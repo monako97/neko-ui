@@ -21,6 +21,7 @@ stages:
       - node_modules/
   script:
     - echo '安装依赖'
+    - getconf PAGESIZE
     - npm i
     - echo '开始构建'
     - npm run build
