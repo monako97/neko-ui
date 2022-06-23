@@ -1,0 +1,11 @@
+# 非特殊标示的都识别成文本文件,行结束符为lf
+* text       eol=lf
+*.multipart  -text
+*.bat        -text
+*.png        binary
+*.ico        binary
+*.gif        binary
+*.jar        binary
+*.jpeg       binary
+*.jpg        binary
+*.vsd        binary

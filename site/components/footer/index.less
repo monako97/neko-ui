@@ -1,0 +1,30 @@
+.footer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    padding: @distance;
+    color: var(--disabled-color, rgba(255, 255, 255, 0.85));
+    background-color: var(--footer-bg, #333);
+    margin: 0 -@distance -@distance;
+    height: 75px;
+    text-align: center;
+    z-index: 2;
+    box-shadow: 0 1px 1px 0 var(--header-shadow, rgba(0, 0, 0, 0.05));
+    transition-duration: @transition-duration;
+    transition-timing-function: @transition-timing-function;
+    transition-property: box-shadow, background-color;
+
+    a {
+        color: var(--disabled-color);
+    }
+}
+
+.beian {
+    padding: 0 12px;
+}
+
+[data-theme='dark'] {
+    --footer-bg: #141414;
+}

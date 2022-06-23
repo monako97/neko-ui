@@ -1,0 +1,23 @@
+{
+  "compilerOptions": {
+    "jsx": "react",
+    "moduleResolution": "node",
+    "esModuleInterop": true,
+    "resolveJsonModule": true,
+    "baseUrl": ".",
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "forceConsistentCasingInFileNames": true,
+    "skipLibCheck": true,
+    "declaration": true,
+    "emitDeclarationOnly": true,
+    "removeComments": false,
+    "preserveConstEnums": true,
+    "newLine": "lf",
+    "rootDir": "components",
+    "lib": ["DOM", "es2016"],
+    "typeRoots": ["node_modules/@types", "typings"]
+  },
+  "include": ["components", "typings"],
+  "exclude": ["*/**/examples/*", "*/**/__tests__/*", "*/**/__mocks__/*"]
+}

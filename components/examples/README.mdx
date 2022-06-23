@@ -1,0 +1,17 @@
+export const basic = {
+    type: '开始',
+    title: '说明',
+    subtitle: '注意事项',
+}
+
+#### 目录结构说明
+
+import CodeBlock from '@/components/code';
+import structure from './structure.txt';
+
+<CodeBlock code={structure} lang="treeview" />
+
+import MBox from '../markdown';
+import readme from './readme.md?raw';
+
+<MBox text={readme} getAnchorContainer={() => document.querySelector('main article')} />

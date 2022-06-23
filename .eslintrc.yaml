@@ -1,0 +1,6 @@
+extends:
+  - neko
+ignorePatterns:
+  - dist/
+  - coverage/
+  - __snapshots__/

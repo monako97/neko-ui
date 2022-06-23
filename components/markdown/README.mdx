@@ -1,0 +1,17 @@
+export const basic = {
+    type: '通用',
+    title: 'Markdown',
+    subtitle: 'MD文档',
+}
+
+# Markdown
+
+import Snapshot from '@/components/snapshot';
+
+## 代码演示
+<Snapshot path="markdown/examples/default" lang="tsx" />
+
+import MBox from '../markdown';
+import api from './examples/api.md?raw';
+
+<MBox text={api} />

@@ -1,0 +1,31 @@
+root_folder/
+|-- components/
+|   |-- index.ts 
+|   `-- wave-circle/ 组件源码
+|       |-- examples/ 组件案例
+|       |   `-- 案例代码 demo.tsx
+|       |-- index.less
+|       |-- index.tsx
+|       `-- 文档排版，配合案例代码使用 README.mdx 
+|-- config/
+|   `-- 默认环境配置 index.ts 
+|   `-- 额外配置，当运行 `npm start --config=bcs` 时会加载 bcs.ts
+|-- dist/ 编译的文档
+|   |-- index.js
+|   `-- index.html
+|-- lib/ 编译的组件
+|   |-- index.js
+|   `-- wave-circle/
+|       |-- index.less
+|       `-- index.js
+|-- .eslintrc.yaml 
+|-- .gitattributes 
+|-- .prettierrc.yaml
+|-- .stylelintrc.yaml
+|-- package.json                   
+|-- pkg.json
+|-- README.md
+|-- site/
+|-- tsconfig.json
+`-- typings
+    `-- typings.d.ts

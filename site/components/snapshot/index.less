@@ -1,0 +1,54 @@
+.snapshot {
+  border: 1px solid var(--border-color-base, @border-color-base);
+  border-radius: var(--border-radius-base, @border-radius-base);
+  margin-bottom: @distance;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+
+.preview {
+  padding: @distance;
+  text-align: right;
+  max-width: 100%;
+  box-shadow: 0 1px 0 var(--border-color-base, @border-color-base);
+  background-color: var(--component-background);
+
+  .view {
+    text-align: left;
+  }
+}
+
+.toolbar {
+  width: fit-content;
+  background-color: rgba(221, 221, 221, 0.5);
+  padding: 0 16px;
+  text-align: center;
+  cursor: pointer;
+  float: right;
+  margin-left: 8px;
+  border-radius: @border-radius-base @border-radius-base 0 0;
+  user-select: none;
+
+  &:hover,
+  &.open {
+    color: @primary-color;
+    background-color: var(--primary-color-deprecated-bg);
+  }
+}
+
+.code {
+  padding: @distance;
+  background-color: var(--body-background);
+
+  :global(.markdown-box), pre {
+    margin: 0;
+  }
+}
+
+.snapshot, .preview, .toolbar, .code {
+  transition-duration: @transition-duration;
+  transition-timing-function: @transition-timing-function;
+  transition-property: border-color, background-color, box-shadow;
+}
