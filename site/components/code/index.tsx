@@ -1,5 +1,5 @@
 import React from 'react';
-import { Markdown } from 'neko-ui';
+import { Markdown } from '@pkg/index';
 import styles from './index.less';
 
 const CodeBlock: React.FC<{ code: string; lang: string }> = ({ code, lang }) => {

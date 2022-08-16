@@ -7,11 +7,9 @@
         margin: 0;
     }
 
-    & [data-prefix] {
-        &::before {
-            color: var(--primary-color);
-            content: attr(data-prefix);
-        }
+    & [data-prefix]::before {
+        color: var(--primary-color);
+        content: attr(data-prefix);
     }
   
     ol {
@@ -241,10 +239,8 @@
         border-spacing: 0;
         transition-property: border-color;
   
-        tbody {
-            tr:hover {
-                background-color: var(--table-row-hover-bg, rgba(60,90,100,.04));
-            }
+        tbody tr:hover {
+            background-color: var(--table-row-hover-bg, rgba(60,90,100,.04));
         }
   
         tr {
@@ -272,10 +268,8 @@
             }
 
   
-            &:last-child {
-                td {
-                    border-bottom: none;
-                }
+            &:last-child td {
+                border-bottom: none;
             }
         }
     }

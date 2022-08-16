@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo } from 'react';
 import { myPkgs, useLocation } from 'plugin-runtime';
-import { useTheme } from 'neko-ui';
+import { useTheme } from '@pkg/index';
 import { isEqual } from 'lodash';
 import { PkgType, projectInfo } from '@/utils';
 import styles from './index.less';

@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import { useLocation, useOutlet } from 'plugin-runtime';
 import styles from './index.less';
-import { BackTop } from 'neko-ui';
+import { BackTop } from '@pkg/index';
 import Sider from '../components/sider';
 import Coverage from '@/components/coverage';
 import Header from '@/components/header';

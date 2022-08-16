@@ -13,6 +13,17 @@
     "emitDeclarationOnly": true,
     "removeComments": false,
     "preserveConstEnums": true,
+    "paths": {
+        "@/*": [
+            "site/*"
+        ],
+        "@pkg/*": [
+            "components/*"
+        ],
+        "neko-ui/*": [
+            "components/*"
+        ]
+    },
     "newLine": "lf",
     "rootDir": "components",
     "lib": ["DOM", "es2016"],
