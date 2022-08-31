@@ -8,6 +8,7 @@ const conf: PartialConfigType = {
   designSize: 1920,
   minifier: {
     type: 'terser',
+    css: 'cssnano',
   },
   importOnDemand: {
     antd: ['[source]/es/[name:-]', '[source]/es/[name:-]/style'],
