@@ -1,4 +1,4 @@
-import type { ThemeTypes } from 'neko-ui';
+import type { ThemeTypes } from '../use-theme';
 
 /**
  * 判断当前时间是晚上还是白天

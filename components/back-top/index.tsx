@@ -1,7 +1,8 @@
 import React, { memo, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import styles from './index.less';
 import { getMaxZindex, getScrollTop } from '../utils/document';
-import { isEqual, isFunction } from 'lodash';
+import isEqual from 'lodash/isEqual';
+import isFunction from 'lodash/isFunction';
 
 export interface BackTopProps extends React.HTMLAttributes<HTMLDivElement> {
   /** 设置需要监听其滚动事件的元素，值为一个返回对应 DOM 元素的函数 */

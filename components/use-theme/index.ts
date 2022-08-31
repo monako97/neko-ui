@@ -1,5 +1,6 @@
-import { Dispatch, useState } from 'react';
-import { getDefaultTheme } from '@pkg/index';
+import { useState } from 'react';
+import type { Dispatch } from 'react';
+import getDefaultTheme from '../get-default-theme';
 
 export interface ThemeTypes {
   type: 'light' | 'dark';
