@@ -13,9 +13,9 @@ permissions:
   packages: read
 
 # 允许一个并发部署
-# concurrency:
-#   group: "pages"
-#   cancel-in-progress: true
+concurrency:
+  group: "pages"
+  cancel-in-progress: true
 
 jobs:
   build:
@@ -46,11 +46,6 @@ jobs:
           fi
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-      - name: Publish to GitHub Package
-        run: |
-          npm config set registry https://npm.pkg.github.com
-          npm config set //npm.pkg.github.com/:_authToken ${{secrets.GITHUB_TOKEN}}
-          npm publish --registry https://npm.pkg.github.com
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v1
         with:
