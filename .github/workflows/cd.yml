@@ -32,7 +32,7 @@ jobs:
           path:  |
             node_modules
             yarn.lock
-          key: node-modules-${{ hashFiles('package.json') }}
+          key: node-modules-${{ hashFiles('yarn.lock') }}
           restore-keys: node-modules-
       - name: 'install'
         run: yarn
