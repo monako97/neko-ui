@@ -1,19 +1,19 @@
 # neko-ui
 
-> 组件库模板
+> Neko UI
 
 ## 安装依赖
 
 ```shell
-npm install
+yarn install
 ```
 
 ## 启动项目
 ```shell
-npm start
+yarn start
 ```
 
 ## 打包项目
 ```shell
-npm run build
+yarn build
 ```
