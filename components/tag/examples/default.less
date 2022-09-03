@@ -1,12 +1,16 @@
-@import url('../index.less');
-
 .card {
     width: 200px;
-
+    position: relative;
+    border-radius: @border-radius-base;
+    box-shadow: @box-shadow-small;
 }
 
 .tag {
     color: rgb(233, 250, 215);
+    position: absolute;
+    top: 42px;
+    min-width: 60px;
+    font-weight: bold;
 }
 
 .body {
@@ -21,5 +25,6 @@
 }
 
 .footer {
-    border-top: 1px solid var(--border-color-base);
+    font-size: 12px;
+    text-align: right;
 }

@@ -5,14 +5,11 @@ on:
     branches:
       - main
 
-# 设置 GITHUB_TOKEN 的权限以允许部署到 GitHub Pages
 permissions:
   contents: read
   pages: write
   id-token: write
-  packages: read
 
-# 允许一个并发部署
 concurrency:
   group: "pages"
   cancel-in-progress: true

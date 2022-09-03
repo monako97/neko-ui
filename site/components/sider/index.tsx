@@ -3,7 +3,7 @@ import { myPkgs, RouterProps, useLocation, useNavigate } from 'plugin-runtime';
 import styles from './index.less';
 import { isEqual } from 'lodash';
 import { projectInfo } from '@/utils';
-import Avatar from '@pkg/avatar';
+import { Avatar } from 'neko-ui';
 
 type MenuType = {
   subtitle?: string;

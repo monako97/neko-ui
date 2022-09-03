@@ -1,5 +1,5 @@
 import React, { useRef } from 'react';
-import BackTop from '..';
+import { BackTop } from 'neko-ui';
 
 const data = new Array(20).fill(0);
 

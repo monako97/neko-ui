@@ -1,4 +1,4 @@
-import { Markdown, MarkdownProps } from '@pkg/index';
+import { Markdown, MarkdownProps } from 'neko-ui';
 import React from 'react';
 
 const MD = (props: MarkdownProps) => {
