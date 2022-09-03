@@ -4,7 +4,7 @@ name: Deploy static content to Pages
 on:
   # Runs on pushes targeting the default branch
   push:
-    branches: ["main"]
+    branches: ["gh-pages"]
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
@@ -30,20 +30,6 @@ jobs:
     steps:
       - name: '检出代码'
         uses: actions/checkout@v2
-        with:
-          ref: ${{ github.ref }}
-          
-      - name: '配置Node环境'
-        uses: actions/setup-node@v1
-        with:
-          node-version: 16
-          registry-url: https://registry.npmjs.org/
-
-      - name: '安装依赖'
-        run: npm install
-
-      - name: '编译package'
-        run: npm run build
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v1
         with:
