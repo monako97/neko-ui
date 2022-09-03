@@ -3,6 +3,9 @@ import { PACKAGENAME, DEV } from 'plugin-runtime/build/process-env';
 
 const conf: PartialConfigType = {
   publicPath: DEV ? 'auto' : `/${PACKAGENAME}/`,
+  htmlPluginOption: {
+    favicon: './site/assets/images/favicon.ico',
+  },
   prefixCls: PACKAGENAME,
   modifyVars: {},
   miniIdc: false,

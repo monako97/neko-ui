@@ -6,8 +6,7 @@
     "scripts": {
         "start": "skyl start library",
         "build": "skyl build library",
-        "stylelint:fix": "skyl stylelint fix",
-        "eslint:fix": "skyl eslint fix"
+        "lint": "skyl stylelint components && skyl eslint components"
     },
     "author": "moneko",
     "license": "MIT",
