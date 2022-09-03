@@ -24,10 +24,8 @@ stages:
     - echo '安装依赖'
     - getconf PAGESIZE
     - yarn install
-    # - npm i
     - echo '开始构建'
     - yarn build
-    # - npm run build
     - echo '构建完成'
   artifacts:
     paths:
