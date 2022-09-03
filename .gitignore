@@ -3,6 +3,7 @@
 .vscode
 .DS_Store
 node_modules
+/docs
 /dist
 /lib
 /coverage
