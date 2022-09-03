@@ -19,12 +19,15 @@ stages:
         - package.json
     paths:
       - node_modules/
+      - yarn.lock
   script:
     - echo '安装依赖'
     - getconf PAGESIZE
-    - npm i
+    - yarn install
+    # - npm i
     - echo '开始构建'
-    - npm run build
+    - yarn build
+    # - npm run build
     - echo '构建完成'
   artifacts:
     paths:
