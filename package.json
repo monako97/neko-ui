@@ -14,7 +14,7 @@
         "@types/lodash": "^4.14.182",
         "eslint-config-neko": "^1.0.7",
         "plugin-postcss": "^1.0.13",
-        "plugin-runtime": "2.6.34",
+        "plugin-runtime": "2.6.34-beta.2",
         "react": "^18.2.0",
         "react-dom": "^18.2.0",
         "skyl": "^1.2.14",
