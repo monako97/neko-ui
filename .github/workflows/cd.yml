@@ -1,10 +1,9 @@
-name: 自动部署
+name: Publish and Deploy
 
 on:
   push:
     branches:
       - main
-  workflow_dispatch:
 
 # 设置 GITHUB_TOKEN 的权限以允许部署到 GitHub Pages
 permissions:
@@ -13,9 +12,9 @@ permissions:
   id-token: write
 
 # 允许一个并发部署
-concurrency:
-  group: "pages"
-  cancel-in-progress: true
+# concurrency:
+#   group: "pages"
+#   cancel-in-progress: true
 
 jobs:
   build:
@@ -23,13 +22,11 @@ jobs:
     steps:
       - name: 'Checkout Code'
         uses: actions/checkout@v2
-        with:
-          ref: ${{ github.ref }}
-      - name: 'Setup nodejs'
-        uses: actions/setup-node@v1
-        with:
-          node-version: 16
-          registry-url: https://registry.npmjs.org/
+      # - name: 'Setup nodejs'
+      #   uses: actions/setup-node@v1
+      #   with:
+      #     node-version: 16
+      #     registry-url: https://registry.npmjs.org/
       - name: 'install'
         run: yarn
       - name: 'lint'
@@ -42,8 +39,6 @@ jobs:
           tag-prefix: 'v'
       - name: 'Build Artifact'
         run: yarn build
-      - name: 'next version'
-        uses: 'vemel/nextversion@0.1.1'
       - name: '发布package'
         run: npm publish
         env:
