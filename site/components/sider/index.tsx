@@ -3,6 +3,7 @@ import { myPkgs, RouterProps, useLocation, useNavigate } from 'plugin-runtime';
 import styles from './index.less';
 import { isEqual } from 'lodash';
 import { projectInfo } from '@/utils';
+import Avatar from '@pkg/avatar';
 
 type MenuType = {
   subtitle?: string;
@@ -89,7 +90,7 @@ const Sider = () => {
   return (
     <div className={styles.nav}>
       <div className={styles.logo}>
-        <div className={styles.logoImg} onClick={() => navigate('/')} />
+        <Avatar className={styles.logoImg} onClick={() => navigate('/')} />
         <div className={styles.logoCon}>
           <h2>{projectInfo.title}</h2>
           <p>{projectInfo.description}</p>

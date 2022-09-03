@@ -1,24 +1,22 @@
 import { useState } from 'react';
 import type { Dispatch } from 'react';
-import getDefaultTheme from '../get-default-theme';
 
 export interface ThemeTypes {
   type: 'light' | 'dark';
 }
 
-interface UseThemeTypes {
-  type: ThemeTypes['type'];
-  setType: Dispatch<ThemeTypes['type']>;
-}
+type UseThemeType = [ThemeTypes['type'], Dispatch<ThemeTypes['type']>];
 
 /**
  * 主题 hooks
  * @returns {UseThemeTypes} theme and setTheme
  */
-const useTheme = (): UseThemeTypes => {
-  const [type, setType] = useState<ThemeTypes['type']>(getDefaultTheme());
+const useTheme = (): UseThemeType => {
+  const [type, setType] = useState<ThemeTypes['type']>(
+    window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark'
+  );
 
-  return { type, setType };
+  return [type, setType];
 };
 
 export default useTheme;

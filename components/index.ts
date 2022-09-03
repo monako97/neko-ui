@@ -10,4 +10,5 @@ export type { TagProps } from './tag';
 export { default as useTheme } from './use-theme';
 export type { ThemeTypes } from './use-theme';
 
-export { default as getDefaultTheme } from './get-default-theme';
+export { default as Avatar } from './avatar';
+export type { AvatarProps } from './avatar';

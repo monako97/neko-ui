@@ -1,17 +1,30 @@
-import React, { useEffect, useMemo } from 'react';
+import React, { useCallback, useEffect, useMemo } from 'react';
 import { myPkgs, useLocation } from 'plugin-runtime';
 import { useTheme } from '@pkg/index';
 import { isEqual } from 'lodash';
 import { PkgType, projectInfo } from '@/utils';
 import styles from './index.less';
 
+const themeMedia = window.matchMedia('(prefers-color-scheme: light)');
 const Header = () => {
   const location = useLocation();
-  const { type, setType } = useTheme();
-  const handleTheme = () => {
-    setType(type === 'light' ? 'dark' : 'light');
-  };
+  const [type, setType] = useTheme();
+  const handleTheme = useCallback(
+    ({ matches }: { matches: boolean }) => {
+      const theme = matches ? 'light' : 'dark';
 
+      setType(theme);
+      document.body.setAttribute('data-theme', theme);
+    },
+    [setType]
+  );
+
+  useEffect(() => {
+    themeMedia.addEventListener('change', handleTheme);
+    return () => {
+      themeMedia.removeEventListener('change', handleTheme);
+    };
+  }, [handleTheme]);
   useEffect(() => {
     document.body.setAttribute('data-theme', type);
   }, [type]);
@@ -28,7 +41,7 @@ const Header = () => {
         <h2>{current?.title}</h2>
         <span className={styles.subTitle}>{current?.subtitle}</span>
       </div>
-      <div onClick={handleTheme} className={styles.switchTheme}>
+      <div onClick={() => handleTheme({ matches: type === 'dark' })} className={styles.switchTheme}>
         {type === 'dark' ? '🌒' : '🌞'}
       </div>
     </header>
