@@ -17,14 +17,14 @@ jobs:
       - name: '配置Node环境'
         uses: actions/setup-node@v1
         with:
-          node-version: 16
+          node-version: 16.15.1
           registry-url: https://registry.npmjs.org/
 
       - name: '安装依赖'
-        run: yarn
+        run: npm install
 
       - name: '编译package'
-        run: yarn build
+        run: npm run build
 
 #       - name: '更新版本号'
 #         uses: 'phips28/gh-action-bump-version@master'
