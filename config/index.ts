@@ -1,14 +1,14 @@
 import type { PartialConfigType } from 'plugin-runtime';
-import { PACKAGENAME } from 'plugin-runtime/build/process-env';
+import { PACKAGENAME, DEV } from 'plugin-runtime/build/process-env';
 
 const conf: PartialConfigType = {
+  publicPath: DEV ? 'auto' : `/${PACKAGENAME}/`,
   prefixCls: PACKAGENAME,
   modifyVars: {},
   miniIdc: false,
   designSize: 1920,
   minifier: {
     type: 'terser',
-    css: 'cssnano',
   },
   importOnDemand: {
     antd: ['[source]/es/[name:-]', '[source]/es/[name:-]/style'],
