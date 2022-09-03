@@ -17,7 +17,7 @@
         "plugin-runtime": "2.6.35",
         "react": "^18.2.0",
         "react-dom": "^18.2.0",
-        "skyl": "^1.2.14",
+        "skyl": "^1.2.15",
         "stylelint-config-neko": "^1.0.6"
     },
     "dependencies": {
