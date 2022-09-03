@@ -23,9 +23,10 @@ jobs:
       - name: 'Checkout Code'
         uses: actions/checkout@v2
       - name: 'Setup nodejs'
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v3
         with:
           node-version: 16
+          registry-url: 'https://registry.npmjs.org'
       - name: 'install'
         run: yarn
       - name: 'lint'
@@ -40,8 +41,14 @@ jobs:
         run: yarn build
       - name: 'Publish to npm'
         run: |
-          npm config set //registry.npmjs.org/:_authToken ${{secrets.NPM_TOKEN}}
-          npm publish --registry https://registry.npmjs.org
+          NPM_PACKAGE_NAME=$(node -p "require('./package.json').name")
+          NPM_PACKAGE_VERSION=$(node -p "require('./package.json').version")
+          if [[ $(npm view "${NPM_PACKAGE_NAME}" versions) != *"'${NPM_PACKAGE_VERSION}'"* ]]; then
+            npm publish
+            echo "Successfully published version ${NPM_PACKAGE_VERSION} of ${NPM_PACKAGE_NAME} to GitLab's NPM registry: ${CI_PROJECT_URL}/-/packages"
+          else
+            echo "Version ${NPM_PACKAGE_VERSION} of ${NPM_PACKAGE_NAME} has already been published, so no new version has been published."
+          fi
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
       - name: Publish to GitHub Package
