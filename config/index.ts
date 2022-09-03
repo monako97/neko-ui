@@ -10,6 +10,7 @@ const conf: PartialConfigType = {
   modifyVars: {},
   miniIdc: false,
   designSize: 1920,
+  cacheDirectory: false,
   minifier: {
     type: 'terser',
   },
