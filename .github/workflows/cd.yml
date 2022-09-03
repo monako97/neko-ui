@@ -5,27 +5,60 @@ on:
     branches:
       - main
 
+# 设置 GITHUB_TOKEN 的权限以允许部署到 GitHub Pages
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# 允许一个并发部署
+concurrency:
+  group: "Deploy site"
+  cancel-in-progress: true
+
 jobs:
-  publish-npm:
+  build:
     runs-on: ubuntu-latest
     steps:
-      - name: '检出代码'
+      - name: 'Checkout Code'
         uses: actions/checkout@v2
         with:
           ref: ${{ github.ref }}
           
-      - name: '配置Node环境'
+      - name: 'Setup nodejs'
         uses: actions/setup-node@v1
         with:
-          node-version: 16.15.1
+          node-version: 16
           registry-url: https://registry.npmjs.org/
 
-      - name: '安装依赖'
-        run: npm install
+      - name: 'install'
+        run: yarn
 
-      - name: '编译package'
-        run: npm run build
-
+      - name: 'Build Artifact'
+        run: yarn build
+  # 单一部署工作，因为我们只是部署
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: 'Checkout Code'
+        uses: actions/checkout@v2
+        with:
+          ref: ${{ github.ref }}
+      - name: '发布package'
+        run: ls
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v1
+        with:
+          path: './docs'
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v1
+      - name: '发布package'
+        run: ls
 #       - name: '更新版本号'
 #         uses: 'phips28/gh-action-bump-version@master'
 #         env:
@@ -37,4 +70,3 @@ jobs:
 #         run: npm publish
 #         env:
 #           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-          
