@@ -32,30 +32,26 @@ jobs:
           registry-url: https://registry.npmjs.org/
       - name: 'install'
         run: yarn
-      - name: 'Build Artifact'
-        run: yarn build
-          
-      - name: Semantic Release
-        uses: cycjimmy/semantic-release-action@v2
+      - name: 'lint'
+        run: yarn lint
+      - name: 'Next Version'
+        uses: 'phips28/gh-action-bump-version@master'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
-
-      # - name: '更新版本号'
-      #   uses: 'phips28/gh-action-bump-version@master'
-      #   env:
-      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      #   with:
-      #     tag-prefix: 'v'
-      # - name: '发布package'
-      #   run: npm publish
-      #   env:
-      #     NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+        with:
+          tag-prefix: 'v'
+      - name: 'Build Artifact'
+        run: yarn build
+      - name: 'next version'
+        uses: 'vemel/nextversion@0.1.1'
+      - name: '发布package'
+        run: npm publish
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v1
         with:
           path: './docs'
-  # 单一部署工作，因为我们只是部署
   deploy:
     environment:
       name: github-pages
