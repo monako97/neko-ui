@@ -1,0 +1,40 @@
+name: 自动部署
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  publish-npm:
+    runs-on: ubuntu-latest
+    steps:
+      - name: '检出代码'
+        uses: actions/checkout@v2
+        with:
+          ref: ${{ github.ref }}
+          
+      - name: '配置Node环境'
+        uses: actions/setup-node@v1
+        with:
+          node-version: 16
+          registry-url: https://registry.npmjs.org/
+
+      - name: '安装依赖'
+        run: yarn
+
+      - name: '编译package'
+        run: yarn build
+
+#       - name: '更新版本号'
+#         uses: 'phips28/gh-action-bump-version@master'
+#         env:
+#           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#         with:
+#           tag-prefix: 'v'
+
+#       - name: '发布package'
+#         run: npm publish
+#         env:
+#           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+          
