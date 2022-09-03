@@ -29,8 +29,10 @@ jobs:
         id: cache-node-modules
         uses: actions/cache@v2
         with:
-          path: node_modules
-          key: node-modules-${{ hashFiles('yarn.lock') }}
+          path:  |
+            node_modules
+            yarn.lock
+          key: node-modules-${{ hashFiles('package.json') }}
           restore-keys: node-modules-
       - name: 'install'
         run: yarn
