@@ -29,7 +29,7 @@ stages:
     - echo '构建完成'
   artifacts:
     paths:
-      - dist/
+      - docs/
       - es/
       - lib/
   retry: 0
