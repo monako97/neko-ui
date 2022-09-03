@@ -10,6 +10,7 @@ const conf: PartialConfigType = {
   minifier: {
     type: 'terser',
   },
+  routerMode: 'hash',
   importOnDemand: {
     antd: ['[source]/es/[name:-]', '[source]/es/[name:-]/style'],
     lodash: '[source]/[name]',
