@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - main
+  workflow_dispatch:
 
 # 设置 GITHUB_TOKEN 的权限以允许部署到 GitHub Pages
 permissions:
@@ -13,7 +14,7 @@ permissions:
 
 # 允许一个并发部署
 concurrency:
-  group: "Deploy site"
+  group: "pages"
   cancel-in-progress: true
 
 jobs:
@@ -24,18 +25,19 @@ jobs:
         uses: actions/checkout@v2
         with:
           ref: ${{ github.ref }}
-          
       - name: 'Setup nodejs'
         uses: actions/setup-node@v1
         with:
           node-version: 16
           registry-url: https://registry.npmjs.org/
-
       - name: 'install'
         run: yarn
-
       - name: 'Build Artifact'
         run: yarn build
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v1
+        with:
+          path: './docs'
   # 单一部署工作，因为我们只是部署
   deploy:
     environment:
@@ -50,10 +52,6 @@ jobs:
           ref: ${{ github.ref }}
       - name: '发布package'
         run: ls
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v1
-        with:
-          path: './docs'
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v1
