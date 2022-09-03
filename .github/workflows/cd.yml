@@ -63,12 +63,6 @@ jobs:
     runs-on: ubuntu-latest
     needs: build
     steps:
-      - name: 'Checkout Code'
-        uses: actions/checkout@v2
-        with:
-          ref: ${{ github.ref }}
-      - name: '发布package'
-        run: ls
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v1
