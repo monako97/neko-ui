@@ -13,17 +13,15 @@
     "devDependencies": {
         "@types/lodash": "^4.14.182",
         "eslint-config-neko": "^1.0.7",
-        "katex": "^0.16.2",
         "plugin-postcss": "^1.0.13",
         "plugin-runtime": "2.6.36",
         "react": "^18.2.0",
         "react-dom": "^18.2.0",
-        "rehype-katex": "^6.0.2",
-        "remark-gfm": "^3.0.1",
         "skyl": "^1.2.15",
         "stylelint-config-neko": "^1.0.6"
     },
     "dependencies": {
+        "katex": "^0.16.2",
         "marked-completed": "^1.1.69",
         "react-photo-view": "^1.2.2",
         "react-window": "^1.8.7"
