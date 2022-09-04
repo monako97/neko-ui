@@ -23,6 +23,8 @@ export interface MarkdownProps {
   tools?: CodeBlockToolType;
   /** 指定滚动的容器 */
   getAnchorContainer?: () => HTMLElement;
+  /** 渲染KateX数学公式 */
+  tex?: boolean;
 }
 
 export type AnchorType = {
@@ -45,6 +47,7 @@ const Markdown: FC<MarkdownProps> = ({
   langLineNumber = true,
   tools = ['copy'],
   getAnchorContainer = () => window,
+  tex,
 }) => {
   const ref = useRef<HTMLDivElement>(null);
   const [visible, setVisible] = useState(false);
@@ -61,6 +64,7 @@ const Markdown: FC<MarkdownProps> = ({
       str = markdownUtil(text, {
         langLineNumber,
         langToolbar: tools,
+        tex: tex,
       });
     } else {
       str = '';
@@ -71,7 +75,7 @@ const Markdown: FC<MarkdownProps> = ({
       });
       setHtmlString(str);
     }
-  }, [langLineNumber, tools, text]);
+  }, [text, langLineNumber, tools, tex]);
 
   useEffect(() => {
     const timer: NodeJS.Timeout = setTimeout(() => {

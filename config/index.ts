@@ -25,6 +25,17 @@ const conf: PartialConfigType = {
         return `${source}/es/icons/${name}`;
       },
     },
+    // prismjs: {
+    //   transform: ({ name, source }) => {
+    //     console.log({ name, source });
+    //     return `${source}/es/icons/${name}`;
+    //   },
+    // },
+  },
+  rulesInclude: {
+    css: ['katex'],
+    media: ['katex'],
+    fonts: ['katex'],
   },
 };
 

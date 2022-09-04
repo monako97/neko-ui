@@ -11,7 +11,7 @@ import structure from './structure.txt';
 
 <CodeBlock code={structure} lang="treeview" />
 
-import MBox from '../markdown';
+import MBox from '@/components/markdown';
 import readme from './readme.md?raw';
 
 <MBox text={readme} getAnchorContainer={() => document.querySelector('main article')} />
