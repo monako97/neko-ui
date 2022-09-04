@@ -23,8 +23,7 @@
     "dependencies": {
         "katex": "^0.16.2",
         "marked-completed": "^1.1.69",
-        "react-photo-view": "^1.2.2",
-        "react-window": "^1.8.7"
+        "react-photo-view": "^1.2.2"
     },
     "files": [
         "lib",
