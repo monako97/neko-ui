@@ -27,7 +27,7 @@ const replacer = ((blockRegex, inlineRegex) => (text: string) => {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   (renderer[type as keyof marked.Renderer] as any) = (...args: string[]) => {
     args[0] = replacer(args[0]);
-    return original(...args);
+    return original(args);
   };
 });
 
