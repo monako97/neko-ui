@@ -1,6 +1,6 @@
 {
     "name": "neko-ui",
-    "version": "0.1.1",
+    "version": "0.1.2",
     "description": "UI 组件库",
     "main": "lib/index.js",
     "scripts": {
