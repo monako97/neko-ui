@@ -9,7 +9,8 @@
         "start": "mo start library",
         "build": "mo build library",
         "stylelint": "mo stylelint src && mo stylelint site",
-        "eslint": "mo eslint src && mo eslint site"
+        "eslint": "mo eslint src && mo eslint site",
+        "lint": "yarn eslint && yarn stylelint"
     },
     "author": "moneko",
     "license": "MIT",
