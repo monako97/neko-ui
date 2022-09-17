@@ -1,6 +1,9 @@
 extends:
   - moneko
 ignorePatterns:
+  - node_modules/
   - dist/
   - coverage/
   - __snapshots__/
+  - prism.js
+  - iconfont.js

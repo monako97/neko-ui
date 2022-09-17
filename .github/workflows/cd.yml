@@ -36,8 +36,6 @@ jobs:
           restore-keys: node-modules-
       - name: 'install'
         run: yarn
-      - name: 'lint'
-        run: yarn lint
       - name: 'Build Artifact'
         run: yarn build
       - name: 'Publish to npm'
