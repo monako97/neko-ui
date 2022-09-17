@@ -17,6 +17,8 @@
 [size-url]: https://packagephobia.com/result?p=neko-ui@latest
 [download-tag]: https://img.shields.io/npm/dm/neko-ui.svg?logo=docusign
 
+> logo轮廓其实是双马尾
+
 ## 安装依赖
 
 ```shell
