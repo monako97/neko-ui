@@ -13,22 +13,11 @@
     "emitDeclarationOnly": true,
     "removeComments": false,
     "preserveConstEnums": true,
-    "paths": {
-        "@/*": [
-            "site/*"
-        ],
-        "@pkg/*": [
-            "components/*"
-        ],
-        "neko-ui/*": [
-            "components/*"
-        ]
-    },
     "newLine": "lf",
-    "rootDir": "components",
+    "rootDir": "src",
     "lib": ["DOM", "es2016"],
     "typeRoots": ["node_modules/@types", "typings"]
   },
-  "include": ["components", "typings"],
+  "include": ["src", "typings"],
   "exclude": ["*/**/examples/*", "*/**/__tests__/*", "*/**/__mocks__/*"]
 }

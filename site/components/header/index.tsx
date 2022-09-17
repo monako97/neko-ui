@@ -1,8 +1,9 @@
 import React, { useMemo } from 'react';
-import { myPkgs, useLocation } from 'plugin-runtime';
+import { myPkgs, useLocation } from '@moneko/core';
 import { useTheme } from 'neko-ui';
 import { isEqual } from 'lodash';
-import { PkgType, projectInfo } from '@/utils';
+import { projectInfo } from '@/utils';
+import type { PkgType } from '@/utils';
 import styles from './index.less';
 
 const Header = () => {

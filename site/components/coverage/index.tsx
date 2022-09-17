@@ -1,5 +1,5 @@
 import React, { memo, useMemo } from 'react';
-import { projectBasicInfo, useLocation, useOutlet } from 'plugin-runtime';
+import { projectBasicInfo, useLocation, useOutlet } from '@moneko/core';
 import styles from './index.less';
 import { isEqual } from 'lodash';
 

@@ -1,7 +1,6 @@
 extends:
-  - neko
+  - moneko
 ignorePatterns:
   - dist/
   - coverage/
   - __snapshots__/
-  - prism.js

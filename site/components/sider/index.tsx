@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { myPkgs, RouterProps, useLocation, useNavigate } from 'plugin-runtime';
+import { myPkgs, RouterProps, useLocation, useNavigate } from '@moneko/core';
 import styles from './index.less';
 import { isEqual } from 'lodash';
 import { projectInfo } from '@/utils';

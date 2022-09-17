@@ -1,4 +1,4 @@
-import { projectBasicInfo } from 'plugin-runtime';
+import { projectBasicInfo } from '@moneko/core';
 
 type ProgramInfo = typeof projectBasicInfo.programInfo;
 

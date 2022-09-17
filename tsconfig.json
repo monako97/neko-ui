@@ -17,10 +17,10 @@
                 "site/*"
             ],
             "@pkg/*": [
-                "components/*"
+                "src/*"
             ],
             "neko-ui/*": [
-                "components/*"
+                "src/*"
             ]
         },
         "experimentalDecorators": true,
@@ -48,6 +48,11 @@
         "typeRoots": [
             "node_modules/@types",
             "typings"
+        ],
+        "types": [
+            "node",
+            "jest",
+            "@testing-library/jest-dom"
         ]
     },
     "exclude": [

@@ -12,9 +12,8 @@ declare module './index.less' {
 }
 
 declare module 'neko-ui' {
-  export * from '@pkg/index';
+  export * from 'src/index';
 }
-
 declare module 'moment' {
   import { Dayjs } from 'dayjs';
   namespace moment {

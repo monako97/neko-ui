@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 import React, { useCallback, useState } from 'react';
-import CodeBlock from '@/components/code';
+import CodeBlock from '../code';
 import styles from './index.less';
 
 const Snapshot: React.FC<{ path: string; lang: string; style?: string; hideSource?: boolean }> = ({

@@ -3,8 +3,9 @@
 .vscode
 .DS_Store
 node_modules
-/docs
+node_modules.nosync
 /dist
+/docs
 /lib
 /coverage
 __snapshots__

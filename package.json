@@ -1,29 +1,46 @@
 {
     "name": "neko-ui",
-    "version": "0.1.4",
-    "description": "UI 组件库",
+    "version": "1.0.0",
+    "description": "Neko UI库",
     "main": "lib/index.js",
     "scripts": {
-        "start": "skyl start library",
-        "build": "skyl build library",
-        "lint": "skyl stylelint components && skyl eslint components"
+        "test": "jest --watchAll --coverage",
+        "prebuild": "jest --coverage --passWithNoTests",
+        "start": "mo start library",
+        "build": "mo build library",
+        "stylelint": "mo stylelint src && mo stylelint site",
+        "eslint": "mo eslint src && mo eslint site"
     },
     "author": "moneko",
     "license": "MIT",
     "devDependencies": {
-        "@types/lodash": "^4.14.182",
-        "eslint-config-neko": "^1.0.7",
-        "plugin-postcss": "^1.0.13",
-        "plugin-runtime": "2.6.36",
+        "@moneko/cli": "^1.0.7",
+        "@moneko/core": "^1.0.5",
+        "@moneko/mock": "^1.0.2",
+        "@moneko/postcss": "^1.0.16",
+        "@moneko/request": "^1.0.1",
+        "@swc/jest": "^0.2.22",
+        "@testing-library/jest-dom": "^5.16.5",
+        "@testing-library/react": "^13.4.0",
+        "@testing-library/user-event": "^14.4.3",
+        "@types/jest": "^29.0.3",
+        "@types/lodash": "^4.14.185",
+        "eslint-config-moneko": "^1.0.0",
+        "identity-obj-proxy": "^3.0.0",
+        "jest": "^29.0.3",
+        "jest-environment-jsdom": "^29.0.3",
         "react": "^18.2.0",
         "react-dom": "^18.2.0",
-        "skyl": "^1.2.15",
-        "stylelint-config-neko": "^1.0.6"
+        "stylelint-config-moneko": "^1.0.0",
+        "ts-node": "^10.9.1"
     },
     "dependencies": {
         "katex": "^0.16.2",
         "marked-completed": "^1.1.69",
         "react-photo-view": "^1.2.2"
+    },
+    "resolutions": {
+        "terser": "npm:@swc/core"
     },
     "files": [
         "lib",
