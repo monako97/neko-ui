@@ -1,5 +1,5 @@
 extends:
-  - moneko
+  - neko
 ignorePatterns:
   - node_modules/
   - dist/
