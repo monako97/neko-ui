@@ -3,6 +3,7 @@ import { PACKAGENAME, DEV } from '@moneko/core/build/process-env';
 
 const conf: PartialConfigType = {
   publicPath: DEV ? '/' : `/${PACKAGENAME}/`,
+  routeBaseName: `/${PACKAGENAME}/`,
   htmlPluginOption: {
     favicon: './site/assets/images/favicon.ico',
   },
