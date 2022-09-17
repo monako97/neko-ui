@@ -4,6 +4,7 @@ import { PACKAGENAME, DEV } from '@moneko/core/build/process-env';
 const conf: PartialConfigType = {
   publicPath: DEV ? '/' : `/${PACKAGENAME}/`,
   routeBaseName: `/${PACKAGENAME}/`,
+  routerMode: 'hash',
   htmlPluginOption: {
     favicon: './site/assets/images/favicon.ico',
   },
