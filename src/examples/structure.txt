@@ -9,7 +9,7 @@ root_folder/
 |       `-- 文档排版，配合案例代码使用 README.mdx 
 |-- config/
 |   `-- 默认环境配置 index.ts 
-|   `-- 额外配置，当运行 `npm start --config=bcs` 时会加载 bcs.ts
+|   `-- 额外配置，当运行 `npm start --config=prod` 时会加载 prod.ts
 |-- dist/ 编译的文档
 |   |-- index.js
 |   `-- index.html
