@@ -8,7 +8,7 @@ import globals from '@moneko/core/build/envFlags';
  * Lines 行覆盖率(line coverage): 是不是每一行都执行了?
  */
 
- const ignore = [
+const ignore = [
   '<rootDir>/test/',
   '<rootDir>/lib/',
   '<rootDir>/es/',
@@ -22,7 +22,7 @@ export default {
   clearMocks: true,
   coverageDirectory: 'coverage',
   testEnvironment: 'jsdom',
-  roots: ['src'],
+  roots: ['components'],
   coveragePathIgnorePatterns: ignore,
   moduleFileExtensions: ['js', 'jsx', 'ts', 'tsx'],
   testPathIgnorePatterns: ignore,
@@ -32,7 +32,7 @@ export default {
   },
   setupFilesAfterEnv: ['<rootDir>/test/setup.ts'],
   testMatch: [
-    '<rootDir>/src/**/__tests__/**/*.{js,jsx,ts,tsx}',
+    '<rootDir>/components/**/__tests__/**/*.{js,jsx,ts,tsx}',
     '<rootDir>/site/**/__tests__/**/*.{js,jsx,ts,tsx}',
   ],
   moduleNameMapper: {

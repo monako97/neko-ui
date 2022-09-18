@@ -17,10 +17,10 @@
                 "site/*"
             ],
             "@pkg/*": [
-                "src/*"
+                "components/*"
             ],
             "neko-ui/*": [
-                "src/*"
+                "components/*"
             ]
         },
         "experimentalDecorators": true,

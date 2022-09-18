@@ -14,10 +14,10 @@
     "removeComments": false,
     "preserveConstEnums": true,
     "newLine": "lf",
-    "rootDir": "src",
+    "rootDir": "components",
     "lib": ["DOM", "es2016"],
     "typeRoots": ["node_modules/@types", "typings"]
   },
-  "include": ["src", "typings"],
+  "include": ["components", "typings"],
   "exclude": ["*/**/examples/*", "*/**/__tests__/*", "*/**/__mocks__/*"]
 }

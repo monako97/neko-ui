@@ -2,6 +2,7 @@
   border: 1px solid var(--border-color-base, @border-color-base);
   border-radius: var(--border-radius-base, @border-radius-base);
   margin-bottom: @distance;
+  overflow: hidden;
 
   &:last-child {
     margin-bottom: 0;
@@ -12,7 +13,6 @@
   padding: @distance;
   text-align: right;
   max-width: 100%;
-  box-shadow: 0 1px 0 var(--border-color-base, @border-color-base);
   background-color: var(--component-background);
 
   .view {
@@ -39,8 +39,12 @@
 }
 
 .code {
-  padding: @distance;
   background-color: var(--body-background);
+
+  :global(.markdown-box) {
+    padding: @distance;
+    animation: silde-in @transition-duration @transition-timing-function;
+  }
 
   :global(.markdown-box), pre {
     margin: 0;
@@ -50,5 +54,17 @@
 .snapshot, .preview, .toolbar, .code {
   transition-duration: @transition-duration;
   transition-timing-function: @transition-timing-function;
-  transition-property: border-color, background-color, box-shadow;
+  transition-property: border-color, background-color, box-shadow, padding, height;
+}
+
+@keyframes silde-in {
+  0% {
+    opacity: 0.2;
+    transform: scale(0.8);
+  }
+
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
 }

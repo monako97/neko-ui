@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-var-requires */
 import React, { useCallback, useState } from 'react';
 import CodeBlock from '../code';
 import styles from './index.less';
@@ -12,6 +11,7 @@ const Snapshot: React.FC<{ path: string; lang: string; style?: string; hideSourc
   const [code, setCode] = useState<string | null>();
   const [styleCode, setStyleCode] = useState<string | null>();
   const isHtml = lang === 'html';
+  // eslint-disable-next-line @typescript-eslint/no-var-requires
   const view = require('@pkg/' + path);
 
   const handleShowSource = useCallback(() => {
@@ -19,6 +19,7 @@ const Snapshot: React.FC<{ path: string; lang: string; style?: string; hideSourc
       setCode(null);
     } else {
       setStyleCode(null);
+      // eslint-disable-next-line @typescript-eslint/no-var-requires
       setCode(require('@pkg/' + path + '?raw'));
     }
   }, [code, path]);
@@ -27,6 +28,7 @@ const Snapshot: React.FC<{ path: string; lang: string; style?: string; hideSourc
       setStyleCode(null);
     } else {
       setCode(null);
+      // eslint-disable-next-line @typescript-eslint/no-var-requires
       setStyleCode(require('@pkg/' + style + '?raw'));
     }
   }, [style, styleCode]);

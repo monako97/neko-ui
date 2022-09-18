@@ -1,0 +1,48 @@
+export const basic = {
+  type: '通用',
+  title: '状态标识组件',
+  subtitle: 'WaveCircle',
+};
+
+# 水波纹
+
+> 状态标识
+
+## 直接在 mdx 中写
+
+import { WaveCircle } from 'neko-ui';
+
+<div style={{ display: 'flex', height: 300 }}>
+  <WaveCircle bgColor="pink" />
+  <WaveCircle>默认</WaveCircle>
+</div>
+
+```tsx
+import { WaveCircle } from 'neko-ui';
+
+ReactDOM.render(<WaveCircle bgColor="pink" />, mountNode);
+```
+
+### 读取文件并只展示代码 `./examples/default.tsx`
+
+import CodeBlock from '@/components/code';
+import code from './examples/default?raw';
+
+<CodeBlock code={code} lang="tsx" />
+
+> 或传入 path (src 目录下代码所在位置) 通过 Snapshot 展示
+
+import Snapshot from '@/components/snapshot';
+
+## 案例 1
+
+<Snapshot path="wave-circle/examples/default" lang="tsx" />
+
+## 案例 2
+
+<Snapshot path="wave-circle/examples/bg" lang="tsx" />
+
+import MD from '@/components/markdown';
+import api from './examples/api.md?raw';
+
+<MD text={api} />

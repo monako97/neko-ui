@@ -12,7 +12,7 @@ declare module './index.less' {
 }
 
 declare module 'neko-ui' {
-  export * from 'src2/index';
+  export * from 'components/index';
 }
 declare module 'moment' {
   import { Dayjs } from 'dayjs';

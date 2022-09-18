@@ -9,13 +9,13 @@
         "build": "mo build library",
         "eslint": "mo eslint src && mo eslint site",
         "stylelint": "mo stylelint src && mo stylelint site",
-        "lint": "yarn eslint && yarn stylelint"
+        "lint": "yarn eslint && yarn stylelint && jest --coverage"
     },
     "author": "moneko",
     "license": "MIT",
     "devDependencies": {
-        "@moneko/cli": "^1.0.7",
-        "@moneko/core": "^1.0.5",
+        "@moneko/cli": "^1.0.9",
+        "@moneko/core": "^1.0.6",
         "@moneko/mock": "^1.0.2",
         "@moneko/postcss": "^1.0.16",
         "@moneko/request": "^1.0.1",
@@ -24,6 +24,7 @@
         "@testing-library/react": "^13.4.0",
         "@testing-library/user-event": "^14.4.3",
         "@types/jest": "^29.0.3",
+        "@types/katex": "^0.14.0",
         "@types/lodash": "^4.14.185",
         "eslint-config-neko": "^1.0.8",
         "identity-obj-proxy": "^3.0.0",
@@ -35,9 +36,9 @@
         "ts-node": "^10.9.1"
     },
     "dependencies": {
-        "katex": "^0.16.2",
-        "marked-completed": "^1.1.69",
-        "react-photo-view": "^1.2.2"
+        "katex": "0.16.2",
+        "marked-completed": "1.1.69",
+        "react-photo-view": "1.2.2"
     },
     "resolutions": {
         "terser": "npm:@swc/core"
