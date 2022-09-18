@@ -15,6 +15,9 @@ const ignore = [
   '<rootDir>/dist/',
   '<rootDir>/node_modules/',
   'iconfont.js',
+  'prism.js',
+  'document.ts',
+  'markdown-util.ts',
 ];
 
 export default {
@@ -26,7 +29,9 @@ export default {
   coveragePathIgnorePatterns: ignore,
   moduleFileExtensions: ['js', 'jsx', 'ts', 'tsx'],
   testPathIgnorePatterns: ignore,
-  transformIgnorePatterns: ignore.filter((o) => o !== '<rootDir>/test/'),
+  transformIgnorePatterns: ignore.filter(
+    (o) => !['<rootDir>/test/', 'prism.js', 'document.ts', 'markdown-util.ts'].includes(o)
+  ),
   transform: {
     '^.+\\.(t|j)sx?$': '@swc/jest',
   },
