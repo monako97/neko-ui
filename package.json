@@ -9,7 +9,8 @@
         "build": "mo build library",
         "eslint": "mo eslint components && mo eslint site",
         "stylelint": "mo stylelint components && mo stylelint site",
-        "lint": "yarn eslint && yarn stylelint && jest --coverage"
+        "lint": "yarn eslint && yarn stylelint",
+        "coverage": "jest --coverage"
     },
     "author": "moneko",
     "license": "MIT",
