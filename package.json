@@ -7,8 +7,8 @@
         "test": "jest --watchAll --coverage",
         "start": "mo start library",
         "build": "mo build library",
-        "eslint": "mo eslint src && mo eslint site",
-        "stylelint": "mo stylelint src && mo stylelint site",
+        "eslint": "mo eslint components && mo eslint site",
+        "stylelint": "mo stylelint components && mo stylelint site",
         "lint": "yarn eslint && yarn stylelint && jest --coverage"
     },
     "author": "moneko",
