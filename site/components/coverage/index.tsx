@@ -25,6 +25,7 @@ const Coverage: React.FC = () => {
     <div className={styles.coverage}>
       {Object.keys(conf).map((k) => {
         if (location.pathname === '/examples') return null;
+        if (location.pathname.startsWith('/@moneko')) return null;
         const cover = coverage[k as CoverageType],
           covered = coverage[`covered${k}` as CoverageType],
           coverNum = Math.round((parseFloat(covered) / parseFloat(cover)) * 100) || 0;

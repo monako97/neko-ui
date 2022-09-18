@@ -73,10 +73,10 @@ import { Tag } from 'neko-ui';
 
 ```
 
+## KaTeX
+
 - [x] $a_i$
 - [ ] `${x}_{2}$,${x}_{2}$`
-
-## KaTeX
 
 $a=x+y$
 

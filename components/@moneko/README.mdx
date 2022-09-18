@@ -1,5 +1,5 @@
 export const basic = {
-    type: '开始1',
+    type: '@moneko',
     title: '说明',
     subtitle: '注意事项',
 }
@@ -7,11 +7,11 @@ export const basic = {
 #### 目录结构说明
 
 import CodeBlock from '@/components/code';
-import structure from './structure.txt';
+import structure from './examples/structure.txt';
 
 <CodeBlock code={structure} lang="treeview" />
 
 import MBox from '@/components/markdown';
-import readme from './readme.md?raw';
+import readme from './examples/readme.md?raw';
 
-<MBox text={readme} getAnchorContainer={() => document.querySelector('main article')} />
+<MBox tex text={readme} getAnchorContainer={() => document.querySelector('main article')} />
