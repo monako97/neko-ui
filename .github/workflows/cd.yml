@@ -38,6 +38,8 @@ jobs:
         run: yarn
       - name: 'lint'
         run: yarn lint
+      - name: 'coverage'
+        run: yarn coverage
       - name: 'Build Artifact'
         run: yarn build
       - name: 'Publish to npm'
