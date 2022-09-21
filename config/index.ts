@@ -1,10 +1,10 @@
 import type { PartialConfigType } from '@moneko/core';
 import { PACKAGENAME, DEV } from '@moneko/core/build/process-env';
 
+const entryPath = DEV ? '/' : `/${PACKAGENAME}/`;
 const conf: PartialConfigType = {
-  publicPath: DEV ? '/' : `/${PACKAGENAME}/`,
-  routeBaseName: `/${PACKAGENAME}/`,
-  routerMode: 'hash',
+  publicPath: entryPath,
+  routeBaseName: entryPath,
   htmlPluginOption: {
     favicon: './site/assets/images/favicon.ico',
   },
