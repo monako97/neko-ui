@@ -5,6 +5,7 @@ const entryPath = DEV ? '/' : `/${PACKAGENAME}/`;
 const conf: PartialConfigType = {
   publicPath: entryPath,
   routeBaseName: entryPath,
+  routerMode: 'hash',
   htmlPluginOption: {
     favicon: './site/assets/images/favicon.ico',
   },
