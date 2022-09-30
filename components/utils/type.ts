@@ -1,3 +1,4 @@
+import isEquals from 'lodash/isEqual';
 export const mapTag = '[object Map]';
 export const setTag = '[object Set]';
 export const arrayTag = '[object Array]';
@@ -44,5 +45,5 @@ export function isFunction(target: any): target is (...args: any[]) => any {
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function isEqual(val1: any, val2: any) {
-  return Object.is(val1, val2);
+  return isEquals(val1, val2);
 }

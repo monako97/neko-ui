@@ -26,10 +26,6 @@ const Empty: React.FC = () => {
           {broswer.name} {broswer.version}
         </span>
       </p>
-      <p className={styles.info}>
-        <h3>OS:</h3>
-        <span className={styles.desc}>{broswer.os}</span>
-      </p>
     </div>
   );
 };
