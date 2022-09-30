@@ -1,6 +1,6 @@
 # neko-ui
 
-> neko ui库
+> Neko UI库
 
 [![version][version-tag]][npm-url]
 [![install size][size-tag]][size-url]
