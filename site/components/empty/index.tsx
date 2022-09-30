@@ -1,6 +1,9 @@
 import { projectInfo } from '@/utils';
+import getBrowser from '@pkg/utils/broswer';
 import React from 'react';
 import styles from './index.less';
+
+const broswer = getBrowser();
 
 const Empty: React.FC = () => {
   return (
@@ -11,11 +14,21 @@ const Empty: React.FC = () => {
       </p>
       <p className={styles.info}>
         <h3>version:</h3>
-        <span className={styles.desc}>{projectInfo.version}</span>
+        <span className={styles.desc}>v{projectInfo.version}</span>
       </p>
       <p className={styles.info}>
         <h3>author:</h3>
         <span className={styles.desc}>{projectInfo.author?.toString()}</span>
+      </p>
+      <p className={styles.info}>
+        <h3>Broswer:</h3>
+        <span className={styles.desc}>
+          {broswer.name} {broswer.version}
+        </span>
+      </p>
+      <p className={styles.info}>
+        <h3>OS:</h3>
+        <span className={styles.desc}>{broswer.os}</span>
       </p>
     </div>
   );

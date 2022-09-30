@@ -7,6 +7,9 @@ export type { BackTopProps } from './back-top';
 export { default as Tag } from './tag';
 export type { TagProps } from './tag';
 
+export { default as HighlightText } from './highlight-text';
+export type { Highlight, HighlightTextProps } from './highlight-text';
+
 export { default as useTheme } from './use-theme';
 export type { ThemeTypes } from './use-theme';
 
