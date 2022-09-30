@@ -1,6 +1,6 @@
 # neko-ui
 
-> 组件库模板
+> neko ui库
 
 [![version][version-tag]][npm-url]
 [![install size][size-tag]][size-url]
