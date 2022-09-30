@@ -1,6 +1,6 @@
 import React, { memo, useMemo } from 'react';
 import styles from './index.less';
-import isEqual from 'lodash/isEqual';
+import { isEqual } from '../utils/type';
 
 export interface TagProps extends React.HTMLAttributes<HTMLDivElement> {
   className?: string;

@@ -16,5 +16,8 @@ export type { ThemeTypes } from './use-theme';
 export { default as Avatar } from './avatar';
 export type { AvatarProps } from './avatar';
 
+export { default as Marquee } from './marquee';
+export type { MarqueeProps } from './marquee';
+
 export { default as WaveCircle } from './wave-circle';
 export type { WaveCircleProps } from './wave-circle';

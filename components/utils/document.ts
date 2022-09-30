@@ -1,6 +1,4 @@
-import isNull from 'lodash/isNull';
-import isUndefined from 'lodash/isUndefined';
-import isFunction from 'lodash/isFunction';
+import { isNull, isUndefined, isFunction } from '../utils/type';
 
 interface ClientSizeTypes {
   width: number;

@@ -1,7 +1,7 @@
 import React, { memo, useMemo } from 'react';
 import { projectBasicInfo, useLocation, useOutlet } from '@moneko/core';
 import styles from './index.less';
-import { isEqual } from 'lodash';
+import { isEqual } from 'neko-ui/utils/type';
 
 const projectCoverage = projectBasicInfo.coverage[projectBasicInfo.programInfo.name] || {};
 

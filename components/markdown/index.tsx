@@ -6,7 +6,7 @@ import { PhotoSlider } from 'react-photo-view';
 import type { DataType as PhotoViewDataType } from 'react-photo-view/dist/types';
 import 'react-photo-view/dist/react-photo-view.css';
 import './index.global.less';
-import isEqual from 'lodash/isEqual';
+import { isEqual } from '../utils/type';
 
 export type CodeBlockToolType = Array<'copy'>;
 

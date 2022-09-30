@@ -1,5 +1,5 @@
 import React, { HtmlHTMLAttributes } from 'react';
-import { isEqual } from 'lodash';
+import { isEqual } from '../utils/type';
 import './index.global.less';
 
 export interface WaveCircleProps extends HtmlHTMLAttributes<HTMLDivElement> {
