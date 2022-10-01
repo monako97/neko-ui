@@ -19,5 +19,8 @@ export type { AvatarProps } from './avatar';
 export { default as Marquee } from './marquee';
 export type { MarqueeProps } from './marquee';
 
+export { default as CaptureScreen } from './capture-screen';
+export type { CaptureScreenProp, RecorderOptions } from './capture-screen';
+
 export { default as WaveCircle } from './wave-circle';
 export type { WaveCircleProps } from './wave-circle';

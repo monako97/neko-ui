@@ -19,7 +19,7 @@ const proxyTag = '[object Proxy]';
 export function getType(target: any): string {
   return Object.prototype.toString.call(target);
 }
-export function isObject(target: unknown): boolean {
+export function isObject(target: unknown): target is object {
   const type = typeof target;
 
   return target !== null && (type == 'object' || type == 'function');

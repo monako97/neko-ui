@@ -1,0 +1,126 @@
+.capture {
+    display: block;
+}
+
+.video-container {
+    position: relative;
+
+    video {
+        width: 100%;
+        border: 1px solid var(--border-color-base);
+        border-radius: var(--border-radius-base);
+        transition: border-color @transition-duration @transition-timing-function;
+    }
+
+    .recording,
+    .paused {
+        position: absolute;
+        top: 5px;
+        right: 5px;
+        width: 10px;
+        height: 10px;
+        border-radius: 5px;
+    }
+
+    .recording {
+        background-color: var(--success-color);
+        animation: fade-loop 2s infinite;
+    }
+
+    .paused {
+        background-color: var(--warning-color);
+    }
+}
+
+.tools {
+    display: flex;
+    margin: 16px 0;
+}
+
+.record-tools {
+    display: flex;
+    margin-left: 16px;
+
+    &::before {
+        display: block;
+        height: 100%;
+        border-left: 1px solid var(--border-color-base);
+        transform: translateX(-16px);
+        transition: border-color @transition-duration @transition-timing-function;
+        content: '';
+    }
+}
+
+.btn {
+    display: flex;
+    width: fit-content;
+    height: fit-content;
+    margin-right: 16px;
+    padding: 5px 16px;
+    color: var(--text-color);
+    border: 1px solid var(--border-color-base);
+    border-radius: var(--border-radius-base);
+    cursor: pointer;
+    transition-timing-function: @transition-timing-function;
+    transition-duration: @transition-duration;
+    transition-property: color, background-color, border-color, width, height;
+    user-select: none;
+
+    &:hover {
+        color: var(--primary-color-hover);
+        border-color: var(--primar-color-hover);
+    }
+
+    &:active {
+        color: var(--primary-color-active);
+        border-color: var(--primary-color-active);
+    }
+}
+
+.status-btn(@type) {
+    color: ~"var(--@{type}-color)";
+    background-color: ~"var(--@{type}-color-deprecated-bg)";
+    border-color: ~"var(--@{type}-color-deprecated-border)";
+
+    &:hover {
+        color: ~"var(--@{type}-color-hover)";
+        background-color: ~"var(--@{type}-color-deprecated-bg)";
+        border-color: ~"var(--@{type}-color-hover)";
+    }
+
+    &:active {
+        color: ~"var(--@{type}-color-active)";
+        background-color: ~"var(--@{type}-color-deprecated-bg)";
+        border-color: ~"var(--@{type}-color-active)";
+    }
+}
+
+.inactive {
+    .status-btn(primary);
+}
+
+.stop {
+    .status-btn(error);
+}
+
+.recording {
+    .status-btn(success);
+}
+
+.paused {
+    .status-btn(warning);
+}
+
+@keyframes fade-loop {
+    0% {
+        opacity: 0;
+    }
+
+    50% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0;
+    }
+}
