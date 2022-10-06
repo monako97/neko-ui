@@ -10,7 +10,7 @@ type UseThemeType = [ThemeTypes['type'], (type: ThemeTypes['type']) => void];
 const themeMedia = window.matchMedia('(prefers-color-scheme: light)');
 /**
  * 主题 hooks
- * @returns {UseThemeTypes} theme and setTheme
+ * @returns {UseThemeType} theme and setTheme
  */
 const useTheme = (): UseThemeType => {
   const [theme, setTheme] = useState<ThemeTypes['type']>(themeMedia.matches ? 'light' : 'dark');
