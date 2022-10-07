@@ -74,5 +74,5 @@ export default {
 
 ```javascript
 // tsloader.config.ts
-export default = {};
+export default {};
 ```
