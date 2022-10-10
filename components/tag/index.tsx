@@ -1,13 +1,13 @@
 import React, { memo, useMemo } from 'react';
-import styles from './index.less';
-import { isEqual } from '../utils/type';
+import { classNames, getPrefixCls, isEqual } from '../utils';
+import './index.global.less';
 
 export interface TagProps extends React.HTMLAttributes<HTMLDivElement> {
   className?: string;
 }
 
 const Tag: React.FC<TagProps> = ({ className, ...props }) => {
-  const cls = useMemo(() => [styles.tag, className].filter(Boolean).join(' '), [className]);
+  const cls = useMemo(() => classNames([getPrefixCls('tag'), className]), [className]);
 
   return <div {...props} className={cls} />;
 };

@@ -1,7 +1,13 @@
 import React, { memo, useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import styles from './index.less';
-import { getMaxZindex, getScrollTop } from '../utils/document';
-import { isEqual, isFunction } from '../utils/type';
+import {
+  classNames,
+  getMaxZindex,
+  getPrefixCls,
+  getScrollTop,
+  isEqual,
+  isFunction,
+} from '../utils';
+import './index.global.less';
 
 export interface BackTopProps extends React.HTMLAttributes<HTMLDivElement> {
   /** 设置需要监听其滚动事件的元素，值为一个返回对应 DOM 元素的函数 */
@@ -84,7 +90,7 @@ const BackTop: React.FC<BackTopProps> = ({
   }, [handleScrollY, target]);
 
   const cls = useMemo(
-    () => [styles.backTop, className, !show && styles.out].filter(Boolean).join(' '),
+    () => classNames([getPrefixCls('back-top'), className, !show && getPrefixCls('out')]),
     [className, show]
   );
 

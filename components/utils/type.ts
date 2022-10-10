@@ -35,9 +35,7 @@ export function isUndefined(target: unknown): target is undefined {
 
 // eslint-disable-next-line no-unused-vars, @typescript-eslint/no-explicit-any
 export function isFunction(target: any): target is (...args: any[]) => any {
-  if (!isObject(target)) {
-    return false;
-  }
+  if (!isObject(target)) return false;
   const tagType = getType(target);
 
   return tagType == funcTag || tagType == asyncTag || tagType == genTag || tagType == proxyTag;

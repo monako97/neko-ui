@@ -1,8 +1,8 @@
-.capture {
+.@{prefix-cls}-capture {
     display: block;
 }
 
-.video-container {
+.@{prefix-cls}-video-container {
     position: relative;
 
     video {
@@ -12,8 +12,8 @@
         transition: border-color @transition-duration @transition-timing-function;
     }
 
-    .recording,
-    .paused {
+    .@{prefix-cls}-recording,
+    .@{prefix-cls}-paused {
         position: absolute;
         top: 5px;
         right: 5px;
@@ -22,22 +22,22 @@
         border-radius: 5px;
     }
 
-    .recording {
+    .@{prefix-cls}-recording {
         background-color: var(--success-color);
-        animation: fade-loop 2s infinite;
+        animation: status-btn-fade-loop 2s infinite;
     }
 
-    .paused {
+    .@{prefix-cls}-paused {
         background-color: var(--warning-color);
     }
 }
 
-.tools {
+.@{prefix-cls}-tools {
     display: flex;
     margin: 16px 0;
 }
 
-.record-tools {
+.@{prefix-cls}-record-tools {
     display: flex;
     margin-left: 16px;
 
@@ -51,7 +51,7 @@
     }
 }
 
-.btn {
+.@{prefix-cls}-btn {
     display: flex;
     width: fit-content;
     height: fit-content;
@@ -95,23 +95,23 @@
     }
 }
 
-.inactive {
+.@{prefix-cls}-inactive {
     .status-btn(primary);
 }
 
-.stop {
+.@{prefix-cls}-stop {
     .status-btn(error);
 }
 
-.recording {
+.@{prefix-cls}-recording {
     .status-btn(success);
 }
 
-.paused {
+.@{prefix-cls}-paused {
     .status-btn(warning);
 }
 
-@keyframes fade-loop {
+@keyframes status-btn-fade-loop {
     0% {
         opacity: 0;
     }

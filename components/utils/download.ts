@@ -30,3 +30,5 @@ export const downloadBlob = (blob: Blob, fileName: string): void => {
     URL.revokeObjectURL(objectUrl);
   }
 };
+
+export default downloadBlob;

@@ -1,5 +1,6 @@
 import React, { useMemo } from 'react';
-import styles from './index.less';
+import { classNames, getPrefixCls } from '../utils';
+import './index.global.less';
 
 export interface AvatarProps extends React.HTMLAttributes<HTMLDivElement> {
   src?: string;
@@ -14,7 +15,7 @@ const Avatar: React.FC<AvatarProps> = ({
   imgProps = {},
   ...props
 }) => {
-  const cls = useMemo(() => [styles.avatar, className].filter(Boolean).join(' '), [className]);
+  const cls = useMemo(() => classNames([getPrefixCls('avatar'), className]), [className]);
 
   return (
     <div className={cls} {...props}>

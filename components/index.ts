@@ -8,7 +8,7 @@ export { default as Tag } from './tag';
 export type { TagProps } from './tag';
 
 export { default as HighlightText } from './highlight-text';
-export type { Highlight, HighlightTextProps } from './highlight-text';
+export type { Highlight, HighlightTextProps, HighlightTextJson } from './highlight-text';
 
 export { default as useTheme } from './use-theme';
 export type { ThemeTypes } from './use-theme';
@@ -24,3 +24,6 @@ export type { CaptureScreenProp, RecorderOptions } from './capture-screen';
 
 export { default as WaveCircle } from './wave-circle';
 export type { WaveCircleProps } from './wave-circle';
+
+export { default as CronEditor } from './cron-editor';
+export type { CornEditorProps } from './cron-editor';

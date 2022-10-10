@@ -14,7 +14,7 @@
   .animation-loop(@idx + 1);
 }
 
-.wave-circles {
+.@{prefix-cls}-wave-circles {
   --wave-circles-bg-color: @primary-color;
   --transition-timing-function: @transition-timing-function;
   position: relative;
@@ -45,7 +45,7 @@
     animation: pulse 5s linear -5s infinite;
   }
 
-  .wave-circle {
+  .@{prefix-cls}-wave-circle {
     .animation-loop(1);
   }
 }

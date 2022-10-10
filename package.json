@@ -16,8 +16,8 @@
     "license": "MIT",
     "devDependencies": {
         "@moneko/cli": "^1.0.10",
-        "@moneko/core": "^1.1.0",
-        "@moneko/mock": "^1.0.5",
+        "@moneko/core": "^1.1.2",
+        "@moneko/mock": "^1.0.6",
         "@moneko/postcss": "^1.0.16",
         "@moneko/request": "^1.0.1",
         "@swc/jest": "^0.2.23",

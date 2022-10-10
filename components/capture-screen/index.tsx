@@ -1,7 +1,6 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { isFunction, isObject } from '../utils/type';
-import styles from './index.less';
-import { downloadBlob } from '../utils/download';
+import { isFunction, isObject, downloadBlob, getPrefixCls, classNames } from '../utils';
+import './index.global.less';
 
 export interface RecorderOptions {
   /** 录制文件名称 */
@@ -262,26 +261,32 @@ const CaptureScreen: React.FC<CaptureScreenProp> = ({
   );
 
   return (
-    <div className={`${styles.capture} ${className ? className : ''}`} {...props}>
-      <div className={styles.tools}>
-        <div className={styles.btn} onClick={startCapture}>
+    <div className={classNames([getPrefixCls('capture'), className])} {...props}>
+      <div className={getPrefixCls('tools')}>
+        <div className={getPrefixCls('btn')} onClick={startCapture}>
           {captureScreenText}
         </div>
         {mediaStream && (
           <>
-            <div className={`${styles.btn} ${styles.stop}`} onClick={stopCapture}>
+            <div
+              className={classNames([getPrefixCls('btn'), getPrefixCls('stop')])}
+              onClick={stopCapture}
+            >
               {stopCaptureText}
             </div>
             {recorder && (
-              <div className={styles.recordTools}>
+              <div className={getPrefixCls('record-tools')}>
                 <div
-                  className={`${styles.btn} ${styles[recordState]}`}
+                  className={classNames([getPrefixCls('btn'), getPrefixCls(recordState)])}
                   onClick={handleStartRecorder}
                 >
                   {recorderText}
                 </div>
                 {recordState !== 'inactive' && (
-                  <div className={`${styles.btn} ${styles.stop}`} onClick={stopRecorder}>
+                  <div
+                    className={classNames([getPrefixCls('btn'), getPrefixCls('stop')])}
+                    onClick={stopRecorder}
+                  >
                     {stopRecorderText}
                   </div>
                 )}
@@ -291,8 +296,8 @@ const CaptureScreen: React.FC<CaptureScreenProp> = ({
         )}
       </div>
       {preview && mediaStream ? (
-        <div className={styles.videoContainer}>
-          <span className={styles[recordState]} />
+        <div className={getPrefixCls('video-container')}>
+          <span className={getPrefixCls(recordState)} />
           <video ref={videoElem} autoPlay controls={!!(mediaStream && controls)} />
         </div>
       ) : null}

@@ -1,5 +1,6 @@
 import React, { useEffect, useMemo, useState } from 'react';
-import styles from './index.less';
+import { classNames, getPrefixCls } from '../utils';
+import './index.global.less';
 
 /**
  * 高亮字符串语法
@@ -9,6 +10,13 @@ import styles from './index.less';
  * ```
  */
 export const RegExp_HighLight = /%c:(.+?):c%/i;
+
+export type HighlightTextJson =
+  | {
+      highlight?: boolean;
+      text: string;
+    }[]
+  | null;
 export interface HighlightTextProps {
   className?: string;
   style?: React.CSSProperties;
@@ -35,7 +43,7 @@ export type Highlight = {
 /**
  * 字符串转换成高亮字符的Json格式
  * @param {string} text 字符串
- * @returns {HighlightTextJsonType} 高亮字符的Json
+ * @returns {HighlightTextJson} 高亮字符的Json
  */
 export function strToHighlight(text: string): Highlight[] | null {
   let str = text,
@@ -83,10 +91,7 @@ const HighlightText: React.FC<HighlightTextProps> = ({
   flag = 'g',
 }) => {
   const [texts, setTexts] = useState<Highlight[] | null>();
-  const hitCls = useMemo(
-    () => styles.hit + (hitClassName ? ` ${hitClassName}` : ''),
-    [hitClassName]
-  );
+  const hitCls = useMemo(() => classNames([getPrefixCls('hit'), hitClassName]), [hitClassName]);
 
   useEffect(() => {
     if (typeof text === 'string' && highlight) {
@@ -124,7 +129,7 @@ const HighlightText: React.FC<HighlightTextProps> = ({
   }, [hitCls, hitStyle, text, texts]);
 
   return (
-    <div className={className} style={style}>
+    <div className={classNames([getPrefixCls('highlight-text'), className])} style={style}>
       {hitNode}
       {extra && (
         <span className={hitCls} style={hitStyle}>
