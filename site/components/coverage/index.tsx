@@ -1,7 +1,7 @@
 import React, { memo, useMemo } from 'react';
 import { projectBasicInfo, useLocation, useOutlet } from '@moneko/core';
 import styles from './index.less';
-import { isEqual } from 'neko-ui/utils/type';
+import { isEqual } from 'neko-ui/utils';
 
 const projectCoverage = projectBasicInfo.coverage[projectBasicInfo.programInfo.name] || {};
 
@@ -16,7 +16,8 @@ const Coverage: React.FC = () => {
   const readme = useOutlet();
   const location = useLocation();
   const coverage = useMemo(() => {
-    const compCoverage = projectBasicInfo.coverage[location.pathname.substring(1)] || {};
+    const name = location.pathname.substring(1);
+    const compCoverage = projectBasicInfo.coverage[name && 'components.' + name] || {};
 
     return readme === null ? projectCoverage : compCoverage;
   }, [location.pathname, readme]);

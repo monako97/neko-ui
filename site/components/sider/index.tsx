@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { myPkgs, RouterProps, useLocation, useNavigate } from '@moneko/core';
 import styles from './index.less';
-import { isEqual } from 'neko-ui/utils/type';
+import { isEqual } from 'neko-ui/utils';
 import { projectInfo } from '@/utils';
 import { Avatar } from 'neko-ui';
 

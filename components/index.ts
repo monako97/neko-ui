@@ -27,3 +27,6 @@ export type { WaveCircleProps } from './wave-circle';
 
 export { default as CronEditor } from './cron-editor';
 export type { CornEditorProps } from './cron-editor';
+
+export { default as Button } from './button';
+export type { ButtonProps, ButtonType } from './button';

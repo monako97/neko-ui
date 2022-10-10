@@ -1,4 +1,6 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { Button } from '..';
+import type { ButtonProps } from '..';
 import { isFunction, isObject, downloadBlob, getPrefixCls, classNames } from '../utils';
 import './index.global.less';
 
@@ -58,6 +60,11 @@ const displayMediaOptions: MediaStreamConstraints = {
   },
 };
 
+const btnStatusDic: Record<MediaRecorder['state'], ButtonProps['type']> = {
+  inactive: 'primary',
+  paused: 'warning',
+  recording: 'success',
+};
 const CaptureScreen: React.FC<CaptureScreenProp> = ({
   options = displayMediaOptions,
   preview,
@@ -261,34 +268,23 @@ const CaptureScreen: React.FC<CaptureScreenProp> = ({
   );
 
   return (
-    <div className={classNames([getPrefixCls('capture'), className])} {...props}>
-      <div className={getPrefixCls('tools')}>
-        <div className={getPrefixCls('btn')} onClick={startCapture}>
-          {captureScreenText}
-        </div>
+    <div className={classNames([getPrefixCls('capture-screen'), className])} {...props}>
+      <div className={getPrefixCls('capture-screen-controller')}>
+        <Button onClick={startCapture}>{captureScreenText}</Button>
         {mediaStream && (
           <>
-            <div
-              className={classNames([getPrefixCls('btn'), getPrefixCls('stop')])}
-              onClick={stopCapture}
-            >
+            <Button type="error" onClick={stopCapture}>
               {stopCaptureText}
-            </div>
+            </Button>
             {recorder && (
-              <div className={getPrefixCls('record-tools')}>
-                <div
-                  className={classNames([getPrefixCls('btn'), getPrefixCls(recordState)])}
-                  onClick={handleStartRecorder}
-                >
+              <div className={getPrefixCls('capture-screen-controller-record')}>
+                <Button type={btnStatusDic[recordState]} onClick={handleStartRecorder}>
                   {recorderText}
-                </div>
+                </Button>
                 {recordState !== 'inactive' && (
-                  <div
-                    className={classNames([getPrefixCls('btn'), getPrefixCls('stop')])}
-                    onClick={stopRecorder}
-                  >
+                  <Button type="error" onClick={stopRecorder}>
                     {stopRecorderText}
-                  </div>
+                  </Button>
                 )}
               </div>
             )}
@@ -296,8 +292,8 @@ const CaptureScreen: React.FC<CaptureScreenProp> = ({
         )}
       </div>
       {preview && mediaStream ? (
-        <div className={getPrefixCls('video-container')}>
-          <span className={getPrefixCls(recordState)} />
+        <div className={getPrefixCls('capture-screen-video')}>
+          <span className={getPrefixCls(`capture-screen-video-${recordState}`)} />
           <video ref={videoElem} autoPlay controls={!!(mediaStream && controls)} />
         </div>
       ) : null}

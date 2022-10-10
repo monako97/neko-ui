@@ -1,4 +1,4 @@
-import { isFunction } from '../utils/type';
+import { isFunction } from '../utils';
 import React, { useCallback, useRef } from 'react';
 
 export interface MarqueeProps extends React.HTMLAttributes<HTMLDivElement> {

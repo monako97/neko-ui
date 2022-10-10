@@ -1,4 +1,4 @@
-import { isNull, isUndefined, isFunction } from '../utils/type';
+import { isNull, isUndefined, isFunction } from '../utils';
 
 interface ClientSizeTypes {
   width: number;

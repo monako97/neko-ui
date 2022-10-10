@@ -1,0 +1,38 @@
+export const basic = {
+  type: '组件',
+  title: '按钮',
+  subtitle: 'Button',
+};
+
+# 按钮
+
+import Snapshot from '@/components/snapshot';
+
+## 使用
+
+<Snapshot path="button/examples/default" lang="tsx" />
+
+## 透明背景
+
+<Snapshot path="button/examples/ghost" lang="tsx" />
+## 实底背景
+
+<Snapshot path="button/examples/fill" lang="tsx" />
+## ⭕️圆形
+
+<Snapshot path="button/examples/circle" lang="tsx" />
+## 虚线按钮
+
+<Snapshot path="button/examples/dashed" lang="tsx" />
+## 文字按钮
+
+<Snapshot path="button/examples/float" lang="tsx" />
+
+## 无限动画
+
+<Snapshot path="button/examples/infinite-effect" lang="tsx" />
+
+import MBox from '../markdown';
+import api from './examples/api.md?raw';
+
+<MBox text={api} />

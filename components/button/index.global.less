@@ -1,0 +1,184 @@
+.status-btn(@type) {
+  --wave-shadow-color: ~'var(--@{type}-color)';
+  color: ~'var(--@{type}-color)';
+  background-color: ~'var(--@{type}-color-deprecated-bg)';
+  border-color: ~'var(--@{type}-color-deprecated-border)';
+
+  &:hover {
+    color: ~'var(--@{type}-color-hover)';
+    background-color: ~'var(--@{type}-color-deprecated-bg)';
+    border-color: ~'var(--@{type}-color-hover)';
+  }
+
+  &:active {
+    color: ~'var(--@{type}-color-active)';
+    background-color: ~'var(--@{type}-color-deprecated-bg)';
+    border-color: ~'var(--@{type}-color-active)';
+  }
+}
+.status-fill-btn(@type) {
+  --wave-shadow-color: ~'var(--@{type}-color)';
+  color: #fff;
+  background-color: ~'var(--@{type}-color)';
+  border-color: ~'var(--@{type}-color)';
+
+  &:hover {
+    color: #fff;
+    background-color: ~'var(--@{type}-color-hover)';
+    border-color: ~'var(--@{type}-color-hover)';
+  }
+
+  &:active {
+    color: #fff;
+    background-color: ~'var(--@{type}-color-active)';
+    border-color: ~'var(--@{type}-color-active)';
+  }
+}
+.@{prefix-cls}-btn {
+  --wave-shadow-color: var(--primary-color);
+  display: inline-block;
+  width: fit-content;
+  min-width: 22px;
+  height: fit-content;
+  min-height: 22px;
+  margin-right: 16px;
+  padding: 4px 16px;
+  color: var(--text-color);
+  border: 1px solid var(--border-color-base);
+  border-radius: var(--border-radius-base);
+  background-color: var(--component-background, #fff);
+  cursor: pointer;
+  transition-timing-function: @transition-timing-function;
+  transition-duration: @transition-duration;
+  transition-property: color, background-color, border-color, width, height;
+  user-select: none;
+  touch-action: manipulation;
+
+  &:hover {
+    color: var(--primary-color-hover);
+    border-color: var(--primary-color-hover);
+  }
+
+  &:active {
+    color: var(--primary-color-active);
+    border-color: var(--primary-color-active);
+  }
+
+  &:last-child {
+    margin-right: 0;
+  }
+
+  &-primary {
+    .status-btn(primary);
+  }
+
+  &-primary&-fill {
+    .status-fill-btn(primary);
+  }
+
+  &-error,
+  &-danger {
+    .status-btn(error);
+  }
+
+  &-error&-fill,
+  &-danger&-fill {
+    .status-fill-btn(error);
+  }
+
+  &-success {
+    .status-btn(success);
+  }
+
+  &-success&-fill {
+    .status-fill-btn(success);
+  }
+
+  &-warning {
+    .status-btn(warning);
+  }
+
+  &-warning&-fill {
+    .status-fill-btn(warning);
+  }
+
+  &-ghost {
+    background-color: transparent !important;
+  }
+
+  &-dashed {
+    border-style: dashed;
+  }
+
+  &-float {
+    background-color: transparent;
+    border-color: transparent !important;
+
+    &:hover,
+    &:focus {
+      border-color: transparent;
+    }
+
+    &:active {
+      border-color: transparent;
+    }
+  }
+
+  &-circle {
+    min-width: 32px;
+    min-height: 32px;
+    max-width: 32px;
+    max-height: 32px;
+    padding: 0;
+    line-height: 32px;
+    border-radius: 50% !important;
+    text-align: center;
+
+    span {
+      display: block;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      overflow: hidden;
+    }
+  }
+
+  &-without,
+  &-infinite {
+    position: relative;
+
+    &::before {
+      position: absolute;
+      inset: 0;
+      display: block;
+      border-radius: inherit;
+      box-shadow: 0 0 0 0 var(--wave-shadow-color);
+      opacity: 0.2;
+      animation: wave-effect 0.3s cubic-bezier(1, 1, 1, 1);
+      animation-fill-mode: forwards;
+      content: '';
+      pointer-events: none;
+    }
+  }
+
+  &-infinite::before {
+    opacity: 0.2;
+    animation: wave-effect 0.3s cubic-bezier(1, 1, 1, 0.99) infinite;
+  }
+}
+
+@keyframes wave-effect {
+  0% {
+    opacity: 0.3;
+    box-shadow: 0 0 0 var(--wave-shadow-color);
+  }
+
+  25% {
+    opacity: 0.2;
+    box-shadow: 0 0 0 4px var(--wave-shadow-color);
+  }
+
+  100% {
+    opacity: 0;
+    box-shadow: 0 0 0 6px var(--wave-shadow-color);
+  }
+}

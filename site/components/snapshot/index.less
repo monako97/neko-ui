@@ -41,12 +41,12 @@
 .code {
   background-color: var(--body-background);
 
-  :global(.markdown-box) {
+  :global(.@{prefix-cls}-markdown-box) {
     padding: @distance;
     animation: silde-in @transition-duration @transition-timing-function;
   }
 
-  :global(.markdown-box), pre {
+  :global(.@{prefix-cls}-markdown-box), pre {
     margin: 0;
   }
 }

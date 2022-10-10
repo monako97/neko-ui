@@ -22,11 +22,7 @@ test('测试 WaveCircle', () => {
   // 页面存在传入的文字并且存在传入的className
   expect(
     screen.getByText((content, element) => {
-      return !!(
-        element?.classList.contains('wave-circles') &&
-        element?.classList.contains('test-wave-circle') &&
-        content === testMessage
-      );
+      return !!(element?.classList.contains('test-wave-circle') && content === testMessage);
     })
   ).toBeInTheDocument();
 });

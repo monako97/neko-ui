@@ -1,12 +1,11 @@
 import React, { Fragment, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import type { FC, MouseEvent, WheelEvent } from 'react';
-import { getScrollTop, setClipboard } from '../utils/document';
+import { getScrollTop, setClipboard, classNames, getPrefixCls, isEqual } from '../utils';
 import { getMarkedImgList, markdownUtil } from './markdown-util';
 import { PhotoSlider } from 'react-photo-view';
 import type { DataType as PhotoViewDataType } from 'react-photo-view/dist/types';
 import 'react-photo-view/dist/react-photo-view.css';
 import './index.global.less';
-import { isEqual } from '../utils/type';
 
 export type CodeBlockToolType = Array<'copy'>;
 
@@ -188,7 +187,7 @@ const Markdown: FC<MarkdownProps> = ({
     };
   }, [getAnchorContainer, handleScroll]);
 
-  const cls = useMemo(() => ['markdown-box', className].filter(Boolean).join(' '), [className]);
+  const cls = useMemo(() => classNames([getPrefixCls('markdown-box'), className]), [className]);
 
   return (
     <Fragment>

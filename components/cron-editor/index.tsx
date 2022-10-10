@@ -1,4 +1,4 @@
-import { classNames, getPrefixCls } from '@pkg/utils';
+import { classNames, getPrefixCls } from '../utils';
 import React from 'react';
 
 export interface CornEditorProps extends React.HTMLAttributes<HTMLDivElement> {
