@@ -12,9 +12,9 @@ describe('test Button', () => {
     jest.clearAllTimers();
   });
   it('normal', () => {
-    const { container } = render(<Button>cascacsa</Button>);
+    render(<Button data-testid="btn">cascacsa</Button>);
 
-    expect(container).toBeInTheDocument();
+    expect(screen.getByTestId('btn')).toBeInTheDocument();
   });
   it('args', () => {
     render(
@@ -30,21 +30,38 @@ describe('test Button', () => {
     expect(screen.getByTestId('btn').classList.contains(getPrefixCls('fill')));
     expect(screen.getByTestId('btn').classList.contains(getPrefixCls('infinite')));
     expect(screen.getByTestId('btn').classList.contains(getPrefixCls('primary')));
+    expect(
+      screen.getByTestId('btn').textContent === 'type ghost circle dashed float fill infinite'
+    );
   });
   it('event', async () => {
     const click = jest.fn();
-    const { container } = render(
-      <Button className="btn" onClick={click} data-testid="btn">
+
+    render(
+      <Button onClick={click} data-testid="btn">
         cascacsa
       </Button>
     );
 
-    expect(container.querySelector('.btn')).toBeInTheDocument();
     fireEvent.click(screen.getByTestId('btn'));
     fireEvent.animationEnd(screen.getByTestId('btn'));
 
     jest.advanceTimersByTime(1000);
     await waitFor(() => screen.getByTestId('btn'));
     expect(click).toHaveBeenCalled();
+  });
+  it('disabled', async () => {
+    const click = jest.fn();
+
+    render(
+      <Button onClick={click} disabled data-testid="btn">
+        cascacsa
+      </Button>
+    );
+
+    fireEvent.click(screen.getByTestId('btn'));
+
+    await waitFor(() => screen.getByTestId('btn'));
+    expect(click).not.toHaveBeenCalled();
   });
 });

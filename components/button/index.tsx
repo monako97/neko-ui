@@ -19,6 +19,8 @@ export interface ButtonProps extends React.HTMLAttributes<HTMLDivElement> {
   dashed?: boolean;
   /** 只有文字的按钮 */
   float?: boolean;
+  /** 禁用按钮 */
+  disabled?: boolean;
 }
 
 const Button: React.FC<ButtonProps> = ({
@@ -30,6 +32,7 @@ const Button: React.FC<ButtonProps> = ({
   float,
   className,
   children,
+  disabled,
   onClick,
   type,
   ...props
@@ -39,12 +42,13 @@ const Button: React.FC<ButtonProps> = ({
 
   const handleClick: React.MouseEventHandler<HTMLDivElement> = useCallback(
     (e) => {
+      if (disabled) return;
       setAnimating(true);
       if (isFunction(onClick)) {
         onClick(e);
       }
     },
-    [onClick]
+    [disabled, onClick]
   );
   const cls = useMemo(
     () =>
@@ -58,9 +62,10 @@ const Button: React.FC<ButtonProps> = ({
         dashed && getPrefixCls('btn-dashed'),
         float && getPrefixCls('btn-float'),
         animating && getPrefixCls('btn-without'),
+        disabled && getPrefixCls('btn-disabled'),
         className,
       ]),
-    [type, infinite, ghost, fill, circle, dashed, float, animating, className]
+    [type, infinite, ghost, fill, circle, dashed, float, animating, disabled, className]
   );
   const handleAnimationEnd = useCallback(() => {
     setAnimating(false);
