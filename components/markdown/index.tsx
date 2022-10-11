@@ -150,7 +150,7 @@ const Markdown: FC<MarkdownProps> = ({
         const offsetParent = target.offsetParent as HTMLElement;
 
         if (!offsetParent?.hasAttribute('data-copy')) {
-          setClipboard(offsetParent.innerText, offsetParent);
+          setClipboard(offsetParent?.innerText, offsetParent);
         }
       }
     },
