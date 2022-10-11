@@ -10,3 +10,4 @@
 | dashed   | 虚线按钮 | boolean                                                                 | -      | -    |
 | float    | 文字按钮 | boolean                                                                 | -      | -    |
 | disabled | 禁用按钮 | boolean                                                                 | -      | -    |
+| link     | 链接按钮 | boolean                                                                 | -      | -    |

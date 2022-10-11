@@ -21,6 +21,8 @@ export interface ButtonProps extends React.HTMLAttributes<HTMLDivElement> {
   float?: boolean;
   /** 禁用按钮 */
   disabled?: boolean;
+  /** 链接按钮 */
+  link?: boolean;
 }
 
 const Button: React.FC<ButtonProps> = ({
@@ -30,6 +32,7 @@ const Button: React.FC<ButtonProps> = ({
   circle,
   dashed,
   float,
+  link,
   className,
   children,
   disabled,
@@ -63,9 +66,10 @@ const Button: React.FC<ButtonProps> = ({
         float && getPrefixCls('btn-float'),
         animating && getPrefixCls('btn-without'),
         disabled && getPrefixCls('btn-disabled'),
+        link && getPrefixCls('btn-link'),
         className,
       ]),
-    [type, infinite, ghost, fill, circle, dashed, float, animating, disabled, className]
+    [type, infinite, ghost, fill, circle, dashed, float, animating, disabled, link, className]
   );
   const handleAnimationEnd = useCallback(() => {
     setAnimating(false);

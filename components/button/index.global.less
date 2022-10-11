@@ -1,5 +1,5 @@
 .status-btn(@type) {
-  --wave-shadow-color: ~'var(--@{type}-color)';
+  --wave-shadow-color: ~'var(--@{type}-color-outline)';
   color: ~'var(--@{type}-color)';
   background-color: ~'var(--@{type}-color-deprecated-bg)';
   border-color: ~'var(--@{type}-color-deprecated-border)';
@@ -17,7 +17,7 @@
   }
 }
 .status-fill-btn(@type) {
-  --wave-shadow-color: ~'var(--@{type}-color)';
+  --wave-shadow-color: ~'var(--@{type}-color-outline)';
   color: #fff;
   background-color: ~'var(--@{type}-color)';
   border-color: ~'var(--@{type}-color)';
@@ -35,7 +35,7 @@
   }
 }
 .@{prefix-cls}-btn {
-  --wave-shadow-color: var(--primary-color);
+  --wave-shadow-color: var(--primary-color-outline);
   display: inline-block;
   width: fit-content;
   min-width: 22px;
@@ -62,10 +62,6 @@
   &:active {
     color: var(--primary-color-active);
     border-color: var(--primary-color-active);
-  }
-
-  &:last-child {
-    margin-right: 0;
   }
 
   &-primary {
@@ -110,9 +106,9 @@
     border-style: dashed;
   }
 
-  &-float {
+  &-float, &-link {
     background-color: transparent;
-    border-color: transparent !important;
+    border-color: transparent;
 
     &:hover,
     &:focus {
@@ -122,6 +118,10 @@
     &:active {
       border-color: transparent;
     }
+  }
+
+  &-link {
+    background-color: transparent !important;
   }
 
   &-circle {
@@ -146,8 +146,8 @@
     cursor: not-allowed;
   }
 
-  &-without,
-  &-infinite {
+  &-without:not(&-link),
+  &-infinite:not(&-link) {
     position: relative;
 
     &::before {
@@ -164,20 +164,25 @@
     }
   }
 
-  &-infinite::before {
+  &-infinite:not(&-link)::before {
     opacity: 0.2;
     animation: wave-effect 0.3s cubic-bezier(1, 1, 1, 0.99) infinite;
   }
+
+  &:last-child {
+    margin-right: 0;
+  }
+
 }
 
 @keyframes wave-effect {
   0% {
-    opacity: 0.3;
+    opacity: 1;
     box-shadow: 0 0 0 var(--wave-shadow-color);
   }
 
   25% {
-    opacity: 0.2;
+    opacity: 1;
     box-shadow: 0 0 0 4px var(--wave-shadow-color);
   }
 
