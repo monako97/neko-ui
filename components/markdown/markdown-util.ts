@@ -10,7 +10,7 @@ const renderer = new marked.Renderer();
 
 const replacer = ((blockRegex, inlineRegex) => (text: string) => {
   text = text.replace(blockRegex, (_, expression) => {
-    return katex.renderToString(expression, { displayMode: true });
+    return katex.renderToString(expression, { throwOnError: false, displayMode: true });
   });
 
   text = text.replace(inlineRegex, (_, expression) => {

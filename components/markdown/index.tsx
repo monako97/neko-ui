@@ -1,6 +1,13 @@
 import React, { Fragment, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import type { FC, MouseEvent, WheelEvent } from 'react';
-import { getScrollTop, setClipboard, classNames, getPrefixCls, isEqual } from '../utils';
+import {
+  getScrollTop,
+  setClipboard,
+  classNames,
+  getPrefixCls,
+  isEqual,
+  isSvgElement,
+} from '../utils';
 import { getMarkedImgList, markdownUtil } from './markdown-util';
 import { PhotoSlider } from 'react-photo-view';
 import type { DataType as PhotoViewDataType } from 'react-photo-view/dist/types';
@@ -129,7 +136,8 @@ const Markdown: FC<MarkdownProps> = ({
     (event: MouseEvent<HTMLDivElement>) => {
       const target = event.target as HTMLElement;
 
-      if (target?.tagName === 'IMG' && pictureViewer) {
+      if (isSvgElement(target)) return;
+      if (target.tagName === 'IMG' && pictureViewer) {
         const arr = ref.current?.getElementsByTagName('img') || [];
 
         for (let i = 0, len = arr.length; i < len; i++) {
@@ -138,13 +146,15 @@ const Markdown: FC<MarkdownProps> = ({
             setVisible(true);
           }
         }
-      } else if (target.className.includes('toolbar-copy') && tools?.includes('copy')) {
-        if (target.offsetParent && !target.offsetParent.hasAttribute('data-copy')) {
-          setClipboard((target.offsetParent as HTMLElement).innerText, target.offsetParent);
+      } else if (target.className.includes('toolbar-copy')) {
+        const offsetParent = target.offsetParent as HTMLElement;
+
+        if (!offsetParent?.hasAttribute('data-copy')) {
+          setClipboard(offsetParent.innerText, offsetParent);
         }
       }
     },
-    [tools, pictureViewer]
+    [pictureViewer]
   );
 
   const handleWheel = useCallback((event: WheelEvent<HTMLDivElement>) => {

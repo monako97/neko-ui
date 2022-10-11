@@ -13,6 +13,8 @@ export const regexpTag = '[object RegExp]';
 export const funcTag = '[object Function]';
 export const asyncTag = '[object AsyncFunction]';
 export const genTag = '[object GeneratorFunction]';
+const svgPathTag = '[object SVGPathElement]';
+const svgTag = '[object SVGSVGElement]';
 const proxyTag = '[object Proxy]';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -33,6 +35,15 @@ export function isUndefined(target: unknown): target is undefined {
   return 'undefined' === typeof target;
 }
 
+export function isString(target: unknown): target is string {
+  return 'string' === typeof target && getType(target) == stringTag;
+}
+
+export function isSvgElement(target: unknown): target is SVGAElement {
+  const tagType = getType(target);
+
+  return svgTag === tagType || svgPathTag === tagType;
+}
 // eslint-disable-next-line no-unused-vars, @typescript-eslint/no-explicit-any
 export function isFunction(target: any): target is (...args: any[]) => any {
   if (!isObject(target)) return false;

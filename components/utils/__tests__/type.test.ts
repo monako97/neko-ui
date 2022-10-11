@@ -19,6 +19,7 @@ import {
   funcTag,
   asyncTag,
   genTag,
+  isString,
 } from '../type';
 
 test('测试 getType', () => {
@@ -68,6 +69,14 @@ test('测试 isNull', () => {
 
   expect(false).toBe(res);
   const fn = isNull(null);
+
+  expect(true).toBe(fn);
+});
+test('测试 isString', () => {
+  const res = isString({ a: 1 });
+
+  expect(false).toBe(res);
+  const fn = isString('null');
 
   expect(true).toBe(fn);
 });

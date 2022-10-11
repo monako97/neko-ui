@@ -104,8 +104,18 @@ $\overline{a+b}$
 
 $\underline{a+b}$
 
-$\overbrace{a+b+\dots+n}^{m个}$|
+$\overbrace{a+b+\dots+n}^{m2}$|
 
-$\underbrace{a+b+\dots+n}_{m个}$
+$\underbrace{a+b+\dots+n}_{m2}$
 
 $\vec{a}$
+
+$c=\pm\sqrt{a\^2+b\^2}$
+
+$\left(\LARGE{AB}\right)$
+
+$\xcancel{ABC}$
+
+$\phase{-78^\circ}$
+
+$a_\angln$
