@@ -2,9 +2,10 @@ import React from 'react';
 import { classNames, getPrefixCls } from '../utils';
 import './index.global.less';
 
-export interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
+export interface InputProps extends Omit<React.InputHTMLAttributes<HTMLInputElement>, 'prefix'> {
   className?: string;
   suffix?: React.ReactNode;
+  prefix?: React.ReactNode;
 }
 
 const Input: React.FC<InputProps> = ({
