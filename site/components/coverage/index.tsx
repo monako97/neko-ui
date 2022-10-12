@@ -17,7 +17,7 @@ const Coverage: React.FC = () => {
   const location = useLocation();
   const coverage = useMemo(() => {
     const name = location.pathname.substring(1);
-    const compCoverage = projectBasicInfo.coverage[name && 'components.' + name] || {};
+    const compCoverage = projectBasicInfo.coverage[name] || {};
 
     return readme === null ? projectCoverage : compCoverage;
   }, [location.pathname, readme]);
