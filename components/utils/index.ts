@@ -1,8 +1,8 @@
 export { classNames, getPrefixCls } from './classname';
 export { isFullscreen, exitFullscreen, toggleFullscreen, requestFullscreen } from './fullscreen';
-export { default as downloadBlob } from './download';
+export { downloadBlob } from './download';
 export {
-  getClientSize,
+  // getClientSize,
   getMaxZindex,
   getScrollTop,
   entityToString,

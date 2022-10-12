@@ -1,0 +1,41 @@
+.wrap {
+  position: relative;
+  width: 100%;
+  height: 32px;
+  margin: 10% auto;
+  font-size: 0;
+  overflow: hidden;
+  box-sizing: border-box;
+
+  .cont {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 200%;
+    animation: 5s move infinite linear;
+  }
+
+  .txt {
+    display: inline-block;
+    width: 50%;
+    border-left: 1px solid #fff;
+    text-align: center;
+    margin-top: 5px;
+  }
+
+  &:hover {
+    .cont {
+      animation-play-state: paused;
+    }
+  }
+}
+
+@keyframes move {
+  0% {
+    left: 0;
+  }
+
+  100% {
+    left: -100%;
+  }
+}

@@ -1,0 +1,39 @@
+.tooltip {
+    position: relative;
+    background: #000;
+    color: #fff;
+    padding: 8px 16px;
+    border-radius: 4px;
+    font-size: 14px;
+    filter:
+        drop-shadow(
+            1px 2px 8px hsla(220deg, 0%, 0%, 0.3)
+        )
+        drop-shadow(
+            2px 4px 16px hsla(220deg, 0%, 0%, 0.3)
+        )
+        drop-shadow(
+            4px 8px 32px hsla(220deg, 0%, 0%, 0.3)
+        );
+
+        &::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            margin: auto;
+            width: 16px;
+            height: 10px;
+            background: inherit;
+            clip-path: polygon(
+                0% 0%,
+                50% 100%,
+                100% 0%
+            );
+            transform: translateY(
+                calc(+100% - 1px)
+            );
+        }
+          
+}

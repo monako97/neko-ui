@@ -1,6 +1,6 @@
 import React from 'react';
 import CaptureScreen from '../index';
-import { render, screen, fireEvent, waitFor } from '@testing-library/react';
+import { render, screen, fireEvent, waitFor, act } from '@testing-library/react';
 
 /**
  * @jest-environment jsdom
@@ -29,9 +29,11 @@ test('测试 CaptureScreen 事件', async () => {
   );
 
   expect(container.querySelector('.CaptureScreen')).toBeInTheDocument();
-  fireEvent.click(screen.getByText('捕获屏幕'));
+  act(() => {
+    fireEvent.click(screen.getByText('捕获屏幕'));
+  });
 
-  await waitFor(() => screen.getByText('捕获屏幕'));
+  // await waitFor(() => screen.getByText('捕获屏幕'));
   expect(onErrorCapture).toHaveBeenCalled();
 });
 

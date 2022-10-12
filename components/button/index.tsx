@@ -83,7 +83,7 @@ const Button: React.FC<ButtonProps> = ({
       onAnimationEnd={handleAnimationEnd}
       ref={ref}
     >
-      <span>{children}</span>
+      <span className={getPrefixCls('btn-text')}>{children}</span>
     </div>
   );
 };

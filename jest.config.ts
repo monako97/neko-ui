@@ -16,7 +16,10 @@ const ignore = [
   '<rootDir>/node_modules/',
   'iconfont.js',
   'prism.js',
-  'document.ts',
+  'utils/document.ts',
+  'utils/fullscreen.ts',
+  'utils/index.ts',
+  'components/index.ts',
   'markdown-util.ts',
 ];
 
@@ -30,7 +33,16 @@ export default {
   moduleFileExtensions: ['js', 'jsx', 'ts', 'tsx'],
   testPathIgnorePatterns: ignore,
   transformIgnorePatterns: ignore.filter(
-    (o) => !['<rootDir>/test/', 'prism.js', 'document.ts', 'markdown-util.ts'].includes(o)
+    (o) =>
+      ![
+        '<rootDir>/test/',
+        'prism.js',
+        'components/index.ts',
+        'utils/document.ts',
+        'utils/fullscreen.ts',
+        'utils/index.ts',
+        'markdown-util.ts',
+      ].includes(o)
   ),
   transform: {
     '^.+\\.(t|j)sx?$': '@swc/jest',

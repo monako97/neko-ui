@@ -23,13 +23,20 @@ test('测试 Marquee 事件', async () => {
     </Marquee>
   );
 
+  Object.defineProperty(screen.getByTestId('marquee'), 'stop', {
+    writable: true,
+    value: jest.fn(),
+  });
+  Object.defineProperty(screen.getByTestId('marquee'), 'start', {
+    writable: true,
+    value: jest.fn(),
+  });
+
   expect(container.querySelector('.marquee')).toBeInTheDocument();
   fireEvent.mouseOver(screen.getByTestId('marquee'));
   fireEvent.mouseOut(screen.getByTestId('marquee'));
 
   await waitFor(() => screen.getByTestId('marquee'));
-  // console.log(screen);
-  // container.querySelector('.marquee').mous
   expect(stop).toHaveBeenCalled();
-  // expect(start).toHaveBeenCalled();
+  expect(start).toHaveBeenCalled();
 });

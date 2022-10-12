@@ -1,4 +1,5 @@
 import React, { memo, useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import ReactDOM from 'react-dom';
 import {
   classNames,
   getMaxZindex,
@@ -24,22 +25,17 @@ const BackTop: React.FC<BackTopProps> = ({
 }) => {
   const ref = useRef<HTMLDivElement>(null);
   const [show, setShow] = useState<boolean | null>(null);
-  const [init, setInit] = useState<boolean>(false);
   const handleScrollY = useCallback(() => {
     let scrollTop: number | null = 0;
     let offsetHeight: number | null = 0;
 
     if (isFunction(target)) {
-      let ele: HTMLElement | null = target();
+      const ele: HTMLElement = target() as HTMLElement;
 
       if (ele) {
         scrollTop = getScrollTop(ele);
         offsetHeight = ele.offsetHeight;
       }
-      ele = null;
-    } else {
-      scrollTop = getScrollTop();
-      offsetHeight = document.documentElement.offsetHeight || document.body.offsetHeight;
     }
     const nextShow: boolean = scrollTop > offsetHeight / 3 || scrollTop > visibilityHeight;
 
@@ -54,30 +50,11 @@ const BackTop: React.FC<BackTopProps> = ({
     });
   }, [target]);
 
-  React.useEffect(() => {
-    let timer: NodeJS.Timeout;
-    const outing = show === false;
-
+  useEffect(() => {
     if (show && ref.current) {
       ref.current.style.zIndex = getMaxZindex().toString();
     }
-    if (init) {
-      if (outing) {
-        timer = setTimeout(() => {
-          setShow(null);
-          clearTimeout(timer);
-        }, 1000);
-      }
-    } else {
-      if (outing) {
-        setShow(null);
-      }
-      setInit(true);
-    }
-    return () => {
-      clearTimeout(timer);
-    };
-  }, [init, show]);
+  }, [show]);
   useEffect(() => {
     if (isFunction(target)) {
       target()?.addEventListener('scroll', handleScrollY, false);
@@ -90,13 +67,22 @@ const BackTop: React.FC<BackTopProps> = ({
   }, [handleScrollY, target]);
 
   const cls = useMemo(
-    () => classNames([getPrefixCls('back-top'), className, !show && getPrefixCls('out')]),
+    () => classNames([getPrefixCls('back-top'), className, !show && getPrefixCls('back-top-out')]),
     [className, show]
   );
-
-  return show === null ? null : (
-    <div {...props} ref={ref} className={cls} onClick={handleBackTop} />
+  const exit = useCallback(() => {
+    if (show === false) {
+      setShow(null);
+    }
+  }, [show]);
+  const el = useMemo(
+    () => (
+      <div {...props} ref={ref} onAnimationEnd={exit} className={cls} onClick={handleBackTop} />
+    ),
+    [cls, exit, handleBackTop, props]
   );
+
+  return show === null ? null : ReactDOM.createPortal(el, target());
 };
 
 export default memo(BackTop, isEqual);

@@ -36,6 +36,7 @@
 }
 .@{prefix-cls}-btn {
   --wave-shadow-color: var(--primary-color-outline);
+  outline-offset: 4px;
   display: inline-block;
   width: fit-content;
   min-width: 22px;
@@ -134,7 +135,7 @@
     border-radius: 50% !important;
     text-align: center;
 
-    span {
+    .@{prefix-cls}-btn-text {
       display: block;
       white-space: nowrap;
       text-overflow: ellipsis;
@@ -172,7 +173,6 @@
   &:last-child {
     margin-right: 0;
   }
-
 }
 
 @keyframes wave-effect {
