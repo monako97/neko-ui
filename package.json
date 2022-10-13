@@ -1,20 +1,22 @@
 {
     "name": "neko-ui",
-    "version": "1.0.6",
+    "version": "1.0.7",
     "description": "Neko UI库",
     "main": "lib/index.js",
     "scripts": {
         "test": "jest --watchAll --coverage",
         "start": "mo start library",
-        "build": "mo build library",
+        "build": "mo build library && yarn lessc",
         "eslint": "mo eslint components && mo eslint site",
         "stylelint": "mo stylelint components && mo stylelint site",
         "lint": "yarn eslint && yarn stylelint",
-        "coverage": "jest --coverage"
+        "coverage": "jest --coverage",
+        "lessc": "node ./lessc.js --dir=./lib"
     },
     "author": "moneko",
     "license": "MIT",
     "devDependencies": {
+        "@codesandbox/sandpack-react": "^1.14.2",
         "@moneko/cli": "^1.0.10",
         "@moneko/core": "^1.1.4",
         "@moneko/mock": "^1.0.6",
@@ -31,6 +33,7 @@
         "identity-obj-proxy": "^3.0.0",
         "jest": "^29.1.1",
         "jest-environment-jsdom": "^29.1.1",
+        "postcss-cli": "^10.0.0",
         "react": "^18.2.0",
         "react-dom": "^18.2.0",
         "stylelint-config-moneko": "^1.0.0",

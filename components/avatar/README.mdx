@@ -1,12 +1,12 @@
 export const basic = {
-    type: '组件',
-    title: '头像',
-    subtitle: 'Avatar',
-}
+  type: '组件',
+  title: '头像',
+  subtitle: 'Avatar',
+};
 
 # 双马尾轮廓头像
 
-> logo轮廓就是双马尾
+> logo 轮廓就是双马尾
 
 import Snapshot from '@/components/snapshot';
 
@@ -18,3 +18,26 @@ import MBox from '../markdown';
 import api from './examples/api.md?raw';
 
 <MBox text={api} />
+
+import { Sandpack } from '@codesandbox/sandpack-react';
+
+import defaultDemo from './examples/default.tsx?raw';
+
+<Sandpack
+  template="react-ts"
+  files={{
+    '/App.tsx': defaultDemo,
+  }}
+  customSetup={{
+    scripts: {
+      start: 'mo start site',
+    },
+    dependencies: {
+      'neko-ui': '^1.0.7',
+    },
+  }}
+  options={{
+    showConsole: true,
+    showConsoleButton: true,
+  }}
+/>
