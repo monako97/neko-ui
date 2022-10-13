@@ -4,9 +4,6 @@ export type { MarkdownProps, CodeBlockToolType, AnchorType } from './markdown';
 export { default as BackTop } from './back-top';
 export type { BackTopProps } from './back-top';
 
-export { default as Tag } from './tag';
-export type { TagProps } from './tag';
-
 export { default as HighlightText } from './highlight-text';
 export type { Highlight, HighlightTextProps, HighlightTextJson } from './highlight-text';
 
