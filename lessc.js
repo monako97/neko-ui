@@ -14,9 +14,13 @@ let modifyVarBash = '';
 
 for (const k in modifyVars) {
   if (Object.hasOwnProperty.call(modifyVars, k)) {
-    modifyVarBash += `--modify-var="${k}=${modifyVars[k]}" `;
+    if (k !== '@font-family') {
+      modifyVarBash += `--modify-var="${k}=${modifyVars[k]}" `;
+    }
   }
 }
+
+modifyVarBash += `--modify-var="@font-family=sans-serif" `;
 
 function execute(cmd) {
   return new Promise((resolut, reject) => {
