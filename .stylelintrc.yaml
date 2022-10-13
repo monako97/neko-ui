@@ -5,3 +5,4 @@ ignoreFiles:
   - node_modules.nosync/**/*
   - coverage/**/*
   - coverage.nosync/**/*
+  - lib/**/*
