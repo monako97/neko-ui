@@ -1,5 +1,6 @@
 import React, { useEffect, useMemo, useState } from 'react';
-import { classNames, getPrefixCls } from '../utils';
+import { getPrefixCls } from '../utils';
+import { classNames } from '@moneko/common';
 import './index.global.less';
 
 /**

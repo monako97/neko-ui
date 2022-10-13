@@ -1,5 +1,6 @@
 import React, { memo, useMemo } from 'react';
-import { classNames, getPrefixCls, isEqual } from '../utils';
+import { getPrefixCls } from '../utils';
+import { classNames, isEqual } from '@moneko/common';
 import './index.global.less';
 
 export interface TagProps extends React.HTMLAttributes<HTMLDivElement> {

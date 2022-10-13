@@ -1,5 +1,6 @@
 import React, { useCallback, useMemo, useRef } from 'react';
-import { classNames, getPrefixCls, isFunction } from '../utils';
+import { getPrefixCls } from '../utils';
+import { classNames, isFunction } from '@moneko/common';
 import './index.global.less';
 
 export type ButtonType = 'success' | 'error' | 'danger' | 'primary' | 'warning' | 'default';

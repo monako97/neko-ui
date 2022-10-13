@@ -1,7 +1,8 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { Button } from '..';
 import type { ButtonProps } from '..';
-import { isFunction, isObject, downloadBlob, getPrefixCls, classNames } from '../utils';
+import { getPrefixCls } from '../utils';
+import { downloadBlob, isObject, isFunction, classNames } from '@moneko/common';
 import './index.global.less';
 
 export interface RecorderOptions {

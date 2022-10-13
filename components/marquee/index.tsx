@@ -1,4 +1,4 @@
-import { isFunction } from '../utils';
+import { isFunction } from '@moneko/common';
 import React, { useCallback, useRef } from 'react';
 
 export interface MarqueeProps extends React.HTMLAttributes<HTMLDivElement> {

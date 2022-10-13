@@ -1,5 +1,6 @@
 import React, { useMemo } from 'react';
-import { classNames, getPrefixCls } from '../utils';
+import { getPrefixCls } from '../utils';
+import { classNames } from '@moneko/common';
 import './index.global.less';
 
 export interface AvatarProps extends React.HTMLAttributes<HTMLDivElement> {

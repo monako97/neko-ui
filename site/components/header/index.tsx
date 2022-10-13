@@ -1,7 +1,7 @@
 import React, { useMemo } from 'react';
 import { myPkgs, useLocation } from '@moneko/core';
 import { useTheme } from 'neko-ui';
-import { isEqual } from 'neko-ui/utils';
+import { isEqual } from '@moneko/common';
 import { projectInfo } from '@/utils';
 import type { PkgType } from '@/utils';
 import styles from './index.less';

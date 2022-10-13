@@ -1,6 +1,7 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import CodeBlock from '../code';
 import styles from './index.less';
+import { Sandpack } from '@codesandbox/sandpack-react';
 
 const Snapshot: React.FC<{ path: string; lang: string; style?: string; hideSource?: boolean }> = ({
   path,
@@ -8,30 +9,24 @@ const Snapshot: React.FC<{ path: string; lang: string; style?: string; hideSourc
   style,
   hideSource,
 }) => {
-  const [code, setCode] = useState<string | null>();
-  const [styleCode, setStyleCode] = useState<string | null>();
+  const [visible, setVisible] = useState<'code' | 'style' | 'editor' | false>(false);
   const isHtml = lang === 'html';
   // eslint-disable-next-line @typescript-eslint/no-var-requires
   const view = require('@pkg/' + path);
+  const handleVisible = useCallback(
+    (type: 'code' | 'style' | 'editor') => {
+      setVisible(visible === type ? false : type);
+    },
+    [visible]
+  );
+  const code = useMemo(() => (path ? require('@pkg/' + path + '?raw') : null), [path]);
+  const styleCode = useMemo(() => (style ? require('@pkg/' + style + '?raw') : null), [style]);
 
-  const handleShowSource = useCallback(() => {
-    if (code) {
-      setCode(null);
-    } else {
-      setStyleCode(null);
-      // eslint-disable-next-line @typescript-eslint/no-var-requires
-      setCode(require('@pkg/' + path + '?raw'));
-    }
-  }, [code, path]);
-  const handleShowStyle = useCallback(() => {
-    if (styleCode) {
-      setStyleCode(null);
-    } else {
-      setCode(null);
-      // eslint-disable-next-line @typescript-eslint/no-var-requires
-      setStyleCode(require('@pkg/' + style + '?raw'));
-    }
-  }, [style, styleCode]);
+  useEffect(() => {
+    return () => {
+      setVisible(false);
+    };
+  }, []);
 
   return (
     <div className={styles.snapshot}>
@@ -49,25 +44,50 @@ const Snapshot: React.FC<{ path: string; lang: string; style?: string; hideSourc
         </div>
         {style && (
           <div
-            className={[styles.toolbar, styleCode && styles.open].join(' ')}
-            onClick={handleShowStyle}
+            className={[styles.toolbar, visible === 'style' && styles.open].join(' ')}
+            onClick={() => handleVisible('style')}
           >
-            {styleCode ? 'hide' : 'show'} style
+            {visible === 'style' ? 'hide' : 'show'} style
           </div>
         )}
         {!hideSource && (
           <div
-            className={[styles.toolbar, code && styles.open].join(' ')}
-            onClick={handleShowSource}
+            className={[styles.toolbar, visible === 'code' && styles.open].join(' ')}
+            onClick={() => handleVisible('code')}
           >
-            {code ? 'hide' : 'show'} source
+            {visible === 'code' ? 'hide' : 'show'} source
           </div>
         )}
+        <div
+          className={[styles.toolbar, visible === 'editor' && styles.open].join(' ')}
+          onClick={() => handleVisible('editor')}
+        >
+          {visible === 'editor' ? 'hide' : 'show'} editor
+        </div>
       </div>
-      {(code || styleCode) && (
+      {visible && (
         <div className={styles.code}>
-          {code && <CodeBlock code={code as string} lang={lang} />}
-          {styleCode && <CodeBlock code={styleCode as string} lang="css" />}
+          {visible === 'code' && <CodeBlock code={code as string} lang={lang} />}
+          {visible === 'style' && <CodeBlock code={styleCode as string} lang="css" />}
+          {visible === 'editor' && (
+            <Sandpack
+              theme={
+                (document.documentElement.getAttribute('data-theme') as 'light' | 'dark') || 'auto'
+              }
+              template="react-ts"
+              files={{
+                '/App.tsx': code,
+              }}
+              customSetup={{
+                dependencies: {
+                  'neko-ui': '^1.0.15',
+                },
+              }}
+              options={{
+                showConsoleButton: true,
+              }}
+            />
+          )}
         </div>
       )}
     </div>

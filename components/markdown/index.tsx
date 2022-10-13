@@ -1,13 +1,7 @@
 import React, { Fragment, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import type { FC, MouseEvent, WheelEvent } from 'react';
-import {
-  getScrollTop,
-  setClipboard,
-  classNames,
-  getPrefixCls,
-  isEqual,
-  isSvgElement,
-} from '../utils';
+import { getPrefixCls } from '../utils';
+import { getScrollTop, setClipboard, classNames, isEqual, isSvgElement } from '@moneko/common';
 import { getMarkedImgList, markdownUtil } from './markdown-util';
 import { PhotoSlider } from 'react-photo-view';
 import type { DataType as PhotoViewDataType } from 'react-photo-view/dist/types';

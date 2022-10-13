@@ -7,7 +7,7 @@ import {
   getScrollTop,
   isEqual,
   isFunction,
-} from '../utils';
+} from '@moneko/common';
 import './index.global.less';
 
 export interface BackTopProps extends React.HTMLAttributes<HTMLDivElement> {

@@ -1,5 +1,6 @@
-import { classNames, getPrefixCls } from '../utils';
+import { classNames } from '@moneko/common';
 import React from 'react';
+import { getPrefixCls } from '../utils';
 
 export interface CornEditorProps extends React.HTMLAttributes<HTMLDivElement> {
   className?: string;

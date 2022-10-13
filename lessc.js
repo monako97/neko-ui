@@ -77,7 +77,7 @@ function walk(dir) {
                 execute(`npx postcss -c postcss.config.js ${outputPath} -o ${outputPath}`)
                   .then((postCssRes) => {
                     console.log('postcss:', `${outputPath}`, `${postCssRes}`);
-                    fs.unlink(path.join(__dirname, file), (err) => err);
+                    fs.unlinkSync(path.join(__dirname, file), (err) => err);
                   })
                   .catch((postCssRej) => {
                     console.log('postcss:', `${outputPath}`, `${postCssRej}`);
@@ -110,6 +110,4 @@ args.forEach(function (val) {
   options[arg[0]] = arg[1] || true;
 });
 
-if (options['--dir']) {
-  dealScri(walk(options['--dir']));
-}
+dealScri(walk('./lib'));

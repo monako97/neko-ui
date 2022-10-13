@@ -18,24 +18,3 @@ import MBox from '../markdown';
 import api from './examples/api.md?raw';
 
 <MBox text={api} />
-
-import { Sandpack } from '@codesandbox/sandpack-react';
-
-import defaultDemo from './examples/default.tsx?raw';
-
-<Sandpack
-  template="react-ts"
-  files={{
-    '/App.tsx': defaultDemo,
-  }}
-  customSetup={{
-    dependencies: {
-      'neko-ui': '^1.0.8',
-      lodash: '4.17.21',
-    },
-  }}
-  options={{
-    showConsole: true,
-    showConsoleButton: true,
-  }}
-/>

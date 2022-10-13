@@ -1,11 +1,5 @@
-export { classNames, getPrefixCls } from './classname';
-export { isFullscreen, exitFullscreen, toggleFullscreen, requestFullscreen } from './fullscreen';
-export { downloadBlob } from './download';
-export {
-  // getClientSize,
-  getMaxZindex,
-  getScrollTop,
-  entityToString,
-  setClipboard,
-} from './document';
-export * from './type';
+import variables from '../variables.less';
+import { getPrefixCls as prefixCls } from '@moneko/common';
+
+export const getPrefixCls = (className: string, prefix = variables.prefixCls) =>
+  prefixCls(className, prefix);

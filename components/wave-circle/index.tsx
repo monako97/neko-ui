@@ -1,5 +1,6 @@
 import React, { HtmlHTMLAttributes } from 'react';
-import { classNames, getPrefixCls, isEqual } from '../utils';
+import { getPrefixCls } from '../utils';
+import { classNames, isEqual } from '@moneko/common';
 import './index.global.less';
 
 export interface WaveCircleProps extends HtmlHTMLAttributes<HTMLDivElement> {

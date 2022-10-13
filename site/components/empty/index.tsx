@@ -1,5 +1,5 @@
 import { projectInfo } from '@/utils';
-import getBrowser from '@pkg/utils/broswer';
+import getBrowser from 'neko-ui/utils/broswer';
 import React from 'react';
 import styles from './index.less';
 

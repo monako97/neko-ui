@@ -33,3 +33,5 @@ export type { ButtonProps, ButtonType } from './button';
 
 export { default as Input } from './input';
 export type { InputProps } from './input';
+
+import './variables.less';

@@ -1,6 +1,6 @@
 /* eslint-disable no-param-reassign */
 import marked from 'marked-completed';
-import { entityToString } from '../utils';
+import { entityToString } from '@moneko/common';
 import type { DataType as PhotoViewDataType } from 'react-photo-view/dist/types';
 import * as Prism from './prism.js';
 import katex from 'katex';
