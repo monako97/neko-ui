@@ -14,9 +14,7 @@ let modifyVarBash = '';
 
 for (const k in modifyVars) {
   if (Object.hasOwnProperty.call(modifyVars, k)) {
-    if (k !== '@font-family') {
-      modifyVarBash += `--modify-var="${k}=${modifyVars[k]}" `;
-    }
+    modifyVarBash += `--modify-var="${k}=${modifyVars[k]}" `;
   }
 }
 
@@ -81,7 +79,7 @@ function walk(dir) {
                 execute(`npx postcss -c postcss.config.js ${outputPath} -o ${outputPath}`)
                   .then((postCssRes) => {
                     console.log('postcss:', `${outputPath}`, `${postCssRes}`);
-                    fs.unlinkSync(path.join(__dirname, file), (err) => err);
+                    fs.unlink(path.join(__dirname, file), (err) => err);
                   })
                   .catch((postCssRej) => {
                     console.log('postcss:', `${outputPath}`, `${postCssRej}`);

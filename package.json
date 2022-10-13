@@ -1,6 +1,6 @@
 {
     "name": "neko-ui",
-    "version": "1.0.15",
+    "version": "1.0.16",
     "description": "Neko UI库",
     "main": "lib/index.js",
     "scripts": {
@@ -18,7 +18,7 @@
     "devDependencies": {
         "@codesandbox/sandpack-react": "^1.14.2",
         "@moneko/cli": "^1.0.10",
-        "@moneko/core": "^1.1.7",
+        "@moneko/core": "^1.1.8",
         "@moneko/postcss": "^1.0.16",
         "@moneko/request": "^1.0.1",
         "@swc/jest": "^0.2.23",
