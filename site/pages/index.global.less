@@ -1,19 +1,19 @@
-.layout {
+.@{prefix-cls}-site-layout {
   display: flex;
   max-height: calc(100vh - 32px);
   padding: 16px;
   height: 100%;
 }
 
-.container,
-.container > main,
-.empty {
+.@{prefix-cls}-site-container,
+.@{prefix-cls}-site-container > main,
+.@{prefix-cls}-site-empty {
   flex: 1;
   display: flex;
   flex-direction: column;
 }
 
-.container {
+.@{prefix-cls}-site-container {
   position: relative;
 
   > main {
@@ -21,7 +21,7 @@
   }
 }
 
-.readme {
+.@{prefix-cls}-site-readme {
   padding: 100px @distance @distance;
   margin-left: 16px;
   z-index: 1;
@@ -32,7 +32,7 @@
   transition-property: background-color;
   transition-duration: @transition-duration;
   transition-timing-function: @transition-timing-function;
-  >.@{prefix-cls}-back-top {
+  > .@{prefix-cls}-back-top {
     position: absolute;
   }
 }

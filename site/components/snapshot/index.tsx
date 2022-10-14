@@ -2,6 +2,8 @@ import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import CodeBlock from '../code';
 import styles from './index.less';
 import { Sandpack } from '@codesandbox/sandpack-react';
+import codesandboxCss from '../../../codesandbox/styles.css?raw';
+import codesandboxEntry from '../../../codesandbox/index.tsx?raw';
 
 const Snapshot: React.FC<{ path: string; lang: string; style?: string; hideSource?: boolean }> = ({
   path,
@@ -12,7 +14,7 @@ const Snapshot: React.FC<{ path: string; lang: string; style?: string; hideSourc
   const [visible, setVisible] = useState<'code' | 'style' | 'editor' | false>(false);
   const isHtml = lang === 'html';
   // eslint-disable-next-line @typescript-eslint/no-var-requires
-  const view = require('@pkg/' + path);
+  const view = useMemo(() => require('@pkg/' + path), [path]);
   const handleVisible = useCallback(
     (type: 'code' | 'style' | 'editor') => {
       setVisible(visible === type ? false : type);
@@ -77,10 +79,18 @@ const Snapshot: React.FC<{ path: string; lang: string; style?: string; hideSourc
               template="react-ts"
               files={{
                 '/App.tsx': code,
+                '/styles.css': {
+                  code: codesandboxCss,
+                  hidden: true,
+                },
+                '/index.tsx': {
+                  code: codesandboxEntry,
+                  hidden: true,
+                },
               }}
               customSetup={{
                 dependencies: {
-                  'neko-ui': '^1.0.16',
+                  'neko-ui': '^1.0.17',
                 },
               }}
               options={{

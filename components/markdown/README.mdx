@@ -12,7 +12,15 @@ import Snapshot from '@/components/snapshot';
 
 <Snapshot path="markdown/examples/default" lang="tsx" />
 
+## katex公式
+
+<Snapshot path="markdown/examples/katex" lang="tsx" />
+
 import MBox from '../markdown';
+import katex from './examples/katex.md?raw';
+
+<MBox text={katex} tex />
+
 import api from './examples/api.md?raw';
 
 <MBox text={api} />

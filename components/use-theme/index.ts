@@ -13,17 +13,14 @@ type UseThemeType = [ThemeTypes['type'], (type: ThemeTypes['type']) => void];
  */
 const useTheme = (): UseThemeType => {
   const themeMedia = useRef(window.matchMedia('(prefers-color-scheme: light)'));
-  const [theme, setTheme] = useState<ThemeTypes['type']>(() =>
-    themeMedia.current?.matches ? 'light' : 'dark'
-  );
-  const handleTheme = useCallback(
-    ({ matches }: { matches: boolean }) => {
-      const type = matches ? 'light' : 'dark';
+  const [theme, setTheme] = useState<ThemeTypes['type']>(() => {
+    return themeMedia.current?.matches ? 'light' : 'dark';
+  });
+  const handleTheme = useCallback(({ matches }: { matches: boolean }) => {
+    const type = matches ? 'light' : 'dark';
 
-      setTheme(type);
-    },
-    [setTheme]
-  );
+    setTheme(type);
+  }, []);
 
   const changeTheme = useCallback(
     (color: ThemeTypes['type']) => {

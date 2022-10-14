@@ -31,4 +31,6 @@ export type { ButtonProps, ButtonType } from './button';
 export { default as Input } from './input';
 export type { InputProps } from './input';
 
-import './variables.less';
+export { default as getPrefixCls } from './get-prefix-cls';
+
+import './get-prefix-cls/index.less';

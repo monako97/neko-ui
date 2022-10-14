@@ -1,7 +1,7 @@
 import React from 'react';
 import Button from '../index';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
-import { getPrefixCls } from '../../utils';
+import getPrefixCls from '../../get-prefix-cls';
 
 /**
  * @jest-environment jsdom

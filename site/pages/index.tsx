@@ -1,12 +1,13 @@
 import React, { useEffect, useRef } from 'react';
 import { useLocation, useOutlet } from '@moneko/core';
-import styles from './index.less';
-import { BackTop } from 'neko-ui';
+import { BackTop, getPrefixCls } from 'neko-ui';
 import Sider from '../components/sider';
 import Coverage from '@/components/coverage';
 import Header from '@/components/header';
 import Footer from '@/components/footer';
 import Empty from '@/components/empty';
+import './index.global.less';
+import { classNames } from '@moneko/common';
 
 const App: React.FC = () => {
   const box = useRef<HTMLElement>(null);
@@ -18,19 +19,25 @@ const App: React.FC = () => {
   }, [location.pathname]);
 
   return (
-    <div className={styles.layout}>
+    <div className={getPrefixCls('site-layout')}>
       <Sider />
-      <article className={styles.container}>
+      <article className={getPrefixCls('site-container')}>
         <Header />
         <main>
-          <article className={[styles.readme, !readme && styles.empty].join(' ')} ref={box}>
+          <article
+            className={classNames([
+              getPrefixCls('site-readme'),
+              !readme && getPrefixCls('site-empty'),
+            ])}
+            ref={box}
+          >
             <Coverage />
             {readme || <Empty />}
-            <BackTop target={() => box.current || document.body} />
             <Footer />
           </article>
         </main>
       </article>
+      <BackTop target={() => box.current || document.body} />
     </div>
   );
 };

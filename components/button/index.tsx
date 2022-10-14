@@ -1,5 +1,5 @@
 import React, { useCallback, useMemo, useRef } from 'react';
-import { getPrefixCls } from '../utils';
+import getPrefixCls from '../get-prefix-cls';
 import { classNames, isFunction } from '@moneko/common';
 import './index.global.less';
 

@@ -1,6 +1,6 @@
 import React, { memo, useMemo } from 'react';
 import { classNames, isEqual } from '@moneko/common';
-import { getPrefixCls } from '../utils';
+import getPrefixCls from '../get-prefix-cls';
 import './index.global.less';
 
 export interface TooltipProps extends React.HTMLAttributes<HTMLDivElement> {

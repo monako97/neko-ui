@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { Button } from '..';
-import type { ButtonProps } from '..';
-import { getPrefixCls } from '../utils';
+import Button from '../button';
+import type { ButtonProps } from '../button';
+import getPrefixCls from '../get-prefix-cls';
 import { downloadBlob, isObject, isFunction, classNames } from '@moneko/common';
 import './index.global.less';
 

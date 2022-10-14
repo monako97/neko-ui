@@ -1,6 +1,6 @@
 import React, { Fragment, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import type { FC, MouseEvent, WheelEvent } from 'react';
-import { getPrefixCls } from '../utils';
+import getPrefixCls from '../get-prefix-cls';
 import { getScrollTop, setClipboard, classNames, isEqual, isSvgElement } from '@moneko/common';
 import { getMarkedImgList, markdownUtil } from './markdown-util';
 import { PhotoSlider } from 'react-photo-view';
@@ -64,7 +64,6 @@ const Markdown: FC<MarkdownProps> = ({
       str = markdownUtil(text, {
         langLineNumber,
         langToolbar: tools,
-        tex: tex,
       });
     } else {
       str = '';
@@ -75,7 +74,7 @@ const Markdown: FC<MarkdownProps> = ({
       });
       setHtmlString(str);
     }
-  }, [text, langLineNumber, tools, tex]);
+  }, [text, langLineNumber, tools]);
 
   useEffect(() => {
     const timer: NodeJS.Timeout = setTimeout(() => {
@@ -192,6 +191,33 @@ const Markdown: FC<MarkdownProps> = ({
   }, [getAnchorContainer, handleScroll]);
 
   const cls = useMemo(() => classNames([getPrefixCls('markdown-box'), className]), [className]);
+
+  useEffect(() => {
+    if (tex) {
+      require('katex/dist/katex.css');
+      // eslint-disable-next-line @typescript-eslint/no-var-requires
+      const katex = require('katex');
+
+      ref.current?.querySelectorAll('.m-katex-block').forEach(function (ele) {
+        if (ele.textContent) {
+          katex.render(ele.textContent, ele as HTMLElement, {
+            throwOnError: false,
+            displayMode: true,
+            strict: false,
+          });
+        }
+      });
+      ref.current?.querySelectorAll('.m-katex-inline').forEach(function (ele) {
+        if (ele.textContent) {
+          katex.render(ele.textContent, ele as HTMLElement, {
+            throwOnError: false,
+            displayMode: false,
+            strict: false,
+          });
+        }
+      });
+    }
+  }, [tex, htmlString]);
 
   return (
     <Fragment>

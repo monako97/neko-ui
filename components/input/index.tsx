@@ -1,5 +1,5 @@
 import React from 'react';
-import { getPrefixCls } from '../utils';
+import getPrefixCls from '../get-prefix-cls';
 import { classNames } from '@moneko/common';
 import './index.global.less';
 

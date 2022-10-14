@@ -11,6 +11,10 @@ declare module './index.less' {
   export default styles;
 }
 
+declare module '*?raw' {
+  export default string;
+}
+
 declare module 'neko-ui' {
   export * from 'components/index';
 }

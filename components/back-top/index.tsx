@@ -1,13 +1,7 @@
 import React, { memo, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import ReactDOM from 'react-dom';
-import {
-  classNames,
-  getMaxZindex,
-  getPrefixCls,
-  getScrollTop,
-  isEqual,
-  isFunction,
-} from '@moneko/common';
+import { classNames, getMaxZindex, getScrollTop, isEqual, isFunction } from '@moneko/common';
+import getPrefixCls from '../get-prefix-cls';
 import './index.global.less';
 
 export interface BackTopProps extends React.HTMLAttributes<HTMLDivElement> {
