@@ -90,7 +90,7 @@ const Snapshot: React.FC<{ path: string; lang: string; style?: string; hideSourc
               }}
               customSetup={{
                 dependencies: {
-                  'neko-ui': '^1.0.17',
+                  'neko-ui': '^1.0.18',
                 },
               }}
               options={{
