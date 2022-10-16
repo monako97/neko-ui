@@ -105,9 +105,11 @@ const HighlightText: React.FC<HighlightTextProps> = ({
           const hitStr = isOne ? item : item.highlight;
           const iFlag = isOne ? flag : item.flag;
 
-          str = str.replace(new RegExp(hitStr, iFlag), `%c:${hitStr}:c%`);
+          if (hitStr.length) {
+            str = str.replace(new RegExp(hitStr, iFlag), `%c:${hitStr}:c%`);
+          }
         }
-      } else {
+      } else if (highlight.length) {
         str = str.replace(new RegExp(highlight, flag), `%c:${highlight}:c%`);
       }
       setTexts(strToHighlight(str));
