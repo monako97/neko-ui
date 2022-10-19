@@ -17,7 +17,6 @@ $$
 \\end{equation}
 $$
 
-![/assets/images/ypi.png](csa)
     `;
 
   return <Markdown text={md} tex />;
