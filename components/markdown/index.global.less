@@ -468,19 +468,19 @@
     border-spacing: 0;
     transition-property: border-color;
 
-    tbody tr:hover {
+    tbody tr[role="row"]:hover {
       background-color: var(--table-row-hover-bg, rgba(60, 90, 100, 0.04));
     }
 
-    tr {
-      th {
+    tr[role="row"] {
+      th[role="gridcell"] {
         padding: 10px;
         color: var(--heading-color);
         background-color: var(--table-header-bg, rgba(0, 0, 0, 0.02));
         transition-property: background-color, color;
       }
 
-      td {
+      td[role="gridcell"] {
         padding: 10px;
         border-color: var(--border-color-base);
         border-style: dotted;
@@ -496,7 +496,7 @@
         }
       }
 
-      &:last-child td {
+      &:last-child td[role="gridcell"] {
         border-bottom: none;
       }
     }
