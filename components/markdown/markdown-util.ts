@@ -55,11 +55,11 @@ export const getMarkedImgList = (text: string): PhotoViewDataType[] => {
       );
 
       imageArr.push({
-        intro: params.get('alt') || '' + i,
-        src: params.get('src') || '',
+        intro: params.get('alt') || i,
+        src: params.get('src'),
         key: i,
       });
     }
   }
-  return imageArr;
+  return imageArr as PhotoViewDataType[];
 };

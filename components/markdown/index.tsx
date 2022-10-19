@@ -10,7 +10,7 @@ import './index.global.less';
 
 export type CodeBlockToolType = Array<'copy'>;
 
-export interface MarkdownProps {
+export interface MarkdownProps extends React.HTMLAttributes<HTMLDivElement> {
   className?: string;
   style?: React.CSSProperties;
   /** md内容 */
@@ -48,6 +48,7 @@ const Markdown: FC<MarkdownProps> = ({
   tools = ['copy'],
   getAnchorContainer = () => window,
   tex,
+  ...props
 }) => {
   const ref = useRef<HTMLDivElement>(null);
   const [visible, setVisible] = useState(false);
@@ -131,7 +132,7 @@ const Markdown: FC<MarkdownProps> = ({
 
       if (isSvgElement(target)) return;
       if (target.tagName === 'IMG' && pictureViewer) {
-        const arr = ref.current?.getElementsByTagName('img') || [];
+        const arr = ref.current?.getElementsByTagName('img') as unknown as HTMLImageElement[];
 
         for (let i = 0, len = arr.length; i < len; i++) {
           if (arr[i] === target) {
@@ -171,7 +172,6 @@ const Markdown: FC<MarkdownProps> = ({
     if (!anchors.current.length) return;
     const el = e.target as HTMLElement;
     const top = getScrollTop(el);
-
     let anchor: HTMLAnchorElement | null = null;
 
     anchors.current.forEach((a) => {
@@ -222,6 +222,7 @@ const Markdown: FC<MarkdownProps> = ({
   return (
     <Fragment>
       <div
+        {...props}
         ref={ref}
         className={cls}
         style={style}

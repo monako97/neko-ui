@@ -16,6 +16,8 @@ $$
           + \\cfrac{1}{a_3 + \\cfrac{1}{a_4} } } }
 \\end{equation}
 $$
+
+![/assets/images/ypi.png](csa)
     `;
 
   return <Markdown text={md} tex />;
