@@ -5,7 +5,15 @@ const Demo = () => {
   const [val, setVal] = useState<string>('rgba(255,0,0,0.5)');
 
   return (
-    <div>
+    <div
+      style={{
+        width: '100vw',
+        height: '100vh',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+      }}
+    >
       <Tooltip
         title={<ColorPalette value={val} onChange={setVal} />}
         destroyInactive={false}
