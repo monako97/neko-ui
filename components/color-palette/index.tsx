@@ -27,13 +27,12 @@ const ColorPalette: React.FC<ColorPaletteProps> = ({
     b: 0,
   });
   const [drag, setDrag] = useState(false);
-  const [alpha, setAlpha] = useState(1);
+  const [alpha, setAlpha] = useState(tinycolor(value).getAlpha());
   const [colorValue, setColorValue] = useState({
     r: 255,
     g: 0,
     b: 0,
   });
-
   const fillGradient = useCallback((color: string) => {
     if (!colorPicker.current) return;
     const ctx1 = colorPicker.current.getContext('2d');
@@ -85,7 +84,6 @@ const ColorPalette: React.FC<ColorPaletteProps> = ({
       setRgb({ r, g, b });
     }
   }, []);
-
   const colorPickerMouseDown = useCallback(
     (e: CanvasMouseEvent) => {
       setDrag(true);
@@ -110,12 +108,14 @@ const ColorPalette: React.FC<ColorPaletteProps> = ({
     initColorPicker(value);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
   useEffect(() => {
     const { r, g, b } = colorValue;
 
     fillGradient(`rgba(${r},${g},${b},1)`);
     setRgb({ r, g, b });
   }, [colorValue, fillGradient]);
+
   useEffect(() => {
     colorPicker.current?.parentElement?.parentElement?.style.setProperty(
       '--offset-color',
@@ -168,7 +168,23 @@ const ColorPalette: React.FC<ColorPaletteProps> = ({
           <label htmlFor="b">B</label>
         </div>
         <div className={getPrefixCls('color-input')}>
-          <Input name="a" size="small" value={parseInt((alpha * 100).toFixed(2))} />
+          <Input
+            name="a"
+            size="small"
+            value={parseInt((alpha * 100).toFixed(2))}
+            onChange={(e) => {
+              let val = parseInt(e.target.value) / 100;
+
+              if (isNaN(val)) return;
+              if (val < 0) {
+                val = 0;
+              }
+              if (val > 1) {
+                val = 1;
+              }
+              setAlpha(val);
+            }}
+          />
           <label htmlFor="a">A</label>
         </div>
       </div>

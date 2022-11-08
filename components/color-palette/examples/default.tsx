@@ -2,25 +2,19 @@ import { ColorPalette, Tooltip } from 'neko-ui';
 import React, { useState } from 'react';
 
 const Demo = () => {
-  const [val, setVal] = useState<string>('rgba(255,0,0,1)');
+  const [val, setVal] = useState<string>('rgba(255,0,0,0.5)');
 
   return (
     <div>
       <Tooltip
-        title={
-          <ColorPalette
-            onChange={(value) => {
-              setVal(value);
-            }}
-          />
-        }
+        title={<ColorPalette value={val} onChange={setVal} />}
         destroyInactive={false}
         overlayStyle={{ padding: 10 }}
       >
-        <input
-          type="text"
-          disabled
+        <div
           style={{
+            width: 64,
+            height: 32,
             padding: 8,
             backgroundColor: val,
             marginBottom: 8,

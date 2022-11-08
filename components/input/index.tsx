@@ -19,6 +19,7 @@ const Input: React.FC<InputProps> = ({
   value,
   size,
   disabled,
+  onChange,
   ...prpos
 }) => {
   const [focus, setFocus] = useState<boolean>(false);
@@ -46,6 +47,7 @@ const Input: React.FC<InputProps> = ({
         disabled={disabled}
         onFocus={() => setFocus(true)}
         onBlur={() => setFocus(false)}
+        onChange={(e) => onChange?.(e)}
         {...prpos}
       />
       {suffix && <span className={getPrefixCls('input-suffix')}>{suffix}</span>}

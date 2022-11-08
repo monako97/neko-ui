@@ -27,6 +27,8 @@ const ColorLine: React.ForwardRefRenderFunction<ColorLineInstance, ColorLineProp
   const [color, setColor] = useState(value);
   const [drag, setDrag] = useState(false);
   const [width, setWidth] = useState(172);
+  const [offset, setOffset] = useState(0);
+  const offsetRef = useRef<number>(offset);
   const initStrip = useCallback(() => {
     if (!colorLine.current) return;
     const ctx2 = colorLine.current.getContext('2d');
@@ -46,45 +48,48 @@ const ColorLine: React.ForwardRefRenderFunction<ColorLineInstance, ColorLineProp
       ctx2.fill();
     }
   }, [width]);
-  const changeColorLine = useCallback(
-    ({ offsetX }: { offsetX: number; offsetY: number }) => {
-      if (colorLine.current) {
-        const ctx2 = colorLine.current?.getContext('2d');
-        const maxOffset = width - 10;
-        let offset = offsetX - 5;
+  const changeColorLine = useCallback(() => {
+    const ctx2 = colorLine.current?.getContext('2d');
 
-        if (offset < 0) {
-          offset = 0;
-        }
-        if (offset > maxOffset) {
-          offset = maxOffset;
-        }
-        const x = offsetX >= width ? offsetX : offsetX;
+    if (ctx2) {
+      const [r, g, b] = ctx2.getImageData(offsetRef.current, 0, 1, 1).data;
 
-        if (ctx2) {
-          const [r, g, b] = ctx2.getImageData(x, 0, 1, 1).data;
-
-          setColor({ r, g, b });
-          colorLine.current?.parentElement?.style.setProperty('--offset-x', `${offset}px`);
-        }
-      }
-    },
-    [width]
-  );
+      setColor({ r, g, b });
+    }
+  }, []);
   const onMouseDown = useCallback(
-    ({ nativeEvent: { offsetX, offsetY } }: CanvasMouseEvent) => {
+    ({ nativeEvent: { offsetX } }: CanvasMouseEvent) => {
+      const _offset = offsetX - 5;
+
       setDrag(true);
-      changeColorLine({ offsetX, offsetY });
+      setOffset(_offset);
+      Object.assign(offsetRef, {
+        current: _offset,
+      });
+      changeColorLine();
     },
     [changeColorLine]
   );
   const onMouseMove = useCallback(
-    ({ nativeEvent: { offsetX, offsetY } }: CanvasMouseEvent) => {
+    ({ movementX }: MouseEvent) => {
       if (drag) {
-        changeColorLine({ offsetX, offsetY });
+        const maxOffset = width - 10;
+        let _offset = offsetRef.current + movementX;
+
+        if (_offset < 0) {
+          _offset = 0;
+        }
+        if (_offset > maxOffset) {
+          _offset = maxOffset;
+        }
+        Object.assign(offsetRef, {
+          current: _offset,
+        });
+        changeColorLine();
+        setOffset(_offset);
       }
     },
-    [changeColorLine, drag]
+    [changeColorLine, drag, width]
   );
   const onMouseUp = useCallback(() => {
     setDrag(false);
@@ -100,6 +105,14 @@ const ColorLine: React.ForwardRefRenderFunction<ColorLineInstance, ColorLineProp
   useImperativeHandle(ref, () => ({
     canvas: colorLine.current,
   }));
+  useEffect(() => {
+    document.body.addEventListener('mouseup', onMouseUp, false);
+    document.body.addEventListener('mousemove', onMouseMove, false);
+    return () => {
+      document.body.removeEventListener('mouseup', onMouseUp, false);
+      document.body.removeEventListener('mousemove', onMouseMove, false);
+    };
+  }, [onMouseMove, onMouseUp]);
 
   return (
     <div
@@ -109,11 +122,13 @@ const ColorLine: React.ForwardRefRenderFunction<ColorLineInstance, ColorLineProp
           setWidth(e.offsetWidth);
         }
       }}
+      style={
+        {
+          '--offset-x': `${offset}px`,
+        } as React.CSSProperties
+      }
       className={classNames(getPrefixCls('line-picker'), className)}
       onMouseDown={onMouseDown}
-      onMouseUp={onMouseUp}
-      onMouseOut={onMouseUp}
-      onMouseMove={onMouseMove}
     >
       <canvas ref={colorLine} width={width} />
     </div>
