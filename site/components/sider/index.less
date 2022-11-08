@@ -3,10 +3,9 @@
     color: var(--text-color);
     width: 250px;
     min-width: 250px;
-    background-color: var(--component-background, @component-background);
-    border-radius: var(--border-radius-base);
     display: flex;
     flex-direction: column;
+    overflow-y: scroll;
 
     p, h2 {
         margin-bottom: 0;
@@ -14,18 +13,24 @@
     }
 }
 
+@nav-bg-color: var(--header-bg, rgba(255, 255, 255, 0.9));
+
+.safe-backdrop-filter(nav, @nav-bg-color, @nav-bg-color);
+
 .logo {
     display: flex;
-    padding: @vertical-distance @horizontal-distance;
+    padding: 16px 0 16px @horizontal-distance;
 
     &-img {
-        margin-left: 5px;
-        margin-right: 5px;
+        width: 32px;
+        height: 32px;
     }
 
     &-con {
         margin-left: 16px;
         flex: 1;
+        display: flex;
+        align-items: center;
 
         h2 {
             font-weight: 400;
@@ -37,31 +42,24 @@
 .title {
     font-size: var(--font-size-base);
     color: var(--heading-color);
-    padding: 0 @horizontal-distance 8px;
-    position: sticky;
-    top: 0;
-    z-index: 1;
-    background-color: var(--component-background, #fff);
+    margin-bottom: 8px;
 
     &::after {
         content: '';
         display: block;
         height: 1px;
         margin: 8px 0 0;
-        background-color: var(--border-color-base, @border-color-base);
+        background-color: var(--border-color-base);
         transition-property: background-color;
     }
 }
 
 .sider {
-    width: 100%;
-    flex: 1;
-    overflow-y: scroll;
+    padding: 0 @horizontal-distance;
 }
 
 .menu {
     margin-bottom: 16px;
-    padding: 0 @horizontal-distance;
 }
 
 .item {
@@ -75,13 +73,13 @@
     cursor: pointer;
     transition-property: background-color;
 
-    &::after {
+    &::before {
         content: '';
         width: 3px;
         height: 100%;
         background-color: var(--primary-color);
         position: absolute;
-        left: -@horizontal-distance;
+        right: 0;
         border-top-right-radius: @border-radius-base;
         border-bottom-right-radius: @border-radius-base;
         transform: scale(0);
@@ -96,7 +94,7 @@
     &.active {
         background-color: var(--primary-color-deprecated-bg);
 
-        &::after {
+        &::before {
             transform: scale(1);
         }
     }
@@ -133,7 +131,7 @@
     transition-property: background-color, color;
 }
 
-.nav, .item, .item::after, .title::after, .title {
+.nav, .item, .item::before, .title::after, .title {
     transition-duration: @transition-duration;
     transition-timing-function: @transition-timing-function;
 }

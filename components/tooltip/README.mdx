@@ -1,0 +1,32 @@
+export const basic = {
+  type: '数据展示',
+  title: '文字提示',
+  subtitle: 'Tooltip',
+};
+
+# Tooltip
+
+> 文字提示
+
+import Snapshot from '@/components/snapshot';
+
+## 简单使用
+
+<Snapshot path="tooltip/examples/default" lang="tsx" />
+
+## 鼠标移入触发
+
+<Snapshot path="tooltip/examples/hover" lang="tsx" />
+
+## 获取焦点触发
+
+<Snapshot path="tooltip/examples/focus" lang="tsx" />
+
+## 右键触发
+
+<Snapshot path="tooltip/examples/contextMenu" lang="tsx" />
+
+import MBox from '../markdown';
+import api from './examples/api.md?raw';
+
+<MBox text={api} />

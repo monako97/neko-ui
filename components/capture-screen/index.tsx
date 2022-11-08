@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import Button from '../button';
 import type { ButtonProps } from '../button';
 import getPrefixCls from '../get-prefix-cls';
-import { downloadBlob, isObject, isFunction, classNames } from '@moneko/common';
+import { downloadBlob, classNames, isObject } from '@moneko/common';
 import './index.global.less';
 
 export interface RecorderOptions {
@@ -116,9 +116,7 @@ const CaptureScreen: React.FC<CaptureScreenProp> = ({
   // 开始录制
   const handleStartRecorder = useCallback(() => {
     if (mediaRecorderRef.current) {
-      if (isFunction(onStartRecorder)) {
-        onStartRecorder(mediaRecorderRef.current.state);
-      }
+      onStartRecorder?.(mediaRecorderRef.current.state);
       switch (mediaRecorderRef.current.state) {
         case 'inactive': // 不活跃
           mediaRecorderRef.current.start();
@@ -127,9 +125,8 @@ const CaptureScreen: React.FC<CaptureScreenProp> = ({
           mediaRecorderRef.current.resume();
           break;
         case 'recording': // 录制中
-          mediaRecorderRef.current.pause();
-          break;
         default:
+          mediaRecorderRef.current.pause();
           break;
       }
       setRecordState(mediaRecorderRef.current.state);
@@ -138,9 +135,7 @@ const CaptureScreen: React.FC<CaptureScreenProp> = ({
   const handleRecorderDataAvailable = useCallback(
     (e: MediaRecorderDataAvailableEvent) => {
       chunks.current?.push(e.data as Blob);
-      if (isFunction(onRecorderDataAvailable)) {
-        onRecorderDataAvailable(e);
-      }
+      onRecorderDataAvailable?.(e);
     },
     [onRecorderDataAvailable]
   );
@@ -153,23 +148,20 @@ const CaptureScreen: React.FC<CaptureScreenProp> = ({
       }
       setRecordState(mediaRecorderRef.current.state);
     }
-    if (isFunction(onStopRecorder)) {
-      onStopRecorder();
-    }
+    onStopRecorder?.();
   }, [onStopRecorder]);
   const handleSaveRecorder = useCallback(() => {
     if (!chunks.current?.length) return;
     // 将录制内容保存到本地
+    const { current } = recorderRef;
     const blob: Blob = new Blob(chunks.current, {
-        type: 'video/webm',
-      }),
-      name: string =
-        (isObject(recorderRef.current) && recorderRef.current?.filename) ||
-        new Date().toISOString(),
-      fileName: string = name + '.webm';
+      type: 'video/webm',
+    });
+    const name = isObject(current) ? current?.filename : new Date().toISOString();
+    const fileName: string = name + '.webm';
 
     chunks.current?.splice(0);
-    if (isFunction(onSaveRecorder)) {
+    if (onSaveRecorder) {
       onSaveRecorder(blob, fileName);
     } else {
       // 保存文件
@@ -187,9 +179,7 @@ const CaptureScreen: React.FC<CaptureScreenProp> = ({
       tracks?.forEach((track: MediaStreamTrack) => track.stop());
       setMediaStream(null);
     }
-    if (isFunction(onStopCapture)) {
-      onStopCapture();
-    }
+    onStopCapture?.();
   }, [onStopCapture, stopRecorder]);
 
   // 开始捕获屏幕
@@ -206,13 +196,9 @@ const CaptureScreen: React.FC<CaptureScreenProp> = ({
         stream.addEventListener('inactive', stopCapture, false);
         setMediaStream(stream);
       }
-      if (isFunction(onStartCapture)) {
-        onStartCapture(stream);
-      }
+      onStartCapture?.(stream);
     } catch (err) {
-      if (isFunction(onErrorCapture)) {
-        onErrorCapture(err);
-      }
+      onErrorCapture?.(err);
     }
   }, [onErrorCapture, onStartCapture, options, stopCapture]);
 
@@ -223,7 +209,7 @@ const CaptureScreen: React.FC<CaptureScreenProp> = ({
   }, [mediaStream, preview]);
 
   useEffect(() => {
-    if (mediaStream?.active && recorderRef.current) {
+    if (mediaStream?.active) {
       const recorderInstance = new MediaRecorder(mediaStream);
 
       recorderInstance.onstop = handleSaveRecorder;
@@ -243,11 +229,9 @@ const CaptureScreen: React.FC<CaptureScreenProp> = ({
     return () => {
       const _mediaRecorderRef = getMediaRecorderRef();
 
-      if (_mediaRecorderRef) {
-        // 未录制时不需要停止
-        if (_mediaRecorderRef.state !== 'inactive') {
-          _mediaRecorderRef.stop();
-        }
+      // 未录制时不需要停止
+      if (_mediaRecorderRef?.state !== 'inactive') {
+        _mediaRecorderRef?.stop();
       }
       const streamRef = getMediaStreamRef();
 
@@ -269,7 +253,7 @@ const CaptureScreen: React.FC<CaptureScreenProp> = ({
   );
 
   return (
-    <div className={classNames([getPrefixCls('capture-screen'), className])} {...props}>
+    <div className={classNames(getPrefixCls('capture-screen'), className)} {...props}>
       <div className={getPrefixCls('capture-screen-controller')}>
         <Button onClick={startCapture}>{captureScreenText}</Button>
         {mediaStream && (

@@ -1,39 +1,123 @@
-.tooltip {
-    position: relative;
-    background: #000;
-    color: #fff;
-    padding: 8px 16px;
-    border-radius: 4px;
-    font-size: 14px;
-    filter:
-        drop-shadow(
-            1px 2px 8px hsla(220deg, 0%, 0%, 0.3)
-        )
-        drop-shadow(
-            2px 4px 16px hsla(220deg, 0%, 0%, 0.3)
-        )
-        drop-shadow(
-            4px 8px 32px hsla(220deg, 0%, 0%, 0.3)
-        );
+/* stylelint-disable function-no-unknown */
+.@{prefix-cls} {
+    &-tooltip {
+        position: relative;
+        display: inline-block;
+
+        &::-webkit-scrollbar {
+            width: 1px;
+        }
+    }
+
+    @tooltip-portal-bg: #000;
+    @tooltip-portal-shadow-color: fade(@tooltip-portal-bg, 0.15);
+
+    &-tooltip-portal {
+        --tooltip-bg: @tooltip-portal-bg;
+        --tooltip-shadow-color: @tooltip-portal-shadow-color;
+        position: absolute;
+        display: inline-block;
+        background: var(--tooltip-bg);
+        color: #fff;
+        padding: 4px 8px;
+        border-radius: 4px;
+        font-size: 14px;
+        filter:
+            drop-shadow(.5px 1px 4px var(--tooltip-shadow-color)) drop-shadow(1px 2px 8px var(--tooltip-shadow-color)) drop-shadow(2px 4px 16px var(--tooltip-shadow-color));
 
         &::before {
             content: '';
             position: absolute;
-            bottom: 0;
+            bottom: 1px;
             left: 0;
             right: 0;
             margin: auto;
-            width: 16px;
-            height: 10px;
+            width: 12px;
+            height: 8px;
             background: inherit;
-            clip-path: polygon(
-                0% 0%,
-                50% 100%,
-                100% 0%
-            );
-            transform: translateY(
-                calc(+100% - 1px)
-            );
+            clip-path: polygon(0% 0%,
+                    50% 100%,
+                    100% 0%);
+            transform: translateY(100%);
         }
-          
+    }
+
+    &-tooltip-in {
+        animation: slide-up-in .3s;
+        transform: scaleY(1);
+    }
+
+    &-tooltip-out {
+        animation: slide-up-out .3s forwards;
+    }
+
+    &-tooltip-in-up {
+        animation: slide-down-in .3s;
+        transform: scaleY(1);
+    }
+
+    &-tooltip-out-up {
+        animation: slide-down-out .3s forwards;
+    }
+}
+
+
+@keyframes slide-up-in {
+    0% {
+        transform: scaleY(0.8);
+        transform-origin: 0% 0%;
+        opacity: 0;
+        pointer-events: none;
+    }
+
+    100% {
+        transform: scaleY(1);
+        transform-origin: 0% 0%;
+        opacity: 1;
+        pointer-events: none;
+    }
+}
+
+@keyframes slide-up-out {
+    0% {
+        transform: scaleY(1);
+        transform-origin: 0% 0%;
+        opacity: 1;
+        pointer-events: none;
+    }
+
+    100% {
+        transform: scaleY(0.8);
+        transform-origin: 0% 0%;
+        opacity: 0;
+        pointer-events: none;
+    }
+}
+
+@keyframes slide-down-in {
+    0% {
+        transform: scaleY(0.8);
+        transform-origin: 100% 100%;
+        opacity: 0;
+    }
+
+    100% {
+        transform: scaleY(1);
+        transform-origin: 100% 100%;
+        opacity: 1;
+    }
+}
+
+@keyframes slide-down-out {
+    0% {
+        transform: scaleY(1);
+        transform-origin: 100% 100%;
+        opacity: 1;
+    }
+
+    100% {
+        transform: scaleY(0.8);
+        transform-origin: 100% 100%;
+        opacity: 0;
+    }
 }

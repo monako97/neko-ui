@@ -190,7 +190,7 @@ const Markdown: FC<MarkdownProps> = ({
     };
   }, [getAnchorContainer, handleScroll]);
 
-  const cls = useMemo(() => classNames([getPrefixCls('markdown-box'), className]), [className]);
+  const cls = useMemo(() => classNames(getPrefixCls('markdown-box'), className), [className]);
 
   useEffect(() => {
     if (tex) {
@@ -204,6 +204,7 @@ const Markdown: FC<MarkdownProps> = ({
             throwOnError: false,
             displayMode: true,
             strict: false,
+            output: 'html',
           });
         }
       });
@@ -213,6 +214,7 @@ const Markdown: FC<MarkdownProps> = ({
             throwOnError: false,
             displayMode: false,
             strict: false,
+            output: 'html',
           });
         }
       });

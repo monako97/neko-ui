@@ -1,6 +1,6 @@
-[TOC]
-
 # @moneko/request
+
+\[TOC]
 
 ## 设置响应拦截器、请求前缀
 
@@ -15,15 +15,13 @@ extend({
   },
   prefixUrl: '/api',
 });
-
 ```
 
-## 调用request案例
+## 调用 request 案例
 
 ```typescript
 import { request } from '@/services';
 
 export const getApi = () => request('/metrics');
 export const postApi = (params = {}) => request('/metrics', { data: params, method: 'POST' });
-
 ```

@@ -5,14 +5,18 @@ import getPrefixCls from '../get-prefix-cls';
 import './index.global.less';
 
 export interface BackTopProps extends React.HTMLAttributes<HTMLDivElement> {
-  /** 设置需要监听其滚动事件的元素，值为一个返回对应 DOM 元素的函数 */
+  /** 设置需要监听其滚动事件的元素，值为一个返回对应 DOM 元素 */
   target?: () => HTMLElement;
+  /** 挂载到指定的元素，值为一个返回对应 DOM 元素 默认 document.body */
+  // eslint-disable-next-line no-unused-vars
+  getPopupContainer?: (node?: HTMLElement) => HTMLElement;
   /** 滚动高度达到此参数值才出现 BackTop */
   visibilityHeight?: number;
 }
 
 const BackTop: React.FC<BackTopProps> = ({
   target = () => window as unknown as HTMLElement,
+  getPopupContainer,
   visibilityHeight = 400,
   className,
   ...props
@@ -61,7 +65,7 @@ const BackTop: React.FC<BackTopProps> = ({
   }, [handleScrollY, target]);
 
   const cls = useMemo(
-    () => classNames([getPrefixCls('back-top'), className, !show && getPrefixCls('back-top-out')]),
+    () => classNames(getPrefixCls('back-top'), className, !show && getPrefixCls('back-top-out')),
     [className, show]
   );
   const exit = useCallback(() => {
@@ -75,8 +79,12 @@ const BackTop: React.FC<BackTopProps> = ({
     ),
     [cls, exit, handleBackTop, props]
   );
+  const container = useMemo(
+    () => getPopupContainer?.(target()) || document.body,
+    [getPopupContainer, target]
+  );
 
-  return show === null ? null : ReactDOM.createPortal(el, target());
+  return show === null ? null : ReactDOM.createPortal(el, container);
 };
 
 export default memo(BackTop, isEqual);

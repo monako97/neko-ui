@@ -1,5 +1,6 @@
 {
     "compilerOptions": {
+        "downlevelIteration": true,
         "incremental": true,
         "jsx": "react",
         "isolatedModules": false,

@@ -56,7 +56,7 @@ const Button: React.FC<ButtonProps> = ({
   );
   const cls = useMemo(
     () =>
-      classNames([
+      classNames(
         getPrefixCls('btn'),
         type && getPrefixCls(`btn-${type}`),
         infinite && getPrefixCls('btn-infinite'),
@@ -68,8 +68,8 @@ const Button: React.FC<ButtonProps> = ({
         animating && getPrefixCls('btn-without'),
         disabled && getPrefixCls('btn-disabled'),
         link && getPrefixCls('btn-link'),
-        className,
-      ]),
+        className
+      ),
     [type, infinite, ghost, fill, circle, dashed, float, animating, disabled, link, className]
   );
   const handleAnimationEnd = useCallback(() => {

@@ -1,8 +1,8 @@
-[TOC]
-
 # @moneko/mock
 
-> 在项目启动目录 mock 文件夹下创建mock脚本，达到模拟响应数据的效果
+[TOC]
+
+> 在项目启动目录 mock 文件夹下创建 mock 脚本，达到模拟响应数据的效果
 
 ## 函数方式
 
@@ -21,15 +21,15 @@ const conf: MockConfiguration = {
         effte: '2022/7/1',
       },
     };
+
     res.status(200).send(resp);
   },
 };
 
 export default conf;
-
 ```
 
-### 获取Restful Api参数
+### 获取 Restful Api 参数
 
 ```typescript
 import type { MockConfiguration } from '@moneko/mock';
@@ -46,15 +46,15 @@ const conf: MockConfiguration = {
         effee: '2022/7/1',
       },
     };
+
     res.status(200).send(resp);
   },
 };
 
 export default conf;
-
 ```
 
-### 获取POST请求体数据
+### 获取 POST 请求体数据
 
 ```typescript
 import type { MockConfiguration } from '@moneko/mock';
@@ -75,10 +75,9 @@ const conf: MockConfiguration = {
 };
 
 export default conf;
-
 ```
 
-### 模拟上传文件，返回文件base64
+### 模拟上传文件，返回文件 base64
 
 ```typescript
 import type { MockConfiguration } from '@moneko/core';
@@ -100,7 +99,6 @@ const conf: MockConfiguration = {
 };
 
 export default conf;
-
 ```
 
 ### 使用 YApi JSON Schema 生成数据
@@ -121,7 +119,7 @@ const getYApiOption = (id: string) => {
 };
 
 const conf: MockConfiguration = {
-  'POST /getids/list':  async (req, res) => {
+  'POST /getids/list': async (req, res) => {
     const mockData = await yApiSchemaMock(getYApiOption('7610'), {
       result: {
         page: req.body.pageNum,
@@ -135,10 +133,9 @@ const conf: MockConfiguration = {
 };
 
 export default conf;
-
 ```
 
-### 使用 YApi 高级Mock
+### 使用 YApi 高级 Mock
 
 ```typescript
 import { yApiMock } from '@moneko/mock';
@@ -152,7 +149,7 @@ const yApi: YApiOption = {
 };
 
 const conf: MockConfiguration = {
-  'POST /api/getids/list':  async (req, res) => {
+  'POST /api/getids/list': async (req, res) => {
     // 此时 mockData 将是来自 POST http://yapihost:8080/mock/143/getids/list 响应的数据
     const resp = await yApiMock(req, yApi);
 
@@ -161,22 +158,20 @@ const conf: MockConfiguration = {
 };
 
 export default conf;
-
 ```
 
-## KV方式 `Record<string, any>`
+## KV 方式 `Record<string, any>`
 
 ```typescript
 import type { MockConfiguration } from '@moneko/mock';
 
 const conf: MockConfiguration = {
   'POST /api/use/fun': {
-      status: 200,
-      message: '上传成功',
-      effectiveDate: '2022/7/1',
+    status: 200,
+    message: '上传成功',
+    effectiveDate: '2022/7/1',
   },
 };
 
 export default conf;
-
 ```

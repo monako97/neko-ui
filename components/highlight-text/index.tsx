@@ -92,7 +92,7 @@ const HighlightText: React.FC<HighlightTextProps> = ({
   flag = 'g',
 }) => {
   const [texts, setTexts] = useState<Highlight[] | null>();
-  const hitCls = useMemo(() => classNames([getPrefixCls('hit'), hitClassName]), [hitClassName]);
+  const hitCls = useMemo(() => classNames(getPrefixCls('hit'), hitClassName), [hitClassName]);
 
   useEffect(() => {
     if (typeof text === 'string' && highlight) {
@@ -132,7 +132,7 @@ const HighlightText: React.FC<HighlightTextProps> = ({
   }, [hitCls, hitStyle, text, texts]);
 
   return (
-    <div className={classNames([getPrefixCls('highlight-text'), className])} style={style}>
+    <div className={classNames(getPrefixCls('highlight-text'), className)} style={style}>
       {hitNode}
       {extra && (
         <span className={hitCls} style={hitStyle}>

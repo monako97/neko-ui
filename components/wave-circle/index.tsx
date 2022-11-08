@@ -1,6 +1,6 @@
 import React, { HtmlHTMLAttributes } from 'react';
 import getPrefixCls from '../get-prefix-cls';
-import { classNames, isEqual } from '@moneko/common';
+import { classNames } from '@moneko/common';
 import './index.global.less';
 
 export interface WaveCircleProps extends HtmlHTMLAttributes<HTMLDivElement> {
@@ -33,7 +33,7 @@ const WaveCircle: React.FC<WaveCircleProps> = ({
   return (
     <div
       {...props}
-      className={classNames([getPrefixCls('wave-circles'), className])}
+      className={classNames(getPrefixCls('wave-circles'), className)}
       style={prefixStyles() as React.CSSProperties}
     >
       <i className={getPrefixCls('wave-circle')} />
@@ -44,4 +44,4 @@ const WaveCircle: React.FC<WaveCircleProps> = ({
   );
 };
 
-export default React.memo(WaveCircle, isEqual);
+export default WaveCircle;

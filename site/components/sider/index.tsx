@@ -92,8 +92,8 @@ const Sider = () => {
       <div className={styles.logo}>
         <Avatar className={styles.logoImg} onClick={() => navigate('/')} />
         <div className={styles.logoCon}>
-          <h2>{projectInfo.title}</h2>
-          <p>{projectInfo.description}</p>
+          {/* <h2>{projectInfo.title}</h2> */}
+          <h2>{projectInfo.version}</h2>
         </div>
       </div>
       <div className={styles.sider}>

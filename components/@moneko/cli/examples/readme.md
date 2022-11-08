@@ -1,6 +1,6 @@
-[TOC]
-
 # @moneko/cli
+
+[TOC]
 
 ## 快速开始
 
@@ -49,13 +49,13 @@ npm run build --config=prod
 
 ## 使用 Yarn
 
-### 使用Yarn安装依赖
+### 使用 Yarn 安装依赖
 
 ```shell
 yarn
 ```
 
-### 使用Yarn启动
+### 使用 Yarn 启动
 
 ```shell
 yarn start
@@ -63,7 +63,7 @@ yarn start
 yarn start config=prod
 ```
 
-### 使用Yarn构建项目
+### 使用 Yarn 构建项目
 
 ```shell
 yarn build
@@ -75,7 +75,7 @@ yarn build config=prod
 
 > 使用 flutter 3.0
 
-应用类型为mobile的项目中执行打包步骤`npm run build`，确保正确生产出的资产在 `dist` 文件夹中，然后执行 `mo buildApp`，按控制台提示操作
+应用类型为 mobile 的项目中执行打包步骤`npm run build`，确保正确生产出的资产在 `dist` 文件夹中，然后执行 `mo buildApp`，按控制台提示操作
 
 ```shell
 mo buildApp

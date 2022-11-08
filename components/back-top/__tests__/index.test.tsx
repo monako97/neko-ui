@@ -36,6 +36,7 @@ describe('test BackTop', () => {
           data-testid="back-top"
           visibilityHeight={200}
           target={() => document.querySelector('#box') || document.body}
+          getPopupContainer={() => document.body}
         />
       </div>
     );

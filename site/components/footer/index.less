@@ -4,10 +4,9 @@
     align-items: center;
     justify-content: center;
     font-size: 12px;
-    padding: @distance;
     color: var(--disabled-color, rgba(255, 255, 255, 0.85));
+    // color: var(--text-color);
     background-color: var(--footer-bg, #333);
-    margin: 0 -@distance -@distance;
     height: 75px;
     text-align: center;
     z-index: 2;
@@ -17,7 +16,7 @@
     transition-property: box-shadow, background-color;
 
     a {
-        color: var(--disabled-color);
+        color: var(--disabled-color, rgba(255, 255, 255, 0.85));
     }
 }
 
@@ -26,5 +25,5 @@
 }
 
 [data-theme='dark'] {
-    --footer-bg: #141414;
+    --footer-bg: #000;
 }

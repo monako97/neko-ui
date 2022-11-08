@@ -23,18 +23,12 @@ const App: React.FC = () => {
       <Sider />
       <article className={getPrefixCls('site-container')}>
         <Header />
-        <main>
-          <article
-            className={classNames([
-              getPrefixCls('site-readme'),
-              !readme && getPrefixCls('site-empty'),
-            ])}
-            ref={box}
-          >
+        <main className={classNames(!readme && getPrefixCls('site-empty'))} ref={box}>
+          <article className={classNames(getPrefixCls('site-readme'))}>
             <Coverage />
             {readme || <Empty />}
-            <Footer />
           </article>
+          <Footer />
         </main>
       </article>
       <BackTop target={() => box.current || document.body} />

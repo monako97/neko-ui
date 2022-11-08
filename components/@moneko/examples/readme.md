@@ -1,6 +1,6 @@
-[TOC]
+# 注意事项
 
-## 注意事项
+[TOC]
 
 - **\*.global.less 表示该文件不会使用 cssModule 解析，如果需要使用 cssModule，文件不要以.global.less 结尾**
 
@@ -15,7 +15,11 @@
   ```jsx
   import styles from './index.less';
 
-  console.log(styles.userName);
+  const Demo = () => {
+    return <div className={styles.userName}>{styles.userName}</div>;
+  };
+
+  export default Demo;
   ```
 
 - **components 中的组件源码，开发中不能导入 node_modules 及 components 文件夹之外的代码，以及不能导入 README.mdx 和 examples 命名的文件夹下的代码，编译后不包含 README.mdx 和 examples**
@@ -49,12 +53,15 @@ import DemoRaw from './examples/default.jsx?raw';
 
 ## 在.mdx 中通过 案例代码 path （components 目录下代码所在位置） 预览组件及案例代码 Snapshot
 
-```jsx
+```md
 import Snapshot from '@/components/snapshot';
 
-// 案例1
+// 案例 1
+
 <Snapshot path="tag/examples/default" lang="jsx" />
-// 案例2
+
+// 案例 2
+
 <Snapshot path="tag/examples/bg" lang="tsx" />
 ```
 
@@ -70,5 +77,4 @@ import { Tag } from 'neko-ui';
 <div style={{ display: 'flex', height: 300 }}>
     <Tag>默认</Tag>
 </div>
-
 ```

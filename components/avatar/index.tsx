@@ -9,14 +9,8 @@ export interface AvatarProps extends React.HTMLAttributes<HTMLDivElement> {
   imgProps?: React.HTMLAttributes<HTMLImageElement>;
 }
 
-const Avatar: React.FC<AvatarProps> = ({
-  className,
-  src = 'https://gw.alipayobjects.com/zos/alicdn/HJtErOC0O/avatar.png',
-  alt,
-  imgProps = {},
-  ...props
-}) => {
-  const cls = useMemo(() => classNames([getPrefixCls('avatar'), className]), [className]);
+const Avatar: React.FC<AvatarProps> = ({ className, src, alt, imgProps = {}, ...props }) => {
+  const cls = useMemo(() => classNames(getPrefixCls('avatar'), className), [className]);
 
   return (
     <div className={cls} {...props}>

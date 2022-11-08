@@ -31,6 +31,15 @@ export type { ButtonProps, ButtonType } from './button';
 export { default as Input } from './input';
 export type { InputProps } from './input';
 
+export { default as Tooltip } from './tooltip';
+export type { TooltipProps, TooltipTriggerOption } from './tooltip';
+
+export { default as ColorPalette } from './color-palette';
+export type { ColorPaletteProps } from './color-palette';
+
+export { default as AlphaPicker } from './alpha-picker';
+export type { AlphaPickerProps } from './alpha-picker';
+
 export { default as getPrefixCls } from './get-prefix-cls';
 
 import './get-prefix-cls/index.less';

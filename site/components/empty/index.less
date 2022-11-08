@@ -1,9 +1,13 @@
 .empty {
   flex: 1;
-  width: 100%;
-  max-width: 1000px;
+  max-width: 1048px;
   margin: auto;
   padding: @distance;
+  border-radius: var(--border-radius-base);
+  background-color: var(--component-background,#fff);
+  transition-property: background-color;
+  transition-duration: @transition-duration;
+  transition-timing-function: @transition-timing-function;
 }
 
 .info {

@@ -19,11 +19,11 @@ const Input: React.FC<InputProps> = ({
 }) => {
   return (
     <span
-      className={classNames([
+      className={classNames(
         getPrefixCls('input-wrapper'),
         getPrefixCls(`input-${type}`),
-        className,
-      ])}
+        className
+      )}
     >
       {prefix && <span className={getPrefixCls('input-prefix')}>{prefix}</span>}
       <input value={value} className={getPrefixCls('input')} type={type} {...prpos} />

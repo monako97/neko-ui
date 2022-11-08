@@ -13,7 +13,11 @@ const Demo = () => {
           return <p key={i}>data-{i}</p>;
         })}
       </div>
-      <BackTop visibilityHeight={200} target={() => ref.current || document.body} />
+      <BackTop
+        visibilityHeight={200}
+        target={() => ref.current || document.body}
+        getPopupContainer={(node) => node || document.body}
+      />
     </div>
   );
 };
