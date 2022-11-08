@@ -1,6 +1,6 @@
 {
     "name": "neko-ui",
-    "version": "1.0.23",
+    "version": "1.0.24",
     "description": "Neko UI库",
     "main": "lib/index.js",
     "scripts": {
@@ -46,7 +46,8 @@
         "@moneko/common": "1.0.5",
         "katex": "0.16.3",
         "marked-completed": "1.2.1",
-        "react-photo-view": "1.2.2"
+        "react-photo-view": "1.2.2",
+        "tinycolor2": "1.4.2"
     },
     "resolutions": {
         "terser": "npm:@swc/core"

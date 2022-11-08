@@ -1,4 +1,12 @@
-/* stylelint-disable function-no-unknown */
+:root {
+    --tooltip-bg: rgba(255, 255, 255, 0.8);
+    --tooltip-shadow-color: rgba(0, 0, 0, 0.1);
+}
+
+[data-theme=dark] {
+    --tooltip-bg: rgba(0, 0, 0, 0.8);
+    --tooltip-shadow-color: rgba(255, 255, 255, 0.05);
+}
 .@{prefix-cls} {
     &-tooltip {
         position: relative;
@@ -9,26 +17,22 @@
         }
     }
 
-    @tooltip-portal-bg: #000;
-    @tooltip-portal-shadow-color: fade(@tooltip-portal-bg, 0.15);
-
     &-tooltip-portal {
-        --tooltip-bg: @tooltip-portal-bg;
-        --tooltip-shadow-color: @tooltip-portal-shadow-color;
         position: absolute;
         display: inline-block;
-        background: var(--tooltip-bg);
-        color: #fff;
+        background-color: var(--tooltip-bg);
+        color: var(--text-color);
         padding: 4px 8px;
         border-radius: 4px;
         font-size: 14px;
+        backdrop-filter: blur(16px);
         filter:
             drop-shadow(.5px 1px 4px var(--tooltip-shadow-color)) drop-shadow(1px 2px 8px var(--tooltip-shadow-color)) drop-shadow(2px 4px 16px var(--tooltip-shadow-color));
 
         &::before {
             content: '';
             position: absolute;
-            bottom: 1px;
+            bottom: 0;
             left: 0;
             right: 0;
             margin: auto;
@@ -48,6 +52,7 @@
     }
 
     &-tooltip-out {
+        pointer-events: none;
         animation: slide-up-out .3s forwards;
     }
 
@@ -57,6 +62,7 @@
     }
 
     &-tooltip-out-up {
+        pointer-events: none;
         animation: slide-down-out .3s forwards;
     }
 }

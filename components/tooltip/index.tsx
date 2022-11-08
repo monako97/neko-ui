@@ -24,7 +24,6 @@ export interface TooltipProps extends Omit<React.HTMLAttributes<HTMLDivElement>,
   overlayClassName?: string;
   overlayStyle?: React.CSSProperties;
   color?: string;
-  shadowColor?: string;
   /** 关闭后是否销毁 Tooltip */
   destroyInactive?: boolean;
 }
@@ -36,8 +35,7 @@ const Tooltip: React.FC<TooltipProps> = ({
   getPopupContainer,
   title,
   children,
-  color = '#000',
-  shadowColor = tinycolor(color).setAlpha(0.2).toRgbString(),
+  color,
   trigger = 'click',
   visible = null,
   destroyInactive = true,
@@ -141,6 +139,20 @@ const Tooltip: React.FC<TooltipProps> = ({
     };
   }, [close]);
 
+  const overlayStyles = useMemo(() => {
+    return Object.assign(
+      {
+        ...overlayStyle,
+        left: posi.left,
+        top: posi.top,
+      },
+      color && {
+        '--tooltip-bg': color,
+        '--tooltip-shadow-color': tinycolor(color).setAlpha(0.1).toRgbString(),
+      }
+    ) as React.CSSProperties;
+  }, [color, overlayStyle, posi.left, posi.top]);
+
   return (
     <React.Fragment>
       {(show !== null || !destroyInactive) &&
@@ -153,15 +165,7 @@ const Tooltip: React.FC<TooltipProps> = ({
               overlayClassName,
               getPrefixCls(`tooltip-${show ? 'in-up' : 'out-up'}`)
             )}
-            style={
-              {
-                ...overlayStyle,
-                left: posi.left,
-                top: posi.top,
-                '--tooltip-bg': color,
-                '--tooltip-shadow-color': shadowColor,
-              } as React.CSSProperties
-            }
+            style={overlayStyles}
           >
             {title}
           </div>,

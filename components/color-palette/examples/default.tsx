@@ -15,14 +15,11 @@ const Demo = () => {
           />
         }
         destroyInactive={false}
-        overlayStyle={{ padding: 8 }}
-        color="#fff"
-        shadowColor="rgba(0,0,0,0.1)"
+        overlayStyle={{ padding: 10 }}
       >
         <input
           type="text"
           disabled
-          value={val}
           style={{
             padding: 8,
             backgroundColor: val,

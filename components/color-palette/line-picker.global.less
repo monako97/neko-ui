@@ -1,0 +1,40 @@
+@picker-mark-size: 4px;
+
+.@{prefix-cls}-line-picker {
+  position: relative;
+  width: 100%;
+  height: 10px;
+  user-select: none;
+  margin-bottom: 4px;
+  border-radius: var(--border-radius-base);
+  cursor: pointer;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+  // &::after,
+  &::before {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    margin: auto;
+    content: '';
+    width: 6px;
+    height: 6px;
+    border: 2px solid var(--border-color-base);
+    border-radius: 50%;
+    display: block;
+    opacity: 1;
+    transform: translateX(var(--offset-x, 0));
+    cursor: inherit;
+    z-index: 1;
+    pointer-events: none;
+  }
+
+  canvas {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: 10px;
+  }
+}

@@ -1,8 +1,11 @@
 import { classNames } from '@moneko/common';
-import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { AlphaPicker } from '..';
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import AlphaPicker from './alpha-picker';
 import getPrefixCls from '../get-prefix-cls';
+import ColorLine from './color-line';
 import './index.global.less';
+import tinycolor from 'tinycolor2';
+import { Input } from '..';
 
 export interface ColorPaletteProps extends Omit<React.HTMLAttributes<HTMLDivElement>, 'onChange'> {
   value?: string;
@@ -17,15 +20,19 @@ const ColorPalette: React.FC<ColorPaletteProps> = ({
   onChange,
 }) => {
   const colorPicker = useRef<HTMLCanvasElement>(null);
-  const colorStrip = useRef<HTMLCanvasElement>(null);
+  const colorStrip = useRef<{ canvas: HTMLCanvasElement }>(null);
   const [rgb, setRgb] = useState({
     r: 255,
     g: 0,
     b: 0,
   });
   const [drag, setDrag] = useState(false);
-  const [dragColorStrip, setDragColorStrip] = useState(false);
   const [alpha, setAlpha] = useState(1);
+  const [colorValue, setColorValue] = useState({
+    r: 255,
+    g: 0,
+    b: 0,
+  });
 
   const fillGradient = useCallback((color: string) => {
     if (!colorPicker.current) return;
@@ -36,12 +43,11 @@ const ColorPalette: React.FC<ColorPaletteProps> = ({
     if (!ctx1) return;
     ctx1.fillStyle = color;
     ctx1.fillRect(0, 0, width, height);
-
-    if (!colorStrip.current) return;
-    const ctx2 = colorStrip.current.getContext('2d');
+    if (!colorStrip.current?.canvas) return;
+    const ctx2 = colorStrip.current.canvas.getContext('2d');
 
     if (!ctx2) return;
-    const grdWhite = ctx2.createLinearGradient(0, 0, colorStrip.current.width, 0);
+    const grdWhite = ctx2.createLinearGradient(0, 0, colorStrip.current.canvas.width, 0);
 
     grdWhite.addColorStop(0, 'rgba(255,255,255,1)');
     grdWhite.addColorStop(1, 'rgba(255,255,255,0)');
@@ -55,7 +61,6 @@ const ColorPalette: React.FC<ColorPaletteProps> = ({
     ctx1.fillStyle = grdBlack;
     ctx1.fillRect(0, 0, width, height);
   }, []);
-
   const initColorPicker = useCallback(
     (color: string) => {
       if (colorPicker.current) {
@@ -69,67 +74,6 @@ const ColorPalette: React.FC<ColorPaletteProps> = ({
     },
     [fillGradient]
   );
-  const initColorStrip = useCallback(() => {
-    if (colorStrip.current) {
-      const ctx2 = colorStrip.current.getContext('2d');
-
-      if (ctx2) {
-        ctx2.rect(0, 0, colorStrip.current.width, colorStrip.current.height);
-        const grd1 = ctx2.createLinearGradient(0, 0, colorStrip.current.width, 0);
-
-        grd1.addColorStop(0, 'rgba(255, 0, 0, 1)');
-        grd1.addColorStop(0.17, 'rgba(255, 255, 0, 1)');
-        grd1.addColorStop(0.34, 'rgba(0, 255, 0, 1)');
-        grd1.addColorStop(0.51, 'rgba(0, 255, 255, 1)');
-        grd1.addColorStop(0.68, 'rgba(0, 0, 255, 1)');
-        grd1.addColorStop(0.85, 'rgba(255, 0, 255, 1)');
-        grd1.addColorStop(1, 'rgba(255, 0, 0, 1)');
-        ctx2.fillStyle = grd1;
-        ctx2.fill();
-      }
-    }
-  }, []);
-  const changeColorStrip = useCallback(
-    ({ offsetX }: { offsetX: number; offsetY: number }) => {
-      if (colorStrip.current) {
-        const ctx2 = colorStrip.current?.getContext('2d');
-        const x = offsetX >= colorStrip.current.width ? offsetX - 1 : offsetX;
-
-        if (ctx2) {
-          const [r, g, b] = ctx2.getImageData(x, 0, 1, 1).data;
-
-          setRgb({ r, g, b });
-          fillGradient(`rgba(${r},${g},${b},1)`);
-
-          colorStrip.current?.parentElement?.style.setProperty('--offset-x', `${x}px`);
-          colorStrip.current?.parentElement?.parentElement?.style.setProperty(
-            '--offset-color',
-            `rgba(${r},${g},${b},1)`
-          );
-        }
-      }
-    },
-    [fillGradient]
-  );
-  const colorStripMouseDown = useCallback(
-    ({ nativeEvent: { offsetX, offsetY } }: CanvasMouseEvent) => {
-      setDragColorStrip(true);
-      changeColorStrip({ offsetX, offsetY });
-    },
-    [changeColorStrip]
-  );
-  const colorStripMouseMove = useCallback(
-    ({ nativeEvent: { offsetX, offsetY } }: CanvasMouseEvent) => {
-      if (dragColorStrip) {
-        changeColorStrip({ offsetX, offsetY });
-      }
-    },
-    [changeColorStrip, dragColorStrip]
-  );
-  const colorStripMouseUp = useCallback(() => {
-    setDragColorStrip(false);
-  }, []);
-
   const changeColor = useCallback(({ nativeEvent: { offsetX, offsetY } }: CanvasMouseEvent) => {
     const ctx1 = colorPicker.current?.getContext('2d');
 
@@ -138,7 +82,6 @@ const ColorPalette: React.FC<ColorPaletteProps> = ({
 
       colorPicker.current?.parentElement?.style.setProperty('--offset-x', `${offsetX}px`);
       colorPicker.current?.parentElement?.style.setProperty('--offset-y', `${offsetY}px`);
-
       setRgb({ r, g, b });
     }
   }, []);
@@ -164,15 +107,30 @@ const ColorPalette: React.FC<ColorPaletteProps> = ({
   }, []);
 
   useEffect(() => {
-    initColorStrip();
-  }, [initColorStrip]);
-  useEffect(() => {
     initColorPicker(value);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   useEffect(() => {
+    const { r, g, b } = colorValue;
+
+    fillGradient(`rgba(${r},${g},${b},1)`);
+    setRgb({ r, g, b });
+  }, [colorValue, fillGradient]);
+  useEffect(() => {
+    colorPicker.current?.parentElement?.parentElement?.style.setProperty(
+      '--offset-color',
+      `rgb(${rgb.r},${rgb.g},${rgb.b})`
+    );
+    colorPicker.current?.parentElement?.parentElement?.style.setProperty(
+      '--offset-alpha',
+      alpha as unknown as string
+    );
     onChange?.(`rgba(${rgb.r},${rgb.g},${rgb.b},${alpha})`);
   }, [rgb, alpha, onChange]);
+  const hex = useMemo(
+    () => tinycolor(`rgb(${rgb.r},${rgb.g},${rgb.b})`).toHex(),
+    [rgb.b, rgb.g, rgb.r]
+  );
 
   return (
     <div className={classNames(getPrefixCls('color-palette'), className)}>
@@ -185,16 +143,35 @@ const ColorPalette: React.FC<ColorPaletteProps> = ({
       >
         <canvas ref={colorPicker} width={200} />
       </article>
-      <article
-        className={getPrefixCls('color-strip')}
-        onMouseDown={colorStripMouseDown}
-        onMouseUp={colorStripMouseUp}
-        onMouseOut={colorStripMouseUp}
-        onMouseMove={colorStripMouseMove}
-      >
-        <canvas ref={colorStrip} width={200} />
-      </article>
-      <AlphaPicker value={alpha} onChange={setAlpha} />
+      <div className={getPrefixCls('color-setting')}>
+        <div className={getPrefixCls('color-strip')}>
+          <ColorLine ref={colorStrip} value={colorValue} onChange={setColorValue} />
+          <AlphaPicker value={alpha} onChange={setAlpha} />
+        </div>
+        <div className={getPrefixCls('color-preview')} />
+      </div>
+      <div className={getPrefixCls('color-form')}>
+        <div className={getPrefixCls('color-input')}>
+          <Input name="hex" size="small" value={hex} />
+          <label htmlFor="hex">Hex</label>
+        </div>
+        <div className={getPrefixCls('color-input')}>
+          <Input name="r" size="small" value={rgb.r} />
+          <label htmlFor="r">R</label>
+        </div>
+        <div className={getPrefixCls('color-input')}>
+          <Input name="g" size="small" value={rgb.g} />
+          <label htmlFor="g">G</label>
+        </div>
+        <div className={getPrefixCls('color-input')}>
+          <Input name="b" size="small" value={rgb.b} />
+          <label htmlFor="b">B</label>
+        </div>
+        <div className={getPrefixCls('color-input')}>
+          <Input name="a" size="small" value={parseInt((alpha * 100).toFixed(2))} />
+          <label htmlFor="a">A</label>
+        </div>
+      </div>
     </div>
   );
 };
