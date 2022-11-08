@@ -20,7 +20,6 @@ describe('test Tooltip', () => {
         getPopupContainer={() => document.body}
         overlayStyle={{ padding: 8 }}
         color="red"
-        shadowColor="red"
       >
         Tooltip
       </Tooltip>

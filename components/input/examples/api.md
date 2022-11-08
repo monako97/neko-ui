@@ -6,3 +6,4 @@
 | style     | 自定义样式表 | React.CSSProperties | -      | -    |
 | suffix    | 前缀         | React.ReactNode     | -      | -    |
 | prefix    | 后缀         | React.ReactNode     | -      | -    |
+| size      | 组件尺寸     | `small`             | -      | -    |
