@@ -5,7 +5,7 @@ import tinycolor from 'tinycolor2';
 import getPrefixCls from '../get-prefix-cls';
 import './index.global.less';
 
-export type TooltipTriggerOption = 'hover' | 'click' | 'focus' | 'contextMenu';
+export type TooltipTriggerOption = 'hover' | 'click' | 'contextMenu';
 type TriggerOptionMap = Record<
   TooltipTriggerOption,
   keyof React.DOMAttributes<HTMLSpanElement> | null
@@ -18,9 +18,9 @@ export interface TooltipProps extends Omit<React.HTMLAttributes<HTMLDivElement>,
   getPopupContainer?: (node?: HTMLElement | null) => HTMLElement;
   /** 触发行为,可使用数组设置多个触发行为 */
   trigger?: TooltipTriggerOption | TooltipTriggerOption[];
-  visible?: boolean;
+  visible?: boolean | null;
   // eslint-disable-next-line no-unused-vars
-  onVisibleChange?: (visible: boolean) => void;
+  onVisibleChange?: (visible: boolean | null) => void;
   overlayClassName?: string;
   overlayStyle?: React.CSSProperties;
   color?: string;
@@ -48,15 +48,17 @@ const Tooltip: React.FC<TooltipProps> = ({
   const [posi, setPosi] = useState({ left: -9999, top: -9999 });
 
   useEffect(() => {
-    if (visible !== !show) {
-      onVisibleChange?.(Boolean(show));
-    }
-  }, [onVisibleChange, show, visible]);
+    onVisibleChange?.(show);
+  }, [onVisibleChange, show]);
+
+  useEffect(() => {
+    setShow(visible);
+  }, [visible]);
   useEffect(() => {
     if (show && ref.current) {
       ref.current.style.zIndex = getMaxZindex().toString();
     }
-  }, [onVisibleChange, show]);
+  }, [show]);
   const exit = useCallback(() => {
     if (show === false) {
       setShow(null);
@@ -64,6 +66,8 @@ const Tooltip: React.FC<TooltipProps> = ({
   }, [show]);
   const close = useCallback(
     (e: MouseEvent) => {
+      e.preventDefault();
+      e.stopPropagation();
       if (show && !ref.current?.contains(e.target as Node)) {
         setShow(false);
       }
@@ -72,13 +76,13 @@ const Tooltip: React.FC<TooltipProps> = ({
   );
 
   useEffect(() => {
-    if (!show) return;
-    const elRect = childRef.current?.getBoundingClientRect();
-    const portalRectHeight = ref.current?.getBoundingClientRect();
+    if (!show || !ref.current || !childRef.current) return;
+    const elRect = childRef.current.getBoundingClientRect();
+    const portalRectHeight = ref.current.getBoundingClientRect();
 
     if (elRect && portalRectHeight) {
-      const offsetY = portalRectHeight.height + elRect.height;
-      const offsetX = portalRectHeight.width / 2 - elRect.width / 2;
+      const offsetY = ref.current.offsetHeight + elRect.height / 2;
+      const offsetX = ref.current.offsetWidth / 2 - elRect.width / 2;
 
       setPosi({
         left: elRect.left - offsetX,
@@ -98,13 +102,11 @@ const Tooltip: React.FC<TooltipProps> = ({
     };
     const openEvent: TriggerOptionMap = {
       click: 'onClick',
-      focus: 'onFocus',
       hover: 'onMouseOver',
       contextMenu: 'onContextMenu',
     };
     const closeEvent: TriggerOptionMap = {
       hover: 'onMouseOut',
-      focus: 'onBlur',
       click: null,
       contextMenu: null,
     };
@@ -175,7 +177,7 @@ const Tooltip: React.FC<TooltipProps> = ({
         {...childrenProps}
         className={classNames(getPrefixCls('tooltip'), className)}
         ref={childRef}
-        tabIndex={0}
+        // tabIndex={0}
       >
         {children}
       </span>

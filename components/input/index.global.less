@@ -7,17 +7,6 @@
     text-overflow: ellipsis;
     overflow: hidden;
 
-    &[type="number"] {
-        width: 75px;
-        padding: 0 0 0 10px;
-    }    
-
-    &[type="button"],
-    &[type="submit"],
-    &[type="reset"] {
-        cursor: pointer;
-    }
-
     &-wrapper {
         color: var(--text-color, rgba(0, 0, 0, 0.85));
         font-size: 14px;
@@ -68,5 +57,14 @@
         font-size: 12px;
         line-height: 20px;
         padding: 2px;
+
+        input {
+            padding: 1px 0;
+        }
+    }
+
+    &-large {
+        font-size: 16px;
+        padding: 6px 16px;
     }
 }

@@ -31,12 +31,20 @@ export type { ButtonProps, ButtonType } from './button';
 export { default as Input } from './input';
 export type { InputProps } from './input';
 
+export { default as InputNumber } from './input-number';
+export type { InputNumberProps } from './input-number';
+
 export { default as Tooltip } from './tooltip';
 export type { TooltipProps, TooltipTriggerOption } from './tooltip';
 
 export { default as ColorPalette } from './color-palette';
 export type { ColorPaletteProps } from './color-palette';
 
+export { default as ColorPicker } from './color-picker';
+export type { ColorPickerProps } from './color-picker';
+
 export { default as getPrefixCls } from './get-prefix-cls';
 
 import './get-prefix-cls/index.less';
+
+export type ComponentSize = 'small' | 'normal' | 'large';

@@ -81,7 +81,6 @@ const Snapshot: React.FC<{ path: string; lang: string; style?: string; hideSourc
                 '/App.tsx': code,
                 '/styles.css': {
                   code: codesandboxCss,
-                  hidden: true,
                 },
                 '/index.tsx': {
                   code: codesandboxEntry,

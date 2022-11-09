@@ -5,7 +5,7 @@
         user-select: none;
     }
 
-    &-picker {
+    &-svpanel {
         position: relative;
         display: block;
         width: 200px;
@@ -23,17 +23,17 @@
         }
 
         &::after {
-            content: '';
-            width: 2px;
-            height: 2px;
-            border-radius: 50%;
-            border: 1px solid;
-            display: block;
             position: absolute;
             top: var(--offset-y, 1px);
             left: var(--offset-x, 199px);
+            width: 4px;
+            height: 4px;
+            border-radius: 50%;
+            box-shadow: 0 0 0 1.5px #fff,inset 0 0 1px 1px rgba(0,0,0,.3),0 0 1px 2px rgba(0,0,0,.4);
+            display: block;
+            transform: translate(-3px,-2px);
+            content: '';
             pointer-events: none;
-            transform: translate3d(-50%, -50%, 1px);
         }
     }
 

@@ -1,0 +1,29 @@
+export const basic = {
+  type: '数据录入',
+  title: '数字输入框',
+  subtitle: 'InputNumber',
+};
+
+# 数字输入框
+
+> 在页面中输入数字
+
+import Snapshot from '@/components/snapshot';
+
+## 简单使用
+
+<Snapshot path="input-number/examples/default" lang="tsx" />
+
+## 最大值 & 最小值
+
+<Snapshot path="input-number/examples/maxmin" lang="tsx" />
+
+## formatter
+
+<Snapshot path="input-number/examples/formatter" lang="tsx" />
+
+import MBox from '../markdown';
+
+import api from './examples/api.md?raw';
+
+<MBox text={api} />

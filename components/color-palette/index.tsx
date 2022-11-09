@@ -1,11 +1,10 @@
 import { classNames } from '@moneko/common';
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import AlphaPicker from './alpha-picker';
-import getPrefixCls from '../get-prefix-cls';
-import ColorLine from './color-line';
+import AlphaSlider from './alpha-slider';
+import { getPrefixCls, Input, InputNumber } from 'neko-ui';
+import HueSlider from './hue-slider';
 import './index.global.less';
 import tinycolor from 'tinycolor2';
-import { Input } from '..';
 
 export interface ColorPaletteProps extends Omit<React.HTMLAttributes<HTMLDivElement>, 'onChange'> {
   value?: string;
@@ -19,71 +18,85 @@ const ColorPalette: React.FC<ColorPaletteProps> = ({
   value = 'rgba(255,0,0,1)',
   onChange,
 }) => {
-  const colorPicker = useRef<HTMLCanvasElement>(null);
-  const colorStrip = useRef<{ canvas: HTMLCanvasElement }>(null);
+  const colorPaletteRef = useRef<HTMLDivElement>(null);
+  const colorPickerRef = useRef<HTMLCanvasElement>(null);
+  const hueSlider = useRef<{ canvas: HTMLCanvasElement }>(null);
   const [rgb, setRgb] = useState({
     r: 255,
     g: 0,
     b: 0,
   });
+  const [svPanelRect, setSvPanelRect] = useState({
+    width: 200,
+    height: 150,
+  });
   const [drag, setDrag] = useState(false);
   const [alpha, setAlpha] = useState(tinycolor(value).getAlpha());
-  const [colorValue, setColorValue] = useState({
+  const [hue, setHue] = useState({
     r: 255,
     g: 0,
     b: 0,
   });
-  const fillGradient = useCallback((color: string) => {
-    if (!colorPicker.current) return;
-    const ctx1 = colorPicker.current.getContext('2d');
-    const width = colorPicker.current.width;
-    const height = colorPicker.current.height;
+  const fillGradient = useCallback(
+    (color: string) => {
+      const ctx1 = colorPickerRef.current?.getContext('2d');
 
-    if (!ctx1) return;
-    ctx1.fillStyle = color;
-    ctx1.fillRect(0, 0, width, height);
-    if (!colorStrip.current?.canvas) return;
-    const ctx2 = colorStrip.current.canvas.getContext('2d');
+      if (!ctx1) return;
+      ctx1.fillStyle = color;
+      ctx1.fillRect(0, 0, svPanelRect.width, svPanelRect.height);
+      if (!hueSlider.current?.canvas) return;
+      const ctx2 = hueSlider.current.canvas.getContext('2d');
 
-    if (!ctx2) return;
-    const grdWhite = ctx2.createLinearGradient(0, 0, colorStrip.current.canvas.width, 0);
+      if (!ctx2) return;
+      const grdWhite = ctx2.createLinearGradient(0, 0, hueSlider.current.canvas.width, 0);
 
-    grdWhite.addColorStop(0, 'rgba(255,255,255,1)');
-    grdWhite.addColorStop(1, 'rgba(255,255,255,0)');
-    ctx1.fillStyle = grdWhite;
-    ctx1.fillRect(0, 0, width, height);
+      grdWhite.addColorStop(0, 'rgba(255,255,255,1)');
+      grdWhite.addColorStop(1, 'rgba(255,255,255,0)');
+      ctx1.fillStyle = grdWhite;
+      ctx1.fillRect(0, 0, svPanelRect.width, svPanelRect.height);
 
-    const grdBlack = ctx2.createLinearGradient(0, 0, 0, height);
+      const grdBlack = ctx2.createLinearGradient(0, 0, 0, svPanelRect.height);
 
-    grdBlack.addColorStop(0, 'rgba(0,0,0,0)');
-    grdBlack.addColorStop(1, 'rgba(0,0,0,1)');
-    ctx1.fillStyle = grdBlack;
-    ctx1.fillRect(0, 0, width, height);
-  }, []);
+      grdBlack.addColorStop(0, 'rgba(0,0,0,0)');
+      grdBlack.addColorStop(1, 'rgba(0,0,0,1)');
+      ctx1.fillStyle = grdBlack;
+      ctx1.fillRect(0, 0, svPanelRect.width, svPanelRect.height);
+    },
+    [svPanelRect.height, svPanelRect.width]
+  );
   const initColorPicker = useCallback(
     (color: string) => {
-      if (colorPicker.current) {
-        const ctx1 = colorPicker.current.getContext('2d');
+      const ctx1 = colorPickerRef.current?.getContext('2d');
 
-        if (ctx1) {
-          ctx1.rect(0, 0, colorPicker.current.width || 0, colorPicker.current.height || 0);
-          fillGradient(color);
-        }
+      if (ctx1) {
+        ctx1.rect(0, 0, svPanelRect.width, svPanelRect.height);
+        fillGradient(color);
       }
     },
-    [fillGradient]
+    [fillGradient, svPanelRect.height, svPanelRect.width]
   );
-  const changeColor = useCallback(({ nativeEvent: { offsetX, offsetY } }: CanvasMouseEvent) => {
-    const ctx1 = colorPicker.current?.getContext('2d');
+  const changeColor = useCallback(
+    ({ nativeEvent: { offsetX, offsetY } }: CanvasMouseEvent) => {
+      const ctx1 = colorPickerRef.current?.getContext('2d');
 
-    if (ctx1) {
-      const [r, g, b] = ctx1.getImageData(offsetX, offsetY, 1, 1).data;
+      if (ctx1) {
+        let x = offsetX;
 
-      colorPicker.current?.parentElement?.style.setProperty('--offset-x', `${offsetX}px`);
-      colorPicker.current?.parentElement?.style.setProperty('--offset-y', `${offsetY}px`);
-      setRgb({ r, g, b });
-    }
-  }, []);
+        if (offsetX >= svPanelRect.width) {
+          x = offsetX - 1;
+        }
+        if (x < 0) {
+          x = 0;
+        }
+        const [r, g, b] = ctx1.getImageData(x, offsetY, 1, 1).data;
+
+        colorPickerRef.current?.parentElement?.style.setProperty('--offset-x', `${offsetX}px`);
+        colorPickerRef.current?.parentElement?.style.setProperty('--offset-y', `${offsetY}px`);
+        setRgb({ r, g, b });
+      }
+    },
+    [svPanelRect.width]
+  );
   const colorPickerMouseDown = useCallback(
     (e: CanvasMouseEvent) => {
       setDrag(true);
@@ -110,79 +123,135 @@ const ColorPalette: React.FC<ColorPaletteProps> = ({
   }, []);
 
   useEffect(() => {
-    const { r, g, b } = colorValue;
+    const { r, g, b } = hue;
 
     fillGradient(`rgba(${r},${g},${b},1)`);
     setRgb({ r, g, b });
-  }, [colorValue, fillGradient]);
+  }, [hue, fillGradient]);
 
   useEffect(() => {
-    colorPicker.current?.parentElement?.parentElement?.style.setProperty(
-      '--offset-color',
-      `rgb(${rgb.r},${rgb.g},${rgb.b})`
-    );
-    colorPicker.current?.parentElement?.parentElement?.style.setProperty(
-      '--offset-alpha',
-      alpha as unknown as string
-    );
+    colorPaletteRef.current?.style.setProperty('--offset-color', `rgb(${rgb.r},${rgb.g},${rgb.b})`);
+    colorPaletteRef.current?.style.setProperty('--offset-alpha', alpha as unknown as string);
     onChange?.(`rgba(${rgb.r},${rgb.g},${rgb.b},${alpha})`);
   }, [rgb, alpha, onChange]);
-  const hex = useMemo(
-    () => tinycolor(`rgb(${rgb.r},${rgb.g},${rgb.b})`).toHex(),
-    [rgb.b, rgb.g, rgb.r]
-  );
+  const hex = useMemo(() => tinycolor(value).toHex(), [value]);
 
   return (
-    <div className={classNames(getPrefixCls('color-palette'), className)}>
+    <div ref={colorPaletteRef} className={classNames(getPrefixCls('color-palette'), className)}>
       <article
-        className={getPrefixCls('color-picker')}
+        className={getPrefixCls('color-svpanel')}
         onMouseDown={colorPickerMouseDown}
         onMouseUp={colorPickerMouseUp}
         onMouseOut={colorPickerMouseUp}
         onMouseMove={colorPickerMouseMove}
+        ref={(e) => {
+          if (e && svPanelRect.width !== e.offsetWidth && svPanelRect.height !== e.offsetHeight) {
+            setSvPanelRect({
+              width: e.offsetWidth,
+              height: e.offsetHeight,
+            });
+          }
+        }}
       >
-        <canvas ref={colorPicker} width={200} />
+        <canvas ref={colorPickerRef} width={svPanelRect.width} />
       </article>
       <div className={getPrefixCls('color-setting')}>
         <div className={getPrefixCls('color-strip')}>
-          <ColorLine ref={colorStrip} value={colorValue} onChange={setColorValue} />
-          <AlphaPicker value={alpha} onChange={setAlpha} />
+          <HueSlider ref={hueSlider} value={hue} onChange={setHue} />
+          <AlphaSlider value={alpha} onChange={setAlpha} />
         </div>
         <div className={getPrefixCls('color-preview')} />
       </div>
       <div className={getPrefixCls('color-form')}>
         <div className={getPrefixCls('color-input')}>
-          <Input name="hex" size="small" value={hex} />
+          <Input
+            name="hex"
+            size="small"
+            formatter={(v) => `#${v}`}
+            parser={(v) => v?.toString().replace(/#/, '')}
+            value={hex}
+            onChange={(v) => {
+              if (v) {
+                const { r, g, b } = tinycolor(v as string).toRgb();
+
+                setRgb({ r, g, b });
+              }
+            }}
+          />
           <label htmlFor="hex">Hex</label>
         </div>
         <div className={getPrefixCls('color-input')}>
-          <Input name="r" size="small" value={rgb.r} />
+          <InputNumber
+            name="r"
+            size="small"
+            min={0}
+            max={255}
+            value={rgb.r}
+            onChange={(v) => {
+              setRgb({ ...rgb, r: v || 0 });
+            }}
+          />
           <label htmlFor="r">R</label>
         </div>
         <div className={getPrefixCls('color-input')}>
-          <Input name="g" size="small" value={rgb.g} />
+          <InputNumber
+            name="g"
+            size="small"
+            min={0}
+            max={255}
+            value={rgb.g}
+            onChange={(v) => {
+              setRgb({ ...rgb, g: v || 0 });
+            }}
+          />
           <label htmlFor="g">G</label>
         </div>
         <div className={getPrefixCls('color-input')}>
-          <Input name="b" size="small" value={rgb.b} />
+          <InputNumber
+            name="b"
+            size="small"
+            min={0}
+            max={255}
+            value={rgb.b}
+            onChange={(v) => {
+              setRgb({ ...rgb, b: v || 0 });
+            }}
+          />
           <label htmlFor="b">B</label>
         </div>
         <div className={getPrefixCls('color-input')}>
-          <Input
+          <InputNumber
             name="a"
             size="small"
-            value={parseInt((alpha * 100).toFixed(2))}
-            onChange={(e) => {
-              let val = parseInt(e.target.value) / 100;
+            value={alpha}
+            formatter={(v) => {
+              let _val = v || 0;
 
-              if (isNaN(val)) return;
-              if (val < 0) {
-                val = 0;
+              if (typeof _val === 'string') {
+                _val = parseFloat(_val.replace(/[^\d]/g, ''));
               }
-              if (val > 1) {
-                val = 1;
+              const val = (_val * 100).toFixed();
+
+              return v ? parseInt(val) : v;
+            }}
+            // parser={(v) => {
+            //   let _val = v;
+
+            //   if (typeof v === 'string') {
+            //     _val = v.replace(/[^\d]/g, '');
+            //   }
+            //   const val = (_val as number) / 100;
+
+            //   console.log(_val);
+            //   return isNaN(val) ? _val : val;
+            // }}
+            step={0.01}
+            min={0}
+            max={1}
+            onChange={(v) => {
+              if (typeof v === 'number') {
+                setAlpha(v);
               }
-              setAlpha(val);
             }}
           />
           <label htmlFor="a">A</label>

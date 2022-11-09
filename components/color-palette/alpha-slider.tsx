@@ -1,15 +1,15 @@
 import { classNames } from '@moneko/common';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
-import getPrefixCls from '../get-prefix-cls';
-import './alpha-picker.global.less';
+import { getPrefixCls } from 'neko-ui';
+import './alpha-slider.global.less';
 
-export interface AlphaPickerProps extends Omit<React.HTMLAttributes<HTMLDivElement>, 'onChange'> {
+export interface AlphaSliderProps extends Omit<React.HTMLAttributes<HTMLDivElement>, 'onChange'> {
   value?: number;
   // eslint-disable-next-line no-unused-vars
   onChange?: (alpha: number) => void;
 }
 
-const AlphaPicker: React.FC<AlphaPickerProps> = ({ className, value = 1, onChange }) => {
+const AlphaSlider: React.FC<AlphaSliderProps> = ({ className, value = 1, onChange }) => {
   const alphaStrip = useRef<HTMLDivElement>(null);
   const [dragAlphaStrip, setDragAlphaStrip] = useState(false);
   const [alpha, setAlpha] = useState(value);
@@ -17,8 +17,8 @@ const AlphaPicker: React.FC<AlphaPickerProps> = ({ className, value = 1, onChang
   const offsetRef = useRef<number>(offset);
 
   const alphaChange = useCallback(() => {
-    const maxOffset = (alphaStrip.current?.offsetWidth || 10) - 10;
-    let val = offsetRef.current / maxOffset;
+    const maxOffset = (alphaStrip.current?.offsetWidth || 172) - 6;
+    let val = parseFloat((offsetRef.current / maxOffset).toFixed(2));
 
     if (val < 0) {
       val = 0;
@@ -48,7 +48,7 @@ const AlphaPicker: React.FC<AlphaPickerProps> = ({ className, value = 1, onChang
   const alphaMouseMove = useCallback(
     ({ movementX }: MouseEvent) => {
       if (dragAlphaStrip) {
-        const maxOffset = (alphaStrip.current?.offsetWidth || 10) - 10;
+        const maxOffset = (alphaStrip.current?.offsetWidth || 172) - 6;
         let _offset = offsetRef.current + movementX;
 
         if (_offset < 0) {
@@ -71,7 +71,7 @@ const AlphaPicker: React.FC<AlphaPickerProps> = ({ className, value = 1, onChang
   }, []);
 
   useEffect(() => {
-    const maxOffset = (alphaStrip.current?.offsetWidth || 172) - 10;
+    const maxOffset = (alphaStrip.current?.offsetWidth || 172) - 6;
     const _offset = alpha * maxOffset;
 
     Object.assign(offsetRef, {
@@ -98,7 +98,7 @@ const AlphaPicker: React.FC<AlphaPickerProps> = ({ className, value = 1, onChang
   return (
     <div
       ref={alphaStrip}
-      className={classNames(getPrefixCls('line-picker'), className)}
+      className={classNames(getPrefixCls('slider-picker'), className)}
       onMouseDown={alphaMouseDown}
       style={
         {
@@ -106,9 +106,9 @@ const AlphaPicker: React.FC<AlphaPickerProps> = ({ className, value = 1, onChang
         } as React.CSSProperties
       }
     >
-      <div className={getPrefixCls('alpha-strip')} />
+      <div className={getPrefixCls('alpha-slider')} />
     </div>
   );
 };
 
-export default AlphaPicker;
+export default AlphaSlider;

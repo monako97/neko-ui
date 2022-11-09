@@ -1,7 +1,7 @@
 import { classNames } from '@moneko/common';
 import React, { useCallback, useEffect, useImperativeHandle, useRef, useState } from 'react';
-import getPrefixCls from '../get-prefix-cls';
-import './color-line.global.less';
+import { getPrefixCls } from 'neko-ui';
+import './hue-slider.global.less';
 
 type RGB = {
   r: number;
@@ -9,32 +9,34 @@ type RGB = {
   b: number;
 };
 
-export interface ColorLineProps extends Omit<React.HTMLAttributes<HTMLElement>, 'onChange'> {
+export interface HueSliderProps extends Omit<React.HTMLAttributes<HTMLElement>, 'onChange'> {
   value?: RGB;
   // eslint-disable-next-line no-unused-vars
   onChange?: (color: RGB) => void;
 }
+
 type CanvasMouseEvent = React.MouseEvent<HTMLDivElement>;
-type ColorLineInstance = {
+
+export type HueInstance = {
   canvas?: HTMLCanvasElement | null;
 };
 
-const ColorLine: React.ForwardRefRenderFunction<ColorLineInstance, ColorLineProps> = (
+const HueSlider: React.ForwardRefRenderFunction<HueInstance, HueSliderProps> = (
   { className, value = { r: 255, g: 0, b: 255 }, onChange, ...props },
   ref
 ) => {
-  const colorLine = useRef<HTMLCanvasElement>(null);
+  const hueSlider = useRef<HTMLCanvasElement>(null);
   const [color, setColor] = useState(value);
   const [drag, setDrag] = useState(false);
   const [width, setWidth] = useState(172);
   const [offset, setOffset] = useState(0);
   const offsetRef = useRef<number>(offset);
   const initStrip = useCallback(() => {
-    if (!colorLine.current) return;
-    const ctx2 = colorLine.current.getContext('2d');
+    if (!hueSlider.current) return;
+    const ctx2 = hueSlider.current.getContext('2d');
 
     if (ctx2) {
-      ctx2.rect(0, 0, width, colorLine.current.height);
+      ctx2.rect(0, 0, width, hueSlider.current.height);
       const grd1 = ctx2.createLinearGradient(0, 0, width, 0);
 
       grd1.addColorStop(0, 'rgba(255, 0, 0, 1)');
@@ -48,8 +50,8 @@ const ColorLine: React.ForwardRefRenderFunction<ColorLineInstance, ColorLineProp
       ctx2.fill();
     }
   }, [width]);
-  const changeColorLine = useCallback(() => {
-    const ctx2 = colorLine.current?.getContext('2d');
+  const changeHue = useCallback(() => {
+    const ctx2 = hueSlider.current?.getContext('2d');
 
     if (ctx2) {
       const [r, g, b] = ctx2.getImageData(offsetRef.current, 0, 1, 1).data;
@@ -66,14 +68,14 @@ const ColorLine: React.ForwardRefRenderFunction<ColorLineInstance, ColorLineProp
       Object.assign(offsetRef, {
         current: _offset,
       });
-      changeColorLine();
+      changeHue();
     },
-    [changeColorLine]
+    [changeHue]
   );
   const onMouseMove = useCallback(
     ({ movementX }: MouseEvent) => {
       if (drag) {
-        const maxOffset = width - 10;
+        const maxOffset = width - 6;
         let _offset = offsetRef.current + movementX;
 
         if (_offset < 0) {
@@ -85,11 +87,11 @@ const ColorLine: React.ForwardRefRenderFunction<ColorLineInstance, ColorLineProp
         Object.assign(offsetRef, {
           current: _offset,
         });
-        changeColorLine();
+        changeHue();
         setOffset(_offset);
       }
     },
-    [changeColorLine, drag, width]
+    [changeHue, drag, width]
   );
   const onMouseUp = useCallback(() => {
     setDrag(false);
@@ -103,7 +105,7 @@ const ColorLine: React.ForwardRefRenderFunction<ColorLineInstance, ColorLineProp
   }, [onChange, color]);
 
   useImperativeHandle(ref, () => ({
-    canvas: colorLine.current,
+    canvas: hueSlider.current,
   }));
   useEffect(() => {
     document.body.addEventListener('mouseup', onMouseUp, false);
@@ -127,12 +129,12 @@ const ColorLine: React.ForwardRefRenderFunction<ColorLineInstance, ColorLineProp
           '--offset-x': `${offset}px`,
         } as React.CSSProperties
       }
-      className={classNames(getPrefixCls('line-picker'), className)}
+      className={classNames(getPrefixCls('slider-picker'), className)}
       onMouseDown={onMouseDown}
     >
-      <canvas ref={colorLine} width={width} />
+      <canvas ref={hueSlider} width={width} />
     </div>
   );
 };
 
-export default React.forwardRef(ColorLine);
+export default React.forwardRef(HueSlider);
