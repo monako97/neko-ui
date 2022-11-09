@@ -1,6 +1,6 @@
 import { classNames } from '@moneko/common';
 import React, { useCallback, useEffect, useImperativeHandle, useRef, useState } from 'react';
-import { getPrefixCls } from 'neko-ui';
+import getPrefixCls from '../get-prefix-cls';
 import './hue-slider.global.less';
 
 type RGB = {
@@ -54,9 +54,9 @@ const HueSlider: React.ForwardRefRenderFunction<HueInstance, HueSliderProps> = (
     const ctx2 = hueSlider.current?.getContext('2d');
 
     if (ctx2) {
-      const [r, g, b] = ctx2.getImageData(offsetRef.current, 0, 1, 1).data;
+      const rgbData = ctx2.getImageData(offsetRef.current, 0, 1, 1).data;
 
-      setColor({ r, g, b });
+      setColor({ r: rgbData[0], g: rgbData[1], b: rgbData[2] });
     }
   }, []);
   const onMouseDown = useCallback(

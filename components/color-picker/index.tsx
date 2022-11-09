@@ -1,7 +1,9 @@
 import React from 'react';
 import { classNames } from '@moneko/common';
-import { ColorPalette, getPrefixCls, Tooltip } from 'neko-ui';
-import type { ColorPaletteProps, ComponentSize } from 'neko-ui';
+import ColorPalette from '../color-palette';
+import Tooltip from '../tooltip';
+import getPrefixCls from '../get-prefix-cls';
+import type { ColorPaletteProps, ComponentSize } from '../index';
 import './index.global.less';
 
 export interface ColorPickerProps extends ColorPaletteProps {

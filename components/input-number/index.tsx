@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { Input } from 'neko-ui';
-import type { InputProps } from 'neko-ui';
+import Input from '../input';
+import type { InputProps } from '../input';
 import './index.global.less';
 
 export interface InputNumberProps extends Omit<InputProps, 'value' | 'onChange'> {

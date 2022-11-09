@@ -1,6 +1,6 @@
 import { classNames } from '@moneko/common';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { getPrefixCls } from 'neko-ui';
+import getPrefixCls from '../get-prefix-cls';
 import './alpha-slider.global.less';
 
 export interface AlphaSliderProps extends Omit<React.HTMLAttributes<HTMLDivElement>, 'onChange'> {

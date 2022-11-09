@@ -52,33 +52,11 @@ describe('test Tooltip', () => {
     });
     fireEvent.animationEnd(screen.getByTestId('tooltip-test-id'));
   });
-  it('Tooltip focus', async () => {
-    render(
-      <Tooltip
-        data-testid="tooltip-test-id"
-        className="tooltip-cls"
-        overlayClassName="tooltip-overlay"
-        title="Tooltip focus"
-        trigger="focus"
-      >
-        Tooltip
-      </Tooltip>
-    );
-
-    await act(async () => {
-      fireEvent.focus(screen.getByTestId('tooltip-test-id'));
-    });
-    await act(async () => {
-      fireEvent.blur(screen.getByTestId('tooltip-test-id'));
-    });
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    fireEvent.animationEnd(document.querySelector('.tooltip-overlay')!);
-  });
   it('Tooltip contextMenu', async () => {
     render(
       <Tooltip
         data-testid="tooltip-test-id"
-        className="tooltip-cls"
+        overlayClassName="tooltip-overlay"
         title="Tooltip contextMenu"
         trigger={['contextMenu', 'click']}
       >
@@ -93,6 +71,6 @@ describe('test Tooltip', () => {
       fireEvent.click(document.body);
     });
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    fireEvent.animationEnd(document.querySelector('.tooltip-cls')!);
+    fireEvent.animationEnd(document.querySelector('.tooltip-overlay')!);
   });
 });

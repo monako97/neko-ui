@@ -1,7 +1,9 @@
 import { classNames } from '@moneko/common';
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import AlphaSlider from './alpha-slider';
-import { getPrefixCls, Input, InputNumber } from 'neko-ui';
+import getPrefixCls from '../get-prefix-cls';
+import Input from '../input';
+import InputNumber from '../input-number';
 import HueSlider from './hue-slider';
 import './index.global.less';
 import tinycolor from 'tinycolor2';
@@ -88,11 +90,11 @@ const ColorPalette: React.FC<ColorPaletteProps> = ({
         if (x < 0) {
           x = 0;
         }
-        const [r, g, b] = ctx1.getImageData(x, offsetY, 1, 1).data;
+        const rgbData = ctx1.getImageData(x, offsetY, 1, 1).data;
 
         colorPickerRef.current?.parentElement?.style.setProperty('--offset-x', `${offsetX}px`);
         colorPickerRef.current?.parentElement?.style.setProperty('--offset-y', `${offsetY}px`);
-        setRgb({ r, g, b });
+        setRgb({ r: rgbData[0], g: rgbData[1], b: rgbData[2] });
       }
     },
     [svPanelRect.width]

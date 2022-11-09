@@ -1,7 +1,7 @@
 import React, { useCallback, useMemo, useState } from 'react';
-import { getPrefixCls } from 'neko-ui';
+import getPrefixCls from '../get-prefix-cls';
 import { classNames } from '@moneko/common';
-import type { ComponentSize } from 'neko-ui';
+import type { ComponentSize } from '../index';
 import './index.global.less';
 
 export interface InputProps
