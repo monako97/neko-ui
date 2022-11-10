@@ -3,15 +3,14 @@ import React, { useState } from 'react';
 
 const Demo = () => {
   const [val, setVal] = useState<string>('rgba(255,0,0,0.5)');
-  //   const [visible, setVisible] = useState<boolean>(false);
 
   return (
     <div>
-      <p>小</p>
+      <span style={{ margin: 16 }}>小</span>
       <ColorPicker value={val} onChange={setVal} size="small" />
-      <p>默认</p>
+      <span style={{ margin: 16 }}>默认</span>
       <ColorPicker value={val} onChange={setVal} size="normal" />
-      <p>大</p>
+      <span style={{ margin: 16 }}>大</span>
       <ColorPicker value={val} onChange={setVal} size="large" />
     </div>
   );

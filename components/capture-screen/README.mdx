@@ -10,21 +10,23 @@ export const basic = {
 
 import Snapshot from '@/components/snapshot';
 
-## 捕获屏幕
+<Snapshot title="捕获屏幕" path="capture-screen/examples/default" lang="tsx" cols={5} />
 
-<Snapshot path="capture-screen/examples/default" lang="tsx" />
+<Snapshot
+  title="录制屏幕并保存到本地"
+  path="capture-screen/examples/recorder"
+  lang="tsx"
+  cols={5}
+/>
 
-## 录制屏幕并保存到本地
+<Snapshot title="捕获屏幕时预览" path="capture-screen/examples/preview" lang="tsx" cols={5} />
 
-<Snapshot path="capture-screen/examples/recorder" lang="tsx" />
-
-## 捕获屏幕时预览
-
-<Snapshot path="capture-screen/examples/preview" lang="tsx" />
-
-## 自定义保存录制视频方法
-
-<Snapshot path="capture-screen/examples/custom-save" lang="tsx" />
+<Snapshot
+  title="自定义保存录制视频方法"
+  path="capture-screen/examples/custom-save"
+  lang="tsx"
+  cols={5}
+/>
 
 import MBox from '../markdown';
 import api from './examples/api.md?raw';

@@ -4,13 +4,16 @@ import styles from './index.less';
 import { Sandpack } from '@codesandbox/sandpack-react';
 import codesandboxCss from '../../../codesandbox/styles.css?raw';
 import codesandboxEntry from '../../../codesandbox/index.tsx?raw';
+import { classNames } from '@moneko/common';
 
-const Snapshot: React.FC<{ path: string; lang: string; style?: string; hideSource?: boolean }> = ({
-  path,
-  lang,
-  style,
-  hideSource,
-}) => {
+const Snapshot: React.FC<{
+  title: string;
+  path: string;
+  lang: string;
+  style?: string;
+  hideSource?: boolean;
+  cols?: number;
+}> = ({ path, lang, style, hideSource, cols, title }) => {
   const [visible, setVisible] = useState<'code' | 'style' | 'editor' | false>(false);
   const isHtml = lang === 'html';
   // eslint-disable-next-line @typescript-eslint/no-var-requires
@@ -31,7 +34,8 @@ const Snapshot: React.FC<{ path: string; lang: string; style?: string; hideSourc
   }, []);
 
   return (
-    <div className={styles.snapshot}>
+    <div className={classNames(styles.snapshot, cols && styles[`cols${cols}`])}>
+      {title && <h2 className={styles.title}>{title}</h2>}
       <div className={styles.preview}>
         <div className={styles.view}>
           {isHtml ? (
@@ -44,27 +48,29 @@ const Snapshot: React.FC<{ path: string; lang: string; style?: string; hideSourc
             React.createElement(view.default)
           )}
         </div>
-        {style && (
+        <div className={styles.toolbar}>
+          {style && (
+            <div
+              className={classNames(styles.btn, visible === 'style' && styles.open)}
+              onClick={() => handleVisible('style')}
+            >
+              {visible === 'style' ? 'hide' : 'show'} style
+            </div>
+          )}
+          {!hideSource && (
+            <div
+              className={classNames(styles.btn, visible === 'code' && styles.open)}
+              onClick={() => handleVisible('code')}
+            >
+              {visible === 'code' ? 'hide' : 'show'} source
+            </div>
+          )}
           <div
-            className={[styles.toolbar, visible === 'style' && styles.open].join(' ')}
-            onClick={() => handleVisible('style')}
+            className={classNames(styles.btn, visible === 'editor' && styles.open)}
+            onClick={() => handleVisible('editor')}
           >
-            {visible === 'style' ? 'hide' : 'show'} style
+            {visible === 'editor' ? 'hide' : 'show'} editor
           </div>
-        )}
-        {!hideSource && (
-          <div
-            className={[styles.toolbar, visible === 'code' && styles.open].join(' ')}
-            onClick={() => handleVisible('code')}
-          >
-            {visible === 'code' ? 'hide' : 'show'} source
-          </div>
-        )}
-        <div
-          className={[styles.toolbar, visible === 'editor' && styles.open].join(' ')}
-          onClick={() => handleVisible('editor')}
-        >
-          {visible === 'editor' ? 'hide' : 'show'} editor
         </div>
       </div>
       {visible && (
@@ -72,30 +78,34 @@ const Snapshot: React.FC<{ path: string; lang: string; style?: string; hideSourc
           {visible === 'code' && <CodeBlock code={code as string} lang={lang} />}
           {visible === 'style' && <CodeBlock code={styleCode as string} lang="css" />}
           {visible === 'editor' && (
-            <Sandpack
-              theme={
-                (document.documentElement.getAttribute('data-theme') as 'light' | 'dark') || 'auto'
-              }
-              template="react-ts"
-              files={{
-                '/App.tsx': code,
-                '/styles.css': {
-                  code: codesandboxCss,
-                },
-                '/index.tsx': {
-                  code: codesandboxEntry,
-                  hidden: true,
-                },
-              }}
-              customSetup={{
-                dependencies: {
-                  'neko-ui': '^1.0.18',
-                },
-              }}
-              options={{
-                showConsoleButton: true,
-              }}
-            />
+            <div className={styles.editor}>
+              <Sandpack
+                theme={
+                  (document.documentElement.getAttribute('data-theme') as 'light' | 'dark') ||
+                  'auto'
+                }
+                template="react-ts"
+                files={{
+                  '/App.tsx': code,
+                  '/styles.css': {
+                    code: codesandboxCss,
+                  },
+                  '/index.tsx': {
+                    code: codesandboxEntry,
+                    hidden: true,
+                  },
+                }}
+                customSetup={{
+                  dependencies: {
+                    'neko-ui': '^1.0.18',
+                  },
+                }}
+                options={{
+                  showConsoleButton: true,
+                  wrapContent: true,
+                }}
+              />
+            </div>
           )}
         </div>
       )}

@@ -30,7 +30,11 @@ export default {
   transform: {
     '^.+\\.(t|j)sx?$': '@swc/jest',
   },
-  setupFilesAfterEnv: ['<rootDir>/test/setup.ts'],
+  setupFilesAfterEnv: [
+    '<rootDir>/test/setup.ts',
+    '<rootDir>/test/canvas.ts',
+    '<rootDir>/test/event.ts',
+  ],
   testMatch: [
     '<rootDir>/components/**/__tests__/**/*.{js,jsx,ts,tsx}',
     '<rootDir>/site/**/__tests__/**/*.{js,jsx,ts,tsx}',

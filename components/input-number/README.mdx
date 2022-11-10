@@ -10,20 +10,16 @@ export const basic = {
 
 import Snapshot from '@/components/snapshot';
 
-## 简单使用
+<Snapshot title="简单使用" path="input-number/examples/default" lang="tsx" cols={5} />
 
-<Snapshot path="input-number/examples/default" lang="tsx" />
+<Snapshot title="最大值 & 最小值" path="input-number/examples/maxmin" lang="tsx" cols={5} />
 
-## 最大值 & 最小值
-
-<Snapshot path="input-number/examples/maxmin" lang="tsx" />
-
-## formatter
-
-<Snapshot path="input-number/examples/formatter" lang="tsx" />
+<Snapshot title="自定义格式" path="input-number/examples/formatter" lang="tsx" cols={5} />
 
 import MBox from '../markdown';
 
 import api from './examples/api.md?raw';
 
 <MBox text={api} />
+
+> 更多 api 请查看 [Input](/neko-ui/#/input) 组件

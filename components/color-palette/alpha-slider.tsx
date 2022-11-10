@@ -9,7 +9,7 @@ export interface AlphaSliderProps extends Omit<React.HTMLAttributes<HTMLDivEleme
   onChange?: (alpha: number) => void;
 }
 
-const AlphaSlider: React.FC<AlphaSliderProps> = ({ className, value = 1, onChange }) => {
+const AlphaSlider: React.FC<AlphaSliderProps> = ({ className, value = 1, onChange, ...props }) => {
   const alphaStrip = useRef<HTMLDivElement>(null);
   const [dragAlphaStrip, setDragAlphaStrip] = useState(false);
   const [alpha, setAlpha] = useState(value);
@@ -20,10 +20,10 @@ const AlphaSlider: React.FC<AlphaSliderProps> = ({ className, value = 1, onChang
     const maxOffset = (alphaStrip.current?.offsetWidth || 172) - 6;
     let val = parseFloat((offsetRef.current / maxOffset).toFixed(2));
 
-    if (val < 0) {
+    if (val <= 0) {
       val = 0;
     }
-    if (val > 1) {
+    if (val >= 1) {
       val = 1;
     }
     if (val !== alpha) {
@@ -97,6 +97,7 @@ const AlphaSlider: React.FC<AlphaSliderProps> = ({ className, value = 1, onChang
 
   return (
     <div
+      {...props}
       ref={alphaStrip}
       className={classNames(getPrefixCls('slider-picker'), className)}
       onMouseDown={alphaMouseDown}

@@ -10,7 +10,7 @@
             border-radius: var(--border-radius-base);
             transition: border-color @transition-duration @transition-timing-function;
         }
-    
+
         &-recording,
         &-paused {
             position: absolute;
@@ -20,12 +20,12 @@
             height: 10px;
             border-radius: 5px;
         }
-    
+
         &-recording {
             background-color: var(--success-color);
             animation: record-fade-loop 2s infinite;
         }
-    
+
         &-paused {
             background-color: var(--warning-color);
         }
@@ -35,10 +35,14 @@
         display: flex;
         margin: 16px 0;
 
+        .@{prefix-cls}-btn {
+            margin-right: 16px;
+        }
+
         &-record {
             display: flex;
             margin-left: 16px;
-        
+
             &::before {
                 display: block;
                 height: 100%;

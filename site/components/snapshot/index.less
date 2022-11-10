@@ -10,7 +10,7 @@
 }
 
 .preview {
-  padding: @distance;
+  padding: @distance @distance 0 @distance;
   text-align: right;
   max-width: 100%;
   background-color: var(--component-background);
@@ -21,26 +21,35 @@
 }
 
 .toolbar {
-  width: fit-content;
-  background-color: rgba(221, 221, 221, 0.5);
-  padding: 0 16px;
-  text-align: center;
-  cursor: pointer;
-  float: right;
-  margin-left: 8px;
-  border-radius: @border-radius-base @border-radius-base 0 0;
-  user-select: none;
+  display: flex;
+  justify-content: center;
 
-  &:hover,
-  &.open {
-    color: @primary-color;
-    background-color: var(--primary-color-deprecated-bg);
+  .btn {
+    width: fit-content;
+    background-color: rgba(221, 221, 221, 0.5);
+    padding: 0 16px;
+    text-align: center;
+    cursor: pointer;
+    float: right;
+    margin-left: 8px;
+    margin-top: 16px;
+    border-radius: @border-radius-base @border-radius-base 0 0;
+    user-select: none;
+
+    &:hover,
+    &.open {
+      color: @primary-color;
+      background-color: var(--primary-color-deprecated-bg);
+    }
   }
 }
 
-.code {
-  background-color: var(--body-background);
+.editor {
+  padding: 24px;
+  animation: silde-in @transition-duration @transition-timing-function;
+}
 
+.code {
   :global(.@{prefix-cls}-markdown-box) {
     padding: @distance;
     animation: silde-in @transition-duration @transition-timing-function;
@@ -55,10 +64,30 @@
   }
 }
 
-.snapshot, .preview, .toolbar, .code {
+.snapshot, .preview, .toolbar, .code, .btn, .editor {
   transition-duration: @transition-duration;
   transition-timing-function: @transition-timing-function;
   transition-property: border-color, background-color, box-shadow, padding, height;
+}
+
+.cols-5 {
+  display: inline-flex;
+  flex-direction: column;
+  width: calc((100% - 24px) / 2);
+  margin-right: 16px;
+
+  .title {
+    padding: 16px;
+    margin: 0;
+
+    &::before {
+      content: none;
+    }
+  }
+
+  &:nth-of-type(2n) {
+    margin-right: 0;
+  }
 }
 
 @keyframes silde-in {

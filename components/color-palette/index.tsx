@@ -19,6 +19,7 @@ const ColorPalette: React.FC<ColorPaletteProps> = ({
   className,
   value = 'rgba(255,0,0,1)',
   onChange,
+  ...props
 }) => {
   const colorPaletteRef = useRef<HTMLDivElement>(null);
   const colorPickerRef = useRef<HTMLCanvasElement>(null);
@@ -41,28 +42,33 @@ const ColorPalette: React.FC<ColorPaletteProps> = ({
   });
   const fillGradient = useCallback(
     (color: string) => {
-      const ctx1 = colorPickerRef.current?.getContext('2d');
+      if (colorPickerRef.current) {
+        const ctx1 = colorPickerRef.current.getContext('2d');
 
-      if (!ctx1) return;
-      ctx1.fillStyle = color;
-      ctx1.fillRect(0, 0, svPanelRect.width, svPanelRect.height);
-      if (!hueSlider.current?.canvas) return;
-      const ctx2 = hueSlider.current.canvas.getContext('2d');
+        if (ctx1) {
+          ctx1.fillStyle = color;
+          ctx1.fillRect(0, 0, svPanelRect.width, svPanelRect.height);
+          if (hueSlider.current?.canvas) {
+            const ctx2 = hueSlider.current.canvas.getContext('2d');
 
-      if (!ctx2) return;
-      const grdWhite = ctx2.createLinearGradient(0, 0, hueSlider.current.canvas.width, 0);
+            if (ctx2) {
+              const grdWhite = ctx2.createLinearGradient(0, 0, hueSlider.current.canvas.width, 0);
 
-      grdWhite.addColorStop(0, 'rgba(255,255,255,1)');
-      grdWhite.addColorStop(1, 'rgba(255,255,255,0)');
-      ctx1.fillStyle = grdWhite;
-      ctx1.fillRect(0, 0, svPanelRect.width, svPanelRect.height);
+              grdWhite.addColorStop(0, 'rgba(255,255,255,1)');
+              grdWhite.addColorStop(1, 'rgba(255,255,255,0)');
+              ctx1.fillStyle = grdWhite;
+              ctx1.fillRect(0, 0, svPanelRect.width, svPanelRect.height);
 
-      const grdBlack = ctx2.createLinearGradient(0, 0, 0, svPanelRect.height);
+              const grdBlack = ctx2.createLinearGradient(0, 0, 0, svPanelRect.height);
 
-      grdBlack.addColorStop(0, 'rgba(0,0,0,0)');
-      grdBlack.addColorStop(1, 'rgba(0,0,0,1)');
-      ctx1.fillStyle = grdBlack;
-      ctx1.fillRect(0, 0, svPanelRect.width, svPanelRect.height);
+              grdBlack.addColorStop(0, 'rgba(0,0,0,0)');
+              grdBlack.addColorStop(1, 'rgba(0,0,0,1)');
+              ctx1.fillStyle = grdBlack;
+              ctx1.fillRect(0, 0, svPanelRect.width, svPanelRect.height);
+            }
+          }
+        }
+      }
     },
     [svPanelRect.height, svPanelRect.width]
   );
@@ -139,7 +145,11 @@ const ColorPalette: React.FC<ColorPaletteProps> = ({
   const hex = useMemo(() => tinycolor(value).toHex(), [value]);
 
   return (
-    <div ref={colorPaletteRef} className={classNames(getPrefixCls('color-palette'), className)}>
+    <div
+      {...props}
+      ref={colorPaletteRef}
+      className={classNames(getPrefixCls('color-palette'), className)}
+    >
       <article
         className={getPrefixCls('color-svpanel')}
         onMouseDown={colorPickerMouseDown}
@@ -155,7 +165,7 @@ const ColorPalette: React.FC<ColorPaletteProps> = ({
           }
         }}
       >
-        <canvas ref={colorPickerRef} width={svPanelRect.width} />
+        <canvas ref={colorPickerRef} width={svPanelRect.width} height={svPanelRect.height} />
       </article>
       <div className={getPrefixCls('color-setting')}>
         <div className={getPrefixCls('color-strip')}>
@@ -190,7 +200,7 @@ const ColorPalette: React.FC<ColorPaletteProps> = ({
             max={255}
             value={rgb.r}
             onChange={(v) => {
-              setRgb({ ...rgb, r: v || 0 });
+              setRgb({ ...rgb, r: v as number });
             }}
           />
           <label htmlFor="r">R</label>
@@ -203,7 +213,7 @@ const ColorPalette: React.FC<ColorPaletteProps> = ({
             max={255}
             value={rgb.g}
             onChange={(v) => {
-              setRgb({ ...rgb, g: v || 0 });
+              setRgb({ ...rgb, g: v as number });
             }}
           />
           <label htmlFor="g">G</label>
@@ -216,7 +226,7 @@ const ColorPalette: React.FC<ColorPaletteProps> = ({
             max={255}
             value={rgb.b}
             onChange={(v) => {
-              setRgb({ ...rgb, b: v || 0 });
+              setRgb({ ...rgb, b: v as number });
             }}
           />
           <label htmlFor="b">B</label>
@@ -227,26 +237,19 @@ const ColorPalette: React.FC<ColorPaletteProps> = ({
             size="small"
             value={alpha}
             formatter={(v) => {
-              let _val = v || 0;
-
-              if (typeof _val === 'string') {
-                _val = parseFloat(_val.replace(/[^\d]/g, ''));
-              }
-              const val = (_val * 100).toFixed();
+              const val = ((v as number) * 100).toFixed();
 
               return v ? parseInt(val) : v;
             }}
-            // parser={(v) => {
-            //   let _val = v;
+            parser={(v) => {
+              let _val = v;
 
-            //   if (typeof v === 'string') {
-            //     _val = v.replace(/[^\d]/g, '');
-            //   }
-            //   const val = (_val as number) / 100;
+              if (typeof v === 'string') {
+                _val = v.replace(/[^\d]/g, '');
+              }
 
-            //   console.log(_val);
-            //   return isNaN(val) ? _val : val;
-            // }}
+              return (_val as number) / 100;
+            }}
             step={0.01}
             min={0}
             max={1}

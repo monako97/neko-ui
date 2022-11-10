@@ -5,7 +5,7 @@ const Demo = () => {
   const types: ButtonType[] = ['default', 'primary', 'success', 'warning', 'danger', 'error'];
 
   return (
-    <React.Fragment>
+    <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
       {types.map((item) => {
         return (
           <Button key={item} ghost type={item as ButtonType}>
@@ -13,7 +13,7 @@ const Demo = () => {
           </Button>
         );
       })}
-    </React.Fragment>
+    </div>
   );
 };
 

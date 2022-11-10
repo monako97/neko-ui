@@ -57,7 +57,7 @@ const InputNumber: React.FC<InputNumberProps> = ({
   const handleMouseMove = useCallback(
     ({ movementX, movementY }: { movementX: number; movementY: number }) => {
       const allStep = (movementX + movementY) * step;
-      const val = typeof valRef.current === 'number' ? valRef.current : 0;
+      const val = typeof valRef.current === 'number' && !isNaN(valRef.current) ? valRef.current : 0;
 
       handleChange(parseFloat((val + allStep).toFixed(precision)));
     },

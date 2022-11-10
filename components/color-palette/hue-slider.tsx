@@ -28,28 +28,32 @@ const HueSlider: React.ForwardRefRenderFunction<HueInstance, HueSliderProps> = (
   const hueSlider = useRef<HTMLCanvasElement>(null);
   const [color, setColor] = useState(value);
   const [drag, setDrag] = useState(false);
-  const [width, setWidth] = useState(172);
+  const [hueRect, setHueRect] = useState({
+    width: 172,
+    height: 10,
+  });
   const [offset, setOffset] = useState(0);
   const offsetRef = useRef<number>(offset);
   const initStrip = useCallback(() => {
-    if (!hueSlider.current) return;
-    const ctx2 = hueSlider.current.getContext('2d');
+    if (hueSlider.current) {
+      const ctx2 = hueSlider.current.getContext('2d');
 
-    if (ctx2) {
-      ctx2.rect(0, 0, width, hueSlider.current.height);
-      const grd1 = ctx2.createLinearGradient(0, 0, width, 0);
+      if (ctx2) {
+        ctx2.rect(0, 0, hueRect.width, hueRect.height);
+        const grd1 = ctx2.createLinearGradient(0, 0, hueRect.width, 0);
 
-      grd1.addColorStop(0, 'rgba(255, 0, 0, 1)');
-      grd1.addColorStop(0.17, 'rgba(255, 255, 0, 1)');
-      grd1.addColorStop(0.34, 'rgba(0, 255, 0, 1)');
-      grd1.addColorStop(0.51, 'rgba(0, 255, 255, 1)');
-      grd1.addColorStop(0.68, 'rgba(0, 0, 255, 1)');
-      grd1.addColorStop(0.85, 'rgba(255, 0, 255, 1)');
-      grd1.addColorStop(1, 'rgba(255, 0, 0, 1)');
-      ctx2.fillStyle = grd1;
-      ctx2.fill();
+        grd1.addColorStop(0, 'rgba(255, 0, 0, 1)');
+        grd1.addColorStop(0.17, 'rgba(255, 255, 0, 1)');
+        grd1.addColorStop(0.34, 'rgba(0, 255, 0, 1)');
+        grd1.addColorStop(0.51, 'rgba(0, 255, 255, 1)');
+        grd1.addColorStop(0.68, 'rgba(0, 0, 255, 1)');
+        grd1.addColorStop(0.85, 'rgba(255, 0, 255, 1)');
+        grd1.addColorStop(1, 'rgba(255, 0, 0, 1)');
+        ctx2.fillStyle = grd1;
+        ctx2.fill();
+      }
     }
-  }, [width]);
+  }, [hueRect]);
   const changeHue = useCallback(() => {
     const ctx2 = hueSlider.current?.getContext('2d');
 
@@ -75,10 +79,10 @@ const HueSlider: React.ForwardRefRenderFunction<HueInstance, HueSliderProps> = (
   const onMouseMove = useCallback(
     ({ movementX }: MouseEvent) => {
       if (drag) {
-        const maxOffset = width - 6;
+        const maxOffset = hueRect.width - 6;
         let _offset = offsetRef.current + movementX;
 
-        if (_offset < 0) {
+        if (_offset <= 0) {
           _offset = 0;
         }
         if (_offset > maxOffset) {
@@ -91,7 +95,7 @@ const HueSlider: React.ForwardRefRenderFunction<HueInstance, HueSliderProps> = (
         setOffset(_offset);
       }
     },
-    [changeHue, drag, width]
+    [changeHue, drag, hueRect.width]
   );
   const onMouseUp = useCallback(() => {
     setDrag(false);
@@ -120,8 +124,11 @@ const HueSlider: React.ForwardRefRenderFunction<HueInstance, HueSliderProps> = (
     <div
       {...props}
       ref={(e) => {
-        if (e && width !== e.offsetWidth) {
-          setWidth(e.offsetWidth);
+        if (e && hueRect.width !== e.offsetWidth && hueRect.height !== e.offsetHeight) {
+          setHueRect({
+            width: e.offsetWidth,
+            height: e.offsetHeight,
+          });
         }
       }}
       style={
@@ -132,7 +139,7 @@ const HueSlider: React.ForwardRefRenderFunction<HueInstance, HueSliderProps> = (
       className={classNames(getPrefixCls('slider-picker'), className)}
       onMouseDown={onMouseDown}
     >
-      <canvas ref={hueSlider} width={width} />
+      <canvas ref={hueSlider} width={hueRect.width} height={hueRect.height} />
     </div>
   );
 };

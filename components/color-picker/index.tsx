@@ -20,9 +20,11 @@ const ColorPicker: React.FC<ColorPickerProps> = ({
   size,
   value,
   onChange,
+  ...props
 }) => {
   return (
     <Tooltip
+      {...props}
       title={<ColorPalette value={value} onChange={onChange} />}
       destroyInactive={destroyInactive}
       overlayClassName={classNames(getPrefixCls('color-picker'), overlayClassName)}
