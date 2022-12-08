@@ -28,6 +28,9 @@ export type { CornEditorProps } from './cron-editor';
 export { default as Button } from './button';
 export type { ButtonProps, ButtonType } from './button';
 
+export { default as Powser } from './powser';
+export type { PowserProps } from './powser';
+
 export { default as Input } from './input';
 export type { InputProps } from './input';
 
