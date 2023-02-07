@@ -1,20 +1,91 @@
-import React, { memo, useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import ReactDOM from 'react-dom';
+import React, { FC, HTMLAttributes, memo, useCallback, useEffect, useRef, useState } from 'react';
+import { css, keyframes, injectGlobal } from '@emotion/css';
+import { createPortal } from 'react-dom';
 import { classNames, getMaxZindex, getScrollTop, isEqual, isFunction } from '@moneko/common';
-import getPrefixCls from '../get-prefix-cls';
-import './index.global.less';
 
-export interface BackTopProps extends React.HTMLAttributes<HTMLDivElement> {
+const fadeIn = keyframes`
+from {
+  transform: translate3d(0, 16px, 0) scale(1);
+  opacity: 0;
+}
+
+to {
+  transform: translate3d(0, 0, 0) scale(1);
+  opacity: 1;
+}
+`;
+const fadeOut = keyframes`
+0%,
+20% {
+  transform: translate3d(0, 0, 0);
+  opacity: 1;
+}
+
+100% {
+  transform: translate3d(0, 16px, 0);
+  opacity: 0;
+}
+`;
+const backTopCss = css`
+  position: sticky;
+  left: calc(100% - 100px);
+  bottom: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  min-height: 40px;
+  min-width: 40px;
+  cursor: pointer;
+  animation: ${fadeIn} 1s forwards;
+  box-shadow: var(--box-shadow-base);
+  border-radius: 50%;
+  color: var(--back-top-color);
+  background-color: var(--back-top-bg);
+  backdrop-filter: blur(16px);
+  transition: background-color var(--transition-duration), color var(--transition-duration);
+  z-index: 9;
+
+  &::before {
+    content: '';
+    display: block;
+    width: 16px;
+    height: 8px;
+    background-color: var(--back-top-color);
+    clip-path: polygon(0 100%, 50% 0, 100% 100%);
+  }
+
+  &:hover {
+    background-color: var(--back-top-hover-bg);
+  }
+`;
+
+const outCss = css`
+  animation: ${fadeOut} 1s forwards;
+`;
+
+injectGlobal(`
+:root {
+  --back-top-color: #fff;
+  --back-top-bg: var(--text-color-secondary);
+  --back-top-hover-bg: var(--text-color);
+}
+[data-theme='dark'] {
+  --back-top-bg: rgba(255, 255, 255, 0.45);
+}
+`);
+export interface BackTopProps extends HTMLAttributes<HTMLDivElement> {
   /** 设置需要监听其滚动事件的元素，值为一个返回对应 DOM 元素 */
   target?: () => HTMLElement;
   /** 挂载到指定的元素，值为一个返回对应 DOM 元素 默认 document.body */
   // eslint-disable-next-line no-unused-vars
-  getPopupContainer?: (node?: HTMLElement) => HTMLElement;
+  getPopupContainer?: (node: HTMLElement) => HTMLElement;
   /** 滚动高度达到此参数值才出现 BackTop */
   visibilityHeight?: number;
 }
 
-const BackTop: React.FC<BackTopProps> = ({
+const BackTop: FC<BackTopProps> = ({
   target = () => window as unknown as HTMLElement,
   getPopupContainer,
   visibilityHeight = 400,
@@ -64,27 +135,23 @@ const BackTop: React.FC<BackTopProps> = ({
     };
   }, [handleScrollY, target]);
 
-  const cls = useMemo(
-    () => classNames(getPrefixCls('back-top'), className, !show && getPrefixCls('back-top-out')),
-    [className, show]
-  );
   const exit = useCallback(() => {
     if (show === false) {
       setShow(null);
     }
   }, [show]);
-  const el = useMemo(
-    () => (
-      <div {...props} ref={ref} onAnimationEnd={exit} className={cls} onClick={handleBackTop} />
-    ),
-    [cls, exit, handleBackTop, props]
-  );
-  const container = useMemo(
-    () => getPopupContainer?.(target()) || document.body,
-    [getPopupContainer, target]
-  );
 
-  return show === null ? null : ReactDOM.createPortal(el, container);
+  if (show === null) return null;
+  return createPortal(
+    <div
+      {...props}
+      ref={ref}
+      onAnimationEnd={exit}
+      className={classNames(className, backTopCss, show === false && outCss)}
+      onClick={handleBackTop}
+    />,
+    getPopupContainer?.(target()) || document.body
+  );
 };
 
 export default memo(BackTop, isEqual);

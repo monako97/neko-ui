@@ -9,4 +9,5 @@ const Demo = () => {
   );
 };
 
+export const title = '点击触发';
 export default Demo;

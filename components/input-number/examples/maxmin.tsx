@@ -7,4 +7,5 @@ const Demo = () => {
   return <InputNumber min={0} max={100} value={val} onChange={setVal} />;
 };
 
+export const title = '最大值 & 最小值';
 export default Demo;

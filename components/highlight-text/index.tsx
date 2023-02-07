@@ -1,7 +1,14 @@
-import React, { useEffect, useMemo, useState } from 'react';
-import getPrefixCls from '../get-prefix-cls';
+import React, { CSSProperties, FC } from 'react';
+import { css } from '@emotion/css';
+import { useEffect, useMemo, useState } from 'react';
 import { classNames } from '@moneko/common';
-import './index.global.less';
+
+const highlightTextCss = css`
+  cursor: auto;
+`;
+const hitCss = css`
+  color: var(--primary-color, #1890ff);
+`;
 
 /**
  * 高亮字符串语法
@@ -20,9 +27,9 @@ export type HighlightTextJson =
   | null;
 export interface HighlightTextProps {
   className?: string;
-  style?: React.CSSProperties;
+  style?: CSSProperties;
   /** 命中高亮部分的样式 */
-  hitStyle?: React.CSSProperties;
+  hitStyle?: CSSProperties;
   /** 命中高亮部分的类名 */
   hitClassName?: string;
   /** 内容 */
@@ -81,7 +88,7 @@ export function strToHighlight(text: string): Highlight[] | null {
   return null;
 }
 
-const HighlightText: React.FC<HighlightTextProps> = ({
+const HighlightText: FC<HighlightTextProps> = ({
   className,
   style,
   hitStyle,
@@ -92,7 +99,6 @@ const HighlightText: React.FC<HighlightTextProps> = ({
   flag = 'g',
 }) => {
   const [texts, setTexts] = useState<Highlight[] | null>();
-  const hitCls = useMemo(() => classNames(getPrefixCls('hit'), hitClassName), [hitClassName]);
 
   useEffect(() => {
     if (typeof text === 'string' && highlight) {
@@ -121,7 +127,12 @@ const HighlightText: React.FC<HighlightTextProps> = ({
     return (
       texts?.map((item, i) => {
         return item.hit ? (
-          <span key={item.text + i} className={hitCls} data-text={item.text} style={hitStyle}>
+          <span
+            key={item.text + i}
+            className={classNames(hitCss, hitClassName)}
+            data-text={item.text}
+            style={hitStyle}
+          >
             {item.text}
           </span>
         ) : (
@@ -129,13 +140,13 @@ const HighlightText: React.FC<HighlightTextProps> = ({
         );
       }) ?? text
     );
-  }, [hitCls, hitStyle, text, texts]);
+  }, [hitClassName, hitStyle, text, texts]);
 
   return (
-    <div className={classNames(getPrefixCls('highlight-text'), className)} style={style}>
+    <div className={classNames(highlightTextCss, className)} style={style}>
       {hitNode}
       {extra && (
-        <span className={hitCls} style={hitStyle}>
+        <span className={classNames(hitCss, hitClassName)} style={hitStyle}>
           {extra}
         </span>
       )}

@@ -1,21 +1,37 @@
-import { classNames } from '@moneko/common';
-import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import React, {
+  type FC,
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+  HTMLAttributes,
+  MouseEvent as ReactMouseEvent,
+} from 'react';
 import AlphaSlider from './alpha-slider';
-import getPrefixCls from '../get-prefix-cls';
 import Input from '../input';
 import InputNumber from '../input-number';
 import HueSlider from './hue-slider';
-import './index.global.less';
 import tinycolor from 'tinycolor2';
+import {
+  formCss,
+  inputCss,
+  paletteCss,
+  previewCss,
+  settingCss,
+  stripCss,
+  svpanelCss,
+} from './style';
+import { classNames } from '@moneko/common';
 
-export interface ColorPaletteProps extends Omit<React.HTMLAttributes<HTMLDivElement>, 'onChange'> {
+export interface ColorPaletteProps extends Omit<HTMLAttributes<HTMLDivElement>, 'onChange'> {
   value?: string;
   // eslint-disable-next-line no-unused-vars
   onChange?: (color: string) => void;
 }
-type CanvasMouseEvent = React.MouseEvent<HTMLCanvasElement>;
+type CanvasMouseEvent = ReactMouseEvent<HTMLCanvasElement>;
 
-const ColorPalette: React.FC<ColorPaletteProps> = ({
+const ColorPalette: FC<ColorPaletteProps> = ({
   className,
   value = 'rgba(255,0,0,1)',
   onChange,
@@ -145,13 +161,9 @@ const ColorPalette: React.FC<ColorPaletteProps> = ({
   const hex = useMemo(() => tinycolor(value).toHex(), [value]);
 
   return (
-    <div
-      {...props}
-      ref={colorPaletteRef}
-      className={classNames(getPrefixCls('color-palette'), className)}
-    >
+    <div {...props} ref={colorPaletteRef} className={classNames(paletteCss, className)}>
       <article
-        className={getPrefixCls('color-svpanel')}
+        className={svpanelCss}
         onMouseDown={colorPickerMouseDown}
         onMouseUp={colorPickerMouseUp}
         onMouseOut={colorPickerMouseUp}
@@ -167,15 +179,15 @@ const ColorPalette: React.FC<ColorPaletteProps> = ({
       >
         <canvas ref={colorPickerRef} width={svPanelRect.width} height={svPanelRect.height} />
       </article>
-      <div className={getPrefixCls('color-setting')}>
-        <div className={getPrefixCls('color-strip')}>
+      <div className={settingCss}>
+        <div className={stripCss}>
           <HueSlider ref={hueSlider} value={hue} onChange={setHue} />
           <AlphaSlider value={alpha} onChange={setAlpha} />
         </div>
-        <div className={getPrefixCls('color-preview')} />
+        <div className={previewCss} />
       </div>
-      <div className={getPrefixCls('color-form')}>
-        <div className={getPrefixCls('color-input')}>
+      <div className={formCss}>
+        <div className={inputCss}>
           <Input
             name="hex"
             size="small"
@@ -192,7 +204,7 @@ const ColorPalette: React.FC<ColorPaletteProps> = ({
           />
           <label htmlFor="hex">Hex</label>
         </div>
-        <div className={getPrefixCls('color-input')}>
+        <div className={inputCss}>
           <InputNumber
             name="r"
             size="small"
@@ -205,7 +217,7 @@ const ColorPalette: React.FC<ColorPaletteProps> = ({
           />
           <label htmlFor="r">R</label>
         </div>
-        <div className={getPrefixCls('color-input')}>
+        <div className={inputCss}>
           <InputNumber
             name="g"
             size="small"
@@ -218,7 +230,7 @@ const ColorPalette: React.FC<ColorPaletteProps> = ({
           />
           <label htmlFor="g">G</label>
         </div>
-        <div className={getPrefixCls('color-input')}>
+        <div className={inputCss}>
           <InputNumber
             name="b"
             size="small"
@@ -231,7 +243,7 @@ const ColorPalette: React.FC<ColorPaletteProps> = ({
           />
           <label htmlFor="b">B</label>
         </div>
-        <div className={getPrefixCls('color-input')}>
+        <div className={inputCss}>
           <InputNumber
             name="a"
             size="small"

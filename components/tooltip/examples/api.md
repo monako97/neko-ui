@@ -2,14 +2,14 @@
 
 | 属性              | 说明                                        | 类型                                  | 默认值              | 版本 |
 | ----------------- | ------------------------------------------- | ------------------------------------- | ------------------- | ---- |
-| visible           | 显示                                        | `boolean`                             | -                   | -    |
+| open              | 显示                                        | `boolean`                             | -                   | -    |
 | destroyInactive   | 关闭后是否销毁 Tooltip                      | `boolean`                             | -                   | -    |
-| onVisibleChange   | 变更时触发的方法                            | `(visible: boolean) => void`          | -                   | -    |
+| onOpenChange      | 变更时触发的方法                            | `(open: boolean) => void`             | -                   | -    |
 | className         | 自定义类名                                  | `string`                              | -                   | -    |
-| overlayClassName  | 提示层自定义类名                            | `string`                              | -                   | -    |
+| popupClassName    | 提示层自定义类名                            | `string`                              | -                   | -    |
 | color             | 提示层背景颜色                              | `string`                              | -                   | -    |
 | shadowColor       | 提示层背景阴影颜色                          | `string`                              | -                   | -    |
-| overlayStyle      | 提示层自定义样式                            | `React.CSSProperties`                 | -                   | -    |
+| popupStyle        | 提示层自定义样式                            | `React.CSSProperties`                 | -                   | -    |
 | children          | 子元素                                      | `React.ReactNode`                     | -                   | -    |
 | title             | 提示内容                                    | `React.ReactNode`                     | -                   | -    |
 | trigger           | 触发行为,可使用数组设置多个触发行为         | `TriggerOption` \| `TriggerOption[]`  | -                   | -    |

@@ -3,24 +3,16 @@ export const basic = {
   title: '高亮文字',
   subtitle: 'HighlightText',
 };
+import Snapshot from '@/components/snapshot';
+
+<div className="n-md-body">
 
 # 高亮文字
 
 > 在文章中高亮部分文字内容
 
-import Snapshot from '@/components/snapshot';
-
-## 简单使用
-
-<Snapshot path="highlight-text/examples/default" lang="tsx" />
-
-## 多个高亮匹配
-
-<Snapshot path="highlight-text/examples/multiple" lang="tsx" />
-
-## 未命中
-
-<Snapshot path="highlight-text/examples/no-hit" lang="tsx" />
+<Snapshot name="highlight-text" />
+</div>
 
 import MBox from '../markdown';
 import api from './examples/api.md?raw';

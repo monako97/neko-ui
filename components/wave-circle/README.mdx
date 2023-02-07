@@ -3,14 +3,20 @@ export const basic = {
   title: '水波纹',
   subtitle: 'WaveCircle',
 };
+import Snapshot from '@/components/snapshot';
+import MBox from '../markdown';
+import CodeBlock from '@/components/code-block';
+import api from './examples/api.md?raw';
+import code from './examples/default?raw';
+import { WaveCircle } from 'neko-ui';
+
+<div className="n-md-body">
 
 # 水波纹
 
 > 波纹溢出动画, 用于标记用户在线状态
 
 ## 直接在 mdx 中写
-
-import { WaveCircle } from 'neko-ui';
 
 <div style={{ display: 'flex', height: 300 }}>
   <WaveCircle bgColor="pink" />
@@ -25,20 +31,11 @@ ReactDOM.render(<WaveCircle bgColor="pink" />, document.body);
 
 ### 读取文件并只展示代码 `./examples/default.tsx`
 
-import CodeBlock from '@/components/code';
-import code from './examples/default?raw';
-
 <CodeBlock code={code} lang="tsx" />
 
 > 或传入 path (src 目录下代码所在位置) 通过 Snapshot 展示
 
-import Snapshot from '@/components/snapshot';
+<Snapshot name="wave-circle" />
+</div>
 
-<Snapshot title="案例一" path="wave-circle/examples/default" lang="tsx" cols={5} />
-
-<Snapshot title="案例二" path="wave-circle/examples/bg" lang="tsx" cols={5} />
-
-import MD from '@/components/markdown';
-import api from './examples/api.md?raw';
-
-<MD text={api} />
+<MBox text={api} />

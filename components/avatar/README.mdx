@@ -4,13 +4,15 @@ export const basic = {
   subtitle: 'Avatar',
 };
 
+import Snapshot from '@/components/snapshot';
+
+<div className="n-md-body">
 # 双马尾轮廓头像
 
 > logo 轮廓就是双马尾
 
-import Snapshot from '@/components/snapshot';
-
-<Snapshot title="代码演示" path="avatar/examples/default" lang="tsx" cols={5} />
+<Snapshot name="avatar" />
+</div>
 
 import MBox from '../markdown';
 import api from './examples/api.md?raw';

@@ -1,8 +1,0 @@
-extends:
-  - stylelint-config-moneko
-ignoreFiles:
-  - node_modules/**/*
-  - node_modules.nosync/**/*
-  - coverage/**/*
-  - coverage.nosync/**/*
-  - lib/**/*

@@ -5,6 +5,7 @@ declare module '*.jsx';
 declare module '*.ts';
 declare module '*.png';
 declare module '*.svg';
+declare module '*.woff2';
 declare module './index.less' {
   const styles: { readonly [key: string]: string };
 
@@ -26,10 +27,10 @@ declare module 'moment' {
   export = moment;
   export as namespace moment;
 }
+declare module 'env-flags';
 
 interface PureComponentProps {
   path: string;
-  selfUrl: string;
 }
 
 interface Window {

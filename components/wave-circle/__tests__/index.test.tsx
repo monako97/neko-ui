@@ -1,6 +1,6 @@
-import React from 'react';
 import WaveCircle from '../index';
 import { render, screen } from '@testing-library/react';
+import React from 'react';
 
 /**
  * @jest-environment jsdom
@@ -12,7 +12,7 @@ test('测试 WaveCircle', () => {
     <WaveCircle
       bgColor="#000"
       className="test-wave-circle"
-      timingFunction="cubic-bezier(0.645, 0.045, 0.355, 1)"
+      timingFunction="var(--transition-timing-function)"
     >
       {testMessage}
     </WaveCircle>

@@ -1,18 +1,16 @@
-import React, { Fragment, useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import type { FC, MouseEvent, WheelEvent } from 'react';
-import getPrefixCls from '../get-prefix-cls';
+import React, { memo, useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import type { CSSProperties, FC, MouseEvent, WheelEvent } from 'react';
 import { getScrollTop, setClipboard, classNames, isEqual, isSvgElement } from '@moneko/common';
-import { getMarkedImgList, markdownUtil } from './markdown-util';
+import { getMarkedImgList, markdownUtil, type PhotoViewDataType } from './markdown-util';
 import { PhotoSlider } from 'react-photo-view';
-import type { DataType as PhotoViewDataType } from 'react-photo-view/dist/types';
-import 'react-photo-view/dist/react-photo-view.css';
-import './index.global.less';
+import './index.css';
+import '../utils/prism.css';
 
 export type CodeBlockToolType = Array<'copy'>;
 
-export interface MarkdownProps extends React.HTMLAttributes<HTMLDivElement> {
+export interface MarkdownProps {
   className?: string;
-  style?: React.CSSProperties;
+  style?: CSSProperties;
   /** md内容 */
   text?: string;
   /** 开启图片查看器 */
@@ -41,7 +39,6 @@ const toggleAnchor = (anchor: HTMLAnchorElement) => {
 
 const Markdown: FC<MarkdownProps> = ({
   className,
-  style,
   text,
   pictureViewer = true,
   langLineNumber = true,
@@ -51,7 +48,7 @@ const Markdown: FC<MarkdownProps> = ({
   ...props
 }) => {
   const ref = useRef<HTMLDivElement>(null);
-  const [visible, setVisible] = useState(false);
+  const [open, setOpen] = useState(false);
   const [photoIndex, setPhotoIndex] = useState(0);
   const [htmlString, setHtmlString] = useState<string>('');
   const [imgList, setImgList] = useState<PhotoViewDataType[]>([]);
@@ -108,7 +105,7 @@ const Markdown: FC<MarkdownProps> = ({
   useEffect(() => {
     const _anchors: AnchorType[] = [];
 
-    ref.current?.querySelectorAll('.markdown-toc li a')?.forEach((e) => {
+    ref.current?.querySelectorAll('.n-md-toc li a')?.forEach((e) => {
       const a = e as HTMLAnchorElement;
       const _el = ref.current?.querySelector(
         decodeURIComponent((a as HTMLAnchorElement)?.hash)
@@ -137,7 +134,7 @@ const Markdown: FC<MarkdownProps> = ({
         for (let i = 0, len = arr.length; i < len; i++) {
           if (arr[i] === target) {
             setPhotoIndex(i);
-            setVisible(true);
+            setOpen(true);
           }
         }
       } else if (target.className.includes('toolbar-copy')) {
@@ -190,7 +187,7 @@ const Markdown: FC<MarkdownProps> = ({
     };
   }, [getAnchorContainer, handleScroll]);
 
-  const cls = useMemo(() => classNames(getPrefixCls('markdown-box'), className), [className]);
+  const cls = useMemo(() => classNames('n-md-box', className), [className]);
 
   useEffect(() => {
     if (tex) {
@@ -198,7 +195,7 @@ const Markdown: FC<MarkdownProps> = ({
       // eslint-disable-next-line @typescript-eslint/no-var-requires
       const katex = require('katex');
 
-      ref.current?.querySelectorAll('.m-katex-block').forEach(function (ele) {
+      ref.current?.querySelectorAll('.n-katex-block').forEach(function (ele) {
         if (ele.textContent) {
           katex.render(ele.textContent, ele as HTMLElement, {
             throwOnError: false,
@@ -208,7 +205,7 @@ const Markdown: FC<MarkdownProps> = ({
           });
         }
       });
-      ref.current?.querySelectorAll('.m-katex-inline').forEach(function (ele) {
+      ref.current?.querySelectorAll('.n-katex-inline').forEach(function (ele) {
         if (ele.textContent) {
           katex.render(ele.textContent, ele as HTMLElement, {
             throwOnError: false,
@@ -220,31 +217,35 @@ const Markdown: FC<MarkdownProps> = ({
       });
     }
   }, [tex, htmlString]);
+  useEffect(() => {
+    if (imgList.length) {
+      require('react-photo-view/dist/react-photo-view.css');
+    }
+  }, [imgList]);
 
   return (
-    <Fragment>
+    <>
       <div
-        {...props}
         ref={ref}
         className={cls}
-        style={style}
         dangerouslySetInnerHTML={{
           __html: htmlString,
         }}
         onClick={handleClick}
         onWheel={handleWheel}
+        {...props}
       />
       {imgList.length ? (
         <PhotoSlider
           images={imgList}
-          visible={visible}
-          onClose={() => setVisible(false)}
+          visible={open}
+          onClose={() => setOpen(false)}
           index={photoIndex}
           onIndexChange={setPhotoIndex}
         />
       ) : null}
-    </Fragment>
+    </>
   );
 };
 
-export default React.memo(Markdown, isEqual);
+export default memo(Markdown, isEqual);

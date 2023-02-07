@@ -18,4 +18,5 @@ const Demo = () => {
   );
 };
 
+export const title = '自定义格式';
 export default Demo;

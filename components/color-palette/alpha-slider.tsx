@@ -1,15 +1,23 @@
 import { classNames } from '@moneko/common';
-import React, { useCallback, useEffect, useRef, useState } from 'react';
-import getPrefixCls from '../get-prefix-cls';
-import './alpha-slider.global.less';
+import React, {
+  CSSProperties,
+  FC,
+  HTMLAttributes,
+  MouseEvent as ReactMouseEvent,
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+} from 'react';
+import { alphaSliderCss, sliderPickerCss } from './style';
 
-export interface AlphaSliderProps extends Omit<React.HTMLAttributes<HTMLDivElement>, 'onChange'> {
+export interface AlphaSliderProps extends Omit<HTMLAttributes<HTMLDivElement>, 'onChange'> {
   value?: number;
   // eslint-disable-next-line no-unused-vars
   onChange?: (alpha: number) => void;
 }
 
-const AlphaSlider: React.FC<AlphaSliderProps> = ({ className, value = 1, onChange, ...props }) => {
+const AlphaSlider: FC<AlphaSliderProps> = ({ className, value = 1, onChange, ...props }) => {
   const alphaStrip = useRef<HTMLDivElement>(null);
   const [dragAlphaStrip, setDragAlphaStrip] = useState(false);
   const [alpha, setAlpha] = useState(value);
@@ -33,7 +41,7 @@ const AlphaSlider: React.FC<AlphaSliderProps> = ({ className, value = 1, onChang
   }, [alpha, onChange]);
 
   const alphaMouseDown = useCallback(
-    ({ nativeEvent: { offsetX } }: React.MouseEvent<HTMLDivElement>) => {
+    ({ nativeEvent: { offsetX } }: ReactMouseEvent<HTMLDivElement>) => {
       const _offset = offsetX - 5;
 
       setDragAlphaStrip(true);
@@ -99,15 +107,15 @@ const AlphaSlider: React.FC<AlphaSliderProps> = ({ className, value = 1, onChang
     <div
       {...props}
       ref={alphaStrip}
-      className={classNames(getPrefixCls('slider-picker'), className)}
+      className={classNames(sliderPickerCss, className)}
       onMouseDown={alphaMouseDown}
       style={
         {
           '--offset-x': `${offset}px`,
-        } as React.CSSProperties
+        } as CSSProperties
       }
     >
-      <div className={getPrefixCls('alpha-slider')} />
+      <div className={alphaSliderCss} />
     </div>
   );
 };

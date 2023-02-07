@@ -1,3 +1,4 @@
+import type { Config } from 'jest';
 import globals from '@moneko/core/build/envFlags';
 
 /**
@@ -16,8 +17,7 @@ const ignore = [
   '<rootDir>/node_modules/',
   'prism.js',
 ];
-
-export default {
+const config: Config = {
   automock: false,
   clearMocks: true,
   coverageDirectory: 'coverage',
@@ -43,7 +43,10 @@ export default {
     '\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$':
       '<rootDir>/test/file.mock.ts',
     '\\.(css|less)$': 'identity-obj-proxy',
+    '\\?raw$': '<rootDir>/test/file.mock.ts',
     'iconfont.js$': '<rootDir>/test/file.mock.ts',
   },
   globals: globals,
 };
+
+export default config;

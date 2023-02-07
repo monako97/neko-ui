@@ -1,5 +1,5 @@
-import React from 'react';
 import { Markdown } from 'neko-ui';
+import React from 'react';
 
 const Demo = () => {
   const md = `
@@ -20,4 +20,5 @@ $$`;
   return <Markdown text={md} tex />;
 };
 
+export const title = 'katex 公式';
 export default Demo;

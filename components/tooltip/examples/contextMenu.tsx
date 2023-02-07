@@ -9,4 +9,5 @@ const Demo = () => {
   );
 };
 
+export const title = '右键触发';
 export default Demo;

@@ -1,5 +1,5 @@
-import React from 'react';
 import { CaptureScreen } from 'neko-ui';
+import React from 'react';
 
 const Demo = () => {
   return (
@@ -18,4 +18,5 @@ const Demo = () => {
   );
 };
 
+export const title = '捕获屏幕';
 export default Demo;

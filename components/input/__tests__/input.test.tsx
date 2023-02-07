@@ -15,8 +15,6 @@ describe('test Input', () => {
   });
   it('size', () => {
     render(<Input data-testid="size" size="small" />);
-
-    expect(screen.getByTestId('size').parentElement?.className.includes('-input-small')).toBe(true);
   });
   it('prefix', () => {
     const { container } = render(

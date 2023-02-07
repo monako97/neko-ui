@@ -16,4 +16,5 @@ const Demo = () => {
   );
 };
 
+export const title = '不同尺寸';
 export default Demo;

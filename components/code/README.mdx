@@ -1,0 +1,20 @@
+export const basic = {
+  type: '数据展示',
+  title: '代码块',
+  subtitle: 'Code',
+};
+import Snapshot from '@/components/snapshot';
+
+<div className="n-md-body">
+
+# 代码块
+
+> 代码块
+
+<Snapshot name="code" />
+</div>
+
+import MBox from '../markdown';
+import api from './examples/api.md?raw';
+
+<MBox text={api} />

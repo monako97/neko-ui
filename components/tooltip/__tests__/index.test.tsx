@@ -1,6 +1,6 @@
-import React from 'react';
 import Tooltip from '../index';
 import { render, screen, fireEvent, act } from '@testing-library/react';
+import React from 'react';
 
 /**
  * @jest-environment jsdom
@@ -18,7 +18,7 @@ describe('test Tooltip', () => {
         title="Tooltip default"
         className="tooltip-cls"
         getPopupContainer={() => document.body}
-        overlayStyle={{ padding: 8 }}
+        popupStyle={{ padding: 8 }}
         color="red"
       >
         Tooltip
@@ -56,7 +56,7 @@ describe('test Tooltip', () => {
     render(
       <Tooltip
         data-testid="tooltip-test-id"
-        overlayClassName="tooltip-overlay"
+        popupClassName="tooltip-overlay"
         title="Tooltip contextMenu"
         trigger={['contextMenu', 'click']}
       >

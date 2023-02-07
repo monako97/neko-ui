@@ -1,39 +1,40 @@
-import React, { useEffect, useRef } from 'react';
+import React, { type FC, useEffect, useRef, memo } from 'react';
 import { useLocation, useOutlet } from '@moneko/core';
-import { BackTop, getPrefixCls } from 'neko-ui';
+import { BackTop } from 'neko-ui';
 import Sider from '../components/sider';
 import Coverage from '@/components/coverage';
 import Header from '@/components/header';
 import Footer from '@/components/footer';
 import Empty from '@/components/empty';
-import './index.global.less';
-import { classNames } from '@moneko/common';
 
-const App: React.FC = () => {
+const App: FC = () => {
   const box = useRef<HTMLElement>(null);
   const readme = useOutlet();
   const location = useLocation();
+  const num = useRef<number>(0);
 
   useEffect(() => {
+    num.current++;
     box.current?.scrollTo({ top: 0, behavior: 'smooth' });
   }, [location.pathname]);
 
   return (
-    <div className={getPrefixCls('site-layout')}>
+    <div className="n-flex n-max-h-[100vh] n-h-full">
       <Sider />
-      <article className={getPrefixCls('site-container')}>
-        <Header />
-        <main className={classNames(!readme && getPrefixCls('site-empty'))} ref={box}>
-          <article className={classNames(getPrefixCls('site-readme'))}>
-            <Coverage />
-            {readme || <Empty />}
-          </article>
-          <Footer />
-        </main>
-      </article>
+      <Header />
+      <main
+        ref={box}
+        className={
+          'n-z-10 n-flex-1 n-overflow-y-auto n-min-h-[calc(100vh-200px)] n-pr-4 n-pl-2 n-py-24'
+        }
+      >
+        <Coverage />
+        {readme ? <div>{readme}</div> : <Empty />}
+      </main>
+      <Footer />
       <BackTop target={() => box.current || document.body} />
     </div>
   );
 };
 
-export default App;
+export default memo(App, () => true);

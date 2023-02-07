@@ -13,4 +13,5 @@ const Demo = () => {
   );
 };
 
+export const title = '代码演示';
 export default Demo;

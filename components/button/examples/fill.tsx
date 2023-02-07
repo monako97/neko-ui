@@ -2,7 +2,7 @@ import React from 'react';
 import { Button, ButtonType } from 'neko-ui';
 
 const Demo = () => {
-  const types: ButtonType[] = ['default', 'primary', 'success', 'warning', 'danger', 'error'];
+  const types: ButtonType[] = ['default', 'primary', 'success', 'warning', 'error'];
 
   return (
     <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
@@ -17,4 +17,5 @@ const Demo = () => {
   );
 };
 
+export const title = '实底背景';
 export default Demo;

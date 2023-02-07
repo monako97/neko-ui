@@ -3,30 +3,16 @@ export const basic = {
   title: '捕获屏幕',
   subtitle: 'CaptureScreen',
 };
+import Snapshot from '@/components/snapshot';
+
+<div className="n-md-body">
 
 # 捕获、录制屏幕
 
 > 捕获、录制屏幕
 
-import Snapshot from '@/components/snapshot';
-
-<Snapshot title="捕获屏幕" path="capture-screen/examples/default" lang="tsx" cols={5} />
-
-<Snapshot
-  title="录制屏幕并保存到本地"
-  path="capture-screen/examples/recorder"
-  lang="tsx"
-  cols={5}
-/>
-
-<Snapshot title="捕获屏幕时预览" path="capture-screen/examples/preview" lang="tsx" cols={5} />
-
-<Snapshot
-  title="自定义保存录制视频方法"
-  path="capture-screen/examples/custom-save"
-  lang="tsx"
-  cols={5}
-/>
+<Snapshot name="capture-screen" />
+</div>
 
 import MBox from '../markdown';
 import api from './examples/api.md?raw';

@@ -1,45 +1,54 @@
-import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import React, {
+  type CSSProperties,
+  type DOMAttributes,
+  type FC,
+  type HTMLAttributes,
+  type ReactNode,
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
+import { injectGlobal } from '@emotion/css';
 import { createPortal } from 'react-dom';
 import { classNames, getMaxZindex, isString } from '@moneko/common';
 import tinycolor from 'tinycolor2';
-import getPrefixCls from '../get-prefix-cls';
-import './index.global.less';
+import { portalCss, tooltipCss, tooltipInUp, tooltipOutUp, variablesCss } from './style';
 
+injectGlobal(variablesCss);
 export type TooltipTriggerOption = 'hover' | 'click' | 'contextMenu';
-type TriggerOptionMap = Record<
-  TooltipTriggerOption,
-  keyof React.DOMAttributes<HTMLSpanElement> | null
->;
-export interface TooltipProps extends Omit<React.HTMLAttributes<HTMLDivElement>, 'title'> {
-  children: React.ReactNode;
-  title: React.ReactNode;
+type TriggerOptionMap = Record<TooltipTriggerOption, keyof DOMAttributes<HTMLSpanElement> | null>;
+export interface TooltipProps extends Omit<HTMLAttributes<HTMLDivElement>, 'title'> {
+  children: ReactNode;
+  title: ReactNode;
   /** 挂载到指定的元素，值为一个返回对应 DOM 元素 默认 document.body */
   // eslint-disable-next-line no-unused-vars
   getPopupContainer?: (node?: HTMLElement | null) => HTMLElement;
   /** 触发行为,可使用数组设置多个触发行为 */
   trigger?: TooltipTriggerOption | TooltipTriggerOption[];
-  visible?: boolean | null;
+  open?: boolean | null;
   // eslint-disable-next-line no-unused-vars
-  onVisibleChange?: (visible: boolean | null) => void;
-  overlayClassName?: string;
-  overlayStyle?: React.CSSProperties;
+  onOpenChange?: (open: boolean | null) => void;
+  popupClassName?: string;
+  popupStyle?: CSSProperties;
   color?: string;
   /** 关闭后是否销毁 Tooltip */
   destroyInactive?: boolean;
 }
 
-const Tooltip: React.FC<TooltipProps> = ({
+const Tooltip: FC<TooltipProps> = ({
   className,
-  overlayClassName,
-  overlayStyle,
+  popupClassName,
+  popupStyle,
   getPopupContainer,
   title,
   children,
   color,
   trigger = 'click',
-  visible = null,
+  open = null,
   destroyInactive = true,
-  onVisibleChange,
+  onOpenChange,
   ...props
 }) => {
   const ref = useRef<HTMLDivElement>(null);
@@ -48,12 +57,12 @@ const Tooltip: React.FC<TooltipProps> = ({
   const [posi, setPosi] = useState({ left: -9999, top: -9999 });
 
   useEffect(() => {
-    onVisibleChange?.(show);
-  }, [onVisibleChange, show]);
+    onOpenChange?.(show);
+  }, [onOpenChange, show]);
 
   useEffect(() => {
-    setShow(visible);
-  }, [visible]);
+    setShow(open);
+  }, [open]);
   useEffect(() => {
     if (show && ref.current) {
       ref.current.style.zIndex = getMaxZindex().toString();
@@ -141,10 +150,10 @@ const Tooltip: React.FC<TooltipProps> = ({
     };
   }, [close]);
 
-  const overlayStyles = useMemo(() => {
+  const style = useMemo(() => {
     return Object.assign(
       {
-        ...overlayStyle,
+        ...popupStyle,
         left: posi.left,
         top: posi.top,
       },
@@ -152,36 +161,27 @@ const Tooltip: React.FC<TooltipProps> = ({
         '--tooltip-bg': color,
         '--tooltip-shadow-color': tinycolor(color).setAlpha(0.1).toRgbString(),
       }
-    ) as React.CSSProperties;
-  }, [color, overlayStyle, posi.left, posi.top]);
+    ) as CSSProperties;
+  }, [color, popupStyle, posi.left, posi.top]);
 
   return (
-    <React.Fragment>
+    <>
       {(show !== null || !destroyInactive) &&
         createPortal(
           <div
             ref={ref}
             onAnimationEnd={exit}
-            className={classNames(
-              getPrefixCls('tooltip-portal'),
-              overlayClassName,
-              getPrefixCls(`tooltip-${show ? 'in-up' : 'out-up'}`)
-            )}
-            style={overlayStyles}
+            className={classNames(portalCss, show ? tooltipInUp : tooltipOutUp, popupClassName)}
+            style={style}
           >
             {title}
           </div>,
           container
         )}
-      <span
-        {...childrenProps}
-        className={classNames(getPrefixCls('tooltip'), className)}
-        ref={childRef}
-        // tabIndex={0}
-      >
+      <span {...childrenProps} className={classNames(tooltipCss, className)} ref={childRef}>
         {children}
       </span>
-    </React.Fragment>
+    </>
   );
 };
 

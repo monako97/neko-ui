@@ -1,15 +1,29 @@
-import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import Button from '../button';
-import type { ButtonProps } from '../button';
-import getPrefixCls from '../get-prefix-cls';
-import { downloadBlob, classNames, isObject } from '@moneko/common';
-import './index.global.less';
+import React, {
+  FC,
+  HTMLAttributes,
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
+import Button, { type ButtonProps } from '../button';
+import { classNames, downloadBlob, isObject } from '@moneko/common';
+import {
+  btnCss,
+  captureScreenCss,
+  controllerCss,
+  pausedCss,
+  recordCss,
+  recordingCss,
+  videoCss,
+} from './style';
 
 export interface RecorderOptions {
   /** 录制文件名称 */
   filename?: string;
 }
-export interface CaptureScreenProp extends React.HTMLAttributes<HTMLDivElement> {
+export interface CaptureScreenProp extends HTMLAttributes<HTMLDivElement> {
   options?: MediaStreamConstraints;
   /** 是否预览 */
   preview?: boolean;
@@ -66,12 +80,11 @@ const btnStatusDic: Record<MediaRecorder['state'], ButtonProps['type']> = {
   paused: 'warning',
   recording: 'success',
 };
-const CaptureScreen: React.FC<CaptureScreenProp> = ({
+const CaptureScreen: FC<CaptureScreenProp> = ({
   options = displayMediaOptions,
   preview,
   controls,
   recorder,
-  className,
   captureScreenText = '捕获屏幕',
   stopCaptureText = '停止捕获',
   startRecorderText = '开始录制',
@@ -86,6 +99,7 @@ const CaptureScreen: React.FC<CaptureScreenProp> = ({
   onRecorderDataAvailable,
   onErrorCapture,
   onSaveRecorder,
+  className,
   ...props
 }) => {
   const videoElem = useRef<HTMLVideoElement>(null);
@@ -253,21 +267,27 @@ const CaptureScreen: React.FC<CaptureScreenProp> = ({
   );
 
   return (
-    <div className={classNames(getPrefixCls('capture-screen'), className)} {...props}>
-      <div className={getPrefixCls('capture-screen-controller')}>
-        <Button onClick={startCapture}>{captureScreenText}</Button>
+    <div {...props} className={classNames(captureScreenCss, className)}>
+      <div className={controllerCss}>
+        <Button onClick={startCapture} className={btnCss}>
+          {captureScreenText}
+        </Button>
         {mediaStream && (
           <>
-            <Button type="error" onClick={stopCapture}>
+            <Button type="error" onClick={stopCapture} className={btnCss}>
               {stopCaptureText}
             </Button>
             {recorder && (
-              <div className={getPrefixCls('capture-screen-controller-record')}>
-                <Button type={btnStatusDic[recordState]} onClick={handleStartRecorder}>
+              <div className={recordCss}>
+                <Button
+                  type={btnStatusDic[recordState]}
+                  onClick={handleStartRecorder}
+                  className={btnCss}
+                >
                   {recorderText}
                 </Button>
                 {recordState !== 'inactive' && (
-                  <Button type="error" onClick={stopRecorder}>
+                  <Button type="error" onClick={stopRecorder} className={btnCss}>
                     {stopRecorderText}
                   </Button>
                 )}
@@ -277,8 +297,13 @@ const CaptureScreen: React.FC<CaptureScreenProp> = ({
         )}
       </div>
       {preview && mediaStream ? (
-        <div className={getPrefixCls('capture-screen-video')}>
-          <span className={getPrefixCls(`capture-screen-video-${recordState}`)} />
+        <div className={videoCss}>
+          <span
+            className={classNames(
+              recordState === 'recording' && recordingCss,
+              recordState === 'paused' && pausedCss
+            )}
+          />
           <video ref={videoElem} autoPlay controls={!!(mediaStream && controls)} />
         </div>
       ) : null}

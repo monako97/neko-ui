@@ -41,7 +41,7 @@ jobs:
       - name: 'coverage'
         run: yarn coverage
       - name: 'Build Artifact'
-        run: yarn build
+        run: yarn build config=deploy
       - name: 'Publish to npm'
         run: |
           NPM_PACKAGE_NAME=$(node -p "require('./package.json').name")

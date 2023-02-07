@@ -1,6 +1,6 @@
-import React from 'react';
 import Markdown from '../index';
 import { act, fireEvent, render, screen } from '@testing-library/react';
+import React from 'react';
 
 const code_str = `\n
 \`\`\`javascript
@@ -116,7 +116,10 @@ $$`}
         data-testid="md-gmf"
         style={{}}
         tools={[]}
-        text={`[TOC]\n# table\n## table-h2\n
+        text={`
+[TOC] \n
+# table \n
+## table-h2 \n
 
 | 属性               | 说明             | 类型                | 默认值         | 版本 |
 | ------------------ | ---------------- | ------------------- | -------------- | ---- |
@@ -125,7 +128,7 @@ $$`}
 
 ![${imgSrc}](${imgSrc})
 
-![](${imgSrc})
+![q](${imgSrc})
 
     `}
       />
@@ -175,10 +178,16 @@ ${code_str}
   it('pre > code wheel 2', () => {
     Object.defineProperty(HTMLElement.prototype, 'offsetParent', {
       get() {
-        return this.parentNode.parentNode;
+        return this.parentNode?.parentNode;
       },
     });
-    const { container } = render(<Markdown text={code_str} />);
+    const { container } = render(
+      <Markdown
+        text={`## a\n
+        ${code_str}
+        `}
+      />
+    );
 
     screen.getAllByRole('button').forEach((e) => {
       fireEvent.click(e);

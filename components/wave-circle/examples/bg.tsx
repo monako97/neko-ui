@@ -1,7 +1,7 @@
-import React from 'react';
 import { WaveCircle } from 'neko-ui';
+import React, { FC } from 'react';
 
-const Example: React.FC = () => {
+const Example: FC = () => {
   return (
     <div style={{ padding: 100 }}>
       <WaveCircle bgColor="pink" />
@@ -9,4 +9,5 @@ const Example: React.FC = () => {
   );
 };
 
+export const title = '案例一';
 export default Example;

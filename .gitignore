@@ -2,6 +2,7 @@
 .idea
 .vscode
 .DS_Store
+.swc
 node_modules
 node_modules.nosync
 /dist

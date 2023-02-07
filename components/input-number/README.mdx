@@ -3,22 +3,17 @@ export const basic = {
   title: '数字输入框',
   subtitle: 'InputNumber',
 };
+import Snapshot from '@/components/snapshot';
+import MBox from '../markdown';
+import api from './examples/api.md?raw';
 
+<div className="n-md-body">
 # 数字输入框
 
 > 在页面中输入数字
 
-import Snapshot from '@/components/snapshot';
-
-<Snapshot title="简单使用" path="input-number/examples/default" lang="tsx" cols={5} />
-
-<Snapshot title="最大值 & 最小值" path="input-number/examples/maxmin" lang="tsx" cols={5} />
-
-<Snapshot title="自定义格式" path="input-number/examples/formatter" lang="tsx" cols={5} />
-
-import MBox from '../markdown';
-
-import api from './examples/api.md?raw';
+<Snapshot name="input-number" />
+</div>
 
 <MBox text={api} />
 

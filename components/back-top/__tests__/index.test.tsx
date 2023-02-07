@@ -1,5 +1,5 @@
 import React from 'react';
-import BackTop from '../index';
+import BackTop, { type BackTopProps } from '../index';
 import { render, screen, fireEvent, act } from '@testing-library/react';
 
 /**
@@ -11,19 +11,17 @@ describe('test BackTop', () => {
     jest.clearAllTimers();
   });
 
-  it('测试 BackTop 默认', () => {
-    const { container } = render(<BackTop />);
-
-    expect(container).toBeInTheDocument();
-    fireEvent.scroll(window);
-  });
-
-  it('测试 BackTop', async () => {
+  const testPopupContainer = (hasGetPopupContainer: boolean) => {
     const data = new Array(20).fill(0);
+    const props: BackTopProps = {};
+    const testid = 'box' + hasGetPopupContainer;
+    const backTopTestId = 'back-top-' + hasGetPopupContainer;
+
+    if (hasGetPopupContainer) props.getPopupContainer = (node) => node;
 
     render(
       <div
-        data-testid="box"
+        data-testid={testid}
         id="box"
         style={{ height: 100, overflow: 'auto', position: 'relative' }}
       >
@@ -33,24 +31,38 @@ describe('test BackTop', () => {
           })}
         </div>
         <BackTop
-          data-testid="back-top"
+          data-testid={backTopTestId}
           visibilityHeight={200}
           target={() => document.querySelector('#box') || document.body}
-          getPopupContainer={() => document.body}
+          {...props}
         />
       </div>
     );
+    screen.getByTestId(testid).scrollTo = jest.fn();
 
-    screen.getByTestId('box').scrollTo = jest.fn();
     act(() => {
-      screen.getByTestId('box').scrollTop = 1000;
-      fireEvent.scroll(screen.getByTestId('box'));
+      screen.getByTestId(testid).scrollTop = 1000;
+      fireEvent.scroll(screen.getByTestId(testid));
     });
-    fireEvent.click(screen.getByTestId('back-top'));
     act(() => {
-      screen.getByTestId('box').scrollTop = 0;
-      fireEvent.scroll(screen.getByTestId('box'));
+      fireEvent.click(screen.getByTestId(backTopTestId));
+      screen.getByTestId(testid).scrollTop = 0;
+      fireEvent.scroll(screen.getByTestId(testid));
     });
-    fireEvent.animationEnd(screen.getByTestId('back-top'));
+    fireEvent.animationEnd(screen.getByTestId(backTopTestId));
+  };
+
+  it('测试 BackTop 默认', () => {
+    const { container } = render(<BackTop />);
+
+    expect(container).toBeInTheDocument();
+    fireEvent.scroll(window);
+  });
+
+  it('test getPopupContainer', () => {
+    testPopupContainer(false);
+  });
+  it('test getPopupContainer', () => {
+    testPopupContainer(true);
   });
 });

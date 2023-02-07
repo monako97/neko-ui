@@ -3,14 +3,16 @@ export const basic = {
   title: '取色板',
   subtitle: 'ColorPalette',
 };
+import Snapshot from '@/components/snapshot';
+
+<div className="n-md-body">
 
 # ColorPalette
 
 > 取色板
 
-import Snapshot from '@/components/snapshot';
-
-<Snapshot title="代码演示" path="color-palette/examples/default" lang="tsx" cols={5} />
+<Snapshot name="color-palette" />
+</div>
 
 import MBox from '../markdown';
 import api from './examples/api.md?raw';

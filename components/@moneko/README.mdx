@@ -4,14 +4,14 @@ export const basic = {
   icon: '😋',
 };
 
-#### 目录结构说明
-
-import CodeBlock from '@/components/code';
+import CodeBlock from '@/components/code-block';
+import MD from '@/components/markdown';
+import readme from './examples/readme.md?raw';
 import structure from './examples/structure.txt';
 
-<CodeBlock code={structure} lang="treeview" />
+<div className="n-md-body">
+  #### 目录结构说明
+  <CodeBlock code={structure} lang="treeview" />
+</div>
 
-import MBox from '@/components/markdown';
-import readme from './examples/readme.md?raw';
-
-<MBox text={readme} getAnchorContainer={() => document.querySelector('main article')} />
+<MD text={readme} />

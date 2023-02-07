@@ -1,5 +1,5 @@
-import React from 'react';
 import { CaptureScreen } from 'neko-ui';
+import React from 'react';
 
 const Demo = () => {
   return (
@@ -23,4 +23,5 @@ const Demo = () => {
   );
 };
 
+export const title = '自定义保存录制视频方法';
 export default Demo;

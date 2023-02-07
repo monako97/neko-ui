@@ -56,7 +56,5 @@
             "@testing-library/jest-dom"
         ]
     },
-    "exclude": [
-        "node_modules"
-    ]
+    "exclude": []
 }

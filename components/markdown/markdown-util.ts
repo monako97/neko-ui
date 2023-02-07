@@ -1,21 +1,9 @@
 import marked from 'marked-completed';
 import { entityToString } from '@moneko/common';
-import type { DataType as PhotoViewDataType } from 'react-photo-view/dist/types';
-import * as Prism from './prism.js';
+import { highlight } from '../utils/highlight';
 
 marked.setOptions({
-  highlight: function (code: string, lang: string) {
-    const LANGUAGE_REGEX = /^diff-([\w-]+)/i;
-
-    if (Prism.languages[lang]) {
-      return Prism.highlight(code, Prism.languages[lang], lang);
-    } else if (LANGUAGE_REGEX.test(lang)) {
-      Prism.languages[lang] = Prism.languages.diff;
-      return Prism.highlight(code, Prism.languages[lang], lang);
-    }
-
-    return Prism.highlight(code, Prism.languages.markup, 'markup');
-  },
+  highlight: highlight,
   headerPrefix: '# ',
   langLineNumber: true,
   langToolbar: ['copy'],
@@ -36,6 +24,11 @@ export const markdownUtil = (text: string, option: marked.MarkedOptions): string
   return marked(text, option);
 };
 
+export type PhotoViewDataType = {
+  src?: string;
+  intro?: string;
+  key: string | number;
+};
 /**
  * 提取md图片src
  * @param {string} text HTML string
@@ -44,7 +37,7 @@ export const markdownUtil = (text: string, option: marked.MarkedOptions): string
 export const getMarkedImgList = (text: string): PhotoViewDataType[] => {
   if (!text) return [];
   const imageList = text.match(/role=('|")dialog('|") src=('|")(.*?) alt=('|")(.*?)('|")/g);
-  const imageArr = [];
+  const imageArr: PhotoViewDataType[] = [];
 
   if (imageList) {
     for (let i = 0, len = imageList.length; i < len; i++) {
@@ -55,11 +48,11 @@ export const getMarkedImgList = (text: string): PhotoViewDataType[] => {
       );
 
       imageArr.push({
-        intro: params.get('alt') || i,
-        src: params.get('src'),
+        intro: params.get('alt') as string,
+        src: params.get('src') as string,
         key: i,
       });
     }
   }
-  return imageArr as PhotoViewDataType[];
+  return imageArr;
 };

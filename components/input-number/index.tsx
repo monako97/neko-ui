@@ -1,7 +1,28 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import React, {
+  type FC,
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+  MouseEventHandler,
+  KeyboardEventHandler,
+} from 'react';
+import { css } from '@emotion/css';
 import Input from '../input';
 import type { InputProps } from '../input';
-import './index.global.less';
+import { classNames } from '@moneko/common';
+
+const inputNumberCss = css`
+  /** 隐藏原生加减控件 */
+  &[type='number'] {
+    appearance: textfield;
+
+    &::-webkit-inner-spin-button,
+    &::-webkit-outer-spin-button {
+      appearance: none;
+    }
+  }
+`;
 
 export interface InputNumberProps extends Omit<InputProps, 'value' | 'onChange'> {
   value?: number;
@@ -15,7 +36,7 @@ export interface InputNumberProps extends Omit<InputProps, 'value' | 'onChange'>
   precision?: number;
 }
 
-const InputNumber: React.FC<InputNumberProps> = ({
+const InputNumber: FC<InputNumberProps> = ({
   value,
   min = Number.MIN_SAFE_INTEGER,
   max = Number.MAX_SAFE_INTEGER,
@@ -26,6 +47,7 @@ const InputNumber: React.FC<InputNumberProps> = ({
   onMouseDown,
   onKeyDown,
   precision = 2,
+  className,
   ...prpos
 }) => {
   const valRef = useRef<number | undefined>(value);
@@ -47,7 +69,7 @@ const InputNumber: React.FC<InputNumberProps> = ({
     },
     [max, min, onChange]
   );
-  const handleMouseDown: React.MouseEventHandler<HTMLInputElement> = useCallback(
+  const handleMouseDown: MouseEventHandler<HTMLInputElement> = useCallback(
     (e) => {
       setMove(true);
       onMouseDown?.(e);
@@ -66,7 +88,7 @@ const InputNumber: React.FC<InputNumberProps> = ({
   const handleMouseUp = useCallback(() => {
     setMove(false);
   }, []);
-  const handleKeyDown: React.KeyboardEventHandler<HTMLInputElement> = useCallback(
+  const handleKeyDown: KeyboardEventHandler<HTMLInputElement> = useCallback(
     (e) => {
       if (e.key === 'ArrowUp') {
         handleMouseMove({ movementX: 0, movementY: 1 });
@@ -97,6 +119,7 @@ const InputNumber: React.FC<InputNumberProps> = ({
   return (
     <Input
       {...prpos}
+      className={classNames(inputNumberCss, className)}
       value={value}
       max={max}
       min={min}

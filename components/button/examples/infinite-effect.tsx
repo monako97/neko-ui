@@ -8,7 +8,7 @@ const Demo = () => {
     <Button
       infinite={danger}
       fill
-      type={danger ? 'danger' : 'default'}
+      type={danger ? 'error' : 'default'}
       onClick={() => {
         setDanger(!danger);
       }}
@@ -18,4 +18,5 @@ const Demo = () => {
   );
 };
 
+export const title = '无限动画';
 export default Demo;

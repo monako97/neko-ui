@@ -13,3 +13,5 @@ export const projectInfo: PkgType = {
   subtitle: projectBasicInfo.programInfo.description,
   ...projectBasicInfo.programInfo,
 };
+
+export const prefixCls = projectBasicInfo.providerConfig.prefixCls;

@@ -1,7 +1,17 @@
 import { classNames } from '@moneko/common';
-import React, { useCallback, useEffect, useImperativeHandle, useRef, useState } from 'react';
-import getPrefixCls from '../get-prefix-cls';
-import './hue-slider.global.less';
+import React, {
+  CSSProperties,
+  forwardRef,
+  ForwardRefRenderFunction,
+  HTMLAttributes,
+  MouseEvent as ReactMouseEvent,
+  useCallback,
+  useEffect,
+  useImperativeHandle,
+  useRef,
+  useState,
+} from 'react';
+import { sliderPickerCss } from './style';
 
 type RGB = {
   r: number;
@@ -9,19 +19,19 @@ type RGB = {
   b: number;
 };
 
-export interface HueSliderProps extends Omit<React.HTMLAttributes<HTMLElement>, 'onChange'> {
+export interface HueSliderProps extends Omit<HTMLAttributes<HTMLElement>, 'onChange'> {
   value?: RGB;
   // eslint-disable-next-line no-unused-vars
   onChange?: (color: RGB) => void;
 }
 
-type CanvasMouseEvent = React.MouseEvent<HTMLDivElement>;
+type CanvasMouseEvent = ReactMouseEvent<HTMLDivElement>;
 
 export type HueInstance = {
   canvas?: HTMLCanvasElement | null;
 };
 
-const HueSlider: React.ForwardRefRenderFunction<HueInstance, HueSliderProps> = (
+const HueSlider: ForwardRefRenderFunction<HueInstance, HueSliderProps> = (
   { className, value = { r: 255, g: 0, b: 255 }, onChange, ...props },
   ref
 ) => {
@@ -131,12 +141,12 @@ const HueSlider: React.ForwardRefRenderFunction<HueInstance, HueSliderProps> = (
           });
         }
       }}
+      className={classNames(sliderPickerCss, className)}
       style={
         {
           '--offset-x': `${offset}px`,
-        } as React.CSSProperties
+        } as CSSProperties
       }
-      className={classNames(getPrefixCls('slider-picker'), className)}
       onMouseDown={onMouseDown}
     >
       <canvas ref={hueSlider} width={hueRect.width} height={hueRect.height} />
@@ -144,4 +154,4 @@ const HueSlider: React.ForwardRefRenderFunction<HueInstance, HueSliderProps> = (
   );
 };
 
-export default React.forwardRef(HueSlider);
+export default forwardRef(HueSlider);

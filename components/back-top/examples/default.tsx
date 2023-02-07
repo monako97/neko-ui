@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import { useRef } from 'react';
 import { BackTop } from 'neko-ui';
 
 const data = new Array(20).fill(0);
@@ -16,7 +16,7 @@ const Demo = () => {
       <BackTop
         visibilityHeight={200}
         target={() => ref.current || document.body}
-        getPopupContainer={(node) => node || document.body}
+        getPopupContainer={(node) => node}
       />
     </div>
   );

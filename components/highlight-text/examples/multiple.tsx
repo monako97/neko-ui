@@ -1,5 +1,5 @@
-import React from 'react';
 import { HighlightText } from 'neko-ui';
+import React from 'react';
 
 const str = `朱敦儒的词作语言流畅，清新自然。他的词风可分为三个阶段：早年词风浓艳丽巧；
 中年的词风激昂慷慨；闲居后词风婉明清畅。朱敦儒对南宋词坛也产生了 一些积极的影响。
@@ -24,4 +24,5 @@ const Demo = () => {
   );
 };
 
+export const title = '多个高亮匹配';
 export default Demo;

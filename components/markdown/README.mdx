@@ -3,24 +3,17 @@ export const basic = {
   title: 'Markdown',
   subtitle: 'MD文档',
 };
-
-# Markdown
-
 import Snapshot from '@/components/snapshot';
-
-## 案例
-
-<Snapshot path="markdown/examples/default" lang="tsx" />
-
-## katex 公式
-
-<Snapshot path="markdown/examples/katex" lang="tsx" />
-
 import MBox from '../markdown';
+import api from './examples/api.md?raw';
 import katex from './examples/katex.md?raw';
 
-<MBox text={katex} tex />
+<div className="n-md-body">
+# Markdown
 
-import api from './examples/api.md?raw';
+<Snapshot name="markdown" />
+</div>
+
+<MBox text={katex} tex />
 
 <MBox text={api} />

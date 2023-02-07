@@ -45,24 +45,20 @@
 ## 读取文件并展示出文件代码
 
 ```jsx
-import CodeBlock from '@/components/code';
+import CodeBlock from '@/components/code-block';
 import DemoRaw from './examples/default.jsx?raw';
 
 <CodeBlock code={DemoRaw} lang="jsx" />;
 ```
 
-## 在.mdx 中通过 案例代码 path （components 目录下代码所在位置） 预览组件及案例代码 Snapshot
+## 在.mdx 中通过 组件文件夹 name （components 目录下代码所在位置） 预览组件案例及代码 Snapshot
 
 ```md
 import Snapshot from '@/components/snapshot';
 
 // 案例 1
 
-<Snapshot path="tag/examples/default" lang="jsx" />
-
-// 案例 2
-
-<Snapshot path="tag/examples/bg" lang="tsx" />
+<Snapshot name="wave-circle" />
 ```
 
 ## 直接在 mdx 中编写文档
