@@ -28,7 +28,7 @@
         "@testing-library/user-event": "14.4.3",
         "@types/jest": "29.4.0",
         "@types/katex": "0.16.0",
-        "@types/lodash": "^4.14.191",
+        "@types/lodash": "4.14.191",
         "@types/tinycolor2": "1.4.3",
         "eslint-config-neko": "1.0.15",
         "identity-obj-proxy": "3.0.0",
@@ -42,6 +42,7 @@
         "@emotion/css": "11.10.5",
         "@moneko/common": "1.0.7",
         "katex": "0.16.4",
+        "lodash": "4.17.21",
         "marked-completed": "1.2.3",
         "react-photo-view": "1.2.3",
         "tinycolor2": "1.6.0"
