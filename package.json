@@ -1,6 +1,6 @@
 {
     "name": "neko-ui",
-    "version": "1.0.29",
+    "version": "1.0.29-beta.0",
     "description": "Neko UI库",
     "main": "lib/index.js",
     "scripts": {
@@ -38,6 +38,7 @@
         "ts-node": "10.9.1"
     },
     "dependencies": {
+        "@emotion/css": "11.10.5",
         "@moneko/common": "1.0.7",
         "katex": "0.16.4",
         "marked-completed": "1.2.3",
