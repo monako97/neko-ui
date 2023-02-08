@@ -3,6 +3,7 @@ import type { CSSProperties, FC, MouseEvent, WheelEvent } from 'react';
 import { getScrollTop, setClipboard, classNames, isEqual, isSvgElement } from '@moneko/common';
 import { getMarkedImgList, markdownUtil, type PhotoViewDataType } from './markdown-util';
 import { PhotoSlider } from 'react-photo-view';
+// import { throttle } from 'lodash';
 import './index.css';
 import '../utils/prism.css';
 
@@ -35,6 +36,24 @@ const toggleAnchor = (anchor: HTMLAnchorElement) => {
     a.classList.remove('active');
   });
   anchor.parentElement?.classList.add('active');
+  const box = anchor.offsetParent?.getBoundingClientRect();
+  const anchorRect = anchor.getBoundingClientRect();
+
+  if (box) {
+    let scrollLogicalPosition: ScrollLogicalPosition | null = null;
+
+    if (box.top > anchorRect.top) {
+      scrollLogicalPosition = 'start';
+    } else if (box.height + box.top < anchorRect.top + anchorRect.height) {
+      scrollLogicalPosition = 'end';
+    }
+    if (scrollLogicalPosition !== null) {
+      anchor.parentElement?.scrollIntoView({
+        behavior: 'smooth',
+        block: scrollLogicalPosition,
+      });
+    }
+  }
 };
 
 const Markdown: FC<MarkdownProps> = ({
@@ -90,7 +109,7 @@ const Markdown: FC<MarkdownProps> = ({
     };
   }, [htmlString, pictureViewer]);
 
-  const handleAnchor = (e: Event) => {
+  const handleAnchor = useCallback((e: Event) => {
     e.preventDefault();
     e.stopPropagation();
     toggleAnchor(e.target as HTMLAnchorElement);
@@ -100,7 +119,7 @@ const Markdown: FC<MarkdownProps> = ({
         behavior: 'smooth',
         block: 'center',
       });
-  };
+  }, []);
 
   useEffect(() => {
     const _anchors: AnchorType[] = [];
@@ -121,7 +140,7 @@ const Markdown: FC<MarkdownProps> = ({
     Object.assign(anchors, {
       current: _anchors,
     });
-  }, [htmlString]);
+  }, [handleAnchor, htmlString]);
 
   const handleClick = useCallback(
     (event: MouseEvent<HTMLDivElement>) => {
@@ -181,9 +200,17 @@ const Markdown: FC<MarkdownProps> = ({
   }, []);
 
   useEffect(() => {
-    getAnchorContainer()?.addEventListener('scroll', handleScroll);
+    getAnchorContainer()?.addEventListener(
+      'scroll',
+      handleScroll
+      // throttle(handleScroll, 200, { trailing: true })
+    );
     return () => {
-      getAnchorContainer()?.removeEventListener('scroll', handleScroll);
+      getAnchorContainer()?.removeEventListener(
+        'scroll',
+        handleScroll
+        // throttle(handleScroll, 1600, { trailing: true })
+      );
     };
   }, [getAnchorContainer, handleScroll]);
 

@@ -3,7 +3,8 @@ import { useCallback, useMemo, useState } from 'react';
 import { type ExampleModule, myDemoKv } from '@moneko/core';
 import { css } from '@emotion/css';
 import { classNames, isFunction } from '@moneko/common';
-import { Code } from 'neko-ui';
+// import { Code } from 'neko-ui';
+import { Code } from '../../es';
 import { Sandpack } from '@codesandbox/sandpack-react';
 import codesandboxCss from '../../codesandbox/styles.css?raw';
 import codesandboxEntry from '../../codesandbox/index.tsx?raw';
@@ -113,7 +114,9 @@ const Snapshot: FC<SnapshotProps> = ({ module, style }) => {
                 }}
                 customSetup={{
                   dependencies: {
-                    'neko-ui': '^1.0.18',
+                    '@emotion/css': '11.10.5',
+                    tailwindcss: '3.2.4',
+                    'neko-ui': '1.0.29-beta.0',
                   },
                 }}
                 options={{

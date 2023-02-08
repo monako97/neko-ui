@@ -5,6 +5,8 @@ export const basic = {
 };
 
 import Snapshot from '@/components/snapshot';
+import MBox from '../markdown';
+import api from './examples/api.md?raw';
 
 <div className="n-md-body">
 # 双马尾轮廓头像
@@ -13,8 +15,5 @@ import Snapshot from '@/components/snapshot';
 
 <Snapshot name="avatar" />
 </div>
-
-import MBox from '../markdown';
-import api from './examples/api.md?raw';
 
 <MBox text={api} />
