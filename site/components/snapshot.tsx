@@ -114,9 +114,7 @@ const Snapshot: FC<SnapshotProps> = ({ module, style }) => {
                 }}
                 customSetup={{
                   dependencies: {
-                    '@emotion/css': '11.10.5',
-                    tailwindcss: '3.2.4',
-                    'neko-ui': '1.0.29-beta.1',
+                    'neko-ui': '1.0.29-beta.2',
                   },
                 }}
                 options={{
