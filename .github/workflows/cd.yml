@@ -53,7 +53,7 @@ jobs:
           then
               NPM_PACKAGE_TAG=$NPM_PACKAGE_BETA_TAG
               echo "发布beta"
-          else if [[ $NPM_PACKAGE_VERSION =~ $NPM_PACKAGE_ALPHA_TAG ]]
+          elif [[ $NPM_PACKAGE_VERSION =~ $NPM_PACKAGE_ALPHA_TAG ]]
               NPM_PACKAGE_TAG=$NPM_PACKAGE_ALPHA_TAG
               echo "发布alpha"
           else
