@@ -3,18 +3,16 @@ export const basic = {
   title: '输入框',
   subtitle: 'Input',
 };
+import Box from '@/components/box';
 import Snapshot from '@/components/snapshot';
+import api from './examples/api.md?raw';
 
-<div className="n-md-body">
+<Box>
 # 输入框
 
 > 在页面中输入文字内容
 
 <Snapshot name="input" />
-</div>
+</Box>
 
-import MBox from '../markdown';
-
-import api from './examples/api.md?raw';
-
-<MBox text={api} />
+<Box text={api} />

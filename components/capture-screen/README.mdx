@@ -3,18 +3,17 @@ export const basic = {
   title: '捕获屏幕',
   subtitle: 'CaptureScreen',
 };
+import Box from '@/components/box';
 import Snapshot from '@/components/snapshot';
+import api from './examples/api.md?raw';
 
-<div className="n-md-body">
+<Box>
 
 # 捕获、录制屏幕
 
 > 捕获、录制屏幕
 
-<Snapshot name="capture-screen" />
-</div>
+<Snapshot name="capture-screen" col={1} />
+</Box>
 
-import MBox from '../markdown';
-import api from './examples/api.md?raw';
-
-<MBox text={api} />
+<Box text={api} />

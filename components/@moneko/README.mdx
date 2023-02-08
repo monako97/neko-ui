@@ -3,15 +3,13 @@ export const basic = {
   title: '说明及注意事项',
   icon: '😋',
 };
-
-import CodeBlock from '@/components/code-block';
-import MD from '@/components/markdown';
+import Box from '@/components/box';
+import Code from '@/components/code';
 import readme from './examples/readme.md?raw';
 import structure from './examples/structure.txt';
 
-<div className="n-md-body">
+<Box>
   #### 目录结构说明
-  <CodeBlock code={structure} lang="treeview" />
-</div>
-
-<MD text={readme} />
+  <Code code={structure} lang="treeview" />
+</Box>
+<Box text={readme} />

@@ -1,6 +1,6 @@
-# 注意事项
-
 [TOC]
+
+# 注意事项
 
 - **\*.global.less 表示该文件不会使用 cssModule 解析，如果需要使用 cssModule，文件不要以.global.less 结尾**
 
@@ -27,10 +27,10 @@
 - **README.mdx 不支持 gmf，比如 table，如需要如需要使用可通过以下方式导入外部.md 文件在 .mdx 文件中使用**
 
   ```jsx
-  import MBox from '@/components/markdown';
+  import Box from '@/components/markdown';
   import readme from './readme.md?raw';
 
-  <MBox text={readme} />;
+  <Box text={readme} />;
   ```
 
 - **README.mdx 文件中需要添加如下代码**
@@ -45,10 +45,10 @@
 ## 读取文件并展示出文件代码
 
 ```jsx
-import CodeBlock from '@/components/code-block';
+import Code from '@/components/code';
 import DemoRaw from './examples/default.jsx?raw';
 
-<CodeBlock code={DemoRaw} lang="jsx" />;
+<Code code={DemoRaw} lang="jsx" />;
 ```
 
 ## 在.mdx 中通过 组件文件夹 name （components 目录下代码所在位置） 预览组件案例及代码 Snapshot
@@ -70,7 +70,7 @@ import Snapshot from '@/components/snapshot';
 // neko-ui 这里表示的是当前项目 package.json 中的 name
 import { Tag } from 'neko-ui';
 
-<div style={{ display: 'flex', height: 300 }}>
+<div className="n-flex n-h-72">
     <Tag>默认</Tag>
 </div>
 ```

@@ -1,16 +1,43 @@
 import { Markdown } from 'neko-ui';
 import React from 'react';
 
-const text = `### h1 \n 
-> csacas
+const text = `
+#### 案例
 
 \`\`\`markdown
-# title
-## title
-### title
-#### title
 
-> 的
+# h1
+
+## h2
+
+### h3
+
+#### h4
+
+> csacas
+
+\`\`\`
+
+# h1
+
+## h2
+
+### h3
+
+#### h4
+
+> csacas
+
+#### 括号对带有彩虹括号
+
+\`\`\`diff-javascript match-braces rainbow-braces
+@@ -4,6 +4,5 @@
+
+- let foo = bar.baz([1, 2, 3]);
+- foo = foo + 1;
+
+* const foo = bar.baz([1, 2, 3]) + 1;
+  console.log(\`foo: \${foo}\`);
 \`\`\`
 `;
 
@@ -18,5 +45,4 @@ const Demo = () => {
   return <Markdown pictureViewer={false} langLineNumber={false} tools={[]} text={text} />;
 };
 
-export const title = '案例';
 export default Demo;

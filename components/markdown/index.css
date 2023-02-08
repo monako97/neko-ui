@@ -176,7 +176,7 @@
   display: flex;
   flex-direction: row-reverse;
   max-width: 1280px;
-  gap: 24px;
+  gap: 16px;
   margin: 0 auto;
 }
 .n-md-body {

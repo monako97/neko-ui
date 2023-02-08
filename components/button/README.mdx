@@ -4,15 +4,15 @@ export const basic = {
   subtitle: 'Button',
 };
 
+import Box from '@/components/box';
 import Snapshot from '@/components/snapshot';
 
-<div className="n-md-body">
+<Box>
 # 按钮
 
 <Snapshot name="button" />
-</div>
+</Box>
 
-import MBox from '../markdown';
 import api from './examples/api.md?raw';
 
-<MBox text={api} />
+<Box text={api} />

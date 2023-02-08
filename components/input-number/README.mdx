@@ -3,18 +3,19 @@ export const basic = {
   title: '数字输入框',
   subtitle: 'InputNumber',
 };
+import Box from '@/components/box';
 import Snapshot from '@/components/snapshot';
-import MBox from '../markdown';
 import api from './examples/api.md?raw';
 
-<div className="n-md-body">
+<Box>
 # 数字输入框
 
 > 在页面中输入数字
 
 <Snapshot name="input-number" />
-</div>
+</Box>
 
-<MBox text={api} />
-
+<Box text={api}>
 > 更多 api 请查看 [Input](/neko-ui/#/input) 组件
+
+</Box>

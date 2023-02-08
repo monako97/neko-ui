@@ -74,6 +74,9 @@ const conf = {
         'body,html': {
           userSelect: 'auto',
         },
+        '#doc-body::-webkit-scrollbar': {
+          display: 'none',
+        },
       });
 
       const transitionBasic = {

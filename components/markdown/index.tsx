@@ -3,12 +3,11 @@ import type { CSSProperties, FC, MouseEvent, WheelEvent } from 'react';
 import { getScrollTop, setClipboard, classNames, isEqual, isSvgElement } from '@moneko/common';
 import { getMarkedImgList, markdownUtil, type PhotoViewDataType } from './markdown-util';
 import { PhotoSlider } from 'react-photo-view';
-// import { throttle } from 'lodash';
+import { throttle } from 'lodash';
 import './index.css';
 import '../utils/prism.css';
 
-export type CodeBlockToolType = Array<'copy'>;
-
+export type CodeToolType = Array<'copy'>;
 export interface MarkdownProps {
   className?: string;
   style?: CSSProperties;
@@ -19,7 +18,7 @@ export interface MarkdownProps {
   /** 显示代码块行号 */
   langLineNumber?: boolean;
   /** 开启代码块工具条 */
-  tools?: CodeBlockToolType;
+  tools?: CodeToolType;
   /** 指定滚动的容器 */
   getAnchorContainer?: () => HTMLElement;
   /** 渲染KateX数学公式 */
@@ -43,9 +42,9 @@ const toggleAnchor = (anchor: HTMLAnchorElement) => {
     let scrollLogicalPosition: ScrollLogicalPosition | null = null;
 
     if (box.top > anchorRect.top) {
-      scrollLogicalPosition = 'start';
+      scrollLogicalPosition = 'nearest';
     } else if (box.height + box.top < anchorRect.top + anchorRect.height) {
-      scrollLogicalPosition = 'end';
+      scrollLogicalPosition = 'nearest';
     }
     if (scrollLogicalPosition !== null) {
       anchor.parentElement?.scrollIntoView({
@@ -53,6 +52,15 @@ const toggleAnchor = (anchor: HTMLAnchorElement) => {
         block: scrollLogicalPosition,
       });
     }
+  }
+};
+const tocWheel = (e: Event) => {
+  e.preventDefault();
+  const { currentTarget, deltaY } = e as unknown as WheelEvent<HTMLElement>;
+  const targetDom = currentTarget as HTMLElement;
+
+  if (targetDom.classList.contains('n-md-toc')) {
+    targetDom.scrollTop = targetDom.scrollTop + deltaY;
   }
 };
 
@@ -117,7 +125,7 @@ const Markdown: FC<MarkdownProps> = ({
       ?.querySelector(decodeURIComponent((e.target as HTMLAnchorElement)?.hash))
       ?.scrollIntoView({
         behavior: 'smooth',
-        block: 'center',
+        block: 'nearest',
       });
   }, []);
 
@@ -200,21 +208,23 @@ const Markdown: FC<MarkdownProps> = ({
   }, []);
 
   useEffect(() => {
+    ref.current
+      ?.querySelector('ol.n-md-toc')
+      ?.addEventListener('wheel', throttle(tocWheel, 8, { trailing: true }), false);
     getAnchorContainer()?.addEventListener(
       'scroll',
-      handleScroll
-      // throttle(handleScroll, 200, { trailing: true })
+      throttle(handleScroll, 200, { trailing: true })
     );
     return () => {
+      document
+        .querySelector('ol.n-md-toc')
+        ?.removeEventListener('wheel', throttle(tocWheel, 8, { trailing: true }), false);
       getAnchorContainer()?.removeEventListener(
         'scroll',
-        handleScroll
-        // throttle(handleScroll, 1600, { trailing: true })
+        throttle(handleScroll, 200, { trailing: true })
       );
     };
   }, [getAnchorContainer, handleScroll]);
-
-  const cls = useMemo(() => classNames('n-md-box', className), [className]);
 
   useEffect(() => {
     if (tex) {
@@ -254,7 +264,7 @@ const Markdown: FC<MarkdownProps> = ({
     <>
       <div
         ref={ref}
-        className={cls}
+        className={classNames('n-md-box', className)}
         dangerouslySetInnerHTML={{
           __html: htmlString,
         }}

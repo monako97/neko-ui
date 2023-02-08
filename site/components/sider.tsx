@@ -104,7 +104,7 @@ const Sider = () => {
   );
 
   return (
-    <div className="n-bg-[var(--header-bg,rgba(255,255,255,0.8))] n-backdrop-blur-lg n-text-[var(--text-color)] n-transition-bg-c n-flex n-flex-col n-overflow-y-scroll n-box-border n-w-60 n-min-w-[15rem] n-m-4 n-mt-24 n-rounded n-z-30 n-shadow-small">
+    <div className=" n-sticky n-top-0 n-bg-[var(--header-bg,rgba(255,255,255,0.8))] n-backdrop-blur-lg n-text-[var(--text-color)] n-transition-bg-c n-flex n-flex-col n-overflow-y-scroll n-box-border n-w-60 n-min-w-[15rem] n-m-4 n-mt-0 n-rounded n-z-30 n-shadow-small">
       <div ref={menuEl} className="n-py-0 n-px-4 n-relative ">
         {Object.keys(menuObj).map((key) => {
           return (

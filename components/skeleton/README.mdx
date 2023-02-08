@@ -3,16 +3,16 @@ export const basic = {
   title: '骨架屏',
   subtitle: 'Skeleton',
 };
+import Box from '@/components/box';
 import Snapshot from '@/components/snapshot';
-import MBox from '../markdown';
 import api from './examples/api.md?raw';
 
-<div className="n-md-body">
+<Box>
 # 骨架屏
 
 > 网络较慢，需要长时间等待加载处理的情况下、图文信息内容较多的列表/卡片中、第一次加载数据的时候使用
 
 <Snapshot name="skeleton" col={1} />
-</div>
+</Box>
 
-<MBox text={api} />
+<Box text={api} />

@@ -3,14 +3,14 @@ export const basic = {
   title: '水波纹',
   subtitle: 'WaveCircle',
 };
+import Box from '@/components/box';
 import Snapshot from '@/components/snapshot';
-import MBox from '../markdown';
-import CodeBlock from '@/components/code-block';
+import Code from '@/components/code';
 import api from './examples/api.md?raw';
 import code from './examples/default?raw';
 import { WaveCircle } from 'neko-ui';
 
-<div className="n-md-body">
+<Box>
 
 # 水波纹
 
@@ -18,7 +18,7 @@ import { WaveCircle } from 'neko-ui';
 
 ## 直接在 mdx 中写
 
-<div style={{ display: 'flex', height: 300 }}>
+<div className="n-flex n-h-72">
   <WaveCircle bgColor="pink" />
   <WaveCircle>默认</WaveCircle>
 </div>
@@ -31,11 +31,11 @@ ReactDOM.render(<WaveCircle bgColor="pink" />, document.body);
 
 ### 读取文件并只展示代码 `./examples/default.tsx`
 
-<CodeBlock code={code} lang="tsx" />
+<Code code={code} lang="tsx" />
 
 > 或传入 path (src 目录下代码所在位置) 通过 Snapshot 展示
 
 <Snapshot name="wave-circle" />
-</div>
+</Box>
 
-<MBox text={api} />
+<Box text={api} />

@@ -3,17 +3,16 @@ export const basic = {
   title: '头像',
   subtitle: 'Avatar',
 };
-
+import Box from '@/components/box';
 import Snapshot from '@/components/snapshot';
-import MBox from '../markdown';
 import api from './examples/api.md?raw';
 
-<div className="n-md-body">
+<Box>
 # 双马尾轮廓头像
 
 > logo 轮廓就是双马尾
 
 <Snapshot name="avatar" />
-</div>
+</Box>
 
-<MBox text={api} />
+<Box text={api} />

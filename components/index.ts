@@ -1,7 +1,7 @@
 export {
   default as Markdown,
   type MarkdownProps,
-  type CodeBlockToolType,
+  type CodeToolType,
   type AnchorType,
 } from './markdown';
 

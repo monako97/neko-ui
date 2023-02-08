@@ -3,16 +3,16 @@ export const basic = {
   title: '文字提示',
   subtitle: 'Tooltip',
 };
+import Box from '@/components/box';
 import Snapshot from '@/components/snapshot';
-import MBox from '../markdown';
 import api from './examples/api.md?raw';
 
-<div className="n-md-body">
+<Box>
 # Tooltip
 
 > 文字提示
 
 <Snapshot name="tooltip" />
-</div>
+</Box>
 
-<MBox text={api} />
+<Box text={api} />

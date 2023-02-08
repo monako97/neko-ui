@@ -26,12 +26,12 @@ const Header = () => {
           <h2 className="n-font-normal n-text-shadow n-mb-0 n-mt-0">{projectInfo.title}</h2>
         </div>
       </div>
-      <div className="n-flex n-flex-1 n-items-end n-pl-6">
-        <h2 className="n-my-0 n-mx-4">{current?.title}</h2>
+      <div className=" n-inline-flex n-gap-4 n-flex-1 n-items-end">
+        <h2 className="n-m-0">{current?.title}</h2>
         <span className="n-opacity-70">{current?.subtitle}</span>
       </div>
       <div
-        className="n-text-2xl n-py-1 n-px-6 n-cursor-pointer"
+        className="n-text-2xl n-py-1 n-px-6 n-cursor-pointer n-select-none"
         onClick={() => changeTheme(theme === 'dark' ? 'light' : 'dark')}
       >
         {theme === 'dark' ? '🌒' : '🌞'}

@@ -3,17 +3,17 @@ export const basic = {
   title: 'Markdown',
   subtitle: 'MD文档',
 };
+import Box from '@/components/box';
 import Snapshot from '@/components/snapshot';
-import MBox from '../markdown';
 import api from './examples/api.md?raw';
 import katex from './examples/katex.md?raw';
 
-<div className="n-md-body">
+<Box>
 # Markdown
 
-<Snapshot name="markdown" />
-</div>
+<Snapshot name="markdown" col={1} />
+</Box>
 
-<MBox text={katex} tex />
+<Box text={katex} tex />
 
-<MBox text={api} />
+<Box text={api} />

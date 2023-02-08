@@ -1,4 +1,4 @@
-import React, { FC, useEffect, MouseEvent } from 'react';
+import React, { FC, useEffect, MouseEvent, useRef } from 'react';
 import { useCallback, useMemo, useState } from 'react';
 import { type ExampleModule, myDemoKv } from '@moneko/core';
 import { css } from '@emotion/css';
@@ -32,6 +32,7 @@ const codeCss = css`
 type CodeKind = 'code' | 'style' | 'editor';
 
 const Snapshot: FC<SnapshotProps> = ({ module, style }) => {
+  const el = useRef<HTMLDivElement>(null);
   const [open, setOpen] = useState<CodeKind | false>(false);
   const handleOpen = useCallback(
     (e: MouseEvent) => {
@@ -50,7 +51,10 @@ const Snapshot: FC<SnapshotProps> = ({ module, style }) => {
   }, []);
 
   return (
-    <div className="n-transition-snapshot n-rounded n-h-fit n-overflow-hidden n-border-base">
+    <div
+      ref={el}
+      className="n-break-inside-avoid n-my-6 n-box-border n-transition-snapshot n-rounded n-border-base"
+    >
       {module.title && <h3 className="n-p-[1rem!important] n-m-[0!important]">{module.title}</h3>}
       <div className="n-transition-snapshot n-flex n-justify-between n-flex-col n-flex-1 n-p-6 n-pb-0 n-text-right">
         <div className="n-text-left">{isFunction(module.default) ? module.default() : null}</div>
@@ -114,7 +118,7 @@ const Snapshot: FC<SnapshotProps> = ({ module, style }) => {
                 }}
                 customSetup={{
                   dependencies: {
-                    'neko-ui': '1.0.29-beta.2',
+                    'neko-ui': '^1.0.30',
                   },
                 }}
                 options={{
@@ -133,9 +137,9 @@ const Snapshot: FC<SnapshotProps> = ({ module, style }) => {
 const SnapshotGroup: FC<SnapshotGroupProps> = ({ name, col = 2 }) => {
   return (
     <div
-      className="n-grid n-w-full n-gap-6 n-flex-wrap"
+      className="n-w-full n-gap-6"
       style={{
-        gridTemplateColumns: `repeat(${col},1fr)`,
+        columnCount: col,
       }}
     >
       {myDemoKv[name]?.map((module, i) => (
