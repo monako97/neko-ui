@@ -1,10 +1,8 @@
 export const basic = {
   type: '数据展示',
   title: '代码块',
-  subtitle: 'Code',
+  subtitle: 'CodeBlock',
 };
-import Box from '@/components/box';
-import Snapshot from '@/components/snapshot';
 import api from './examples/api.md?raw';
 
 <Box>
@@ -13,7 +11,7 @@ import api from './examples/api.md?raw';
 
 > 代码块
 
-<Snapshot name="code" />
+<Snapshot name="code-block" />
 </Box>
 
 <Box text={api} />

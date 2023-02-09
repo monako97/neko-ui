@@ -1,5 +1,4 @@
 import { AvatarGroup } from 'neko-ui';
-import React from 'react';
 
 const Demo = () => {
   return (
@@ -30,5 +29,4 @@ const Demo = () => {
   );
 };
 
-export const title = '头像组合';
 export default Demo;

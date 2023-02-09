@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Button } from 'neko-ui';
 
 const Demo = () => {
@@ -18,5 +18,4 @@ const Demo = () => {
   );
 };
 
-export const title = '无限动画';
 export default Demo;

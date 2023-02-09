@@ -1,10 +1,5 @@
 extends:
   - neko
-rules:
-  react/no-unknown-property: off
-  no-void: off
-  '@typescript-eslint/no-namespace': off
-  "@typescript-eslint/no-non-null-assertion": off
 ignorePatterns:
   - node_modules/
   - dist/

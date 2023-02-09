@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { InputNumber } from 'neko-ui';
 
 const Demo = () => {

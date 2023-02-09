@@ -1,4 +1,3 @@
-import React from 'react';
 import { Button, ButtonType } from 'neko-ui';
 
 const Demo = () => {
@@ -8,8 +7,8 @@ const Demo = () => {
     <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
       {types.map((item) => {
         return (
-          <Button key={item} ghost type={item as ButtonType}>
-            Ghost
+          <Button key={item} type={item as ButtonType}>
+            Button
           </Button>
         );
       })}
@@ -17,5 +16,4 @@ const Demo = () => {
   );
 };
 
-export const title = '透明背景';
 export default Demo;

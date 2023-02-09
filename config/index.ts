@@ -27,6 +27,14 @@ const conf: PartialConfigType = {
       },
     },
   },
+  htmlPluginOption: {
+    tags: [
+      {
+        tag: 'script',
+        textContent: 'var process = {};',
+      },
+    ],
+  },
 };
 
 export default conf;

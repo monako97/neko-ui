@@ -43,6 +43,6 @@ export { default as ColorPicker, type ColorPickerProps } from './color-picker';
 
 export { default as Skeleton } from './skeleton';
 
-export { default as Code, type CodeProps } from './code';
+export { default as CodeBlock, type CodeBlockProps } from './code-block';
 
 export type ComponentSize = 'small' | 'normal' | 'large';

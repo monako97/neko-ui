@@ -2,7 +2,7 @@
     "compilerOptions": {
         "downlevelIteration": true,
         "incremental": true,
-        "jsx": "react",
+        "jsx": "react-jsx",
         "isolatedModules": false,
         "strict": true,
         "noUnusedLocals": true,

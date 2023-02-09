@@ -1,5 +1,4 @@
 import { CaptureScreen } from 'neko-ui';
-import React from 'react';
 
 const Demo = () => {
   return <CaptureScreen recorder preview />;

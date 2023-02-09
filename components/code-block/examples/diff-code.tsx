@@ -1,10 +1,9 @@
-import { Code } from 'neko-ui';
-import React from 'react';
+import { CodeBlock } from 'neko-ui';
 
 const Demo = () => {
   return (
     <>
-      <Code
+      <CodeBlock
         code={`@@ -4,6 +4,5 @@
 -    let foo = bar.baz([1, 2, 3]);
 -    foo = foo + 1;
@@ -13,7 +12,7 @@ const Demo = () => {
 `}
         lang="diff-javascript"
       />
-      <Code
+      <CodeBlock
         code={`@@ -111,6 +114,9 @@
   nasty_btree_map.insert(i, MyLeafNode(i));
 }

@@ -3,11 +3,11 @@ import { useCallback, useMemo, useState } from 'react';
 import { type ExampleModule, myDemoKv } from '@moneko/core';
 import { css } from '@emotion/css';
 import { classNames, isFunction } from '@moneko/common';
-import { Code } from 'neko-ui';
-// import { Code } from '../../es';
+import { CodeBlock } from 'neko-ui';
 import { Sandpack } from '@codesandbox/sandpack-react';
 import codesandboxCss from '../../codesandbox/styles.css?raw';
 import codesandboxEntry from '../../codesandbox/index.tsx?raw';
+// import WebView from './web-view';
 
 interface SnapshotGroupProps {
   name: string;
@@ -90,12 +90,12 @@ const Snapshot: FC<SnapshotProps> = ({ module, style }) => {
         <div className={classNames('n-transition-snapshot n-p-6 n-text-primary', codeCss)}>
           {open === 'code' && (
             <div className="n-transition-snapshot n-animate-silde-in">
-              <Code code={module?.codeSoucre} lang="tsx" lineNumber={false} />
+              <CodeBlock code={module?.codeSoucre} lang="tsx" lineNumber={false} />
             </div>
           )}
           {open === 'style' && (
             <div className="n-transition-snapshot n-animate-silde-in">
-              <Code code={styleCode as string} lang="css" lineNumber={false} />
+              <CodeBlock code={styleCode as string} lang="css" lineNumber={false} />
             </div>
           )}
           {open === 'editor' && (
@@ -142,6 +142,7 @@ const SnapshotGroup: FC<SnapshotGroupProps> = ({ name, col = 2 }) => {
         columnCount: col,
       }}
     >
+      {/* <WebView /> */}
       {myDemoKv[name]?.map((module, i) => (
         <Snapshot key={i} module={module} />
       ))}

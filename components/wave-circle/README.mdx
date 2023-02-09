@@ -3,12 +3,8 @@ export const basic = {
   title: '水波纹',
   subtitle: 'WaveCircle',
 };
-import Box from '@/components/box';
-import Snapshot from '@/components/snapshot';
-import Code from '@/components/code';
 import api from './examples/api.md?raw';
-import code from './examples/default?raw';
-import { WaveCircle } from 'neko-ui';
+import code from './examples/案例一?raw';
 
 <Box>
 
@@ -24,14 +20,15 @@ import { WaveCircle } from 'neko-ui';
 </div>
 
 ```tsx
-import { WaveCircle } from 'neko-ui';
-
-ReactDOM.render(<WaveCircle bgColor="pink" />, document.body);
+<div className="n-flex n-h-72">
+  <WaveCircle bgColor="pink" />
+  <WaveCircle>默认</WaveCircle>
+</div>
 ```
 
 ### 读取文件并只展示代码 `./examples/default.tsx`
 
-<Code code={code} lang="tsx" />
+<CodeBlock code={code} lang="tsx" />
 
 > 或传入 path (src 目录下代码所在位置) 通过 Snapshot 展示
 

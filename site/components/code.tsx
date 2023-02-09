@@ -1,3 +1,3 @@
-import { Code } from 'neko-ui';
+import { CodeBlock } from 'neko-ui';
 
-export default Code;
+export default CodeBlock;

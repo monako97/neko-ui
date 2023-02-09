@@ -1,5 +1,4 @@
 import { type ComponentSize, Input } from 'neko-ui';
-import React from 'react';
 
 const Demo = () => {
   const sizes: ComponentSize[] = ['normal', 'small', 'large'];

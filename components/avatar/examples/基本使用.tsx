@@ -1,5 +1,4 @@
 import { Avatar } from 'neko-ui';
-import React from 'react';
 
 const Demo = () => {
   return (
@@ -10,5 +9,4 @@ const Demo = () => {
   );
 };
 
-export const title = '基本使用';
 export default Demo;

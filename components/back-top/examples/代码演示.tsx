@@ -9,9 +9,9 @@ const Demo = () => {
   return (
     <div ref={ref} style={{ height: 200, overflow: 'auto', position: 'relative' }}>
       <div>
-        {data.map((_, i) => {
-          return <p key={i}>data-{i}</p>;
-        })}
+        {data.map((_, i) => (
+          <p key={i}>data {i}</p>
+        ))}
       </div>
       <BackTop
         visibilityHeight={200}

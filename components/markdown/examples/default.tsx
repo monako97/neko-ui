@@ -1,5 +1,4 @@
 import { Markdown } from 'neko-ui';
-import React from 'react';
 
 const text = `
 #### 案例

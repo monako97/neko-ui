@@ -1,9 +1,8 @@
-import { Code } from 'neko-ui';
-import React from 'react';
+import { CodeBlock } from 'neko-ui';
 
 const Demo = () => {
   return (
-    <Code
+    <CodeBlock
       code={`# title
 ## title
 ### title

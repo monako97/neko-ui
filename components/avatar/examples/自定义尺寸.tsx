@@ -1,5 +1,4 @@
 import { Avatar } from 'neko-ui';
-import React from 'react';
 
 const Demo = () => {
   return (
@@ -15,5 +14,4 @@ const Demo = () => {
   );
 };
 
-export const title = '自定义尺寸';
 export default Demo;

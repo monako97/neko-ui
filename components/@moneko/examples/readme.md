@@ -27,7 +27,6 @@
 - **README.mdx 不支持 gmf，比如 table，如需要如需要使用可通过以下方式导入外部.md 文件在 .mdx 文件中使用**
 
   ```jsx
-  import Box from '@/components/markdown';
   import readme from './readme.md?raw';
 
   <Box text={readme} />;
@@ -45,17 +44,14 @@
 ## 读取文件并展示出文件代码
 
 ```jsx
-import Code from '@/components/code';
 import DemoRaw from './examples/default.jsx?raw';
 
-<Code code={DemoRaw} lang="jsx" />;
+<CodeBlock code={DemoRaw} lang="jsx" />;
 ```
 
 ## 在.mdx 中通过 组件文件夹 name （components 目录下代码所在位置） 预览组件案例及代码 Snapshot
 
 ```md
-import Snapshot from '@/components/snapshot';
-
 // 案例 1
 
 <Snapshot name="wave-circle" />

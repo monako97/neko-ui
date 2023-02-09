@@ -7,7 +7,7 @@ import React, {
   useState,
   useRef,
 } from 'react';
-import { myPkgs, type RouterProps, useLocation, useNavigate } from '@moneko/core';
+import { myPkgs, useLocation, useNavigate, RouterProps } from '@moneko/core';
 import { classNames } from '@moneko/common';
 
 type MenuType = {
@@ -23,20 +23,14 @@ const menuObj: Record<string, MenuType[]> = {};
 
 const extractMenu = (list: RouterProps[]) => {
   return list?.map((item) => {
-    // eslint-disable-next-line @typescript-eslint/no-var-requires
-    const md = require('@pkg/' + item.key + '/README.mdx');
-    const type = md.basic.type || 'default';
+    const type = item?.type || 'default';
     const prev = menuObj[type] || [];
 
     Object.assign(menuObj, {
       [type]: prev.concat({
-        ...md.basic,
-        path: item.path,
-        key: item.key,
+        ...item,
+        type,
       }),
-    });
-    Object.assign(item, {
-      ...md.basic,
     });
   });
 };

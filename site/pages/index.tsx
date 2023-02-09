@@ -69,7 +69,7 @@ const App: FC = () => {
         className="n-flex n-max-h-[100vh] n-h-full n-overflow-y-auto n-pr-4 n-flex-1 n-pt-24 n-z-10"
       >
         <Sider />
-        <main className="n-w-full n-pb-24">
+        <main className="n-w-[calc(100%-17rem)] n-pb-24">
           <Coverage />
           {readme ? (
             <div className="n-box-border n-min-h-[calc(100vh-13.25rem)]">{readme}</div>
