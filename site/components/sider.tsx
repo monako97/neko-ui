@@ -1,5 +1,4 @@
-import React, {
-  type ReactNode,
+import {
   Fragment,
   memo,
   useCallback,
@@ -7,21 +6,12 @@ import React, {
   useState,
   useRef,
 } from 'react';
-import { myPkgs, useLocation, useNavigate, RouterProps } from '@moneko/core';
+import { myPkgs, MyPkg, useLocation, useNavigate } from '@moneko/core';
 import { classNames } from '@moneko/common';
 
-type MenuType = {
-  subtitle?: string;
-  key: string;
-  title: string;
-  path: string;
-  icon?: ReactNode;
-  children: MenuType[];
-};
+const menuObj: Record<string, MyPkg[]> = {};
 
-const menuObj: Record<string, MenuType[]> = {};
-
-const extractMenu = (list: RouterProps[]) => {
+const extractMenu = (list: MyPkg[]) => {
   return list?.map((item) => {
     const type = item?.type || 'default';
     const prev = menuObj[type] || [];
@@ -46,7 +36,7 @@ const Sider = () => {
   const activeKey = useMemo(() => location.pathname.substring(1), [location]);
 
   const handleMenu = useCallback(
-    (item: MenuType) => {
+    (item: MyPkg) => {
       const isSubMenu = Array.isArray(item.children);
 
       if (!isSubMenu) {
@@ -66,7 +56,7 @@ const Sider = () => {
     [navigate, openKey]
   );
   const renderMenu = useCallback(
-    (list?: MenuType[]) => {
+    (list?: MyPkg[]) => {
       return list?.map((item) => {
         return (
           <Fragment key={item.key}>
