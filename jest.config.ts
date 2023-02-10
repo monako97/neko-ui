@@ -1,6 +1,8 @@
 import type { Config } from 'jest';
 import globals from '@moneko/core/build/envFlags';
 
+const { name } = JSON.parse(globals.programInfo);
+
 /**
  * 单元测试的几个指标:
  * stmts 是语句覆盖率(statement coverage): 是不是每个语句都执行了?
@@ -14,6 +16,7 @@ const ignore = [
   '<rootDir>/lib/',
   '<rootDir>/es/',
   '<rootDir>/dist/',
+  '<rootDir>/docs/',
   '<rootDir>/node_modules/',
   'prism.js',
 ];
@@ -45,6 +48,7 @@ const config: Config = {
     '\\.(css|less)$': 'identity-obj-proxy',
     '\\?raw$': '<rootDir>/test/file.mock.ts',
     'iconfont.js$': '<rootDir>/test/file.mock.ts',
+    [name]: '<rootDir>/components/index.ts',
   },
   globals: globals,
 };

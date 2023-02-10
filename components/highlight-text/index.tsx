@@ -1,4 +1,4 @@
-import React, { CSSProperties, FC, useEffect, useMemo, useState } from 'react';
+import React, { type CSSProperties, type FC, useEffect, useMemo, useState } from 'react';
 import { css } from '@emotion/css';
 import { classNames } from '@moneko/common';
 

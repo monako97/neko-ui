@@ -1,5 +1,5 @@
 import React from 'react';
-import ColorPicker from '../index';
+import { ColorPicker } from 'neko-ui';
 import { render, screen, fireEvent, act } from '@testing-library/react';
 
 /**

@@ -1,4 +1,4 @@
-import { type FC, type HTMLAttributes } from 'react';
+import React, { type FC, type HTMLAttributes } from 'react';
 import { css, keyframes, injectGlobal } from '@emotion/css';
 import { classNames } from '@moneko/common';
 
@@ -79,6 +79,7 @@ export interface SkeletonProps extends HTMLAttributes<HTMLDivElement> {
 }
 
 injectGlobal(skeletonVar);
+
 const Skeleton: FC<SkeletonProps> = ({ count = 3, className, ...props }) => {
   return (
     <div {...props} className={classNames(skeletonCss, className)}>

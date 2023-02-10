@@ -1,13 +1,13 @@
 import React, {
-  FC,
-  HTMLAttributes,
+  type FC,
+  type HTMLAttributes,
   useCallback,
   useEffect,
   useMemo,
   useRef,
   useState,
 } from 'react';
-import Button, { type ButtonProps } from '../button';
+import { Button, type ButtonProps } from 'neko-ui';
 import { classNames, downloadBlob, isObject } from '@moneko/common';
 import {
   btnCss,

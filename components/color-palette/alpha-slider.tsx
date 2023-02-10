@@ -1,9 +1,9 @@
 import { classNames } from '@moneko/common';
 import React, {
-  CSSProperties,
-  FC,
-  HTMLAttributes,
-  MouseEvent as ReactMouseEvent,
+  type CSSProperties,
+  type FC,
+  type HTMLAttributes,
+  type MouseEvent as ReactMouseEvent,
   useCallback,
   useEffect,
   useRef,

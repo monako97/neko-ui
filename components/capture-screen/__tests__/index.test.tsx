@@ -1,5 +1,5 @@
 import React from 'react';
-import CaptureScreen from '../index';
+import { CaptureScreen } from 'neko-ui';
 import { render, screen, fireEvent, act } from '@testing-library/react';
 
 const mockMedia = (ondataavailable?: boolean) => {

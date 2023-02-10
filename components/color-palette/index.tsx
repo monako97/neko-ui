@@ -5,8 +5,8 @@ import React, {
   useMemo,
   useRef,
   useState,
-  HTMLAttributes,
-  MouseEvent as ReactMouseEvent,
+  type HTMLAttributes,
+  type MouseEvent as ReactMouseEvent,
 } from 'react';
 import AlphaSlider from './alpha-slider';
 import Input from '../input';

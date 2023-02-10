@@ -1,4 +1,4 @@
-import {
+import React, {
   type FC,
   type InputHTMLAttributes,
   type ReactNode,

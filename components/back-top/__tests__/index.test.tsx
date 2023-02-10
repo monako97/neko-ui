@@ -1,5 +1,5 @@
 import React from 'react';
-import BackTop, { type BackTopProps } from '../index';
+import { BackTop, type BackTopProps } from 'neko-ui';
 import { render, screen, fireEvent, act } from '@testing-library/react';
 
 /**

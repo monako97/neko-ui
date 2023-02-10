@@ -1,5 +1,5 @@
 import React from 'react';
-import Input from '../index';
+import { Input } from 'neko-ui';
 import { fireEvent, render, screen } from '@testing-library/react';
 
 /**

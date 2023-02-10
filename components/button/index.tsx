@@ -1,4 +1,11 @@
-import React, { FC, HTMLAttributes, MouseEventHandler, useCallback, useRef, useState } from 'react';
+import React, {
+  type FC,
+  type HTMLAttributes,
+  type MouseEventHandler,
+  useCallback,
+  useRef,
+  useState,
+} from 'react';
 import { classNames, isFunction } from '@moneko/common';
 import { css, keyframes } from '@emotion/css';
 

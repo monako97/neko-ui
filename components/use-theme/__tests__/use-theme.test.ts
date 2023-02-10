@@ -1,5 +1,5 @@
 import { act, renderHook } from '@testing-library/react';
-import useTheme from '../index';
+import { useTheme } from 'neko-ui';
 /**
  * @jest-environment jsdom
  */

@@ -1,4 +1,4 @@
-import React, { CSSProperties, FC } from 'react';
+import React, { type CSSProperties, type FC } from 'react';
 import { css, injectGlobal } from '@emotion/css';
 import { classNames } from '@moneko/common';
 import ColorPalette from '../color-palette';

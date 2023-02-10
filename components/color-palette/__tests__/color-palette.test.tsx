@@ -1,5 +1,5 @@
 import React from 'react';
-import ColorPalette from '../index';
+import { ColorPalette } from 'neko-ui';
 import { fireEvent, render, screen } from '@testing-library/react';
 
 /**

@@ -9,6 +9,9 @@ export { default as BackTop, type BackTopProps } from './back-top';
 
 export {
   default as HighlightText,
+  strToHighlight,
+  RegExp_HighLight,
+  type HighlightFlag,
   type Highlight,
   type HighlightTextProps,
   type HighlightTextJson,

@@ -4,8 +4,8 @@ import React, {
   useEffect,
   useRef,
   useState,
-  MouseEventHandler,
-  KeyboardEventHandler,
+  type MouseEventHandler,
+  type KeyboardEventHandler,
 } from 'react';
 import { css } from '@emotion/css';
 import Input from '../input';

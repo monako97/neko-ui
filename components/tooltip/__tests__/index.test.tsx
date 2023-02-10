@@ -1,6 +1,6 @@
-import Tooltip from '../index';
-import { render, screen, fireEvent, act } from '@testing-library/react';
 import React from 'react';
+import { Tooltip } from 'neko-ui';
+import { render, screen, fireEvent, act } from '@testing-library/react';
 
 /**
  * @jest-environment jsdom

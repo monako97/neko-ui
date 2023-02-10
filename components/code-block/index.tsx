@@ -1,5 +1,5 @@
 import { setClipboard, classNames } from '@moneko/common';
-import React, { FC, ReactNode, useMemo, useRef } from 'react';
+import React, { type FC, type ReactNode, useMemo, useRef } from 'react';
 import { highlight } from '../utils/highlight';
 import '../utils/prism.css';
 
