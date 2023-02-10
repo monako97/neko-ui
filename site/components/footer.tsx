@@ -1,4 +1,4 @@
-import React, { memo } from 'react';
+import { memo } from 'react';
 import { isObject } from '@moneko/common';
 import { projectInfo } from '@/utils';
 

@@ -1,4 +1,4 @@
-import React, { useMemo, memo } from 'react';
+import { useMemo, memo } from 'react';
 import { myPkgs, useLocation, useNavigate } from '@moneko/core';
 import { Avatar, useTheme } from 'neko-ui';
 import { projectInfo, type PkgType } from '@/utils';

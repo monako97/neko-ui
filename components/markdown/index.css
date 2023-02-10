@@ -213,9 +213,14 @@
   color: var(--primary-color);
   content: attr(data-prefix) '# ';
 }
-.n-md-body [data-prefix]::before {
+h1[data-prefix]::before,
+h2[data-prefix]::before,
+h3[data-prefix]::before,
+h4[data-prefix]::before,
+h5[data-prefix]::before,
+h6[data-prefix]::before {
   color: var(--primary-color);
-  content: attr(data-prefix);
+  content: attr(data-prefix) !important;
 }
 
 .n-md-body ol,
@@ -458,15 +463,15 @@
 .n-md-body table,
 .n-md-body tr th,
 .n-md-body tr td,
-.n-md-body blockquote,
-.n-md-body blockquote::after,
-.n-md-body blockquote::before,
-.n-md-body blockquote p {
+blockquote,
+blockquote::after,
+blockquote::before,
+blockquote p {
   transition-duration: var(--transition-duration);
   transition-timing-function: var(--transition-timing-function);
 }
 
-.n-md-body blockquote {
+blockquote {
   position: relative;
   margin: 30px 60px;
   padding: 16px;
@@ -476,8 +481,8 @@
   transition-property: background-color;
 }
 
-.n-md-body blockquote::before,
-.n-md-body blockquote::after {
+ blockquote::before,
+ blockquote::after {
   position: absolute;
   color: var(--blockquote-icon-color, #fb5);
   font-size: 48px;
@@ -485,31 +490,31 @@
   transition-property: color;
 }
 
-.n-md-body blockquote::before {
+blockquote::before {
   top: -8px;
   left: 0;
   transform: translateX(-53px);
   content: '\e68e';
 }
 
-.n-md-body blockquote::after {
+blockquote::after {
   right: 0;
   bottom: -8px;
   transform: translateX(53px);
   content: '\e68d';
 }
 
-.n-md-body blockquote cite {
+blockquote cite {
   color: var(--cite-color, #bfbfbf);
   font-size: var(--font-size-base, 14px);
   line-height: 20px;
 }
 
-.n-md-body blockquote cite::before {
+blockquote cite::before {
   content: '\2014 \00A0';
 }
 
-.n-md-body blockquote p {
+blockquote p {
   margin: auto 0;
   color: var(--blockquote-color, #5e6d82);
   font-size: var(--font-size-base, 14px);

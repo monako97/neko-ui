@@ -3,7 +3,6 @@ export const basic = {
   title: '数字输入框',
   subtitle: 'InputNumber',
 };
-import api from './examples/api.md?raw';
 
 <Box>
 # 数字输入框
@@ -13,7 +12,15 @@ import api from './examples/api.md?raw';
 <Snapshot name="input-number" />
 </Box>
 
-<Box text={api}>
-> 更多 api 请查看 [Input](/neko-ui/#/input) 组件
+<Box text={`## API
 
-</Box>
+| 属性     | 说明                     | 类型                     | 默认值 | 版本 |
+| -------- | ------------------------ | ------------------------ | ------ | ---- |
+| value    | 值                       | number                   | -      | -    |
+| min      | 最小值                   | number                   | -      | -    |
+| max      | 最大值                   | number                   | -      | -    |
+| onChange | 值变更时触发的函数       | (value?: number) => void | -      | -    |
+| step     | 每次改变步数，可以为小数 | number                   | -      | -    |
+
+> 更多 api 请查看 [Input](/neko-ui/#/input) 组件
+> `} />

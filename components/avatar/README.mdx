@@ -3,7 +3,6 @@ export const basic = {
   title: '头像',
   subtitle: 'Avatar',
 };
-import api from './examples/api.md?raw';
 
 <Box>
 # 双马尾轮廓头像
@@ -11,6 +10,16 @@ import api from './examples/api.md?raw';
 > logo 轮廓就是双马尾
 
 <Snapshot name="avatar" />
+
 </Box>
 
-<Box text={api} />
+<Box text={`
+| 属性     | 说明       | 类型   | 默认值                                  | 版本 |
+| -------- | ---------- | ------ | --------------------------------------- | ---- |
+| src      | 头像       | string | -                                       | -    |
+| imgProps | 头像 props | -      | React.HTMLAttributes<HTMLImageElement> | -    |
+`}>
+
+## API
+
+</Box>

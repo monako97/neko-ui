@@ -7,3 +7,5 @@ ignorePatterns:
   - __snapshots__/
   - prism.js
   - iconfont.js
+  - components/**/examples/*.mdx
+  - components/**/examples/*.md

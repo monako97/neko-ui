@@ -1,4 +1,4 @@
-import React, { FC, memo } from 'react';
+import { FC, memo } from 'react';
 import { projectInfo } from '@/utils';
 import getBrowser from 'neko-ui/utils/broswer';
 

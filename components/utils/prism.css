@@ -52,8 +52,9 @@ pre[class*='language-'] {
 }
 
 code[class*='language-']::selection,
+pre[class*='language-'] ::selection,
 code[class*='language-'] ::selection pre[class*='language-']::selection,
-pre[class*='language-'] ::selection {
+pre[class*='language-'] ::selection pre[class*='language-']::selection {
     text-shadow: 0 1px var(--text-shadow-color);
     background-color: var(--text-selection-bg);
 }
@@ -453,13 +454,24 @@ pre {
     font-family: 'Liberation Mono', Monaco, Menlo, Consolas, 'Source Code Pro', 'Ubuntu Mono',
         'Microsoft Yahei', '微软雅黑', Courier, 'Helvetica Neue', 'Lantinghei SC', STXihei, WenQuanYi,
         sans-serif;
-    white-space: pre;
     text-align: left;
+    white-space: pre;
     word-wrap: normal;
     word-break: normal;
     word-spacing: normal;
     tab-size: 4;
     hyphens: none;
+}
+pre.prism-code {
+    font-size: 12px !important;
+    line-height: 1.5 !important;
+    white-space: pre-wrap;
+    word-wrap: normal;
+    word-break: break-all;
+    word-spacing: normal;
+    font-family: 'Liberation Mono', Monaco, Menlo, Consolas, 'Source Code Pro', 'Ubuntu Mono',
+    'Microsoft Yahei', '微软雅黑', Courier, 'Helvetica Neue', 'Lantinghei SC', STXihei, WenQuanYi,
+    sans-serif !important;
 }
 
 code a[href],
@@ -644,7 +656,7 @@ pre:not(.sp-cm) ::-webkit-scrollbar {
     display: none;
 }
 
-pre:not(.sp-cm):hover {
+pre:not(.sp-cm):not(.prism-code):hover {
     box-shadow: 0 2px 20px rgba(0, 0, 0, 0.2);
 }
 

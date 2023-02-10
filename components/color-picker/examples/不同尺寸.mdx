@@ -1,0 +1,9 @@
+function Demo() {
+  const [val, setVal] = React.useState("rgba(255,0,0,1)");
+
+  return <div className="n-flex n-gap-4 n-items-end">
+    <ColorPicker value={val} onChange={setVal} size="small" />
+    <ColorPicker value={val} onChange={setVal} size="normal" />
+    <ColorPicker value={val} onChange={setVal} size="large" />
+  </div>;
+}

@@ -11,7 +11,13 @@ declare module './index.less' {
 
   export default styles;
 }
+// types/mdx.d.ts
+declare module '*.mdx' {
+  // eslint-disable-next-line no-unused-vars, @typescript-eslint/no-explicit-any
+  let MDXComponent: (props: any) => JSX.Element;
 
+  export default MDXComponent;
+}
 declare module '*?raw' {
   export default string;
 }

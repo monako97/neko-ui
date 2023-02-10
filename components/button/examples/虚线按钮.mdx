@@ -1,0 +1,9 @@
+<div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
+  {['default', 'primary', 'success', 'warning', 'error'].map((item) => {
+    return (
+      <Button key={item} dashed ghost type={item}>
+        Dashed
+      </Button>
+    );
+  })}
+</div>

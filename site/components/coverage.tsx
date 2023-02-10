@@ -1,4 +1,4 @@
-import React, { FC, memo, useMemo } from 'react';
+import { FC, memo, useMemo } from 'react';
 import { projectBasicInfo, useLocation, useOutlet } from '@moneko/core';
 import { css } from '@emotion/css';
 import { classNames } from '@moneko/common';

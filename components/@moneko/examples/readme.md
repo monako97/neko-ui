@@ -1,6 +1,45 @@
 [TOC]
+# 说明
 
-# 注意事项
+## 目录结构
+
+```treeview
+root_folder/
+|-- components/
+|   |-- index.ts
+|   `-- wave-circle/ 组件源码
+|       |-- examples/ 组件案例
+|       |   `-- 案例代码 demo.mdx
+|       |-- index.tsx
+|       `-- 文档排版，配合案例代码使用 README.mdx
+|-- config/
+|   `-- 默认环境配置 index.ts
+|   `-- 额外配置，当运行 `npm start --config=prod` 时会加载 prod.ts
+|-- docs/ 编译的文档
+|   |-- index.js
+|   `-- index.html
+|-- es/ 编译的组件
+|   |-- index.js
+|   `-- wave-circle/
+|       `-- index.js
+|-- lib/ 编译的组件
+|   |-- index.js
+|   `-- wave-circle/
+|       `-- index.js
+|-- .eslintrc.yaml
+|-- .gitattributes
+|-- .prettierrc.yaml
+|-- .stylelintrc.yaml
+|-- package.json
+|-- README.md
+|-- site/
+|-- tsconfig.json
+`-- typings
+    `-- typings.d.ts
+
+```
+
+## 注意事项
 
 - **\*.global.less 表示该文件不会使用 cssModule 解析，如果需要使用 cssModule，文件不要以.global.less 结尾**
 

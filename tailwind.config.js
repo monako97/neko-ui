@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 const plugin = require('tailwindcss/plugin');
-const defaultTheme = require('tailwindcss/defaultTheme');
+// const defaultTheme = require('tailwindcss/defaultTheme');
 
 /** @type {import('tailwindcss').Config} */
 const conf = {
@@ -17,7 +17,6 @@ const conf = {
   theme: {
     extend: {
       colors: {
-        ...defaultTheme.colors,
         primaryBase: '#1890ff',
         primary: 'var(--primary-color)',
         primaryDeprecatedBg: 'var(--primary-color-deprecated-bg)',
@@ -28,7 +27,6 @@ const conf = {
         current: 'currentColor',
       },
       borderRadius: {
-        ...defaultTheme.borderRadius,
         DEFAULT: 'var(--border-radius-base)',
       },
       transitionProperty: {

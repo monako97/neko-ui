@@ -1,3 +1,4 @@
-import { CodeBlock } from 'neko-ui';
+import { CodeBlock as Code } from 'neko-ui';
 
-export default CodeBlock;
+export { type CodeBlockProps as CodeProps } from 'neko-ui';
+export default Code;
