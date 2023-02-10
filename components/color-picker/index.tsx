@@ -1,9 +1,7 @@
 import React, { type CSSProperties, type FC } from 'react';
 import { css, injectGlobal } from '@emotion/css';
 import { classNames } from '@moneko/common';
-import ColorPalette from '../color-palette';
-import Tooltip from '../tooltip';
-import type { ColorPaletteProps, ComponentSize } from '../index';
+import { ColorPalette, Tooltip, type ColorPaletteProps, type ComponentSize } from '../index';
 
 const triggerCss = css`
   display: inline-block;

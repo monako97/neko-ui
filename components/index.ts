@@ -1,5 +1,8 @@
 export {
   default as Markdown,
+  getMarkedImgList,
+  markdownUtil,
+  type PhotoViewDataType,
   type MarkdownProps,
   type CodeToolType,
   type AnchorType,

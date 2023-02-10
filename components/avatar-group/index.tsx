@@ -1,8 +1,7 @@
 import React, { type FC, useMemo } from 'react';
 import { classNames } from '@moneko/common';
 import { css } from '@emotion/css';
-import Tooltip from '../tooltip';
-import Avatar, { type AvatarProps } from '../avatar';
+import { Avatar, Tooltip, type AvatarProps } from '../index';
 
 export interface AvatarGroupProps {
   data: Omit<AvatarProps, 'size'>[];

@@ -7,7 +7,7 @@ import React, {
   useRef,
   useState,
 } from 'react';
-import { Button, type ButtonProps } from 'neko-ui';
+import { Button, type ButtonProps } from '../index';
 import { classNames, downloadBlob, isObject } from '@moneko/common';
 import {
   btnCss,

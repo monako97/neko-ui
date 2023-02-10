@@ -1,15 +1,14 @@
 import React, {
-  type FC,
   useCallback,
   useEffect,
   useRef,
   useState,
+  type FC,
   type MouseEventHandler,
   type KeyboardEventHandler,
 } from 'react';
 import { css } from '@emotion/css';
-import Input from '../input';
-import type { InputProps } from '../input';
+import { Input, type InputProps } from '../index';
 import { classNames } from '@moneko/common';
 
 const inputNumberCss = css`

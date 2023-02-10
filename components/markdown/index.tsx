@@ -1,11 +1,84 @@
-import React, { memo, useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import type { CSSProperties, FC, MouseEvent, WheelEvent } from 'react';
-import { getScrollTop, setClipboard, classNames, isEqual, isSvgElement } from '@moneko/common';
-import { getMarkedImgList, markdownUtil, type PhotoViewDataType } from './markdown-util';
+import React, {
+  memo,
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+  type CSSProperties,
+  type FC,
+  type MouseEvent,
+  type WheelEvent,
+} from 'react';
+import {
+  classNames,
+  entityToString,
+  getScrollTop,
+  setClipboard,
+  isEqual,
+  isSvgElement,
+} from '@moneko/common';
 import { PhotoSlider } from 'react-photo-view';
 import { throttle } from 'lodash';
+import marked from 'marked-completed';
+import { highlight } from '../utils/highlight';
 import './index.css';
 import '../utils/prism.css';
+
+marked.setOptions({
+  highlight: highlight,
+  headerPrefix: '# ',
+  langLineNumber: true,
+  langToolbar: ['copy'],
+  breaks: true,
+  pedantic: false,
+  smartLists: true,
+  smartypants: true,
+  xhtml: true,
+});
+
+/**
+ * Markdown to Html
+ * @param {string} text Markdown文本
+ * @param {MarkedOptions} option MarkedOptions
+ * @returns {string} Html文本
+ */
+export const markdownUtil = (text: string, option: marked.MarkedOptions): string => {
+  return marked(text, option);
+};
+
+export type PhotoViewDataType = {
+  src?: string;
+  intro?: string;
+  key: string | number;
+};
+/**
+ * 提取md图片src
+ * @param {string} text HTML string
+ * @returns {PhotoViewDataType[]} PhotoViewDataType
+ */
+export const getMarkedImgList = (text: string): PhotoViewDataType[] => {
+  if (!text) return [];
+  const imageList = text.match(/role=('|")dialog('|") src=('|")(.*?) alt=('|")(.*?)('|")/g);
+  const imageArr: PhotoViewDataType[] = [];
+
+  if (imageList) {
+    for (let i = 0, len = imageList.length; i < len; i++) {
+      const params: URLSearchParams = new URLSearchParams(
+        entityToString(
+          imageList[i].replace(/('|")/g, '').replace(/ src=/, '&src=').replace(/ alt=/, '&alt=')
+        )
+      );
+
+      imageArr.push({
+        intro: params.get('alt') as string,
+        src: params.get('src') as string,
+        key: i,
+      });
+    }
+  }
+  return imageArr;
+};
 
 export type CodeToolType = Array<'copy'>;
 export interface MarkdownProps {

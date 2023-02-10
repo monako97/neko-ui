@@ -8,8 +8,8 @@ import React, {
   useState,
 } from 'react';
 import { css } from '@emotion/css';
-import type { ComponentSize } from '../index';
 import { classNames } from '@moneko/common';
+import { type ComponentSize } from '../index';
 
 const inputCss = css`
   border: none;

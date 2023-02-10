@@ -1,7 +1,7 @@
 import React, { type FC, useEffect, useRef, memo } from 'react';
 import { useLocation, useOutlet } from '@moneko/core';
 import { BackTop } from 'neko-ui';
-import Sider from '../components/sider';
+import Sider from '@/components/sider';
 import Coverage from '@/components/coverage';
 import Header from '@/components/header';
 import Footer from '@/components/footer';

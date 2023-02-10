@@ -11,7 +11,7 @@ import { css, keyframes } from '@emotion/css';
 import { classNames } from '@moneko/common';
 import favicon from './favicon.svg?raw';
 import clipPath from './clip-path.svg?raw';
-import type { ComponentSize } from '..';
+import { type ComponentSize } from '../index';
 
 const avatarMorph = keyframes`
   0% {

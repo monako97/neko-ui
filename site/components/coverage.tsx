@@ -1,7 +1,8 @@
-import { FC, memo, useMemo } from 'react';
+import React, { type FC, memo, useMemo } from 'react';
 import { projectBasicInfo, useLocation, useOutlet } from '@moneko/core';
 
-const projectCoverage = projectBasicInfo.coverage[projectBasicInfo.programInfo.name] || {};
+const cover = projectBasicInfo.coverage;
+const projectCoverage = cover[projectBasicInfo.programInfo.name] || {};
 
 type CoverageType = 'statements' | 'conditionals' | 'methods';
 const conf: Record<CoverageType, string> = {
@@ -14,8 +15,7 @@ const Coverage: FC = () => {
   const readme = useOutlet();
   const location = useLocation();
   const coverage = useMemo(
-    () =>
-      (readme ? projectBasicInfo.coverage[location.pathname.substring(1)] : projectCoverage) || {},
+    () => (readme ? cover[`components.${location.pathname.substring(1)}`] : projectCoverage) || {},
     [location.pathname, readme]
   );
 
@@ -24,9 +24,9 @@ const Coverage: FC = () => {
   return location.pathname === '/examples' ? null : (
     <div className="n-flex n-gap-4 n-mx-auto n-mt-0 n-mb-4 n-max-w-[80rem] n-flex-wrap">
       {Object.keys(conf).map((k) => {
-        const cover = coverage[k as CoverageType],
+        const c = coverage[k as CoverageType],
           covered = coverage[`covered${k}` as CoverageType],
-          coverNum = Math.round((parseFloat(covered) / parseFloat(cover)) * 100) || 0;
+          coverNum = Math.round((parseFloat(covered) / parseFloat(c)) * 100) || 0;
 
         let stat = 'success';
 
@@ -69,7 +69,7 @@ const Coverage: FC = () => {
               >
                 {coverNum ? `${coverNum}%` : '-'}
               </div>
-              <div>{`${cover || '-'} / ${covered || '-'}`}</div>
+              <div>{`${c || '-'} / ${covered || '-'}`}</div>
             </div>
           </div>
         );
