@@ -11,7 +11,7 @@ const Footer = () => {
     <footer className="n-flex n-justify-center n-text-xs n-pb-4">
       <p>
         <a
-          className="n-text-[var(--text-color)] n-transition-bg-c"
+          className="n-text-color n-transition-bg-c"
           href={repositoryUrl}
           target="_blank"
           rel="noopener noreferrer"
@@ -20,7 +20,7 @@ const Footer = () => {
         </a>
         {` ${year} Created by `}
         <a
-          className="n-text-[var(--text-color)] n-transition-bg-c"
+          className="n-text-color n-transition-bg-c"
           href=""
           target="_blank"
           rel="noopener noreferrer"

@@ -8,4 +8,5 @@ ignorePatterns:
   - prism.js
   - iconfont.js
   - components/**/examples/*.mdx
-  - components/**/examples/*.md
+rules:
+  import/no-unresolved: 0

@@ -1,11 +1,11 @@
-import React, {
+import {
   type FC,
+  type InputHTMLAttributes,
+  type ReactNode,
+  type ChangeEventHandler,
+  type FocusEventHandler,
   useCallback,
   useState,
-  InputHTMLAttributes,
-  ReactNode,
-  ChangeEventHandler,
-  FocusEventHandler,
 } from 'react';
 import { css } from '@emotion/css';
 import type { ComponentSize } from '../index';
@@ -27,7 +27,7 @@ const wrapperCss = css`
   background-color: var(--component-background, white);
   background-image: none;
   border: 1px solid var(--border-color-base, #d9d9d9);
-  border-radius: 4px;
+  border-radius: var(--border-radius-base, 4px);
   transition: all 0.3s;
   box-sizing: border-box;
   width: 100%;

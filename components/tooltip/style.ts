@@ -54,7 +54,7 @@ export const portalCss = css`
   background-color: var(--tooltip-bg);
   color: var(--text-color);
   padding: 4px 8px;
-  border-radius: 4px;
+  border-radius: var(--border-radius-base, 4px);
   font-size: 14px;
   backdrop-filter: blur(16px);
   filter: drop-shadow(0.5px 1px 4px var(--tooltip-shadow-color))

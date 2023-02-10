@@ -1,4 +1,4 @@
-import React, { type FC, type HTMLAttributes } from 'react';
+import { type FC, type HTMLAttributes } from 'react';
 import { css, keyframes, injectGlobal } from '@emotion/css';
 import { classNames } from '@moneko/common';
 
@@ -34,7 +34,7 @@ const animationCss = css`
   z-index: 0;
   overflow: hidden;
   background: var(--skeleton-bg);
-  border-radius: 4px;
+  border-radius: var(--border-radius-base, 4px);
   &::after {
     position: absolute;
     top: 0;

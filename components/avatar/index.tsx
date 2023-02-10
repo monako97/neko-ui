@@ -1,4 +1,12 @@
-import React, { FC, HTMLAttributes, ReactNode, useEffect, useMemo, useRef, useState } from 'react';
+import {
+  type FC,
+  type HTMLAttributes,
+  type ReactNode,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
 import { css, keyframes } from '@emotion/css';
 import { classNames } from '@moneko/common';
 import favicon from './favicon.svg?raw';

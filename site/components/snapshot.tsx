@@ -1,6 +1,5 @@
-import { useCallback, useState, FC, useEffect, useRef } from 'react';
+import { useState, FC, useEffect, CSSProperties } from 'react';
 import { type ExampleModule, myDemoKv } from '@moneko/core';
-import { css } from '@emotion/css';
 import { classNames } from '@moneko/common';
 import * as pkg from '@pkg/index';
 import { LiveProvider, LiveEditor, LiveError, LivePreview } from 'react-live';
@@ -11,24 +10,10 @@ interface SnapshotGroupProps {
   col?: number;
 }
 
-interface SnapshotProps {
-  module: ExampleModule;
-  style?: string;
-}
-
-const codeCss = css`
-  .n-md-body,
-  pre {
-    margin: 0;
-  }
-`;
-
-const Snapshot: FC<SnapshotProps> = ({ module }) => {
-  const el = useRef<HTMLDivElement>(null);
+const openCls = 'n-text-white n-bg-primary';
+const Snapshot: FC<ExampleModule> = ({ soucre, title }) => {
+  const [init, setInit] = useState<boolean>(false);
   const [open, setOpen] = useState<boolean>(false);
-  const handleOpen = useCallback(() => {
-    setOpen(!open);
-  }, [open]);
 
   useEffect(() => {
     return () => {
@@ -38,7 +23,7 @@ const Snapshot: FC<SnapshotProps> = ({ module }) => {
 
   return (
     <LiveProvider
-      code={module.soucre}
+      code={soucre}
       scope={pkg}
       language="typescript"
       theme={{
@@ -46,35 +31,47 @@ const Snapshot: FC<SnapshotProps> = ({ module }) => {
         styles: [],
       }}
     >
-      <div
-        ref={el}
-        className="n-break-inside-avoid n-my-6 n-box-border n-transition-snapshot n-rounded n-border-base"
-      >
-        <h3 className="n-p-[1rem!important] n-m-[0!important]">{module.title}</h3>
-        <div className="n-transition-snapshot n-flex n-justify-between n-flex-col n-flex-1 n-p-6 n-pb-0 n-text-right">
-          <div className="n-text-left">
+      <div className="n-break-inside-avoid n-box-border n-pb-4">
+        <div className=" n-transition-border n-rounded n-border-base">
+          <h4 className="n-px-4 n-font-medium " style={{ margin: '0.5rem 0' }}>
+            {title}
+          </h4>
+          <div
+            className="n-p-4 n-pb-8 n-relative n-transition-border"
+            style={{
+              borderTop: '1px solid var(--border-color-base, #d9d9d9)',
+            }}
+          >
             <LiveError />
             <LivePreview />
-          </div>
-          <div className="n-flex n-items-center n-justify-end n-transition-snapshot">
-            <div
+            <span
               className={classNames(
-                'n-w-fit n-bg-[#ddd]/50 n-px-4 n-py-0 n-rounded-t n-select-none n-mt-4 n-ml-2 n-float-right n-cursor-pointer n-text-center n-transition-snapshot hover:n-bg-primaryDeprecatedBg hover:n-text-primary',
-                open && 'n-text-primary n-bg-primaryDeprecatedBg'
+                'n-w-fit n-cursor-pointer n-p-1 n-rounded-tl n-text-xs n-select-none n-right-0 n-bottom-0 n-absolute n-transition-bg-c',
+                open ? openCls : 'n-rounded-br n-bg-primaryDeprecatedBg n-text-primary'
               )}
-              onClick={handleOpen}
+              onClick={() => {
+                if (!init) {
+                  setInit(true);
+                }
+                setOpen(!open);
+              }}
             >
-              {open ? 'Close' : 'Open'} Editor
-            </div>
+              编辑案例代码
+            </span>
           </div>
+          {init && (
+            <LiveEditor
+              className={classNames('live-editor n-p-4 n-transition-border', !open && 'n-hidden')}
+              style={
+                {
+                  borderTop: '1px solid var(--border-color-base, #d9d9d9)',
+                  '--code-color': 'var(--text-color)',
+                } as CSSProperties
+              }
+              prism={Prism}
+            />
+          )}
         </div>
-        {open && (
-          <div className={classNames('n-transition-snapshot n-p-6 n-text-primary', codeCss)}>
-            <div className="n-transition-snapshot n-animate-silde-in">
-              <LiveEditor prism={Prism} />
-            </div>
-          </div>
-        )}
       </div>
     </LiveProvider>
   );
@@ -83,13 +80,13 @@ const Snapshot: FC<SnapshotProps> = ({ module }) => {
 const SnapshotGroup: FC<SnapshotGroupProps> = ({ name, col = 2 }) => {
   return (
     <div
-      className="n-w-full n-gap-6"
+      className="n-w-full"
       style={{
         columnCount: col,
       }}
     >
-      {myDemoKv[name]?.map((module, i) => (
-        <Snapshot key={i} module={module} />
+      {myDemoKv[name]?.map((m, i) => (
+        <Snapshot key={i} soucre={m.soucre} title={m.title} />
       ))}
     </div>
   );

@@ -1,6 +1,5 @@
-import React, { CSSProperties, FC } from 'react';
+import React, { CSSProperties, FC, useEffect, useMemo, useState } from 'react';
 import { css } from '@emotion/css';
-import { useEffect, useMemo, useState } from 'react';
 import { classNames } from '@moneko/common';
 
 const highlightTextCss = css`

@@ -16,7 +16,10 @@ const Header = () => {
   );
 
   return (
-    <header className="n-flex n-items-center n-fixed n-top-0 n-right-0 n-left-0 n-h-20 n-z-20 n-transition-s-bg-b n-bg-[var(--header-bg,rgba(255,255,255,0.9))] n-backdrop-blur-lg">
+    <header
+      className="n-flex n-items-center n-fixed n-top-0 n-right-0 n-left-0 n-h-20 n-z-20 n-transition-s-bg-b n-backdrop-blur n-shadow-sm"
+      style={{ backgroundColor: 'var(--header-bg,rgba(255,255,255,0.9))' }}
+    >
       <div
         className="n-flex n-p-4 n-px-6 n-cursor-pointer n-min-w-[14rem]"
         onClick={() => navigate('/')}

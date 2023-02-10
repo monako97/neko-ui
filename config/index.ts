@@ -11,6 +11,7 @@ const conf: PartialConfigType = {
   miniIdc: false,
   designSize: 1920,
   fallbackCompPath: '@/components/fallback',
+  externals: [/(.+)\/__tests__\/(.+)/i],
   swcrc: {
     jsc: {
       experimental: {

@@ -33,7 +33,7 @@ const recordingAndPausedCss = css`
   right: 5px;
   width: 10px;
   height: 10px;
-  border-radius: 5px;
+  border-radius: 50%;
 `;
 
 export const recordingCss = css`
