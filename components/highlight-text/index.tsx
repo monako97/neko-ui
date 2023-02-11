@@ -6,7 +6,7 @@ const highlightTextCss = css`
   cursor: auto;
 `;
 const hitCss = css`
-  color: var(--primary-color, #1890ff);
+  color: var(--primary-color, #5794ff);
 `;
 
 /**

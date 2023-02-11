@@ -1,4 +1,3 @@
-import { classNames } from '@moneko/common';
 import React, {
   type CSSProperties,
   type FC,
@@ -9,6 +8,7 @@ import React, {
   useRef,
   useState,
 } from 'react';
+import { classNames } from '@moneko/common';
 import { alphaSliderCss, sliderPickerCss } from './style';
 
 export interface AlphaSliderProps extends Omit<HTMLAttributes<HTMLDivElement>, 'onChange'> {

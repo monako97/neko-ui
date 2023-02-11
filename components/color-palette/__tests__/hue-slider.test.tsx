@@ -1,6 +1,6 @@
 import React from 'react';
-import HueSlider from '../hue-slider';
 import { render, screen, waitFor, fireEvent, act } from '@testing-library/react';
+import HueSlider from '../hue-slider';
 
 /**
  * @jest-environment jsdom

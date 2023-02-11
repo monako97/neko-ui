@@ -1,4 +1,5 @@
-import React, { type FC, memo, useMemo } from 'react';
+import React, { type FC, memo, useMemo, CSSProperties } from 'react';
+import { css, injectGlobal } from '@emotion/css';
 import { projectBasicInfo, useLocation, useOutlet } from '@moneko/core';
 
 const cover = projectBasicInfo.coverage;
@@ -10,7 +11,66 @@ const conf: Record<CoverageType, string> = {
   conditionals: '条件覆盖率',
   methods: '函数覆盖率',
 };
+const coverageStyle = css`
+  .site-coverage {
+    display: flex;
+    gap: 16px;
+    margin: 0 auto 16px;
+    max-width: 1280px;
+    flex-wrap: wrap;
+  }
 
+  .site-coverage-body {
+    --coverage-color: var(--error-color, #ff4d4f);
+
+    display: flex;
+    overflow: hidden;
+    border: 1px solid var(--coverage-color);
+    border-radius: var(--border-radius-base, 4px);
+    box-shadow: 0 0 2px 0 var(--coverage-color), inset 0 0 2px 0 var(--coverage-color);
+    transition-duration: var(--transition-duration);
+    transition-timing-function: var(--transition-timing-function);
+    transition-property: box-shadow, background-color, border-color, color;
+  }
+
+  .site-coverage-label,
+  .site-coverage-value {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: inherit;
+  }
+
+  .site-coverage-label {
+    border-right: 1px solid var(--coverage-color);
+    padding: 0 8px;
+    font-size: 14px;
+    font-weight: 500;
+    color: white;
+    background-color: var(--coverage-color);
+    text-shadow: 2px 2px 2px var(--text-shadow-color);
+    line-height: 20px;
+  }
+
+  .site-coverage-value {
+    padding: 4px 8px;
+    min-width: 80px;
+    font-size: 12px;
+    text-align: center;
+    line-height: 16px;
+    flex-direction: column;
+    color: var(--coverage-color);
+  }
+
+  .site-coverage-value > div:first-of-type {
+    border-bottom: 1px solid var(--coverage-color);
+    width: 100%;
+    transition: inherit;
+    transition-property: box-shadow, background-color, border-color;
+  }
+`;
+
+injectGlobal([coverageStyle]);
 const Coverage: FC = () => {
   const readme = useOutlet();
   const location = useLocation();
@@ -21,8 +81,8 @@ const Coverage: FC = () => {
 
   if (location.pathname === '/examples') return null;
   if (location.pathname.startsWith('/@moneko')) return null;
-  return location.pathname === '/examples' ? null : (
-    <div className="n-flex n-gap-4 n-mx-auto n-mt-0 n-mb-4 n-max-w-[80rem] n-flex-wrap">
+  return (
+    <div className="site-coverage">
       {Object.keys(conf).map((k) => {
         const c = coverage[k as CoverageType],
           covered = coverage[`covered${k}` as CoverageType],
@@ -30,45 +90,25 @@ const Coverage: FC = () => {
 
         let stat = 'success';
 
-        if (coverNum < 80) {
-          stat = 'warning';
-        }
         if (coverNum < 50) {
           stat = 'error';
+        } else if (coverNum < 80) {
+          stat = 'warning';
         }
 
         return (
           <div
             key={k}
-            className="n-flex n-rounded n-transition-coverage n-border n-border-solid n-overflow-hidden"
-            style={{
-              boxShadow: `0 0 2px 0 var(--${stat}-color), inset 0 0 2px 0 var(--${stat}-color)`,
-              borderColor: `var(--${stat}-color)`,
-            }}
+            className="site-coverage-body"
+            style={
+              {
+                '--coverage-color': `var(--${stat}-color)`,
+              } as CSSProperties
+            }
           >
-            <div
-              className="n-flex n-items-center n-justify-center n-px-2 n-transition-coverage n-font-medium n-text-white n-text-sm n-text-shadow n-border-r n-border-solid"
-              style={{
-                backgroundColor: `var(--${stat}-color)`,
-                borderColor: `var(--${stat}-color)`,
-              }}
-            >
-              {conf[k as CoverageType]}
-            </div>
-            <div
-              className="n-flex n-text-xs n-items-center n-justify-center n-px-2 n-py-1 n-transition-coverage n-flex-col n-text-center n-min-w-[5rem]"
-              style={{
-                color: `var(--${stat}-color)`,
-              }}
-            >
-              <div
-                className="n-w-full n-transition-s-bg-b n-border-0 n-border-b n-border-solid"
-                style={{
-                  borderColor: `var(--${stat}-color)`,
-                }}
-              >
-                {coverNum ? `${coverNum}%` : '-'}
-              </div>
+            <div className="site-coverage-label">{conf[k as CoverageType]}</div>
+            <div className="site-coverage-value">
+              <div>{coverNum ? `${coverNum}%` : '0%'}</div>
               <div>{`${c || '-'} / ${covered || '-'}`}</div>
             </div>
           </div>

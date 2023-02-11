@@ -1,6 +1,6 @@
 import React from 'react';
-import { Avatar } from 'neko-ui';
 import { render, screen } from '@testing-library/react';
+import { Avatar } from 'neko-ui';
 
 /**
  * @jest-environment jsdom

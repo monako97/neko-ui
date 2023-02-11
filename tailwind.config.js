@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
-const plugin = require('tailwindcss/plugin');
+// const plugin = require('tailwindcss/plugin');
 
 /** @type {import('tailwindcss').Config} */
 const conf = {
@@ -11,9 +11,9 @@ const conf = {
   theme: {
     extend: {
       colors: {
-        primary: 'var(--primary-color)',
-        primaryDeprecatedBg: 'var(--primary-color-deprecated-bg)',
-        primaryDeprecatedBorder: 'var(--primary-color-deprecated-border)',
+        primary: 'var(--primary-color, #5794ff)',
+        primaryDeprecatedBg: 'var(--primary-color-deprecated-bg, #f0f8ff)',
+        primaryDeprecatedBorder: 'var(--primary-color-deprecated-border, #d1e7ff)',
         secondary: 'var(--text-color-secondary)',
         component: 'var(--component-background, rgba(255,255,255,0.8))',
         borderColor: 'var(--border-color-base, #d9d9d9)',
@@ -30,78 +30,16 @@ const conf = {
   corePlugins: {
     preflight: false,
   },
-  plugins: [
-    plugin(function ({ addBase, addUtilities }) {
-      // eslint-disable-next-line @typescript-eslint/no-var-requires
-      const { rootStatusColor, rootStatusColorDark } = require('@moneko/core/build/variables');
-
-      addBase({
-        ':root': {
-          '--component-background': 'rgba(255,255,255,0.8)',
-          '--border-radius-base': '4px',
-          ...rootStatusColor,
-        },
-        '[data-theme="dark"]': {
-          '--component-background': 'rgba(20, 20, 20, 0.8)',
-          '--readme-bg': '#171717',
-          '--footer-bg': '#000000',
-          ...rootStatusColorDark,
-        },
-        '.before-content-empty::before': {
-          display: 'block',
-          content: '"" !important',
-        },
-        '.after-content-empty::after': {
-          display: 'block',
-          content: '"" !important',
-        },
-      });
-
-      const transitionBasic = {
-        transitionDuration: 'var(--transition-duration)',
-        transitionTimingFunction: 'var(--transition-timing-function)',
-      };
-
-      addUtilities({
-        '.backdrop-blur': {
-          backdropFilter: 'blur(16px)',
-        },
-        '.border-base': {
-          border: '1px solid var(--border-color-base, #d9d9d9)',
-        },
-        '.transition-s-bg-b': {
-          ...transitionBasic,
-          transitionProperty: 'box-shadow, background-color, border-color',
-        },
-        '.transition-bg-transform': {
-          ...transitionBasic,
-          transitionProperty: 'background-color, transform',
-        },
-        '.transition-bg-c': {
-          ...transitionBasic,
-          transitionProperty: 'background-color, color',
-        },
-        '.transition-coverage': {
-          ...transitionBasic,
-          transitionProperty: 'box-shadow, background-color, border-color, color',
-        },
-        '.transition-border': {
-          ...transitionBasic,
-          transitionProperty: 'border-color',
-        },
-        '.transition-bg': {
-          ...transitionBasic,
-          transitionProperty: 'background-color',
-        },
-        '.text-shadow': {
-          textShadow: '2px 2px 2px var(--text-shadow-color)',
-        },
-        '.shadow-small': {
-          boxShadow: 'var(--box-shadow-small)',
-        },
-      });
-    }),
-  ],
+  // plugins: [
+  //   plugin(function ({ addUtilities }) {
+  //     addUtilities({
+  //       '.transition-basic': {
+  //         transitionDuration: 'var(--transition-duration)',
+  //         transitionTimingFunction: 'var(--transition-timing-function)',
+  //       },
+  //     });
+  //   }),
+  // ],
 };
 
 module.exports = conf;

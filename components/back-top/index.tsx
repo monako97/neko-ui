@@ -8,11 +8,10 @@ import React, {
   useState,
 } from 'react';
 import { css, keyframes, injectGlobal } from '@emotion/css';
-import { createPortal } from 'react-dom';
 import { classNames, getMaxZindex, getScrollTop, isEqual, isFunction } from '@moneko/common';
+import { createPortal } from 'react-dom';
 
-const fadeIn = keyframes`
-from {
+const fadeIn = keyframes`from {
   transform: translate3d(0, 16px, 0) scale(1);
   opacity: 0;
 }
@@ -22,8 +21,7 @@ to {
   opacity: 1;
 }
 `;
-const fadeOut = keyframes`
-0%,
+const fadeOut = keyframes`0%,
 20% {
   transform: translate3d(0, 0, 0);
   opacity: 1;
@@ -36,24 +34,24 @@ const fadeOut = keyframes`
 `;
 const backTopCss = css`
   position: sticky;
-  left: calc(100% - 100px);
   bottom: 50px;
+  left: calc(100% - 100px);
+  z-index: 9;
   display: flex;
-  align-items: center;
   justify-content: center;
+  align-items: center;
+  border-radius: 50%;
   width: 40px;
+  min-width: 40px;
   height: 40px;
   min-height: 40px;
-  min-width: 40px;
-  cursor: pointer;
-  animation: ${fadeIn} 1s forwards;
-  box-shadow: var(--box-shadow-base);
-  border-radius: 50%;
   color: var(--back-top-color);
   background-color: var(--back-top-bg);
-  backdrop-filter: blur(16px);
+  box-shadow: var(--box-shadow-base);
   transition: background-color var(--transition-duration), color var(--transition-duration);
-  z-index: 9;
+  cursor: pointer;
+  animation: ${fadeIn} 1s forwards;
+  backdrop-filter: blur(16px);
 
   &::before {
     content: '';

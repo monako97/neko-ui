@@ -1,6 +1,6 @@
 import React from 'react';
-import { ColorPicker } from 'neko-ui';
 import { render, screen, fireEvent, act } from '@testing-library/react';
+import { ColorPicker } from 'neko-ui';
 
 /**
  * @jest-environment jsdom

@@ -1,9 +1,11 @@
 function Demo() {
   const [val, setVal] = React.useState("rgba(255,0,0,0.7)");
 
-  return <div className="n-flex n-gap-4 n-items-end">
-    <ColorPicker value={val} onChange={setVal} size="small" />
-    <ColorPicker value={val} onChange={setVal} size="normal" />
-    <ColorPicker value={val} onChange={setVal} size="large" />
-  </div>;
+  return (
+    <div style={{ display: 'flex', alignItems: 'flex-end', gap: 16 }}>
+      <ColorPicker value={val} onChange={setVal} size="small" />
+      <ColorPicker value={val} onChange={setVal} size="normal" />
+      <ColorPicker value={val} onChange={setVal} size="large" />
+    </div>
+  );
 }

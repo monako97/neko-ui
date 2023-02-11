@@ -1,6 +1,6 @@
 import React from 'react';
-import { Markdown } from 'neko-ui';
 import { act, fireEvent, render, screen } from '@testing-library/react';
+import { Markdown } from 'neko-ui';
 
 const code_str = `\n
 \`\`\`javascript

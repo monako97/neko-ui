@@ -94,7 +94,7 @@ import DemoRaw from './examples/default.jsx?raw';
 ```md
 // 案例 1
 
-<Snapshot name="wave-circle" />
+<SandboxGroup name="wave-circle" />
 ```
 
 ## 直接在 mdx 中编写文档
@@ -106,7 +106,7 @@ import DemoRaw from './examples/default.jsx?raw';
 // neko-ui 这里表示的是当前项目 package.json 中的 name
 import { Tag } from 'neko-ui';
 
-<div className="n-flex n-h-72">
+<div style={{ display: 'flex', height: 288 }}>
     <Tag>默认</Tag>
 </div>
 ```

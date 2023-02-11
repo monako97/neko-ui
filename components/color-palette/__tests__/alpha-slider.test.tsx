@@ -1,6 +1,6 @@
 import React from 'react';
-import AlphaSlider from '../alpha-slider';
 import { render, screen, waitFor, fireEvent } from '@testing-library/react';
+import AlphaSlider from '../alpha-slider';
 
 /**
  * @jest-environment jsdom

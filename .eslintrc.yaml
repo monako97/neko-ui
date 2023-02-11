@@ -1,12 +1,14 @@
 extends:
   - neko
 ignorePatterns:
-  - node_modules/
-  - dist/
-  - coverage/
-  - __snapshots__/
   - prism.js
   - iconfont.js
-  - components/**/examples/*.mdx
 rules:
-  import/no-unresolved: 0
+  import/no-unresolved:
+    - 2
+    - ignore:
+      - \\?raw$
+      - ^@pkg
+      - ^@/
+      - components
+      - ^neko-ui

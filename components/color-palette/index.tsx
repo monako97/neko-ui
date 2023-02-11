@@ -9,10 +9,9 @@ import React, {
   type MouseEvent as ReactMouseEvent,
 } from 'react';
 import { classNames } from '@moneko/common';
-import { Input, InputNumber } from '../index';
+import tinycolor from 'tinycolor2';
 import AlphaSlider from './alpha-slider';
 import HueSlider from './hue-slider';
-import tinycolor from 'tinycolor2';
 import {
   formCss,
   inputCss,
@@ -22,6 +21,7 @@ import {
   stripCss,
   svpanelCss,
 } from './style';
+import { Input, InputNumber } from '../index';
 
 export interface ColorPaletteProps extends Omit<HTMLAttributes<HTMLDivElement>, 'onChange'> {
   value?: string;

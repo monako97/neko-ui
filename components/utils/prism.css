@@ -1,13 +1,13 @@
 @font-face {
-    font-family: 'PrismTreeview';
-    src: url("./prism-treeview.woff2") format("woff2");
+    font-family: prism-treeview;
+    src: url('./prism-treeview.woff2') format('woff2');
 }
 
 [data-theme='dark'] {
     --code-color: #eee;
-    --code-bg: var(--component-background, rgba(23, 23, 23, 0.8));
+    --code-bg: var(--component-background, rgb(20 20 20 / 80%));
     --code-lang-style-color: #fd9170;
-    --code-toolbar-bg: rgba(63, 63, 63, 0.2);
+    --code-toolbar-bg: rgb(63 63 63 / 20%);
     --token-atrule: #c792ea;
     --token-attr-name: #ffcb6b;
     --token-attr-value: #a5e844;
@@ -55,8 +55,69 @@ code[class*='language-']::selection,
 pre[class*='language-'] ::selection,
 code[class*='language-'] ::selection pre[class*='language-']::selection,
 pre[class*='language-'] ::selection pre[class*='language-']::selection {
-    text-shadow: 0 1px var(--text-shadow-color);
     background-color: var(--text-selection-bg);
+    text-shadow: 0 1px var(--text-shadow-color);
+}
+
+.prism-previewer-easing {
+    margin-top: -76px;
+    margin-left: -30px;
+    width: 60px;
+    height: 60px;
+    background: #333;
+}
+
+.prism-previewer-easing.flipped {
+    margin-bottom: -116px;
+}
+
+.prism-previewer-easing circle {
+    fill: #2d3438;
+    stroke: #fff;
+}
+
+.prism-previewer-easing path {
+    fill: none;
+    stroke: #fff;
+    stroke-linecap: round;
+    stroke-width: 4;
+}
+
+.prism-previewer-easing line {
+    stroke: #fff;
+    stroke-opacity: .5;
+    stroke-width: 2;
+}
+
+.prism-previewer-easing,
+.prism-previewer-easing svg {
+    width: 60px;
+    height: 60px;
+}
+
+.prism-previewer-time::before {
+    border-radius: 50%;
+    background: #fff;
+}
+
+.prism-previewer-time::after {
+    margin-top: 4px;
+}
+
+.prism-previewer-time svg {
+    width: 32px;
+    height: 32px;
+    transform: rotate(-90deg);
+}
+
+.prism-previewer-time circle {
+    fill: transparent;
+    stroke: #2d3438;
+    stroke-opacity: .9;
+    stroke-width: 32;
+    stroke-dasharray: 0, 500;
+    stroke-dashoffset: 0;
+    animation: previewer-time-effect linear infinite 3s;
 }
 
 .language-css>code,
@@ -65,8 +126,19 @@ pre[class*='language-'] ::selection pre[class*='language-']::selection {
     color: var(--code-lang-style-color, #f76d47);
 }
 
+.line-numbers-rows,
+.toolbar::after,
+.toolbar-copy::after,
+.treeview-part .entry-line::before,
+.treeview-part .line-h::after,
+pre,
+pre:not(.sp-cm) > code {
+    transition-duration: var(--transition-duration);
+    transition-timing-function: var(--transition-timing-function);
+}
+
 [class*='language-'] .namespace {
-    opacity: 0.7;
+    opacity: .7;
 }
 
 .token.atrule {
@@ -138,13 +210,13 @@ pre[class*='language-'] ::selection pre[class*='language-']::selection {
 }
 
 .token.id {
-    color: var(--token-id, #7c4dff);
     font-weight: bold;
+    color: var(--token-id, #7c4dff);
 }
 
 .token.important {
-    color: var(--token-important, #7c4dff);
     font-weight: bold;
+    color: var(--token-important, #7c4dff);
 }
 
 .token.inserted {
@@ -247,8 +319,8 @@ pre[class*='language-'] ::selection pre[class*='language-']::selection {
 
 .treeview-part .line-v-last::before,
 .treeview-part .line-h::after {
-    height: 50%;
     border-bottom: 1px solid var(--border-color-base);
+    height: 50%;
 }
 
 .treeview-part .entry-name {
@@ -258,16 +330,16 @@ pre[class*='language-'] ::selection pre[class*='language-']::selection {
 }
 
 .treeview-part .entry-name.dotfile {
-    opacity: 0.5;
+    opacity: .5;
 }
 
 .treeview-part .entry-name::before {
     display: block;
     float: left;
     width: 2.5ex;
-    color: #9e9e9e;
     font-size: inherit;
-    font-family: 'PrismTreeview', sans-serif;
+    font-family: prism-treeview, sans-serif;
+    color: #9e9e9e;
     font-style: normal;
     content: '\ea01';
     -webkit-font-smoothing: antialiased;
@@ -462,19 +534,20 @@ pre {
     tab-size: 4;
     hyphens: none;
 }
-.live-editor .prism-code {
-    font-size: 12px !important;
-    line-height: 1.5 !important;
-    background: inherit !important;
-    box-shadow: none !important;
+
+.sandbox-live-editor .prism-code {
     padding: 0 !important;
-    white-space: pre-wrap;
-    word-wrap: normal;
-    word-break: break-all;
-    word-spacing: normal;
+    font-size: 12px !important;
     font-family: 'Liberation Mono', Monaco, Menlo, Consolas, 'Source Code Pro', 'Ubuntu Mono',
     'Microsoft Yahei', '微软雅黑', Courier, 'Helvetica Neue', 'Lantinghei SC', STXihei, WenQuanYi,
     sans-serif !important;
+    white-space: pre-wrap;
+    background: inherit !important;
+    box-shadow: none !important;
+    line-height: 1.5 !important;
+    word-wrap: normal;
+    word-break: break-all;
+    word-spacing: normal;
 }
 
 code a[href],
@@ -485,27 +558,27 @@ pre a[href] {
 .token.deleted:not(.prefix) {
     display: block;
     color: inherit;
-    background-color: rgba(255, 0, 0, 0.1);
+    background-color: rgb(255 0 0 / 10%);
 }
 
 .token.inserted:not(.prefix) {
     display: block;
     color: inherit;
-    background-color: rgba(0, 255, 128, 0.1);
+    background-color: rgb(0 255 128 / 10%);
 }
 
 span .inline-color-wrapper {
     display: inline-block;
-    box-sizing: border-box;
+    overflow: hidden;
+    margin: 0 .333ch;
+    border: 1px solid #fff;
     width: 1.333ch;
     height: 1.333ch;
-    margin: 0 0.333ch;
-    overflow: hidden;
-    background-image: url("./pre-code-inline-color-wrapper.svg");
     background-position: center;
     background-size: 110%;
-    border: 1px solid #fff;
-    outline: 1px solid rgba(0, 0, 0, 0.5);
+    outline: 1px solid rgb(0 0 0 / 50%);
+    box-sizing: border-box;
+    background-image: url('./pre-code-inline-color-wrapper.svg');
 }
 
 span .inline-color {
@@ -517,14 +590,14 @@ span .inline-color {
 pre:not(.sp-cm) {
     position: relative;
     display: block;
-    max-width: 100%;
-    margin: 35px auto;
     overflow: visible;
-    font-size: var(--font-size-base);
-    line-height: 20px;
-    background-color: var(--code-bg, rgba(255, 255, 255, 0.8));
+    margin: 35px auto;
     border-radius: var(--border-radius-base, 5px);
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    max-width: 100%;
+    font-size: var(--font-size-base);
+    background-color: var(--code-bg, rgb(255 255 255 / 80%));
+    box-shadow: 0 0 10px rgb(0 0 0 / 10%);
+    line-height: 20px;
     transition-property: color, background-color, box-shadow;
 
 }
@@ -539,19 +612,19 @@ pre:not(.sp-cm) .toolbar::after {
     left: 0;
     z-index: 1;
     display: block;
+    overflow: hidden;
+    border-radius: var(--border-radius-base, 4px) var(--border-radius-base, 4px) 0 0;
     width: 100%;
     height: 24px;
-    overflow: hidden;
-    color: var(--text-color, #4d4d4c);
-    font-weight: bold;
     font-size: 14px;
     font-family: Ubuntu, sans-serif;
-    line-height: 24px;
+    font-weight: bold;
     text-align: center;
+    color: var(--text-color, #4d4d4c);
+    background-color: var(--code-toolbar-bg, rgb(220 224 229 / 50%));
+    box-shadow: 0 1px 5px rgb(0 0 0 / 10%);
+    line-height: 24px;
     text-transform: uppercase;
-    background-color: var(--code-toolbar-bg, rgba(220, 224, 229, 0.5));
-    border-radius: var(--border-radius-base, 4px) var(--border-radius-base, 4px) 0 0;
-    box-shadow: 0 1px 5px rgba(0, 0, 0, 0.1);
     backdrop-filter: blur(16px);
     content: attr(data-lang) '';
     transition-property: background-color, border-color, color;
@@ -563,10 +636,10 @@ pre:not(.sp-cm) .toolbar::before {
     left: 12px;
     z-index: 3;
     display: inline-block;
+    border-radius: var(--border-radius-base, 4px);
     width: 4px;
     height: 4px;
     text-align: center;
-    border-radius: var(--border-radius-base, 4px);
     background-color: #fc625d;
     box-shadow: 0 0 0 4px #fc625d, 20px 0 0 4px #fdbc40, 40px 0 0 4px #35cd4b;
     cursor: pointer;
@@ -578,19 +651,19 @@ pre:not(.sp-cm) .toolbar .toolbar-copy {
     top: 0;
     right: 8px;
     z-index: 3;
+    border: none;
     padding: 0;
     background: none;
-    border: none;
     outline: none;
     cursor: pointer;
 }
 
 .toolbar .toolbar-copy::after {
     display: block;
-    color: var(--text-color, #4d4d4c);
-    font-weight: 600;
     font-size: 14px;
-    font-family: 'neko__icon', sans-serif;
+    font-family: neko-icon, sans-serif;
+    font-weight: 600;
+    color: var(--text-color, #4d4d4c);
     line-height: 24px;
     text-transform: uppercase;
     content: '\e631';
@@ -598,20 +671,20 @@ pre:not(.sp-cm) .toolbar .toolbar-copy {
 }
 
 .toolbar .toolbar-copy:hover::after {
-    color: var(--primary-color, #1c5f84);
     font-weight: bold;
+    color: var(--primary-color, #5794ff);
 }
 
 pre:not(.sp-cm)>code {
-    font-size: var(--font-size-base);
     display: block;
-    max-width: 100%;
+    overflow: auto;
     margin: 0 16px 8px;
     padding: 32px 0 8px;
-    overflow: auto;
+    max-width: 100%;
+    font-size: var(--font-size-base);
+    white-space: pre;
     color: #585260;
     line-height: 1.8;
-    white-space: pre;
     pointer-events: auto;
     transition-property: box-shadow, background-color, border-color, color;
 }
@@ -626,15 +699,15 @@ pre:not(.sp-cm).line-numbers .line-numbers-rows {
     position: absolute;
     top: 0;
     left: 0;
-    width: 44px;
-    max-height: inherit;
-    padding: 32px 0 8px;
     overflow-y: auto;
-    font-size: 100%;
-    letter-spacing: -1px;
-    background-color: var(--code-bg, #fff);
     border-right: 1px solid var(--border-color-base);
     border-radius: var(--border-radius-base, 4px) 0 0 var(--border-radius-base, 4px);
+    padding: 32px 0 8px;
+    width: 44px;
+    max-height: inherit;
+    font-size: 100%;
+    background-color: var(--code-bg, #fff);
+    letter-spacing: -1px;
     user-select: none;
     pointer-events: none;
     transition-property: background-color, border-color;
@@ -647,10 +720,10 @@ pre:not(.sp-cm).line-numbers .line-numbers-rows {
 
 .line-numbers-rows>span::before {
     display: block;
-    padding-right: 0.8em;
-    color: #999;
+    padding-right: .8em;
     text-align: right;
-    opacity: 0.5;
+    color: #999;
+    opacity: .5;
     content: counter(linenumber);
 }
 
@@ -659,23 +732,11 @@ pre:not(.sp-cm) ::-webkit-scrollbar {
     display: none;
 }
 
-pre:not(.sp-cm):not(.prism-code):hover {
-    box-shadow: 0 2px 20px rgba(0, 0, 0, 0.2);
-}
-
-pre,
-.line-numbers-rows,
-.toolbar::after,
-.toolbar-copy::after,
-.treeview-part .entry-line::before,
-.treeview-part .line-h::after,
-pre:not(.sp-cm)>code {
-    transition-duration: var(--transition-duration);
-    transition-timing-function: var(--transition-timing-function);
+pre:not(.sp-cm, .prism-code):hover {
+    box-shadow: 0 2px 20px rgb(0 0 0 / 20%);
 }
 
 @media print {
-
     code[class*='language-'],
     pre[class*='language-'] {
         text-shadow: none;
@@ -695,13 +756,13 @@ pre:not(.sp-cm)>code {
 }
 
 .prism-previewer {
+    z-index: 10;
     margin-top: -48px;
+    margin-left: -16px;
     width: 32px;
     height: 32px;
-    margin-left: -16px;
-    z-index: 10;
     opacity: 0;
-    transition: opacity 0.25s;
+    transition: opacity .25s;
 }
 
 .prism-previewer.flipped {
@@ -719,21 +780,21 @@ pre:not(.sp-cm)>code {
 .prism-previewer::before {
     top: -5px;
     right: -5px;
-    left: -5px;
     bottom: -5px;
-    border-radius: 10px;
+    left: -5px;
     border: 5px solid #fff;
-    box-shadow: 0 0 3px rgba(0, 0, 0, 0.5) inset, 0 0 10px rgba(0, 0, 0, 0.75);
+    border-radius: 10px;
+    box-shadow: 0 0 3px rgb(0 0 0 / 50%) inset, 0 0 10px rgb(0 0 0 / 75%);
 }
 
 .prism-previewer::after {
     top: 100%;
-    width: 0;
-    height: 0;
     margin: 5px 0 0 -7px;
     border: 7px solid transparent;
-    border-color: rgba(255, 0, 0, 0);
+    border-color: rgb(255 0 0 / 0%);
     border-top-color: #fff;
+    width: 0;
+    height: 0;
 }
 
 .prism-previewer.flipped::after {
@@ -741,7 +802,7 @@ pre:not(.sp-cm)>code {
     bottom: 100%;
     margin-top: 0;
     margin-bottom: 5px;
-    border-top-color: rgba(255, 0, 0, 0);
+    border-top-color: rgb(255 0 0 / 0%);
     border-bottom-color: #fff;
 }
 
@@ -771,12 +832,16 @@ pre:not(.sp-cm)>code {
 .prism-previewer-angle circle {
     fill: transparent;
     stroke: #2d3438;
-    stroke-opacity: 0.9;
+    stroke-opacity: .9;
     stroke-width: 32;
     stroke-dasharray: 0, 500;
 }
 
 .prism-previewer-gradient {
+    margin-left: -32px;
+    width: 64px;
+    background-position: 0 0, 5px 5px;
+    background-size: 10px 10px;
     background-image: linear-gradient(45deg,
             #bbb 25%,
             transparent 25%,
@@ -784,10 +849,6 @@ pre:not(.sp-cm)>code {
             #bbb 75%,
             #bbb),
         linear-gradient(45deg, #bbb 25%, #eee 25%, #eee 75%, #bbb 75%, #bbb);
-    background-size: 10px 10px;
-    background-position: 0 0, 5px 5px;
-    width: 64px;
-    margin-left: -32px;
 }
 
 .prism-previewer-gradient::before {
@@ -797,15 +858,17 @@ pre:not(.sp-cm)>code {
 .prism-previewer-gradient div {
     position: absolute;
     top: -5px;
-    left: -5px;
     right: -5px;
     bottom: -5px;
-    border-radius: 10px;
+    left: -5px;
     border: 5px solid #fff;
-    box-shadow: 0 0 3px rgba(0, 0, 0, 0.5) inset, 0 0 10px rgba(0, 0, 0, 0.75);
+    border-radius: 10px;
+    box-shadow: 0 0 3px rgb(0 0 0 / 50%) inset, 0 0 10px rgb(0 0 0 / 75%);
 }
 
 .prism-previewer-color {
+    background-position: 0 0, 5px 5px;
+    background-size: 10px 10px;
     background-image: linear-gradient(45deg,
             #bbb 25%,
             transparent 25%,
@@ -813,8 +876,6 @@ pre:not(.sp-cm)>code {
             #bbb 75%,
             #bbb),
         linear-gradient(45deg, #bbb 25%, #eee 25%, #eee 75%, #bbb 75%, #bbb);
-    background-size: 10px 10px;
-    background-position: 0 0, 5px 5px;
 }
 
 .prism-previewer-color::before {
@@ -822,67 +883,7 @@ pre:not(.sp-cm)>code {
     background-clip: padding-box;
 }
 
-.prism-previewer-easing {
-    margin-top: -76px;
-    margin-left: -30px;
-    width: 60px;
-    height: 60px;
-    background: #333;
-}
-
-.prism-previewer-easing.flipped {
-    margin-bottom: -116px;
-}
-
-.prism-previewer-easing svg {
-    width: 60px;
-    height: 60px;
-}
-
-.prism-previewer-easing circle {
-    fill: #2d3438;
-    stroke: #fff;
-}
-
-.prism-previewer-easing path {
-    fill: none;
-    stroke: #fff;
-    stroke-linecap: round;
-    stroke-width: 4;
-}
-
-.prism-previewer-easing line {
-    stroke: #fff;
-    stroke-opacity: 0.5;
-    stroke-width: 2;
-}
-
-.prism-previewer-time::before {
-    border-radius: 50%;
-    background: #fff;
-}
-
-.prism-previewer-time::after {
-    margin-top: 4px;
-}
-
-.prism-previewer-time svg {
-    width: 32px;
-    height: 32px;
-    transform: rotate(-90deg);
-}
-
-.prism-previewer-time circle {
-    fill: transparent;
-    stroke: #2d3438;
-    stroke-opacity: 0.9;
-    stroke-width: 32;
-    stroke-dasharray: 0, 500;
-    stroke-dashoffset: 0;
-    animation: prismPreviewerTime linear infinite 3s;
-}
-
-@keyframes prismPreviewerTime {
+@keyframes previewer-time-effect {
     0% {
         stroke-dasharray: 0, 500;
         stroke-dashoffset: 0;

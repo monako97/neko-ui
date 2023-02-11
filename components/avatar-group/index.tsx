@@ -1,6 +1,6 @@
 import React, { type FC, useMemo } from 'react';
-import { classNames } from '@moneko/common';
 import { css } from '@emotion/css';
+import { classNames } from '@moneko/common';
 import { Avatar, Tooltip, type AvatarProps } from '../index';
 
 export interface AvatarGroupProps {
@@ -12,6 +12,7 @@ export interface AvatarGroupProps {
 const avatarGroupCss = css`
   display: inline-flex;
   align-items: center;
+
   & > *:not(:first-child) {
     margin-left: -5%;
   }

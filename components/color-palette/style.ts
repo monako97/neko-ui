@@ -1,9 +1,11 @@
 import { css } from '@emotion/css';
 
 export const alphaSliderCss = css`
+  border-radius: 10px;
   width: 100%;
   height: 10px;
-  border-radius: 10px;
+  background-position: 0 0, 5px 5px;
+  background-size: 10px 10px;
   background-image: linear-gradient(
       45deg,
       #ccc 25%,
@@ -13,29 +15,27 @@ export const alphaSliderCss = css`
       #ccc
     ),
     linear-gradient(45deg, #ccc 25%, transparent 25%, transparent 75%, #ccc 75%, #ccc);
-  background-size: 10px 10px;
-  background-position: 0 0, 5px 5px;
   cursor: inherit;
   pointer-events: none;
   user-select: none;
 
   &::after {
-    content: '';
     display: block;
+    border-radius: 10px;
     width: 100%;
     height: 100%;
+    content: '';
     background-image: linear-gradient(to left, var(--offset-color, #fff), transparent);
-    border-radius: 10px;
     cursor: inherit;
   }
 `;
 export const sliderPickerCss = css`
   position: relative;
+  margin-bottom: 4px;
+  border-radius: var(--border-radius-base);
   width: 100%;
   height: 10px;
   user-select: none;
-  margin-bottom: 4px;
-  border-radius: var(--border-radius-base);
   cursor: pointer;
 
   &:last-of-type {
@@ -46,26 +46,25 @@ export const sliderPickerCss = css`
     position: absolute;
     top: 0;
     bottom: 0;
+    z-index: 1;
+    display: block;
     margin: auto;
-    content: '';
+    border-radius: 50%;
     width: 6px;
     height: 6px;
-    border-radius: 50%;
-    display: block;
     opacity: 1;
+    box-shadow: 0 0 0 1.5px #fff, inset 0 0 1px 1px rgb(0 0 0 / 20%), 0 0 1px 2px rgb(0 0 0 / 30%);
+    content: '';
     transform: translateX(var(--offset-x, 0));
     cursor: inherit;
-    z-index: 1;
-    box-shadow: 0 0 0 1.5px #fff, inset 0 0 1px 1px rgba(0, 0, 0, 0.2),
-      0 0 1px 2px rgba(0, 0, 0, 0.3);
     pointer-events: none;
   }
 
   canvas {
     position: absolute;
+    border-radius: 10px;
     width: 100%;
     height: 100%;
-    border-radius: 10px;
   }
 `;
 export const paletteCss = css`
@@ -76,14 +75,14 @@ export const paletteCss = css`
 export const svpanelCss = css`
   position: relative;
   display: block;
+  border-radius: var(--border-radius-base);
   width: 200px;
   height: 150px;
-  border-radius: var(--border-radius-base);
 
   canvas {
+    border-radius: 5px;
     width: 100%;
     height: 100%;
-    border-radius: 5px;
   }
 
   &:hover {
@@ -94,28 +93,30 @@ export const svpanelCss = css`
     position: absolute;
     top: var(--offset-y, 1px);
     left: var(--offset-x, 199px);
+    display: block;
+    border-radius: 50%;
     width: 4px;
     height: 4px;
-    border-radius: 50%;
-    box-shadow: 0 0 0 1.5px #fff, inset 0 0 1px 1px rgba(0, 0, 0, 0.3),
-      0 0 1px 2px rgba(0, 0, 0, 0.4);
-    display: block;
+    box-shadow: 0 0 0 1.5px #fff, inset 0 0 1px 1px rgb(0 0 0 / 30%), 0 0 1px 2px rgb(0 0 0 / 40%);
     transform: translate(-3px, -2px);
     content: '';
     pointer-events: none;
   }
 `;
 export const settingCss = css`
-  width: 100%;
-  margin-top: 4px;
   display: flex;
+  margin-top: 4px;
+  width: 100%;
 `;
 export const stripCss = css`
   flex: 1;
 `;
 export const previewCss = css`
-  width: 24px;
   margin-left: 4px;
+  border-radius: var(--border-radius-base);
+  width: 24px;
+  background-position: 0 0, 5px 5px;
+  background-size: 10px 10px;
   background-image: linear-gradient(
       45deg,
       #ccc 25%,
@@ -125,25 +126,22 @@ export const previewCss = css`
       #ccc
     ),
     linear-gradient(45deg, #ccc 25%, transparent 25%, transparent 75%, #ccc 75%, #ccc);
-  background-size: 10px 10px;
-  background-position: 0 0, 5px 5px;
-  border-radius: var(--border-radius-base);
 
   &::after {
-    content: '';
     display: block;
+    border-radius: var(--border-radius-base);
     width: 100%;
     height: 100%;
     background: var(--offset-color, #fff);
-    border-radius: var(--border-radius-base);
     opacity: var(--offset-alpha, #fff);
-    box-shadow: rgba(0, 0, 0, 0.15) 0 0 0 1px inset, rgba(0, 0, 0, 0.25) 0 0 4px inset;
+    box-shadow: rgb(0 0 0 / 15%) 0 0 0 1px inset, rgb(0 0 0 / 25%) 0 0 4px inset;
+    content: '';
   }
 `;
 export const formCss = css`
-  width: 100%;
   display: flex;
   margin-top: 8px;
+  width: 100%;
 `;
 export const inputCss = css`
   flex: 1;
@@ -151,12 +149,12 @@ export const inputCss = css`
   text-align: center;
 
   label {
-    text-align: center;
+    display: block;
     padding: 4px;
     font-size: 12px;
-    color: var(--text-color, rgba(0, 0, 0, 0.85));
+    text-align: center;
+    color: var(--text-color, rgb(0 0 0 / 85%));
     line-height: 12px;
-    display: block;
   }
 
   input {

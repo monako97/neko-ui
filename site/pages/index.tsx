@@ -1,52 +1,81 @@
 import React, { type FC, useEffect, useRef, memo } from 'react';
+import { css, injectGlobal } from '@emotion/css';
 import { useLocation, useOutlet } from '@moneko/core';
 import { BackTop } from 'neko-ui';
-import Sider from '@/components/sider';
 import Coverage from '@/components/coverage';
-import Header from '@/components/header';
-import Footer from '@/components/footer';
 import Empty from '@/components/empty';
-import { css, keyframes } from '@emotion/css';
+import Footer from '@/components/footer';
+import Header from '@/components/header';
+import Sider from '@/components/sider';
 
-const waveEffect = keyframes`
-  0% {
-    transform: rotate(0deg);
+const waveBg = css`
+  #doc-body {
+    z-index: 10;
+    display: flex;
+    overflow-y: auto;
+    padding-top: 96px;
+    padding-right: 16px;
+    height: 100%;
+    max-height: 100vh;
+    flex: 1;
   }
-  100% {
-    transform: rotate(360deg);
+
+  .site-doc-main {
+    padding-bottom: 96px;
+    width: calc(100% - 272px);
   }
-`;
-const waveCss = css`
-  background: var(--primary-color);
-  width: 500vw;
-  height: 500vw;
-  border-radius: 47%;
-  opacity: 0.4;
-  position: absolute;
-  top: 80%;
-  left: -200%;
-  transform-origin: center;
-  animation: ${waveEffect} 30s infinite linear;
-  pointer-events: none;
-  &::after,
-  &::before {
-    content: '';
+
+  .site-doc-main-box {
+    box-sizing: border-box;
+    min-height: calc(100vh - 212px);
+  }
+
+  .site-wave-bg {
     position: absolute;
-    background: var(--primary-color);
-    opacity: 0.6;
+    top: 80%;
+    left: -200%;
+    border-radius: 47%;
+    width: 500vw;
+    height: 500vw;
+    background: var(--primary-color, #5794ff);
+    opacity: 0.4;
+    transform-origin: center;
+    animation: site-wave-effect 30s infinite linear;
+    pointer-events: none;
+  }
+
+  .site-wave-bg::after,
+  .site-wave-bg::before {
+    position: absolute;
     display: block;
+    border-radius: 46.5%;
     width: 100%;
     height: 100%;
-    border-radius: 46.5%;
-    animation: ${waveEffect} 35s infinite linear;
+    background: var(--primary-color, #5794ff);
+    opacity: 0.6;
+    content: '';
+    animation: site-wave-effect 35s infinite linear;
   }
-  &::before {
-    opacity: 0.1;
-    background: var(--primary-color);
+
+  .site-wave-bg::before {
     border-radius: 46%;
-    animation: ${waveEffect} 40s infinite linear;
+    background: var(--primary-color, #5794ff);
+    opacity: 0.1;
+    animation: site-wave-effect 40s infinite linear;
+  }
+
+  @keyframes site-wave-effect {
+    0% {
+      transform: rotate(0deg);
+    }
+
+    100% {
+      transform: rotate(360deg);
+    }
   }
 `;
+
+injectGlobal([waveBg]);
 
 const App: FC = () => {
   const box = useRef<HTMLDivElement>(null);
@@ -61,21 +90,13 @@ const App: FC = () => {
 
   return (
     <>
-      <i className={waveCss} />
+      <i className="site-wave-bg n-flex" />
       <Header />
-      <div
-        ref={box}
-        id="doc-body"
-        className="n-flex n-max-h-[100vh] n-h-full n-overflow-y-auto n-pr-4 n-flex-1 n-pt-24 n-z-10"
-      >
+      <div ref={box} id="doc-body">
         <Sider />
-        <main className="n-w-[calc(100%-17rem)] n-pb-24">
+        <main className="site-doc-main">
           <Coverage />
-          {readme ? (
-            <div className="n-box-border n-min-h-[calc(100vh-13.25rem)]">{readme}</div>
-          ) : (
-            <Empty />
-          )}
+          {readme ? <div className="site-doc-main-box">{readme}</div> : <Empty />}
           <Footer />
         </main>
       </div>

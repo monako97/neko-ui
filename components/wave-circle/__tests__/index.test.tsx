@@ -1,6 +1,6 @@
 import React from 'react';
-import { WaveCircle } from 'neko-ui';
 import { render, screen } from '@testing-library/react';
+import { WaveCircle } from 'neko-ui';
 
 /**
  * @jest-environment jsdom

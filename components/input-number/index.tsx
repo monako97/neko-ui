@@ -8,8 +8,8 @@ import React, {
   type KeyboardEventHandler,
 } from 'react';
 import { css } from '@emotion/css';
-import { Input, type InputProps } from '../index';
 import { classNames } from '@moneko/common';
+import { Input, type InputProps } from '../index';
 
 const inputNumberCss = css`
   /** 隐藏原生加减控件 */

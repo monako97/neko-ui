@@ -9,12 +9,11 @@ import React, {
 } from 'react';
 import { css, keyframes } from '@emotion/css';
 import { classNames } from '@moneko/common';
-import favicon from './favicon.svg?raw';
 import clipPath from './clip-path.svg?raw';
+import favicon from './favicon.svg?raw';
 import { type ComponentSize } from '../index';
 
-const avatarMorph = keyframes`
-  0% {
+const avatarMorph = keyframes`0% {
     border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
   }
 
@@ -29,17 +28,18 @@ const avatarMorph = keyframes`
 
 const faviconBg = `data:image/svg+xml;base64,${window.btoa(favicon)}`;
 const avatarCss = css`
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
   position: relative;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
   width: 32px;
   height: 32px;
+  transition: transform 0.3s;
   cursor: pointer;
   user-select: none;
-  transition: transform 0.3s;
   background-image: linear-gradient(45deg, #cabdeb 0%, #e9887c 100%);
   animation: ${avatarMorph} 8s ease-in-out infinite;
+
   &::before,
   &::after {
     position: absolute;
@@ -56,9 +56,11 @@ const avatarCss = css`
     background-color: var(--avatar-color);
     clip-path: url('#clipPathAvatar');
   }
+
   &::after {
     background: url(${faviconBg}) no-repeat center/contain;
   }
+
   span {
     transition: transform 0.3s;
   }

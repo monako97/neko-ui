@@ -1,6 +1,6 @@
 import React from 'react';
-import { Button } from 'neko-ui';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
+import { Button } from 'neko-ui';
 
 /**
  * @jest-environment jsdom

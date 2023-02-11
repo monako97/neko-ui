@@ -1,4 +1,3 @@
-import { classNames } from '@moneko/common';
 import React, {
   type CSSProperties,
   forwardRef,
@@ -11,6 +10,7 @@ import React, {
   useRef,
   useState,
 } from 'react';
+import { classNames } from '@moneko/common';
 import { sliderPickerCss } from './style';
 
 type RGB = {

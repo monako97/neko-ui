@@ -1,6 +1,6 @@
 import React from 'react';
-import { CaptureScreen } from 'neko-ui';
 import { render, screen, fireEvent, act } from '@testing-library/react';
+import { CaptureScreen } from 'neko-ui';
 
 const mockMedia = (ondataavailable?: boolean) => {
   global.URL.revokeObjectURL = jest.fn(() => '');

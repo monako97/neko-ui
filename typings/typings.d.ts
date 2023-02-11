@@ -23,16 +23,9 @@ declare module '*?raw' {
 }
 
 declare module 'neko-ui' {
-  export * from 'components/index';
+  export * from 'components';
 }
-declare module 'moment' {
-  import { Dayjs } from 'dayjs';
-  namespace moment {
-    type Moment = Dayjs;
-  }
-  export = moment;
-  export as namespace moment;
-}
+
 declare module 'env-flags';
 
 interface PureComponentProps {

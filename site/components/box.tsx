@@ -1,4 +1,4 @@
-import { FC, memo, ReactNode } from 'react';
+import React, { FC, memo, ReactNode } from 'react';
 import { Markdown } from 'neko-ui';
 
 interface BoxProps {

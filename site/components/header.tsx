@@ -1,8 +1,78 @@
-import { useMemo, memo } from 'react';
+import React, { useMemo, memo } from 'react';
+import { css, injectGlobal } from '@emotion/css';
 import { myPkgs, useLocation, useNavigate } from '@moneko/core';
 import { Avatar, useTheme } from 'neko-ui';
 import { projectInfo, type PkgType } from '@/utils';
 
+const headerCss = css`
+  .site-header {
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 0;
+    z-index: 20;
+    display: flex;
+    align-items: center;
+    height: 80px;
+    background-color: var(--header-bg, rgb(255 255 255 / 90%));
+    box-shadow: 0 0 #0000, 0 0 #0000, 0 1px 2px 0 rgb(0 0 0 / 5%);
+    transition-duration: var(--transition-duration);
+    transition-timing-function: var(--transition-timing-function);
+    transition-property: box-shadow, background-color, border-color;
+    backdrop-filter: blur(16px);
+  }
+
+  .site-logo {
+    display: flex;
+    padding: 16px 24px;
+    cursor: pointer;
+    min-width: 224px;
+  }
+
+  .site-favicon {
+    width: 32px;
+    height: 32px;
+  }
+
+  .site-title {
+    display: flex;
+    flex: 1;
+    align-items: center;
+    margin-left: 16px;
+  }
+
+  .site-title h2 {
+    margin-top: 0;
+    margin-bottom: 0;
+    font-weight: 400;
+    text-shadow: 2px 2px 2px var(--text-shadow-color);
+  }
+
+  .site-header-center {
+    display: inline-flex;
+    gap: 16px;
+    flex: 1;
+    align-items: flex-end;
+  }
+
+  .site-header-center h2 {
+    margin: 0;
+  }
+
+  .site-header-center span {
+    opacity: 0.67;
+  }
+
+  .site-theme-btn {
+    padding: 4px 24px;
+    font-size: 24px;
+    line-height: 32px;
+    cursor: pointer;
+    user-select: none;
+  }
+`;
+
+injectGlobal([headerCss]);
 const Header = () => {
   const navigate = useNavigate();
   const location = useLocation();
@@ -16,25 +86,19 @@ const Header = () => {
   );
 
   return (
-    <header
-      className="n-flex n-items-center n-fixed n-top-0 n-right-0 n-left-0 n-h-20 n-z-20 n-transition-s-bg-b n-backdrop-blur n-shadow-sm"
-      style={{ backgroundColor: 'var(--header-bg,rgba(255,255,255,0.9))' }}
-    >
-      <div
-        className="n-flex n-p-4 n-px-6 n-cursor-pointer n-min-w-[14rem]"
-        onClick={() => navigate('/')}
-      >
-        <Avatar className="n-w-8 n-h-8" />
-        <div className="n-flex n-flex-1 n-items-center n-ml-4">
-          <h2 className="n-font-normal n-text-shadow n-mb-0 n-mt-0">{projectInfo.title}</h2>
+    <header className="site-header">
+      <div className="site-logo" onClick={() => navigate('/')}>
+        <Avatar className="site-favicon" />
+        <div className="site-title">
+          <h2>{projectInfo.title}</h2>
         </div>
       </div>
-      <div className=" n-inline-flex n-gap-4 n-flex-1 n-items-end">
-        <h2 className="n-m-0">{current?.title}</h2>
-        <span className="n-opacity-70">{current?.subtitle}</span>
+      <div className="site-header-center">
+        <h2>{current?.title}</h2>
+        <span>{current?.subtitle}</span>
       </div>
       <div
-        className="n-text-2xl n-py-1 n-px-6 n-cursor-pointer n-select-none"
+        className="site-theme-btn"
         onClick={() => changeTheme(theme === 'dark' ? 'light' : 'dark')}
       >
         {theme === 'dark' ? '🌒' : '🌞'}

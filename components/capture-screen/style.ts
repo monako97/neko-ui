@@ -1,7 +1,6 @@
 import { css, keyframes } from '@emotion/css';
 
-const recordFadeLoop = keyframes`    
-    0% {
+const recordFadeLoop = keyframes`0% {
         opacity: 0;
     }
 
@@ -21,9 +20,9 @@ export const videoCss = css`
   position: relative;
 
   video {
-    width: 100%;
     border: 1px solid var(--border-color-base);
     border-radius: var(--border-radius-base);
+    width: 100%;
     transition: border-color var(--transition-duration) var(--transition-timing-function);
   }
 `;
@@ -31,19 +30,21 @@ const recordingAndPausedCss = css`
   position: absolute;
   top: 5px;
   right: 5px;
+  border-radius: 50%;
   width: 10px;
   height: 10px;
-  border-radius: 50%;
 `;
 
 export const recordingCss = css`
   ${recordingAndPausedCss}
-  background-color: var(--success-color);
+
+  background-color: var(--success-color, #52c41a);
   animation: ${recordFadeLoop} 2s infinite;
 `;
 export const pausedCss = css`
   ${recordingAndPausedCss}
-  background-color: var(--warning-color);
+
+  background-color: var(--warning-color, #faad14);
 `;
 export const controllerCss = css`
   display: flex;
@@ -58,10 +59,10 @@ export const recordCss = css`
 
   &::before {
     display: block;
-    height: 100%;
     border-left: 1px solid var(--border-color-base);
-    transform: translateX(-16px);
+    height: 100%;
     transition: border-color var(--transition-duration) var(--transition-timing-function);
+    transform: translateX(-16px);
     content: '';
   }
 `;

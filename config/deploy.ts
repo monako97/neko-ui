@@ -1,5 +1,5 @@
-import type { PartialConfigType } from '@moneko/core';
 import { PACKAGENAME } from '@moneko/core/build/process-env';
+import type { PartialConfigType } from '@moneko/core';
 
 const conf: PartialConfigType = {
   devtool: false,

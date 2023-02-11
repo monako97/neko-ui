@@ -1,9 +1,24 @@
-import { memo } from 'react';
+import React, { memo } from 'react';
+import { css, injectGlobal } from '@emotion/css';
 import { Skeleton } from 'neko-ui';
+
+const siteFallbackCss = css`
+  .site-fallback {
+    display: flex;
+    margin: auto;
+    border-radius: var(--border-radius-base, 4px);
+    padding: 32px;
+    max-width: 1280px;
+    background-color: var(--component-background, rgb(255 255 255 / 80%));
+    flex: 1;
+  }
+`;
+
+injectGlobal([siteFallbackCss]);
 
 const Fallback = () => {
   return (
-    <div className="n-flex n-flex-1 n-max-w-[80rem] n-m-auto n-bg-component n-p-6 n-rounded">
+    <div className="site-fallback">
       <Skeleton count={6} />
     </div>
   );

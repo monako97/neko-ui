@@ -12,31 +12,31 @@ import { classNames } from '@moneko/common';
 import { type ComponentSize } from '../index';
 
 const inputCss = css`
+  overflow: hidden;
   border: none;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: inherit;
   outline: none;
   flex: 1;
-  color: inherit;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  overflow: hidden;
 `;
 const wrapperCss = css`
-  color: var(--text-color, rgba(0, 0, 0, 0.85));
-  font-size: 14px;
-  line-height: 1.5715;
-  background-color: var(--component-background, white);
-  background-image: none;
+  display: flex;
   border: 1px solid var(--border-color-base, #d9d9d9);
   border-radius: var(--border-radius-base, 4px);
-  transition: all 0.3s;
-  box-sizing: border-box;
-  width: 100%;
   padding: 4px 10px;
-  display: flex;
+  width: 100%;
+  font-size: 14px;
+  color: var(--text-color, rgb(0 0 0 / 85%));
+  background-color: var(--component-background, rgb(255 255 255 / 80%));
+  transition: all 0.3s;
+  line-height: 1.5715;
+  background-image: none;
+  box-sizing: border-box;
   accent-color: var(--primary-color, #5794ff);
 
   &:hover {
-    border-color: var(--primary-color-hover, #5794ff);
+    border-color: var(--primary-color-hover, #80b3ff);
     border-right-width: 1px;
   }
 
@@ -45,14 +45,14 @@ const wrapperCss = css`
   }
 `;
 const focusCss = css`
-  border-color: var(--primary-color-hover, #5794ff);
-  box-shadow: 0 0 0 2px rgba(45, 115, 255, 0.2);
+  border-color: var(--primary-color-hover, #80b3ff);
   border-right-width: 1px;
   outline: 0;
+  box-shadow: 0 0 0 2px rgb(45 115 255 / 20%);
 `;
 const disabledCss = css`
-  background: var(--disabled-bg, #f5f5f5);
   border-color: var(--border-color-base, #d9d9d9);
+  background: var(--disabled-bg, #f5f5f5);
   cursor: not-allowed;
 `;
 const prefixCss = css`
@@ -63,17 +63,17 @@ const suffixCss = css`
 `;
 const sizeCss = {
   small: css`
+    padding: 2px;
     font-size: 12px;
     line-height: 20px;
-    padding: 2px;
 
     input {
       padding: 1px 0;
     }
   `,
   large: css`
-    font-size: 16px;
     padding: 6px 16px;
+    font-size: 16px;
   `,
   normal: null,
 };

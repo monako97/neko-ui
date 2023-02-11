@@ -12,10 +12,10 @@ const skeletonVar = `
     --skeleton-bg-active: rgba(255, 255, 255, 0.15);
   }
 `;
-const skeletonLoading = keyframes`
-    0% {
+const skeletonLoading = keyframes`0% {
         transform:translateX(-37.5%);
     }
+
     100% {
         transform:translateX(37.5%);
     }
@@ -33,8 +33,9 @@ const animationCss = css`
   position: relative;
   z-index: 0;
   overflow: hidden;
-  background: var(--skeleton-bg);
   border-radius: var(--border-radius-base, 4px);
+  background: var(--skeleton-bg);
+
   &::after {
     position: absolute;
     top: 0;
@@ -59,6 +60,7 @@ const titleCss = css`
 const paragraphCss = css`
   margin-block-start: 24px;
   padding: 0;
+
   li {
     width: 100%;
     height: 16px;
@@ -67,6 +69,7 @@ const paragraphCss = css`
     & + li {
       margin-block-start: 16px;
     }
+
     &:last-of-type {
       width: 65%;
     }

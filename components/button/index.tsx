@@ -5,19 +5,21 @@ import React, {
   useCallback,
   useRef,
   useState,
+  CSSProperties,
 } from 'react';
-import { classNames, isFunction } from '@moneko/common';
 import { css, keyframes } from '@emotion/css';
+import { classNames, isFunction } from '@moneko/common';
 
-const waveEffect = keyframes`
-  0% {
+const waveEffect = keyframes`0% {
     opacity: 1;
     box-shadow: 0 0 0 var(--wave-shadow-color);
   }
+
   25% {
     opacity: 1;
     box-shadow: 0 0 0 4px var(--wave-shadow-color);
   }
+
   100% {
     opacity: 0;
     box-shadow: 0 0 0 6px var(--wave-shadow-color);
@@ -25,9 +27,9 @@ const waveEffect = keyframes`
 `;
 const btnTextCss = css`
   display: block;
-  white-space: nowrap;
-  text-overflow: ellipsis;
   overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 `;
 
 export type ButtonType = 'success' | 'error' | 'primary' | 'warning' | 'default';
@@ -77,15 +79,15 @@ const getStatusCss = (
   dashed?: boolean,
   disabled?: boolean
 ) => {
-  let bg = 'var(--component-background, white)';
+  let bg = 'var(--component-background, rgba(255,255,255,0.8))';
   let hoverBg = bg;
   let activeBg = bg;
   let borderColor = 'var(--border-color-base)';
-  let borderHover = `var(--primary-color-hover)`;
-  let borderActive = `var(--primary-color-active)`;
+  let borderHover = `var(--primary-color-hover, #80b3ff)`;
+  let borderActive = `var(--primary-color-active, #3f72d9)`;
   let color = `var(--text-color)`;
-  let colorHover = `var(--primary-color-hover)`;
-  let colorActive = `var(--primary-color-active)`;
+  let colorHover = `var(--primary-color-hover, #80b3ff)`;
+  let colorActive = `var(--primary-color-active, #3f72d9)`;
 
   if (type !== 'default') {
     bg = `var(--${type}-color${fill ? '' : '-deprecated-bg'})`;
@@ -110,57 +112,58 @@ const getStatusCss = (
   }
 
   return css`
-    --wave-shadow-color: var(--${type === 'default' ? 'primary' : type}-color-outline);
+    border-style: ${dashed ? 'dashed' : 'solid'};
+    border-color: ${borderColor};
+    border-radius: ${circle ? '50%' : 'var(--border-radius-base)'};
+    padding: ${circle ? 0 : '8px 16px'};
+    min-width: ${circle ? '32px' : '22px'};
+    max-width: ${circle ? '32px' : 'unset'};
+    min-height: ${circle ? '32px' : '22px'};
+    max-height: ${circle ? '32px' : 'unset'};
     color: ${color};
     background-color: ${bg};
-    border-color: ${borderColor};
-    min-width: ${circle ? '32px' : '22px'};
-    min-height: ${circle ? '32px' : '22px'};
-    max-width: ${circle ? '32px' : 'unset'};
-    max-height: ${circle ? '32px' : 'unset'};
     line-height: ${circle ? '32px' : 1};
-    padding: ${circle ? 0 : '8px 16px'};
-    border-radius: ${circle ? '50%' : 'var(--border-radius-base)'};
-    border-style: ${dashed ? 'dashed' : 'solid'};
     cursor: ${disabled ? 'not-allowed' : 'pointer'};
 
     &:hover {
+      border-color: ${borderHover};
       color: ${colorHover};
       background-color: ${hoverBg};
-      border-color: ${borderHover};
     }
+
     &:active {
+      border-color: ${borderActive};
       color: ${colorActive};
       background-color: ${activeBg};
-      border-color: ${borderActive};
     }
   `;
 };
 const getBaseStyle = () => {
   return css`
     position: relative;
-    outline-offset: 4px;
     display: inline-block;
+    border-width: 1px;
     width: fit-content;
     height: fit-content;
-    border-width: 1px;
+    text-align: center;
+    outline-offset: 4px;
     transition-timing-function: var(--transition-timing-function);
     transition-duration: var(--transition-duration);
     transition-property: color, background-color, border-color, width, height;
     user-select: none;
     touch-action: manipulation;
     box-sizing: border-box;
-    text-align: center;
 
     &::before {
       position: absolute;
-      inset: 0;
       display: block;
       border-radius: inherit;
-      box-shadow: 0 0 0 0 var(--wave-shadow-color);
       opacity: 0.2;
+      box-shadow: 0 0 0 0 var(--wave-shadow-color);
+      inset: 0;
       pointer-events: none;
     }
+
     &:last-of-type {
       margin-right: 0;
     }
@@ -211,6 +214,11 @@ const Button: FC<ButtonProps> = ({
         getAnimationCss(animating, link, infinite),
         className
       )}
+      style={
+        {
+          '--wave-shadow-color': `var(--${type === 'default' ? 'primary' : type}-color-outline)`,
+        } as CSSProperties
+      }
     >
       <span className={btnTextCss}>{children}</span>
     </div>

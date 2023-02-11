@@ -1,8 +1,8 @@
-import { memo, useCallback, useMemo, useState, useRef } from 'react';
+import React, { memo, useCallback, useMemo, useState, useRef } from 'react';
+import { css, injectGlobal } from '@emotion/css';
 import { myPkgs, MyPkg, useLocation, useNavigate } from '@moneko/core';
 
 const menuObj: Record<string, MyPkg[]> = {};
-
 const extractMenu = (list: MyPkg[]) => {
   return list?.map((item) => {
     const type = item?.type || 'default';
@@ -19,6 +19,134 @@ const extractMenu = (list: MyPkg[]) => {
 
 extractMenu(myPkgs);
 
+const siderCss = css`
+  .site-sider,
+  .site-sider-group-title,
+  .site-sider-item,
+  .site-sider-item::before {
+    transition-duration: var(--transition-duration);
+    transition-timing-function: var(--transition-timing-function);
+  }
+
+  .site-sider {
+    position: sticky;
+    top: 0;
+    z-index: 30;
+    display: flex;
+    overflow-y: scroll;
+    margin: 0 16px 16px;
+    border-radius: var(--border-radius-base, 4px);
+    width: 240px;
+    min-width: 240px;
+    color: var(--text-color, rgb(0 0 0 / 65%));
+    background-color: var(--header-bg, rgb(255 255 255 / 80%));
+    box-sizing: border-box;
+    backdrop-filter: blur(16px);
+    transition-property: background-color, color;
+    flex-direction: column;
+  }
+
+  .site-sider > div {
+    position: relative;
+    padding: 0 16px;
+  }
+
+  .site-sider-group {
+    position: relative;
+  }
+
+  .site-sider-group:last-of-type {
+    margin-bottom: 16px;
+  }
+
+  .site-sider-group-title {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    margin-bottom: 8px;
+    border-bottom: 1px solid var(--border-color-base, #d9d9d9);
+    padding: 8px 0;
+    font-size: 14px;
+    color: var(--heading-color, rgb(255 255 255 / 85%));
+    backdrop-filter: blur(16px);
+    line-height: 20px;
+    transition-property: background-color, color, border-color;
+  }
+
+  .site-sider-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .site-sider-item {
+    position: relative;
+    display: flex;
+    align-items: center;
+    border-radius: var(--border-radius-base, 4px);
+    min-height: 45px;
+    color: var(--text-color, rgb(0 0 0 / 65%));
+    flex-wrap: wrap;
+    cursor: pointer;
+  }
+
+  .site-sider-item::before {
+    position: absolute;
+    right: 0;
+    display: block;
+    border-radius: 0 var(--border-radius-base, 4px) var(--border-radius-base, 4px) 0;
+    width: 5px;
+    height: 100%;
+    color: var(--primary-color, #5794ff);
+    background-color: var(--primary-color, #5794ff);
+    content: '';
+    transition-property: background-color, transform;
+    transform: scale(0);
+  }
+
+  .site-sider-item[data-active='false'] {
+    transition-property: background-color, color;
+  }
+
+  .site-sider-item[data-active='true'] {
+    color: var(--primary-color, #5794ff);
+    background-color: var(--primary-color-deprecated-bg, #f0f8ff);
+    transition-property: background-color;
+  }
+
+  .site-sider-item[data-active='true']::before {
+    transform: scale(1);
+  }
+
+  .site-sider-icon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 32px;
+    height: 100%;
+  }
+
+  .site-sider-label {
+    position: relative;
+  }
+
+  .site-sider-label,
+  .site-sider-subtitle {
+    overflow: hidden;
+    width: calc(100% - 32px);
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .site-sider-subtitle {
+    margin-left: 32px;
+    padding-bottom: 4px;
+    font-size: 12px;
+    opacity: 0.67;
+  }
+`;
+
+injectGlobal([siderCss]);
 const Sider = () => {
   const menuEl = useRef<HTMLDivElement>(null);
   const navigate = useNavigate();
@@ -46,29 +174,17 @@ const Sider = () => {
   const renderMenu = useCallback(
     (list?: MyPkg[]) => {
       return list?.map((item) => {
-        const activeCls =
-          'n-transition-bg before:n-scale-100 n-bg-primaryDeprecatedBg n-text-primary';
-
         return (
           <a
             key={item.key}
             href={window.location.origin + window.location.pathname + '#/' + item.key}
-            className={`n-text-color n-min-h-[2.8125rem] n-rounded n-relative n-flex n-flex-wrap n-items-center n-cursor-pointer n-mb-2 before-content-empty before:n-transition-bg-transform before:n-rounded-r before:n-w-1 before:n-h-full before:n-bg-primary before:n-absolute before:n-right-0 hover:n-text-primary before:n-scale-0 ${
-              activeKey === item.key ? activeCls : 'n-transition-bg-c'
-            }`}
+            className="site-sider-item"
+            data-active={activeKey === item.key}
             onClick={() => handleMenu(item)}
           >
-            <span className="n-flex n-items-center n-justify-center n-w-8 n-h-full">
-              {item.icon}
-            </span>
-            <div className="n-relative n-w-[calc(100%-2rem)] n-truncate">
-              {item.title || item.path}
-            </div>
-            {item.subtitle && (
-              <div className="n-w-[calc(100%-2rem)] n-truncate n-opacity-70 n-ml-8 n-text-xs n-pb-1">
-                {item.subtitle}
-              </div>
-            )}
+            <span className="site-sider-icon">{item.icon}</span>
+            <div className="site-sider-label">{item.title || item.path}</div>
+            {item.subtitle && <div className="site-sider-subtitle">{item.subtitle}</div>}
           </a>
         );
       });
@@ -77,15 +193,13 @@ const Sider = () => {
   );
 
   return (
-    <div className="n-sticky n-top-0 n-bg-header n-backdrop-blur n-text-color n-transition-bg-c n-flex n-flex-col n-overflow-y-scroll n-box-border n-w-60 n-min-w-[15rem] n-m-4 n-mt-0 n-rounded n-z-30">
-      <div ref={menuEl} className="n-py-0 n-px-4 n-relative ">
+    <div className="site-sider">
+      <div ref={menuEl}>
         {Object.keys(menuObj).map((key) => {
           return (
-            <div key={key} className="n-relative">
-              <div className="n-sticky n-top-0 n-z-10 n-backdrop-blur n-text-sm n-pb-2 n-text-heading n-transition-bg-c after:n-h-[0.0625rem] after:n-mt-2 after:n-mb-0 after:n-mx-0 after:n-bg-borderColor after:n-transition-bg after-content-empty before-content-empty before:n-sticky before:n-top-2 n-h-6 n-pt-2">
-                {key}
-              </div>
-              <div className="n-mb-2">{renderMenu(menuObj[key])}</div>
+            <div key={key} className="site-sider-group">
+              <div className="site-sider-group-title">{key}</div>
+              <div className="site-sider-list">{renderMenu(menuObj[key])}</div>
             </div>
           );
         })}

@@ -1,6 +1,6 @@
 import React from 'react';
-import { Input } from 'neko-ui';
 import { fireEvent, render, screen } from '@testing-library/react';
+import { Input } from 'neko-ui';
 
 /**
  * @jest-environment jsdom

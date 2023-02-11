@@ -18,9 +18,9 @@ import {
   isEqual,
   isSvgElement,
 } from '@moneko/common';
-import { PhotoSlider } from 'react-photo-view';
 import { throttle } from 'lodash';
 import marked from 'marked-completed';
+import { PhotoSlider } from 'react-photo-view';
 import { highlight } from '../utils/highlight';
 import './index.css';
 import '../utils/prism.css';

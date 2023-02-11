@@ -7,7 +7,6 @@ import React, {
   useRef,
   useState,
 } from 'react';
-import { Button, type ButtonProps } from '../index';
 import { classNames, downloadBlob, isObject } from '@moneko/common';
 import {
   btnCss,
@@ -18,6 +17,7 @@ import {
   recordingCss,
   videoCss,
 } from './style';
+import { Button, type ButtonProps } from '../index';
 
 export interface RecorderOptions {
   /** 录制文件名称 */

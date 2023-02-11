@@ -12,9 +12,8 @@ export const variablesCss = `
   }
 `;
 
-const slideDownIn = keyframes`
-0% {
-    transform: scaleY(0.8);
+const slideDownIn = keyframes`0% {
+    transform: scaleY(.8);
     transform-origin: 100% 100%;
     opacity: 0;
 }
@@ -25,15 +24,14 @@ const slideDownIn = keyframes`
     opacity: 1;
 }
 `;
-const slideDownOut = keyframes`
-0% {
+const slideDownOut = keyframes`0% {
     transform: scaleY(1);
     transform-origin: 100% 100%;
     opacity: 1;
 }
 
 100% {
-    transform: scaleY(0.8);
+    transform: scaleY(.8);
     transform-origin: 100% 100%;
     opacity: 0;
 }
@@ -51,26 +49,26 @@ export const tooltipCss = css`
 export const portalCss = css`
   position: fixed;
   display: inline-block;
-  background-color: var(--tooltip-bg);
-  color: var(--text-color);
-  padding: 4px 8px;
   border-radius: var(--border-radius-base, 4px);
+  padding: 4px 8px;
   font-size: 14px;
-  backdrop-filter: blur(16px);
+  color: var(--text-color);
+  background-color: var(--tooltip-bg);
   filter: drop-shadow(0.5px 1px 4px var(--tooltip-shadow-color))
     drop-shadow(1px 2px 8px var(--tooltip-shadow-color))
     drop-shadow(2px 4px 16px var(--tooltip-shadow-color));
+  backdrop-filter: blur(16px);
 
   &::before {
-    content: '';
     position: absolute;
+    right: 0;
     bottom: 0;
     left: 0;
-    right: 0;
     margin: auto;
     width: 12px;
     height: 8px;
     background: inherit;
+    content: '';
     clip-path: polygon(0% 0%, 50% 100%, 100% 0%);
     transform: translateY(100%);
   }

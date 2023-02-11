@@ -14,13 +14,13 @@ import code from './examples/案例一.mdx?raw';
 
 ## 直接在 mdx 中写
 
-<div className="n-flex n-h-72">
+<div style={{ display: 'flex', height: 288 }}>
   <WaveCircle bgColor="pink" />
   <WaveCircle>默认</WaveCircle>
 </div>
 
 ```tsx
-<div className="n-flex n-h-72">
+<div style={{ display: 'flex', height: 288 }}>
   <WaveCircle bgColor="pink" />
   <WaveCircle>默认</WaveCircle>
 </div>
@@ -32,7 +32,7 @@ import code from './examples/案例一.mdx?raw';
 
 > 或传入 path (src 目录下代码所在位置) 通过 Snapshot 展示
 
-<Snapshot name="wave-circle" />
+<SandboxGroup name="wave-circle" />
 </Box>
 
 <Box text={api} />

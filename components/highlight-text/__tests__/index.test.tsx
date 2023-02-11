@@ -1,6 +1,6 @@
 import React from 'react';
-import { HighlightText, strToHighlight, RegExp_HighLight } from 'neko-ui';
 import { render } from '@testing-library/react';
+import { HighlightText, strToHighlight, RegExp_HighLight } from 'neko-ui';
 
 /**
  * @jest-environment jsdom

@@ -5,8 +5,11 @@ import { ColorPalette, Tooltip, type ColorPaletteProps, type ComponentSize } fro
 
 const triggerCss = css`
   display: inline-block;
+  border-radius: var(--border-radius-base);
   width: 25px;
   height: 25px;
+  background-position: 0 0, 5px 5px;
+  background-size: 10px 10px;
   background-image: linear-gradient(
       45deg,
       #ccc 25%,
@@ -16,19 +19,16 @@ const triggerCss = css`
       #ccc
     ),
     linear-gradient(45deg, #ccc 25%, transparent 25%, transparent 75%, #ccc 75%, #ccc);
-  background-size: 10px 10px;
-  background-position: 0 0, 5px 5px;
-  border-radius: var(--border-radius-base);
 
   &::after {
-    content: '';
     display: block;
+    border-radius: var(--border-radius-base);
     width: 100%;
     height: 100%;
     background: var(--offset-color, #fff);
-    border-radius: var(--border-radius-base);
     opacity: var(--offset-alpha, #fff);
-    box-shadow: rgba(0, 0, 0, 0.15) 0 0 0 1px inset, rgba(0, 0, 0, 0.25) 0 0 4px inset;
+    box-shadow: rgb(0 0 0 / 15%) 0 0 0 1px inset, rgb(0 0 0 / 25%) 0 0 4px inset;
+    content: '';
   }
 `;
 const sizeCss = {
