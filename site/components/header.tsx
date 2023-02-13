@@ -69,6 +69,11 @@ const headerCss = css`
     line-height: 32px;
     cursor: pointer;
     user-select: none;
+    transition: transform var(--transition-duration) var(--transition-timing-function);
+  }
+
+  .site-theme-btn:active {
+    transform: scale(0.95);
   }
 `;
 

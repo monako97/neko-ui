@@ -88,6 +88,11 @@ const siderCss = css`
     color: var(--text-color, rgb(0 0 0 / 65%));
     flex-wrap: wrap;
     cursor: pointer;
+    user-select: contain;
+  }
+
+  .site-sider-item:active {
+    transform: scale(0.95);
   }
 
   .site-sider-item::before {
@@ -105,13 +110,13 @@ const siderCss = css`
   }
 
   .site-sider-item[data-active='false'] {
-    transition-property: background-color, color;
+    transition-property: background-color, color, transform;
   }
 
   .site-sider-item[data-active='true'] {
     color: var(--primary-color, #5794ff);
     background-color: var(--primary-color-deprecated-bg, #f0f8ff);
-    transition-property: background-color;
+    transition-property: background-color, transform;
   }
 
   .site-sider-item[data-active='true']::before {

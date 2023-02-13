@@ -51,6 +51,8 @@ export interface ButtonProps extends HTMLAttributes<HTMLDivElement> {
   float?: boolean;
   /** 禁用按钮 */
   disabled?: boolean;
+  /** 块按钮 */
+  block?: boolean;
   /** 链接按钮 */
   link?: boolean;
 }
@@ -124,6 +126,7 @@ const getStatusCss = (
     background-color: ${bg};
     line-height: ${circle ? '32px' : 1};
     cursor: ${disabled ? 'not-allowed' : 'pointer'};
+    opacity: ${disabled ? 0.7 : 1};
 
     &:hover {
       border-color: ${borderHover};
@@ -132,40 +135,10 @@ const getStatusCss = (
     }
 
     &:active {
+      transform: scale(${disabled ? 1 : 0.95});
       border-color: ${borderActive};
       color: ${colorActive};
       background-color: ${activeBg};
-    }
-  `;
-};
-const getBaseStyle = () => {
-  return css`
-    position: relative;
-    display: inline-block;
-    border-width: 1px;
-    width: fit-content;
-    height: fit-content;
-    text-align: center;
-    outline-offset: 4px;
-    transition-timing-function: var(--transition-timing-function);
-    transition-duration: var(--transition-duration);
-    transition-property: color, background-color, border-color, width, height;
-    user-select: none;
-    touch-action: manipulation;
-    box-sizing: border-box;
-
-    &::before {
-      position: absolute;
-      display: block;
-      border-radius: inherit;
-      opacity: 0.2;
-      box-shadow: 0 0 0 0 var(--wave-shadow-color);
-      inset: 0;
-      pointer-events: none;
-    }
-
-    &:last-of-type {
-      margin-right: 0;
     }
   `;
 };
@@ -180,6 +153,7 @@ const Button: FC<ButtonProps> = ({
   link,
   children,
   disabled,
+  block,
   onClick,
   type = 'default',
   className,
@@ -187,6 +161,37 @@ const Button: FC<ButtonProps> = ({
 }) => {
   const ref = useRef<HTMLDivElement>(null);
   const [animating, setAnimating] = useState(false);
+  const getBaseStyle = () => {
+    return css`
+      position: relative;
+      display: inline-block;
+      border-width: 1px;
+      width: ${block ? '100%' : 'fit-content'};
+      height: fit-content;
+      text-align: center;
+      outline-offset: 4px;
+      transition-timing-function: var(--transition-timing-function);
+      transition-duration: var(--transition-duration);
+      transition-property: color, background-color, border-color, width, height, transform;
+      user-select: none;
+      touch-action: manipulation;
+      box-sizing: border-box;
+
+      &::before {
+        position: absolute;
+        display: block;
+        border-radius: inherit;
+        opacity: 0.2;
+        box-shadow: 0 0 0 0 var(--wave-shadow-color);
+        inset: 0;
+        pointer-events: none;
+      }
+
+      &:last-of-type {
+        margin-right: 0;
+      }
+    `;
+  };
 
   const handleClick: MouseEventHandler<HTMLDivElement> = useCallback(
     (e) => {

@@ -59,7 +59,11 @@ const sandboxCss = css`
     border-top-left-radius: var(--border-radius-base);
     line-height: 16px;
     user-select: none;
-    transition-property: background-color, color;
+    transition-property: background-color, color, transform;
+  }
+
+  .sandbox-btn:active {
+    transform: scale(0.95);
   }
 
   .sandbox-btn[data-open='true'] {
