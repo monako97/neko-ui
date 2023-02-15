@@ -1,9 +1,7 @@
 <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
-  {['default', 'primary', 'success', 'warning', 'error'].map((item) => {
-    return (
-      <Button key={item} circle type={item}>
-        🤔
-      </Button>
-    );
-  })}
+  <Button circle>🤔</Button>
+  <Button type="primary" circle>🤔</Button>
+  <Button type="success" circle>🤔</Button>
+  <Button type="warning" circle>🤔</Button>
+  <Button type="error" circle>🤔</Button>
 </div>

@@ -181,7 +181,8 @@ pre:not(.sp-cm) > code {
     color: var(--token-class, #39adb5);
 }
 
-.token.class-name {
+.token.class-name,
+.token.maybe-class-name {
     color: var(--token-class-name, #6182b8);
 }
 
@@ -688,7 +689,6 @@ pre:not(.sp-cm)>code {
     max-width: 100%;
     font-size: var(--font-size-base);
     white-space: pre;
-    color: #585260;
     line-height: 1.8;
     pointer-events: auto;
     transition-property: box-shadow, background-color, border-color, color;

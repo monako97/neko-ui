@@ -3,7 +3,6 @@ import { css, injectGlobal } from '@emotion/css';
 import { isEqual } from '@moneko/common';
 import { type ExampleModule, myDemoKv } from '@moneko/core';
 import * as pkg from '@pkg/index';
-import * as Prism from 'neko-ui/utils/prism.js';
 import { LiveProvider, LiveEditor, LiveError, LivePreview } from 'react-live';
 
 const sandboxCss = css`
@@ -150,7 +149,10 @@ const SandboxComp: FC<ExampleModule> = ({ soucre, title }) => {
             </span>
           </div>
           {init && (
-            <LiveEditor className={`sandbox-live-editor ${open ? '' : 'hide'}`} prism={Prism} />
+            <LiveEditor
+              className={`sandbox-live-editor ${open ? '' : 'hide'}`}
+              prism={window.Prism}
+            />
           )}
         </div>
       </div>

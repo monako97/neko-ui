@@ -11,9 +11,8 @@ import React, {
   useState,
 } from 'react';
 import { injectGlobal } from '@emotion/css';
-import { classNames, getMaxZindex, isString } from '@moneko/common';
+import { classNames, getMaxZindex, isString, tinycolor } from '@moneko/common';
 import { createPortal } from 'react-dom';
-import tinycolor from 'tinycolor2';
 import { portalCss, tooltipCss, tooltipInUp, tooltipOutUp, variablesCss } from './style';
 
 injectGlobal(variablesCss);

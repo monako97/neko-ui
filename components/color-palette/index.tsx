@@ -8,8 +8,7 @@ import React, {
   type HTMLAttributes,
   type MouseEvent as ReactMouseEvent,
 } from 'react';
-import { classNames } from '@moneko/common';
-import tinycolor from 'tinycolor2';
+import { classNames, tinycolor } from '@moneko/common';
 import AlphaSlider from './alpha-slider';
 import HueSlider from './hue-slider';
 import {

@@ -1,9 +1,7 @@
 <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
-  {['default', 'primary', 'success', 'warning', 'error'].map((item) => {
-    return (
-      <Button key={item} disabled type={item}>
-        disabled
-      </Button>
-    );
-  })}
+  <Button disabled>禁用</Button>
+  <Button type="primary" disabled>禁用</Button>
+  <Button type="success" disabled>禁用</Button>
+  <Button type="warning" disabled>禁用</Button>
+  <Button type="error" disabled>禁用</Button>
 </div>
