@@ -9,14 +9,20 @@ export const basic = {
 
 > 网络较慢，需要长时间等待加载处理的情况下、图文信息内容较多的列表/卡片中、第一次加载数据的时候使用
 
-<SandboxGroup name="skeleton" col={1} />
+  <Sandbox soucre="<Skeleton />" title="示例代码" />
+  <SandboxGroup name="skeleton" col={2} />
+  <Sandbox soucre="<Skeleton avatar title />" title="显示标题" />
 </Box>
 
-<Box text={`## API
+<Box text={`
+## API
 
-| 属性      | 说明       | 类型   | 默认值 | 版本 |
-| --------- | ---------- | ------ | ------ | ---- |
-| className | 自定义类名 | string | -      | -    |
-| count     | 自定义行数 | number | 3      | -    |
+| 属性      | 说明       | 类型    | 默认值 | 版本 |
+| --------- | ---------- | ------- | ------ | ---- |
+| className | 自定义类名 | string  | -      | -    |
+| rows      | 自定义行数 | number  | 3      | -    |
+| active    | 显示动画   | boolean | false  | -    |
+| avatar    | 显示头像   | boolean | false  | -    |
+| title     | 显示标题   | boolean | false  | -    |
 
 `} />

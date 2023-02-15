@@ -1,5 +1,6 @@
-import React, { type FC, memo, useMemo, CSSProperties } from 'react';
+import React, { type FC, memo, useMemo } from 'react';
 import { css, injectGlobal } from '@emotion/css';
+import { classNames } from '@moneko/common';
 import { projectBasicInfo, useLocation, useOutlet } from '@moneko/core';
 
 const cover = projectBasicInfo.coverage;
@@ -20,9 +21,19 @@ const coverageStyle = css`
     flex-wrap: wrap;
   }
 
-  .site-coverage-body {
+  .site-coverage-error {
     --coverage-color: var(--error-color, #ff4d4f);
+  }
 
+  .site-coverage-success {
+    --coverage-color: var(--success-color, #52c41a);
+  }
+
+  .site-coverage-warning {
+    --coverage-color: var(--warning-color, #faad14);
+  }
+
+  .site-coverage-body {
     display: flex;
     overflow: hidden;
     border: 1px solid var(--coverage-color);
@@ -71,6 +82,9 @@ const coverageStyle = css`
 `;
 
 injectGlobal([coverageStyle]);
+function getNum(num: number) {
+  return typeof num === 'number' ? num : '-';
+}
 const Coverage: FC = () => {
   const readme = useOutlet();
   const location = useLocation();
@@ -84,32 +98,17 @@ const Coverage: FC = () => {
   return (
     <div className="site-coverage">
       {Object.keys(conf).map((k) => {
-        const c = coverage[k as CoverageType],
-          covered = coverage[`covered${k}` as CoverageType],
-          coverNum = Math.round((parseFloat(covered) / parseFloat(c)) * 100) || 0;
-
-        let stat = 'success';
-
-        if (coverNum < 50) {
-          stat = 'error';
-        } else if (coverNum < 80) {
-          stat = 'warning';
-        }
+        const c = parseFloat(coverage[k as CoverageType]);
+        const covered = parseFloat(coverage[`covered${k}` as CoverageType]);
+        const coverNum = c === 0 && covered === 0 ? 100 : Math.round((covered / c) * 100) || 0;
+        const stat = coverNum < 50 ? 'error' : coverNum < 80 ? 'warning' : 'success';
 
         return (
-          <div
-            key={k}
-            className="site-coverage-body"
-            style={
-              {
-                '--coverage-color': `var(--${stat}-color)`,
-              } as CSSProperties
-            }
-          >
+          <div key={k} className={classNames('site-coverage-body', `site-coverage-${stat}`)}>
             <div className="site-coverage-label">{conf[k as CoverageType]}</div>
             <div className="site-coverage-value">
-              <div>{coverNum ? `${coverNum}%` : '0%'}</div>
-              <div>{`${c || '-'} / ${covered || '-'}`}</div>
+              <div>{coverNum}%</div>
+              <div>{`${getNum(c)} / ${getNum(covered)}`}</div>
             </div>
           </div>
         );

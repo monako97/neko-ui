@@ -1,0 +1,28 @@
+export const basic = {
+  type: '其他',
+  title: '前缀类名',
+  subtitle: 'prefixCls',
+};
+
+<Box>
+# 前缀类名
+
+> prefixCls 允许您通过传入名称获取到添加前缀后的 css 类名
+
+```javascript
+const avatar = prefixCls('b');
+
+console.log(avatar); // b-avatar
+```
+
+> setPrefixCls 允许您向 neko-ui 的所有组件 css 类名添加自定义前缀。
+
+例如，您可以通过设置 setPrefixCls 来设置 b-前缀:
+
+```tsx
+setPrefixCls('b');
+
+<Button>现在这个按钮的可以通过 .b-button 查找到</Button>;
+```
+
+</Box>

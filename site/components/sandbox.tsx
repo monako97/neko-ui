@@ -62,8 +62,22 @@ const sandboxCss = css`
     transition-property: background-color, color, transform;
   }
 
+  .sandbox-btn::after {
+    display: inline-block;
+    font-size: 8px;
+    font-family: neko-icon, sans-serif;
+    text-indent: 4px;
+    content: '\\e644';
+  }
+
   .sandbox-btn:active {
     transform: scale(0.95);
+  }
+
+  .sandbox-btn:hover::after,
+  .sandbox-btn[data-open='true']::after {
+    font-size: 10px;
+    content: '\\e63e';
   }
 
   .sandbox-btn[data-open='true'] {
@@ -73,7 +87,7 @@ const sandboxCss = css`
 
   .sandbox-btn[data-open='false'] {
     color: var(--primary-color, #5794ff);
-    background-color: var(--primary-color-deprecated-bg, #f0f8ff);
+    background-color: var(--primary-color-bg, #f0f8ff);
     border-bottom-right-radius: var(--border-radius-base);
   }
 
@@ -93,6 +107,7 @@ injectGlobal([sandboxCss]);
 interface SandboxGroupProps {
   name: string;
   col?: number;
+  ignore?: string[];
 }
 
 const SandboxComp: FC<ExampleModule> = ({ soucre, title }) => {
@@ -109,7 +124,7 @@ const SandboxComp: FC<ExampleModule> = ({ soucre, title }) => {
     <LiveProvider
       code={soucre}
       scope={pkg}
-      language="typescript"
+      language="tsx"
       theme={{
         plain: {},
         styles: [],
@@ -131,7 +146,7 @@ const SandboxComp: FC<ExampleModule> = ({ soucre, title }) => {
                 setOpen(!open);
               }}
             >
-              编辑案例代码
+              编辑示例代码
             </span>
           </div>
           {init && (
@@ -145,7 +160,7 @@ const SandboxComp: FC<ExampleModule> = ({ soucre, title }) => {
 
 export const Sandbox = memo(SandboxComp, isEqual);
 
-const SandboxGroup: FC<SandboxGroupProps> = ({ name, col = 2 }) => {
+const SandboxGroup: FC<SandboxGroupProps> = ({ name, col = 2, ignore = [] }) => {
   return (
     <div
       className="sandbox-group"
@@ -153,9 +168,11 @@ const SandboxGroup: FC<SandboxGroupProps> = ({ name, col = 2 }) => {
         columnCount: col,
       }}
     >
-      {myDemoKv[name]?.map((m, i) => (
-        <Sandbox key={i} soucre={m.soucre} title={m.title} />
-      ))}
+      {myDemoKv[name]
+        ?.filter((e) => (e.title ? !ignore.includes(e.title) : true))
+        .map((m, i) => (
+          <Sandbox key={i} soucre={m.soucre} title={m.title} />
+        ))}
     </div>
   );
 };

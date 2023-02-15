@@ -1,7 +1,7 @@
 {
     "name": "neko-ui",
     "version": "1.0.33",
-    "description": "Neko UI库",
+    "description": "UI库",
     "main": "lib/index.js",
     "scripts": {
         "test": "jest --watchAll --coverage",
@@ -20,7 +20,7 @@
     },
     "devDependencies": {
         "@moneko/cli": "1.1.5",
-        "@moneko/core": "2.0.2",
+        "@moneko/core": "2.0.3",
         "@moneko/postcss": "1.0.26",
         "@swc/jest": "0.2.24",
         "@testing-library/jest-dom": "5.16.5",
@@ -42,12 +42,11 @@
     },
     "dependencies": {
         "@emotion/css": "11.10.5",
-        "@moneko/common": "1.0.7",
+        "@moneko/common": "1.0.10",
         "katex": "0.16.4",
         "lodash": "4.17.21",
         "marked-completed": "1.2.3",
-        "react-photo-view": "1.2.3",
-        "tinycolor2": "1.6.0"
+        "react-photo-view": "1.2.3"
     },
     "resolutions": {
         "terser": "npm:@swc/core"

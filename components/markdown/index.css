@@ -14,100 +14,19 @@
   --md-mark-color: #e9887c;
   --mark-bg: rgb(249 242 244 / 10%);
   --toc-bg: rgb(23 23 23 / 80%);
+  --shadow-lite: rgb(255 255 255 / 6%);
 }
 
 :root {
   --table-border-color: rgb(0 0 0 / 6%);
+  --shadow-lite: rgb(0 0 0 / 6%);
 }
 
 .neko-icon {
-  font-size: 16px;
+  font-size: inherit;
   font-family: neko-icon, sans-serif !important;
   font-style: normal;
-}
-
-.iconmacos-add::before {
-  content: '\e641';
-}
-
-.iconmacos-close::before {
-  content: '\e642';
-}
-
-.iconmacos-minimize::before {
-  content: '\e643';
-}
-
-.iconnight::before {
-  content: '\e688';
-}
-
-.iconlight::before {
-  content: '\e6e9';
-}
-
-.iconlogout::before {
-  content: '\e607';
-}
-
-.iconlogin::before {
-  content: '\e608';
-}
-
-.icontimeline::before {
-  content: '\e609';
-}
-
-.iconavatar::before {
-  content: '\e600';
-}
-
-.iconhome::before {
-  content: '\e6ae';
-}
-
-.iconcopy::before {
-  content: '\e631';
-}
-
-.icontheme::before {
-  content: '\e63c';
-}
-
-.iconmark-right::before {
-  content: '\e68d';
-}
-
-.iconmark-left::before {
-  content: '\e68e';
-}
-
-.iconxiala::before {
-  content: '\e611';
-}
-
-.iconclose::before {
-  content: '\e720';
-}
-
-.icon14-circle::before {
-  content: '\e640';
-}
-
-.iconwarning::before {
-  content: '\e670';
-}
-
-.iconinfo::before {
-  content: '\e6eb';
-}
-
-.iconsuccess::before {
-  content: '\e726';
-}
-
-.iconzan-f::before {
-  content: '\e669';
+  line-height: normal;
 }
 
 [data-copy]::before {
@@ -129,17 +48,17 @@
 }
 
 [data-copy='success']::before {
-  border-color: var(--success-color-deprecated-border, #b7eb8f);
+  border-color: var(--success-color-border, #b7eb8f);
   color: var(--success-color, #52c41a);
-  background-color: var(--success-color-deprecated-bg, #f6ffed);
+  background-color: var(--success-color-bg, #f6ffed);
   animation: copy-slide-in .3s ease-in-out;
   content: '\590d\5236\6210\529f';
 }
 
 [data-copy='failure']::before {
-  border-color: var(--error-color-deprecated-border, #ffccc7);
+  border-color: var(--error-color-border, #ffccc7);
   color: var(--error-color, #ff4d4f);
-  background-color: var(--error-color-deprecated-bg, #fff2f0);
+  background-color: var(--error-color-bg, #fff2f0);
   animation: copy-slide-in .3s ease-in-out, error 1s ease-in-out 1s;
   content: '\590d\5236\5931\8d25';
 }
@@ -494,7 +413,7 @@ blockquote p {
 
 .n-md-body blockquote {
   position: relative;
-  margin: 30px 60px;
+  margin: 30px 54px;
   border-radius: var(--border-radius-base, 4px);
   padding: 16px;
   font-weight: 500;
@@ -505,24 +424,23 @@ blockquote p {
 .n-md-body blockquote::before,
 .n-md-body blockquote::after {
   position: absolute;
-  font-size: 48px;
+  font-size: 32px;
   font-family: neko-icon, sans-serif;
   color: var(--blockquote-icon-color, #fb5);
   transition-property: color;
+  content: '\e68d';
 }
 
 .n-md-body blockquote::before {
   top: -8px;
   left: 0;
-  transform: translateX(-53px);
-  content: '\e68e';
+  transform: translateX(-53px) rotate(180deg);
 }
 
 .n-md-body blockquote::after {
   right: 0;
   bottom: -8px;
   transform: translateX(53px);
-  content: '\e68d';
 }
 
 .n-md-body blockquote cite {
@@ -545,72 +463,75 @@ blockquote p {
 
 .n-md-body details {
   overflow: hidden;
-  border-left: 5px solid var(--details-border-color, #b4b3ff);
+  border-left: 5px solid var(--primary-color-border, #5794ff);
   border-radius: var(--border-radius-base, 4px);
-  padding: 20px;
+  padding: 12px 24px;
   background: var(--details-bg, #fafaff);
+  box-sizing: border-box;
   user-select: none;
+  box-shadow: 1px 1px 10px 0 var(--shadow-lite);
+}
+
+.n-md-body details,
+.n-md-body details summary {
+  transition-duration: var(--transition-duration);
+  transition-timing-function: var(--transition-timing-function);
+  transition-property: background-color, transform, border-color;
 }
 
 .n-md-body details:not(:last-of-type) {
-  margin-bottom: 15px;
+  margin-bottom: 16px;
 }
 
-.n-md-body details summary ~ * {
-  padding-left: 30px;
-}
-
-.n-md-body details summary,
-.n-md-body details summary ~ * {
+.n-md-body details >summary,
+.n-md-body details >summary ~ * {
   font-size: 14px;
   font-weight: normal;
   color: var(--details-summary-color, #0e1c4e);
   font-style: normal;
   line-height: 1.4;
+  transition-property: background-color, transform, border-color, margin;
 }
 
-.n-md-body details[open] summary ~ * {
-  padding-left: 32px;
+.n-md-body details >summary:not(:last-of-type) .n-md-body details >summary ~ *:not(:last-of-type) {
+  margin-bottom: 16px;
 }
 
-.n-md-body details summary:not(:last-of-type) .n-md-body details summary ~ *:not(:last-of-type) {
-  margin-bottom: 10px;
-}
-
-
-.n-md-body details summary {
-  margin-bottom: 0;
-  list-style-image: url('./summary-plus.svg');
+.n-md-body details >summary {
+  font-weight: 500;
   outline: none;
   cursor: pointer;
+  transform: translateX(-18px);
 }
 
-.n-md-body details summary::-webkit-details-marker {
-  margin-right: 18px;
-  width: 16px;
-  height: 16px;
-  color: transparent;
-  background-size: 100% 100%;
-  background-image: url('./summary-close.svg');
-  transform: translateY(2px);
+.n-md-body details >summary::-webkit-details-marker {
+  display: none;
+}
+
+.n-md-body details >summary::before {
+  display: inline-block;
+  margin-right: 4px;
+  width: 14px;
+  font-size: 12px;
+  font-family: neko-icon, sans-serif;
+  font-weight: lighter;
+  text-align: center;
+  opacity: 0.2;
+  content: '\e63f';
 }
 
 .n-md-body details[open] {
   user-select: auto;
 }
 
-.n-md-body details[open] summary {
-  margin-bottom: 10px;
-  font-weight: 700;
-  list-style-image: url('./summary-plus.svg');
+.n-md-body details[open] >details {
+  margin-top: 10px;
 }
 
-.n-md-body details[open] summary::-webkit-details-marker {
-  margin-right: 20px;
-  width: 12px;
-  height: 12px;
-  color: transparent;
-  background-size: 100% 100%;
-  background-image: url('./summary-close.svg');
-  transform: translateY(1px);
+.n-md-body details[open] >summary {
+  margin-bottom: 10px;
+}
+
+.n-md-body details[open] >summary::before {
+  transform: rotate(90deg);
 }

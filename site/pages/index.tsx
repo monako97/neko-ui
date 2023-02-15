@@ -13,7 +13,7 @@ const waveBg = css`
     z-index: 10;
     display: flex;
     overflow-y: auto;
-    padding-top: 96px;
+    padding-top: 86px;
     padding-right: 16px;
     height: 100%;
     max-height: 100vh;

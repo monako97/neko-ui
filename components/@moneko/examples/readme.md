@@ -2,7 +2,8 @@
 
 # 说明
 
-## 目录结构
+<details>
+  <summary>查看目录结构说明</summary>
 
 ```treeview
 root_folder/
@@ -40,6 +41,8 @@ root_folder/
 
 ```
 
+</details>
+
 ## 注意事项
 
 - **\*.global.less 表示该文件不会使用 cssModule 解析，如果需要使用 cssModule，文件不要以.global.less 结尾**
@@ -49,6 +52,26 @@ root_folder/
   ```css
   .user-name {
     color: #000;
+    background-image: linear-gradient(135deg, #9dd53a 0%, #a1d54f 50%, #80c217 51%, #7cbc0a 100%);
+  }
+  .user-name::after {
+    background-image: radial-gradient(
+      ellipse at center,
+      #f2f6f8 0%,
+      #d8e1e7 50%,
+      #b5c6d0 51%,
+      #e0eff9 100%
+    );
+    transform: rotate(-120deg);
+    color: color: rgba(147, 32, 34, 0.8);
+    transition-timing-function: ease-in-out;
+    transition-duration: 0.3s;
+  }
+  .user-name::before {
+    background-image: repeating-linear-gradient(10deg, rgba(255, 0, 0, 0), rgba(255, 0, 0, 1) 10px, rgba(255, 0, 0, 0) 20px);
+    transition-timing-function: cubic-bezier(0.9, 0.1, .2, .4);
+    transition-duration: 10s;
+    background-image: repeating-radial-gradient(circle, rgba(255, 0, 0, 0), rgba(255, 0, 0, 1) 10px, rgba(255, 0, 0, 0) 20px);
   }
   ```
 
@@ -56,7 +79,11 @@ root_folder/
   import styles from './index.less';
 
   const Demo = () => {
-    return <div className={styles.userName}>{styles.userName}</div>;
+    return (
+      <table className={styles.userName} style="color:#6E5494;">
+        {styles.userName}
+      </table>
+    );
   };
 
   export default Demo;

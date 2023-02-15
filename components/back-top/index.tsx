@@ -7,80 +7,88 @@ import React, {
   useRef,
   useState,
 } from 'react';
-import { css, keyframes, injectGlobal } from '@emotion/css';
+import { css, injectGlobal } from '@emotion/css';
 import { classNames, getMaxZindex, getScrollTop, isEqual, isFunction } from '@moneko/common';
 import { createPortal } from 'react-dom';
+import prefixCls from '../prefix-cls';
 
-const fadeIn = keyframes`from {
-  transform: translate3d(0, 16px, 0) scale(1);
-  opacity: 0;
-}
-
-to {
-  transform: translate3d(0, 0, 0) scale(1);
-  opacity: 1;
-}
-`;
-const fadeOut = keyframes`0%,
-20% {
-  transform: translate3d(0, 0, 0);
-  opacity: 1;
-}
-
-100% {
-  transform: translate3d(0, 16px, 0);
-  opacity: 0;
-}
-`;
+const backTopCls = prefixCls('back-top');
+const backTopOutCls = prefixCls('back-top-out');
 const backTopCss = css`
-  position: sticky;
-  bottom: 50px;
-  left: calc(100% - 100px);
-  z-index: 9;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border-radius: 50%;
-  width: 40px;
-  min-width: 40px;
-  height: 40px;
-  min-height: 40px;
-  color: var(--back-top-color);
-  background-color: var(--back-top-bg);
-  box-shadow: var(--box-shadow-base);
-  transition: background-color var(--transition-duration), color var(--transition-duration);
-  cursor: pointer;
-  animation: ${fadeIn} 1s forwards;
-  backdrop-filter: blur(16px);
-
-  &::before {
-    content: '';
-    display: block;
-    width: 16px;
-    height: 8px;
-    background-color: var(--back-top-color);
-    clip-path: polygon(0 100%, 50% 0, 100% 100%);
+  :root {
+    --back-top-color: #fff;
+    --back-top-bg: var(--text-color-secondary);
+    --back-top-hover-bg: var(--text-color);
   }
 
-  &:hover {
-    background-color: var(--back-top-hover-bg);
+  [data-theme='dark'] {
+    --back-top-bg: rgb(255 255 255 / 45%);
+  }
+  .${backTopCls} {
+    position: sticky;
+    bottom: 50px;
+    left: calc(100% - 100px);
+    z-index: 9;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    width: 40px;
+    min-width: 40px;
+    height: 40px;
+    min-height: 40px;
+    color: var(--back-top-color);
+    background-color: var(--back-top-bg);
+    box-shadow: var(--box-shadow-base);
+    transition: background-color var(--transition-duration), color var(--transition-duration);
+    cursor: pointer;
+    animation: back-top-fade-in 1s forwards;
+    backdrop-filter: blur(16px);
+
+    &::before {
+      content: '';
+      display: block;
+      width: 16px;
+      height: 8px;
+      background-color: var(--back-top-color);
+      clip-path: polygon(0 100%, 50% 0, 100% 100%);
+    }
+
+    &:hover {
+      background-color: var(--back-top-hover-bg);
+    }
+  }
+  .${backTopOutCls} {
+    animation: back-top-fade-out 1s forwards;
+  }
+
+  @keyframes back-top-fade-in {
+    from {
+      transform: translate3d(0, 16px, 0) scale(1);
+      opacity: 0;
+    }
+
+    to {
+      transform: translate3d(0, 0, 0) scale(1);
+      opacity: 1;
+    }
+  }
+
+  @keyframes back-top-fade-out {
+    0%,
+    20% {
+      transform: translate3d(0, 0, 0);
+      opacity: 1;
+    }
+
+    100% {
+      transform: translate3d(0, 16px, 0);
+      opacity: 0;
+    }
   }
 `;
 
-const outCss = css`
-  animation: ${fadeOut} 1s forwards;
-`;
-
-injectGlobal(`
-:root {
-  --back-top-color: #fff;
-  --back-top-bg: var(--text-color-secondary);
-  --back-top-hover-bg: var(--text-color);
-}
-[data-theme='dark'] {
-  --back-top-bg: rgba(255, 255, 255, 0.45);
-}
-`);
+injectGlobal([backTopCss]);
 export interface BackTopProps extends HTMLAttributes<HTMLDivElement> {
   /** 设置需要监听其滚动事件的元素，值为一个返回对应 DOM 元素 */
   target?: () => HTMLElement;
@@ -153,7 +161,7 @@ const BackTop: FC<BackTopProps> = ({
       {...props}
       ref={ref}
       onAnimationEnd={exit}
-      className={classNames(className, backTopCss, show === false && outCss)}
+      className={classNames(className, backTopCls, show === false && backTopOutCls)}
       onClick={handleBackTop}
     />,
     getPopupContainer?.(target()) || document.body

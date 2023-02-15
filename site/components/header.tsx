@@ -13,7 +13,7 @@ const headerCss = css`
     z-index: 20;
     display: flex;
     align-items: center;
-    height: 80px;
+    height: 70px;
     background-color: var(--header-bg, rgb(255 255 255 / 90%));
     box-shadow: 0 0 #0000, 0 0 #0000, 0 1px 2px 0 rgb(0 0 0 / 5%);
     transition-duration: var(--transition-duration);
@@ -64,12 +64,23 @@ const headerCss = css`
   }
 
   .site-theme-btn {
-    padding: 4px 24px;
+    padding: 0 24px;
     font-size: 24px;
+    transition: transform var(--transition-duration) var(--transition-timing-function);
     line-height: 32px;
     cursor: pointer;
     user-select: none;
-    transition: transform var(--transition-duration) var(--transition-timing-function);
+  }
+
+  .site-theme-btn::before {
+    font-family: neko-icon, sans-serif;
+    color: #fc0;
+    content: '\\e645';
+  }
+
+  .site-theme-btn[data-theme='dark']::before {
+    content: '\\e647';
+    color: #fff;
   }
 
   .site-theme-btn:active {
@@ -104,10 +115,9 @@ const Header = () => {
       </div>
       <div
         className="site-theme-btn"
+        data-theme={theme}
         onClick={() => changeTheme(theme === 'dark' ? 'light' : 'dark')}
-      >
-        {theme === 'dark' ? '🌒' : '🌞'}
-      </div>
+      />
     </header>
   );
 };

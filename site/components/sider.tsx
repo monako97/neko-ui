@@ -102,8 +102,7 @@ const siderCss = css`
     border-radius: 0 var(--border-radius-base, 4px) var(--border-radius-base, 4px) 0;
     width: 5px;
     height: 100%;
-    color: var(--primary-color, #5794ff);
-    background-color: var(--primary-color, #5794ff);
+    background-color: var(--primary-color-border, #5794ff);
     content: '';
     transition-property: background-color, transform;
     transform: scale(0);
@@ -115,7 +114,7 @@ const siderCss = css`
 
   .site-sider-item[data-active='true'] {
     color: var(--primary-color, #5794ff);
-    background-color: var(--primary-color-deprecated-bg, #f0f8ff);
+    background-color: var(--primary-color-bg, #f0f8ff);
     transition-property: background-color, transform;
   }
 

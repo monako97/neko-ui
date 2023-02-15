@@ -12,8 +12,8 @@ const conf = {
     extend: {
       colors: {
         primary: 'var(--primary-color, #5794ff)',
-        primaryDeprecatedBg: 'var(--primary-color-deprecated-bg, #f0f8ff)',
-        primaryDeprecatedBorder: 'var(--primary-color-deprecated-border, #d1e7ff)',
+        primaryBg: 'var(--primary-color-bg, #f0f8ff)',
+        primaryBorder: 'var(--primary-color-border, #d1e7ff)',
         secondary: 'var(--text-color-secondary)',
         component: 'var(--component-background, rgba(255,255,255,0.8))',
         borderColor: 'var(--border-color-base, #d9d9d9)',

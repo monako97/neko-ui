@@ -92,15 +92,15 @@ const getStatusCss = (
   let colorActive = `var(--primary-color-active, #3f72d9)`;
 
   if (type !== 'default') {
-    bg = `var(--${type}-color${fill ? '' : '-deprecated-bg'})`;
-    borderColor = `var(--${type}-color${fill ? '' : '-deprecated-border'})`;
+    bg = `var(--${type}-color${fill ? '' : '-bg'})`;
+    borderColor = `var(--${type}-color${fill ? '' : '-border'})`;
     borderHover = `var(--${type}-color-hover)`;
     borderActive = `var(--${type}-color-active)`;
     color = fill ? 'white' : `var(--${type}-color)`;
     colorHover = fill ? 'white' : `var(--${type}-color-hover)`;
     colorActive = fill ? 'white' : `var(--${type}-color-active)`;
-    hoverBg = `var(--${type}-color-${fill ? 'hover' : 'deprecated-bg'})`;
-    activeBg = `var(--${type}-color-${fill ? 'active' : 'deprecated-bg'})`;
+    hoverBg = `var(--${type}-color-${fill ? 'hover' : 'bg'})`;
+    activeBg = `var(--${type}-color-${fill ? 'active' : 'bg'})`;
   }
   if (ghost || link) {
     bg = 'transparent';

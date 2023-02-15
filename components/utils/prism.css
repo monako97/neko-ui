@@ -59,7 +59,7 @@ pre[class*='language-'] ::selection pre[class*='language-']::selection {
     text-shadow: 0 1px var(--text-shadow-color);
 }
 
-.prism-previewer-easing {
+.prism-previewer.prism-previewer-easing {
     margin-top: -76px;
     margin-left: -30px;
     width: 60px;
@@ -141,6 +141,10 @@ pre:not(.sp-cm) > code {
     opacity: .7;
 }
 
+.token.tag {
+    color: var(--token-tag, #e53935);
+}
+
 .token.atrule {
     color: var(--token-atrule, #7c4dff);
 }
@@ -209,6 +213,7 @@ pre:not(.sp-cm) > code {
     color: var(--token-hexcode, #f76d47);
 }
 
+
 .token.id {
     font-weight: bold;
     color: var(--token-id, #7c4dff);
@@ -274,10 +279,6 @@ pre:not(.sp-cm) > code {
 
 .token.symbol {
     color: var(--token-symbol, #7c4dff);
-}
-
-.token.tag {
-    color: var(--token-tag, #e53935);
 }
 
 .token.unit {
@@ -539,8 +540,8 @@ pre {
     padding: 0 !important;
     font-size: 12px !important;
     font-family: 'Liberation Mono', Monaco, Menlo, Consolas, 'Source Code Pro', 'Ubuntu Mono',
-    'Microsoft Yahei', '微软雅黑', Courier, 'Helvetica Neue', 'Lantinghei SC', STXihei, WenQuanYi,
-    sans-serif !important;
+        'Microsoft Yahei', '微软雅黑', Courier, 'Helvetica Neue', 'Lantinghei SC', STXihei, WenQuanYi,
+        sans-serif !important;
     white-space: pre-wrap;
     background: inherit !important;
     box-shadow: none !important;
@@ -658,6 +659,10 @@ pre:not(.sp-cm) .toolbar .toolbar-copy {
     cursor: pointer;
 }
 
+pre:not(.sp-cm) .toolbar .toolbar-copy:active {
+    transform: scale(0.95);
+}
+
 .toolbar .toolbar-copy::after {
     display: block;
     font-size: 14px;
@@ -667,12 +672,12 @@ pre:not(.sp-cm) .toolbar .toolbar-copy {
     line-height: 24px;
     text-transform: uppercase;
     content: '\e631';
-    transition-property: color;
+    transition-property: color, transform;
 }
 
 .toolbar .toolbar-copy:hover::after {
-    font-weight: bold;
     color: var(--primary-color, #5794ff);
+    content: '\e637';
 }
 
 pre:not(.sp-cm)>code {
@@ -843,11 +848,11 @@ pre:not(.sp-cm, .prism-code):hover {
     background-position: 0 0, 5px 5px;
     background-size: 10px 10px;
     background-image: linear-gradient(45deg,
-            #bbb 25%,
-            transparent 25%,
-            transparent 75%,
-            #bbb 75%,
-            #bbb),
+    #bbb 25%,
+    transparent 25%,
+    transparent 75%,
+    #bbb 75%,
+    #bbb),
         linear-gradient(45deg, #bbb 25%, #eee 25%, #eee 75%, #bbb 75%, #bbb);
 }
 
@@ -870,11 +875,11 @@ pre:not(.sp-cm, .prism-code):hover {
     background-position: 0 0, 5px 5px;
     background-size: 10px 10px;
     background-image: linear-gradient(45deg,
-            #bbb 25%,
-            transparent 25%,
-            transparent 75%,
-            #bbb 75%,
-            #bbb),
+    #bbb 25%,
+    transparent 25%,
+    transparent 75%,
+    #bbb 75%,
+    #bbb),
         linear-gradient(45deg, #bbb 25%, #eee 25%, #eee 75%, #bbb 75%, #bbb);
 }
 

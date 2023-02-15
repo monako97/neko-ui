@@ -74,8 +74,7 @@ yarn build config=prod
 ## 编译 app
 
 > 使用 flutter 3.0
-
-应用类型为 mobile 的项目中执行打包步骤`npm run build`，确保正确生产出的资产在 `dist` 文件夹中，然后执行 `mo buildApp`，按控制台提示操作
+> 应用类型为 mobile 的项目中执行打包步骤`npm run build`，确保正确生产出的资产在 `dist` 文件夹中，然后执行 `mo buildApp`，按控制台提示操作
 
 ```shell
 mo buildApp

@@ -7,81 +7,88 @@ import React, {
   useRef,
   useState,
 } from 'react';
-import { css, keyframes } from '@emotion/css';
+import { css, injectGlobal } from '@emotion/css';
 import { classNames } from '@moneko/common';
 import clipPath from './clip-path.svg?raw';
 import favicon from './favicon.svg?raw';
-import { type ComponentSize } from '../index';
-
-const avatarMorph = keyframes`0% {
-    border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
-  }
-
-  50% {
-    border-radius: 30% 60% 70% 40% / 50% 60% 30% 60%;
-  }
-
-  100% {
-    border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
-  }
-`;
+import { type ComponentSize } from '../';
+import prefixCls from '../prefix-cls';
 
 const faviconBg = `data:image/svg+xml;base64,${window.btoa(favicon)}`;
+const avatarCls = prefixCls('avatar');
 const avatarCss = css`
-  position: relative;
-  display: inline-flex;
-  justify-content: center;
-  align-items: center;
-  width: 32px;
-  height: 32px;
-  transition: transform 0.3s;
-  cursor: pointer;
-  user-select: none;
-  background-image: linear-gradient(45deg, #cabdeb 0%, #e9887c 100%);
-  animation: ${avatarMorph} 8s ease-in-out infinite;
-
-  &::before,
-  &::after {
-    position: absolute;
-    top: 0;
-    left: 0;
-    display: block;
-    width: 100%;
-    height: 100%;
-    content: '';
+  .${avatarCls} {
+    position: relative;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    width: 32px;
+    height: 32px;
     transition: transform 0.3s;
-  }
+    cursor: pointer;
+    user-select: none;
+    background-image: linear-gradient(45deg, #cabdeb 0%, #e9887c 100%);
+    animation: avatar-morph-effect 8s ease-in-out infinite;
 
-  &::before {
-    background-color: var(--avatar-color);
-    clip-path: url('#clipPathAvatar');
-  }
+    &::before,
+    &::after {
+      position: absolute;
+      top: 0;
+      left: 0;
+      display: block;
+      width: 100%;
+      height: 100%;
+      content: '';
+      transition: transform 0.3s;
+    }
 
-  &::after {
-    background: url(${faviconBg}) no-repeat center/contain;
-  }
-
-  span {
-    transition: transform 0.3s;
-  }
-
-  &:hover {
-    > *,
-    &::after,
     &::before {
-      transform: scale(1.2);
+      background-color: var(--avatar-color);
+      clip-path: url('#clipPathAvatar');
+    }
+
+    &::after {
+      background: url(${faviconBg}) no-repeat center/contain;
+    }
+
+    span {
+      transition: transform 0.3s;
+    }
+
+    &:hover {
+      > *,
+      &::after,
+      &::before {
+        transform: scale(1.2);
+      }
+    }
+
+    img {
+      position: absolute;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      clip-path: url('#clipPathAvatar');
+      transition: transform 0.3s;
     }
   }
 
-  img {
-    position: absolute;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    clip-path: url('#clipPathAvatar');
-    transition: transform 0.3s;
+  @keyframes avatar-morph-effect {
+    0% {
+      border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+    }
+
+    50% {
+      border-radius: 30% 60% 70% 40% / 50% 60% 30% 60%;
+    }
+
+    100% {
+      border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+    }
   }
 `;
+
+injectGlobal([avatarCss]);
 
 export interface AvatarProps extends HTMLAttributes<HTMLDivElement> {
   src?: ReactNode;
@@ -109,7 +116,7 @@ const Avatar: FC<AvatarProps> = ({
   const box = useRef<HTMLDivElement>(null);
   const label = useRef<HTMLSpanElement>(null);
   const [scale, setScale] = useState(1);
-  const cls = useMemo(() => classNames(avatarCss, className), [className]);
+  const cls = useMemo(() => classNames(avatarCls, className), [className]);
 
   useEffect(() => {
     const hasSvg = document.documentElement.querySelector('clipPath#clipPathAvatar');
@@ -136,6 +143,11 @@ const Avatar: FC<AvatarProps> = ({
     return style;
   }, [color, size, style]);
 
+  const img = useMemo(
+    () => (typeof src === 'string' ? <img src={src} alt={alt} /> : src),
+    [alt, src]
+  );
+
   useEffect(() => {
     if (label.current && box.current) {
       if (label.current.clientWidth + 6 > box.current.clientWidth) {
@@ -143,10 +155,6 @@ const Avatar: FC<AvatarProps> = ({
       }
     }
   }, []);
-  const img = useMemo(
-    () => (typeof src === 'string' ? <img src={src} alt={alt} /> : src),
-    [alt, src]
-  );
 
   return (
     <div ref={box} className={cls} style={_style} {...props}>

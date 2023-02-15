@@ -11,7 +11,6 @@ import { classNames } from '@moneko/common';
 injectGlobal(`
   :root {
     --wave-circles-bg-color: var(--primary-color, #5794ff);
-    --transition-timing-function: var(--transition-timing-function);
   }
 `);
 const pulse = keyframes`0% {

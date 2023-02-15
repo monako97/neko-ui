@@ -19,7 +19,7 @@ injectGlobal([siteFallbackCss]);
 const Fallback = () => {
   return (
     <div className="site-fallback">
-      <Skeleton count={6} />
+      <Skeleton title active rows={6} />
     </div>
   );
 };

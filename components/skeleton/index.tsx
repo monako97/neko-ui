@@ -1,100 +1,125 @@
-import React, { type FC, type HTMLAttributes } from 'react';
-import { css, keyframes, injectGlobal } from '@emotion/css';
+import React, { useMemo, type FC, type HTMLAttributes } from 'react';
+import { css, injectGlobal } from '@emotion/css';
 import { classNames } from '@moneko/common';
+import prefixCls from '../prefix-cls';
 
-const skeletonVar = `
-  :root {
-    --skeleton-bg: rgba(0, 0, 0, 0.06);
-    --skeleton-bg-active: rgba(0, 0, 0, 0.15);
-  }
-  [data-theme='dark'] {
-    --skeleton-bg: rgba(255, 255, 255, 0.06);
-    --skeleton-bg-active: rgba(255, 255, 255, 0.15);
-  }
-`;
-const skeletonLoading = keyframes`0% {
-        transform:translateX(-37.5%);
-    }
+const skeletonCls = {
+  skeleton: prefixCls('skeleton'),
+  active: prefixCls('skeleton-active'),
+  title: prefixCls('skeleton-title'),
+  paragraph: prefixCls('skeleton-paragraph'),
+  body: prefixCls('skeleton-body'),
+  avatar: prefixCls('skeleton-avatar'),
+};
 
-    100% {
-        transform:translateX(37.5%);
-    }
-`;
 const skeletonCss = css`
-  display: table;
-  width: 100%;
-`;
-const contentCss = css`
-  display: table-cell;
-  width: 100%;
-  vertical-align: top;
-`;
-const animationCss = css`
-  position: relative;
-  z-index: 0;
-  overflow: hidden;
-  border-radius: var(--border-radius-base, 4px);
-  background: var(--skeleton-bg);
-
-  &::after {
-    position: absolute;
-    top: 0;
-    inset-inline-end: -150%;
-    bottom: 0;
-    inset-inline-start: -150%;
-    background: linear-gradient(
-      90deg,
-      var(--skeleton-bg) 25%,
-      var(--skeleton-bg-active) 37%,
-      var(--skeleton-bg) 63%
-    );
-    animation: ${skeletonLoading} 1.4s ease infinite;
-    content: '';
+  :root {
+    --skeleton-bg: rgb(0 0 0 / 6%);
+    --skeleton-bg-active: linear-gradient(
+        100deg,
+        rgb(0 0 0 / 5%) 40%,
+        rgb(0 0 0 / 15%) 50%,
+        rgb(0 0 0 / 5%) 60%
+      )
+      transparent 180%/200% 100%;
   }
-`;
-const titleCss = css`
-  width: 32%;
-  height: 32px;
-  ${animationCss}
-`;
-const paragraphCss = css`
-  margin-block-start: 24px;
-  padding: 0;
 
-  li {
+  [data-theme='dark'] {
+    --skeleton-bg: rgb(255 255 255 / 6%);
+    --skeleton-bg-active: linear-gradient(
+        100deg,
+        rgb(255 255 255 / 5%) 40%,
+        rgb(255 255 255 / 15%) 50%,
+        rgb(255 255 255 / 5%) 60%
+      )
+      transparent 180%/200% 100%;
+  }
+  .${skeletonCls.skeleton} {
+    display: flex;
+    width: 100%;
+    gap: 16px;
+  }
+  .${skeletonCls.avatar} {
+    border-radius: 50%;
+    width: 32px;
+    height: 32px;
+  }
+
+  .${skeletonCls.body} {
+    flex: 1;
+  }
+  .${skeletonCls.title} {
+    margin-bottom: 16px;
+    width: 32%;
+    height: 32px;
+  }
+  .${skeletonCls.paragraph} {
+    display: flex;
+    padding: 0;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .${skeletonCls.paragraph} > div {
     width: 100%;
     height: 16px;
     list-style: none;
-    ${animationCss}
-    & + li {
-      margin-block-start: 16px;
-    }
+  }
 
-    &:last-of-type {
-      width: 65%;
+  .${skeletonCls.paragraph} > div:last-of-type {
+    width: 65%;
+  }
+  .${skeletonCls.avatar}, .${skeletonCls.title}, .${skeletonCls.paragraph} > div {
+    overflow: hidden;
+    border-radius: var(--border-radius-base, 4px);
+    background: var(--skeleton-bg);
+    transition: background-color var(--transition-duration) var(--transition-timing-function);
+  }
+
+  .${skeletonCls.active} {
+    &::after {
+      display: block;
+      height: 100%;
+      animation: skeleton-effect 1.4s ease-in-out infinite;
+      background: var(--skeleton-bg-active);
+      content: '';
+      transition: background-color var(--transition-duration) var(--transition-timing-function);
+    }
+  }
+
+  @keyframes skeleton-effect {
+    to {
+      background-position-x: -20%;
     }
   }
 `;
 
-export interface SkeletonProps extends HTMLAttributes<HTMLDivElement> {
+injectGlobal([skeletonCss]);
+export interface SkeletonProps extends Omit<HTMLAttributes<HTMLDivElement>, 'title'> {
   /** 行 */
-  count?: number;
+  rows?: number;
+  /** 显示动画 */
+  active?: boolean;
+  /** 显示头像 */
+  avatar?: boolean;
+  /** 显示标题 */
+  title?: boolean;
 }
 
-injectGlobal(skeletonVar);
+const Skeleton: FC<SkeletonProps> = ({ rows = 3, className, active, avatar, title, ...props }) => {
+  const activeCls = useMemo(() => active && skeletonCls.active, [active]);
 
-const Skeleton: FC<SkeletonProps> = ({ count = 3, className, ...props }) => {
   return (
-    <div {...props} className={classNames(skeletonCss, className)}>
-      <div className={contentCss}>
-        <h3 className={titleCss} />
-        <ul className={paragraphCss}>
-          {Array(count)
+    <div {...props} className={classNames(skeletonCls.skeleton, className)}>
+      {avatar && <div className={classNames(skeletonCls.avatar, activeCls)} />}
+      <div className={skeletonCls.body}>
+        {title && <div className={classNames(skeletonCls.title, activeCls)} />}
+        <div className={skeletonCls.paragraph}>
+          {Array(rows)
             .fill(0)
             .map((_, i) => (
-              <li key={i} />
+              <div key={i} className={classNames(activeCls)} />
             ))}
-        </ul>
+        </div>
       </div>
     </div>
   );
