@@ -1,6 +1,6 @@
-import React, { memo, useCallback, useMemo, useState, useRef } from 'react';
+import React, { memo, useCallback, useMemo, useRef } from 'react';
 import { css, injectGlobal } from '@emotion/css';
-import { myPkgs, MyPkg, useLocation, useNavigate } from '@moneko/core';
+import { myPkgs, MyPkg, useLocation, Link } from '@moneko/core';
 
 const menuObj: Record<string, MyPkg[]> = {};
 const extractMenu = (list: MyPkg[]) => {
@@ -19,6 +19,7 @@ const extractMenu = (list: MyPkg[]) => {
 
 extractMenu(myPkgs);
 
+const menuKeys = Object.keys(menuObj);
 const siderCss = css`
   .site-sider,
   .site-sider-group-title,
@@ -153,53 +154,33 @@ const siderCss = css`
 injectGlobal([siderCss]);
 const Sider = () => {
   const menuEl = useRef<HTMLDivElement>(null);
-  const navigate = useNavigate();
   const location = useLocation();
-  const [openKey, setOpenKey] = useState<string[]>([]);
   const activeKey = useMemo(() => location.pathname.substring(1), [location]);
-  const handleMenu = useCallback(
-    (item: MyPkg) => {
-      if (Array.isArray(item.children)) {
-        const _openKey = [...openKey];
-        const idx = _openKey.indexOf(item.key);
 
-        if (idx === -1) {
-          setOpenKey(_openKey.concat(item.key));
-        } else {
-          _openKey.splice(idx, 1);
-          setOpenKey(_openKey);
-        }
-      } else {
-        navigate('/' + item.key);
-      }
-    },
-    [navigate, openKey]
-  );
   const renderMenu = useCallback(
     (list?: MyPkg[]) => {
       return list?.map((item) => {
         return (
-          <a
+          <Link
             key={item.key}
-            href={window.location.origin + window.location.pathname + '#/' + item.key}
+            to={`/${item.key}`}
             className="site-sider-item"
             data-active={activeKey === item.key}
-            onClick={() => handleMenu(item)}
           >
             <span className="site-sider-icon">{item.icon}</span>
             <div className="site-sider-label">{item.title || item.path}</div>
             {item.subtitle && <div className="site-sider-subtitle">{item.subtitle}</div>}
-          </a>
+          </Link>
         );
       });
     },
-    [activeKey, handleMenu]
+    [activeKey]
   );
 
   return (
     <div className="site-sider">
       <div ref={menuEl}>
-        {Object.keys(menuObj).map((key) => {
+        {menuKeys.map((key) => {
           return (
             <div key={key} className="site-sider-group">
               <div className="site-sider-group-title">{key}</div>
