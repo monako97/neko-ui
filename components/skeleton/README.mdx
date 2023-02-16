@@ -3,6 +3,7 @@ export const basic = {
   title: '骨架屏',
   subtitle: 'Skeleton',
 };
+import api from './examples/api.md';
 
 <Box>
 # 骨架屏
@@ -13,16 +14,4 @@ export const basic = {
   <SandboxGroup name="skeleton" col={2} />
   <Sandbox soucre="<Skeleton avatar title />" title="显示标题" />
 </Box>
-
-<Box text={`
-## API
-
-| 属性      | 说明       | 类型    | 默认值 | 版本 |
-| --------- | ---------- | ------- | ------ | ---- |
-| className | 自定义类名 | string  | -      | -    |
-| rows      | 自定义行数 | number  | 3      | -    |
-| active    | 显示动画   | boolean | false  | -    |
-| avatar    | 显示头像   | boolean | false  | -    |
-| title     | 显示标题   | boolean | false  | -    |
-
-`} />
+<Box text={api} />

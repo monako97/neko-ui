@@ -43,11 +43,13 @@ const sizeCss = {
   normal: null,
 };
 
-injectGlobal(`
-body .neko-color-picker {
-  padding: 10px;
-}
-`);
+injectGlobal([
+  css`
+    body .neko-color-picker {
+      padding: 10px;
+    }
+  `,
+]);
 export interface ColorPickerProps extends ColorPaletteProps {
   destroyInactive?: boolean;
   popupClassName?: string;

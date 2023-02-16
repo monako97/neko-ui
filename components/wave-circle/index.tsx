@@ -8,11 +8,13 @@ import React, {
 import { css, keyframes, injectGlobal } from '@emotion/css';
 import { classNames } from '@moneko/common';
 
-injectGlobal(`
-  :root {
-    --wave-circles-bg-color: var(--primary-color, #5794ff);
-  }
-`);
+injectGlobal([
+  css`
+    :root {
+      --wave-circles-bg-color: var(--primary-color, #5794ff);
+    }
+  `,
+]);
 const pulse = keyframes`0% {
     transform: scale(1);
     opacity: .5;

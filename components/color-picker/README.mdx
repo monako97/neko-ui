@@ -3,6 +3,7 @@ export const basic = {
   title: '颜色选择器',
   subtitle: 'ColorPicker',
 };
+import api from './examples/api.md';
 
 <Box>
 
@@ -12,13 +13,4 @@ export const basic = {
 
 <SandboxGroup name="color-picker" />
 </Box>
-
-<Box text={`## API
-
-| 属性      | 说明             | 类型                    | 默认值 | 版本 |
-| --------- | ---------------- | ----------------------- | ------ | ---- |
-| value     | 颜色             | string                  | -      | -    |
-| onChange  | 变更时触发的方法 | (color: string) => void | -      | -    |
-| className | 自定义类名       | string                  | -      | -    |
-
-`} />
+<Box text={api} />
