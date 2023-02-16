@@ -9,12 +9,18 @@ import React, {
 } from 'react';
 import { css, injectGlobal } from '@emotion/css';
 import { classNames } from '@moneko/common';
-import clipPath from './clip-path.svg?raw';
-import favicon from './favicon.svg?raw';
+import clipPath from './clip-path.svg';
+import favicon from './favicon.svg';
 import { type ComponentSize } from '../';
 import prefixCls from '../prefix-cls';
 
-const faviconBg = `data:image/svg+xml;base64,${window.btoa(favicon)}`;
+const svgPrefix = 'data:image/svg+xml,';
+const clip = decodeURIComponent(clipPath.replace(svgPrefix, ''));
+
+const faviconBg = `data:image/svg+xml;base64,${window.btoa(
+  decodeURIComponent(favicon.replace(svgPrefix, ''))
+)}`;
+
 const avatarCls = prefixCls('avatar');
 const avatarCss = css`
   .${avatarCls} {
@@ -124,7 +130,7 @@ const Avatar: FC<AvatarProps> = ({
     if (!hasSvg) {
       const svg = document.createElement('a');
 
-      svg.innerHTML = clipPath;
+      svg.innerHTML = clip;
       document.body.insertBefore(svg.firstChild as ChildNode, document.body.firstChild);
     }
   }, []);

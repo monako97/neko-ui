@@ -349,7 +349,7 @@ blockquote p {
 .n-md-body p,
 .n-md-body ul,
 .n-md-body ol {
-  font-size: var(--font-size-base, 14px);
+  font-size: var(--font-size, 14px);
 }
 
 .n-md-body dl {
@@ -444,7 +444,7 @@ blockquote p {
 }
 
 .n-md-body blockquote cite {
-  font-size: var(--font-size-base, 14px);
+  font-size: var(--font-size, 14px);
   color: var(--cite-color, #bfbfbf);
   line-height: 20px;
 }
@@ -455,7 +455,7 @@ blockquote p {
 
 .n-md-body blockquote p {
   margin: auto 0;
-  font-size: var(--font-size-base, 14px);
+  font-size: var(--font-size, 14px);
   color: var(--blockquote-color, #5e6d82);
   line-height: 24px;
   transition-property: color;

@@ -1,6 +1,6 @@
 {
     "name": "neko-ui",
-    "version": "1.0.33",
+    "version": "1.0.34",
     "description": "UI库",
     "main": "lib/index.js",
     "scripts": {
@@ -20,8 +20,9 @@
     },
     "devDependencies": {
         "@moneko/cli": "1.1.5",
-        "@moneko/core": "2.0.4",
+        "@moneko/core": "2.0.7",
         "@moneko/postcss": "1.0.26",
+        "@moneko/react-live": "3.1.2",
         "@swc/jest": "0.2.24",
         "@testing-library/jest-dom": "5.16.5",
         "@testing-library/react": "13.4.0",
@@ -35,7 +36,6 @@
         "jest-environment-jsdom": "29.4.1",
         "react": "18.2.0",
         "react-dom": "18.2.0",
-        "react-live": "3.1.1",
         "stylelint-config-moneko": "1.0.9",
         "ts-node": "10.9.1"
     },

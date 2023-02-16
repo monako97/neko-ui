@@ -57,6 +57,10 @@ export type ComponentSize = 'small' | 'normal' | 'large';
 
 export { default as prefixCls, setPrefixCls } from './prefix-cls';
 
+export { default as highlight } from './highlight';
+
+export { default as Prism } from './prism';
+
 injectGlobal([
   `:root {
     ${getColorVariableString('#5794ff', { name: 'primary' })}

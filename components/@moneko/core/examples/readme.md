@@ -38,7 +38,6 @@
 | routerMode         | 路由模式                                          | 'hash' \| 'browser' \| 'memory';                                                                       | browser |
 | plugins            | webpack 插件                                      |                                                                                                        | -       |
 | splitChunk         | 对生产 chunk 进行拆分                             | false \|OptimizationSplitChunksOptions                                                                 | -       |
-| webFontLoader      | 需要通过 Web 字体加载的字体                       | string[]                                                                                               | -       |
 | output             | 编译输出路径                                      | ROOT/dist \| ROOT/docs                                                                                 | -       |
 | runtimeChunk       | 拆分 runtime                                      | boolean\| 'single' \| 'multiple'\| { name?: string \| Function; };                                     | -       |
 | moduleFederation   | 模块联邦                                          | ModuleFederationOption[]                                                                               | -       |

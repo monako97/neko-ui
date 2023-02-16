@@ -537,7 +537,9 @@ pre {
     hyphens: none;
 }
 
-.sandbox-live-editor .prism-code {
+.sandbox-live-editor .prism-code,
+.sandbox-error-msg {
+    margin: 0 !important;
     padding: 0 !important;
     font-size: 12px !important;
     font-family: 'Liberation Mono', Monaco, Menlo, Consolas, 'Source Code Pro', 'Ubuntu Mono',
@@ -596,12 +598,12 @@ pre:not(.sp-cm) {
     margin: 35px auto;
     border-radius: var(--border-radius-base, 5px);
     max-width: 100%;
-    font-size: var(--font-size-base);
+    font-size: var(--font-size);
+    white-space: pre-wrap;
     background-color: var(--code-bg, rgb(255 255 255 / 80%));
     box-shadow: 0 0 10px rgb(0 0 0 / 10%);
     line-height: 20px;
     transition-property: color, background-color, box-shadow;
-
 }
 
 pre:not(.sp-cm):last-of-type {
@@ -687,7 +689,7 @@ pre:not(.sp-cm)>code {
     margin: 0 16px 8px;
     padding: 32px 0 8px;
     max-width: 100%;
-    font-size: var(--font-size-base);
+    font-size: var(--font-size, 14px);
     white-space: pre;
     line-height: 1.8;
     pointer-events: auto;
@@ -737,7 +739,7 @@ pre:not(.sp-cm) ::-webkit-scrollbar {
     display: none;
 }
 
-pre:not(.sp-cm, .prism-code):hover {
+pre:not(.sp-cm, .prism-code, .sandbox-error-msg):hover {
     box-shadow: 0 2px 20px rgb(0 0 0 / 20%);
 }
 

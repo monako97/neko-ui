@@ -83,7 +83,7 @@ const coverageStyle = css`
 
 injectGlobal([coverageStyle]);
 function getNum(num: number) {
-  return typeof num === 'number' ? num : '-';
+  return typeof num === 'number' && !isNaN(num) ? num : '-';
 }
 const Coverage: FC = () => {
   const readme = useOutlet();

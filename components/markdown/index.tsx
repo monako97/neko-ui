@@ -21,9 +21,8 @@ import {
 import { throttle } from 'lodash';
 import marked from 'marked-completed';
 import { PhotoSlider } from 'react-photo-view';
-import { highlight } from '../utils/highlight';
+import highlight from '../highlight';
 import './index.css';
-import '../utils/prism.css';
 
 marked.setOptions({
   highlight: highlight,

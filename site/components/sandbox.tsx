@@ -1,15 +1,11 @@
 import React, { useState, FC, useEffect, memo } from 'react';
 import { css, injectGlobal } from '@emotion/css';
 import { isEqual } from '@moneko/common';
-import { type ExampleModule, myDemoKv } from '@moneko/core';
-import * as pkg from '@pkg/index';
-import { LiveProvider, LiveEditor, LiveError, LivePreview } from 'react-live';
+import { mdxComponents, type ExampleModule } from '@moneko/core';
+import { LiveProvider, LiveEditor, LiveError, LivePreview } from '@moneko/react-live';
+import { Prism } from 'neko-ui';
 
 const sandboxCss = css`
-  .sandbox-group {
-    width: 100%;
-  }
-
   .sandbox-box {
     break-inside: avoid;
     box-sizing: border-box;
@@ -100,16 +96,15 @@ const sandboxCss = css`
   .sandbox-live-editor.hide {
     display: none;
   }
+
+  .sandbox-error-msg {
+    color: var(--error-color);
+  }
 `;
 
 injectGlobal([sandboxCss]);
-interface SandboxGroupProps {
-  name: string;
-  col?: number;
-  ignore?: string[];
-}
 
-const SandboxComp: FC<ExampleModule> = ({ soucre, title }) => {
+const Sandbox: FC<ExampleModule> = ({ soucre, title }) => {
   const [init, setInit] = useState<boolean>(false);
   const [open, setOpen] = useState<boolean>(false);
 
@@ -122,7 +117,7 @@ const SandboxComp: FC<ExampleModule> = ({ soucre, title }) => {
   return (
     <LiveProvider
       code={soucre}
-      scope={pkg}
+      scope={mdxComponents}
       language="tsx"
       theme={{
         plain: {},
@@ -133,7 +128,7 @@ const SandboxComp: FC<ExampleModule> = ({ soucre, title }) => {
         <div className="sandbox-container">
           <h4 className="sandbox-title">{title}</h4>
           <div className="sandbox-view">
-            <LiveError />
+            <LiveError className="sandbox-error-msg" />
             <LivePreview />
             <span
               className="sandbox-btn"
@@ -149,10 +144,7 @@ const SandboxComp: FC<ExampleModule> = ({ soucre, title }) => {
             </span>
           </div>
           {init && (
-            <LiveEditor
-              className={`sandbox-live-editor ${open ? '' : 'hide'}`}
-              prism={window.Prism}
-            />
+            <LiveEditor className={`sandbox-live-editor ${open ? '' : 'hide'}`} prism={Prism} />
           )}
         </div>
       </div>
@@ -160,23 +152,4 @@ const SandboxComp: FC<ExampleModule> = ({ soucre, title }) => {
   );
 };
 
-export const Sandbox = memo(SandboxComp, isEqual);
-
-const SandboxGroup: FC<SandboxGroupProps> = ({ name, col = 2, ignore = [] }) => {
-  return (
-    <div
-      className="sandbox-group"
-      style={{
-        columnCount: col,
-      }}
-    >
-      {myDemoKv[name]
-        ?.filter((e) => (e.title ? !ignore.includes(e.title) : true))
-        .map((m, i) => (
-          <Sandbox key={i} soucre={m.soucre} title={m.title} />
-        ))}
-    </div>
-  );
-};
-
-export default SandboxGroup;
+export default memo(Sandbox, isEqual);
