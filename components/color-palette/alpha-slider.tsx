@@ -9,7 +9,7 @@ import React, {
   useState,
 } from 'react';
 import { classNames } from '@moneko/common';
-import { alphaSliderCss, sliderPickerCss } from './style';
+import { cls } from './index';
 
 export interface AlphaSliderProps extends Omit<HTMLAttributes<HTMLDivElement>, 'onChange'> {
   value?: number;
@@ -107,7 +107,7 @@ const AlphaSlider: FC<AlphaSliderProps> = ({ className, value = 1, onChange, ...
     <div
       {...props}
       ref={alphaStrip}
-      className={classNames(sliderPickerCss, className)}
+      className={classNames(cls.sliderPicker, className)}
       onMouseDown={alphaMouseDown}
       style={
         {
@@ -115,7 +115,7 @@ const AlphaSlider: FC<AlphaSliderProps> = ({ className, value = 1, onChange, ...
         } as CSSProperties
       }
     >
-      <div className={alphaSliderCss} />
+      <div className={cls.alphaSlider} />
     </div>
   );
 };

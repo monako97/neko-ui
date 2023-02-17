@@ -1,6 +1,6 @@
 {
     "name": "neko-ui",
-    "version": "1.0.34",
+    "version": "1.0.35",
     "description": "UI库",
     "main": "lib/index.js",
     "scripts": {
@@ -19,9 +19,9 @@
         "url": "https://github.com/monako97/neko-ui"
     },
     "devDependencies": {
-        "@moneko/cli": "1.1.5",
-        "@moneko/core": "2.0.7",
-        "@moneko/postcss": "1.0.26",
+        "@moneko/cli": "1.1.6",
+        "@moneko/core": "2.0.8",
+        "@moneko/postcss": "1.0.27",
         "@moneko/react-live": "3.1.2",
         "@swc/jest": "0.2.24",
         "@testing-library/jest-dom": "5.16.5",

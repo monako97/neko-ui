@@ -10,12 +10,103 @@ import React, {
   useRef,
   useState,
 } from 'react';
-import { injectGlobal } from '@emotion/css';
+import { css, injectGlobal } from '@emotion/css';
 import { classNames, getMaxZindex, isString, tinycolor } from '@moneko/common';
 import { createPortal } from 'react-dom';
-import { portalCss, tooltipCss, tooltipInUp, tooltipOutUp, variablesCss } from './style';
+import prefixCls from '../prefix-cls';
 
-injectGlobal(variablesCss);
+const cls = {
+  tooltip: prefixCls('tooltip'),
+  portal: prefixCls('tooltip-portal'),
+  inUp: prefixCls('tooltip-in-up'),
+  outUp: prefixCls('tooltip-out-up'),
+};
+const tooltipCss = css`
+  :root {
+    --tooltip-bg: rgb(255 255 255 / 80%);
+    --tooltip-shadow-color: rgb(0 0 0 / 10%);
+  }
+
+  [data-theme='dark'] {
+    --tooltip-bg: rgb(0 0 0 / 80%);
+    --tooltip-shadow-color: rgb(255 255 255 / 5%);
+  }
+
+  .${cls.tooltip} {
+    position: relative;
+    display: inline-block;
+
+    &::-webkit-scrollbar {
+      width: 1px;
+    }
+  }
+  .${cls.portal} {
+    position: fixed;
+    display: inline-block;
+    border-radius: var(--border-radius-base, 4px);
+    padding: 4px 8px;
+    font-size: 14px;
+    color: var(--text-color);
+    background-color: var(--tooltip-bg);
+    filter: drop-shadow(0.5px 1px 4px var(--tooltip-shadow-color))
+      drop-shadow(1px 2px 8px var(--tooltip-shadow-color))
+      drop-shadow(2px 4px 16px var(--tooltip-shadow-color));
+    backdrop-filter: blur(16px);
+
+    &::before {
+      position: absolute;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      margin: auto;
+      width: 12px;
+      height: 8px;
+      background: inherit;
+      content: '';
+      clip-path: polygon(0% 0%, 50% 100%, 100% 0%);
+      transform: translateY(100%);
+    }
+  }
+  .${cls.inUp} {
+    animation: tooltip-slide-down-in-effect 0.3s forwards;
+    transform: scaleY(1);
+  }
+  .${cls.outUp} {
+    animation: tooltip-slide-down-out-effect 0.3s forwards;
+    transform: scaleY(1);
+  }
+
+  @keyframes tooltip-slide-down-in-effect {
+    0% {
+      transform: scaleY(0.8);
+      transform-origin: 100% 100%;
+      opacity: 0;
+    }
+
+    100% {
+      transform: scaleY(1);
+      transform-origin: 100% 100%;
+      opacity: 1;
+    }
+  }
+
+  @keyframes tooltip-slide-down-out-effect {
+    0% {
+      transform: scaleY(1);
+      transform-origin: 100% 100%;
+      opacity: 1;
+    }
+
+    100% {
+      transform: scaleY(0.8);
+      transform-origin: 100% 100%;
+      opacity: 0;
+    }
+  }
+`;
+
+injectGlobal([tooltipCss]);
+
 export type TooltipTriggerOption = 'hover' | 'click' | 'contextMenu';
 type TriggerOptionMap = Record<TooltipTriggerOption, keyof DOMAttributes<HTMLSpanElement> | null>;
 export interface TooltipProps extends Omit<HTMLAttributes<HTMLDivElement>, 'title'> {
@@ -170,14 +261,14 @@ const Tooltip: FC<TooltipProps> = ({
           <div
             ref={ref}
             onAnimationEnd={exit}
-            className={classNames(portalCss, show ? tooltipInUp : tooltipOutUp, popupClassName)}
+            className={classNames(cls.portal, show ? cls.inUp : cls.outUp, popupClassName)}
             style={style}
           >
             {title}
           </div>,
           container
         )}
-      <span {...childrenProps} className={classNames(tooltipCss, className)} ref={childRef}>
+      <span {...childrenProps} className={classNames(cls.tooltip, className)} ref={childRef}>
         {children}
       </span>
     </>

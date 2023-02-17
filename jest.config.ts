@@ -1,5 +1,5 @@
-import type { Config } from 'jest';
 import globals from '@moneko/core/build/envFlags';
+import type { Config } from 'jest';
 
 const { name } = JSON.parse(globals.programInfo);
 

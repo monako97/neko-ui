@@ -12,20 +12,9 @@ const conf: PartialConfigType = {
   designSize: 1920,
   fallbackCompPath: '@/components/fallback',
   externals: [/(.+)\/__tests__\/(.+)/i],
-  swcrc: {
-    jsc: {
-      experimental: {
-        plugins: [
-          [
-            '@swc/plugin-transform-imports',
-            {
-              lodash: {
-                transform: 'lodash/{{member}}',
-              },
-            },
-          ],
-        ],
-      },
+  importOnDemand: {
+    lodash: {
+      transform: 'lodash/${member}',
     },
   },
 };

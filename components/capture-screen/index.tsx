@@ -7,17 +7,85 @@ import React, {
   useRef,
   useState,
 } from 'react';
+import { css, injectGlobal } from '@emotion/css';
 import { classNames, downloadBlob, isObject } from '@moneko/common';
-import {
-  btnCss,
-  captureScreenCss,
-  controllerCss,
-  pausedCss,
-  recordCss,
-  recordingCss,
-  videoCss,
-} from './style';
 import { Button, type ButtonProps } from '../index';
+import prefixCls from '../prefix-cls';
+
+const cls = {
+  captureScreen: prefixCls('capture-screen'),
+  view: prefixCls('capture-screen-view'),
+  recording: prefixCls('capture-screen-recording'),
+  paused: prefixCls('capture-screen-paused'),
+  record: prefixCls('capture-screen-record'),
+  controller: prefixCls('capture-screen-controller'),
+  btn: prefixCls('capture-screen-btn'),
+};
+const captureScreenCss = css`
+  .${cls.captureScreen} {
+    display: block;
+  }
+  .${cls.view} {
+    position: relative;
+  }
+  .${cls.view} video {
+    border: 1px solid var(--border-color-base);
+    border-radius: var(--border-radius-base);
+    width: 100%;
+    transition: border-color var(--transition-duration) var(--transition-timing-function);
+  }
+  .${cls.recording}, .${cls.paused} {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    border-radius: 50%;
+    width: 10px;
+    height: 10px;
+  }
+  .${cls.recording} {
+    background-color: var(--success-color, #52c41a);
+    animation: record-fade-loop-effect 2s infinite;
+  }
+  .${cls.paused} {
+    background-color: var(--warning-color, #faad14);
+  }
+  .${cls.controller} {
+    display: flex;
+    margin: 16px 0;
+  }
+  .${cls.btn} {
+    margin-right: 16px;
+  }
+  .${cls.record} {
+    display: flex;
+    margin-left: 16px;
+
+    &::before {
+      display: block;
+      border-left: 1px solid var(--border-color-base);
+      height: 100%;
+      transition: border-color var(--transition-duration) var(--transition-timing-function);
+      transform: translateX(-16px);
+      content: '';
+    }
+  }
+
+  @keyframes record-fade-loop-effect {
+    0% {
+      opacity: 0;
+    }
+
+    50% {
+      opacity: 1;
+    }
+
+    100% {
+      opacity: 0;
+    }
+  }
+`;
+
+injectGlobal([captureScreenCss]);
 
 export interface RecorderOptions {
   /** 录制文件名称 */
@@ -267,27 +335,27 @@ const CaptureScreen: FC<CaptureScreenProp> = ({
   );
 
   return (
-    <div {...props} className={classNames(captureScreenCss, className)}>
-      <div className={controllerCss}>
-        <Button onClick={startCapture} className={btnCss}>
+    <div {...props} className={classNames(cls.captureScreen, className)}>
+      <div className={cls.controller}>
+        <Button onClick={startCapture} className={cls.btn}>
           {captureScreenText}
         </Button>
         {mediaStream && (
           <>
-            <Button type="error" onClick={stopCapture} className={btnCss}>
+            <Button type="error" onClick={stopCapture} className={cls.btn}>
               {stopCaptureText}
             </Button>
             {recorder && (
-              <div className={recordCss}>
+              <div className={cls.record}>
                 <Button
                   type={btnStatusDic[recordState]}
                   onClick={handleStartRecorder}
-                  className={btnCss}
+                  className={cls.btn}
                 >
                   {recorderText}
                 </Button>
                 {recordState !== 'inactive' && (
-                  <Button type="error" onClick={stopRecorder} className={btnCss}>
+                  <Button type="error" onClick={stopRecorder} className={cls.btn}>
                     {stopRecorderText}
                   </Button>
                 )}
@@ -297,11 +365,11 @@ const CaptureScreen: FC<CaptureScreenProp> = ({
         )}
       </div>
       {preview && mediaStream ? (
-        <div className={videoCss}>
+        <div className={cls.view}>
           <span
             className={classNames(
-              recordState === 'recording' && recordingCss,
-              recordState === 'paused' && pausedCss
+              recordState === 'recording' && cls.recording,
+              recordState === 'paused' && cls.paused
             )}
           />
           <video ref={videoElem} autoPlay controls={!!(mediaStream && controls)} />

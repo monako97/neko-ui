@@ -11,7 +11,7 @@ import React, {
   useState,
 } from 'react';
 import { classNames } from '@moneko/common';
-import { sliderPickerCss } from './style';
+import { cls } from './index';
 
 type RGB = {
   r: number;
@@ -141,7 +141,7 @@ const HueSlider: ForwardRefRenderFunction<HueInstance, HueSliderProps> = (
           });
         }
       }}
-      className={classNames(sliderPickerCss, className)}
+      className={classNames(cls.sliderPicker, className)}
       style={
         {
           '--offset-x': `${offset}px`,

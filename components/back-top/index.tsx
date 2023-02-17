@@ -12,8 +12,11 @@ import { classNames, getMaxZindex, getScrollTop, isEqual, isFunction } from '@mo
 import { createPortal } from 'react-dom';
 import prefixCls from '../prefix-cls';
 
-const backTopCls = prefixCls('back-top');
-const backTopOutCls = prefixCls('back-top-out');
+const cls = {
+  backtop: prefixCls('back-top'),
+  out: prefixCls('back-top-out'),
+};
+
 const backTopCss = css`
   :root {
     --back-top-color: #fff;
@@ -24,7 +27,7 @@ const backTopCss = css`
   [data-theme='dark'] {
     --back-top-bg: rgb(255 255 255 / 45%);
   }
-  .${backTopCls} {
+  .${cls.backtop} {
     position: sticky;
     bottom: 50px;
     left: calc(100% - 100px);
@@ -58,7 +61,7 @@ const backTopCss = css`
       background-color: var(--back-top-hover-bg);
     }
   }
-  .${backTopOutCls} {
+  .${cls.out} {
     animation: back-top-fade-out 1s forwards;
   }
 
@@ -161,7 +164,7 @@ const BackTop: FC<BackTopProps> = ({
       {...props}
       ref={ref}
       onAnimationEnd={exit}
-      className={classNames(className, backTopCls, show === false && backTopOutCls)}
+      className={classNames(className, cls.backtop, show === false && cls.out)}
       onClick={handleBackTop}
     />,
     getPopupContainer?.(target()) || document.body

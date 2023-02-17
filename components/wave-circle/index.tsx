@@ -5,80 +5,83 @@ import React, {
   type ReactNode,
   type CSSProperties,
 } from 'react';
-import { css, keyframes, injectGlobal } from '@emotion/css';
+import { css, injectGlobal } from '@emotion/css';
 import { classNames } from '@moneko/common';
+import prefixCls from '../prefix-cls';
 
-injectGlobal([
-  css`
-    :root {
-      --wave-circles-bg-color: var(--primary-color, #5794ff);
-    }
-  `,
-]);
-const pulse = keyframes`0% {
-    transform: scale(1);
-    opacity: .5;
+const cls = {
+  circle: prefixCls('wave-circle'),
+  wave: prefixCls('wave-circles'),
+  waveAfter: prefixCls('wave-circles::after'),
+  waveBefore: prefixCls('wave-circles::before'),
+};
+const waveCss = css`
+  :root {
+    --wave-circles-bg-color: var(--primary-color, #5794ff);
   }
 
-  90% {
-    transform: scale(3);
-    opacity: 0;
+  .${cls.wave} {
+    position: relative;
+    z-index: inherit;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: auto;
+    border-radius: 50%;
+    width: 100px;
+    height: 100px;
+    background: var(--wave-circles-bg-color);
+    line-height: 1;
   }
-
-  100% {
-    transform: scale(4);
-    opacity: 0;
-  }
-`;
-const inheritCss = css`
-  position: absolute;
-  top: 0;
-  left: 0;
-  border-radius: inherit;
-  width: 100%;
-  height: 100%;
-  background: inherit;
-`;
-const waveCirclesCss = css`
-  position: relative;
-  z-index: inherit;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin: auto;
-  border-radius: 50%;
-  width: 100px;
-  height: 100px;
-  background: var(--wave-circles-bg-color);
-  line-height: 1;
-
-  &::after,
-  &::before {
-    ${inheritCss}
-
-    animation: ${pulse} 5s var(--transition-timing-function) -1s infinite;
+  .${cls.waveAfter}, .${cls.waveBefore} {
+    animation: wave-pulse-effect 5s var(--transition-timing-function) -1s infinite;
     content: '';
   }
+  .${cls.waveAfter} {
+    animation: wave-pulse-effect 5s linear -5s infinite;
+  }
+  .${cls.circle}, .${cls.waveAfter}, .${cls.waveBefore} {
+    position: absolute;
+    top: 0;
+    left: 0;
+    border-radius: inherit;
+    width: 100%;
+    height: 100%;
+    background: inherit;
+  }
+  .${cls.circle} {
+    &:nth-of-type(1) {
+      animation: wave-pulse-effect 5s -2s linear infinite;
+    }
 
-  &::after {
-    animation: ${pulse} 5s linear -5s infinite;
+    &:nth-of-type(2) {
+      animation: wave-pulse-effect 5s -3s linear infinite;
+    }
+
+    &:nth-of-type(3) {
+      animation: wave-pulse-effect 5s -4s linear infinite;
+    }
+  }
+
+  @keyframes wave-pulse-effect {
+    0% {
+      transform: scale(1);
+      opacity: 0.5;
+    }
+
+    90% {
+      transform: scale(3);
+      opacity: 0;
+    }
+
+    100% {
+      transform: scale(4);
+      opacity: 0;
+    }
   }
 `;
-const waveCircleCss = css`
-  ${inheritCss}
 
-  &:nth-of-type(1) {
-    animation: ${pulse} 5s -2s linear infinite;
-  }
-
-  &:nth-of-type(2) {
-    animation: ${pulse} 5s -3s linear infinite;
-  }
-
-  &:nth-of-type(3) {
-    animation: ${pulse} 5s -4s linear infinite;
-  }
-`;
+injectGlobal([waveCss]);
 
 export interface WaveCircleProps extends HtmlHTMLAttributes<HTMLDivElement> {
   /** 背景颜色 */
@@ -111,11 +114,11 @@ const WaveCircle: FC<WaveCircleProps> = ({
     <div
       {...props}
       style={prefixStyles as CSSProperties}
-      className={classNames(waveCirclesCss, className)}
+      className={classNames(cls.wave, className)}
     >
-      <i className={waveCircleCss} />
-      <i className={waveCircleCss} />
-      <i className={waveCircleCss} />
+      <i className={cls.circle} />
+      <i className={cls.circle} />
+      <i className={cls.circle} />
       {children}
     </div>
   );

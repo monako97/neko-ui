@@ -3,7 +3,7 @@ import { css, injectGlobal } from '@emotion/css';
 import { classNames } from '@moneko/common';
 import prefixCls from '../prefix-cls';
 
-const skeletonCls = {
+const cls = {
   skeleton: prefixCls('skeleton'),
   active: prefixCls('skeleton-active'),
   title: prefixCls('skeleton-title'),
@@ -34,48 +34,48 @@ const skeletonCss = css`
       )
       transparent 180%/200% 100%;
   }
-  .${skeletonCls.skeleton} {
+  .${cls.skeleton} {
     display: flex;
     width: 100%;
     gap: 16px;
   }
-  .${skeletonCls.avatar} {
+  .${cls.avatar} {
     border-radius: 50%;
     width: 32px;
     height: 32px;
   }
 
-  .${skeletonCls.body} {
+  .${cls.body} {
     flex: 1;
   }
-  .${skeletonCls.title} {
+  .${cls.title} {
     margin-bottom: 16px;
     width: 32%;
     height: 32px;
   }
-  .${skeletonCls.paragraph} {
+  .${cls.paragraph} {
     display: flex;
     padding: 0;
     flex-direction: column;
     gap: 12px;
   }
-  .${skeletonCls.paragraph} > div {
+  .${cls.paragraph} > div {
     width: 100%;
     height: 16px;
     list-style: none;
   }
 
-  .${skeletonCls.paragraph} > div:last-of-type {
+  .${cls.paragraph} > div:last-of-type {
     width: 65%;
   }
-  .${skeletonCls.avatar}, .${skeletonCls.title}, .${skeletonCls.paragraph} > div {
+  .${cls.avatar}, .${cls.title}, .${cls.paragraph} > div {
     overflow: hidden;
     border-radius: var(--border-radius-base, 4px);
     background: var(--skeleton-bg);
     transition: background-color var(--transition-duration) var(--transition-timing-function);
   }
 
-  .${skeletonCls.active} {
+  .${cls.active} {
     &::after {
       display: block;
       height: 100%;
@@ -106,14 +106,14 @@ export interface SkeletonProps extends Omit<HTMLAttributes<HTMLDivElement>, 'tit
 }
 
 const Skeleton: FC<SkeletonProps> = ({ rows = 3, className, active, avatar, title, ...props }) => {
-  const activeCls = useMemo(() => active && skeletonCls.active, [active]);
+  const activeCls = useMemo(() => active && cls.active, [active]);
 
   return (
-    <div {...props} className={classNames(skeletonCls.skeleton, className)}>
-      {avatar && <div className={classNames(skeletonCls.avatar, activeCls)} />}
-      <div className={skeletonCls.body}>
-        {title && <div className={classNames(skeletonCls.title, activeCls)} />}
-        <div className={skeletonCls.paragraph}>
+    <div {...props} className={classNames(cls.skeleton, className)}>
+      {avatar && <div className={classNames(cls.avatar, activeCls)} />}
+      <div className={cls.body}>
+        {title && <div className={classNames(cls.title, activeCls)} />}
+        <div className={cls.paragraph}>
           {Array(rows)
             .fill(0)
             .map((_, i) => (

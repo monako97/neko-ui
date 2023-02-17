@@ -4,10 +4,12 @@ import { classNames } from '@moneko/common';
 import { Avatar, Tooltip, type AvatarProps } from '../index';
 import prefixCls from '../prefix-cls';
 
-const avatarGroupCls = prefixCls('avatar-group');
-const avatarMoreCls = prefixCls('avatar-more');
+const cls = {
+  group: prefixCls('avatar-group'),
+  more: prefixCls('avatar-more'),
+};
 const avatarGroupCss = css`
-  .${avatarGroupCls} {
+  .${cls.group} {
     display: inline-flex;
     align-items: center;
 
@@ -15,7 +17,7 @@ const avatarGroupCss = css`
       margin-left: -5%;
     }
   }
-  .${avatarMoreCls} {
+  .${cls.more} {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -48,14 +50,14 @@ const AvatarGroup: FC<AvatarGroupProps> = (props: AvatarGroupProps) => {
   );
 
   return (
-    <div className={classNames(avatarGroupCls, props.className)}>
+    <div className={classNames(cls.group, props.className)}>
       {showAvatar.map((a, i) => (
         <Avatar key={`${i}-${a.src}`} size={props.size} {...a} />
       ))}
       {more > 0 ? (
         <Tooltip
           title={
-            <div className={avatarMoreCls}>
+            <div className={cls.more}>
               {props.data.slice(-more).map((a, i) => (
                 <Avatar key={`${i}-${a.src}`} size={props.size} {...a} />
               ))}

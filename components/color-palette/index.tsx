@@ -8,19 +8,195 @@ import React, {
   type HTMLAttributes,
   type MouseEvent as ReactMouseEvent,
 } from 'react';
+import { css, injectGlobal } from '@emotion/css';
 import { classNames, tinycolor } from '@moneko/common';
 import AlphaSlider from './alpha-slider';
 import HueSlider from './hue-slider';
-import {
-  formCss,
-  inputCss,
-  paletteCss,
-  previewCss,
-  settingCss,
-  stripCss,
-  svpanelCss,
-} from './style';
 import { Input, InputNumber } from '../index';
+import prefixCls from '../prefix-cls';
+
+export const cls = {
+  alphaSlider: prefixCls('color-palette-alpha-slider'),
+  sliderPicker: prefixCls('color-palette-alpha-picker'),
+  palette: prefixCls('color-palette-palette'),
+  svpanel: prefixCls('color-palette-svpanel'),
+  setting: prefixCls('color-palette-setting'),
+  strip: prefixCls('color-palette-strip'),
+  preview: prefixCls('color-palette-preview'),
+  form: prefixCls('color-palette-form'),
+  input: prefixCls('color-palette-input'),
+};
+
+const colorPaletteCss = css`
+  .${cls.alphaSlider} {
+    border-radius: 10px;
+    width: 100%;
+    height: 10px;
+    background-position: 0 0, 5px 5px;
+    background-size: 10px 10px;
+    background-image: linear-gradient(
+        45deg,
+        #ccc 25%,
+        transparent 25%,
+        transparent 75%,
+        #ccc 75%,
+        #ccc
+      ),
+      linear-gradient(45deg, #ccc 25%, transparent 25%, transparent 75%, #ccc 75%, #ccc);
+    cursor: inherit;
+    pointer-events: none;
+    user-select: none;
+
+    &::after {
+      display: block;
+      border-radius: 10px;
+      width: 100%;
+      height: 100%;
+      content: '';
+      background-image: linear-gradient(to left, var(--offset-color, #fff), transparent);
+      cursor: inherit;
+    }
+  }
+  .${cls.sliderPicker} {
+    position: relative;
+    margin-bottom: 4px;
+    border-radius: var(--border-radius-base);
+    width: 100%;
+    height: 10px;
+    user-select: none;
+    cursor: pointer;
+
+    &:last-of-type {
+      margin-bottom: 0;
+    }
+
+    &::before {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      z-index: 1;
+      display: block;
+      margin: auto;
+      border-radius: 50%;
+      width: 6px;
+      height: 6px;
+      opacity: 1;
+      box-shadow: 0 0 0 1.5px #fff, inset 0 0 1px 1px rgb(0 0 0 / 20%), 0 0 1px 2px rgb(0 0 0 / 30%);
+      content: '';
+      transform: translateX(var(--offset-x, 0));
+      cursor: inherit;
+      pointer-events: none;
+    }
+
+    canvas {
+      position: absolute;
+      border-radius: 10px;
+      width: 100%;
+      height: 100%;
+    }
+  }
+  .${cls.palette} {
+    width: 200px;
+    box-sizing: border-box;
+    user-select: none;
+  }
+  .${cls.svpanel} {
+    position: relative;
+    display: block;
+    border-radius: var(--border-radius-base);
+    width: 200px;
+    height: 150px;
+
+    canvas {
+      border-radius: 5px;
+      width: 100%;
+      height: 100%;
+    }
+
+    &:hover {
+      cursor: crosshair;
+    }
+
+    &::after {
+      position: absolute;
+      top: var(--offset-y, 1px);
+      left: var(--offset-x, 199px);
+      display: block;
+      border-radius: 50%;
+      width: 4px;
+      height: 4px;
+      box-shadow: 0 0 0 1.5px #fff, inset 0 0 1px 1px rgb(0 0 0 / 30%), 0 0 1px 2px rgb(0 0 0 / 40%);
+      transform: translate(-3px, -2px);
+      content: '';
+      pointer-events: none;
+    }
+  }
+  .${cls.setting} {
+    display: flex;
+    margin-top: 4px;
+    width: 100%;
+  }
+  .${cls.strip} {
+    flex: 1;
+  }
+  .${cls.preview} {
+    margin-left: 4px;
+    border-radius: var(--border-radius-base);
+    width: 24px;
+    background-position: 0 0, 5px 5px;
+    background-size: 10px 10px;
+    background-image: linear-gradient(
+        45deg,
+        #ccc 25%,
+        transparent 25%,
+        transparent 75%,
+        #ccc 75%,
+        #ccc
+      ),
+      linear-gradient(45deg, #ccc 25%, transparent 25%, transparent 75%, #ccc 75%, #ccc);
+
+    &::after {
+      display: block;
+      border-radius: var(--border-radius-base);
+      width: 100%;
+      height: 100%;
+      background: var(--offset-color, #fff);
+      opacity: var(--offset-alpha, #fff);
+      box-shadow: rgb(0 0 0 / 15%) 0 0 0 1px inset, rgb(0 0 0 / 25%) 0 0 4px inset;
+      content: '';
+    }
+  }
+  .${cls.form} {
+    display: flex;
+    margin-top: 8px;
+    width: 100%;
+  }
+  .${cls.input} {
+    flex: 1;
+    padding-left: 4px;
+    text-align: center;
+
+    label {
+      display: block;
+      padding: 4px;
+      font-size: 12px;
+      text-align: center;
+      color: var(--text-color, rgb(0 0 0 / 85%));
+      line-height: 12px;
+    }
+
+    input {
+      width: calc(100% - 8px);
+    }
+
+    &:first-of-type {
+      flex: 2;
+      padding-left: 0;
+    }
+  }
+`;
+
+injectGlobal([colorPaletteCss]);
 
 export interface ColorPaletteProps extends Omit<HTMLAttributes<HTMLDivElement>, 'onChange'> {
   value?: string;
@@ -159,9 +335,9 @@ const ColorPalette: FC<ColorPaletteProps> = ({
   const hex = useMemo(() => tinycolor(value).toHex(), [value]);
 
   return (
-    <div {...props} ref={colorPaletteRef} className={classNames(paletteCss, className)}>
+    <div {...props} ref={colorPaletteRef} className={classNames(cls.palette, className)}>
       <article
-        className={svpanelCss}
+        className={cls.svpanel}
         onMouseDown={colorPickerMouseDown}
         onMouseUp={colorPickerMouseUp}
         onMouseOut={colorPickerMouseUp}
@@ -177,15 +353,15 @@ const ColorPalette: FC<ColorPaletteProps> = ({
       >
         <canvas ref={colorPickerRef} width={svPanelRect.width} height={svPanelRect.height} />
       </article>
-      <div className={settingCss}>
-        <div className={stripCss}>
+      <div className={cls.setting}>
+        <div className={cls.strip}>
           <HueSlider ref={hueSlider} value={hue} onChange={setHue} />
           <AlphaSlider value={alpha} onChange={setAlpha} />
         </div>
-        <div className={previewCss} />
+        <div className={cls.preview} />
       </div>
-      <div className={formCss}>
-        <div className={inputCss}>
+      <div className={cls.form}>
+        <div className={cls.input}>
           <Input
             name="hex"
             size="small"
@@ -202,7 +378,7 @@ const ColorPalette: FC<ColorPaletteProps> = ({
           />
           <label htmlFor="hex">Hex</label>
         </div>
-        <div className={inputCss}>
+        <div className={cls.input}>
           <InputNumber
             name="r"
             size="small"
@@ -215,7 +391,7 @@ const ColorPalette: FC<ColorPaletteProps> = ({
           />
           <label htmlFor="r">R</label>
         </div>
-        <div className={inputCss}>
+        <div className={cls.input}>
           <InputNumber
             name="g"
             size="small"
@@ -228,7 +404,7 @@ const ColorPalette: FC<ColorPaletteProps> = ({
           />
           <label htmlFor="g">G</label>
         </div>
-        <div className={inputCss}>
+        <div className={cls.input}>
           <InputNumber
             name="b"
             size="small"
@@ -241,7 +417,7 @@ const ColorPalette: FC<ColorPaletteProps> = ({
           />
           <label htmlFor="b">B</label>
         </div>
-        <div className={inputCss}>
+        <div className={cls.input}>
           <InputNumber
             name="a"
             size="small"

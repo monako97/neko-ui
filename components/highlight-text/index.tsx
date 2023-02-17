@@ -1,14 +1,22 @@
 import React, { type CSSProperties, type FC, useEffect, useMemo, useState } from 'react';
-import { css } from '@emotion/css';
+import { css, injectGlobal } from '@emotion/css';
 import { classNames } from '@moneko/common';
+import prefixCls from '../prefix-cls';
 
+const cls = {
+  text: prefixCls('highlight-text'),
+  hit: prefixCls('highlight-hit'),
+};
 const highlightTextCss = css`
-  cursor: auto;
-`;
-const hitCss = css`
-  color: var(--primary-color, #5794ff);
+  .${cls.text} {
+    cursor: auto;
+  }
+  .${cls.hit} {
+    color: var(--primary-color, #5794ff);
+  }
 `;
 
+injectGlobal([highlightTextCss]);
 /**
  * 高亮字符串语法
  * @example
@@ -128,7 +136,7 @@ const HighlightText: FC<HighlightTextProps> = ({
         return item.hit ? (
           <span
             key={item.text + i}
-            className={classNames(hitCss, hitClassName)}
+            className={classNames(cls.hit, hitClassName)}
             data-text={item.text}
             style={hitStyle}
           >
@@ -142,10 +150,10 @@ const HighlightText: FC<HighlightTextProps> = ({
   }, [hitClassName, hitStyle, text, texts]);
 
   return (
-    <div className={classNames(highlightTextCss, className)} style={style}>
+    <div className={classNames(cls.text, className)} style={style}>
       {hitNode}
       {extra && (
-        <span className={classNames(hitCss, hitClassName)} style={hitStyle}>
+        <span className={classNames(cls.hit, hitClassName)} style={hitStyle}>
           {extra}
         </span>
       )}
