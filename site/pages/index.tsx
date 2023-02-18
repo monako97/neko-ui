@@ -38,7 +38,7 @@ const waveBg = css`
     width: 500vw;
     height: 500vw;
     background: var(--primary-color, #5794ff);
-    opacity: 0.4;
+    opacity: 0.3;
     transform-origin: center;
     animation: site-wave-effect 30s infinite linear;
     pointer-events: none;
@@ -52,7 +52,7 @@ const waveBg = css`
     width: 100%;
     height: 100%;
     background: var(--primary-color, #5794ff);
-    opacity: 0.6;
+    opacity: 0.5;
     content: '';
     animation: site-wave-effect 35s infinite linear;
   }
