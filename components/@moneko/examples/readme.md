@@ -137,3 +137,5 @@ import { Tag } from 'neko-ui';
     <Tag>默认</Tag>
 </div>
 ```
+
+> 更多 api 请查看 [neko-ui](https://monako97.github.io/neko-ui/#/) 组件
