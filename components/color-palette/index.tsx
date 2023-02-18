@@ -60,7 +60,7 @@ const colorPaletteCss = css`
   .${cls.sliderPicker} {
     position: relative;
     margin-bottom: 4px;
-    border-radius: var(--border-radius-base);
+    border-radius: var(--border-radius, 8px);
     width: 100%;
     height: 10px;
     user-select: none;
@@ -103,7 +103,7 @@ const colorPaletteCss = css`
   .${cls.svpanel} {
     position: relative;
     display: block;
-    border-radius: var(--border-radius-base);
+    border-radius: var(--border-radius, 8px);
     width: 200px;
     height: 150px;
 
@@ -141,7 +141,7 @@ const colorPaletteCss = css`
   }
   .${cls.preview} {
     margin-left: 4px;
-    border-radius: var(--border-radius-base);
+    border-radius: var(--border-radius, 8px);
     width: 24px;
     background-position: 0 0, 5px 5px;
     background-size: 10px 10px;
@@ -157,7 +157,7 @@ const colorPaletteCss = css`
 
     &::after {
       display: block;
-      border-radius: var(--border-radius-base);
+      border-radius: var(--border-radius, 8px);
       width: 100%;
       height: 100%;
       background: var(--offset-color, #fff);
@@ -179,9 +179,9 @@ const colorPaletteCss = css`
     label {
       display: block;
       padding: 4px;
-      font-size: 12px;
+      font-size: var(--font-size-sm, 12px);
       text-align: center;
-      color: var(--text-color, rgb(0 0 0 / 85%));
+      color: var(--text-color, rgb(0 0 0 / 65%));
       line-height: 12px;
     }
 

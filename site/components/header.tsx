@@ -13,44 +13,44 @@ const headerCss = css`
     z-index: 20;
     display: flex;
     align-items: center;
-    height: 70px;
+    height: 4.375rem;
     background-color: var(--header-bg, rgb(255 255 255 / 90%));
-    box-shadow: 0 0 #0000, 0 0 #0000, 0 1px 2px 0 rgb(0 0 0 / 5%);
+    box-shadow: 0 0 #0000, 0 0 #0000, 0 0.0625rem 0.125rem 0 rgb(0 0 0 / 5%);
     transition-duration: var(--transition-duration);
     transition-timing-function: var(--transition-timing-function);
     transition-property: box-shadow, background-color, border-color;
-    backdrop-filter: blur(16px);
+    backdrop-filter: blur(1rem);
   }
 
   .site-logo {
     display: flex;
-    padding: 16px 24px;
+    padding: 1rem 1.5rem;
     cursor: pointer;
-    min-width: 224px;
+    min-width: 14rem;
   }
 
   .site-favicon {
-    width: 32px;
-    height: 32px;
+    width: 2rem;
+    height: 2rem;
   }
 
   .site-title {
     display: flex;
     flex: 1;
     align-items: center;
-    margin-left: 16px;
+    margin-left: 1rem;
   }
 
   .site-title h2 {
     margin-top: 0;
     margin-bottom: 0;
     font-weight: 400;
-    text-shadow: 2px 2px 2px var(--text-shadow-color);
+    text-shadow: 0.125rem 0.125rem 0.125rem var(--text-shadow-color);
   }
 
   .site-header-center {
     display: inline-flex;
-    gap: 16px;
+    gap: 1rem;
     flex: 1;
     align-items: flex-end;
   }
@@ -64,10 +64,10 @@ const headerCss = css`
   }
 
   .site-theme-btn {
-    padding: 0 24px;
-    font-size: 24px;
+    padding: 0 1.5rem;
+    font-size: 1.5rem;
     transition: transform var(--transition-duration) var(--transition-timing-function);
-    line-height: 32px;
+    line-height: 2rem;
     cursor: pointer;
     user-select: none;
   }

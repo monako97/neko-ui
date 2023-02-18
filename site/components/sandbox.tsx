@@ -9,7 +9,7 @@ const sandboxCss = css`
   .sandbox-box {
     break-inside: avoid;
     box-sizing: border-box;
-    padding-bottom: 16px;
+    padding-bottom: 1rem;
   }
 
   .sandbox-container,
@@ -24,55 +24,49 @@ const sandboxCss = css`
   .sandbox-view,
   .sandbox-live-editor {
     transition-property: border-color;
-    border: 1px solid var(--border-color-base, #d9d9d9);
+    border: var(--border-base);
   }
 
   .sandbox-container {
-    border-radius: var(--border-radius-base);
+    border-radius: var(--border-radius, 8px);
   }
 
   .sandbox-title {
-    margin: 8px 0 !important;
-    padding: 0 16px;
+    margin: 0.5rem 0 !important;
+    padding: 0 1rem;
     font-weight: 500;
   }
 
   .sandbox-view {
     position: relative;
-    border-width: 1px 0 0;
-    padding: 16px 16px 32px;
+    border-width: 0.0625rem 0 0;
+    padding: 1rem 1rem 2rem;
   }
 
   .sandbox-btn {
     position: absolute;
     right: 0;
     bottom: 0;
-    padding: 4px;
+    padding: 0.25rem;
     width: fit-content;
-    font-size: 12px;
+    font-size: var(--font-size-sm, 12px);
     cursor: pointer;
-    border-top-left-radius: var(--border-radius-base);
-    line-height: 16px;
+    border-top-left-radius: var(--border-radius, 8px);
+    line-height: 1rem;
     user-select: none;
     transition-property: background-color, color, transform;
   }
 
   .sandbox-btn::after {
     display: inline-block;
-    font-size: 8px;
+    font-size: var(--font-size-xs, 10px);
     font-family: neko-icon, sans-serif;
-    text-indent: 4px;
-    content: '\\e644';
+    text-indent: 0.25rem;
+    content: '\\e63e';
   }
 
   .sandbox-btn:active {
     transform: scale(0.95);
-  }
-
-  .sandbox-btn:hover::after,
-  .sandbox-btn[data-open='true']::after {
-    font-size: 10px;
-    content: '\\e63e';
   }
 
   .sandbox-btn[data-open='true'] {
@@ -83,14 +77,14 @@ const sandboxCss = css`
   .sandbox-btn[data-open='false'] {
     color: var(--primary-color, #5794ff);
     background-color: var(--primary-color-bg, #f0f8ff);
-    border-bottom-right-radius: var(--border-radius-base);
+    border-bottom-right-radius: var(--border-radius, 8px);
   }
 
   .sandbox-live-editor {
-    --code-color: var(--text-color);
+    --code-color: var(--text-color, rgb(0 0 0 / 65%));
 
-    border-width: 1px 0 0;
-    padding: 16px;
+    border-width: 0.0625rem 0 0;
+    padding: 1rem;
   }
 
   .sandbox-live-editor.hide {

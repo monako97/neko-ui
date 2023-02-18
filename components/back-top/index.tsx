@@ -20,8 +20,8 @@ const cls = {
 const backTopCss = css`
   :root {
     --back-top-color: #fff;
-    --back-top-bg: var(--text-color-secondary);
-    --back-top-hover-bg: var(--text-color);
+    --back-top-bg: var(--text-secondary, #4e4e4e);
+    --back-top-hover-bg: var(--text-color, rgb(0 0 0 / 65%));
   }
 
   [data-theme='dark'] {

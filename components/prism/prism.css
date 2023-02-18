@@ -316,12 +316,12 @@ pre:not(.sp-cm) > code {
 .treeview-part .line-h::before,
 .treeview-part .line-v::before,
 .treeview-part .line-v-last::before {
-    border-left: 1px solid var(--border-color-base);
+    border-left: 1px solid var(--border-color, #d9d9d9);
 }
 
 .treeview-part .line-v-last::before,
 .treeview-part .line-h::after {
-    border-bottom: 1px solid var(--border-color-base);
+    border-bottom: 1px solid var(--border-color, #d9d9d9);
     height: 50%;
 }
 
@@ -541,7 +541,7 @@ pre {
 .sandbox-error-msg {
     margin: 0 !important;
     padding: 0 !important;
-    font-size: 12px !important;
+    font-size: var(--font-size-sm, 12px) !important;
     font-family: 'Liberation Mono', Monaco, Menlo, Consolas, 'Source Code Pro', 'Ubuntu Mono',
         'Microsoft Yahei', '微软雅黑', Courier, 'Helvetica Neue', 'Lantinghei SC', STXihei, WenQuanYi,
         sans-serif !important;
@@ -575,7 +575,7 @@ span .inline-color-wrapper {
     display: inline-block;
     overflow: hidden;
     margin: 0 .333ch;
-    border: 1px solid #fff;
+    border: var(--border-base);
     width: 1.333ch;
     height: 1.333ch;
     background-position: center;
@@ -596,9 +596,9 @@ pre:not(.sp-cm) {
     display: block;
     overflow: visible;
     margin: 35px auto;
-    border-radius: var(--border-radius-base, 5px);
+    border-radius: var(--border-radius, 8px);
     max-width: 100%;
-    font-size: var(--font-size);
+    font-size: var(--font-size, 14px);
     white-space: pre-wrap;
     background-color: var(--code-bg, rgb(255 255 255 / 80%));
     box-shadow: 0 0 10px rgb(0 0 0 / 10%);
@@ -617,10 +617,10 @@ pre:not(.sp-cm) .toolbar::after {
     z-index: 1;
     display: block;
     overflow: hidden;
-    border-radius: var(--border-radius-base, 4px) var(--border-radius-base, 4px) 0 0;
+    border-radius: var(--border-radius, 8px) var(--border-radius, 8px) 0 0;
     width: 100%;
     height: 24px;
-    font-size: 14px;
+    font-size: var(--font-size, 14px);
     font-family: Ubuntu, sans-serif;
     font-weight: bold;
     text-align: center;
@@ -640,7 +640,7 @@ pre:not(.sp-cm) .toolbar::before {
     left: 12px;
     z-index: 3;
     display: inline-block;
-    border-radius: var(--border-radius-base, 4px);
+    border-radius: var(--border-radius, 8px);
     width: 4px;
     height: 4px;
     text-align: center;
@@ -668,7 +668,7 @@ pre:not(.sp-cm) .toolbar .toolbar-copy:active {
 
 .toolbar .toolbar-copy::after {
     display: block;
-    font-size: 14px;
+    font-size: var(--font-size, 14px);
     font-family: neko-icon, sans-serif;
     font-weight: 600;
     color: var(--text-color, #4d4d4c);
@@ -707,8 +707,8 @@ pre:not(.sp-cm).line-numbers .line-numbers-rows {
     top: 0;
     left: 0;
     overflow-y: auto;
-    border-right: 1px solid var(--border-color-base);
-    border-radius: var(--border-radius-base, 4px) 0 0 var(--border-radius-base, 4px);
+    border-right: 1px solid var(--border-color, #d9d9d9);
+    border-radius: var(--border-radius, 8px) 0 0 var(--border-radius, 8px);
     padding: 32px 0 8px;
     width: 44px;
     max-height: inherit;

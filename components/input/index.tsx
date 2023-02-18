@@ -22,12 +22,12 @@ const inputCss = css`
 `;
 const wrapperCss = css`
   display: flex;
-  border: 1px solid var(--border-color-base, #d9d9d9);
-  border-radius: var(--border-radius-base, 4px);
+  border: var(--border-base);
+  border-radius: var(--border-radius, 8px);
   padding: 4px 10px;
   width: 100%;
-  font-size: 14px;
-  color: var(--text-color, rgb(0 0 0 / 85%));
+  font-size: var(--font-size, 14px);
+  color: var(--text-color, rgb(0 0 0 / 65%));
   background-color: var(--component-background, rgb(255 255 255 / 80%));
   transition: all 0.3s;
   line-height: 1.5715;
@@ -51,7 +51,7 @@ const focusCss = css`
   box-shadow: 0 0 0 2px rgb(45 115 255 / 20%);
 `;
 const disabledCss = css`
-  border-color: var(--border-color-base, #d9d9d9);
+  border-color: var(--border-color, #d9d9d9);
   background: var(--disabled-bg, #f5f5f5);
   cursor: not-allowed;
 `;
@@ -64,7 +64,7 @@ const suffixCss = css`
 const sizeCss = {
   small: css`
     padding: 2px;
-    font-size: 12px;
+    font-size: var(--font-size-sm, 12px);
     line-height: 20px;
 
     input {
@@ -73,7 +73,7 @@ const sizeCss = {
   `,
   large: css`
     padding: 6px 16px;
-    font-size: 16px;
+    font-size: var(--font-size-lg, 16px);
   `,
   normal: null,
 };

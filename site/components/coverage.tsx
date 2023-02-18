@@ -15,30 +15,30 @@ const conf: Record<CoverageType, string> = {
 const coverageStyle = css`
   .site-coverage {
     display: flex;
-    gap: 16px;
-    margin: 0 auto 16px;
-    max-width: 1280px;
+    gap: 1rem;
+    margin: 0 auto 1rem;
+    max-width: 80rem;
     flex-wrap: wrap;
   }
 
   .site-coverage-error {
-    --coverage-color: var(--error-color, #ff4d4f);
+    --border-color: var(--error-color, #ff4d4f);
   }
 
   .site-coverage-success {
-    --coverage-color: var(--success-color, #52c41a);
+    --border-color: var(--success-color, #52c41a);
   }
 
   .site-coverage-warning {
-    --coverage-color: var(--warning-color, #faad14);
+    --border-color: var(--warning-color, #faad14);
   }
 
   .site-coverage-body {
     display: flex;
     overflow: hidden;
-    border: 1px solid var(--coverage-color);
-    border-radius: var(--border-radius-base, 4px);
-    box-shadow: 0 0 2px 0 var(--coverage-color), inset 0 0 2px 0 var(--coverage-color);
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius, 8px);
+    box-shadow: 0 0 0.125rem 0 var(--border-color), inset 0 0 0.125rem 0 var(--border-color);
     transition-duration: var(--transition-duration);
     transition-timing-function: var(--transition-timing-function);
     transition-property: box-shadow, background-color, border-color, color;
@@ -53,28 +53,28 @@ const coverageStyle = css`
   }
 
   .site-coverage-label {
-    border-right: 1px solid var(--coverage-color);
-    padding: 0 8px;
-    font-size: 14px;
+    border-right: 1px solid var(--border-color);
+    padding: 0 0.5rem;
+    font-size: var(--font-size, 14px);
     font-weight: 500;
     color: white;
-    background-color: var(--coverage-color);
-    text-shadow: 2px 2px 2px var(--text-shadow-color);
-    line-height: 20px;
+    background-color: var(--border-color);
+    text-shadow: 0.125rem 0.125rem 0.125rem var(--text-shadow-color);
+    line-height: 1.25rem;
   }
 
   .site-coverage-value {
-    padding: 4px 8px;
-    min-width: 80px;
-    font-size: 12px;
+    padding: 0.25rem 0.5rem;
+    min-width: 5rem;
+    font-size: var(--font-size-sm, 12px);
     text-align: center;
-    line-height: 16px;
+    line-height: 1rem;
     flex-direction: column;
-    color: var(--coverage-color);
+    color: var(--border-color);
   }
 
   .site-coverage-value > div:first-of-type {
-    border-bottom: 1px solid var(--coverage-color);
+    border-bottom: 1px solid var(--border-color);
     width: 100%;
     transition: inherit;
     transition-property: box-shadow, background-color, border-color;

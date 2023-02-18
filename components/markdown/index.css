@@ -38,10 +38,10 @@
   display: inline-block;
   margin: auto;
   border: 1px solid;
-  border-radius: var(--border-radius-base);
+  border-radius: var(--border-radius, 8px);
   padding: 4px 8px;
   width: fit-content;
-  font-size: 12px;
+  font-size: var(--font-size-sm, 12px);
   transition: background-color .2s, color .2s, border-color .2s;
   animation-fill-mode: forwards;
   content: '\590d\5236\6210\529f';
@@ -95,24 +95,24 @@
   position: relative;
   display: flex;
   margin: 0 auto;
-  max-width: 1280px;
+  max-width: 80rem;
   flex-direction: row-reverse;
-  gap: 16px;
+  gap: 1rem;
 }
 
 .n-md-body {
   overflow: hidden;
-  margin: 0 auto 24px;
-  border-radius: var(--border-radius-base, 0);
-  padding: 24px;
-  max-width: 1280px;
+  margin: 0 auto 1.5rem;
+  border-radius: var(--border-radius, 8px);
+  padding: 1.5rem;
+  max-width: 80rem;
   background-color: var(--component-background, rgb(255 255 255 / 80%));
   box-sizing: border-box;
   overflow-wrap: break-word;
   transition-duration: var(--transition-duration);
   transition-timing-function: var(--transition-timing-function);
   transition-property: background-color;
-  backdrop-filter: blur(16px);
+  backdrop-filter: blur(1rem);
   flex: 1;
 }
 
@@ -130,7 +130,7 @@
   display: block;
   overflow-y: auto;
   margin: 0;
-  border-radius: var(--border-radius-base);
+  border-radius: var(--border-radius, 8px);
   padding: 16px;
   max-width: 200px;
   height: fit-content;
@@ -154,7 +154,7 @@
 .n-md-toc li a {
   overflow: hidden;
   max-width: 100%;
-  font-size: 12px;
+  font-size: var(--font-size-sm, 12px);
   text-overflow: ellipsis;
   text-decoration: none;
   white-space: nowrap;
@@ -185,7 +185,7 @@
 }
 
 .n-md-body a:visited {
-  color: var(--text-color-secondary, rgb(0 0 0 / 45%));
+  color: var(--text-secondary, #4e4e4e);
 }
 
 .n-md-body a:hover {
@@ -242,11 +242,13 @@ h6[data-prefix]::before {
 .n-md-body h5 > code,
 .n-md-body h6 > code,
 .n-md-body li > code,
-.n-md-body mark {
-  border-radius: var(--border-radius-base, 4px);
-  padding: 2px 4px;
+.n-md-body td > code,
+.n-md-body mark,
+.n-md-body code:not([class]) {
+  border-radius: var(--border-radius, 8px);
+  padding: 2px 7px;
   font-size: 90%;
-  color: var(--md-mark-color, #e9887c);
+  color: var(--md-mark-color, #cd9278);
   background-color: var(--mark-bg, #f9f2f4);
   transition-duration: var(--transition-duration);
   transition-timing-function: var(--transition-timing-function);
@@ -261,7 +263,7 @@ h6[data-prefix]::before {
   margin-top: 1em;
   margin-bottom: 1em;
   font-weight: 500;
-  color: var(--heading-color);
+  color: var(--text-heading, #1b1b1b);
   transition-duration: var(--transition-duration);
   transition-timing-function: var(--transition-timing-function);
   transition-property: border-color, background-color, box-shadow, color;
@@ -301,7 +303,7 @@ blockquote p {
 
 .n-md-body h1,
 .n-md-body h2 {
-  border-bottom: 1px dotted var(--border-color-base);
+  border-bottom: 1px dotted var(--border-color, #d9d9d9);
   padding-bottom: 10px;
 }
 
@@ -327,7 +329,7 @@ blockquote p {
   height: 2px;
   text-align: left;
   color: var(--text-color);
-  background-color: var(--border-color-base);
+  background-color: var(--border-color, #d9d9d9);
 }
 
 .n-md-body p {
@@ -341,7 +343,7 @@ blockquote p {
   position: relative;
   display: block;
   margin: auto;
-  border-radius: var(--border-radius-base, 4px);
+  border-radius: var(--border-radius, 8px);
   max-width: 100%;
   cursor: pointer;
 }
@@ -372,8 +374,8 @@ blockquote p {
 
 .n-md-body table {
   overflow: hidden;
-  border-bottom: 1px solid var(--border-color-base);
-  border-radius: var(--border-radius-base, 4px);
+  border-bottom: 1px solid var(--border-color, #d9d9d9);
+  border-radius: var(--border-radius, 8px);
   width: 100%;
   max-width: 100%;
   border-spacing: 0;
@@ -386,25 +388,25 @@ blockquote p {
 
 .n-md-body table tr[role='row'] th[role='gridcell'] {
   padding: 10px;
-  color: var(--heading-color);
-  background-color: var(--border-color-base);
+  color: var(--text-heading, #1b1b1b);
+  background-color: var(--border-color, #d9d9d9);
   transition-property: background-color, color;
 }
 
 .n-md-body table td[role='gridcell'] {
   border-style: dotted;
   border-width: 0 0 1px 1px;
-  border-color: var(--border-color-base);
+  border-color: var(--border-color, #d9d9d9);
   padding: 10px;
   transition-property: border-color;
 }
 
 .n-md-body table td[role='gridcell']:first-of-type {
-  border-left: 1px solid var(--border-color-base);
+  border-left: 1px solid var(--border-color, #d9d9d9);
 }
 
 .n-md-body table td[role='gridcell']:last-of-type {
-  border-right: 1px solid var(--border-color-base);
+  border-right: 1px solid var(--border-color, #d9d9d9);
 }
 
 .n-md-body table tr[role='row']:last-of-type td[role='gridcell'] {
@@ -414,7 +416,7 @@ blockquote p {
 .n-md-body blockquote {
   position: relative;
   margin: 30px 54px;
-  border-radius: var(--border-radius-base, 4px);
+  border-radius: var(--border-radius, 8px);
   padding: 16px;
   font-weight: 500;
   background-color: var(--blockquote-bg, #ecf8ff);
@@ -424,7 +426,7 @@ blockquote p {
 .n-md-body blockquote::before,
 .n-md-body blockquote::after {
   position: absolute;
-  font-size: 32px;
+  font-size: 2rem;
   font-family: neko-icon, sans-serif;
   color: var(--blockquote-icon-color, #fb5);
   transition-property: color;
@@ -464,7 +466,7 @@ blockquote p {
 .n-md-body details {
   overflow: hidden;
   border-left: 5px solid var(--primary-color-border, #5794ff);
-  border-radius: var(--border-radius-base, 4px);
+  border-radius: var(--border-radius, 8px);
   padding: 12px 24px;
   background: var(--details-bg, #fafaff);
   box-sizing: border-box;
@@ -485,7 +487,7 @@ blockquote p {
 
 .n-md-body details >summary,
 .n-md-body details >summary ~ * {
-  font-size: 14px;
+  font-size: var(--font-size, 14px);
   font-weight: normal;
   color: var(--details-summary-color, #0e1c4e);
   font-style: normal;
@@ -504,15 +506,17 @@ blockquote p {
   transform: translateX(-18px);
 }
 
-.n-md-body details >summary::-webkit-details-marker {
+.n-md-body details > summary::-webkit-details-marker,
+.n-md-body details > summary::marker {
   display: none;
+  color: transparent;
 }
 
 .n-md-body details >summary::before {
   display: inline-block;
   margin-right: 4px;
   width: 14px;
-  font-size: 12px;
+  font-size: var(--font-size-sm, 12px);
   font-family: neko-icon, sans-serif;
   font-weight: lighter;
   text-align: center;

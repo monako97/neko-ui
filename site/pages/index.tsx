@@ -13,21 +13,21 @@ const waveBg = css`
     z-index: 10;
     display: flex;
     overflow-y: auto;
-    padding-top: 86px;
-    padding-right: 16px;
+    padding-top: 5.375rem;
+    padding-right: 1rem;
     height: 100%;
     max-height: 100vh;
     flex: 1;
   }
 
   .site-doc-main {
-    padding-bottom: 96px;
-    width: calc(100% - 272px);
+    padding-bottom: 6rem;
+    width: calc(100% - 17rem);
   }
 
   .site-doc-main-box {
     box-sizing: border-box;
-    min-height: calc(100vh - 212px);
+    min-height: calc(100vh - 13.25rem);
   }
 
   .site-wave-bg {

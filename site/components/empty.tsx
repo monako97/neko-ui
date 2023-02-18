@@ -9,38 +9,38 @@ const siteEmptyCss = css`
   }
 
   .site-empty > span {
-    margin-left: 16px;
+    margin-left: 1rem;
   }
 
   .site-empty-colors {
     display: flex;
-    gap: 12px;
+    gap: 0.75rem;
   }
 
   .site-empty-color {
     display: flex;
     flex-direction: column;
     flex: 1;
-    gap: 5px;
+    gap: 0.3125rem;
   }
 
   .site-empty-color-item {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    border-radius: var(--border-radius-base);
-    padding: 8px 12px;
+    border-radius: var(--border-radius, 8px);
+    padding: 0.5rem 0.75rem;
     color: #fff;
     cursor: pointer;
   }
 
   .site-empty-color-item i {
-    color: var(--text-color);
+    color: var(--text-color, rgb(0 0 0 / 65%));
     transition: opacity var(--transition-duration) var(--transition-timing-function);
   }
 
   .site-empty-color-item i:last-of-type {
-    font-size: 10px;
+    font-size: var(--font-size-xs, 10px);
     opacity: 0.8;
   }
 `;

@@ -1,7 +1,23 @@
 <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
-  <Button disabled>禁用</Button>
-  <Button type="primary" disabled>禁用</Button>
-  <Button type="success" disabled>禁用</Button>
-  <Button type="warning" disabled>禁用</Button>
-  <Button type="error" disabled>禁用</Button>
+  <Button disabled>normal [disabled]</Button>
+  <Button type="primary" disabled>
+    primary
+  </Button>
+  <Button disabled fill>
+    fill
+  </Button>
+  <Button disabled link>
+    link
+  </Button>
+  <Button disabled float>
+    float
+  </Button>
+  <Button disabled dashed>
+    dashed
+  </Button>
+  <div style={{ backgroundColor: '#827f7f', padding: 8 }}>
+    <Button type="primary" disabled ghost>
+      ghost
+    </Button>
+  </div>
 </div>

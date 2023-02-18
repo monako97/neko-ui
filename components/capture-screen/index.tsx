@@ -29,8 +29,8 @@ const captureScreenCss = css`
     position: relative;
   }
   .${cls.view} video {
-    border: 1px solid var(--border-color-base);
-    border-radius: var(--border-radius-base);
+    border: var(--border-base);
+    border-radius: var(--border-radius, 8px);
     width: 100%;
     transition: border-color var(--transition-duration) var(--transition-timing-function);
   }
@@ -62,7 +62,7 @@ const captureScreenCss = css`
 
     &::before {
       display: block;
-      border-left: 1px solid var(--border-color-base);
+      border-left: 1px solid var(--border-color, #d9d9d9);
       height: 100%;
       transition: border-color var(--transition-duration) var(--transition-timing-function);
       transform: translateX(-16px);

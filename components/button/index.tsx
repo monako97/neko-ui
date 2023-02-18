@@ -5,36 +5,228 @@ import React, {
   useCallback,
   useRef,
   useState,
-  CSSProperties,
+  useMemo,
 } from 'react';
-import { css, keyframes } from '@emotion/css';
+import { css, injectGlobal } from '@emotion/css';
 import { classNames, isFunction } from '@moneko/common';
+import prefixCls from '../prefix-cls';
+import type { ComponentSize } from '../';
 
-const waveEffect = keyframes`0% {
-    opacity: 1;
-    box-shadow: 0 0 0 var(--wave-shadow-color);
+const cls: Record<string | ButtonType | ComponentSize | number | symbol, string> = {
+  btn: prefixCls('btn'),
+  text: prefixCls('btn-text'),
+  primary: prefixCls('btn-primary'),
+  warning: prefixCls('btn-warning'),
+  error: prefixCls('btn-error'),
+  danger: prefixCls('btn-danger'),
+  success: prefixCls('btn-success'),
+  infinite: prefixCls('btn-infinite'),
+  block: prefixCls('btn-block'),
+  dashed: prefixCls('btn-dashed'),
+  fill: prefixCls('btn-fill'),
+  circle: prefixCls('btn-circle'),
+  ghost: prefixCls('btn-ghost'),
+  link: prefixCls('btn-link'),
+  float: prefixCls('btn-float'),
+  disabled: prefixCls('btn-disabled'),
+  without: prefixCls('btn-without'),
+  default: prefixCls('btn-default'),
+  large: prefixCls('btn-large'),
+  small: prefixCls('btn-small'),
+  normal: prefixCls('btn-normal'),
+};
+
+function btnColor(type: ButtonType) {
+  return `
+    .${cls[type]} {
+      --btn-color: var(--${type}-color);
+      --btn-border: var(--${type}-color-border);
+      --btn-bg: var(--${type}-color-bg);
+      --btn-hover-color: var(--${type}-color-hover);
+      --btn-active-color: var(--${type}-color-active);
+      --btn-outline-color: var(--${type}-color-outline);
+    }
+    .${cls[type]}.${cls.fill} {
+      --btn-bg: var(--${type}-color);
+      --btn-border: var(--${type}-color);
+      --btn-hover-bg: var(--${type}-color-hover);
+      --btn-active-bg: var(--${type}-color-active);
+    }
+  `;
+}
+const btnCss = css`
+  :root {
+    --disable-color: rgb(0 0 0 / 25%);
+    --disable-bg: rgb(0 0 0 / 4%);
+    --disable-border: #d9d9d9;
   }
 
-  25% {
-    opacity: 1;
-    box-shadow: 0 0 0 4px var(--wave-shadow-color);
+  [data-theme='dark'] {
+    --disable-color: rgb(255 255 255 / 25%);
+    --disable-bg: rgb(255 255 255 / 8%);
+    --disable-border: #424242;
+  }
+  .${cls.btn} {
+    display: inline-block;
+    border: 1px solid var(--btn-border);
+    border-radius: var(--border-radius);
+    padding: 4px 16px;
+    width: fit-content;
+    min-width: var(--btn-size);
+    height: fit-content;
+    min-height: var(--btn-size);
+    font-size: var(--font-size, 14px);
+    color: var(--btn-color);
+    background-color: var(--btn-bg);
+    outline-offset: 4px;
+    line-height: 1;
+    cursor: pointer;
+    transition-timing-function: var(--transition-timing-function);
+    transition-duration: var(--transition-duration);
+    transition-property: color, background-color, border-color, width, height, transform;
+    user-select: none;
+    touch-action: manipulation;
+    box-sizing: border-box;
+
+    &:hover:not([disabled]) {
+      border-color: var(--btn-hover-color);
+      color: var(--btn-hover-color);
+      background-color: var(--btn-bg);
+    }
+
+    &:active:not([disabled]) {
+      border-color: var(--btn-active-color);
+      color: var(--btn-active-color);
+      background-color: var(--btn-bg);
+      transform: scale(0.98);
+    }
+  }
+  .${cls.text} {
+    display: block;
+    overflow: hidden;
+    text-align: center;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .${cls.normal} {
+    --btn-size: 2rem;
+  }
+  .${cls.small} {
+    --btn-size: 1.5rem;
+
+    padding: 0 7px;
+    font-size: var(--font-size-xs, 10px);
+  }
+  .${cls.large} {
+    --btn-size: 2.5rem;
+
+    font-size: var(--font-size-lg, 16px);
+  }
+  .${cls.default} {
+    --btn-outline-color: var(--primary-color-outline);
+    --btn-color: var(--text-color);
+    --btn-bg: var(--component-background, #fff);
+    --btn-border: var(--border-color);
+    --btn-hover-color: var(--primary-color-hover);
+    --btn-active-color: var(--primary-color-active);
+  }
+  ${btnColor('primary')}
+  ${btnColor('error')}
+  ${btnColor('success')}
+  ${btnColor('warning')}
+  .${cls.fill} {
+    &:not([disabled]):not(.${cls.default}) {
+      color: #fff !important;
+
+      &:hover {
+        --btn-bg: var(--btn-hover-color) !important;
+      }
+
+      &:active {
+        --btn-bg: var(--btn-active-color) !important;
+      }
+    }
+  }
+  .${cls.dashed} {
+    border-style: dashed;
+  }
+  .${cls.float}, .${cls.link} {
+    border-color: transparent !important;
+    background-color: transparent;
+  }
+  .${cls.ghost}, .${cls.link} {
+    background-color: transparent !important;
+  }
+  .${cls.circle} {
+    border-radius: 50% !important;
+    padding: 0;
+    min-width: var(--btn-size);
+    max-width: var(--btn-size);
+    min-height: var(--btn-size);
+    max-height: var(--btn-size);
+    text-align: center;
+    line-height: var(--btn-size);
+  }
+  .${cls.disabled}[disabled] {
+    --btn-color: var(--disable-color);
+    --btn-bg: var(--disable-bg);
+    --btn-border: var(--disable-border);
+
+    cursor: not-allowed;
+  }
+  .${cls.block} {
+    width: 100%;
   }
 
-  100% {
-    opacity: 0;
-    box-shadow: 0 0 0 6px var(--wave-shadow-color);
+  .${cls.without}, .${cls.infinite} {
+    &:not(${cls.link}) {
+      position: relative;
+
+      &::before {
+        position: absolute;
+        display: block;
+        border-radius: inherit;
+        opacity: 0.2;
+        box-shadow: 0 0 0 0 var(--btn-outline-color);
+        inset: 0;
+        animation: btn-wave-effect 0.3s cubic-bezier(1, 1, 1, 1);
+        animation-fill-mode: forwards;
+        content: '';
+        pointer-events: none;
+      }
+    }
+  }
+
+  .${cls.infinite} {
+    &:not(${cls.link})::before {
+      opacity: 0.2;
+      animation: btn-wave-effect 0.3s cubic-bezier(1, 1, 1, 0.99) infinite;
+    }
+  }
+
+  @keyframes btn-wave-effect {
+    0% {
+      opacity: 1;
+      box-shadow: 0 0 0 var(--btn-outline-color);
+    }
+
+    25% {
+      opacity: 1;
+      box-shadow: 0 0 0 0.25rem var(--btn-outline-color);
+    }
+
+    100% {
+      opacity: 0;
+      box-shadow: 0 0 0 0.375rem var(--btn-outline-color);
+    }
   }
 `;
-const btnTextCss = css`
-  display: block;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-`;
+
+injectGlobal([btnCss]);
 
 export type ButtonType = 'success' | 'error' | 'primary' | 'warning' | 'default';
 
-export interface ButtonProps extends HTMLAttributes<HTMLDivElement> {
+export interface ButtonProps extends HTMLAttributes<HTMLButtonElement> {
   /** 按钮类型 */
   type?: ButtonType;
   /** 无限动画 */
@@ -55,93 +247,8 @@ export interface ButtonProps extends HTMLAttributes<HTMLDivElement> {
   block?: boolean;
   /** 链接按钮 */
   link?: boolean;
+  size?: ComponentSize;
 }
-const getAnimationCss = (animating?: boolean, link?: boolean, infinite?: boolean) => {
-  let animation = css``;
-
-  if ((animating || infinite) && !link) {
-    animation = css`
-      &::before {
-        animation: ${waveEffect} 0.3s cubic-bezier(1, 1, 1, ${infinite ? 0.99 : 1})
-          ${infinite ? 'infinite' : ''} forwards;
-        content: '';
-      }
-    `;
-  }
-  return animation;
-};
-
-const getStatusCss = (
-  type: ButtonType,
-  fill?: boolean,
-  float?: boolean,
-  ghost?: boolean,
-  link?: boolean,
-  circle?: boolean,
-  dashed?: boolean,
-  disabled?: boolean
-) => {
-  let bg = 'var(--component-background, rgba(255,255,255,0.8))';
-  let hoverBg = bg;
-  let activeBg = bg;
-  let borderColor = 'var(--border-color-base)';
-  let borderHover = `var(--primary-color-hover, #80b3ff)`;
-  let borderActive = `var(--primary-color-active, #3f72d9)`;
-  let color = `var(--text-color)`;
-  let colorHover = `var(--primary-color-hover, #80b3ff)`;
-  let colorActive = `var(--primary-color-active, #3f72d9)`;
-
-  if (type !== 'default') {
-    bg = `var(--${type}-color${fill ? '' : '-bg'})`;
-    borderColor = `var(--${type}-color${fill ? '' : '-border'})`;
-    borderHover = `var(--${type}-color-hover)`;
-    borderActive = `var(--${type}-color-active)`;
-    color = fill ? 'white' : `var(--${type}-color)`;
-    colorHover = fill ? 'white' : `var(--${type}-color-hover)`;
-    colorActive = fill ? 'white' : `var(--${type}-color-active)`;
-    hoverBg = `var(--${type}-color-${fill ? 'hover' : 'bg'})`;
-    activeBg = `var(--${type}-color-${fill ? 'active' : 'bg'})`;
-  }
-  if (ghost || link) {
-    bg = 'transparent';
-    hoverBg = 'transparent';
-    activeBg = 'transparent';
-  }
-  if (float || link) {
-    borderColor = 'transparent';
-    borderHover = 'transparent';
-    borderActive = 'transparent';
-  }
-
-  return css`
-    border-style: ${dashed ? 'dashed' : 'solid'};
-    border-color: ${borderColor};
-    border-radius: ${circle ? '50%' : 'var(--border-radius-base)'};
-    padding: ${circle ? 0 : '8px 16px'};
-    min-width: ${circle ? '32px' : '22px'};
-    max-width: ${circle ? '32px' : 'unset'};
-    min-height: ${circle ? '32px' : '22px'};
-    max-height: ${circle ? '32px' : 'unset'};
-    color: ${color};
-    background-color: ${bg};
-    line-height: ${circle ? '32px' : 1};
-    cursor: ${disabled ? 'not-allowed' : 'pointer'};
-    opacity: ${disabled ? 0.7 : 1};
-
-    &:hover {
-      border-color: ${borderHover};
-      color: ${colorHover};
-      background-color: ${hoverBg};
-    }
-
-    &:active {
-      transform: scale(${disabled ? 1 : 0.95});
-      border-color: ${borderActive};
-      color: ${colorActive};
-      background-color: ${activeBg};
-    }
-  `;
-};
 
 const Button: FC<ButtonProps> = ({
   infinite,
@@ -155,45 +262,14 @@ const Button: FC<ButtonProps> = ({
   disabled,
   block,
   onClick,
+  size = 'normal',
   type = 'default',
   className,
   ...props
 }) => {
-  const ref = useRef<HTMLDivElement>(null);
+  const ref = useRef<HTMLButtonElement>(null);
   const [animating, setAnimating] = useState(false);
-  const getBaseStyle = () => {
-    return css`
-      position: relative;
-      display: inline-block;
-      border-width: 1px;
-      width: ${block ? '100%' : 'fit-content'};
-      height: fit-content;
-      text-align: center;
-      outline-offset: 4px;
-      transition-timing-function: var(--transition-timing-function);
-      transition-duration: var(--transition-duration);
-      transition-property: color, background-color, border-color, width, height, transform;
-      user-select: none;
-      touch-action: manipulation;
-      box-sizing: border-box;
-
-      &::before {
-        position: absolute;
-        display: block;
-        border-radius: inherit;
-        opacity: 0.2;
-        box-shadow: 0 0 0 0 var(--wave-shadow-color);
-        inset: 0;
-        pointer-events: none;
-      }
-
-      &:last-of-type {
-        margin-right: 0;
-      }
-    `;
-  };
-
-  const handleClick: MouseEventHandler<HTMLDivElement> = useCallback(
+  const handleClick: MouseEventHandler<HTMLButtonElement> = useCallback(
     (e) => {
       if (disabled) return;
       setAnimating(true);
@@ -207,26 +283,52 @@ const Button: FC<ButtonProps> = ({
     setAnimating(false);
   }, []);
 
+  const btnCls = useMemo(
+    () =>
+      classNames(
+        cls.btn,
+        cls[type],
+        cls[size],
+        block && cls.block,
+        fill && cls.fill,
+        circle && cls.circle,
+        float && cls.float,
+        dashed && cls.dashed,
+        ghost && cls.ghost,
+        infinite && cls.infinite,
+        link && cls.link,
+        disabled && cls.disabled,
+        animating && cls.without,
+        className
+      ),
+    [
+      animating,
+      block,
+      circle,
+      className,
+      dashed,
+      disabled,
+      fill,
+      float,
+      ghost,
+      infinite,
+      link,
+      size,
+      type,
+    ]
+  );
+
   return (
-    <div
+    <button
       {...props}
       ref={ref}
       onClick={handleClick}
       onAnimationEnd={handleAnimationEnd}
-      className={classNames(
-        getBaseStyle(),
-        getStatusCss(type, fill, float, ghost, link, circle, dashed, disabled),
-        getAnimationCss(animating, link, infinite),
-        className
-      )}
-      style={
-        {
-          '--wave-shadow-color': `var(--${type === 'default' ? 'primary' : type}-color-outline)`,
-        } as CSSProperties
-      }
+      className={btnCls}
+      disabled={disabled}
     >
-      <span className={btnTextCss}>{children}</span>
-    </div>
+      <span className={cls.text}>{children}</span>
+    </button>
   );
 };
 

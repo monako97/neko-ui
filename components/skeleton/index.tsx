@@ -70,7 +70,7 @@ const skeletonCss = css`
   }
   .${cls.avatar}, .${cls.title}, .${cls.paragraph} > div {
     overflow: hidden;
-    border-radius: var(--border-radius-base, 4px);
+    border-radius: var(--border-radius, 8px);
     background: var(--skeleton-bg);
     transition: background-color var(--transition-duration) var(--transition-timing-function);
   }

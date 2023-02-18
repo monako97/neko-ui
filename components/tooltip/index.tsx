@@ -43,10 +43,10 @@ const tooltipCss = css`
   .${cls.portal} {
     position: fixed;
     display: inline-block;
-    border-radius: var(--border-radius-base, 4px);
+    border-radius: var(--border-radius, 8px);
     padding: 4px 8px;
-    font-size: 14px;
-    color: var(--text-color);
+    font-size: var(--font-size, 14px);
+    color: var(--text-color, rgb(0 0 0 / 65%));
     background-color: var(--tooltip-bg);
     filter: drop-shadow(0.5px 1px 4px var(--tooltip-shadow-color))
       drop-shadow(1px 2px 8px var(--tooltip-shadow-color))

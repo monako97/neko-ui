@@ -7,9 +7,9 @@ const footerCss = css`
   .site-footer {
     display: flex;
     justify-content: center;
-    padding-bottom: 16px;
-    font-size: 12px;
-    line-height: 16px;
+    padding-bottom: 1rem;
+    font-size: var(--font-size-sm, 12px);
+    line-height: 1rem;
   }
 
   .site-footer a {

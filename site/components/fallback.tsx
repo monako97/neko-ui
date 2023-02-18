@@ -6,9 +6,9 @@ const siteFallbackCss = css`
   .site-fallback {
     display: flex;
     margin: auto;
-    border-radius: var(--border-radius-base, 4px);
-    padding: 32px;
-    max-width: 1280px;
+    border-radius: var(--border-radius, 8px);
+    padding: 2rem;
+    max-width: 80rem;
     background-color: var(--component-background, rgb(255 255 255 / 80%));
     flex: 1;
   }

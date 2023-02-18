@@ -17,7 +17,7 @@ const colorPickerCss = css`
   }
   .${cls.trigger} {
     display: inline-block;
-    border-radius: var(--border-radius-base);
+    border-radius: var(--border-radius, 8px);
     width: 25px;
     height: 25px;
     background-position: 0 0, 5px 5px;
@@ -34,7 +34,7 @@ const colorPickerCss = css`
 
     &::after {
       display: block;
-      border-radius: var(--border-radius-base);
+      border-radius: var(--border-radius, 8px);
       width: 100%;
       height: 100%;
       background: var(--offset-color, #fff);

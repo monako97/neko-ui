@@ -5,3 +5,4 @@
 | value     | 颜色             | string                  | -      | -    |
 | onChange  | 变更时触发的方法 | (color: string) => void | -      | -    |
 | className | 自定义类名       | string                  | -      | -    |
+| style     | 自定义样式表     | `React.CSSProperties`   | -      | -    |

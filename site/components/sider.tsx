@@ -35,21 +35,21 @@ const siderCss = css`
     z-index: 30;
     display: flex;
     overflow-y: scroll;
-    margin: 0 16px 16px;
-    border-radius: var(--border-radius-base, 4px);
-    width: 240px;
-    min-width: 240px;
+    margin: 0 1rem 1rem;
+    border-radius: var(--border-radius, 8px);
+    width: 15rem;
+    min-width: 15rem;
     color: var(--text-color, rgb(0 0 0 / 65%));
     background-color: var(--header-bg, rgb(255 255 255 / 80%));
     box-sizing: border-box;
-    backdrop-filter: blur(16px);
+    backdrop-filter: blur(1rem);
     transition-property: background-color, color;
     flex-direction: column;
   }
 
   .site-sider > div {
     position: relative;
-    padding: 0 16px;
+    padding: 0 1rem;
   }
 
   .site-sider-group {
@@ -57,35 +57,35 @@ const siderCss = css`
   }
 
   .site-sider-group:last-of-type {
-    margin-bottom: 16px;
+    margin-bottom: 1rem;
   }
 
   .site-sider-group-title {
     position: sticky;
     top: 0;
     z-index: 10;
-    margin-bottom: 8px;
-    border-bottom: 1px solid var(--border-color-base, #d9d9d9);
-    padding: 8px 0;
-    font-size: 14px;
-    color: var(--heading-color, rgb(255 255 255 / 85%));
-    backdrop-filter: blur(16px);
-    line-height: 20px;
+    margin-bottom: 0.5rem;
+    border-bottom: var(--border-base);
+    padding: 0.5rem 0;
+    font-size: var(--font-size, 14px);
+    color: var(--text-heading, #1b1b1b);
+    backdrop-filter: blur(1rem);
+    line-height: 1.25rem;
     transition-property: background-color, color, border-color;
   }
 
   .site-sider-list {
     display: flex;
     flex-direction: column;
-    gap: 8px;
+    gap: 0.5rem;
   }
 
   .site-sider-item {
     position: relative;
     display: flex;
     align-items: center;
-    border-radius: var(--border-radius-base, 4px);
-    min-height: 45px;
+    border-radius: var(--border-radius, 8px);
+    min-height: 2.8125rem;
     color: var(--text-color, rgb(0 0 0 / 65%));
     flex-wrap: wrap;
     cursor: pointer;
@@ -100,8 +100,8 @@ const siderCss = css`
     position: absolute;
     right: 0;
     display: block;
-    border-radius: 0 var(--border-radius-base, 4px) var(--border-radius-base, 4px) 0;
-    width: 5px;
+    border-radius: 0 var(--border-radius, 8px) var(--border-radius, 8px) 0;
+    width: 0.3125rem;
     height: 100%;
     background-color: var(--primary-color-border, #5794ff);
     content: '';
@@ -127,7 +127,7 @@ const siderCss = css`
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 32px;
+    width: 2rem;
     height: 100%;
   }
 
@@ -138,15 +138,15 @@ const siderCss = css`
   .site-sider-label,
   .site-sider-subtitle {
     overflow: hidden;
-    width: calc(100% - 32px);
+    width: calc(100% - 2rem);
     text-overflow: ellipsis;
     white-space: nowrap;
   }
 
   .site-sider-subtitle {
-    margin-left: 32px;
-    padding-bottom: 4px;
-    font-size: 12px;
+    margin-left: 2rem;
+    padding-bottom: 0.25rem;
+    font-size: var(--font-size-sm, 12px);
     opacity: 0.67;
   }
 `;
