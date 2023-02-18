@@ -25,7 +25,7 @@
 | fallbackCompPath   | 自定义容错组件                                    | string                                                                                                 | -       |
 | modifyVars         | less 全局变量                                     | Record<string, string>                                                                                 | -       |
 | antdThemeVariables | antd 主题配置                                     | { compact: false, dark: false}                                                                         | -       |
-| prefixCls          | 类名前缀                                          | string                                                                                                 | sky     |
+| prefixCls          | 类名前缀                                          | string                                                                                                 | n     |
 | layoutHasSider     | 是否需要左侧菜单栏 仅中台类型有效                 | boolean                                                                                                | -       |
 | moduleRules        | 自定义 webpack module rules                       |                                                                                                        | -       |
 | cssModules         | node_modules 中, 需要开启 cssModules 的模块       | string[]                                                                                               | -       |
