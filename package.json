@@ -20,7 +20,7 @@
     },
     "devDependencies": {
         "@moneko/cli": "1.1.6",
-        "@moneko/core": "2.0.9",
+        "@moneko/core": "2.0.11",
         "@moneko/postcss": "1.0.27",
         "@moneko/react-live": "3.1.2",
         "@swc/jest": "0.2.24",
