@@ -7,7 +7,7 @@
   "scripts": {
     "build": "mo build library",
     "changelog": "conventional-changelog -p angular -u -i CHANGELOG.md -s -r 0 && git add CHANGELOG.md",
-    "lint": "mo eslint {components,site} && mo stylelint components && mo stylelint site && jest --coverage",
+    "lint": "mo eslint components && mo eslint site && mo stylelint components && mo stylelint site && jest --coverage",
     "precommit": "yarn lint && yarn changelog",
     "prepare": "mo githooks pre-commit=\"yarn precommit\" commit-msg=\"npx --no -- commitlint --edit \\${1}\"",
     "start": "mo start library",
