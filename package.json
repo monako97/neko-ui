@@ -1,59 +1,64 @@
 {
-    "name": "neko-ui",
-    "version": "1.0.35",
-    "description": "UI库",
-    "main": "lib/index.js",
-    "scripts": {
-        "test": "jest --watchAll --coverage",
-        "start": "mo start library",
-        "build": "mo build library",
-        "lint": "yarn eslint && yarn stylelint",
-        "eslint": "mo eslint components && mo eslint site",
-        "stylelint": "mo stylelint components && mo stylelint site",
-        "coverage": "jest --coverage"
-    },
-    "author": "moneko",
-    "license": "MIT",
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/monako97/neko-ui"
-    },
-    "devDependencies": {
-        "@moneko/cli": "1.1.6",
-        "@moneko/core": "2.0.11",
-        "@moneko/postcss": "1.0.27",
-        "@moneko/react-live": "3.1.2",
-        "@swc/jest": "0.2.24",
-        "@testing-library/jest-dom": "5.16.5",
-        "@testing-library/react": "13.4.0",
-        "@testing-library/user-event": "14.4.3",
-        "@types/jest": "29.4.0",
-        "@types/katex": "0.16.0",
-        "@types/lodash": "4.14.191",
-        "eslint-config-neko": "1.0.20",
-        "identity-obj-proxy": "3.0.0",
-        "jest": "29.4.1",
-        "jest-environment-jsdom": "29.4.1",
-        "react": "18.2.0",
-        "react-dom": "18.2.0",
-        "stylelint-config-moneko": "1.0.9",
-        "ts-node": "10.9.1"
-    },
-    "dependencies": {
-        "@emotion/css": "11.10.5",
-        "@moneko/common": "1.0.11",
-        "katex": "0.16.4",
-        "lodash": "4.17.21",
-        "marked-completed": "1.2.3",
-        "react-photo-view": "1.2.3"
-    },
-    "resolutions": {
-        "terser": "npm:@swc/core"
-    },
-    "files": [
-        "lib",
-        "es",
-        "README.md",
-        "LICENSE"
-    ]
+  "name": "neko-ui",
+  "version": "1.0.35",
+  "description": "UI库",
+  "main": "lib/index.js",
+  "private": true,
+  "scripts": {
+    "build": "mo build library",
+    "changelog": "conventional-changelog -p angular -u -i CHANGELOG.md -s -r 0 && git add CHANGELOG.md",
+    "lint": "mo eslint {components,site} && mo stylelint components && mo stylelint site && jest --coverage",
+    "precommit": "yarn lint && yarn changelog",
+    "prepare": "mo githooks pre-commit=\"yarn precommit\" commit-msg=\"npx --no -- commitlint --edit \\${1}\"",
+    "start": "mo start library",
+    "test": "jest --watchAll --coverage"
+  },
+  "author": "moneko",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/monako97/neko-ui"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "17.4.4",
+    "@commitlint/config-conventional": "17.4.4",
+    "@moneko/cli": "1.1.9",
+    "@moneko/core": "2.0.11",
+    "@moneko/postcss": "1.0.27",
+    "@moneko/react-live": "3.1.2",
+    "@swc/jest": "0.2.24",
+    "@testing-library/jest-dom": "5.16.5",
+    "@testing-library/react": "13.4.0",
+    "@testing-library/user-event": "14.4.3",
+    "@types/jest": "29.4.0",
+    "@types/katex": "0.16.0",
+    "@types/lodash": "4.14.191",
+    "conventional-changelog-cli": "2.2.2",
+    "eslint-config-neko": "1.0.20",
+    "husky": "8.0.3",
+    "identity-obj-proxy": "3.0.0",
+    "jest": "29.4.1",
+    "jest-environment-jsdom": "29.4.1",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
+    "stylelint-config-moneko": "1.0.9",
+    "ts-node": "10.9.1"
+  },
+  "dependencies": {
+    "@emotion/css": "11.10.5",
+    "@moneko/common": "1.0.11",
+    "katex": "0.16.4",
+    "lodash": "4.17.21",
+    "marked-completed": "1.2.3",
+    "react-photo-view": "1.2.3"
+  },
+  "resolutions": {
+    "terser": "npm:@swc/core"
+  },
+  "files": [
+    "lib",
+    "es",
+    "README.md",
+    "LICENSE"
+  ]
 }

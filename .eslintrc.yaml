@@ -3,6 +3,7 @@ extends:
 ignorePatterns:
   - prism.js
   - iconfont.js
+  - CHANGELOG.md
 rules:
   import/no-unresolved:
     - 2

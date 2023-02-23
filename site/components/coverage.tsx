@@ -93,6 +93,7 @@ const Coverage: FC = () => {
     [location.pathname, readme]
   );
 
+  if (location.pathname === '/change-log') return null;
   if (location.pathname === '/examples') return null;
   if (location.pathname.startsWith('/@moneko')) return null;
   return (

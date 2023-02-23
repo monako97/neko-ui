@@ -12,6 +12,28 @@ const siteEmptyCss = css`
     margin-left: 1rem;
   }
 
+  .site-empty-top {
+    display: flex;
+    gap: 24px;
+  }
+
+  .site-empty-info {
+    flex: 1;
+  }
+
+  .site-empty-thank {
+    width: 180px;
+
+    h2::before,
+    a::after {
+      content: none;
+    }
+
+    h2 {
+      border: none;
+    }
+  }
+
   .site-empty-colors {
     display: flex;
     gap: 0.75rem;
@@ -59,16 +81,33 @@ const types = ['color-bg', 'color-outline', 'color-border', 'color-hover', 'colo
 const Empty: FC = () => {
   return (
     <div className="n-md-body site-empty">
-      {infos.map((e, i) => {
-        return (
-          typeof e[1] === 'string' && (
-            <p key={i}>
-              <strong>{e[0]}: </strong>
-              <span>{e[1]}</span>
-            </p>
-          )
-        );
-      })}
+      <div className="site-empty-top">
+        <div className="site-empty-info">
+          {infos.map((e, i) => {
+            return (
+              typeof e[1] === 'string' && (
+                <p key={i}>
+                  <strong>{e[0]}: </strong>
+                  <span>{e[1]}</span>
+                </p>
+              )
+            );
+          })}
+        </div>
+        <div className="site-empty-thank">
+          <h2>感谢</h2>
+          <a
+            href="https://www.jetbrains.com/?from=monako"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <img
+              src="https://resources.jetbrains.com/storage/products/company/brand/logos/jb_beam.svg"
+              alt="jetbrains"
+            />
+          </a>
+        </div>
+      </div>
       <h4>主题色</h4>
       <div className="site-empty-colors">
         {colors.map((c) => {
