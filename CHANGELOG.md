@@ -3,7 +3,8 @@
 
 ### Features
 
-* 颜色选择器 ([a8f0fd2](https://github.com/monako97/neko-ui/commit/a8f0fd255e3fa606d76377a82c6e4939e5cb05af))
+* 颜色选择器、颜色选择面板、文档生产方式 ([35602e7](https://github.com/monako97/neko-ui/commit/35602e758b1dcb695c823be87d553721903b52ad))
+* 颜色选择器、颜色选择面板、文档生产方式 ([3195b70](https://github.com/monako97/neko-ui/commit/3195b709be77f103c5f40dffe6f5f61bd745e13d))
 
 
 
