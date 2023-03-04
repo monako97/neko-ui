@@ -2,7 +2,7 @@
 
 # 说明
 
-<details>
+<details open>
   <summary>查看目录结构说明</summary>
 
 ```treeview

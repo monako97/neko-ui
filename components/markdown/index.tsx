@@ -84,7 +84,7 @@ export interface MarkdownProps {
   className?: string;
   style?: CSSProperties;
   /** md内容 */
-  text?: string;
+  text?: string | null;
   /** 开启图片查看器 */
   pictureViewer?: boolean;
   /** 显示代码块行号 */

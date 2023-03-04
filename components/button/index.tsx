@@ -1,4 +1,4 @@
-import React, {
+import {
   type FC,
   type HTMLAttributes,
   type MouseEventHandler,
@@ -6,6 +6,7 @@ import React, {
   useRef,
   useState,
   useMemo,
+  createElement,
 } from 'react';
 import { css, injectGlobal } from '@emotion/css';
 import { classNames, isFunction } from '@moneko/common';
@@ -14,7 +15,7 @@ import type { ComponentSize } from '../';
 
 const cls: Record<string | ButtonType | ComponentSize | number | symbol, string> = {
   btn: prefixCls('btn'),
-  text: prefixCls('btn-text'),
+  label: prefixCls('btn-label'),
   primary: prefixCls('btn-primary'),
   warning: prefixCls('btn-warning'),
   error: prefixCls('btn-error'),
@@ -27,7 +28,7 @@ const cls: Record<string | ButtonType | ComponentSize | number | symbol, string>
   circle: prefixCls('btn-circle'),
   ghost: prefixCls('btn-ghost'),
   link: prefixCls('btn-link'),
-  float: prefixCls('btn-float'),
+  flat: prefixCls('btn-flat'),
   disabled: prefixCls('btn-disabled'),
   without: prefixCls('btn-without'),
   default: prefixCls('btn-default'),
@@ -36,17 +37,27 @@ const cls: Record<string | ButtonType | ComponentSize | number | symbol, string>
   normal: prefixCls('btn-normal'),
 };
 
-function btnColor(type: ButtonType) {
+function btnColor(type: ButtonType | 'danger') {
+  let _cls = `.${cls[type]}`,
+    fillCls = `.${cls[type]}.${cls.fill}`;
+
+  if (type === 'error') {
+    _cls = `.${cls[type]},.${cls.danger}`;
+    fillCls = `.${cls[type]}.${cls.fill},.${cls.danger}.${cls.fill}`;
+  }
+
   return `
-    .${cls[type]} {
-      --btn-color: var(--${type}-color);
+    ${_cls}:not([disabled]) {
+      .${cls.label} {
+        --btn-color: var(--${type}-color);
+      }
       --btn-border: var(--${type}-color-border);
       --btn-bg: var(--${type}-color-bg);
       --btn-hover-color: var(--${type}-color-hover);
       --btn-active-color: var(--${type}-color-active);
       --btn-outline-color: var(--${type}-color-outline);
     }
-    .${cls[type]}.${cls.fill} {
+    ${fillCls} {
       --btn-bg: var(--${type}-color);
       --btn-border: var(--${type}-color);
       --btn-hover-bg: var(--${type}-color-hover);
@@ -66,8 +77,23 @@ const btnCss = css`
     --disable-bg: rgb(255 255 255 / 8%);
     --disable-border: #424242;
   }
+  .${cls.label} {
+    display: block;
+    overflow: hidden;
+    text-align: center;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    color: var(--btn-color);
+    transition-property: color;
+  }
+  .${cls.btn},.${cls.label} {
+    transition-timing-function: var(--transition-timing-function);
+    transition-duration: var(--transition-duration);
+  }
   .${cls.btn} {
-    display: inline-block;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
     border: 1px solid var(--btn-border);
     border-radius: var(--border-radius);
     padding: 4px 16px;
@@ -81,8 +107,6 @@ const btnCss = css`
     outline-offset: 4px;
     line-height: 1;
     cursor: pointer;
-    transition-timing-function: var(--transition-timing-function);
-    transition-duration: var(--transition-duration);
     transition-property: color, background-color, border-color, width, height, transform;
     user-select: none;
     touch-action: manipulation;
@@ -90,23 +114,20 @@ const btnCss = css`
 
     &:hover:not([disabled]) {
       border-color: var(--btn-hover-color);
-      color: var(--btn-hover-color);
       background-color: var(--btn-bg);
+      .${cls.label} {
+        color: var(--btn-hover-color);
+      }
     }
 
     &:active:not([disabled]) {
       border-color: var(--btn-active-color);
-      color: var(--btn-active-color);
       background-color: var(--btn-bg);
       transform: scale(0.98);
+      .${cls.label} {
+        color: var(--btn-active-color);
+      }
     }
-  }
-  .${cls.text} {
-    display: block;
-    overflow: hidden;
-    text-align: center;
-    text-overflow: ellipsis;
-    white-space: nowrap;
   }
   .${cls.normal} {
     --btn-size: 2rem;
@@ -122,6 +143,11 @@ const btnCss = css`
 
     font-size: var(--font-size-lg, 16px);
   }
+  .${cls.link} {
+    .${cls.label} {
+      --btn-color: var(--primary-color);
+    }
+  }
   .${cls.default} {
     --btn-outline-color: var(--primary-color-outline);
     --btn-color: var(--text-color);
@@ -136,7 +162,9 @@ const btnCss = css`
   ${btnColor('warning')}
   .${cls.fill} {
     &:not([disabled]):not(.${cls.default}) {
-      color: #fff !important;
+      .${cls.label} {
+        color: #fff !important;
+      }
 
       &:hover {
         --btn-bg: var(--btn-hover-color) !important;
@@ -147,15 +175,25 @@ const btnCss = css`
       }
     }
   }
+  .${cls.fill}.${cls.danger}.${cls.default} {
+    .${cls.label} {
+      color: #fff !important;
+    }
+  }
   .${cls.dashed} {
     border-style: dashed;
   }
-  .${cls.float}, .${cls.link} {
+  .${cls.flat}, .${cls.link} {
     border-color: transparent !important;
     background-color: transparent;
   }
   .${cls.ghost}, .${cls.link} {
     background-color: transparent !important;
+  }
+  .${cls.btn}.${cls.link} {
+    &::after {
+      content: none;
+    }
   }
   .${cls.circle} {
     border-radius: 50% !important;
@@ -179,7 +217,7 @@ const btnCss = css`
   }
 
   .${cls.without}, .${cls.infinite} {
-    &:not(${cls.link}) {
+    &:not(.${cls.link}):not(.${cls.flat}) {
       position: relative;
 
       &::before {
@@ -198,7 +236,7 @@ const btnCss = css`
   }
 
   .${cls.infinite} {
-    &:not(${cls.link})::before {
+    &:not(.${cls.link}):not(.${cls.flat})::before {
       opacity: 0.2;
       animation: btn-wave-effect 0.3s cubic-bezier(1, 1, 1, 0.99) infinite;
     }
@@ -239,14 +277,16 @@ export interface ButtonProps extends HTMLAttributes<HTMLButtonElement> {
   circle?: boolean;
   /** 虚线按钮 */
   dashed?: boolean;
-  /** 只有文字的按钮 */
-  float?: boolean;
+  /** 扁平按钮 */
+  flat?: boolean;
   /** 禁用按钮 */
   disabled?: boolean;
   /** 块按钮 */
   block?: boolean;
   /** 链接按钮 */
   link?: boolean;
+  /** 危险按钮 */
+  danger?: boolean;
   size?: ComponentSize;
 }
 
@@ -256,8 +296,9 @@ const Button: FC<ButtonProps> = ({
   fill,
   circle,
   dashed,
-  float,
+  flat,
   link,
+  danger,
   children,
   disabled,
   block,
@@ -289,10 +330,11 @@ const Button: FC<ButtonProps> = ({
         cls.btn,
         cls[type],
         cls[size],
+        danger && cls.danger,
         block && cls.block,
         fill && cls.fill,
         circle && cls.circle,
-        float && cls.float,
+        flat && cls.flat,
         dashed && cls.dashed,
         ghost && cls.ghost,
         infinite && cls.infinite,
@@ -306,10 +348,11 @@ const Button: FC<ButtonProps> = ({
       block,
       circle,
       className,
+      danger,
       dashed,
       disabled,
       fill,
-      float,
+      flat,
       ghost,
       infinite,
       link,
@@ -318,17 +361,25 @@ const Button: FC<ButtonProps> = ({
     ]
   );
 
-  return (
-    <button
-      {...props}
-      ref={ref}
-      onClick={handleClick}
-      onAnimationEnd={handleAnimationEnd}
-      className={btnCls}
-      disabled={disabled}
-    >
-      <span className={cls.text}>{children}</span>
-    </button>
+  const tag = useMemo(() => (link ? 'a' : 'button'), [link]);
+
+  return createElement(
+    tag,
+    {
+      ...props,
+      ref,
+      onClick: handleClick,
+      onAnimationEnd: handleAnimationEnd,
+      className: btnCls,
+      disabled: disabled,
+    },
+    createElement(
+      'span',
+      {
+        className: cls.label,
+      },
+      children
+    )
   );
 };
 

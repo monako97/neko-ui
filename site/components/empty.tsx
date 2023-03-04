@@ -1,6 +1,7 @@
 import React, { FC, memo } from 'react';
 import { css, injectGlobal } from '@emotion/css';
 import getBrowser from 'neko-ui/utils/broswer';
+import jb_beam from '@/assets/images/jb_beam.svg';
 import { projectInfo } from '@/utils';
 
 const siteEmptyCss = css`
@@ -14,7 +15,7 @@ const siteEmptyCss = css`
 
   .site-empty-top {
     display: flex;
-    gap: 24px;
+    gap: 1.5rem;
   }
 
   .site-empty-info {
@@ -22,7 +23,10 @@ const siteEmptyCss = css`
   }
 
   .site-empty-thank {
-    width: 180px;
+    img {
+      width: 7.5rem;
+      height: 7.5rem;
+    }
 
     h2::before,
     a::after {
@@ -30,6 +34,7 @@ const siteEmptyCss = css`
     }
 
     h2 {
+      margin: 0;
       border: none;
     }
   }
@@ -50,15 +55,22 @@ const siteEmptyCss = css`
     display: flex;
     justify-content: space-between;
     align-items: center;
-    border-radius: var(--border-radius, 8px);
+    border-radius: var(--border-radius, 0.5rem);
     padding: 0.5rem 0.75rem;
     color: #fff;
     cursor: pointer;
+    transition-property: background-color;
+  }
+
+  .site-empty-color-item,
+  .site-empty-color-item i {
+    transition-timing-function: var(--transition-timing-function);
+    transition-duration: var(--transition-duration);
   }
 
   .site-empty-color-item i {
     color: var(--text-color, rgb(0 0 0 / 65%));
-    transition: opacity var(--transition-duration) var(--transition-timing-function);
+    transition-property: opacity, color;
   }
 
   .site-empty-color-item i:last-of-type {
@@ -72,7 +84,7 @@ const broswer = getBrowser();
 const infos: [string, string?][] = [
   ['描述', projectInfo.description],
   ['版本', projectInfo.version],
-  ['作者', projectInfo.author as string],
+  ['作者', projectInfo.author?.name],
   ['浏览器', `${broswer.name} ${broswer.version}`],
 ];
 const colors = ['primary', 'warning', 'error', 'success'];
@@ -101,10 +113,7 @@ const Empty: FC = () => {
             target="_blank"
             rel="noopener noreferrer"
           >
-            <img
-              src="https://resources.jetbrains.com/storage/products/company/brand/logos/jb_beam.svg"
-              alt="jetbrains"
-            />
+            <img src={jb_beam} />
           </a>
         </div>
       </div>

@@ -601,7 +601,7 @@ pre:not(.sp-cm) {
     font-size: var(--font-size, 14px);
     white-space: pre-wrap;
     background-color: var(--code-bg, rgb(255 255 255 / 80%));
-    box-shadow: 0 0 10px rgb(0 0 0 / 10%);
+    box-shadow: 0 2px 8px 0 rgb(0 0 0 / 5%);
     line-height: 20px;
     transition-property: color, background-color, box-shadow;
 }
@@ -737,10 +737,6 @@ pre:not(.sp-cm).line-numbers .line-numbers-rows {
 pre:not(.sp-cm)::-webkit-scrollbar,
 pre:not(.sp-cm) ::-webkit-scrollbar {
     display: none;
-}
-
-pre:not(.sp-cm, .prism-code, .sandbox-error-msg):hover {
-    box-shadow: 0 2px 20px rgb(0 0 0 / 20%);
 }
 
 @media print {

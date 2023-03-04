@@ -114,6 +114,7 @@
   transition-property: background-color;
   backdrop-filter: blur(1rem);
   flex: 1;
+  box-shadow: 0 2px 8px 0 rgb(0 0 0 / 2%);
 }
 
 .n-md-body a {
@@ -138,6 +139,7 @@
   background-color: var(--toc-bg, rgb(255 255 255 / 80%));
   box-sizing: border-box;
   backdrop-filter: blur(16px);
+  box-shadow: 0 2px 8px 0 rgb(0 0 0 / 2%);
   transition-duration: var(--transition-duration);
   transition-timing-function: var(--transition-timing-function);
   transition-property: border-color, background-color, box-shadow;
@@ -167,6 +169,7 @@
 .n-md-toc .active,
 .n-md-toc .active a {
   color: var(--primary-color, #5794ff);
+  text-shadow: 0 1px var(--text-shadow-color);
 }
 
 .n-md-body a::after {
@@ -206,6 +209,7 @@
   padding: 0;
   background-color: unset;
   backdrop-filter: none;
+  box-shadow: none;
 }
 
 .n-md-body h1::before,
@@ -445,6 +449,31 @@ blockquote p {
   transform: translateX(53px);
 }
 
+.n-md-body blockquote.n-tip {
+  margin: 16px 0 16px 8px;
+  border-left: 4px solid var(--primary-color, #5794ff);
+}
+
+.n-md-body blockquote.n-tip::after {
+  content: none;
+}
+
+.n-md-body blockquote.n-tip::before {
+  top: 18px;
+  left: -12px;
+  border-radius: 100%;
+  width: 20px;
+  height: 20px;
+  font-size: 14px;
+  font-weight: bold;
+  text-align: center;
+  color: #fff;
+  background-color: var(--primary-color, #5794ff);
+  transform: none;
+  content: "!";
+  line-height: 20px;
+}
+
 .n-md-body blockquote cite {
   font-size: var(--font-size, 14px);
   color: var(--cite-color, #bfbfbf);
@@ -471,7 +500,7 @@ blockquote p {
   background: var(--details-bg, #fafaff);
   box-sizing: border-box;
   user-select: none;
-  box-shadow: 1px 1px 10px 0 var(--shadow-lite);
+  box-shadow: 0 2px 8px 0 rgb(0 0 0 / 5%);
 }
 
 .n-md-body details,

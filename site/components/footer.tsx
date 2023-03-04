@@ -1,6 +1,5 @@
 import React, { memo } from 'react';
 import { css, injectGlobal } from '@emotion/css';
-import { isObject } from '@moneko/common';
 import { projectInfo } from '@/utils';
 
 const footerCss = css`
@@ -22,19 +21,16 @@ const footerCss = css`
 
 injectGlobal([footerCss]);
 const year = new Date().getFullYear();
-const { repository, author } = projectInfo;
-const repositoryUrl = isObject(repository) ? repository.url : repository;
-
 const Footer = () => {
   return (
     <footer className="site-footer">
       <p>
-        <a href={repositoryUrl} target="_blank" rel="noopener noreferrer">
-          {projectInfo.title}
+        <a href={projectInfo.repository?.url} target="_blank" rel="noopener noreferrer">
+          {projectInfo.title}&nbsp;
         </a>
-        {` ${year} Created by `}
-        <a href="" target="_blank" rel="noopener noreferrer">
-          {author?.toString()}
+        Ⓒ {year} Made with ❤️‍🔥 by&nbsp;
+        <a href={projectInfo.author?.url} target="_blank" rel="noopener noreferrer">
+          {projectInfo.author?.name}
         </a>
       </p>
     </footer>

@@ -22,7 +22,7 @@ describe('test Button', () => {
   });
   it('args', () => {
     render(
-      <Button type="primary" link circle ghost float dashed fill infinite data-testid="btn">
+      <Button type="primary" link circle ghost flat dashed fill infinite data-testid="btn">
         type ghost circle dashed float fill infinite
       </Button>
     );

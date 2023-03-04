@@ -91,7 +91,7 @@ export interface InputProps
   // eslint-disable-next-line no-unused-vars
   formatter?: (value?: InputProps['value']) => InputProps['value'];
   // eslint-disable-next-line no-unused-vars
-  parser?: (value?: InputProps['value']) => InputProps['value'];
+  parser?: false | ((value?: InputProps['value']) => InputProps['value']);
 }
 
 const Input: FC<InputProps> = ({

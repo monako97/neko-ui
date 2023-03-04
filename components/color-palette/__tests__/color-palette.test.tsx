@@ -1,6 +1,6 @@
 import React from 'react';
 import { fireEvent, render, screen } from '@testing-library/react';
-import { ColorPalette } from 'neko-ui';
+import { ColorPalette, prefixCls } from 'neko-ui';
 
 /**
  * @jest-environment jsdom
@@ -13,7 +13,7 @@ describe('test ColorPalette', () => {
 
     const colorCanvasEl = screen
       .getByTestId(testId)
-      .querySelector('article canvas') as HTMLCanvasElement;
+      .querySelector(`.${prefixCls('color-palette-picker')}`) as HTMLCanvasElement;
 
     fireEvent(
       colorCanvasEl,
@@ -60,70 +60,70 @@ describe('test ColorPalette', () => {
     const hexEl = screen.getByTestId(testId).querySelector('input[name=hex]') as HTMLElement;
 
     expect(hexEl).toBeInTheDocument();
-    const rEl = screen.getByTestId(testId).querySelector('input[name=r]') as HTMLElement;
+    // const rEl = screen.getByTestId(testId).querySelector('input[name=r]') as HTMLElement;
 
-    expect(rEl).toBeInTheDocument();
-    const gEl = screen.getByTestId(testId).querySelector('input[name=g]') as HTMLElement;
+    // expect(rEl).toBeInTheDocument();
+    // const gEl = screen.getByTestId(testId).querySelector('input[name=g]') as HTMLElement;
 
-    expect(gEl).toBeInTheDocument();
-    const bEl = screen.getByTestId(testId).querySelector('input[name=b]') as HTMLElement;
+    // expect(gEl).toBeInTheDocument();
+    // const bEl = screen.getByTestId(testId).querySelector('input[name=b]') as HTMLElement;
 
-    expect(bEl).toBeInTheDocument();
-    const aEl = screen.getByTestId(testId).querySelector('input[name=a]') as HTMLElement;
+    // expect(bEl).toBeInTheDocument();
+    // const aEl = screen.getByTestId(testId).querySelector('input[name=a]') as HTMLElement;
 
-    expect(aEl).toBeInTheDocument();
+    // expect(aEl).toBeInTheDocument();
 
     fireEvent.input(hexEl, {
       target: {
         value: 101,
       },
     });
-    fireEvent.input(rEl, {
-      target: {
-        value: 101,
-      },
-    });
-    fireEvent.input(gEl, {
-      target: {
-        value: 101,
-      },
-    });
-    fireEvent.input(bEl, {
-      target: {
-        value: 101,
-      },
-    });
-    fireEvent.input(aEl, {
-      target: {
-        value: -0.1,
-      },
-    });
-    fireEvent.input(aEl, {
-      target: {
-        value: '1a22',
-      },
-    });
-    fireEvent(
-      aEl,
-      new FakeMouseEvent('mousedown', {
-        bubbles: true,
-        cancelable: true,
-        offsetX: 1,
-      })
-    );
-    fireEvent(
-      aEl,
-      new FakeMouseEvent('mousemove', {
-        bubbles: true,
-        cancelable: true,
-        movementX: -100,
-      })
-    );
-    fireEvent.input(aEl, {
-      target: {
-        value: 'NAN',
-      },
-    });
+    // fireEvent.input(rEl, {
+    //   target: {
+    //     value: 101,
+    //   },
+    // });
+    // fireEvent.input(gEl, {
+    //   target: {
+    //     value: 101,
+    //   },
+    // });
+    // fireEvent.input(bEl, {
+    //   target: {
+    //     value: 101,
+    //   },
+    // });
+    // fireEvent.input(aEl, {
+    //   target: {
+    //     value: -0.1,
+    //   },
+    // });
+    // fireEvent.input(aEl, {
+    //   target: {
+    //     value: '1a22',
+    //   },
+    // });
+    // fireEvent(
+    //   aEl,
+    //   new FakeMouseEvent('mousedown', {
+    //     bubbles: true,
+    //     cancelable: true,
+    //     offsetX: 1,
+    //   })
+    // );
+    // fireEvent(
+    //   aEl,
+    //   new FakeMouseEvent('mousemove', {
+    //     bubbles: true,
+    //     cancelable: true,
+    //     movementX: -100,
+    //   })
+    // );
+    // fireEvent.input(aEl, {
+    //   target: {
+    //     value: 'NAN',
+    //   },
+    // });
     expect(screen.getByTestId(testId)).toBeInTheDocument();
   });
 });

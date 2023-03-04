@@ -45,6 +45,7 @@ const siderCss = css`
     backdrop-filter: blur(1rem);
     transition-property: background-color, color;
     flex-direction: column;
+    box-shadow: 0 0.125rem 0.5rem 0 rgb(0 0 0 / 2%);
   }
 
   .site-sider > div {

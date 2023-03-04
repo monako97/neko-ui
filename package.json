@@ -1,6 +1,6 @@
 {
   "name": "neko-ui",
-  "version": "1.0.35",
+  "version": "1.0.36",
   "description": "UI库",
   "main": "lib/index.js",
   "private": true,
@@ -13,7 +13,11 @@
     "start": "mo start library",
     "test": "jest --watchAll --coverage"
   },
-  "author": "moneko",
+  "author": {
+    "name": "moneko",
+    "url": "https://github.com/monako97",
+    "email": "meow.monako@gmail.com"
+  },
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -23,7 +27,7 @@
     "@commitlint/cli": "17.4.4",
     "@commitlint/config-conventional": "17.4.4",
     "@moneko/cli": "1.1.9",
-    "@moneko/core": "2.0.11",
+    "@moneko/core": "2.0.13",
     "@moneko/postcss": "1.0.27",
     "@moneko/react-live": "3.1.2",
     "@swc/jest": "0.2.24",
@@ -49,7 +53,7 @@
     "@moneko/common": "1.0.11",
     "katex": "0.16.4",
     "lodash": "4.17.21",
-    "marked-completed": "1.2.3",
+    "marked-completed": "1.2.4",
     "react-photo-view": "1.2.3"
   },
   "resolutions": {

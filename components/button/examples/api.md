@@ -1,3 +1,5 @@
+## API
+
 | 属性      | 说明         | 类型                                                        | 默认值    | 版本   |
 | --------- | ------------ | ----------------------------------------------------------- | --------- | ------ |
 | className | 自定义类名   | string                                                      | -         | -      |
@@ -8,8 +10,9 @@
 | fill      | 实色背景     | boolean                                                     | -         | -      |
 | circle    | 圆形按钮     | boolean                                                     | -         | -      |
 | dashed    | 虚线按钮     | boolean                                                     | -         | -      |
-| float     | 文字按钮     | boolean                                                     | -         | -      |
+| flat      | 扁平按钮     | boolean                                                     | -         | -      |
 | disabled  | 禁用按钮     | boolean                                                     | -         | -      |
 | link      | 链接按钮     | boolean                                                     | -         | -      |
 | block     | 块按钮       | boolean                                                     | -         | -      |
 | size      | 尺寸         | `small` \| `normal` \| `large`                              | `normal`  | 1.0.36 |
+| danger    | 危险按钮     | boolean                                                     | -         | -      |

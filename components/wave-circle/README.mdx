@@ -2,9 +2,9 @@ export const basic = {
   type: '组件',
   title: '水波纹',
   subtitle: 'WaveCircle',
+  icon: '💦',
 };
 import api from './examples/api.md';
-import code from './examples/案例一.mdx';
 
 <Box>
 
@@ -19,16 +19,12 @@ import code from './examples/案例一.mdx';
   <WaveCircle>默认</WaveCircle>
 </div>
 
-```tsx
+```jsx
 <div style={{ display: 'flex', height: 288 }}>
   <WaveCircle bgColor="pink" />
   <WaveCircle>默认</WaveCircle>
 </div>
 ```
-
-### 读取文件并只展示代码 `./examples/default.tsx`
-
-<CodeBlock code={code} lang="tsx" />
 
 > 或传入 path (src 目录下代码所在位置) 通过 Snapshot 展示
 

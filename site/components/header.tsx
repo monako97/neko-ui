@@ -15,11 +15,11 @@ const headerCss = css`
     align-items: center;
     height: 4.375rem;
     background-color: var(--header-bg, rgb(255 255 255 / 90%));
-    box-shadow: 0 0 #0000, 0 0 #0000, 0 0.0625rem 0.125rem 0 rgb(0 0 0 / 5%);
     transition-duration: var(--transition-duration);
     transition-timing-function: var(--transition-timing-function);
     transition-property: box-shadow, background-color, border-color;
     backdrop-filter: blur(1rem);
+    box-shadow: 0 0.0625rem 0.125rem 0 rgb(0 0 0 / 2%);
   }
 
   .site-logo {

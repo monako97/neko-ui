@@ -1,150 +1,74 @@
 import React, {
-  type FC,
   useCallback,
   useEffect,
-  useMemo,
   useRef,
   useState,
+  useMemo,
+  type CSSProperties,
+  type Dispatch,
+  type FC,
   type HTMLAttributes,
-  type MouseEvent as ReactMouseEvent,
+  type MouseEventHandler,
+  type SetStateAction,
 } from 'react';
 import { css, injectGlobal } from '@emotion/css';
-import { classNames, tinycolor } from '@moneko/common';
-import AlphaSlider from './alpha-slider';
-import HueSlider from './hue-slider';
-import { Input, InputNumber } from '../index';
+import { classNames, passiveSupported, setClipboard } from '@moneko/common';
+import { parseToHSVA } from './color';
+import { genHSVA, HSVAVoidName } from './gen-hsva';
+import { Button, Input, InputNumber } from '../index';
 import prefixCls from '../prefix-cls';
 
+const colors = [
+  '#f44336',
+  '#E91E63',
+  '#9C27B0',
+  '#673AB7',
+  '#3F51B5',
+  '#2196F3',
+  '#03A9F4',
+  '#00BCD4',
+  '#009688',
+  '#4CAF50',
+  '#8BC34A',
+  '#CDDC39',
+  '#FFC107',
+  '#FF9800',
+  'rgba(0,0,0,.65)',
+  'transparent',
+];
+
 export const cls = {
-  alphaSlider: prefixCls('color-palette-alpha-slider'),
-  sliderPicker: prefixCls('color-palette-alpha-picker'),
-  palette: prefixCls('color-palette-palette'),
-  svpanel: prefixCls('color-palette-svpanel'),
-  setting: prefixCls('color-palette-setting'),
-  strip: prefixCls('color-palette-strip'),
+  palette: prefixCls('color-palette'),
+  picker: prefixCls('color-palette-picker'),
   preview: prefixCls('color-palette-preview'),
   form: prefixCls('color-palette-form'),
   input: prefixCls('color-palette-input'),
+  switch: prefixCls('color-palette-switch'),
+  chooser: prefixCls('color-chooser'),
+  range: prefixCls('color-range'),
+  hue: prefixCls('color-hue'),
+  opacity: prefixCls('color-opacity'),
+  color: prefixCls('color-color'),
+  slider: prefixCls('color-slider'),
 };
 
 const colorPaletteCss = css`
-  .${cls.alphaSlider} {
-    border-radius: 10px;
-    width: 100%;
-    height: 10px;
-    background-position: 0 0, 5px 5px;
-    background-size: 10px 10px;
-    background-image: linear-gradient(
-        45deg,
-        #ccc 25%,
-        transparent 25%,
-        transparent 75%,
-        #ccc 75%,
-        #ccc
-      ),
-      linear-gradient(45deg, #ccc 25%, transparent 25%, transparent 75%, #ccc 75%, #ccc);
-    cursor: inherit;
-    pointer-events: none;
-    user-select: none;
-
-    &::after {
-      display: block;
-      border-radius: 10px;
-      width: 100%;
-      height: 100%;
-      content: '';
-      background-image: linear-gradient(to left, var(--offset-color, #fff), transparent);
-      cursor: inherit;
-    }
-  }
-  .${cls.sliderPicker} {
-    position: relative;
-    margin-bottom: 4px;
-    border-radius: var(--border-radius, 8px);
-    width: 100%;
-    height: 10px;
-    user-select: none;
-    cursor: pointer;
-
-    &:last-of-type {
-      margin-bottom: 0;
-    }
-
-    &::before {
-      position: absolute;
-      top: 0;
-      bottom: 0;
-      z-index: 1;
-      display: block;
-      margin: auto;
-      border-radius: 50%;
-      width: 6px;
-      height: 6px;
-      opacity: 1;
-      box-shadow: 0 0 0 1.5px #fff, inset 0 0 1px 1px rgb(0 0 0 / 20%), 0 0 1px 2px rgb(0 0 0 / 30%);
-      content: '';
-      transform: translateX(var(--offset-x, 0));
-      cursor: inherit;
-      pointer-events: none;
-    }
-
-    canvas {
-      position: absolute;
-      border-radius: 10px;
-      width: 100%;
-      height: 100%;
-    }
-  }
   .${cls.palette} {
-    width: 200px;
+    width: 100%;
     box-sizing: border-box;
     user-select: none;
   }
-  .${cls.svpanel} {
-    position: relative;
-    display: block;
-    border-radius: var(--border-radius, 8px);
-    width: 200px;
-    height: 150px;
-
-    canvas {
-      border-radius: 5px;
-      width: 100%;
-      height: 100%;
-    }
-
-    &:hover {
-      cursor: crosshair;
-    }
-
-    &::after {
-      position: absolute;
-      top: var(--offset-y, 1px);
-      left: var(--offset-x, 199px);
-      display: block;
-      border-radius: 50%;
-      width: 4px;
-      height: 4px;
-      box-shadow: 0 0 0 1.5px #fff, inset 0 0 1px 1px rgb(0 0 0 / 30%), 0 0 1px 2px rgb(0 0 0 / 40%);
-      transform: translate(-3px, -2px);
-      content: '';
-      pointer-events: none;
-    }
-  }
-  .${cls.setting} {
-    display: flex;
-    margin-top: 4px;
-    width: 100%;
-  }
-  .${cls.strip} {
-    flex: 1;
-  }
   .${cls.preview} {
-    margin-left: 4px;
-    border-radius: var(--border-radius, 8px);
-    width: 24px;
+    margin-left: 6px;
+    border-radius: var(--border-radius);
+    width: 46px;
+    font-family: neko-icon, sans-serif;
+    text-align: center;
+    color: #fff;
     background-position: 0 0, 5px 5px;
     background-size: 10px 10px;
+    cursor: pointer;
+    line-height: 26px;
     background-image: linear-gradient(
         45deg,
         #ccc 25%,
@@ -157,41 +81,191 @@ const colorPaletteCss = css`
 
     &::after {
       display: block;
-      border-radius: var(--border-radius, 8px);
+      border-radius: var(--border-radius);
       width: 100%;
       height: 100%;
-      background: var(--offset-color, #fff);
-      opacity: var(--offset-alpha, #fff);
-      box-shadow: rgb(0 0 0 / 15%) 0 0 0 1px inset, rgb(0 0 0 / 25%) 0 0 4px inset;
+      background-color: var(--c, #fff);
+      box-shadow: rgb(0 0 0 / 10%) 0 0 0 1px inset, rgb(0 0 0 / 15%) 0 0 5px inset;
+      text-shadow: var(--text-shadow);
       content: '';
+    }
+
+    &:hover::after {
+      content: '\\e631';
+    }
+
+    &[data-copy='success']::after {
+      content: '✓';
     }
   }
   .${cls.form} {
     display: flex;
-    margin-top: 8px;
-    width: 100%;
+    gap: 6px;
   }
   .${cls.input} {
     flex: 1;
-    padding-left: 4px;
-    text-align: center;
-
-    label {
-      display: block;
-      padding: 4px;
-      font-size: var(--font-size-sm, 12px);
-      text-align: center;
-      color: var(--text-color, rgb(0 0 0 / 65%));
-      line-height: 12px;
-    }
 
     input {
-      width: calc(100% - 8px);
+      width: 100%;
+      text-align: center;
+    }
+  }
+  .${cls.switch} {
+    width: 46px;
+    background-color: var(--primary-color-bg);
+    text-transform: uppercase;
+  }
+  .${cls.picker} {
+    position: relative;
+    border-radius: var(--border-radius);
+    height: 150px;
+    background: linear-gradient(to top, hsl(0deg 0% 0% / calc(var(--a))), transparent),
+      linear-gradient(
+        to left,
+        hsl(calc(var(--h)) 100% 50% / calc(var(--a))),
+        hsl(0deg 0% 100% / calc(var(--a)))
+      ),
+      linear-gradient(45deg, #ddd 25%, transparent 0, transparent 75%, #ddd 0),
+      linear-gradient(45deg, #ddd 25%, transparent 0, transparent 75%, #ddd 0);
+    background-position: 0 0, 0 0, 0 0, 5px 5px;
+    background-size: 100% 100%, 100% 100%, 10px 10px, 10px 10px;
+    opacity: 1;
+    transition: opacity 0.1s;
+    user-select: none;
+    cursor: crosshair;
+
+    &:active {
+      opacity: 0.99;
     }
 
-    &:first-of-type {
-      flex: 2;
-      padding-left: 0;
+    &::after {
+      position: absolute;
+      top: calc((100 - var(--v)) * 1%);
+      left: calc(var(--s) * 1%);
+      border: 2px solid #fff;
+      border-radius: 50%;
+      width: 10px;
+      height: 10px;
+      pointer-events: none;
+      content: '';
+      box-sizing: border-box;
+      transform: translate(-50%, -50%);
+    }
+  }
+  .${cls.chooser} {
+    display: flex;
+    padding: 8px 0;
+  }
+  .${cls.range} {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    flex: 1;
+  }
+  .${cls.hue} {
+    background-image: linear-gradient(to right, red, yellow, lime, cyan, blue, magenta, red);
+  }
+  .${cls.opacity} {
+    background-image: linear-gradient(
+        to right,
+        hsl(calc(var(--h)) 100% 50% / 0%),
+        hsl(calc(var(--h)) 100% 50% / 100%)
+      ),
+      linear-gradient(45deg, #ddd 25%, transparent 0, transparent 75%, #ddd 0),
+      linear-gradient(45deg, #ddd 25%, transparent 0, transparent 75%, #ddd 0);
+    background-position: 0 0, 0 0, 5px 5px;
+    background-size: 100% 100%, 10px 10px, 10px 10px;
+  }
+  .${cls.slider} {
+    display: block;
+    margin: 0;
+    border-radius: 5px;
+    width: 100%;
+    height: 10px;
+    outline: 0;
+    pointer-events: all;
+    appearance: none;
+
+    &::-webkit-slider-runnable-track {
+      position: relative;
+      display: flex;
+      align-items: center;
+    }
+
+    &::-webkit-slider-thumb {
+      appearance: none;
+      position: relative;
+      border-radius: 50%;
+      width: 10px;
+      height: 10px;
+      background: #fff;
+      box-shadow: 0 0 10px rgb(0 0 0 / 10%);
+      transition: 0.2s cubic-bezier(0.12, 0.4, 0.29, 1.46);
+      transform: scale(1.2);
+    }
+
+    &::-moz-range-thumb {
+      position: relative;
+      border: 0;
+      border-radius: 50%;
+      width: 10px;
+      height: 10px;
+      background: #fff;
+      box-shadow: 0 0 10px rgb(0 0 0 / 10%);
+      transition: 0.2s cubic-bezier(0.12, 0.4, 0.29, 1.46);
+      box-sizing: border-box;
+      pointer-events: none;
+      transform: scale(1.2);
+    }
+
+    &::-webkit-slider-thumb:active,
+    &:focus::-webkit-slider-thumb {
+      transform: scale(1.5);
+    }
+
+    &::-moz-range-thumb:active,
+    &:focus::-moz-range-thumb {
+      transform: scale(1.5);
+    }
+  }
+
+  .${cls.color} {
+    display: grid;
+    padding-top: 8px;
+    grid-template-columns: repeat(auto-fit, minmax(15px, 20px));
+    grid-gap: 8px;
+
+    i {
+      position: relative;
+      border: 0;
+      border-radius: var(--border-radius);
+      padding-top: 100%;
+      padding-bottom: 0;
+      width: 100%;
+      background-color: var(--c);
+      outline: 0;
+      cursor: pointer;
+      transition: 0.15s box-shadow ease;
+
+      &::before {
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: -1;
+        border-radius: var(--border-radius);
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(45deg, #ddd 25%, transparent 0, transparent 75%, #ddd 0),
+          linear-gradient(45deg, #ddd 25%, transparent 0, transparent 75%, #ddd 0);
+        background-position: 0 0, 5px 5px;
+        background-size: 10px 10px;
+        content: '';
+      }
+
+      &:hover,
+      &:focus {
+        box-shadow: 2px 2px 3px 0 var(--c);
+      }
     }
   }
 `;
@@ -200,253 +274,284 @@ injectGlobal([colorPaletteCss]);
 
 export interface ColorPaletteProps extends Omit<HTMLAttributes<HTMLDivElement>, 'onChange'> {
   value?: string;
+  defaultValue?: string;
   // eslint-disable-next-line no-unused-vars
   onChange?: (color: string) => void;
 }
-type CanvasMouseEvent = ReactMouseEvent<HTMLCanvasElement>;
+const formatterInt = (v?: number | string) => {
+  return v ? parseInt((v as number).toFixed()) : v;
+};
+const formatterOpacity = (v?: number | string) => {
+  return v ? parseInt(((v as number) * 100).toFixed()) : v;
+};
+const parseOpacity = (v?: string | number) => {
+  let _val = v;
 
+  if (typeof v === 'string') {
+    _val = v.replace(/[^\d]/g, '');
+  }
+
+  return (_val as number) / 100;
+};
+
+interface RGBAFormProps {
+  hsva: number[];
+  setColor: Dispatch<SetStateAction<string>>;
+}
+const rgbaFlied = ['r', 'g', 'b', 'a'];
+const RGBAForm: FC<RGBAFormProps> = ({ hsva, setColor }) => {
+  const rgba = useMemo(() => genHSVA(...hsva).toRGBA(), [hsva]);
+
+  return (
+    <>
+      {rgbaFlied.map((k, i) => {
+        return (
+          <InputNumber
+            key={k}
+            className={cls.input}
+            name={k}
+            size="small"
+            min={0}
+            max={i === 3 ? 1 : 255}
+            step={i === 3 ? 0.01 : 1}
+            value={rgba[i]}
+            formatter={i === 3 ? formatterOpacity : formatterInt}
+            parser={i === 3 && parseOpacity}
+            onChange={(v?: number) => {
+              const c = [...rgba];
+
+              c[i] = v || 0;
+              setColor(`rgba(${c.join(',')})`);
+            }}
+          />
+        );
+      })}
+    </>
+  );
+};
+const hslaFlied = [
+  { key: 'h', max: 360 },
+  { key: 's', max: 100 },
+  { key: 'l', max: 100 },
+  {
+    key: 'a',
+    step: 0.01,
+    max: 1,
+    formatter: formatterOpacity,
+    parser: parseOpacity,
+  },
+];
+const HSLAForm: FC<RGBAFormProps> = ({ hsva, setColor }) => {
+  const hsla = useMemo(() => genHSVA(...hsva).toHSLA(), [hsva]);
+
+  return (
+    <>
+      {hslaFlied.map((h, i) => {
+        return (
+          <InputNumber
+            key={h.key}
+            name={h.key}
+            className={cls.input}
+            min={0}
+            max={h.max}
+            step={h.step || 1}
+            size="small"
+            value={hsla[i]}
+            formatter={i === 3 ? formatterOpacity : formatterInt}
+            parser={i === 3 && parseOpacity}
+            onChange={(v) => {
+              const c = [...hsla];
+
+              c[i] = v || 0;
+              setColor(`hsla(${c[0]},${c[1]}%,${c[2]}%,${c[3]})`);
+            }}
+          />
+        );
+      })}
+    </>
+  );
+};
 const ColorPalette: FC<ColorPaletteProps> = ({
   className,
-  value = 'rgba(255,0,0,1)',
+  defaultValue = '#5794ff',
+  value,
   onChange,
   ...props
 }) => {
-  const colorPaletteRef = useRef<HTMLDivElement>(null);
-  const colorPickerRef = useRef<HTMLCanvasElement>(null);
-  const hueSlider = useRef<{ canvas: HTMLCanvasElement }>(null);
-  const [rgb, setRgb] = useState({
-    r: 255,
-    g: 0,
-    b: 0,
-  });
-  const [svPanelRect, setSvPanelRect] = useState({
-    width: 200,
-    height: 150,
-  });
+  const colorPickerRef = useRef<HTMLDivElement>(null);
+  const [color, setColor] = useState(value || defaultValue);
+  const colorRef = useRef(color);
+  const [hsva, setHSVA] = useState(parseToHSVA(color));
+  const hsvaRef = useRef(hsva);
   const [drag, setDrag] = useState(false);
-  const [alpha, setAlpha] = useState(tinycolor(value).getAlpha());
-  const [hue, setHue] = useState({
-    r: 255,
-    g: 0,
-    b: 0,
-  });
-  const fillGradient = useCallback(
-    (color: string) => {
-      if (colorPickerRef.current) {
-        const ctx1 = colorPickerRef.current.getContext('2d');
+  const val = useMemo(() => hsva.values, [hsva.values]);
+  const { hex } = useMemo(() => {
+    const _hsv = genHSVA(...val);
 
-        if (ctx1) {
-          ctx1.fillStyle = color;
-          ctx1.fillRect(0, 0, svPanelRect.width, svPanelRect.height);
-          if (hueSlider.current?.canvas) {
-            const ctx2 = hueSlider.current.canvas.getContext('2d');
-
-            if (ctx2) {
-              const grdWhite = ctx2.createLinearGradient(0, 0, hueSlider.current.canvas.width, 0);
-
-              grdWhite.addColorStop(0, 'rgba(255,255,255,1)');
-              grdWhite.addColorStop(1, 'rgba(255,255,255,0)');
-              ctx1.fillStyle = grdWhite;
-              ctx1.fillRect(0, 0, svPanelRect.width, svPanelRect.height);
-
-              const grdBlack = ctx2.createLinearGradient(0, 0, 0, svPanelRect.height);
-
-              grdBlack.addColorStop(0, 'rgba(0,0,0,0)');
-              grdBlack.addColorStop(1, 'rgba(0,0,0,1)');
-              ctx1.fillStyle = grdBlack;
-              ctx1.fillRect(0, 0, svPanelRect.width, svPanelRect.height);
-            }
-          }
-        }
-      }
-    },
-    [svPanelRect.height, svPanelRect.width]
-  );
-  const initColorPicker = useCallback(
-    (color: string) => {
-      const ctx1 = colorPickerRef.current?.getContext('2d');
-
-      if (ctx1) {
-        ctx1.rect(0, 0, svPanelRect.width, svPanelRect.height);
-        fillGradient(color);
-      }
-    },
-    [fillGradient, svPanelRect.height, svPanelRect.width]
-  );
+    return { hex: _hsv.toHEXA() };
+  }, [val]);
   const changeColor = useCallback(
-    ({ nativeEvent: { offsetX, offsetY } }: CanvasMouseEvent) => {
-      const ctx1 = colorPickerRef.current?.getContext('2d');
+    (ev: MouseEvent) => {
+      if (colorPickerRef.current) {
+        const { x, y, width, height } = colorPickerRef.current.getBoundingClientRect();
+        const _x = Math.min(Math.max(0, ((ev.clientX - x) / width) * 100), 100);
+        const _y = Math.min(Math.max(0, ((ev.clientY - y) / height) * 100), 100);
+        const _hsva = genHSVA(val[0], _x, 100 - _y, val[3]);
 
-      if (ctx1) {
-        let x = offsetX;
-
-        if (offsetX >= svPanelRect.width) {
-          x = offsetX - 1;
-        }
-        if (x < 0) {
-          x = 0;
-        }
-        const rgbData = ctx1.getImageData(x, offsetY, 1, 1).data;
-
-        colorPickerRef.current?.parentElement?.style.setProperty('--offset-x', `${offsetX}px`);
-        colorPickerRef.current?.parentElement?.style.setProperty('--offset-y', `${offsetY}px`);
-        setRgb({ r: rgbData[0], g: rgbData[1], b: rgbData[2] });
+        setColor(_hsva[`to${hsva.type.toLocaleUpperCase()}` as HSVAVoidName]().toString());
       }
     },
-    [svPanelRect.width]
+    [hsva.type, val]
   );
-  const colorPickerMouseDown = useCallback(
-    (e: CanvasMouseEvent) => {
+  const colorPickerMouseDown: React.MouseEventHandler<HTMLDivElement> = useCallback(
+    (e) => {
       setDrag(true);
-      changeColor(e);
+      changeColor(e as unknown as MouseEvent);
     },
     [changeColor]
   );
   const colorPickerMouseMove = useCallback(
-    (e: CanvasMouseEvent) => {
+    (e: MouseEvent) => {
       if (drag) {
         changeColor(e);
       }
     },
     [changeColor, drag]
   );
-
   const colorPickerMouseUp = useCallback(() => {
     setDrag(false);
   }, []);
+  const handleSwitch = useCallback(() => {
+    const _type = hsva.type === 'hexa' ? 'rgba' : hsva.type === 'rgba' ? 'hsla' : 'hexa';
+    const _hsva = genHSVA(val[0], val[1], val[2], val[3]);
+
+    setColor(_hsva[`to${_type.toLocaleUpperCase()}` as HSVAVoidName]().toString());
+  }, [hsva.type, val]);
+  const handleCopy: MouseEventHandler<HTMLDivElement> = useCallback(
+    ({ target }) => {
+      setClipboard(color, target as HTMLElement);
+    },
+    [color]
+  );
+
+  const styleProperty = useMemo(() => {
+    return {
+      '--c': hex.toString(),
+      '--h': val[0],
+      '--s': val[1],
+      '--v': val[2],
+      '--a': val[3],
+    } as React.CSSProperties;
+  }, [val, hex]);
 
   useEffect(() => {
-    initColorPicker(value);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+    if (value !== colorRef.current) {
+      setColor(value || defaultValue);
+    }
+  }, [defaultValue, value]);
+  useEffect(() => {
+    Object.assign(colorRef, {
+      current: color,
+    });
+    const _color = parseToHSVA(color);
+    const _hsva = genHSVA(..._color.values);
+
+    Object.assign(hsvaRef, {
+      current: _color,
+    });
+    setHSVA(_color);
+    if (onChange) {
+      onChange(_hsva[`to${hsva.type.toLocaleUpperCase()}` as HSVAVoidName]().toString());
+    }
+  }, [color, onChange, hsva.type]);
 
   useEffect(() => {
-    const { r, g, b } = hue;
+    document.body.addEventListener('mousemove', colorPickerMouseMove, passiveSupported);
+    document.body.addEventListener('mouseup', colorPickerMouseUp, passiveSupported);
+    return () => {
+      document.body.removeEventListener('mousemove', colorPickerMouseMove, passiveSupported);
+      document.body.removeEventListener('mouseup', colorPickerMouseUp, passiveSupported);
+    };
+  }, [colorPickerMouseMove, colorPickerMouseUp]);
 
-    fillGradient(`rgba(${r},${g},${b},1)`);
-    setRgb({ r, g, b });
-  }, [hue, fillGradient]);
-
-  useEffect(() => {
-    colorPaletteRef.current?.style.setProperty('--offset-color', `rgb(${rgb.r},${rgb.g},${rgb.b})`);
-    colorPaletteRef.current?.style.setProperty('--offset-alpha', alpha as unknown as string);
-    onChange?.(`rgba(${rgb.r},${rgb.g},${rgb.b},${alpha})`);
-  }, [rgb, alpha, onChange]);
-  const hex = useMemo(() => tinycolor(value).toHex(), [value]);
-
-  return (
-    <div {...props} ref={colorPaletteRef} className={classNames(cls.palette, className)}>
-      <article
-        className={cls.svpanel}
-        onMouseDown={colorPickerMouseDown}
-        onMouseUp={colorPickerMouseUp}
-        onMouseOut={colorPickerMouseUp}
-        onMouseMove={colorPickerMouseMove}
-        ref={(e) => {
-          if (e && svPanelRect.width !== e.offsetWidth && svPanelRect.height !== e.offsetHeight) {
-            setSvPanelRect({
-              width: e.offsetWidth,
-              height: e.offsetHeight,
-            });
-          }
-        }}
-      >
-        <canvas ref={colorPickerRef} width={svPanelRect.width} height={svPanelRect.height} />
-      </article>
-      <div className={cls.setting}>
-        <div className={cls.strip}>
-          <HueSlider ref={hueSlider} value={hue} onChange={setHue} />
-          <AlphaSlider value={alpha} onChange={setAlpha} />
-        </div>
-        <div className={cls.preview} />
-      </div>
-      <div className={cls.form}>
-        <div className={cls.input}>
+  const renderForm = useCallback(() => {
+    switch (hsva.type) {
+      case 'hexa':
+        return (
           <Input
+            className={cls.input}
             name="hex"
             size="small"
-            formatter={(v) => `#${v}`}
-            parser={(v) => v?.toString().replace(/#/, '')}
-            value={hex}
+            value={hex.toString()}
             onChange={(v) => {
               if (v) {
-                const { r, g, b } = tinycolor(v as string).toRgb();
-
-                setRgb({ r, g, b });
+                setColor(v as string);
               }
             }}
           />
-          <label htmlFor="hex">Hex</label>
-        </div>
-        <div className={cls.input}>
-          <InputNumber
-            name="r"
-            size="small"
-            min={0}
-            max={255}
-            value={rgb.r}
-            onChange={(v) => {
-              setRgb({ ...rgb, r: v as number });
-            }}
-          />
-          <label htmlFor="r">R</label>
-        </div>
-        <div className={cls.input}>
-          <InputNumber
-            name="g"
-            size="small"
-            min={0}
-            max={255}
-            value={rgb.g}
-            onChange={(v) => {
-              setRgb({ ...rgb, g: v as number });
-            }}
-          />
-          <label htmlFor="g">G</label>
-        </div>
-        <div className={cls.input}>
-          <InputNumber
-            name="b"
-            size="small"
-            min={0}
-            max={255}
-            value={rgb.b}
-            onChange={(v) => {
-              setRgb({ ...rgb, b: v as number });
-            }}
-          />
-          <label htmlFor="b">B</label>
-        </div>
-        <div className={cls.input}>
-          <InputNumber
-            name="a"
-            size="small"
-            value={alpha}
-            formatter={(v) => {
-              const val = ((v as number) * 100).toFixed();
+        );
+      case 'rgba':
+        return <RGBAForm hsva={val} setColor={setColor} />;
+      case 'hsla':
+        return <HSLAForm hsva={val} setColor={setColor} />;
+      default:
+        return null;
+    }
+  }, [hex, hsva.type, val]);
 
-              return v ? parseInt(val) : v;
-            }}
-            parser={(v) => {
-              let _val = v;
+  return (
+    <div {...props} className={classNames(cls.palette, className)} style={styleProperty}>
+      <div className={cls.picker} ref={colorPickerRef} onMouseDown={colorPickerMouseDown} />
+      <div className={cls.chooser}>
+        <div className={cls.range}>
+          <input
+            className={classNames(cls.slider, cls.hue)}
+            min="0"
+            max="360"
+            type="range"
+            value={val[0]}
+            onChange={(e) => {
+              const _hsva = genHSVA(Number(e.target.value), val[1], val[2], val[3]);
 
-              if (typeof v === 'string') {
-                _val = v.replace(/[^\d]/g, '');
-              }
-
-              return (_val as number) / 100;
-            }}
-            step={0.01}
-            min={0}
-            max={1}
-            onChange={(v) => {
-              if (typeof v === 'number') {
-                setAlpha(v);
-              }
+              setColor(_hsva[`to${hsva.type.toLocaleUpperCase()}` as HSVAVoidName]().toString());
             }}
           />
-          <label htmlFor="a">A</label>
+          <input
+            className={classNames(cls.slider, cls.opacity)}
+            min="0"
+            max="1"
+            step="0.01"
+            type="range"
+            value={val[3]}
+            onChange={(e) => {
+              const _hsva = genHSVA(val[0], val[1], val[2], Number(e.target.value));
+
+              setColor(_hsva[`to${hsva.type.toLocaleUpperCase()}` as HSVAVoidName]().toString());
+            }}
+          />
         </div>
+        <div className={cls.preview} onClick={handleCopy} />
+      </div>
+      <div className={cls.form}>
+        {renderForm()}
+        <Button flat type="primary" size="small" className={cls.switch} onClick={handleSwitch}>
+          {hsva.type}
+        </Button>
+      </div>
+      <div className={cls.color}>
+        {colors.map((c) => (
+          <i
+            key={c}
+            style={
+              {
+                '--c': c,
+              } as CSSProperties
+            }
+            onClick={() => {
+              setColor(c);
+            }}
+          />
+        ))}
       </div>
     </div>
   );

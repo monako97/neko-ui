@@ -1,4 +1,7 @@
-<div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
+添加 `disabled` 属性即可让按钮处于不可用状态，同时按钮样式也会改变
+
+```jsx
+<section style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
   <Button disabled>normal [disabled]</Button>
   <Button type="primary" disabled>
     primary
@@ -18,6 +21,8 @@
   <div style={{ backgroundColor: '#827f7f', padding: 8 }}>
     <Button type="primary" disabled ghost>
       ghost
+      {/* 注释 */}
     </Button>
   </div>
-</div>
+</section>
+```

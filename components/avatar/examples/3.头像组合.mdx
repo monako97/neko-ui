@@ -1,3 +1,6 @@
+使用 AvatarGroup 将头像组合展现。
+
+```jsx
 <div
   style={{
     display: 'flex',
@@ -12,7 +15,7 @@
   />
   <br />
   <AvatarGroup
-    data={Array(20)
+    data={Array(8)
       .fill(0)
       .map((_, i) => {
         if (i % 2) {
@@ -28,3 +31,4 @@
     maxCount={3}
   />
 </div>
+```

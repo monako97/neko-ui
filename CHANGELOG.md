@@ -1,3 +1,12 @@
+## [1.0.36](https://github.com/monako97/neko-ui/compare/1.0.35...1.0.36) (2023-03-07)
+
+
+### Features
+
+* 颜色选择器 ([a8f0fd2](https://github.com/monako97/neko-ui/commit/a8f0fd255e3fa606d76377a82c6e4939e5cb05af))
+
+
+
 ## [1.0.35](https://github.com/monako97/neko-ui/compare/1.0.27...1.0.35) (2023-02-23)
 
 
@@ -19,6 +28,11 @@
 * twilwindcss ([aae268c](https://github.com/monako97/neko-ui/commit/aae268c6383b90938d3b486d8a700554021fc85c))
 
 
+### Features
+
+* 添加change log、commitlint ([fdbf645](https://github.com/monako97/neko-ui/commit/fdbf6454d99a020b0ba12c619fea9249c3dd058d))
+
+
 
 ## [1.0.27](https://github.com/monako97/neko-ui/compare/1.0.22...1.0.27) (2022-11-10)
 
@@ -33,8 +47,8 @@
 
 ### Features
 
-* 颜色选择器 ([aa59914](https://github.com/monako97/neko-ui/commit/aa59914f406b06ba282b24fafd251f77e2ecae19))
 * Tooltip ([53c8ef4](https://github.com/monako97/neko-ui/commit/53c8ef4f62da8f3828acf137ca240d3028037a56))
+* 颜色选择器 ([aa59914](https://github.com/monako97/neko-ui/commit/aa59914f406b06ba282b24fafd251f77e2ecae19))
 
 
 
@@ -83,9 +97,6 @@
 
 ### Bug Fixes
 
-* 刷新页面404 ([92519f1](https://github.com/monako97/neko-ui/commit/92519f1ff86fc31a73c2f066658fa6299897b99a))
-* 刷新页面404 ([73ac100](https://github.com/monako97/neko-ui/commit/73ac1001a2a78e7cba38754a849a6439210ed4ad))
-* 刷新页面404 ([d00c81a](https://github.com/monako97/neko-ui/commit/d00c81a4647f4fffa799b3e3d96af036086b603d))
 * isEqual ([99b8932](https://github.com/monako97/neko-ui/commit/99b893204a2496d370cd36e7ad3db79c8aba68a9))
 * KaTeX ([856e46a](https://github.com/monako97/neko-ui/commit/856e46a1c03398cda1ccd8a67a6570dc697291c3))
 * lint ([6448087](https://github.com/monako97/neko-ui/commit/6448087a3d20cae29178af191f385659c2cbc1e6))
@@ -93,6 +104,9 @@
 * lint ([de7982c](https://github.com/monako97/neko-ui/commit/de7982c3269b9a3811a30dee4f66fa3f0e6d8ddc))
 * lint ([acea9a2](https://github.com/monako97/neko-ui/commit/acea9a2e6d80d3456d4e6c2cc01bd05c09e9456c))
 * setClipboard ([ab0bdb8](https://github.com/monako97/neko-ui/commit/ab0bdb8c2ef9b35c836846319b75cc3f3cf10646))
+* 刷新页面404 ([92519f1](https://github.com/monako97/neko-ui/commit/92519f1ff86fc31a73c2f066658fa6299897b99a))
+* 刷新页面404 ([73ac100](https://github.com/monako97/neko-ui/commit/73ac1001a2a78e7cba38754a849a6439210ed4ad))
+* 刷新页面404 ([d00c81a](https://github.com/monako97/neko-ui/commit/d00c81a4647f4fffa799b3e3d96af036086b603d))
 
 
 

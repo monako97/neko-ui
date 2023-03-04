@@ -10,6 +10,7 @@ const sandboxCss = css`
 `;
 
 injectGlobal([sandboxCss]);
+
 interface SandboxGroupProps {
   name: string;
   col?: number;
@@ -27,7 +28,7 @@ const SandboxGroup: FC<SandboxGroupProps> = ({ name, col = 2, ignore = [] }) => 
       {myDemoKv[name]
         ?.filter((e) => (e.title ? !ignore.includes(e.title) : true))
         .map((m, i) => (
-          <Sandbox key={i} soucre={m.soucre} title={m.title} />
+          <Sandbox key={i} soucre={m.soucre} title={m.title} description={m.description} />
         ))}
     </div>
   );
