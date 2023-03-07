@@ -138,7 +138,12 @@ const sandboxCss = css`
 
 injectGlobal([sandboxCss]);
 
-const Sandbox: FC<ExampleModule> = ({ soucre, title, description }) => {
+const Sandbox: FC<ExampleModule & { noInline?: boolean }> = ({
+  soucre,
+  title,
+  description,
+  noInline,
+}) => {
   const [init, setInit] = useState<boolean>(false);
   const [open, setOpen] = useState<boolean>(false);
   const handleOpen = useCallback(
@@ -163,6 +168,7 @@ const Sandbox: FC<ExampleModule> = ({ soucre, title, description }) => {
       code={soucre}
       scope={mdxComponents}
       language="tsx"
+      noInline={noInline}
       theme={{
         plain: {},
         styles: [],

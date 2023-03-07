@@ -91,6 +91,12 @@ export interface RecorderOptions {
   /** 录制文件名称 */
   filename?: string;
 }
+
+declare interface MediaRecorderDataAvailableEvent extends Event {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  data: any;
+}
+
 export interface CaptureScreenProp extends HTMLAttributes<HTMLDivElement> {
   options?: MediaStreamConstraints;
   /** 是否预览 */

@@ -13,14 +13,12 @@ function getLastJsx(str: string) {
 }
 describe('test get last tag', () => {
   it('闭合', () => {
-    const lastStr = `
-\`\`\`typescript
+    const lastStr = `\`\`\`typescript
 <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
     <Button disabled>normal [disabled]</Button>
     <Button disabled>normal [disabled]</Button>
 </div>
-\`\`\`
-`;
+\`\`\``;
     const str = `## zh-CN
 
 <Button disabled>normal [disabled]</Button>
@@ -32,9 +30,9 @@ ${lastStr}`;
     const m = str.matchAll(/```([^\r\n]+)?\r?\n([\s\S]*?)\r?\n```/g);
 
     for (const match of m) {
-      console.log(match[2], match[0]);
+      // console.log(match[2]);
+      expect(match[0]).toBe(lastStr);
     }
-    // expect(getLastJsx(str)).toBe(lastStr);
   });
   it('自闭合1', () => {
     const lastStr = `<Button />`;
@@ -135,31 +133,4 @@ ${lastStr}`;
 
     expect(getLastJsx(str)).toBe(lastStr);
   });
-  //   it('jsx中属性值包含方法', () => {
-  //     const lastStr = `<CaptureScreen
-  //     recorder
-  //     onSaveRecorder={(blob, fileName) => {
-  //       console.log('停止录制', fileName, 'size:', (blob.size / 1048576).toFixed(2) + 'mb');
-  //       const URL = window.URL || window.webkitURL,
-  //         objectUrl = URL.createObjectURL(blob),
-  //         a = document.createElement('a');
-
-  //       a.href = objectUrl;
-  //       a.download = \`自定义保存录制视频方法-\${fileName}\`;
-  //       document.body.appendChild(a);
-  //       a.click();
-  //       a.remove();
-  //       URL.revokeObjectURL(objectUrl);
-
-  //   }}
-  //   />
-  //   `;
-  //     const str = `## zh-CN
-
-  // 添加 \`disabled\` 属性即可让按钮处于不可用状态，同时按钮样式也会改变
-
-  // ${lastStr}`;
-
-  //     expect(getLastJsx(str)).toBe(lastStr);
-  //   });
 });
