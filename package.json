@@ -29,7 +29,7 @@
     "@moneko/cli": "1.1.10",
     "@moneko/core": "2.0.13",
     "@moneko/postcss": "1.0.27",
-    "@moneko/react-live": "3.1.2",
+    "@moneko/react-live": "3.1.3",
     "@swc/jest": "0.2.24",
     "@testing-library/jest-dom": "5.16.5",
     "@testing-library/react": "13.4.0",

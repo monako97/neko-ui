@@ -1,6 +1,11 @@
 ## [1.0.36](https://github.com/monako97/neko-ui/compare/1.0.35...1.0.36) (2023-03-07)
 
 
+### Bug Fixes
+
+* type MediaRecorderDataAvailableEvent ([cda8b39](https://github.com/monako97/neko-ui/commit/cda8b390cb38b206dfbf9d6fa13c4b4fea00e9ca))
+
+
 ### Features
 
 * 颜色选择器、颜色选择面板、文档生产方式 ([35602e7](https://github.com/monako97/neko-ui/commit/35602e758b1dcb695c823be87d553721903b52ad))
