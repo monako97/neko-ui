@@ -1,9 +1,9 @@
-```jsx
+```tsx
 <div style={{ width: 375 }}>
   {['text', 'number', 'url', 'email', 'password', 'user', 'tel', 'date', 'time', 'range'].map(
     (item) => {
       return (
-        <div key={item} style={{ marginBottom: 8 }}>
+        <div key={item}>
           <label htmlFor={item}>{item}: </label>
           <Input
             id={item}

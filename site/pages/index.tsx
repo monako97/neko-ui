@@ -81,7 +81,7 @@ const App: FC = () => {
   const box = useRef<HTMLDivElement>(null);
   const readme = useOutlet();
   const location = useLocation();
-  const num = useRef<number>(0);
+  const num = useRef(0);
 
   useEffect(() => {
     num.current++;

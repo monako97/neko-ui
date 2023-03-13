@@ -28,7 +28,7 @@ const SandboxGroup: FC<SandboxGroupProps> = ({ name, col = 2, ignore = [] }) => 
       {myDemoKv[name]
         ?.filter((e) => (e.title ? !ignore.includes(e.title) : true))
         .map((m, i) => (
-          <Sandbox key={i} soucre={m.soucre} title={m.title} description={m.description} />
+          <Sandbox key={i} {...m} />
         ))}
     </div>
   );

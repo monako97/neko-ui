@@ -48,6 +48,18 @@ const sandboxCss = css`
     padding-inline: 0.5rem;
   }
 
+  .sandbox-view > div {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    align-items: flex-end;
+  }
+
+  .sandbox-view .n-md-box,
+  .sandbox-view pre {
+    width: 100%;
+  }
+
   .sandbox-view pre:first-of-type {
     margin-top: 0.5rem;
   }
@@ -138,14 +150,9 @@ const sandboxCss = css`
 
 injectGlobal([sandboxCss]);
 
-const Sandbox: FC<ExampleModule & { noInline?: boolean }> = ({
-  soucre,
-  title,
-  description,
-  noInline,
-}) => {
-  const [init, setInit] = useState<boolean>(false);
-  const [open, setOpen] = useState<boolean>(false);
+const Sandbox: FC<ExampleModule> = ({ title, description, ...props }) => {
+  const [init, setInit] = useState(false);
+  const [open, setOpen] = useState(false);
   const handleOpen = useCallback(
     function () {
       if (!init) {
@@ -165,10 +172,8 @@ const Sandbox: FC<ExampleModule & { noInline?: boolean }> = ({
 
   return (
     <LiveProvider
-      code={soucre}
+      {...props}
       scope={mdxComponents}
-      language="tsx"
-      noInline={noInline}
       theme={{
         plain: {},
         styles: [],
