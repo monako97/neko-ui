@@ -8,6 +8,8 @@ const conf: PartialConfigType = {
     nojekyll: true,
     path: 'docs',
   },
+  routeBaseName: `/${PACKAGENAME}/`,
+  publicPath: `/${PACKAGENAME}/`,
   output: resolveProgramPath(`/docs/${PACKAGENAME}/`),
   htmlPluginOption: {
     filename: '../index.html',
