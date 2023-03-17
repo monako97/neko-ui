@@ -1,17 +1,21 @@
-import { DEV, PACKAGENAME, resolveProgramPath } from '@moneko/core/build';
+import { DEV, PACKAGENAME } from '@moneko/core/build';
 import type { PartialConfigType } from '@moneko/core';
 
+const fixBrowserRouter = {
+  pathSegmentsToKeep: 1,
+  path: '404.html',
+};
 const conf: PartialConfigType = {
   seo: {
     domain: 'monako97.github.io',
     nojekyll: true,
-    path: 'docs',
+    // path: 'docs',
   },
   devtool: DEV ? 'eval-cheap-module-source-map' : false,
   routeBaseName: `/${PACKAGENAME}/`,
   publicPath: `/${PACKAGENAME}/`,
-  output: resolveProgramPath(`/docs/${PACKAGENAME}/`),
-  pathSegmentsToKeep: DEV ? false : 1,
+  // output: resolveProgramPath(`/docs/${PACKAGENAME}/`),
+  fixBrowserRouter: DEV ? false : fixBrowserRouter,
   htmlPluginOption: {
     favicon: './site/assets/images/favicon.ico',
     meta: {
