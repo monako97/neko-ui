@@ -1,6 +1,11 @@
 ## [1.0.37](https://github.com/monako97/neko-ui/compare/1.0.36...1.0.37) (2023-03-17)
 
 
+### Bug Fixes
+
+* github pages ([271319e](https://github.com/monako97/neko-ui/commit/271319ec3e14bc755751e717300746dbf79fcf47))
+
+
 ### Features
 
 * color-schema ([921edfd](https://github.com/monako97/neko-ui/commit/921edfd1bcf5a94b5110ac55efe004c1e09be0fa))
