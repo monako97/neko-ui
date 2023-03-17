@@ -10,7 +10,7 @@ const conf: PartialConfigType = {
   routeBaseName: `/${PACKAGENAME}/`,
   publicPath: `/${PACKAGENAME}/`,
   output: resolveProgramPath(`/docs/${PACKAGENAME}/`),
-  pathSegmentsToKeep: DEV ? false : 0,
+  pathSegmentsToKeep: DEV ? false : 1,
   htmlPluginOption: {
     favicon: './site/assets/images/favicon.ico',
     meta: {
