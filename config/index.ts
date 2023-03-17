@@ -10,7 +10,7 @@ const conf: PartialConfigType = {
   routeBaseName: `/${PACKAGENAME}/`,
   publicPath: `/${PACKAGENAME}/`,
   output: resolveProgramPath(`/docs/${PACKAGENAME}/`),
-  fixBrowserRouter: !DEV,
+  pathSegmentsToKeep: DEV ? false : 0,
   htmlPluginOption: {
     favicon: './site/assets/images/favicon.ico',
     meta: {
