@@ -1,28 +1,30 @@
-import { DEV, PACKAGENAME } from '@moneko/core/build/process-env';
+import { DEV, PACKAGENAME, resolveProgramPath } from '@moneko/core/build';
 import type { PartialConfigType } from '@moneko/core';
 
 const conf: PartialConfigType = {
+  seo: {
+    domain: 'monako97.github.io',
+    nojekyll: true,
+  },
   devtool: DEV ? 'eval-cheap-module-source-map' : false,
-  routeBaseName: `/${PACKAGENAME}`,
-  publicPath: `/${PACKAGENAME}`,
+  routeBaseName: `/${PACKAGENAME}/`,
+  publicPath: `/${PACKAGENAME}/`,
+  output: resolveProgramPath(`/docs/${PACKAGENAME}/`),
+  fixBrowserRouter: !DEV,
   htmlPluginOption: {
     favicon: './site/assets/images/favicon.ico',
-    tags: [
-      {
-        textContent: `
-          (function(l) {
-            if (l.search[1] === '/' ) {
-              var decoded = l.search.slice(1).split('&').map(function(s) { 
-                return s.replace(/~and~/g, '&')
-              }).join('?');
-              window.history.replaceState(null, null,
-                  l.pathname.slice(0, -1) + decoded + l.hash
-              );
-            }
-          }(window.location))
-        `,
+    meta: {
+      light: {
+        name: 'theme-color',
+        content: '#5794ff',
+        media: '(prefers-color-scheme: light)',
       },
-    ],
+      dark: {
+        name: 'theme-color',
+        content: '#4d81dc',
+        media: '(prefers-color-scheme: dark)',
+      },
+    },
   },
   designSize: 1920,
   fallbackCompPath: '@/components/fallback',

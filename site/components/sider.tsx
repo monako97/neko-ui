@@ -18,7 +18,6 @@ const extractMenu = (list: MyPkg[]) => {
 };
 
 extractMenu(myPkgs);
-
 const menuKeys = Object.keys(menuObj);
 const siderCss = css`
   .site-sider,
