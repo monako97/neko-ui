@@ -23,7 +23,7 @@ export {
   type HighlightTextJson,
 } from './highlight-text';
 
-export { default as useTheme, type ThemeTypes } from './use-theme';
+export { default as colorScheme, type Theme } from './color-scheme';
 
 export { default as Avatar, type AvatarProps } from './avatar';
 

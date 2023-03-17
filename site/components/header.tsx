@@ -1,7 +1,7 @@
-import React, { useMemo, memo } from 'react';
+import React, { useMemo, memo, useEffect } from 'react';
 import { css, injectGlobal } from '@emotion/css';
 import { myPkgs, useLocation, useNavigate } from '@moneko/core';
-import { Avatar, useTheme } from 'neko-ui';
+import { Avatar, colorScheme } from 'neko-ui';
 import { projectInfo, type PkgType } from '@/utils';
 
 const headerCss = css`
@@ -20,6 +20,12 @@ const headerCss = css`
     transition-property: box-shadow, background-color, border-color;
     backdrop-filter: blur(1rem);
     box-shadow: 0 0.0625rem 0.125rem 0 rgb(0 0 0 / 2%);
+  }
+
+  [data-theme='light'] .site-header {
+    color: #fff;
+    background-color: var(--primary-color, rgb(255 255 255 / 90%));
+    box-shadow: 0 0.0625rem 0.125rem 0 var(--primary-color-hover);
   }
 
   .site-logo {
@@ -92,7 +98,7 @@ injectGlobal([headerCss]);
 const Header = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const [theme, changeTheme] = useTheme();
+  const { schema } = colorScheme;
 
   const current: PkgType = useMemo(
     () =>
@@ -100,6 +106,17 @@ const Header = () => {
       projectInfo,
     [location.pathname]
   );
+
+  useEffect(() => {
+    if (document.documentElement.getAttribute('data-theme') !== schema) {
+      document.documentElement.setAttribute('data-theme', schema);
+    }
+    const color = getComputedStyle(document.documentElement).getPropertyValue(
+      schema === 'dark' ? '--header-bg' : '--primary-color'
+    );
+
+    document.querySelector('meta[name=theme-color]')?.setAttribute('content', color);
+  }, [schema]);
 
   return (
     <header className="site-header">
@@ -115,8 +132,10 @@ const Header = () => {
       </div>
       <div
         className="site-theme-btn"
-        data-theme={theme}
-        onClick={() => changeTheme(theme === 'dark' ? 'light' : 'dark')}
+        data-theme={schema}
+        onClick={() => {
+          colorScheme.schema = schema === 'dark' ? 'light' : 'dark';
+        }}
       />
     </header>
   );
