@@ -5,6 +5,7 @@ const conf: PartialConfigType = {
   seo: {
     domain: 'monako97.github.io',
     nojekyll: true,
+    path: 'docs',
   },
   devtool: DEV ? 'eval-cheap-module-source-map' : false,
   routeBaseName: `/${PACKAGENAME}/`,
