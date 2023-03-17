@@ -39,7 +39,7 @@ jobs:
       - name: 'lint'
         run: yarn lint
       - name: 'Build Artifact'
-        run: yarn build config=deploy
+        run: yarn build
       - name: 'Publish to npm'
         run: |
           NPM_PACKAGE_NAME=$(node -p "require('./package.json').name")
