@@ -11,8 +11,10 @@ import React, {
   useState,
 } from 'react';
 import { css, injectGlobal } from '@emotion/css';
-import { classNames, getMaxZindex, isString, tinycolor } from '@moneko/common';
+import { classNames, getMaxZindex, isString } from '@moneko/common';
 import { createPortal } from 'react-dom';
+import { parseToHSVA } from '../color-palette/color';
+import { genHSVA } from '../color-palette/gen-hsva';
 import prefixCls from '../prefix-cls';
 
 const cls = {
@@ -241,6 +243,14 @@ const Tooltip: FC<TooltipProps> = ({
   }, [close]);
 
   const style = useMemo(() => {
+    let shadowColor: string | undefined;
+
+    if (color) {
+      const [h, s, v] = parseToHSVA(color).values;
+
+      shadowColor = genHSVA(h, s, v, 0.1).toRGBA().toString();
+    }
+
     return Object.assign(
       {
         ...popupStyle,
@@ -249,7 +259,7 @@ const Tooltip: FC<TooltipProps> = ({
       },
       color && {
         '--tooltip-bg': color,
-        '--tooltip-shadow-color': tinycolor(color).setAlpha(0.1).toRgbString(),
+        '--tooltip-shadow-color': shadowColor,
       }
     ) as CSSProperties;
   }, [color, popupStyle, posi.left, posi.top]);
