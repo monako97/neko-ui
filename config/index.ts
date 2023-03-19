@@ -1,7 +1,7 @@
 import type { PartialConfigType } from '@moneko/core';
 
 const conf: PartialConfigType = {
-  publicPath: './',
+  publicPath: '/',
   htmlPluginOption: {
     favicon: './site/assets/images/favicon.ico',
     meta: {
@@ -15,8 +15,11 @@ const conf: PartialConfigType = {
   fallbackCompPath: '@/components/fallback',
   externals: [/(.+)\/__tests__\/(.+)/i],
   importOnDemand: {
+    '@moneko/common': {
+      transform: 'lib/${member}',
+    },
     lodash: {
-      transform: 'lodash/${member}',
+      transform: '${member}',
     },
   },
 };
