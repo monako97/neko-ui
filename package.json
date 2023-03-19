@@ -52,7 +52,7 @@
     "@moneko/common": "1.0.20",
     "katex": "0.16.4",
     "lodash": "4.17.21",
-    "marked-completed": "1.2.4",
+    "marked-completed": "1.2.5",
     "react-photo-view": "1.2.3",
     "shared-store-object": "1.0.0"
   },

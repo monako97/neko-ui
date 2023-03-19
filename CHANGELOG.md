@@ -3,6 +3,7 @@
 
 ### Bug Fixes
 
+* getColorVariableString ([f9ae61e](https://github.com/monako97/neko-ui/commit/f9ae61e6d2324c586cec81723ecc0bf85cbdec8d))
 * github pages ([271319e](https://github.com/monako97/neko-ui/commit/271319ec3e14bc755751e717300746dbf79fcf47))
 
 
