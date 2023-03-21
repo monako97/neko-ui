@@ -8,7 +8,7 @@ import React, {
   type KeyboardEventHandler,
 } from 'react';
 import { css } from '@emotion/css';
-import { classNames } from '@moneko/common';
+import { classNames, throttle } from '@moneko/common';
 import { Input, type InputProps } from '../index';
 
 const inputNumberCss = css`
@@ -23,8 +23,9 @@ const inputNumberCss = css`
   }
 `;
 
-export interface InputNumberProps extends Omit<InputProps, 'value' | 'onChange'> {
+export interface InputNumberProps extends Omit<InputProps, 'value' | 'defaultValue' | 'onChange'> {
   value?: number;
+  defaultValue?: number;
   min?: number;
   max?: number;
   // eslint-disable-next-line no-unused-vars
@@ -75,14 +76,18 @@ const InputNumber: FC<InputNumberProps> = ({
     },
     [onMouseDown]
   );
-  const handleMouseMove = useCallback(
-    ({ movementX, movementY }: { movementX: number; movementY: number }) => {
-      const allStep = (movementX + movementY) * step;
-      const val = typeof valRef.current === 'number' && !isNaN(valRef.current) ? valRef.current : 0;
+  const handleMouseMove = throttle(
+    useCallback(
+      ({ movementX, movementY }: { movementX: number; movementY: number }) => {
+        const allStep = (movementX - movementY) * step;
+        const val =
+          typeof valRef.current === 'number' && !isNaN(valRef.current) ? valRef.current : 0;
 
-      handleChange(parseFloat((val + allStep).toFixed(precision)));
-    },
-    [step, handleChange, precision]
+        handleChange(Number(Number(val + allStep).toFixed(precision)));
+      },
+      [step, handleChange, precision]
+    ),
+    4
   );
   const handleMouseUp = useCallback(() => {
     setMove(false);

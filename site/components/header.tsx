@@ -38,6 +38,7 @@ const headerCss = css`
   .site-favicon {
     width: 2rem;
     height: 2rem;
+    background-image: none;
   }
 
   .site-title {

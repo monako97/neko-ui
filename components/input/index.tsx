@@ -78,20 +78,20 @@ const sizeCss = {
   normal: null,
 };
 
-export interface InputProps
-  extends Omit<InputHTMLAttributes<HTMLInputElement>, 'prefix' | 'size' | 'onChange'> {
+export interface InputProps<T = string | number | undefined>
+  extends Omit<InputHTMLAttributes<HTMLInputElement>, 'prefix' | 'size' | 'onChange' | 'value'> {
   className?: string;
   suffix?: ReactNode;
   prefix?: ReactNode;
   size?: ComponentSize;
-  value?: string | number;
+  value?: T;
   // eslint-disable-next-line no-unused-vars
-  onChange?: (value?: InputProps['value']) => void;
+  onChange?: (value?: T) => void;
   /** 指定输入框展示值的格式 */
   // eslint-disable-next-line no-unused-vars
-  formatter?: (value?: InputProps['value']) => InputProps['value'];
+  formatter?: (value?: T) => T;
   // eslint-disable-next-line no-unused-vars
-  parser?: false | ((value?: InputProps['value']) => InputProps['value']);
+  parser?: false | ((value?: T) => T);
 }
 
 const Input: FC<InputProps> = ({
@@ -112,13 +112,13 @@ const Input: FC<InputProps> = ({
 }) => {
   const [focus, setFocus] = useState<boolean>(false);
   const getValue = useCallback(
-    (val?: InputProps['value']) => {
+    (val: InputProps['value']) => {
       return formatter ? formatter(val) : val;
     },
     [formatter]
   );
   const parserValue = useCallback(
-    (val?: InputProps['value']) => {
+    (val: InputProps['value']) => {
       if (parser) {
         return parser(val);
       } else if (type === 'number' && typeof val === 'string') {

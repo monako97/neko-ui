@@ -11,10 +11,8 @@ import React, {
   useState,
 } from 'react';
 import { css, injectGlobal } from '@emotion/css';
-import { classNames, getMaxZindex, isString } from '@moneko/common';
+import { classNames, getMaxZindex, isString, colorParse } from '@moneko/common';
 import { createPortal } from 'react-dom';
-import { parseToHSVA } from '../color-palette/color';
-import { genHSVA } from '../color-palette/gen-hsva';
 import prefixCls from '../prefix-cls';
 
 const cls = {
@@ -246,9 +244,7 @@ const Tooltip: FC<TooltipProps> = ({
     let shadowColor: string | undefined;
 
     if (color) {
-      const [h, s, v] = parseToHSVA(color).values;
-
-      shadowColor = genHSVA(h, s, v, 0.1).toRGBA().toString();
+      shadowColor = colorParse(color).setAlpha(0.1).toRgbaString();
     }
 
     return Object.assign(

@@ -3,19 +3,25 @@ import React, {
   useEffect,
   useRef,
   useState,
-  useMemo,
   type CSSProperties,
-  type Dispatch,
   type FC,
   type HTMLAttributes,
-  type MouseEventHandler,
-  type SetStateAction,
+  useId,
 } from 'react';
 import { css, injectGlobal } from '@emotion/css';
-import { classNames, passiveSupported, setClipboard } from '@moneko/common';
-import { parseToHSVA } from './color';
-import { genHSVA, HSVAVoidName } from './gen-hsva';
-import { Button, Input, InputNumber } from '../index';
+import {
+  classNames,
+  colorParse,
+  passiveSupported,
+  setClipboard,
+  throttle,
+  updateStyleRule,
+  type HSVA,
+  type ColorType,
+  hexToHsv,
+  rgbToHsv,
+} from '@moneko/common';
+import { Input, InputNumber } from '../index';
 import prefixCls from '../prefix-cls';
 
 const colors = [
@@ -36,8 +42,7 @@ const colors = [
   'rgba(0,0,0,.65)',
   'transparent',
 ];
-
-export const cls = {
+const cls = {
   palette: prefixCls('color-palette'),
   picker: prefixCls('color-palette-picker'),
   preview: prefixCls('color-palette-preview'),
@@ -50,8 +55,8 @@ export const cls = {
   opacity: prefixCls('color-opacity'),
   color: prefixCls('color-color'),
   slider: prefixCls('color-slider'),
+  cmykHue: prefixCls('color-slider-cmyk-hue'),
 };
-
 const colorPaletteCss = css`
   .${cls.palette} {
     width: 100%;
@@ -62,13 +67,13 @@ const colorPaletteCss = css`
     margin-left: 6px;
     border-radius: var(--border-radius);
     width: 46px;
+    min-height: 26px;
     font-family: neko-icon, sans-serif;
     text-align: center;
     color: #fff;
     background-position: 0 0, 5px 5px;
     background-size: 10px 10px;
     cursor: pointer;
-    line-height: 26px;
     background-image: linear-gradient(
         45deg,
         #ccc 25%,
@@ -111,9 +116,28 @@ const colorPaletteCss = css`
     }
   }
   .${cls.switch} {
+    border: none;
+    border-radius: var(--border-radius);
+    cursor: pointer;
     width: 46px;
+    font-size: 12px;
+    text-align: center;
+    color: var(--primary-color);
     background-color: var(--primary-color-bg);
     text-transform: uppercase;
+    outline-color: var(--primary-color-outline);
+    transition-property: background-color, color, outline-color, border-radius, transform;
+    transition-timing-function: var(--transition-timing-function);
+    transition-duration: var(--transition-duration);
+
+    &:hover {
+      color: var(--primary-color-hover);
+    }
+
+    &:active {
+      color: var(--primary-color-active);
+      transform: scale(0.98);
+    }
   }
   .${cls.picker} {
     position: relative;
@@ -176,7 +200,19 @@ const colorPaletteCss = css`
     background-position: 0 0, 0 0, 5px 5px;
     background-size: 100% 100%, 10px 10px, 10px 10px;
   }
+  .${cls.cmykHue}.${cls.slider} {
+    &::-webkit-slider-thumb {
+      width: 26px;
+      height: 26px;
+    }
+
+    &::-moz-range-thumb {
+      width: 26px;
+      height: 26px;
+    }
+  }
   .${cls.slider} {
+    flex: 1;
     display: block;
     margin: 0;
     border-radius: 5px;
@@ -279,10 +315,10 @@ export interface ColorPaletteProps extends Omit<HTMLAttributes<HTMLDivElement>, 
   onChange?: (color: string) => void;
 }
 const formatterInt = (v?: number | string) => {
-  return v ? parseInt((v as number).toFixed()) : v;
+  return v ? Math.floor(v as number) || 0 : v;
 };
 const formatterOpacity = (v?: number | string) => {
-  return v ? parseInt(((v as number) * 100).toFixed()) : v;
+  return v ? Math.floor((v as number) * 100) || 0 : v;
 };
 const parseOpacity = (v?: string | number) => {
   let _val = v;
@@ -294,81 +330,74 @@ const parseOpacity = (v?: string | number) => {
   return (_val as number) / 100;
 };
 
-interface RGBAFormProps {
-  hsva: number[];
-  setColor: Dispatch<SetStateAction<string>>;
-}
-const rgbaFlied = ['r', 'g', 'b', 'a'];
-const RGBAForm: FC<RGBAFormProps> = ({ hsva, setColor }) => {
-  const rgba = useMemo(() => genHSVA(...hsva).toRGBA(), [hsva]);
-
-  return (
-    <>
-      {rgbaFlied.map((k, i) => {
-        return (
-          <InputNumber
-            key={k}
-            className={cls.input}
-            name={k}
-            size="small"
-            min={0}
-            max={i === 3 ? 1 : 255}
-            step={i === 3 ? 0.01 : 1}
-            value={rgba[i]}
-            formatter={i === 3 ? formatterOpacity : formatterInt}
-            parser={i === 3 && parseOpacity}
-            onChange={(v?: number) => {
-              const c = [...rgba];
-
-              c[i] = v || 0;
-              setColor(`rgba(${c.join(',')})`);
-            }}
-          />
-        );
-      })}
-    </>
-  );
-};
-const hslaFlied = [
-  { key: 'h', max: 360 },
-  { key: 's', max: 100 },
-  { key: 'l', max: 100 },
+type Opt = Record<
+  ColorType,
   {
-    key: 'a',
-    step: 0.01,
-    max: 1,
-    formatter: formatterOpacity,
-    parser: parseOpacity,
+    get: 'toRgba' | 'toHexa' | 'toHsla' | 'toHsva' | 'toCmyk';
+    next: ColorType;
+    max: number[];
+    // eslint-disable-next-line no-unused-vars, @typescript-eslint/no-explicit-any
+    hsv: (c: any) => HSVA;
+  }
+>;
+
+const opt: Opt = {
+  hexa: {
+    get: 'toHexa',
+    next: 'rgba',
+    max: [255, 255, 255, 1],
+    hsv: hexToHsv,
   },
-];
-const HSLAForm: FC<RGBAFormProps> = ({ hsva, setColor }) => {
-  const hsla = useMemo(() => genHSVA(...hsva).toHSLA(), [hsva]);
+  rgba: {
+    get: 'toRgba',
+    next: 'hsla',
+    max: [255, 255, 255, 1],
+    hsv: rgbToHsv,
+  },
+  hsla: {
+    get: 'toHsla',
+    next: 'hsva',
+    max: [360, 100, 100, 1],
+    hsv: rgbToHsv,
+  },
+  hsva: {
+    get: 'toHsva',
+    next: 'cmyk',
+    max: [360, 100, 100, 1],
+    hsv: rgbToHsv,
+  },
+  cmyk: {
+    get: 'toCmyk',
+    next: 'hexa',
+    max: [100, 100, 100, 100],
+    hsv: rgbToHsv,
+  },
+};
+
+// eslint-disable-next-line no-unused-vars
+const HexaForm: React.FC<{ value?: string; onChange: (hex?: string) => void }> = ({
+  value,
+  onChange,
+}) => {
+  const [hex, setHex] = useState(value);
+
+  useEffect(() => {
+    setHex(value);
+  }, [value]);
 
   return (
-    <>
-      {hslaFlied.map((h, i) => {
-        return (
-          <InputNumber
-            key={h.key}
-            name={h.key}
-            className={cls.input}
-            min={0}
-            max={h.max}
-            step={h.step || 1}
-            size="small"
-            value={hsla[i]}
-            formatter={i === 3 ? formatterOpacity : formatterInt}
-            parser={i === 3 && parseOpacity}
-            onChange={(v) => {
-              const c = [...hsla];
-
-              c[i] = v || 0;
-              setColor(`hsla(${c[0]},${c[1]}%,${c[2]}%,${c[3]})`);
-            }}
-          />
-        );
-      })}
-    </>
+    <Input
+      className={cls.input}
+      name="hex"
+      size="small"
+      value={hex}
+      onChange={(v) => {
+        if (typeof v === 'string') {
+          setHex(v);
+          throttle(onChange, 16)(v);
+        }
+      }}
+    />
   );
 };
 const ColorPalette: FC<ColorPaletteProps> = ({
@@ -378,165 +407,195 @@ const ColorPalette: FC<ColorPaletteProps> = ({
   onChange,
   ...props
 }) => {
+  const id = useId();
+  const selector = useRef(`[data-id="${id}"]`);
   const colorPickerRef = useRef<HTMLDivElement>(null);
-  const [color, setColor] = useState(value || defaultValue);
-  const colorRef = useRef(color);
-  const [hsva, setHSVA] = useState(parseToHSVA(color));
-  const hsvaRef = useRef(hsva);
-  const [drag, setDrag] = useState(false);
-  const val = useMemo(() => hsva.values, [hsva.values]);
-  const { hex } = useMemo(() => {
-    const _hsv = genHSVA(...val);
+  const color = useRef(colorParse(value || defaultValue));
+  const drag = useRef(false);
+  const [type, setType] = useState(color.current.type);
+  const [hsva, setHSVA] = useState(color.current.value);
+  const [inputVal, setInputVal] = useState(color.current[opt[type].get]() as HSVA);
+  const setColor = useCallback((c?: string | number) => {
+    if (c && color.current[opt[color.current.type].get]().toString() !== c) {
+      const nc = colorParse(c as string);
 
-    return { hex: _hsv.toHEXA() };
-  }, [val]);
-  const changeColor = useCallback(
-    (ev: MouseEvent) => {
-      if (colorPickerRef.current) {
-        const { x, y, width, height } = colorPickerRef.current.getBoundingClientRect();
-        const _x = Math.min(Math.max(0, ((ev.clientX - x) / width) * 100), 100);
-        const _y = Math.min(Math.max(0, ((ev.clientY - y) / height) * 100), 100);
-        const _hsva = genHSVA(val[0], _x, 100 - _y, val[3]);
+      color.current.setValue(nc.value);
+      color.current.type = nc.type;
+      setInputVal(color.current[opt[color.current.type].get]() as HSVA);
+      setType(color.current.type);
+      setHSVA(color.current.value);
+    }
+  }, []);
+  const changeColor = useCallback((ev: MouseEvent) => {
+    if (colorPickerRef.current) {
+      const _hsva: HSVA = [...color.current.value];
+      const { x, y, width, height } = colorPickerRef.current.getBoundingClientRect();
 
-        setColor(_hsva[`to${hsva.type.toLocaleUpperCase()}` as HSVAVoidName]().toString());
-      }
-    },
-    [hsva.type, val]
-  );
-  const colorPickerMouseDown: React.MouseEventHandler<HTMLDivElement> = useCallback(
-    (e) => {
-      setDrag(true);
+      _hsva[1] = Math.min(Math.max(0, ((ev.clientX - x) / width) * 100), 100);
+      _hsva[2] = 100 - Math.min(Math.max(0, ((ev.clientY - y) / height) * 100), 100);
+      color.current.setValue(_hsva);
+      setHSVA(_hsva);
+    }
+  }, []);
+  const colorPickerMouseDown = useCallback(
+    (e: React.MouseEvent) => {
+      Object.assign(drag, {
+        current: true,
+      });
       changeColor(e as unknown as MouseEvent);
     },
     [changeColor]
   );
   const colorPickerMouseMove = useCallback(
     (e: MouseEvent) => {
-      if (drag) {
+      if (drag.current) {
         changeColor(e);
       }
     },
-    [changeColor, drag]
+    [changeColor]
   );
   const colorPickerMouseUp = useCallback(() => {
-    setDrag(false);
+    Object.assign(drag, {
+      current: false,
+    });
   }, []);
   const handleSwitch = useCallback(() => {
-    const _type = hsva.type === 'hexa' ? 'rgba' : hsva.type === 'rgba' ? 'hsla' : 'hexa';
-    const _hsva = genHSVA(val[0], val[1], val[2], val[3]);
-
-    setColor(_hsva[`to${_type.toLocaleUpperCase()}` as HSVAVoidName]().toString());
-  }, [hsva.type, val]);
-  const handleCopy: MouseEventHandler<HTMLDivElement> = useCallback(
-    ({ target }) => {
-      setClipboard(color, target as HTMLElement);
+    color.current.type = opt[color.current.type].next;
+    setInputVal(color.current[opt[color.current.type].get]() as HSVA);
+    setType(color.current.type);
+  }, []);
+  const handleCopy = useCallback(
+    (e: React.MouseEvent) => {
+      setClipboard(inputVal.toString(), e.target as HTMLElement);
     },
-    [color]
+    [inputVal]
+  );
+  const setHue = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+    const _hsva: HSVA = [...color.current.value];
+
+    _hsva[0] = Number(e.target.value);
+    setHSVA(_hsva);
+  }, []);
+  const setAlpha = useCallback((e: { target: { value: string } }) => {
+    const _hsva: HSVA = [...color.current.value];
+
+    _hsva[3] = Number(e.target.value);
+    setHSVA(_hsva);
+  }, []);
+  const handleFliedChange = useCallback(
+    (i: number, v?: number) => {
+      if (typeof v === 'number') {
+        const old: HSVA = color.current[opt[color.current.type].get]() as HSVA;
+
+        old[i] = v || 0;
+        setInputVal(old);
+        if (i === 3 && color.current.type !== 'cmyk') {
+          setAlpha({ target: { value: (v || 0) as unknown as string } });
+        } else {
+          setHSVA(colorParse(old.toString()).value);
+        }
+      }
+    },
+    [setAlpha]
+  );
+  const handleHexChange = useCallback(
+    (hex?: string) => {
+      if (hex && color.current.isColor(hex)) {
+        setColor(hex);
+      }
+    },
+    [setColor]
   );
 
-  const styleProperty = useMemo(() => {
-    return {
-      '--c': hex.toString(),
-      '--h': val[0],
-      '--s': val[1],
-      '--v': val[2],
-      '--a': val[3],
-    } as React.CSSProperties;
-  }, [val, hex]);
-
   useEffect(() => {
-    if (value !== colorRef.current) {
-      setColor(value || defaultValue);
-    }
-  }, [defaultValue, value]);
+    throttle(setColor, 4)(value);
+  }, [setColor, value]);
   useEffect(() => {
-    Object.assign(colorRef, {
-      current: color,
-    });
-    const _color = parseToHSVA(color);
-    const _hsva = genHSVA(..._color.values);
-
-    Object.assign(hsvaRef, {
-      current: _color,
-    });
-    setHSVA(_color);
-    if (onChange) {
-      onChange(_hsva[`to${hsva.type.toLocaleUpperCase()}` as HSVAVoidName]().toString());
-    }
-  }, [color, onChange, hsva.type]);
-
+    color.current.setValue(hsva);
+    color.current.type = type;
+    setInputVal(color.current[opt[type].get]() as HSVA);
+  }, [hsva, type]);
   useEffect(() => {
-    document.body.addEventListener('mousemove', colorPickerMouseMove, passiveSupported);
-    document.body.addEventListener('mouseup', colorPickerMouseUp, passiveSupported);
+    onChange?.(inputVal.toString());
+  }, [onChange, inputVal, setColor]);
+  useEffect(() => {
+    throttle(updateStyleRule, 8)(
+      {
+        '--c': color.current.toRgbaString(),
+        '--h': hsva[0],
+        '--s': hsva[1],
+        '--v': hsva[2],
+        '--a': hsva[3],
+      } as unknown as Record<string, string>,
+      selector.current
+    );
+  }, [hsva]);
+  useEffect(() => {
+    document.documentElement.addEventListener('mousemove', colorPickerMouseMove, passiveSupported);
+    document.documentElement.addEventListener('mouseup', colorPickerMouseUp, passiveSupported);
     return () => {
-      document.body.removeEventListener('mousemove', colorPickerMouseMove, passiveSupported);
-      document.body.removeEventListener('mouseup', colorPickerMouseUp, passiveSupported);
+      document.documentElement.removeEventListener(
+        'mousemove',
+        colorPickerMouseMove,
+        passiveSupported
+      );
+      document.documentElement.removeEventListener('mouseup', colorPickerMouseUp, passiveSupported);
     };
   }, [colorPickerMouseMove, colorPickerMouseUp]);
 
-  const renderForm = useCallback(() => {
-    switch (hsva.type) {
-      case 'hexa':
-        return (
-          <Input
-            className={cls.input}
-            name="hex"
-            size="small"
-            value={hex.toString()}
-            onChange={(v) => {
-              if (v) {
-                setColor(v as string);
-              }
-            }}
-          />
-        );
-      case 'rgba':
-        return <RGBAForm hsva={val} setColor={setColor} />;
-      case 'hsla':
-        return <HSLAForm hsva={val} setColor={setColor} />;
-      default:
-        return null;
-    }
-  }, [hex, hsva.type, val]);
-
   return (
-    <div {...props} className={classNames(cls.palette, className)} style={styleProperty}>
+    <div {...props} data-id={id} className={classNames(cls.palette, className)}>
       <div className={cls.picker} ref={colorPickerRef} onMouseDown={colorPickerMouseDown} />
       <div className={cls.chooser}>
         <div className={cls.range}>
           <input
-            className={classNames(cls.slider, cls.hue)}
+            className={classNames(cls.slider, cls.hue, type === 'cmyk' && cls.cmykHue)}
             min="0"
             max="360"
             type="range"
-            value={val[0]}
-            onChange={(e) => {
-              const _hsva = genHSVA(Number(e.target.value), val[1], val[2], val[3]);
-
-              setColor(_hsva[`to${hsva.type.toLocaleUpperCase()}` as HSVAVoidName]().toString());
-            }}
+            value={hsva[0]}
+            onChange={setHue}
           />
-          <input
-            className={classNames(cls.slider, cls.opacity)}
-            min="0"
-            max="1"
-            step="0.01"
-            type="range"
-            value={val[3]}
-            onChange={(e) => {
-              const _hsva = genHSVA(val[0], val[1], val[2], Number(e.target.value));
-
-              setColor(_hsva[`to${hsva.type.toLocaleUpperCase()}` as HSVAVoidName]().toString());
-            }}
-          />
+          {type !== 'cmyk' ? (
+            <input
+              className={classNames(cls.slider, cls.opacity)}
+              min="0"
+              max="1"
+              step="0.01"
+              type="range"
+              value={hsva[3]}
+              onChange={setAlpha}
+            />
+          ) : null}
         </div>
         <div className={cls.preview} onClick={handleCopy} />
       </div>
       <div className={cls.form}>
-        {renderForm()}
-        <Button flat type="primary" size="small" className={cls.switch} onClick={handleSwitch}>
-          {hsva.type}
-        </Button>
+        {type === 'hexa' ? (
+          <HexaForm value={inputVal.toString()} onChange={handleHexChange} />
+        ) : (
+          inputVal.map((n, i) => {
+            const isAlpha = i === 3 && type !== 'cmyk';
+
+            return (
+              <InputNumber
+                size="small"
+                key={type + i}
+                className={cls.input}
+                value={n}
+                max={opt[type].max[i]}
+                min={0}
+                step={isAlpha ? 0.01 : 1}
+                formatter={isAlpha ? formatterOpacity : formatterInt}
+                parser={isAlpha ? parseOpacity : false}
+                onChange={(v) => handleFliedChange(i, v)}
+              />
+            );
+          })
+        )}
+        <div className={cls.switch} onClick={handleSwitch}>
+          {type}
+        </div>
       </div>
       <div className={cls.color}>
         {colors.map((c) => (
