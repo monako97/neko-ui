@@ -82,17 +82,17 @@ const conf = {
   importOnDemand: {
     /** 库名 */
     'neko-ui': {
-      transform: 'neko-ui/es/${member}',
+      transform: 'es/${member}',
       memberTransformers: ['dashed_case'],
     },
     /** 库名 */
     lodash: {
-      transform: 'lodash/${member}',
+      transform: '${member}',
     },
     /** 库名 */
     antd: {
-      transform: 'antd/es/${member}',
-      style: 'antd/es/${member}/style',
+      transform: 'es/${member}',
+      style: 'es/${member}/style',
       memberTransformers: ['dashed_case'],
     },
   },
