@@ -1,31 +1,25 @@
 import React, { useMemo, memo, useEffect } from 'react';
 import { css, injectGlobal } from '@emotion/css';
+import { updateStyleRule } from '@moneko/common';
 import { myPkgs, useLocation, useNavigate } from '@moneko/core';
 import { Avatar, colorScheme } from 'neko-ui';
 import { projectInfo, type PkgType } from '@/utils';
 
 const headerCss = css`
   .site-header {
-    position: fixed;
+    position: sticky;
     top: 0;
-    right: 0;
-    left: 0;
-    z-index: 20;
+    z-index: 19;
     display: flex;
     align-items: center;
+    width: 100vw;
     height: 4.375rem;
-    background-color: var(--header-bg, rgb(255 255 255 / 90%));
+    background-color: var(--component-background, rgb(255 255 255 / 90%));
+    box-shadow: 0 0.0625rem 0.25rem 0 rgb(0 0 0 / 10%);
     transition-duration: var(--transition-duration);
     transition-timing-function: var(--transition-timing-function);
     transition-property: box-shadow, background-color, border-color;
     backdrop-filter: blur(1rem);
-    box-shadow: 0 0.0625rem 0.125rem 0 rgb(0 0 0 / 2%);
-  }
-
-  [data-theme='light'] .site-header {
-    color: #fff;
-    background-color: var(--primary-color, rgb(255 255 255 / 90%));
-    box-shadow: 0 0.0625rem 0.125rem 0 var(--primary-color-hover);
   }
 
   .site-logo {
@@ -93,6 +87,50 @@ const headerCss = css`
   .site-theme-btn:active {
     transform: scale(0.95);
   }
+
+  /* body::before {
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 0;
+    z-index: 2147483647;
+    display: block;
+    height: 100px;
+    background: linear-gradient(
+      124deg,
+      #f00,
+      #ff7f00,
+      #ff0,
+      #7fff00,
+      #0f0,
+      #00ff7f,
+      #0ff,
+      #007fff,
+      #00f,
+      #7f00ff,
+      #f0f,
+      #ff007f,
+      #f00
+    );
+    background-size: 1000% 1000%;
+    content: '';
+    transform: translateY(-99.99px);
+    animation: rainbow 15s ease infinite;
+  }
+
+  @keyframes rainbow {
+    0% {
+      background-position: 0% 80%;
+    }
+
+    50% {
+      background-position: 100% 20%;
+    }
+
+    100% {
+      background-position: 0% 80%;
+    }
+  } */
 `;
 
 injectGlobal([headerCss]);
@@ -112,11 +150,17 @@ const Header = () => {
     if (document.documentElement.getAttribute('data-theme') !== schema) {
       document.documentElement.setAttribute('data-theme', schema);
     }
-    const color = getComputedStyle(document.documentElement).getPropertyValue(
-      schema === 'dark' ? '--header-bg' : '--primary-color'
+    updateStyleRule(
+      {
+        'color-scheme': schema,
+      },
+      ':root'
     );
+    // const color = getComputedStyle(document.documentElement).getPropertyValue(
+    //   schema === 'dark' ? '--header-bg' : '--primary-color'
+    // );
 
-    document.querySelector('meta[name=theme-color]')?.setAttribute('content', color);
+    // document.querySelector('meta[name=theme-color]')?.setAttribute('content', color);
   }, [schema]);
 
   return (

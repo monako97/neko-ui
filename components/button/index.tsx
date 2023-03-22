@@ -79,6 +79,7 @@ const btnCss = css`
   }
   .${cls.label} {
     display: block;
+    line-height: normal;
     overflow: hidden;
     text-align: center;
     text-overflow: ellipsis;

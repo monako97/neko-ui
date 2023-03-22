@@ -26,7 +26,7 @@
     "@commitlint/cli": "17.4.4",
     "@commitlint/config-conventional": "17.4.4",
     "@moneko/cli": "1.1.12",
-    "@moneko/core": "2.0.36",
+    "@moneko/core": "2.0.49",
     "@moneko/postcss": "1.0.27",
     "@moneko/react-live": "3.1.3",
     "@swc/jest": "0.2.24",
@@ -35,7 +35,6 @@
     "@testing-library/user-event": "14.4.3",
     "@types/jest": "29.4.0",
     "@types/katex": "0.16.0",
-    "@types/lodash": "4.14.191",
     "conventional-changelog-cli": "2.2.2",
     "eslint-config-neko": "1.0.20",
     "husky": "8.0.3",
@@ -49,9 +48,8 @@
   },
   "dependencies": {
     "@emotion/css": "11.10.6",
-    "@moneko/common": "1.0.26",
+    "@moneko/common": "1.0.31",
     "katex": "0.16.4",
-    "lodash": "4.17.21",
     "marked-completed": "1.2.5",
     "react-photo-view": "1.2.3",
     "shared-store-object": "1.0.0"

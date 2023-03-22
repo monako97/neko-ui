@@ -7,13 +7,7 @@ interface BoxProps {
   tex?: boolean;
 }
 const Box: FC<BoxProps> = ({ children, text, tex }) => {
-  const body = text ? (
-    <Markdown
-      text={text}
-      tex={tex}
-      getAnchorContainer={() => document.querySelector('header + #doc-body') || document.body}
-    />
-  ) : null;
+  const body = text ? <Markdown text={text} tex={tex} /> : null;
 
   return children ? (
     <div className="n-md-body">

@@ -1,13 +1,18 @@
 import sso from 'shared-store-object';
 
-export type Theme = 'light' | 'dark';
+/** 颜色方案枚举，支持的值为 'light' 或 'dark' */
+export type ColorSchema = 'light' | 'dark';
 
+/** 检测 prefers-color-scheme 媒体查询是否为 light 模式 */
 const themeMedia = window.matchMedia('(prefers-color-scheme: light)');
 
+/** 共享的颜色方案 */
 const colorScheme = sso({
-  schema: (themeMedia?.matches ? 'light' : 'dark') as Theme,
+  /** 当前颜色方案 */
+  schema: (themeMedia?.matches ? 'light' : 'dark') as ColorSchema,
 });
 
+// 监听 prefers-color-scheme 媒体查询变化，自动更新颜色方案
 themeMedia?.addEventListener('change', ({ matches }: { matches: boolean }) => {
   colorScheme.schema = matches ? 'light' : 'dark';
 });

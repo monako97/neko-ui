@@ -4,9 +4,9 @@ const conf: PartialConfigType = {
   publicPath: '/',
   htmlPluginOption: {
     favicon: './site/assets/images/favicon.ico',
-    meta: {
-      'theme-color': '#5794ff',
-    },
+    // meta: {
+    //   'theme-color': '#5794ff',
+    // },
   },
   fixBrowserRouter: {
     pathSegmentsToKeep: 0,

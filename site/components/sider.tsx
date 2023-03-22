@@ -30,21 +30,21 @@ const siderCss = css`
 
   .site-sider {
     position: sticky;
-    top: 0;
-    z-index: 30;
+    top: 5.375rem;
     display: flex;
     overflow-y: scroll;
-    margin: 0 1rem 1rem;
+    margin: 1rem;
     border-radius: var(--border-radius, 8px);
     width: 15rem;
     min-width: 15rem;
+    max-height: calc(100vh - 112px);
     color: var(--text-color, rgb(0 0 0 / 65%));
-    background-color: var(--header-bg, rgb(255 255 255 / 80%));
+    background-color: var(--header-bg, rgb(255 255 255 / 90%));
     box-sizing: border-box;
     backdrop-filter: blur(1rem);
     transition-property: background-color, color;
     flex-direction: column;
-    box-shadow: 0 0.125rem 0.5rem 0 rgb(0 0 0 / 2%);
+    box-shadow: 0 0.125rem 0.5rem 0 rgb(0 0 0 / 10%);
   }
 
   .site-sider > div {

@@ -17,8 +17,9 @@ import {
   setClipboard,
   isEqual,
   isSvgElement,
+  throttle,
+  isUndefined,
 } from '@moneko/common';
-import { throttle } from 'lodash';
 import marked from 'marked-completed';
 import { PhotoSlider } from 'react-photo-view';
 import highlight from '../highlight';
@@ -268,10 +269,12 @@ const Markdown: FC<MarkdownProps> = ({
     if (!anchors.current.length) return;
     const el = e.target as HTMLElement;
     const top = getScrollTop(el);
+
     let anchor: HTMLAnchorElement | null = null;
+    const elTop = (isUndefined(el.tagName) ? -window.scrollY : -el.offsetHeight) / 2;
 
     anchors.current.forEach((a) => {
-      if (top - a.top > -el.offsetHeight / 2) anchor = a.anchor;
+      if (top - a.top > elTop) anchor = a.anchor;
     });
 
     if (anchor) {
@@ -280,21 +283,14 @@ const Markdown: FC<MarkdownProps> = ({
   }, []);
 
   useEffect(() => {
-    ref.current
-      ?.querySelector('ol.n-md-toc')
-      ?.addEventListener('wheel', throttle(tocWheel, 8, { trailing: true }), false);
-    getAnchorContainer()?.addEventListener(
-      'scroll',
-      throttle(handleScroll, 200, { trailing: true })
-    );
+    const s = throttle(handleScroll, 200);
+    const t = throttle(tocWheel, 200);
+
+    ref.current?.querySelector('ol.n-md-toc')?.addEventListener('wheel', t, false);
+    getAnchorContainer().addEventListener('scroll', s);
     return () => {
-      document
-        .querySelector('ol.n-md-toc')
-        ?.removeEventListener('wheel', throttle(tocWheel, 8, { trailing: true }), false);
-      getAnchorContainer()?.removeEventListener(
-        'scroll',
-        throttle(handleScroll, 200, { trailing: true })
-      );
+      document.querySelector('ol.n-md-toc')?.removeEventListener('wheel', t, false);
+      getAnchorContainer().removeEventListener('scroll', s);
     };
   }, [getAnchorContainer, handleScroll]);
 

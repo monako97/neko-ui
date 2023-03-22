@@ -1,0 +1,21 @@
+```tsx
+// import { colorScheme } from 'neko-ui';
+
+function Demo() {
+  const { schema } = colorScheme;
+  const handleTheme = React.useCallback(() => {
+    colorScheme.schema = colorScheme.schema === 'dark' ? 'light' : 'dark';
+  }, []);
+
+  React.useEffect(() => {
+    // 颜色方案发生，变更切换颜色
+    console.log(schema);
+  }, [schema]);
+
+  return (
+    <Button type="primary" flat onClick={handleTheme}>
+      {schema === 'light' ? '🌞' : '🌛'} {schema}
+    </Button>
+  );
+}
+```
