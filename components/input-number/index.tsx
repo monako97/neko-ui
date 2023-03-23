@@ -8,7 +8,7 @@ import React, {
   type KeyboardEventHandler,
 } from 'react';
 import { css } from '@emotion/css';
-import { classNames, throttle } from '@moneko/common';
+import { classNames, passiveSupported, throttle } from '@moneko/common';
 import { Input, type InputProps } from '../index';
 
 const inputNumberCss = css`
@@ -111,12 +111,12 @@ const InputNumber: FC<InputNumberProps> = ({
   }, [value]);
   useEffect(() => {
     if (move) {
-      document.body.addEventListener('mouseup', handleMouseUp, false);
-      document.body.addEventListener('mousemove', handleMouseMove, false);
+      document.body.addEventListener('mouseup', handleMouseUp, passiveSupported);
+      document.body.addEventListener('mousemove', handleMouseMove, passiveSupported);
     }
     return () => {
-      document.body.removeEventListener('mouseup', handleMouseUp, false);
-      document.body.removeEventListener('mousemove', handleMouseMove, false);
+      document.body.removeEventListener('mouseup', handleMouseUp, passiveSupported);
+      document.body.removeEventListener('mousemove', handleMouseMove, passiveSupported);
     };
   }, [handleMouseMove, handleMouseUp, move]);
 

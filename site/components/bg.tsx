@@ -11,9 +11,9 @@ const bg = css`
     left: 0;
     z-index: -1;
     width: 100vw;
-    height: 100vh;
+    height: 100vw;
     pointer-events: none;
-    animation: rotate 10s linear infinite;
+    animation: blur-color-bg 15s ease infinite;
     filter: blur(8rem);
   }
 
@@ -25,7 +25,7 @@ const bg = css`
     z-index: 1;
     width: 30%;
     height: 30%;
-    opacity: 0.25;
+    opacity: 0.1;
     content: '';
   }
 
@@ -57,7 +57,7 @@ const bg = css`
     clip-path: polygon(80% 0, 100% 70%, 100% 100%, 20% 90%);
   }
 
-  @keyframes rotate {
+  @keyframes blur-color-bg {
     100% {
       transform: rotate(0deg);
     }

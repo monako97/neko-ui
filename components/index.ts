@@ -68,7 +68,6 @@ injectGlobal([
     ${getColorVariableString('#ff4d4f', { name: 'error' })}
     ${getColorVariableString('#52c41a', { name: 'success' })}
   }
-
   :root[data-theme='dark'] {
     ${getColorVariableString('#4d81dc', { name: 'primary', theme: 'dark' })}
     ${getColorVariableString('#bb8314', { name: 'warning', theme: 'dark' })}

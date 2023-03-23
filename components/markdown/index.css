@@ -114,13 +114,17 @@
   transition-property: background-color;
   backdrop-filter: blur(1rem);
   flex: 1;
-  box-shadow: 0 2px 8px 0 rgb(0 0 0 / 2%);
 }
 
 .n-md-body a {
   position: relative;
   text-decoration: none;
   color: var(--text-color, rgb(0 0 0 / 65%));
+}
+
+.n-md-toc,
+.n-md-body {
+  box-shadow: 0 2px 8px 0 rgb(0 0 0 / 5%);
 }
 
 .n-md-toc {
@@ -139,7 +143,6 @@
   background-color: var(--toc-bg, rgb(255 255 255 / 80%));
   box-sizing: border-box;
   backdrop-filter: blur(16px);
-  box-shadow: 0 2px 8px 0 rgb(0 0 0 / 2%);
   transition-duration: var(--transition-duration);
   transition-timing-function: var(--transition-timing-function);
   transition-property: border-color, background-color, box-shadow;

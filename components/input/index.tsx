@@ -89,9 +89,9 @@ export interface InputProps<T = string | number | undefined>
   onChange?: (value?: T) => void;
   /** 指定输入框展示值的格式 */
   // eslint-disable-next-line no-unused-vars
-  formatter?: (value?: T) => T;
+  formatter?: ((value?: T) => T) | null;
   // eslint-disable-next-line no-unused-vars
-  parser?: false | ((value?: T) => T);
+  parser?: null | ((value?: T) => T);
 }
 
 const Input: FC<InputProps> = ({
@@ -113,7 +113,7 @@ const Input: FC<InputProps> = ({
   const [focus, setFocus] = useState<boolean>(false);
   const getValue = useCallback(
     (val: InputProps['value']) => {
-      return formatter ? formatter(val) : val;
+      return formatter ? formatter?.(val) : val;
     },
     [formatter]
   );

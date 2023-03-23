@@ -19,6 +19,7 @@ import {
   isSvgElement,
   throttle,
   isUndefined,
+  passiveSupported,
 } from '@moneko/common';
 import marked from 'marked-completed';
 import { PhotoSlider } from 'react-photo-view';
@@ -286,10 +287,10 @@ const Markdown: FC<MarkdownProps> = ({
     const s = throttle(handleScroll, 200);
     const t = throttle(tocWheel, 200);
 
-    ref.current?.querySelector('ol.n-md-toc')?.addEventListener('wheel', t, false);
+    ref.current?.querySelector('ol.n-md-toc')?.addEventListener('wheel', t, passiveSupported);
     getAnchorContainer().addEventListener('scroll', s);
     return () => {
-      document.querySelector('ol.n-md-toc')?.removeEventListener('wheel', t, false);
+      document.querySelector('ol.n-md-toc')?.removeEventListener('wheel', t, passiveSupported);
       getAnchorContainer().removeEventListener('scroll', s);
     };
   }, [getAnchorContainer, handleScroll]);

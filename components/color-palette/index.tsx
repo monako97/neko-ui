@@ -15,7 +15,7 @@ import {
   passiveSupported,
   setClipboard,
   throttle,
-  updateStyleRule,
+  // updateStyleRule,
   type HSVA,
   type ColorType,
   hexToHsv,
@@ -24,7 +24,7 @@ import {
 import { Input, InputNumber } from '../index';
 import prefixCls from '../prefix-cls';
 
-const colors = [
+const material = [
   '#f44336',
   '#E91E63',
   '#9C27B0',
@@ -37,8 +37,13 @@ const colors = [
   '#4CAF50',
   '#8BC34A',
   '#CDDC39',
+  '#FFEB3B',
   '#FFC107',
   '#FF9800',
+  '#FF5722',
+  '#795548',
+  '#9E9E9E',
+  '#607D8B',
   'rgba(0,0,0,.65)',
   'transparent',
 ];
@@ -219,6 +224,7 @@ const colorPaletteCss = css`
     width: 100%;
     height: 10px;
     outline: 0;
+    cursor: pointer;
     pointer-events: all;
     appearance: none;
 
@@ -314,13 +320,10 @@ export interface ColorPaletteProps extends Omit<HTMLAttributes<HTMLDivElement>, 
   // eslint-disable-next-line no-unused-vars
   onChange?: (color: string) => void;
 }
-const formatterInt = (v?: number | string) => {
-  return v ? Math.floor(v as number) || 0 : v;
-};
-const formatterOpacity = (v?: number | string) => {
-  return v ? Math.floor((v as number) * 100) || 0 : v;
-};
-const parseOpacity = (v?: string | number) => {
+function formatterOpacity(v?: number | string) {
+  return v ? Number(((v as number) * 100).toFixed()) : v;
+}
+function parseOpacity(v?: string | number) {
   let _val = v;
 
   if (typeof v === 'string') {
@@ -328,7 +331,7 @@ const parseOpacity = (v?: string | number) => {
   }
 
   return (_val as number) / 100;
-};
+}
 
 type Opt = Record<
   ColorType,
@@ -408,7 +411,7 @@ const ColorPalette: FC<ColorPaletteProps> = ({
   ...props
 }) => {
   const id = useId();
-  const selector = useRef(`[data-id="${id}"]`);
+  // const selector = useRef(`[data-id="${id}"]`);
   const colorPickerRef = useRef<HTMLDivElement>(null);
   const color = useRef(colorParse(value || defaultValue));
   const drag = useRef(false);
@@ -431,8 +434,8 @@ const ColorPalette: FC<ColorPaletteProps> = ({
       const _hsva: HSVA = [...color.current.value];
       const { x, y, width, height } = colorPickerRef.current.getBoundingClientRect();
 
-      _hsva[1] = Math.min(Math.max(0, ((ev.clientX - x) / width) * 100), 100);
-      _hsva[2] = 100 - Math.min(Math.max(0, ((ev.clientY - y) / height) * 100), 100);
+      _hsva[1] = Math.floor(Math.min(Math.max(0, ((ev.clientX - x) / width) * 100), 100));
+      _hsva[2] = Math.floor(100 - Math.min(Math.max(0, ((ev.clientY - y) / height) * 100), 100));
       color.current.setValue(_hsva);
       setHSVA(_hsva);
     }
@@ -518,18 +521,18 @@ const ColorPalette: FC<ColorPaletteProps> = ({
   useEffect(() => {
     onChange?.(inputVal.toString());
   }, [onChange, inputVal, setColor]);
-  useEffect(() => {
-    throttle(updateStyleRule, 8)(
-      {
-        '--c': color.current.toRgbaString(),
-        '--h': hsva[0],
-        '--s': hsva[1],
-        '--v': hsva[2],
-        '--a': hsva[3],
-      } as unknown as Record<string, string>,
-      selector.current
-    );
-  }, [hsva]);
+  // useEffect(() => {
+  //   throttle(updateStyleRule, 8)(
+  //     {
+  //       '--c': color.current.toRgbaString(),
+  //       '--h': hsva[0],
+  //       '--s': hsva[1],
+  //       '--v': hsva[2],
+  //       '--a': hsva[3],
+  //     } as unknown as Record<string, string>,
+  //     selector.current
+  //   );
+  // }, [hsva]);
   useEffect(() => {
     document.documentElement.addEventListener('mousemove', colorPickerMouseMove, passiveSupported);
     document.documentElement.addEventListener('mouseup', colorPickerMouseUp, passiveSupported);
@@ -544,7 +547,20 @@ const ColorPalette: FC<ColorPaletteProps> = ({
   }, [colorPickerMouseMove, colorPickerMouseUp]);
 
   return (
-    <div {...props} data-id={id} className={classNames(cls.palette, className)}>
+    <div
+      {...props}
+      data-id={id}
+      className={classNames(cls.palette, className)}
+      style={
+        {
+          '--c': color.current.toRgbaString(),
+          '--h': hsva[0],
+          '--s': hsva[1],
+          '--v': hsva[2],
+          '--a': hsva[3],
+        } as React.CSSProperties
+      }
+    >
       <div className={cls.picker} ref={colorPickerRef} onMouseDown={colorPickerMouseDown} />
       <div className={cls.chooser}>
         <div className={cls.range}>
@@ -586,8 +602,8 @@ const ColorPalette: FC<ColorPaletteProps> = ({
                 max={opt[type].max[i]}
                 min={0}
                 step={isAlpha ? 0.01 : 1}
-                formatter={isAlpha ? formatterOpacity : formatterInt}
-                parser={isAlpha ? parseOpacity : false}
+                formatter={isAlpha ? formatterOpacity : null}
+                parser={isAlpha ? parseOpacity : null}
                 onChange={(v) => handleFliedChange(i, v)}
               />
             );
@@ -598,7 +614,7 @@ const ColorPalette: FC<ColorPaletteProps> = ({
         </div>
       </div>
       <div className={cls.color}>
-        {colors.map((c) => (
+        {material.map((c) => (
           <i
             key={c}
             style={
