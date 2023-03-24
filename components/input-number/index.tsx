@@ -7,19 +7,22 @@ import React, {
   type MouseEventHandler,
   type KeyboardEventHandler,
 } from 'react';
-import { css } from '@emotion/css';
+import { injectGlobal } from '@emotion/css';
 import { classNames, passiveSupported, throttle } from '@moneko/common';
 import { Input, type InputProps } from '../index';
+import prefixCls from '../prefix-cls';
 
-const inputNumberCss = css`
+const cls = {
+  inputNumber: prefixCls('input-number'),
+};
+const inputNumberCss = `
   /** 隐藏原生加减控件 */
-  &[type='number'] {
+  .${cls.inputNumber}[type='number'] {
     appearance: textfield;
-
-    &::-webkit-inner-spin-button,
-    &::-webkit-outer-spin-button {
-      appearance: none;
-    }
+  }
+  .${cls.inputNumber}[type='number']::-webkit-inner-spin-button,
+  .${cls.inputNumber}[type='number']::-webkit-outer-spin-button {
+    appearance: none;
   }
 `;
 
@@ -56,9 +59,9 @@ const InputNumber: FC<InputNumberProps> = ({
     (val?: string | number) => {
       let _val = typeof val === 'string' ? parseFloat(val) : val;
 
-      if (typeof val !== 'undefined') {
-        if (val < min) _val = min;
-        if (val > max) _val = max;
+      if (typeof _val !== 'undefined') {
+        if (_val < min) _val = min;
+        if (_val > max) _val = max;
       }
       if (valRef.current !== _val) {
         Object.assign(valRef, {
@@ -119,11 +122,14 @@ const InputNumber: FC<InputNumberProps> = ({
       document.body.removeEventListener('mousemove', handleMouseMove, passiveSupported);
     };
   }, [handleMouseMove, handleMouseUp, move]);
+  useEffect(() => {
+    injectGlobal([inputNumberCss]);
+  }, []);
 
   return (
     <Input
       {...prpos}
-      className={classNames(inputNumberCss, className)}
+      className={classNames(cls.inputNumber, className)}
       value={value}
       max={max}
       min={min}

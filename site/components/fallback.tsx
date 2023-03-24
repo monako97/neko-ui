@@ -1,8 +1,8 @@
-import React, { memo } from 'react';
-import { css, injectGlobal } from '@emotion/css';
+import React, { memo, useEffect } from 'react';
+import { injectGlobal } from '@emotion/css';
 import { Skeleton } from 'neko-ui';
 
-const siteFallbackCss = css`
+const siteFallbackCss = `
   .site-fallback {
     display: flex;
     margin: auto;
@@ -14,9 +14,10 @@ const siteFallbackCss = css`
   }
 `;
 
-injectGlobal([siteFallbackCss]);
-
 const Fallback = () => {
+  useEffect(() => {
+    injectGlobal([siteFallbackCss]);
+  }, []);
   return (
     <div className="site-fallback">
       <Skeleton title active rows={6} />

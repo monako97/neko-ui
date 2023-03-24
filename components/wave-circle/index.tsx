@@ -4,8 +4,9 @@ import React, {
   type HtmlHTMLAttributes,
   type ReactNode,
   type CSSProperties,
+  useEffect,
 } from 'react';
-import { css, injectGlobal } from '@emotion/css';
+import { injectGlobal } from '@emotion/css';
 import { classNames } from '@moneko/common';
 import prefixCls from '../prefix-cls';
 
@@ -15,7 +16,7 @@ const cls = {
   waveAfter: prefixCls('wave-circles::after'),
   waveBefore: prefixCls('wave-circles::before'),
 };
-const waveCss = css`
+const waveCss = `
   :root {
     --wave-circles-bg-color: var(--primary-color, #5794ff);
   }
@@ -81,8 +82,6 @@ const waveCss = css`
   }
 `;
 
-injectGlobal([waveCss]);
-
 export interface WaveCircleProps extends HtmlHTMLAttributes<HTMLDivElement> {
   /** 背景颜色 */
   bgColor?: string;
@@ -109,6 +108,10 @@ const WaveCircle: FC<WaveCircleProps> = ({
       }
     );
   }, [bgColor, timingFunction]);
+
+  useEffect(() => {
+    injectGlobal([waveCss]);
+  }, []);
 
   return (
     <div

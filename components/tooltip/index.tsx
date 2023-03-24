@@ -10,7 +10,7 @@ import React, {
   useRef,
   useState,
 } from 'react';
-import { css, injectGlobal } from '@emotion/css';
+import { injectGlobal } from '@emotion/css';
 import { classNames, getMaxZindex, isString, colorParse } from '@moneko/common';
 import { createPortal } from 'react-dom';
 import prefixCls from '../prefix-cls';
@@ -21,7 +21,7 @@ const cls = {
   inUp: prefixCls('tooltip-in-up'),
   outUp: prefixCls('tooltip-out-up'),
 };
-const tooltipCss = css`
+const tooltipCss = `
   :root {
     --tooltip-bg: rgb(255 255 255 / 80%);
     --tooltip-shadow-color: rgb(0 0 0 / 10%);
@@ -104,8 +104,6 @@ const tooltipCss = css`
     }
   }
 `;
-
-injectGlobal([tooltipCss]);
 
 export type TooltipTriggerOption = 'hover' | 'click' | 'contextMenu';
 type TriggerOptionMap = Record<TooltipTriggerOption, keyof DOMAttributes<HTMLSpanElement> | null>;
@@ -239,6 +237,9 @@ const Tooltip: FC<TooltipProps> = ({
       document.body.removeEventListener('click', close, false);
     };
   }, [close]);
+  useEffect(() => {
+    injectGlobal([tooltipCss]);
+  }, []);
 
   const style = useMemo(() => {
     let shadowColor: string | undefined;

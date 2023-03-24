@@ -7,8 +7,9 @@ import {
   useState,
   useMemo,
   createElement,
+  useEffect,
 } from 'react';
-import { css, injectGlobal } from '@emotion/css';
+import { injectGlobal } from '@emotion/css';
 import { classNames, isFunction } from '@moneko/common';
 import prefixCls from '../prefix-cls';
 import type { ComponentSize } from '../';
@@ -65,7 +66,7 @@ function btnColor(type: ButtonType | 'danger') {
     }
   `;
 }
-const btnCss = css`
+const btnCss = `
   :root {
     --disable-color: rgb(0 0 0 / 25%);
     --disable-bg: rgb(0 0 0 / 4%);
@@ -261,8 +262,6 @@ const btnCss = css`
   }
 `;
 
-injectGlobal([btnCss]);
-
 export type ButtonType = 'success' | 'error' | 'primary' | 'warning' | 'default';
 
 export interface ButtonProps extends HTMLAttributes<HTMLButtonElement> {
@@ -324,10 +323,20 @@ const Button: FC<ButtonProps> = ({
   const handleAnimationEnd = useCallback(() => {
     setAnimating(false);
   }, []);
+  const tag = useMemo(() => (link ? 'a' : 'button'), [link]);
 
-  const btnCls = useMemo(
-    () =>
-      classNames(
+  useEffect(() => {
+    injectGlobal([btnCss]);
+  }, []);
+
+  return createElement(
+    tag,
+    {
+      ...props,
+      ref,
+      onClick: handleClick,
+      onAnimationEnd: handleAnimationEnd,
+      className: classNames(
         cls.btn,
         cls[type],
         cls[size],
@@ -344,34 +353,6 @@ const Button: FC<ButtonProps> = ({
         animating && cls.without,
         className
       ),
-    [
-      animating,
-      block,
-      circle,
-      className,
-      danger,
-      dashed,
-      disabled,
-      fill,
-      flat,
-      ghost,
-      infinite,
-      link,
-      size,
-      type,
-    ]
-  );
-
-  const tag = useMemo(() => (link ? 'a' : 'button'), [link]);
-
-  return createElement(
-    tag,
-    {
-      ...props,
-      ref,
-      onClick: handleClick,
-      onAnimationEnd: handleAnimationEnd,
-      className: btnCls,
       disabled: disabled,
     },
     createElement(

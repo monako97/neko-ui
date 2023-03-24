@@ -7,7 +7,7 @@ import React, {
   useRef,
   useState,
 } from 'react';
-import { css, injectGlobal } from '@emotion/css';
+import { injectGlobal } from '@emotion/css';
 import { classNames } from '@moneko/common';
 import clipPath from './clip-path.svg';
 import favicon from './favicon.svg';
@@ -22,7 +22,7 @@ const faviconBg = `data:image/svg+xml;base64,${window.btoa(
 )}`;
 
 const avatarCls = prefixCls('avatar');
-const avatarCss = css`
+const avatarCss = `
   .${avatarCls} {
     position: relative;
     display: inline-flex;
@@ -94,8 +94,6 @@ const avatarCss = css`
   }
 `;
 
-injectGlobal([avatarCss]);
-
 export interface AvatarProps extends HTMLAttributes<HTMLDivElement> {
   src?: ReactNode;
   alt?: string;
@@ -125,6 +123,7 @@ const Avatar: FC<AvatarProps> = ({
   const cls = useMemo(() => classNames(avatarCls, className), [className]);
 
   useEffect(() => {
+    injectGlobal([avatarCss]);
     const hasSvg = document.documentElement.querySelector('clipPath#clipPathAvatar');
 
     if (!hasSvg) {

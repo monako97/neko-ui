@@ -9,6 +9,7 @@ const conf: PartialConfigType = {
   },
   routeBaseName: `/${PACKAGENAME}/`,
   publicPath: `/${PACKAGENAME}/`,
+  bundleAnalyzer: false,
   fixBrowserRouter: {
     pathSegmentsToKeep: 1,
     path: '404.html',

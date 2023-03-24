@@ -1,8 +1,8 @@
-import React, { memo } from 'react';
-import { css, injectGlobal } from '@emotion/css';
+import React, { memo, useEffect } from 'react';
+import { injectGlobal } from '@emotion/css';
 import { projectInfo } from '@/utils';
 
-const footerCss = css`
+const footerCss = `
   .site-footer {
     display: flex;
     justify-content: center;
@@ -19,9 +19,11 @@ const footerCss = css`
   }
 `;
 
-injectGlobal([footerCss]);
 const year = new Date().getFullYear();
 const Footer = () => {
+  useEffect(() => {
+    injectGlobal([footerCss]);
+  }, []);
   return (
     <footer className="site-footer">
       <p>

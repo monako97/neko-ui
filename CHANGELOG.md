@@ -1,4 +1,4 @@
-## [1.0.39](https://github.com/monako97/neko-ui/compare/1.0.36...1.0.39) (2023-03-23)
+## [1.0.39](https://github.com/monako97/neko-ui/compare/1.0.36...1.0.39) (2023-03-24)
 
 
 ### Bug Fixes
@@ -11,6 +11,7 @@
 
 * color-schema ([921edfd](https://github.com/monako97/neko-ui/commit/921edfd1bcf5a94b5110ac55efe004c1e09be0fa))
 * common按需 ([b21343d](https://github.com/monako97/neko-ui/commit/b21343de3ab6df865f000f4412f246b718bcea2e))
+* passiveSupported ([397ef3b](https://github.com/monako97/neko-ui/commit/397ef3bc1951a65472216b0fd5e46f4e5d833a07))
 * 取色板支持 cmyk | rgba | hsla | hsva | hexa ([c2719e7](https://github.com/monako97/neko-ui/commit/c2719e7af1822cee8ec0a2a3be99960371bc4a04))
 
 

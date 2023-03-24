@@ -1,25 +1,22 @@
 import React, {
   useCallback,
   useEffect,
+  useMemo,
   useRef,
   useState,
   type CSSProperties,
   type FC,
   type HTMLAttributes,
-  useId,
 } from 'react';
-import { css, injectGlobal } from '@emotion/css';
+import { injectGlobal } from '@emotion/css';
 import {
   classNames,
   colorParse,
   passiveSupported,
   setClipboard,
   throttle,
-  // updateStyleRule,
-  type HSVA,
   type ColorType,
-  hexToHsv,
-  rgbToHsv,
+  type HSVA,
 } from '@moneko/common';
 import { Input, InputNumber } from '../index';
 import prefixCls from '../prefix-cls';
@@ -62,40 +59,44 @@ const cls = {
   slider: prefixCls('color-slider'),
   cmykHue: prefixCls('color-slider-cmyk-hue'),
 };
-const colorPaletteCss = css`
+const sliderThumb = `
+  position: relative;
+  border-radius: 50%;
+  width: 10px;
+  height: 10px;
+  background: #fff;
+  box-shadow: 0 0 10px rgb(0 0 0 / 10%);
+  transition: 0.2s cubic-bezier(0.12, 0.4, 0.29, 1.46);
+  transform: scale(1.2);
+`;
+const colorPaletteCss = `
   .${cls.palette} {
+    --alpha-gradient: repeating-conic-gradient(#eee 0 25%, transparent 0 50%) 0 / 10px 10px;
+
     width: 100%;
     box-sizing: border-box;
     user-select: none;
   }
+  .${cls.preview}, .${cls.preview}&::after, .${cls.switch}, .${cls.color} i,
+  .${cls.color} i::before {
+    border-radius: var(--border-radius);
+  }
   .${cls.preview} {
     margin-left: 6px;
-    border-radius: var(--border-radius);
     width: 46px;
     min-height: 26px;
     font-family: neko-icon, sans-serif;
     text-align: center;
     color: #fff;
-    background-position: 0 0, 5px 5px;
-    background-size: 10px 10px;
     cursor: pointer;
-    background-image: linear-gradient(
-        45deg,
-        #ccc 25%,
-        transparent 25%,
-        transparent 75%,
-        #ccc 75%,
-        #ccc
-      ),
-      linear-gradient(45deg, #ccc 25%, transparent 25%, transparent 75%, #ccc 75%, #ccc);
+    background: var(--alpha-gradient);
 
     &::after {
       display: block;
-      border-radius: var(--border-radius);
       width: 100%;
       height: 100%;
       background-color: var(--c, #fff);
-      box-shadow: rgb(0 0 0 / 10%) 0 0 0 1px inset, rgb(0 0 0 / 15%) 0 0 5px inset;
+      box-shadow: rgb(0 0 0 / 10%) 0 0 0 1px inset, rgb(0 0 0 / 10%) 0 0 4px inset;
       text-shadow: var(--text-shadow);
       content: '';
     }
@@ -122,7 +123,6 @@ const colorPaletteCss = css`
   }
   .${cls.switch} {
     border: none;
-    border-radius: var(--border-radius);
     cursor: pointer;
     width: 46px;
     font-size: 12px;
@@ -146,20 +146,18 @@ const colorPaletteCss = css`
   }
   .${cls.picker} {
     position: relative;
-    border-radius: var(--border-radius);
+    border-radius: 4px;
     height: 150px;
-    background: linear-gradient(to top, hsl(0deg 0% 0% / calc(var(--a))), transparent),
+    background: linear-gradient(to top, hsl(0deg 0% 0% / calc(var(--a))), transparent) 0 / 100%,
       linear-gradient(
-        to left,
-        hsl(calc(var(--h)) 100% 50% / calc(var(--a))),
-        hsl(0deg 0% 100% / calc(var(--a)))
-      ),
-      linear-gradient(45deg, #ddd 25%, transparent 0, transparent 75%, #ddd 0),
-      linear-gradient(45deg, #ddd 25%, transparent 0, transparent 75%, #ddd 0);
-    background-position: 0 0, 0 0, 0 0, 5px 5px;
-    background-size: 100% 100%, 100% 100%, 10px 10px, 10px 10px;
+          to left,
+          hsl(calc(var(--h)) 100% 50% / calc(var(--a))),
+          hsl(0deg 0% 100% / calc(var(--a)))
+        )
+        0 / 100%,
+      var(--alpha-gradient);
     opacity: 1;
-    transition: opacity 0.1s;
+    transition: opacity 0.3s;
     user-select: none;
     cursor: crosshair;
 
@@ -171,14 +169,13 @@ const colorPaletteCss = css`
       position: absolute;
       top: calc((100 - var(--v)) * 1%);
       left: calc(var(--s) * 1%);
-      border: 2px solid #fff;
-      border-radius: 50%;
-      width: 10px;
-      height: 10px;
+      border-radius: 3px;
+      width: 6px;
+      height: 6px;
       pointer-events: none;
       content: '';
-      box-sizing: border-box;
       transform: translate(-50%, -50%);
+      box-shadow: inset 0 0 0 1px #fff, 0 0 1px rgb(0 0 0 / 20%), inset 0 0 2.5px 0 rgb(0 0 0 / 20%);
     }
   }
   .${cls.chooser} {
@@ -195,26 +192,12 @@ const colorPaletteCss = css`
     background-image: linear-gradient(to right, red, yellow, lime, cyan, blue, magenta, red);
   }
   .${cls.opacity} {
-    background-image: linear-gradient(
+    background: linear-gradient(
         to right,
         hsl(calc(var(--h)) 100% 50% / 0%),
         hsl(calc(var(--h)) 100% 50% / 100%)
       ),
-      linear-gradient(45deg, #ddd 25%, transparent 0, transparent 75%, #ddd 0),
-      linear-gradient(45deg, #ddd 25%, transparent 0, transparent 75%, #ddd 0);
-    background-position: 0 0, 0 0, 5px 5px;
-    background-size: 100% 100%, 10px 10px, 10px 10px;
-  }
-  .${cls.cmykHue}.${cls.slider} {
-    &::-webkit-slider-thumb {
-      width: 26px;
-      height: 26px;
-    }
-
-    &::-moz-range-thumb {
-      width: 26px;
-      height: 26px;
-    }
+      var(--alpha-gradient);
   }
   .${cls.slider} {
     flex: 1;
@@ -236,28 +219,15 @@ const colorPaletteCss = css`
 
     &::-webkit-slider-thumb {
       appearance: none;
-      position: relative;
-      border-radius: 50%;
-      width: 10px;
-      height: 10px;
-      background: #fff;
-      box-shadow: 0 0 10px rgb(0 0 0 / 10%);
-      transition: 0.2s cubic-bezier(0.12, 0.4, 0.29, 1.46);
-      transform: scale(1.2);
+      ${sliderThumb}
     }
 
     &::-moz-range-thumb {
-      position: relative;
+      ${sliderThumb}
+
       border: 0;
-      border-radius: 50%;
-      width: 10px;
-      height: 10px;
-      background: #fff;
-      box-shadow: 0 0 10px rgb(0 0 0 / 10%);
-      transition: 0.2s cubic-bezier(0.12, 0.4, 0.29, 1.46);
       box-sizing: border-box;
       pointer-events: none;
-      transform: scale(1.2);
     }
 
     &::-webkit-slider-thumb:active,
@@ -271,6 +241,17 @@ const colorPaletteCss = css`
     }
   }
 
+  .${cls.cmykHue}.${cls.slider} {
+    &::-webkit-slider-thumb {
+      width: 26px;
+      height: 26px;
+    }
+
+    &::-moz-range-thumb {
+      width: 26px;
+      height: 26px;
+    }
+  }
   .${cls.color} {
     display: grid;
     padding-top: 8px;
@@ -280,7 +261,6 @@ const colorPaletteCss = css`
     i {
       position: relative;
       border: 0;
-      border-radius: var(--border-radius);
       padding-top: 100%;
       padding-bottom: 0;
       width: 100%;
@@ -294,13 +274,9 @@ const colorPaletteCss = css`
         top: 0;
         left: 0;
         z-index: -1;
-        border-radius: var(--border-radius);
         width: 100%;
         height: 100%;
-        background: linear-gradient(45deg, #ddd 25%, transparent 0, transparent 75%, #ddd 0),
-          linear-gradient(45deg, #ddd 25%, transparent 0, transparent 75%, #ddd 0);
-        background-position: 0 0, 5px 5px;
-        background-size: 10px 10px;
+        background: var(--alpha-gradient);
         content: '';
       }
 
@@ -311,8 +287,6 @@ const colorPaletteCss = css`
     }
   }
 `;
-
-injectGlobal([colorPaletteCss]);
 
 export interface ColorPaletteProps extends Omit<HTMLAttributes<HTMLDivElement>, 'onChange'> {
   value?: string;
@@ -339,8 +313,6 @@ type Opt = Record<
     get: 'toRgba' | 'toHexa' | 'toHsla' | 'toHsva' | 'toCmyk';
     next: ColorType;
     max: number[];
-    // eslint-disable-next-line no-unused-vars, @typescript-eslint/no-explicit-any
-    hsv: (c: any) => HSVA;
   }
 >;
 
@@ -349,59 +321,51 @@ const opt: Opt = {
     get: 'toHexa',
     next: 'rgba',
     max: [255, 255, 255, 1],
-    hsv: hexToHsv,
   },
   rgba: {
     get: 'toRgba',
     next: 'hsla',
     max: [255, 255, 255, 1],
-    hsv: rgbToHsv,
   },
   hsla: {
     get: 'toHsla',
     next: 'hsva',
     max: [360, 100, 100, 1],
-    hsv: rgbToHsv,
   },
   hsva: {
     get: 'toHsva',
     next: 'cmyk',
     max: [360, 100, 100, 1],
-    hsv: rgbToHsv,
   },
   cmyk: {
     get: 'toCmyk',
     next: 'hexa',
     max: [100, 100, 100, 100],
-    hsv: rgbToHsv,
   },
 };
 
-// eslint-disable-next-line no-unused-vars
-const HexaForm: React.FC<{ value?: string; onChange: (hex?: string) => void }> = ({
-  value,
-  onChange,
-}) => {
+interface HexaFormProps {
+  value?: string;
+  // eslint-disable-next-line no-unused-vars
+  onChange: (hex: string) => void;
+}
+const HexaForm: React.FC<HexaFormProps> = ({ value, onChange }) => {
   const [hex, setHex] = useState(value);
+  const hexChange = useCallback(
+    (v?: string | number) => {
+      if (typeof v === 'string') {
+        setHex(v);
+        throttle(onChange, 4)(v);
+      }
+    },
+    [onChange]
+  );
 
   useEffect(() => {
     setHex(value);
   }, [value]);
 
-  return (
-    <Input
-      className={cls.input}
-      name="hex"
-      size="small"
-      value={hex}
-      onChange={(v) => {
-        if (typeof v === 'string') {
-          setHex(v);
-          throttle(onChange, 16)(v);
-        }
-      }}
-    />
-  );
+  return <Input className={cls.input} name="hex" size="small" value={hex} onChange={hexChange} />;
 };
 const ColorPalette: FC<ColorPaletteProps> = ({
   className,
@@ -410,8 +374,6 @@ const ColorPalette: FC<ColorPaletteProps> = ({
   onChange,
   ...props
 }) => {
-  const id = useId();
-  // const selector = useRef(`[data-id="${id}"]`);
   const colorPickerRef = useRef<HTMLDivElement>(null);
   const color = useRef(colorParse(value || defaultValue));
   const drag = useRef(false);
@@ -502,13 +464,22 @@ const ColorPalette: FC<ColorPaletteProps> = ({
     [setAlpha]
   );
   const handleHexChange = useCallback(
-    (hex?: string) => {
-      if (hex && color.current.isColor(hex)) {
+    (hex: string) => {
+      if (color.current.isColor(hex)) {
         setColor(hex);
       }
     },
     [setColor]
   );
+  const style = useMemo(() => {
+    return {
+      '--c': color.current.toRgbaString(),
+      '--h': hsva[0],
+      '--s': hsva[1],
+      '--v': hsva[2],
+      '--a': hsva[3],
+    } as React.CSSProperties;
+  }, [hsva]);
 
   useEffect(() => {
     throttle(setColor, 4)(value);
@@ -521,18 +492,6 @@ const ColorPalette: FC<ColorPaletteProps> = ({
   useEffect(() => {
     onChange?.(inputVal.toString());
   }, [onChange, inputVal, setColor]);
-  // useEffect(() => {
-  //   throttle(updateStyleRule, 8)(
-  //     {
-  //       '--c': color.current.toRgbaString(),
-  //       '--h': hsva[0],
-  //       '--s': hsva[1],
-  //       '--v': hsva[2],
-  //       '--a': hsva[3],
-  //     } as unknown as Record<string, string>,
-  //     selector.current
-  //   );
-  // }, [hsva]);
   useEffect(() => {
     document.documentElement.addEventListener('mousemove', colorPickerMouseMove, passiveSupported);
     document.documentElement.addEventListener('mouseup', colorPickerMouseUp, passiveSupported);
@@ -545,22 +504,12 @@ const ColorPalette: FC<ColorPaletteProps> = ({
       document.documentElement.removeEventListener('mouseup', colorPickerMouseUp, passiveSupported);
     };
   }, [colorPickerMouseMove, colorPickerMouseUp]);
+  useEffect(() => {
+    injectGlobal([colorPaletteCss]);
+  }, []);
 
   return (
-    <div
-      {...props}
-      data-id={id}
-      className={classNames(cls.palette, className)}
-      style={
-        {
-          '--c': color.current.toRgbaString(),
-          '--h': hsva[0],
-          '--s': hsva[1],
-          '--v': hsva[2],
-          '--a': hsva[3],
-        } as React.CSSProperties
-      }
-    >
+    <div {...props} className={classNames(cls.palette, className)} style={style}>
       <div className={cls.picker} ref={colorPickerRef} onMouseDown={colorPickerMouseDown} />
       <div className={cls.chooser}>
         <div className={cls.range}>

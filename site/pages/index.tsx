@@ -1,5 +1,5 @@
 import React, { type FC, useEffect, useRef, memo } from 'react';
-import { css, injectGlobal } from '@emotion/css';
+import { injectGlobal } from '@emotion/css';
 import { useLocation, useOutlet } from '@moneko/core';
 import { BackTop } from 'neko-ui';
 import Bg from '@/components/bg';
@@ -25,8 +25,8 @@ const material = [
   '#FFC107',
   '#FF9800',
   '#FF5722',
-];
-const waveBg = css`
+].toString();
+const app = `
   #root {
     flex-wrap: wrap;
   }
@@ -43,6 +43,14 @@ const waveBg = css`
 
   .site-doc-main-box {
     box-sizing: border-box;
+
+    .n-md-toc {
+      top: 1rem;
+    }
+  }
+
+  body {
+    overflow-x: hidden;
   }
 
   body::before {
@@ -51,12 +59,12 @@ const waveBg = css`
     z-index: 1;
     display: block;
     width: 100vw;
-    height: 100px;
-    background: linear-gradient(124deg, ${material.toString()});
+    height: 6.25rem;
+    background: linear-gradient(124deg, ${material});
     background-size: 1000% 1000%;
     opacity: 0.15;
     content: '';
-    transform: translateY(-99.99px);
+    transform: translateY(-6.25rem);
     animation: rainbow 15s ease infinite;
   }
 
@@ -75,24 +83,19 @@ const waveBg = css`
   }
 `;
 
-injectGlobal([waveBg]);
-
 const App: FC = () => {
   const box = useRef<HTMLDivElement>(null);
   const readme = useOutlet();
   const location = useLocation();
   const num = useRef(0);
-  // const current: PkgType = useMemo(
-  //   () =>
-  //     (myPkgs.find((item) => item.key === location.pathname.substring(1)) as unknown as PkgType) ||
-  //     projectInfo,
-  //   [location.pathname]
-  // );
 
   useEffect(() => {
     num.current++;
     box.current?.scrollTo({ top: 0, behavior: 'smooth' });
   }, [location.pathname]);
+  useEffect(() => {
+    injectGlobal([app]);
+  }, []);
 
   return (
     <>

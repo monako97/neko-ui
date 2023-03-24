@@ -1,8 +1,8 @@
-import React, { type FC, memo } from 'react';
-import { css, injectGlobal } from '@emotion/css';
+import React, { type FC, memo, useEffect } from 'react';
+import { injectGlobal } from '@emotion/css';
 import { createPortal } from 'react-dom';
 
-const bg = css`
+const bg = `
   .site-bg {
     position: fixed;
     top: 0;
@@ -68,9 +68,10 @@ const bg = css`
   }
 `;
 
-injectGlobal([bg]);
-
 const Bg: FC = () => {
+  useEffect(() => {
+    injectGlobal([bg]);
+  }, []);
   return createPortal(
     <div className="site-bg">
       <div className="site-polygon" />

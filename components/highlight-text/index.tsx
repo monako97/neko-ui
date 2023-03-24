@@ -1,5 +1,5 @@
 import React, { type CSSProperties, type FC, useEffect, useMemo, useState } from 'react';
-import { css, injectGlobal } from '@emotion/css';
+import { injectGlobal } from '@emotion/css';
 import { classNames } from '@moneko/common';
 import prefixCls from '../prefix-cls';
 
@@ -7,7 +7,7 @@ const cls = {
   text: prefixCls('highlight-text'),
   hit: prefixCls('highlight-hit'),
 };
-const highlightTextCss = css`
+const highlightTextCss = `
   .${cls.text} {
     cursor: auto;
   }
@@ -16,7 +16,6 @@ const highlightTextCss = css`
   }
 `;
 
-injectGlobal([highlightTextCss]);
 /**
  * 高亮字符串语法
  * @example
@@ -106,6 +105,24 @@ const HighlightText: FC<HighlightTextProps> = ({
   flag = 'g',
 }) => {
   const [texts, setTexts] = useState<Highlight[] | null>();
+  const hitNode = useMemo(() => {
+    return (
+      texts?.map((item, i) => {
+        return item.hit ? (
+          <span
+            key={item.text + i}
+            className={classNames(cls.hit, hitClassName)}
+            data-text={item.text}
+            style={hitStyle}
+          >
+            {item.text}
+          </span>
+        ) : (
+          item.text
+        );
+      }) ?? text
+    );
+  }, [hitClassName, hitStyle, text, texts]);
 
   useEffect(() => {
     if (typeof text === 'string' && highlight) {
@@ -130,24 +147,9 @@ const HighlightText: FC<HighlightTextProps> = ({
       setTexts(null);
     }
   }, [flag, highlight, text]);
-  const hitNode = useMemo(() => {
-    return (
-      texts?.map((item, i) => {
-        return item.hit ? (
-          <span
-            key={item.text + i}
-            className={classNames(cls.hit, hitClassName)}
-            data-text={item.text}
-            style={hitStyle}
-          >
-            {item.text}
-          </span>
-        ) : (
-          item.text
-        );
-      }) ?? text
-    );
-  }, [hitClassName, hitStyle, text, texts]);
+  useEffect(() => {
+    injectGlobal([highlightTextCss]);
+  }, []);
 
   return (
     <div className={classNames(cls.text, className)} style={style}>

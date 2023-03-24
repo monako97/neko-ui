@@ -1,5 +1,5 @@
-import React, { useMemo, type FC, type HTMLAttributes } from 'react';
-import { css, injectGlobal } from '@emotion/css';
+import React, { useEffect, useMemo, type FC, type HTMLAttributes } from 'react';
+import { injectGlobal } from '@emotion/css';
 import { classNames } from '@moneko/common';
 import prefixCls from '../prefix-cls';
 
@@ -12,7 +12,7 @@ const cls = {
   avatar: prefixCls('skeleton-avatar'),
 };
 
-const skeletonCss = css`
+const skeletonCss = `
   :root {
     --skeleton-bg: rgb(0 0 0 / 6%);
     --skeleton-bg-active: linear-gradient(
@@ -93,7 +93,6 @@ const skeletonCss = css`
   }
 `;
 
-injectGlobal([skeletonCss]);
 export interface SkeletonProps extends Omit<HTMLAttributes<HTMLDivElement>, 'title'> {
   /** 行 */
   rows?: number;
@@ -108,6 +107,9 @@ export interface SkeletonProps extends Omit<HTMLAttributes<HTMLDivElement>, 'tit
 const Skeleton: FC<SkeletonProps> = ({ rows = 3, className, active, avatar, title, ...props }) => {
   const activeCls = useMemo(() => active && cls.active, [active]);
 
+  useEffect(() => {
+    injectGlobal([skeletonCss]);
+  }, []);
   return (
     <div {...props} className={classNames(cls.skeleton, className)}>
       {avatar && <div className={classNames(cls.avatar, activeCls)} />}

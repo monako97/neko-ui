@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState, type CSSProperties, type FC } from 'react';
-import { css, injectGlobal } from '@emotion/css';
+import { injectGlobal } from '@emotion/css';
 import { classNames } from '@moneko/common';
 import { ColorPalette, Tooltip, type ColorPaletteProps, type ComponentSize } from '../index';
 import prefixCls from '../prefix-cls';
@@ -11,27 +11,19 @@ const cls = {
   large: prefixCls('color-picker-large'),
   normal: prefixCls('color-picker-normal'),
 };
-const colorPickerCss = css`
+const colorPickerCss = `
   body .${cls.picker} {
     padding: 10px;
     width: 216px;
   }
   .${cls.trigger} {
+    --alpha-gradient: repeating-conic-gradient(#eee 0 25%, transparent 0 50%) 0 / 10px 10px;
+
     display: inline-block;
     border-radius: var(--border-radius, 8px);
     width: 25px;
     height: 25px;
-    background-position: 0 0, 5px 5px;
-    background-size: 10px 10px;
-    background-image: linear-gradient(
-        45deg,
-        #ccc 25%,
-        transparent 25%,
-        transparent 75%,
-        #ccc 75%,
-        #ccc
-      ),
-      linear-gradient(45deg, #ccc 25%, transparent 25%, transparent 75%, #ccc 75%, #ccc);
+    background: var(--alpha-gradient);
 
     &::after {
       display: block;
@@ -40,7 +32,7 @@ const colorPickerCss = css`
       height: 100%;
       background: var(--c, #fff);
       opacity: var(--a, 1);
-      box-shadow: rgb(0 0 0 / 15%) 0 0 0 1px inset, rgb(0 0 0 / 25%) 0 0 4px inset;
+      box-shadow: rgb(0 0 0 / 10%) 0 0 0 1px inset, rgb(0 0 0 / 10%) 0 0 4px inset;
       content: '';
     }
   }
@@ -57,8 +49,6 @@ const colorPickerCss = css`
     height: 25px;
   }
 `;
-
-injectGlobal([colorPickerCss]);
 
 export interface ColorPickerProps extends ColorPaletteProps {
   destroyInactive?: boolean;
@@ -86,6 +76,9 @@ const ColorPicker: FC<ColorPickerProps> = ({
   useEffect(() => {
     return onChange?.(val || defaultValue);
   }, [defaultValue, onChange, val]);
+  useEffect(() => {
+    injectGlobal([colorPickerCss]);
+  }, []);
   return (
     <Tooltip
       {...props}

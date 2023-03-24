@@ -7,7 +7,7 @@ import React, {
   useRef,
   useState,
 } from 'react';
-import { css, injectGlobal } from '@emotion/css';
+import { injectGlobal } from '@emotion/css';
 import { classNames, downloadBlob, isObject } from '@moneko/common';
 import { Button, type ButtonProps } from '../index';
 import prefixCls from '../prefix-cls';
@@ -21,7 +21,7 @@ const cls = {
   controller: prefixCls('capture-screen-controller'),
   btn: prefixCls('capture-screen-btn'),
 };
-const captureScreenCss = css`
+const captureScreenCss = `
   .${cls.captureScreen} {
     display: block;
   }
@@ -84,8 +84,6 @@ const captureScreenCss = css`
     }
   }
 `;
-
-injectGlobal([captureScreenCss]);
 
 export interface RecorderOptions {
   /** 录制文件名称 */
@@ -185,22 +183,6 @@ const CaptureScreen: FC<CaptureScreenProp> = ({
   const [mediaStream, setMediaStream] = useState<MediaStream | null>(null);
   const [recordState, setRecordState] = useState<MediaRecorder['state']>('inactive');
 
-  useEffect(() => {
-    Object.assign(recorderRef, {
-      current: recorder,
-    });
-  }, [recorder]);
-  useEffect(() => {
-    Object.assign(mediaStreamRef, {
-      current: mediaStream,
-    });
-  }, [mediaStream]);
-  useEffect(() => {
-    Object.assign(mediaRecorderRef, {
-      current: mediaRecorder,
-    });
-  }, [mediaRecorder]);
-
   // 开始录制
   const handleStartRecorder = useCallback(() => {
     if (mediaRecorderRef.current) {
@@ -291,6 +273,19 @@ const CaptureScreen: FC<CaptureScreenProp> = ({
   }, [onErrorCapture, onStartCapture, options, stopCapture]);
 
   useEffect(() => {
+    Object.assign(recorderRef, {
+      current: recorder,
+    });
+  }, [recorder]);
+  useEffect(() => {
+    Object.assign(mediaRecorderRef, {
+      current: mediaRecorder,
+    });
+  }, [mediaRecorder]);
+  useEffect(() => {
+    Object.assign(mediaStreamRef, {
+      current: mediaStream,
+    });
     if (preview && videoElem?.current && mediaStream) {
       videoElem.current.srcObject = mediaStream;
     }
@@ -311,6 +306,7 @@ const CaptureScreen: FC<CaptureScreenProp> = ({
   }, [handleRecorderDataAvailable, handleSaveRecorder, mediaStream, onRecorderError]);
 
   useEffect(() => {
+    injectGlobal([captureScreenCss]);
     const getMediaRecorderRef = () => mediaRecorderRef.current;
     const getMediaStreamRef = () => mediaStreamRef.current;
 

@@ -1,22 +1,20 @@
 import React, { FC } from 'react';
-import { css, injectGlobal } from '@emotion/css';
+import { injectGlobal } from '@emotion/css';
 import { myDemoKv } from '@moneko/core';
 import Sandbox from './sandbox';
 
-const sandboxCss = css`
+const sandboxCss = `
   .sandbox-group {
     width: 100%;
   }
 `;
-
-injectGlobal([sandboxCss]);
 
 interface SandboxGroupProps {
   name: string;
   col?: number;
   ignore?: string[];
 }
-
+injectGlobal([sandboxCss]);
 const SandboxGroup: FC<SandboxGroupProps> = ({ name, col = 2, ignore = [] }) => {
   return (
     <div

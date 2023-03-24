@@ -1,5 +1,5 @@
-import React, { type FC, memo, useMemo } from 'react';
-import { css, injectGlobal } from '@emotion/css';
+import React, { type FC, memo, useMemo, useEffect } from 'react';
+import { injectGlobal } from '@emotion/css';
 import { classNames } from '@moneko/common';
 import { projectBasicInfo, useLocation, useOutlet } from '@moneko/core';
 
@@ -12,7 +12,7 @@ const conf: Record<CoverageType, string> = {
   conditionals: '条件覆盖率',
   methods: '函数覆盖率',
 };
-const coverageStyle = css`
+const coverageStyle = `
   .site-coverage {
     display: flex;
     gap: 1rem;
@@ -81,7 +81,6 @@ const coverageStyle = css`
   }
 `;
 
-injectGlobal([coverageStyle]);
 function getNum(num: number) {
   return typeof num === 'number' && !isNaN(num) ? num : '-';
 }
@@ -93,6 +92,9 @@ const Coverage: FC = () => {
     [location.pathname, readme]
   );
 
+  useEffect(() => {
+    injectGlobal([coverageStyle]);
+  }, []);
   if (location.pathname === '/change-log') return null;
   if (location.pathname === '/examples') return null;
   if (location.pathname.startsWith('/@moneko')) return null;

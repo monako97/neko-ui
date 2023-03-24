@@ -7,7 +7,7 @@ import React, {
   useRef,
   useState,
 } from 'react';
-import { css, injectGlobal } from '@emotion/css';
+import { injectGlobal } from '@emotion/css';
 import { classNames, getMaxZindex, getScrollTop, isEqual, isFunction } from '@moneko/common';
 import { createPortal } from 'react-dom';
 import prefixCls from '../prefix-cls';
@@ -17,7 +17,7 @@ const cls = {
   out: prefixCls('back-top-out'),
 };
 
-const backTopCss = css`
+const backTopCss = `
   :root {
     --back-top-color: #fff;
     --back-top-bg: var(--text-secondary, #4e4e4e);
@@ -91,7 +91,6 @@ const backTopCss = css`
   }
 `;
 
-injectGlobal([backTopCss]);
 export interface BackTopProps extends HTMLAttributes<HTMLDivElement> {
   /** 设置需要监听其滚动事件的元素，值为一个返回对应 DOM 元素 */
   target?: () => HTMLElement;
@@ -157,6 +156,10 @@ const BackTop: FC<BackTopProps> = ({
       setShow(null);
     }
   }, [show]);
+
+  useEffect(() => {
+    injectGlobal([backTopCss]);
+  }, []);
 
   if (show === null) return null;
   return createPortal(

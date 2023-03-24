@@ -1,9 +1,9 @@
 import React, { memo, useCallback, useEffect, useMemo, useRef } from 'react';
-import { css, injectGlobal } from '@emotion/css';
-import { updateStyleRule } from '@moneko/common';
+import { injectGlobal } from '@emotion/css';
+import { updateStyleRule, watermark } from '@moneko/common';
 import { myPkgs, MyPkg, useLocation, Link } from '@moneko/core';
 import { Avatar, colorScheme } from 'neko-ui';
-import { projectInfo } from '@/utils';
+import { type PkgType, projectInfo } from '@/utils';
 
 const menuObj: Record<string, MyPkg[]> = {};
 const extractMenu = (list: MyPkg[]) => {
@@ -22,7 +22,7 @@ const extractMenu = (list: MyPkg[]) => {
 
 extractMenu(myPkgs);
 const menuKeys = Object.keys(menuObj);
-const siderCss = css`
+const siderCss = `
   .site-sider,
   .site-sider-group-title,
   .site-sider-item,
@@ -31,16 +31,28 @@ const siderCss = css`
     transition-timing-function: var(--transition-timing-function);
   }
 
+  .site-left {
+    position: sticky;
+    top: 0;
+    overflow-y: scroll;
+    max-height: 100vh;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+  }
+
   .site-sider {
     position: sticky;
-    top: 4.375rem;
+    top: 0;
     display: flex;
     overflow-y: scroll;
     margin: 0 1rem 1rem;
     border-radius: var(--border-radius, 8px);
     width: 15rem;
     min-width: 15rem;
-    max-height: calc(100vh - 6rem);
+    flex: 1;
+    max-height: calc(100% - 2rem);
     color: var(--text-color, rgb(0 0 0 / 65%));
     background-color: var(--header-bg, rgb(255 255 255 / 90%));
     box-sizing: border-box;
@@ -159,17 +171,30 @@ const siderCss = css`
     align-items: center;
     padding: 1rem 1.5rem;
     gap: 1em;
+    min-height: 2.6875rem;
+  }
+
+  .site-logo {
+    background-image: none;
+    animation: none;
   }
 
   .site-title {
     display: flex;
-    align-items: center;
-    margin: 0;
     font-size: 1.5em;
     font-weight: bold;
-    color: var(--text-heading);
-    gap: inherit;
+    color: var(--text-heading, #1b1b1b);
     flex: 1;
+    flex-direction: column;
+    line-height: 1;
+    gap: 5px;
+
+    i {
+      font-size: x-small;
+      font-weight: lighter;
+      color: var(--text-secondary, #4e4e4e);
+      font-style: normal;
+    }
   }
 
   .site-theme-btn {
@@ -196,13 +221,11 @@ const siderCss = css`
   }
 `;
 
-injectGlobal([siderCss]);
 const Sider = () => {
   const { schema } = colorScheme;
   const menuEl = useRef<HTMLDivElement>(null);
   const location = useLocation();
   const activeKey = useMemo(() => location.pathname.substring(1), [location]);
-
   const renderMenu = useCallback(
     (list?: MyPkg[]) => {
       return list?.map((item) => {
@@ -222,6 +245,10 @@ const Sider = () => {
     },
     [activeKey]
   );
+  const current: PkgType = useMemo(
+    () => (myPkgs.find((item) => item.key === activeKey) as unknown as PkgType) || projectInfo,
+    [activeKey]
+  );
 
   useEffect(() => {
     if (document.documentElement.getAttribute('data-theme') !== schema) {
@@ -234,14 +261,30 @@ const Sider = () => {
       ':root'
     );
   }, [schema]);
+  useEffect(() => {
+    document.querySelector('.site-sider-item[data-active="true"]')?.scrollIntoView({
+      behavior: 'smooth',
+      block: 'nearest',
+    });
+    watermark.update(current.title, {
+      opacity: 0.02,
+      color: schema === 'dark' ? '#fff' : '#000',
+    });
+  }, [current, schema]);
+  useEffect(() => {
+    injectGlobal([siderCss]);
+  }, []);
 
   return (
-    <div>
+    <div className="site-left">
       <div className="site-header">
-        <Link className="site-title" to="/">
-          <Avatar />
-          {projectInfo.title}
+        <Link to="/">
+          <Avatar className="site-logo" />
         </Link>
+        <div className="site-title">
+          {projectInfo.title}
+          <i>{current.subtitle}</i>
+        </div>
         <div
           className="site-theme-btn"
           onClick={() => {

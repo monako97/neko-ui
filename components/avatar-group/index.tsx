@@ -1,5 +1,5 @@
-import React, { type FC, useMemo } from 'react';
-import { css, injectGlobal } from '@emotion/css';
+import React, { type FC, useMemo, useEffect } from 'react';
+import { injectGlobal } from '@emotion/css';
 import { classNames } from '@moneko/common';
 import { Avatar, Tooltip, type AvatarProps } from '../index';
 import prefixCls from '../prefix-cls';
@@ -8,7 +8,7 @@ const cls = {
   group: prefixCls('avatar-group'),
   more: prefixCls('avatar-more'),
 };
-const avatarGroupCss = css`
+const avatarGroupCss = `
   .${cls.group} {
     display: inline-flex;
     align-items: center;
@@ -30,8 +30,6 @@ const avatarGroupCss = css`
   }
 `;
 
-injectGlobal([avatarGroupCss]);
-
 export interface AvatarGroupProps {
   data: Omit<AvatarProps, 'size'>[];
   size?: AvatarProps['size'];
@@ -48,6 +46,10 @@ const AvatarGroup: FC<AvatarGroupProps> = (props: AvatarGroupProps) => {
     () => props.data.length - (props.maxCount || props.data.length),
     [props.data.length, props.maxCount]
   );
+
+  useEffect(() => {
+    injectGlobal([avatarGroupCss]);
+  }, []);
 
   return (
     <div className={classNames(cls.group, props.className)}>

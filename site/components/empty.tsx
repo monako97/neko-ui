@@ -1,10 +1,10 @@
-import React, { FC, memo } from 'react';
-import { css, injectGlobal } from '@emotion/css';
+import React, { FC, memo, useEffect } from 'react';
+import { injectGlobal } from '@emotion/css';
 import getBrowser from 'neko-ui/utils/broswer';
 import jb_beam from '@/assets/images/jb_beam.svg';
 import { projectInfo } from '@/utils';
 
-const siteEmptyCss = css`
+const siteEmptyCss = `
   .site-empty {
     min-height: calc(100vh - 14.75rem);
   }
@@ -79,7 +79,6 @@ const siteEmptyCss = css`
   }
 `;
 
-injectGlobal([siteEmptyCss]);
 const broswer = getBrowser();
 const infos: [string, string?][] = [
   ['描述', projectInfo.description],
@@ -91,6 +90,9 @@ const colors = ['primary', 'warning', 'error', 'success'];
 const types = ['color-bg', 'color-outline', 'color-border', 'color-hover', 'color', 'color-active'];
 
 const Empty: FC = () => {
+  useEffect(() => {
+    injectGlobal([siteEmptyCss]);
+  }, []);
   return (
     <div className="n-md-body site-empty">
       <div className="site-empty-top">

@@ -387,6 +387,7 @@ blockquote p {
   max-width: 100%;
   border-spacing: 0;
   transition-property: border-color;
+  word-break: break-all;
 }
 
 .n-md-body table tbody tr[role='row']:hover {
@@ -570,4 +571,8 @@ blockquote p {
 
 .n-md-body details[open] >summary::before {
   transform: rotate(90deg);
+}
+
+.n-md-body .n-katex-block {
+  overflow-x: auto;
 }

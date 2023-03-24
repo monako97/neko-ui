@@ -106,8 +106,8 @@ ${lastStr}`;
         <Button disabled link>
           link
         </Button>
-        <Button disabled float>
-          float
+        <Button disabled flat>
+          flat
         </Button>
         <Button disabled dashed>
           dashed

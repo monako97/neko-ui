@@ -1,11 +1,11 @@
 import React, { useState, FC, useEffect, memo, useCallback, useMemo } from 'react';
-import { css, injectGlobal } from '@emotion/css';
+import { injectGlobal } from '@emotion/css';
 import { classNames, isEqual } from '@moneko/common';
 import { mdxComponents, type ExampleModule } from '@moneko/core';
 import { LiveProvider, LiveEditor, LiveError, LivePreview } from '@moneko/react-live';
 import { Markdown, Prism } from 'neko-ui';
 
-const sandboxCss = css`
+const sandboxCss = `
   .sandbox-box {
     break-inside: avoid;
     box-sizing: border-box;
@@ -149,7 +149,6 @@ const sandboxCss = css`
 `;
 
 injectGlobal([sandboxCss]);
-
 const Sandbox: FC<ExampleModule> = ({ title, description, ...props }) => {
   const [init, setInit] = useState(false);
   const [open, setOpen] = useState(false);
