@@ -9,6 +9,7 @@
 
 ### Features
 
+* 1、Carousel. 2、Photo ([ef41800](https://github.com/monako97/neko-ui/commit/ef418003258ee09da52ab71096b54cefa72ce2c5))
 * color-schema ([921edfd](https://github.com/monako97/neko-ui/commit/921edfd1bcf5a94b5110ac55efe004c1e09be0fa))
 * common按需 ([b21343d](https://github.com/monako97/neko-ui/commit/b21343de3ab6df865f000f4412f246b718bcea2e))
 * passiveSupported ([397ef3b](https://github.com/monako97/neko-ui/commit/397ef3bc1951a65472216b0fd5e46f4e5d833a07))
