@@ -61,28 +61,15 @@ const app = `
     width: 100vw;
     height: 6.25rem;
     background: linear-gradient(124deg, ${material});
-    background-size: 1000% 1000%;
-    opacity: 0.15;
+    background-size: 800% 800%;
+    opacity: 0.2;
     content: '';
     transform: translateY(-6.25rem);
-    animation: rainbow 15s ease infinite;
-  }
-
-  @keyframes rainbow {
-    0% {
-      background-position: 0% 80%;
-    }
-
-    50% {
-      background-position: 100% 20%;
-    }
-
-    100% {
-      background-position: 0% 80%;
-    }
+    animation: colorful-stripe 15s ease infinite;
   }
 `;
 
+injectGlobal([app]);
 const App: FC = () => {
   const box = useRef<HTMLDivElement>(null);
   const readme = useOutlet();
@@ -93,9 +80,6 @@ const App: FC = () => {
     num.current++;
     box.current?.scrollTo({ top: 0, behavior: 'smooth' });
   }, [location.pathname]);
-  useEffect(() => {
-    injectGlobal([app]);
-  }, []);
 
   return (
     <>
@@ -106,7 +90,7 @@ const App: FC = () => {
         {readme ? <div className="site-doc-main-box">{readme}</div> : <Empty />}
         <Footer />
       </main>
-      <BackTop />
+      <BackTop style={{ position: 'fixed' }} />
     </>
   );
 };

@@ -135,11 +135,8 @@ $$`}
     );
 
     fireEvent.click(screen.getByAltText(imgSrc));
-    fireEvent.click(
-      document.documentElement.querySelector('.PhotoView-Slider__toolbarIcon') as HTMLElement
-    );
+    fireEvent.click(document.documentElement.querySelector('.n-photo-close') as HTMLElement);
     expect(screen.getByText('自定义类名')).toBeInTheDocument();
-    expect(screen.getByAltText(imgSrc)).toBeInTheDocument();
   });
   it('pre > code', () => {
     Object.defineProperty(HTMLElement.prototype, 'offsetParent', {

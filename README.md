@@ -1,6 +1,6 @@
 # Neko UI
 
-> 一个轻量的UI组件库
+> UI组件库
 
 [![version][version-tag]][npm-url]
 [![install size][size-tag]][size-url]

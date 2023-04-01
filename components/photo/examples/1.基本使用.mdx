@@ -1,0 +1,15 @@
+```tsx
+<Photo
+  data={Array(3)
+    .fill(0)
+    .map((_, i) => {
+      const png = ['3.70695fb9.jpg', '4.57ff8e86.jpg', '5.7ace37c7.jpg'];
+
+      return {
+        src: `https://react-photo-view.vercel.app/_next/static/media/${png[i % 3]}`,
+        alt: png[i % 3],
+        key: i,
+      };
+    })}
+/>
+```

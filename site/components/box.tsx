@@ -1,4 +1,4 @@
-import React, { FC, memo, ReactNode } from 'react';
+import React, { type FC, type ReactNode } from 'react';
 import { Markdown } from 'neko-ui';
 
 interface BoxProps {
@@ -10,13 +10,13 @@ const Box: FC<BoxProps> = ({ children, text, tex }) => {
   const body = text ? <Markdown text={text} tex={tex} /> : null;
 
   return children ? (
-    <div className="n-md-body">
+    <article className="n-md-body">
       {children}
       {body}
-    </div>
+    </article>
   ) : (
     body
   );
 };
 
-export default memo(Box, () => true);
+export default Box;

@@ -10,7 +10,6 @@
   --blockquote-color: #b3b3ae;
   --details-bg: #1d1d1d;
   --details-border-color: rgb(153 153 153 / 50%);
-  --details-summary-color: var(--blockquote-color);
   --md-mark-color: #e9887c;
   --mark-bg: rgb(249 242 244 / 10%);
   --toc-bg: rgb(23 23 23 / 80%);
@@ -344,6 +343,8 @@ blockquote p {
   vertical-align: baseline;
   word-wrap: break-word;
   word-break: break-word;
+  content-visibility: auto;
+  contain-intrinsic-size: 32px;
 }
 
 .n-md-body p img {
@@ -522,7 +523,6 @@ blockquote p {
 .n-md-body details >summary ~ * {
   font-size: var(--font-size, 14px);
   font-weight: normal;
-  color: var(--details-summary-color, #0e1c4e);
   font-style: normal;
   line-height: 1.4;
   transition-property: background-color, transform, border-color, margin;
@@ -575,4 +575,20 @@ blockquote p {
 
 .n-md-body .n-katex-block {
   overflow-x: auto;
+}
+
+.n-photo-header {
+  display: flex;
+  flex-wrap: wrap;
+  padding: 16px;
+  gap: 16px;
+}
+
+.n-photo-header >span {
+  border-radius: 8px;
+  padding: 4px 10px;
+  font-size: 14px;
+  font-weight: lighter;
+  background-color: rgb(0 0 0 / 20%);
+  backdrop-filter: blur(16px);
 }

@@ -1,4 +1,4 @@
-import React, { type FC, memo, useMemo, useEffect } from 'react';
+import React, { type FC, useMemo } from 'react';
 import { injectGlobal } from '@emotion/css';
 import { classNames } from '@moneko/common';
 import { projectBasicInfo, useLocation, useOutlet } from '@moneko/core';
@@ -81,6 +81,7 @@ const coverageStyle = `
   }
 `;
 
+injectGlobal([coverageStyle]);
 function getNum(num: number) {
   return typeof num === 'number' && !isNaN(num) ? num : '-';
 }
@@ -92,9 +93,6 @@ const Coverage: FC = () => {
     [location.pathname, readme]
   );
 
-  useEffect(() => {
-    injectGlobal([coverageStyle]);
-  }, []);
   if (location.pathname === '/change-log') return null;
   if (location.pathname === '/examples') return null;
   if (location.pathname.startsWith('/@moneko')) return null;
@@ -120,4 +118,4 @@ const Coverage: FC = () => {
   );
 };
 
-export default memo(Coverage, () => true);
+export default Coverage;

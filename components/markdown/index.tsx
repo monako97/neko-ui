@@ -22,8 +22,8 @@ import {
   passiveSupported,
 } from '@moneko/common';
 import marked from 'marked-completed';
-import { PhotoSlider } from 'react-photo-view';
 import highlight from '../highlight';
+import Photo, { type ImageData } from '../photo';
 import './index.css';
 
 marked.setOptions({
@@ -56,12 +56,12 @@ export type PhotoViewDataType = {
 /**
  * 提取md图片src
  * @param {string} text HTML string
- * @returns {PhotoViewDataType[]} PhotoViewDataType
+ * @returns {ImageData[]} PhotoViewDataType
  */
-export const getMarkedImgList = (text: string): PhotoViewDataType[] => {
+export const getMarkedImgList = (text: string): ImageData[] => {
   if (!text) return [];
   const imageList = text.match(/role=('|")dialog('|") src=('|")(.*?) alt=('|")(.*?)('|")/g);
-  const imageArr: PhotoViewDataType[] = [];
+  const imageArr: ImageData[] = [];
 
   if (imageList) {
     for (let i = 0, len = imageList.length; i < len; i++) {
@@ -72,7 +72,7 @@ export const getMarkedImgList = (text: string): PhotoViewDataType[] => {
       );
 
       imageArr.push({
-        intro: params.get('alt') as string,
+        alt: params.get('alt') as string,
         src: params.get('src') as string,
         key: i,
       });
@@ -152,7 +152,7 @@ const Markdown: FC<MarkdownProps> = ({
   const [open, setOpen] = useState(false);
   const [photoIndex, setPhotoIndex] = useState(0);
   const [htmlString, setHtmlString] = useState<string>('');
-  const [imgList, setImgList] = useState<PhotoViewDataType[]>([]);
+  const [imgList, setImgList] = useState<ImageData[]>([]);
   const htmlStrRef = useRef<string>(htmlString);
   const anchors = useRef<AnchorType[]>([]);
 
@@ -323,15 +323,10 @@ const Markdown: FC<MarkdownProps> = ({
       });
     }
   }, [tex, htmlString]);
-  useEffect(() => {
-    if (imgList.length) {
-      require('react-photo-view/dist/react-photo-view.css');
-    }
-  }, [imgList]);
 
   return (
     <>
-      <div
+      <article
         ref={ref}
         className={classNames('n-md-box', className)}
         dangerouslySetInnerHTML={{
@@ -342,12 +337,18 @@ const Markdown: FC<MarkdownProps> = ({
         {...props}
       />
       {imgList.length ? (
-        <PhotoSlider
-          images={imgList}
-          visible={open}
-          onClose={() => setOpen(false)}
-          index={photoIndex}
-          onIndexChange={setPhotoIndex}
+        <Photo
+          data={imgList}
+          open={open}
+          onOpenChange={setOpen}
+          offset={photoIndex}
+          onOffsetChange={setPhotoIndex}
+          header={(num) => (
+            <div className="n-photo-header">
+              <span>100 / {num + 1}</span>
+              <span>{imgList[num].alt}</span>
+            </div>
+          )}
         />
       ) : null}
     </>

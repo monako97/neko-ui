@@ -1,27 +1,10 @@
-import React, { memo, useCallback, useEffect, useMemo, useRef } from 'react';
+import React, { type FC, useCallback, useEffect, useMemo, useRef } from 'react';
 import { injectGlobal } from '@emotion/css';
-import { updateStyleRule, watermark } from '@moneko/common';
+import { updateStyleRule } from '@moneko/common';
 import { myPkgs, MyPkg, useLocation, Link } from '@moneko/core';
 import { Avatar, colorScheme } from 'neko-ui';
 import { type PkgType, projectInfo } from '@/utils';
 
-const menuObj: Record<string, MyPkg[]> = {};
-const extractMenu = (list: MyPkg[]) => {
-  return list?.map((item) => {
-    const type = item?.type || 'default';
-    const prev = menuObj[type] || [];
-
-    Object.assign(menuObj, {
-      [type]: prev.concat({
-        ...item,
-        type,
-      }),
-    });
-  });
-};
-
-extractMenu(myPkgs);
-const menuKeys = Object.keys(menuObj);
 const siderCss = `
   .site-sider,
   .site-sider-group-title,
@@ -61,9 +44,11 @@ const siderCss = `
     flex-direction: column;
   }
 
-  .site-sider > div {
+  .site-sider > ul {
     position: relative;
+    margin: 0;
     padding: 0 1rem;
+    list-style: none;
   }
 
   .site-sider-group {
@@ -78,7 +63,7 @@ const siderCss = `
     position: sticky;
     top: 0;
     z-index: 10;
-    margin-bottom: 0.5rem;
+    margin: 0 0 0.5rem;
     border-bottom: var(--border-base);
     padding: 0.5rem 0;
     font-size: var(--font-size, 14px);
@@ -92,6 +77,7 @@ const siderCss = `
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
+    padding: 0;
   }
 
   .site-sider-item {
@@ -134,6 +120,12 @@ const siderCss = `
 
     &[data-active='true']::before {
       transform: scale(1);
+    }
+
+    a {
+      display: flex;
+      flex-wrap: wrap;
+      color: inherit;
     }
   }
 
@@ -181,6 +173,7 @@ const siderCss = `
 
   .site-title {
     display: flex;
+    margin: 0;
     font-size: 1.5em;
     font-weight: bold;
     color: var(--text-heading, #1b1b1b);
@@ -221,25 +214,40 @@ const siderCss = `
   }
 `;
 
-const Sider = () => {
-  const { schema } = colorScheme;
-  const menuEl = useRef<HTMLDivElement>(null);
+injectGlobal([siderCss]);
+const menuObj: Record<string, MyPkg[]> = {};
+const extractMenu = (list: MyPkg[]) => {
+  return list?.map((item) => {
+    const type = item?.type || 'default';
+    const prev = menuObj[type] || [];
+
+    Object.assign(menuObj, {
+      [type]: prev.concat({
+        ...item,
+        type,
+      }),
+    });
+  });
+};
+
+extractMenu(myPkgs);
+const menuKeys = Object.keys(menuObj);
+const Sider: FC = () => {
+  const { scheme } = colorScheme;
+  const menuEl = useRef<HTMLUListElement>(null);
   const location = useLocation();
   const activeKey = useMemo(() => location.pathname.substring(1), [location]);
   const renderMenu = useCallback(
     (list?: MyPkg[]) => {
       return list?.map((item) => {
         return (
-          <Link
-            key={item.key}
-            to={`/${item.key}`}
-            className="site-sider-item"
-            data-active={activeKey === item.key}
-          >
-            <span className="site-sider-icon">{item.icon}</span>
-            <div className="site-sider-label">{item.title || item.path}</div>
-            {item.subtitle && <div className="site-sider-subtitle">{item.subtitle}</div>}
-          </Link>
+          <li key={item.key} className="site-sider-item" data-active={activeKey === item.key}>
+            <Link to={`/${item.key}`}>
+              <span className="site-sider-icon">{item.icon}</span>
+              <div className="site-sider-label">{item.title || item.path}</div>
+              {item.subtitle && <div className="site-sider-subtitle">{item.subtitle}</div>}
+            </Link>
+          </li>
         );
       });
     },
@@ -251,61 +259,54 @@ const Sider = () => {
   );
 
   useEffect(() => {
-    if (document.documentElement.getAttribute('data-theme') !== schema) {
-      document.documentElement.setAttribute('data-theme', schema);
+    if (document.documentElement.getAttribute('data-theme') !== scheme) {
+      document.documentElement.setAttribute('data-theme', scheme);
     }
     updateStyleRule(
       {
-        'color-scheme': schema,
+        'color-scheme': scheme,
       },
       ':root'
     );
-  }, [schema]);
+  }, [scheme]);
   useEffect(() => {
-    document.querySelector('.site-sider-item[data-active="true"]')?.scrollIntoView({
+    document.querySelector('.site-sider-item[data-active="true"] > a')?.scrollIntoView({
       behavior: 'smooth',
       block: 'nearest',
     });
-    watermark.update(current.title, {
-      opacity: 0.02,
-      color: schema === 'dark' ? '#fff' : '#000',
-    });
-  }, [current, schema]);
-  useEffect(() => {
-    injectGlobal([siderCss]);
-  }, []);
+  }, [current, scheme]);
 
   return (
-    <div className="site-left">
-      <div className="site-header">
+    <section className="site-left">
+      <header className="site-header">
         <Link to="/">
           <Avatar className="site-logo" />
         </Link>
-        <div className="site-title">
+        <h1 className="site-title">
           {projectInfo.title}
           <i>{current.subtitle}</i>
-        </div>
+        </h1>
         <div
           className="site-theme-btn"
           onClick={() => {
-            colorScheme.schema = schema === 'dark' ? 'light' : 'dark';
+            colorScheme.scheme = scheme === 'dark' ? 'light' : 'dark';
           }}
         />
-      </div>
-      <div className="site-sider">
-        <div ref={menuEl}>
+      </header>
+      <section className="site-sider">
+        <ul ref={menuEl}>
           {menuKeys.map((key) => {
             return (
-              <div key={key} className="site-sider-group">
-                <div className="site-sider-group-title">{key}</div>
-                <div className="site-sider-list">{renderMenu(menuObj[key])}</div>
-              </div>
+              <li key={key} className="site-sider-group">
+                <p className="site-sider-group-title">{key}</p>
+                <ul className="site-sider-list">{renderMenu(menuObj[key])}</ul>
+              </li>
             );
           })}
-        </div>
-      </div>
-    </div>
+        </ul>
+      </section>
+    </section>
   );
 };
 
-export default memo(Sider, () => true);
+export default Sider;

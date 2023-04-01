@@ -23,7 +23,7 @@ export {
   type HighlightTextJson,
 } from './highlight-text';
 
-export { default as colorScheme, type ColorSchema } from './color-scheme';
+export { default as colorScheme, type ColorScheme } from './color-scheme';
 
 export { default as Avatar, type AvatarProps } from './avatar';
 
@@ -52,6 +52,10 @@ export { default as ColorPicker, type ColorPickerProps } from './color-picker';
 export { default as Skeleton } from './skeleton';
 
 export { default as CodeBlock, type CodeBlockProps } from './code-block';
+
+export { default as Photo, type PhotoProps, type ImageData } from './photo';
+
+export { default as Carousel, type CarouselProps } from './carousel';
 
 export type ComponentSize = 'small' | 'normal' | 'large';
 

@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { type FC } from 'react';
 import { injectGlobal } from '@emotion/css';
 import { myDemoKv } from '@moneko/core';
 import Sandbox from './sandbox';

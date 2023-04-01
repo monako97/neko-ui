@@ -1,4 +1,4 @@
-import React, { memo, useEffect } from 'react';
+import React from 'react';
 import { injectGlobal } from '@emotion/css';
 import { Skeleton } from 'neko-ui';
 
@@ -14,10 +14,8 @@ const siteFallbackCss = `
   }
 `;
 
+injectGlobal([siteFallbackCss]);
 const Fallback = () => {
-  useEffect(() => {
-    injectGlobal([siteFallbackCss]);
-  }, []);
   return (
     <div className="site-fallback">
       <Skeleton title active rows={6} />
@@ -25,4 +23,4 @@ const Fallback = () => {
   );
 };
 
-export default memo(Fallback, () => true);
+export default Fallback;

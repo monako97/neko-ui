@@ -8,9 +8,9 @@ import { colorScheme } from 'neko-ui';
 describe('test colorScheme', () => {
   it('dark', () => {
     render(createElement(Fragment));
-    const { schema } = colorScheme;
+    const { scheme } = colorScheme;
 
-    expect(schema).toBe('dark');
-    colorScheme.schema = 'light';
+    expect(scheme).toBe('dark');
+    colorScheme.scheme = 'light';
   });
 });

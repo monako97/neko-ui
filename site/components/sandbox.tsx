@@ -1,6 +1,6 @@
-import React, { useState, FC, useEffect, memo, useCallback, useMemo } from 'react';
+import React, { useState, type FC, useEffect, useCallback, useMemo } from 'react';
 import { injectGlobal } from '@emotion/css';
-import { classNames, isEqual } from '@moneko/common';
+import { classNames } from '@moneko/common';
 import { mdxComponents, type ExampleModule } from '@moneko/core';
 import { LiveProvider, LiveEditor, LiveError, LivePreview } from '@moneko/react-live';
 import { Markdown, Prism } from 'neko-ui';
@@ -209,4 +209,4 @@ const Sandbox: FC<ExampleModule> = ({ title, description, ...props }) => {
   );
 };
 
-export default memo(Sandbox, isEqual);
+export default Sandbox;

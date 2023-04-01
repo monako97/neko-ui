@@ -1,4 +1,4 @@
-import React, { FC, memo, useEffect } from 'react';
+import React, { type FC } from 'react';
 import { injectGlobal } from '@emotion/css';
 import getBrowser from 'neko-ui/utils/broswer';
 import jb_beam from '@/assets/images/jb_beam.svg';
@@ -89,10 +89,8 @@ const infos: [string, string?][] = [
 const colors = ['primary', 'warning', 'error', 'success'];
 const types = ['color-bg', 'color-outline', 'color-border', 'color-hover', 'color', 'color-active'];
 
+injectGlobal([siteEmptyCss]);
 const Empty: FC = () => {
-  useEffect(() => {
-    injectGlobal([siteEmptyCss]);
-  }, []);
   return (
     <div className="n-md-body site-empty">
       <div className="site-empty-top">
@@ -148,4 +146,4 @@ const Empty: FC = () => {
   );
 };
 
-export default memo(Empty, () => true);
+export default Empty;

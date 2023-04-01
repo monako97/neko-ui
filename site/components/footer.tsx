@@ -1,4 +1,4 @@
-import React, { memo, useEffect } from 'react';
+import React from 'react';
 import { injectGlobal } from '@emotion/css';
 import { projectInfo } from '@/utils';
 
@@ -19,11 +19,9 @@ const footerCss = `
   }
 `;
 
+injectGlobal([footerCss]);
 const year = new Date().getFullYear();
 const Footer = () => {
-  useEffect(() => {
-    injectGlobal([footerCss]);
-  }, []);
   return (
     <footer className="site-footer">
       <p>
@@ -39,4 +37,4 @@ const Footer = () => {
   );
 };
 
-export default memo(Footer, () => true);
+export default Footer;
