@@ -26,7 +26,7 @@
     "@commitlint/cli": "17.6.1",
     "@commitlint/config-conventional": "17.6.1",
     "@moneko/cli": "1.1.15",
-    "@moneko/core": "2.0.54",
+    "@moneko/core": "2.0.55",
     "@moneko/postcss": "1.0.29",
     "@moneko/react-live": "3.1.3",
     "@swc/jest": "0.2.26",
@@ -52,7 +52,7 @@
     "@moneko/common": "1.0.33",
     "katex": "0.16.6",
     "marked-completed": "1.2.5",
-    "shared-store-object": "1.0.6-beta.0",
+    "shared-store-object": "1.0.6",
     "stylis-px2rem-plugin": "0.1.0"
   },
   "resolutions": {
