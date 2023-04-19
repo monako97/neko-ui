@@ -1,17 +1,5 @@
-import React, {
-  memo,
-  useCallback,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-  type CSSProperties,
-  type FC,
-  type MouseEvent,
-  type WheelEvent,
-} from 'react';
+import React, { memo, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import {
-  classNames,
   entityToString,
   getScrollTop,
   setClipboard,
@@ -22,6 +10,7 @@ import {
   passiveSupported,
 } from '@moneko/common';
 import marked from 'marked-completed';
+import { cx } from '../emotion';
 import highlight from '../highlight';
 import Photo, { type ImageData } from '../photo';
 import './index.css';
@@ -84,7 +73,7 @@ export const getMarkedImgList = (text: string): ImageData[] => {
 export type CodeToolType = Array<'copy'>;
 export interface MarkdownProps {
   className?: string;
-  style?: CSSProperties;
+  style?: React.CSSProperties;
   /** md内容 */
   text?: string | null;
   /** 开启图片查看器 */
@@ -130,7 +119,7 @@ const toggleAnchor = (anchor: HTMLAnchorElement) => {
 };
 const tocWheel = (e: Event) => {
   e.preventDefault();
-  const { currentTarget, deltaY } = e as unknown as WheelEvent<HTMLElement>;
+  const { currentTarget, deltaY } = e as unknown as React.WheelEvent<HTMLElement>;
   const targetDom = currentTarget as HTMLElement;
 
   if (targetDom.classList.contains('n-md-toc')) {
@@ -138,7 +127,7 @@ const tocWheel = (e: Event) => {
   }
 };
 
-const Markdown: FC<MarkdownProps> = ({
+const Markdown: React.FC<MarkdownProps> = ({
   className,
   text,
   pictureViewer = true,
@@ -225,7 +214,7 @@ const Markdown: FC<MarkdownProps> = ({
   }, [handleAnchor, htmlString]);
 
   const handleClick = useCallback(
-    (event: MouseEvent<HTMLDivElement>) => {
+    (event: React.MouseEvent<HTMLDivElement>) => {
       const target = event.target as HTMLElement;
 
       if (isSvgElement(target)) return;
@@ -249,7 +238,7 @@ const Markdown: FC<MarkdownProps> = ({
     [pictureViewer]
   );
 
-  const handleWheel = useCallback((event: WheelEvent<HTMLDivElement>) => {
+  const handleWheel = useCallback((event: React.WheelEvent<HTMLDivElement>) => {
     const offsetParent = (event.target as HTMLElement).offsetParent;
 
     if (!offsetParent || offsetParent.tagName !== 'PRE') {
@@ -328,7 +317,7 @@ const Markdown: FC<MarkdownProps> = ({
     <>
       <article
         ref={ref}
-        className={classNames('n-md-box', className)}
+        className={cx('n-md-box', className)}
         dangerouslySetInnerHTML={{
           __html: htmlString,
         }}

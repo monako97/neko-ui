@@ -1,115 +1,17 @@
-import React, {
-  type CSSProperties,
-  type DOMAttributes,
-  type FC,
-  type HTMLAttributes,
-  type ReactNode,
-  useCallback,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-} from 'react';
-import { injectGlobal } from '@emotion/css';
-import { classNames, getMaxZindex, isString, colorParse } from '@moneko/common';
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { getMaxZindex, isString, colorParse } from '@moneko/common';
 import { createPortal } from 'react-dom';
-import prefixCls from '../prefix-cls';
-
-const cls = {
-  tooltip: prefixCls('tooltip'),
-  portal: prefixCls('tooltip-portal'),
-  inUp: prefixCls('tooltip-in-up'),
-  outUp: prefixCls('tooltip-out-up'),
-};
-const tooltipCss = `
-  :root {
-    --tooltip-bg: rgb(255 255 255 / 80%);
-    --tooltip-shadow-color: rgb(0 0 0 / 10%);
-  }
-
-  [data-theme='dark'] {
-    --tooltip-bg: rgb(0 0 0 / 80%);
-    --tooltip-shadow-color: rgb(255 255 255 / 5%);
-  }
-
-  .${cls.tooltip} {
-    position: relative;
-    display: inline-block;
-
-    &::-webkit-scrollbar {
-      width: 1px;
-    }
-  }
-  .${cls.portal} {
-    position: fixed;
-    display: inline-block;
-    border-radius: var(--border-radius, 8px);
-    padding: 4px 8px;
-    font-size: var(--font-size, 14px);
-    color: var(--text-color, rgb(0 0 0 / 65%));
-    background-color: var(--tooltip-bg);
-    filter: drop-shadow(0.5px 1px 4px var(--tooltip-shadow-color))
-      drop-shadow(1px 2px 8px var(--tooltip-shadow-color))
-      drop-shadow(2px 4px 16px var(--tooltip-shadow-color));
-    backdrop-filter: blur(16px);
-
-    &::before {
-      position: absolute;
-      right: 0;
-      bottom: 0;
-      left: 0;
-      margin: auto;
-      width: 12px;
-      height: 8px;
-      background: inherit;
-      content: '';
-      clip-path: polygon(0% 0%, 50% 100%, 100% 0%);
-      transform: translateY(100%);
-    }
-  }
-  .${cls.inUp} {
-    animation: tooltip-slide-down-in-effect 0.3s forwards;
-    transform: scaleY(1);
-  }
-  .${cls.outUp} {
-    animation: tooltip-slide-down-out-effect 0.3s forwards;
-    transform: scaleY(1);
-  }
-
-  @keyframes tooltip-slide-down-in-effect {
-    0% {
-      transform: scaleY(0.8);
-      transform-origin: 100% 100%;
-      opacity: 0;
-    }
-
-    100% {
-      transform: scaleY(1);
-      transform-origin: 100% 100%;
-      opacity: 1;
-    }
-  }
-
-  @keyframes tooltip-slide-down-out-effect {
-    0% {
-      transform: scaleY(1);
-      transform-origin: 100% 100%;
-      opacity: 1;
-    }
-
-    100% {
-      transform: scaleY(0.8);
-      transform-origin: 100% 100%;
-      opacity: 0;
-    }
-  }
-`;
+import { cls } from './style';
+import { cx } from '../emotion';
 
 export type TooltipTriggerOption = 'hover' | 'click' | 'contextMenu';
-type TriggerOptionMap = Record<TooltipTriggerOption, keyof DOMAttributes<HTMLSpanElement> | null>;
-export interface TooltipProps extends Omit<HTMLAttributes<HTMLDivElement>, 'title'> {
-  children: ReactNode;
-  title: ReactNode;
+type TriggerOptionMap = Record<
+  TooltipTriggerOption,
+  keyof React.DOMAttributes<HTMLSpanElement> | null
+>;
+export interface TooltipProps extends Omit<React.HTMLAttributes<HTMLDivElement>, 'title'> {
+  children: React.ReactNode;
+  title: React.ReactNode;
   /** 挂载到指定的元素，值为一个返回对应 DOM 元素 默认 document.body */
   // eslint-disable-next-line no-unused-vars
   getPopupContainer?: (node?: HTMLElement | null) => HTMLElement;
@@ -119,13 +21,13 @@ export interface TooltipProps extends Omit<HTMLAttributes<HTMLDivElement>, 'titl
   // eslint-disable-next-line no-unused-vars
   onOpenChange?: (open: boolean | null) => void;
   popupClassName?: string;
-  popupStyle?: CSSProperties;
+  popupStyle?: React.CSSProperties;
   color?: string;
   /** 关闭后是否销毁 Tooltip */
   destroyInactive?: boolean;
 }
 
-const Tooltip: FC<TooltipProps> = ({
+const Tooltip: React.FC<TooltipProps> = ({
   className,
   popupClassName,
   popupStyle,
@@ -237,9 +139,6 @@ const Tooltip: FC<TooltipProps> = ({
       document.body.removeEventListener('click', close, false);
     };
   }, [close]);
-  useEffect(() => {
-    injectGlobal([tooltipCss]);
-  }, []);
 
   const style = useMemo(() => {
     let shadowColor: string | undefined;
@@ -258,7 +157,7 @@ const Tooltip: FC<TooltipProps> = ({
         '--tooltip-bg': color,
         '--tooltip-shadow-color': shadowColor,
       }
-    ) as CSSProperties;
+    ) as React.CSSProperties;
   }, [color, popupStyle, posi.left, posi.top]);
 
   return (
@@ -268,14 +167,14 @@ const Tooltip: FC<TooltipProps> = ({
           <div
             ref={ref}
             onAnimationEnd={exit}
-            className={classNames(cls.portal, show ? cls.inUp : cls.outUp, popupClassName)}
+            className={cx(cls.portal, show ? cls.inUp : cls.outUp, popupClassName)}
             style={style}
           >
             {title}
           </div>,
           container
         )}
-      <span {...childrenProps} className={classNames(cls.tooltip, className)} ref={childRef}>
+      <span {...childrenProps} className={cx(cls.tooltip, className)} ref={childRef}>
         {children}
       </span>
     </>

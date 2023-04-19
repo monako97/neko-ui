@@ -1,101 +1,13 @@
-import React, {
-  type FC,
-  type HTMLAttributes,
-  type ReactNode,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-} from 'react';
-import { injectGlobal } from '@emotion/css';
-import { classNames } from '@moneko/common';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import clipPath from './clip-path.svg';
-import favicon from './favicon.svg';
+import { cls, svgPrefix } from './style';
 import { type ComponentSize } from '../';
-import prefixCls from '../prefix-cls';
+import { cx } from '../emotion';
 
-const svgPrefix = 'data:image/svg+xml,';
 const clip = decodeURIComponent(clipPath.replace(svgPrefix, ''));
 
-const faviconBg = `data:image/svg+xml;base64,${window.btoa(
-  decodeURIComponent(favicon.replace(svgPrefix, ''))
-)}`;
-
-const avatarCls = prefixCls('avatar');
-const avatarCss = `
-  .${avatarCls} {
-    position: relative;
-    display: inline-flex;
-    justify-content: center;
-    align-items: center;
-    width: 32px;
-    height: 32px;
-    transition: transform 0.3s;
-    cursor: pointer;
-    user-select: none;
-    background-image: linear-gradient(45deg, #cabdeb 0%, #e9887c 100%);
-    animation: avatar-morph-effect 8s ease-in-out infinite;
-
-    &::before,
-    &::after {
-      position: absolute;
-      top: 0;
-      left: 0;
-      display: block;
-      width: 100%;
-      height: 100%;
-      content: '';
-      transition: transform 0.3s;
-    }
-
-    &::before {
-      background-color: var(--avatar-color);
-      clip-path: url('#clipPathAvatar');
-    }
-
-    &::after {
-      background: url(${faviconBg}) no-repeat center/contain;
-    }
-
-    span {
-      transition: transform 0.3s;
-    }
-
-    &:hover {
-      > *,
-      &::after,
-      &::before {
-        transform: scale(1.2);
-      }
-    }
-
-    img {
-      position: absolute;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      clip-path: url('#clipPathAvatar');
-      transition: transform 0.3s;
-    }
-  }
-
-  @keyframes avatar-morph-effect {
-    0% {
-      border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
-    }
-
-    50% {
-      border-radius: 30% 60% 70% 40% / 50% 60% 30% 60%;
-    }
-
-    100% {
-      border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
-    }
-  }
-`;
-
-export interface AvatarProps extends HTMLAttributes<HTMLDivElement> {
-  src?: ReactNode;
+export interface AvatarProps extends React.HTMLAttributes<HTMLDivElement> {
+  src?: React.ReactNode;
   alt?: string;
   size?: number | ComponentSize;
   username?: string;
@@ -107,7 +19,7 @@ const avatarSize: Record<ComponentSize, number> = {
   large: 40,
 };
 
-const Avatar: FC<AvatarProps> = ({
+const Avatar: React.FC<AvatarProps> = ({
   className,
   src,
   alt,
@@ -120,10 +32,8 @@ const Avatar: FC<AvatarProps> = ({
   const box = useRef<HTMLDivElement>(null);
   const label = useRef<HTMLSpanElement>(null);
   const [scale, setScale] = useState(1);
-  const cls = useMemo(() => classNames(avatarCls, className), [className]);
 
   useEffect(() => {
-    injectGlobal([avatarCss]);
     const hasSvg = document.documentElement.querySelector('clipPath#clipPathAvatar');
 
     if (!hasSvg) {
@@ -162,7 +72,7 @@ const Avatar: FC<AvatarProps> = ({
   }, []);
 
   return (
-    <div ref={box} className={cls} style={_style} {...props}>
+    <div ref={box} className={cx(cls.avatar, className)} style={_style} {...props}>
       {img ? (
         img
       ) : username ? (

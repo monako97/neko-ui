@@ -11,25 +11,30 @@ const { name } = JSON.parse(globals.programInfo);
  * Lines 行覆盖率(line coverage): 是不是每一行都执行了?
  */
 
-const ignore = [
-  '<rootDir>/test/',
-  '<rootDir>/lib/',
-  '<rootDir>/es/',
-  '<rootDir>/dist/',
-  '<rootDir>/docs/',
-  '<rootDir>/node_modules/',
-  'prism.js',
-];
 const config: Config = {
   automock: false,
   clearMocks: true,
   coverageDirectory: 'coverage',
   testEnvironment: 'jsdom',
   roots: ['components'],
-  coveragePathIgnorePatterns: ignore,
   moduleFileExtensions: ['js', 'jsx', 'ts', 'tsx'],
-  testPathIgnorePatterns: ignore,
-  transformIgnorePatterns: ignore.filter((o) => !['<rootDir>/test/', 'prism.js'].includes(o)),
+  coveragePathIgnorePatterns: [
+    '<rootDir>/test/',
+    '<rootDir>/lib/',
+    '<rootDir>/es/',
+    '<rootDir>/docs/',
+    '<rootDir>/node_modules/',
+    'prism.js',
+  ],
+  testPathIgnorePatterns: [
+    '<rootDir>/test/',
+    '<rootDir>/lib/',
+    '<rootDir>/es/',
+    '<rootDir>/docs/',
+    '<rootDir>/node_modules/',
+    'prism.js',
+  ],
+  transformIgnorePatterns: ['<rootDir>/lib/', '<rootDir>/es/', '<rootDir>/docs/'],
   transform: {
     '^.+\\.(t|j)sx?$': '@swc/jest',
   },
@@ -37,6 +42,7 @@ const config: Config = {
     '<rootDir>/test/setup.ts',
     '<rootDir>/test/canvas.ts',
     '<rootDir>/test/event.ts',
+    '<rootDir>/test/structured-clone.ts',
   ],
   testMatch: [
     '<rootDir>/components/**/__tests__/**/*.{js,jsx,ts,tsx}',

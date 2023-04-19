@@ -1,89 +1,8 @@
-import React, {
-  type FC,
-  type HTMLAttributes,
-  useCallback,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-} from 'react';
-import { injectGlobal } from '@emotion/css';
-import { classNames, downloadBlob, isObject } from '@moneko/common';
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { downloadBlob, isObject } from '@moneko/common';
+import { cls } from './style';
+import { cx } from '../emotion';
 import { Button, type ButtonProps } from '../index';
-import prefixCls from '../prefix-cls';
-
-const cls = {
-  captureScreen: prefixCls('capture-screen'),
-  view: prefixCls('capture-screen-view'),
-  recording: prefixCls('capture-screen-recording'),
-  paused: prefixCls('capture-screen-paused'),
-  record: prefixCls('capture-screen-record'),
-  controller: prefixCls('capture-screen-controller'),
-  btn: prefixCls('capture-screen-btn'),
-};
-const captureScreenCss = `
-  .${cls.captureScreen} {
-    display: block;
-  }
-  .${cls.view} {
-    position: relative;
-  }
-  .${cls.view} video {
-    border: var(--border-base);
-    border-radius: var(--border-radius, 8px);
-    width: 100%;
-    transition: border-color var(--transition-duration) var(--transition-timing-function);
-  }
-  .${cls.recording}, .${cls.paused} {
-    position: absolute;
-    top: 5px;
-    right: 5px;
-    border-radius: 50%;
-    width: 10px;
-    height: 10px;
-  }
-  .${cls.recording} {
-    background-color: var(--success-color, #52c41a);
-    animation: record-fade-loop-effect 2s infinite;
-  }
-  .${cls.paused} {
-    background-color: var(--warning-color, #faad14);
-  }
-  .${cls.controller} {
-    display: flex;
-    margin: 16px 0;
-  }
-  .${cls.btn} {
-    margin-right: 16px;
-  }
-  .${cls.record} {
-    display: flex;
-    margin-left: 16px;
-
-    &::before {
-      display: block;
-      border-left: 1px solid var(--border-color, #d9d9d9);
-      height: 100%;
-      transition: border-color var(--transition-duration) var(--transition-timing-function);
-      transform: translateX(-16px);
-      content: '';
-    }
-  }
-
-  @keyframes record-fade-loop-effect {
-    0% {
-      opacity: 0;
-    }
-
-    50% {
-      opacity: 1;
-    }
-
-    100% {
-      opacity: 0;
-    }
-  }
-`;
 
 export interface RecorderOptions {
   /** 录制文件名称 */
@@ -95,7 +14,7 @@ declare interface MediaRecorderDataAvailableEvent extends Event {
   data: any;
 }
 
-export interface CaptureScreenProp extends HTMLAttributes<HTMLDivElement> {
+export interface CaptureScreenProp extends React.HTMLAttributes<HTMLDivElement> {
   options?: MediaStreamConstraints;
   /** 是否预览 */
   preview?: boolean;
@@ -152,7 +71,7 @@ const btnStatusDic: Record<MediaRecorder['state'], ButtonProps['type']> = {
   paused: 'warning',
   recording: 'success',
 };
-const CaptureScreen: FC<CaptureScreenProp> = ({
+const CaptureScreen: React.FC<CaptureScreenProp> = ({
   options = displayMediaOptions,
   preview,
   controls,
@@ -306,7 +225,6 @@ const CaptureScreen: FC<CaptureScreenProp> = ({
   }, [handleRecorderDataAvailable, handleSaveRecorder, mediaStream, onRecorderError]);
 
   useEffect(() => {
-    injectGlobal([captureScreenCss]);
     const getMediaRecorderRef = () => mediaRecorderRef.current;
     const getMediaStreamRef = () => mediaStreamRef.current;
 
@@ -337,7 +255,7 @@ const CaptureScreen: FC<CaptureScreenProp> = ({
   );
 
   return (
-    <div {...props} className={classNames(cls.captureScreen, className)}>
+    <div {...props} className={cx(cls.captureScreen, className)}>
       <div className={cls.controller}>
         <Button onClick={startCapture} className={cls.btn}>
           {captureScreenText}
@@ -369,7 +287,7 @@ const CaptureScreen: FC<CaptureScreenProp> = ({
       {preview && mediaStream ? (
         <div className={cls.view}>
           <span
-            className={classNames(
+            className={cx(
               recordState === 'recording' && cls.recording,
               recordState === 'paused' && cls.paused
             )}

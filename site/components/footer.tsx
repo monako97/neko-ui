@@ -1,35 +1,41 @@
 import React from 'react';
-import { injectGlobal } from '@emotion/css';
+import { css } from '@emotion/css';
 import { projectInfo } from '@/utils';
 
-const footerCss = `
-  .site-footer {
-    display: flex;
-    justify-content: center;
-    padding-bottom: 1rem;
-    font-size: var(--font-size-sm, 12px);
-    line-height: 1rem;
-  }
-
-  .site-footer a {
-    color: var(--text-color, rgb(0 0 0 / 65%));
-    transition-duration: var(--transition-duration);
-    transition-timing-function: var(--transition-timing-function);
-    transition-property: background-color, color;
-  }
+const footer = css`
+  display: flex;
+  justify-content: center;
+  padding-block-end: 1rem;
+  font-size: var(--font-size-sm);
+  line-height: 1rem;
+`;
+const link = css`
+  color: var(--text-color);
+  transition-duration: var(--transition-duration);
+  transition-timing-function: var(--transition-timing-function);
+  transition-property: background-color, color;
 `;
 
-injectGlobal([footerCss]);
 const year = new Date().getFullYear();
 const Footer = () => {
   return (
-    <footer className="site-footer">
+    <footer className={footer}>
       <p>
-        <a href={projectInfo.repository?.url} target="_blank" rel="noopener noreferrer">
+        <a
+          className={link}
+          href={projectInfo.repository?.url}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
           {projectInfo.title}&nbsp;
         </a>
         Ⓒ {year} Made with ❤️‍🔥 by&nbsp;
-        <a href={projectInfo.author?.url} target="_blank" rel="noopener noreferrer">
+        <a
+          className={link}
+          href={projectInfo.author?.url}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
           {projectInfo.author?.name}
         </a>
       </p>

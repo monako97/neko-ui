@@ -1,0 +1,46 @@
+通过设置 `readonly` 属性来开启只读模式
+
+```jsx
+function Demo() {
+  const data = [
+    {
+      title: '文件地址',
+      subTitle: 'fileAddr',
+      key: 'fileAddr',
+    },
+    {
+      subTitle: 'fileName',
+      title: '文件名称',
+      key: 'fileName',
+      children: [
+        {
+          title: '编号',
+          subTitle: 'fileName.code',
+          key: 'fileName.code',
+          children: [
+            {
+              title: '备注',
+              subTitle: 'fileName.code.x',
+              key: 'fileName.code.x',
+            },
+          ],
+        },
+      ],
+    },
+    {
+      title: '编号',
+      subTitle: 'code',
+      key: 'code',
+      children: [
+        {
+          title: '是否有效',
+          subTitle: 'valid',
+          key: 'valid',
+        },
+      ],
+    },
+  ];
+
+  return <Tree data={data} readonly />;
+}
+```

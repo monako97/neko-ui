@@ -1,6 +1,6 @@
 # Neko UI
 
-> UI组件库
+!> UI组件库
 
 [![version][version-tag]][npm-url]
 [![install size][size-tag]][size-url]
@@ -17,7 +17,7 @@
 [size-url]: https://packagephobia.com/result?p=neko-ui@latest
 [download-tag]: https://img.shields.io/npm/dm/neko-ui.svg?logo=docusign
 
-> logo轮廓其实是双马尾
+!> logo轮廓其实是双马尾
 
 ## 安装依赖
 
@@ -45,7 +45,7 @@ yarn build
 
 ## 打包项目`使用自定义配置`
 
-> 在打包其它有特殊配置的bundle时, 可以通过命令行参数来加载额外的配置文件;
+!> 在打包其它有特殊配置的bundle时, 可以通过命令行参数来加载额外的配置文件;
 
 例如: 使用 **config/index.ts** 与 **config/prod.ts** 合并后的配置进行编译.
 

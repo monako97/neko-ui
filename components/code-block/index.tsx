@@ -1,5 +1,6 @@
-import React, { type FC, type ReactNode, useMemo, useRef } from 'react';
-import { setClipboard, classNames } from '@moneko/common';
+import React, { useMemo, useRef } from 'react';
+import { setClipboard } from '@moneko/common';
+import { cx } from '../emotion';
 import highlight from '../highlight';
 
 export interface CodeBlockProps {
@@ -7,19 +8,22 @@ export interface CodeBlockProps {
   code?: string;
   lang: string;
   lineNumber?: boolean;
-  children?: ReactNode;
+  children?: React.ReactNode;
 }
 
-const CodeBlock: FC<CodeBlockProps> = ({ className, code, lang, lineNumber = true, children }) => {
+const CodeBlock: React.FC<CodeBlockProps> = ({
+  className,
+  code,
+  lang,
+  lineNumber = true,
+  children,
+}) => {
   const codeRef = useRef<HTMLPreElement>(null);
-  const _html = useMemo(() => code && highlight(code, lang), [code, lang]);
+  const _html = useMemo(() => (code ? highlight(code, lang) : ''), [code, lang]);
   const realLang = useMemo(() => lang?.split(' ')[0], [lang]);
 
   return (
-    <pre
-      className={classNames(`language-${lang}`, lineNumber && 'line-numbers', className)}
-      ref={codeRef}
-    >
+    <pre className={cx(`language-${lang}`, lineNumber && 'line-numbers', className)} ref={codeRef}>
       <div className="toolbar" data-lang={realLang}>
         <button
           className="toolbar-copy"

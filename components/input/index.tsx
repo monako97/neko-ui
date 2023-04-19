@@ -1,14 +1,5 @@
-import React, {
-  type FC,
-  type InputHTMLAttributes,
-  type ReactNode,
-  type ChangeEventHandler,
-  type FocusEventHandler,
-  useCallback,
-  useState,
-} from 'react';
-import { css } from '@emotion/css';
-import { classNames } from '@moneko/common';
+import React, { useCallback, useState } from 'react';
+import { cx, css } from '../emotion';
 import { type ComponentSize } from '../index';
 
 const inputCss = css`
@@ -23,12 +14,12 @@ const inputCss = css`
 const wrapperCss = css`
   display: flex;
   border: var(--border-base);
-  border-radius: var(--border-radius, 8px);
+  border-radius: var(--border-radius);
   padding: 4px 10px;
-  width: 100%;
-  font-size: var(--font-size, 14px);
-  color: var(--text-color, rgb(0 0 0 / 65%));
-  background-color: var(--component-background, rgb(255 255 255 / 80%));
+  inline-size: 100%;
+  font-size: var(--font-size);
+  color: var(--text-color);
+  background-color: var(--component-background);
   transition: all 0.3s;
   line-height: 1.5715;
   background-image: none;
@@ -36,8 +27,8 @@ const wrapperCss = css`
   accent-color: var(--primary-color, #5794ff);
 
   &:hover {
-    border-color: var(--primary-color-hover, #80b3ff);
-    border-right-width: 1px;
+    border-color: var(--primary-hover, #80b3ff);
+    border-inline-end-width: 1px;
   }
 
   input {
@@ -45,26 +36,26 @@ const wrapperCss = css`
   }
 `;
 const focusCss = css`
-  border-color: var(--primary-color-hover, #80b3ff);
-  border-right-width: 1px;
+  border-color: var(--primary-hover, #80b3ff);
+  border-inline-end-width: 1px;
   outline: 0;
   box-shadow: 0 0 0 2px rgb(45 115 255 / 20%);
 `;
 const disabledCss = css`
-  border-color: var(--border-color, #d9d9d9);
+  border-color: var(--border-color);
   background: var(--disabled-bg, #f5f5f5);
   cursor: not-allowed;
 `;
 const prefixCss = css`
-  margin-right: 4px;
+  margin-inline-end: 4px;
 `;
 const suffixCss = css`
-  margin-left: 4px;
+  margin-inline-start: 4px;
 `;
 const sizeCss = {
   small: css`
     padding: 2px;
-    font-size: var(--font-size-sm, 12px);
+    font-size: var(--font-size-sm);
     line-height: 20px;
 
     input {
@@ -73,16 +64,19 @@ const sizeCss = {
   `,
   large: css`
     padding: 6px 16px;
-    font-size: var(--font-size-lg, 16px);
+    font-size: var(--font-size-lg);
   `,
   normal: null,
 };
 
 export interface InputProps<T = string | number | undefined>
-  extends Omit<InputHTMLAttributes<HTMLInputElement>, 'prefix' | 'size' | 'onChange' | 'value'> {
+  extends Omit<
+    React.InputHTMLAttributes<HTMLInputElement>,
+    'prefix' | 'size' | 'onChange' | 'value'
+  > {
   className?: string;
-  suffix?: ReactNode;
-  prefix?: ReactNode;
+  suffix?: React.ReactNode;
+  prefix?: React.ReactNode;
   size?: ComponentSize;
   value?: T;
   // eslint-disable-next-line no-unused-vars
@@ -94,7 +88,7 @@ export interface InputProps<T = string | number | undefined>
   parser?: null | ((value?: T) => T);
 }
 
-const Input: FC<InputProps> = ({
+const Input: React.FC<InputProps> = ({
   className,
   suffix,
   prefix,
@@ -132,20 +126,20 @@ const Input: FC<InputProps> = ({
     [parser, type]
   );
 
-  const handleChange: ChangeEventHandler<HTMLInputElement> = useCallback(
+  const handleChange: React.ChangeEventHandler<HTMLInputElement> = useCallback(
     (e) => {
       onChange?.(parserValue(e.target.value));
     },
     [onChange, parserValue]
   );
-  const handleFocus: FocusEventHandler<HTMLInputElement> = useCallback(
+  const handleFocus: React.FocusEventHandler<HTMLInputElement> = useCallback(
     (e) => {
       setFocus(true);
       onFocus?.(e);
     },
     [onFocus]
   );
-  const handleBlur: FocusEventHandler<HTMLInputElement> = useCallback(
+  const handleBlur: React.FocusEventHandler<HTMLInputElement> = useCallback(
     (e) => {
       setFocus(false);
       onBlur?.(e);
@@ -155,7 +149,7 @@ const Input: FC<InputProps> = ({
 
   return (
     <span
-      className={classNames(
+      className={cx(
         wrapperCss,
         size && sizeCss[size],
         disabled && disabledCss,

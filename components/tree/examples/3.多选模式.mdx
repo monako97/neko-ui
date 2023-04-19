@@ -1,0 +1,47 @@
+将 `multiple` 属性设置为 `true` 来开启多选模式;
+重复点击同一项时，如果已选中则取消选中。
+
+```jsx
+function Demo() {
+  const data = [
+    {
+      title: '文件名称',
+      subTitle: 'object',
+      key: 'a',
+      children: [
+        {
+          title: '备注',
+          subTitle: 'object',
+          key: 'a.b',
+          children: [
+            {
+              title: '备注',
+              subTitle: 'string',
+              key: 'a.b.x',
+            },
+          ],
+        },
+      ],
+    },
+    {
+      title: '编号',
+      subTitle: 'object',
+      key: 'b',
+      children: [
+        {
+          title: '备注',
+          subTitle: 'string',
+          key: 'b2',
+        },
+        {
+          title: '是否有效',
+          subTitle: 'boolean',
+          key: 'c2',
+        },
+      ],
+    },
+  ];
+
+  return <Tree data={data} multiple />;
+}
+```

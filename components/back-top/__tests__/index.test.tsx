@@ -23,7 +23,7 @@ describe('test BackTop', () => {
       <div
         data-testid={testid}
         id="box"
-        style={{ height: 100, overflow: 'auto', position: 'relative' }}
+        style={{ blockSize: 100, overflow: 'auto', position: 'relative' }}
       >
         <div>
           {data.map((_, i) => {

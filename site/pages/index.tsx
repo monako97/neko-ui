@@ -1,4 +1,4 @@
-import React, { type FC, useEffect, useRef, memo } from 'react';
+import React, { useEffect, useRef, memo } from 'react';
 import { injectGlobal } from '@emotion/css';
 import { useLocation, useOutlet } from '@moneko/core';
 import { BackTop } from 'neko-ui';
@@ -26,14 +26,15 @@ const material = [
   '#FF9800',
   '#FF5722',
 ].toString();
-const app = `
+
+injectGlobal`
   #root {
     flex-wrap: wrap;
   }
 
   .site-doc-main {
-    margin-top: 1rem;
-    width: calc(100% - 18rem);
+    margin-block-start: 1rem;
+    inline-size: calc(100% - 18rem);
   }
 
   .site-sider,
@@ -45,7 +46,7 @@ const app = `
     box-sizing: border-box;
 
     .n-md-toc {
-      top: 1rem;
+      inset-block-start: 1rem;
     }
   }
 
@@ -55,11 +56,11 @@ const app = `
 
   body::before {
     position: fixed;
-    top: 0;
+    inset-block-start: 0;
     z-index: 1;
     display: block;
-    width: 100vw;
-    height: 6.25rem;
+    inline-size: 100vi;
+    block-size: 6.25rem;
     background: linear-gradient(124deg, ${material});
     background-size: 800% 800%;
     opacity: 0.2;
@@ -69,8 +70,7 @@ const app = `
   }
 `;
 
-injectGlobal([app]);
-const App: FC = () => {
+const App: React.FC = () => {
   const box = useRef<HTMLDivElement>(null);
   const readme = useOutlet();
   const location = useLocation();

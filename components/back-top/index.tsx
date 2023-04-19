@@ -1,97 +1,10 @@
-import React, {
-  type FC,
-  type HTMLAttributes,
-  memo,
-  useCallback,
-  useEffect,
-  useRef,
-  useState,
-} from 'react';
-import { injectGlobal } from '@emotion/css';
-import { classNames, getMaxZindex, getScrollTop, isEqual, isFunction } from '@moneko/common';
+import React, { memo, useCallback, useEffect, useRef, useState } from 'react';
+import { getMaxZindex, getScrollTop, isEqual, isFunction } from '@moneko/common';
 import { createPortal } from 'react-dom';
-import prefixCls from '../prefix-cls';
+import { cls } from './style';
+import { cx } from '../emotion';
 
-const cls = {
-  backtop: prefixCls('back-top'),
-  out: prefixCls('back-top-out'),
-};
-
-const backTopCss = `
-  :root {
-    --back-top-color: #fff;
-    --back-top-bg: var(--text-secondary, #4e4e4e);
-    --back-top-hover-bg: var(--text-color, rgb(0 0 0 / 65%));
-  }
-
-  [data-theme='dark'] {
-    --back-top-bg: rgb(255 255 255 / 45%);
-  }
-  .${cls.backtop} {
-    position: sticky;
-    bottom: 50px;
-    left: calc(100% - 100px);
-    z-index: 9;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border-radius: 50%;
-    width: 40px;
-    min-width: 40px;
-    height: 40px;
-    min-height: 40px;
-    color: var(--back-top-color);
-    background-color: var(--back-top-bg);
-    box-shadow: var(--box-shadow-base);
-    transition: background-color var(--transition-duration), color var(--transition-duration);
-    cursor: pointer;
-    animation: back-top-fade-in 1s forwards;
-    backdrop-filter: blur(16px);
-
-    &::before {
-      content: '';
-      display: block;
-      width: 16px;
-      height: 8px;
-      background-color: var(--back-top-color);
-      clip-path: polygon(0 100%, 50% 0, 100% 100%);
-    }
-
-    &:hover {
-      background-color: var(--back-top-hover-bg);
-    }
-  }
-  .${cls.out} {
-    animation: back-top-fade-out 1s forwards;
-  }
-
-  @keyframes back-top-fade-in {
-    from {
-      transform: translate3d(0, 16px, 0) scale(1);
-      opacity: 0;
-    }
-
-    to {
-      transform: translate3d(0, 0, 0) scale(1);
-      opacity: 1;
-    }
-  }
-
-  @keyframes back-top-fade-out {
-    0%,
-    20% {
-      transform: translate3d(0, 0, 0);
-      opacity: 1;
-    }
-
-    100% {
-      transform: translate3d(0, 16px, 0);
-      opacity: 0;
-    }
-  }
-`;
-
-export interface BackTopProps extends HTMLAttributes<HTMLDivElement> {
+export interface BackTopProps extends React.HTMLAttributes<HTMLDivElement> {
   /** 设置需要监听其滚动事件的元素，值为一个返回对应 DOM 元素 */
   target?: () => HTMLElement;
   /** 挂载到指定的元素，值为一个返回对应 DOM 元素 默认 document.body */
@@ -101,7 +14,7 @@ export interface BackTopProps extends HTMLAttributes<HTMLDivElement> {
   visibilityHeight?: number;
 }
 
-const BackTop: FC<BackTopProps> = ({
+const BackTop: React.FC<BackTopProps> = ({
   target = () => window as unknown as HTMLElement,
   getPopupContainer,
   visibilityHeight = 400,
@@ -157,17 +70,13 @@ const BackTop: FC<BackTopProps> = ({
     }
   }, [show]);
 
-  useEffect(() => {
-    injectGlobal([backTopCss]);
-  }, []);
-
   if (show === null) return null;
   return createPortal(
     <div
       {...props}
       ref={ref}
       onAnimationEnd={exit}
-      className={classNames(className, cls.backtop, show === false && cls.out)}
+      className={cx(className, cls.backtop, show === false && cls.out)}
       onClick={handleBackTop}
     />,
     getPopupContainer?.(target()) || document.body

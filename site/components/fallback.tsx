@@ -2,19 +2,18 @@ import React from 'react';
 import { injectGlobal } from '@emotion/css';
 import { Skeleton } from 'neko-ui';
 
-const siteFallbackCss = `
+injectGlobal`
   .site-fallback {
     display: flex;
     margin: auto;
-    border-radius: var(--border-radius, 8px);
+    border-radius: var(--border-radius);
     padding: 2rem;
-    max-width: 80rem;
-    background-color: var(--component-background, rgb(255 255 255 / 80%));
+    max-inline-size: 80rem;
+    background-color: var(--component-background);
     flex: 1;
   }
 `;
 
-injectGlobal([siteFallbackCss]);
 const Fallback = () => {
   return (
     <div className="site-fallback">

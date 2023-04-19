@@ -1,0 +1,54 @@
+将 `direction` 属性设置为 `rtl` 来支持从右到左的布局;
+
+```jsx
+function Demo() {
+  const [rtl, setRtl] = React.useState('rtl');
+  const data = [
+    {
+      title: '文件名称',
+      subTitle: 'object',
+      key: 'a',
+      children: [
+        {
+          title: '备注',
+          subTitle: 'object',
+          key: 'a.b',
+          children: [
+            {
+              title: '备注',
+              subTitle: 'string',
+              key: 'a.b.x',
+            },
+          ],
+        },
+      ],
+    },
+    {
+      title: '编号',
+      subTitle: 'object',
+      key: 'b',
+      children: [
+        {
+          title: '备注',
+          subTitle: 'string',
+          key: 'b2',
+        },
+        {
+          title: '是否有效',
+          subTitle: 'boolean',
+          key: 'c2',
+        },
+      ],
+    },
+  ];
+
+  return (
+    <>
+      <Button onClick={() => setRtl(rtl === 'rtl' ? 'ltr' : 'rtl')}>
+        {rtl === 'rtl' ? '从右到左' : '从左到右'}
+      </Button>
+      <Tree data={data} direction={rtl} />
+    </>
+  );
+}
+```

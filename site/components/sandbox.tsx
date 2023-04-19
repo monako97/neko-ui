@@ -1,15 +1,14 @@
-import React, { useState, type FC, useEffect, useCallback, useMemo } from 'react';
-import { injectGlobal } from '@emotion/css';
-import { classNames } from '@moneko/common';
-import { mdxComponents, type ExampleModule } from '@moneko/core';
+import React, { useEffect, useMemo, useRef } from 'react';
+import { cx, injectGlobal } from '@emotion/css';
+import { mdxComponents, type ExampleModule, myDemoKv, sso } from '@moneko/core';
 import { LiveProvider, LiveEditor, LiveError, LivePreview } from '@moneko/react-live';
 import { Markdown, Prism } from 'neko-ui';
 
-const sandboxCss = `
+injectGlobal`
   .sandbox-box {
     break-inside: avoid;
     box-sizing: border-box;
-    padding-bottom: 1rem;
+    padding-block-end: 1rem;
   }
 
   .sandbox-container,
@@ -29,7 +28,7 @@ const sandboxCss = `
   }
 
   .sandbox-container {
-    border-radius: var(--border-radius, 8px);
+    border-radius: var(--border-radius);
   }
 
   fieldset {
@@ -44,7 +43,7 @@ const sandboxCss = `
 
   .sandbox-view {
     position: relative;
-    padding-bottom: 2rem;
+    padding-block-end: 2rem;
     padding-inline: 0.5rem;
   }
 
@@ -57,11 +56,11 @@ const sandboxCss = `
 
   .sandbox-view .n-md-box,
   .sandbox-view pre {
-    width: 100%;
+    inline-size: 100%;
   }
 
   .sandbox-view pre:first-of-type {
-    margin-top: 0.5rem;
+    margin-block-start: 0.5rem;
   }
 
   .sandbox-info {
@@ -81,22 +80,22 @@ const sandboxCss = `
   }
 
   .sandbox-description p:first-of-type {
-    margin-top: 4px;
+    margin-block-start: 4px;
   }
 
   .sandbox-description p:last-of-type {
-    margin-bottom: 4px;
+    margin-block-end: 4px;
   }
 
   .sandbox-btn {
     position: absolute;
-    right: -16px;
-    bottom: 0;
+    inset-inline-end: -16px;
+    inset-block-end: 0;
     padding: 0.25rem;
-    width: fit-content;
-    font-size: var(--font-size-sm, 12px);
+    inline-size: fit-content;
+    font-size: var(--font-size-sm);
     cursor: pointer;
-    border-top-left-radius: var(--border-radius, 8px);
+    border-start-start-radius: var(--border-radius);
     line-height: 1rem;
     user-select: none;
     transition-property: background-color, color, transform;
@@ -104,7 +103,7 @@ const sandboxCss = `
 
   .sandbox-btn::after {
     display: inline-block;
-    font-size: var(--font-size-xs, 10px);
+    font-size: var(--font-size-xs);
     font-family: neko-icon, sans-serif;
     text-indent: 0.25rem;
     content: '\\e63e';
@@ -121,17 +120,17 @@ const sandboxCss = `
 
   .sandbox-btn[data-open='false'] {
     color: var(--primary-color, #5794ff);
-    background-color: var(--primary-color-bg, #f0f8ff);
-    border-bottom-right-radius: var(--border-radius, 8px);
+    background-color: var(--primary-bg, #f0f8ff);
+    border-end-end-radius: var(--border-radius);
   }
 
   .sandbox-btn.sandbox-btn-desc {
     transform: translateY(13px);
-    border-bottom-right-radius: 0;
+    border-end-end-radius: 0;
   }
 
   .sandbox-live-editor {
-    --code-color: var(--text-color, rgb(0 0 0 / 65%));
+    --code-color: var(--text-color);
 
     border-style: dotted;
     border-width: 0.0625rem 0 0;
@@ -146,26 +145,26 @@ const sandboxCss = `
   .sandbox-error-msg {
     color: var(--error-color);
   }
+
+  .sandbox-group {
+    inline-size: 100%;
+  }
 `;
 
-injectGlobal([sandboxCss]);
-const Sandbox: FC<ExampleModule> = ({ title, description, ...props }) => {
-  const [init, setInit] = useState(false);
-  const [open, setOpen] = useState(false);
-  const handleOpen = useCallback(
-    function () {
-      if (!init) {
-        setInit(true);
-      }
-      setOpen(!open);
-    },
-    [init, open]
+const Sandbox: React.FC<ExampleModule> = ({ title, description, ...props }) => {
+  const store = useRef(
+    sso({
+      open: false,
+    })
   );
-  const hasDesc = useMemo(() => description?.trim().length, [description]);
+  const { open } = store.current;
+  const hasDesc = useMemo(() => !!description?.trim().length, [description]);
 
   useEffect(() => {
+    const _store = store.current;
+
     return () => {
-      setOpen(false);
+      _store();
     };
   }, []);
 
@@ -185,9 +184,9 @@ const Sandbox: FC<ExampleModule> = ({ title, description, ...props }) => {
             <LiveError className="sandbox-error-msg" />
             <LivePreview />
             <span
-              className={classNames('sandbox-btn', hasDesc && 'sandbox-btn-desc')}
+              className={cx('sandbox-btn', hasDesc && 'sandbox-btn-desc')}
               data-open={open}
-              onClick={handleOpen}
+              onClick={() => store.current('open', (prev) => !prev)}
             >
               编辑示例代码
             </span>
@@ -200,13 +199,34 @@ const Sandbox: FC<ExampleModule> = ({ title, description, ...props }) => {
               </div>
             </fieldset>
           ) : null}
-          {init && (
-            <LiveEditor className={`sandbox-live-editor ${open ? '' : 'hide'}`} prism={Prism} />
-          )}
+          <LiveEditor className={`sandbox-live-editor ${open ? '' : 'hide'}`} prism={Prism} />
         </fieldset>
       </section>
     </LiveProvider>
   );
 };
 
-export default Sandbox;
+interface SandboxGroupProps {
+  name: string;
+  col?: number;
+  ignore?: string[];
+}
+
+export const SandboxGroup: React.FC<SandboxGroupProps> = ({ name, col = 2, ignore = [] }) => {
+  return (
+    <div
+      className="sandbox-group"
+      style={{
+        columnCount: col,
+      }}
+    >
+      {myDemoKv[name]
+        ?.filter((e) => (e.title ? !ignore.includes(e.title) : true))
+        .map((m, i) => (
+          <Sandbox key={i} {...m} />
+        ))}
+    </div>
+  );
+};
+
+export default React.memo(Sandbox, () => true);

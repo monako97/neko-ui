@@ -1,81 +1,91 @@
-import React, { type FC } from 'react';
+import React from 'react';
 import { injectGlobal } from '@emotion/css';
 import getBrowser from 'neko-ui/utils/broswer';
 import jb_beam from '@/assets/images/jb_beam.svg';
 import { projectInfo } from '@/utils';
 
-const siteEmptyCss = `
+injectGlobal`
   .site-empty {
-    min-height: calc(100vh - 14.75rem);
-  }
+    min-block-size: calc(100vb - 14.75rem);
 
-  .site-empty > span {
-    margin-left: 1rem;
-  }
-
-  .site-empty-top {
-    display: flex;
-    gap: 1.5rem;
-  }
-
-  .site-empty-info {
-    flex: 1;
-  }
-
-  .site-empty-thank {
-    img {
-      width: 7.5rem;
-      height: 7.5rem;
+    & > span {
+      margin-inline-start: 1rem;
     }
 
-    h2::before,
-    a::after {
-      content: none;
+    .site-empty-top {
+      display: flex;
+      gap: 1.5rem;
     }
 
-    h2 {
-      margin: 0;
-      border: none;
+    .site-empty-info {
+      flex: 1;
     }
-  }
 
-  .site-empty-colors {
-    display: flex;
-    gap: 0.75rem;
-  }
+    &-thank {
+      img {
+        inline-size: 7.5rem;
+        block-size: 7.5rem;
+      }
 
-  .site-empty-color {
-    display: flex;
-    flex-direction: column;
-    flex: 1;
-    gap: 0.3125rem;
-  }
+      h2::before,
+      a::after {
+        content: none;
+      }
 
-  .site-empty-color-item {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    border-radius: var(--border-radius, 0.5rem);
-    padding: 0.5rem 0.75rem;
-    color: #fff;
-    cursor: pointer;
-    transition-property: background-color;
-  }
+      h2 {
+        margin: 0;
+        border: none;
+      }
+    }
 
-  .site-empty-color-item,
-  .site-empty-color-item i {
-    transition-timing-function: var(--transition-timing-function);
-    transition-duration: var(--transition-duration);
-  }
+    &-colors {
+      display: flex;
+      gap: 0.75rem;
+    }
 
-  .site-empty-color-item i {
-    color: var(--text-color, rgb(0 0 0 / 65%));
-    transition-property: opacity, color;
-  }
+    &-color {
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+      gap: 0.3125rem;
 
-  .site-empty-color-item i:last-of-type {
-    font-size: var(--font-size-xs, 10px);
-    opacity: 0.8;
+      &-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        border-radius: var(--border-radius);
+        padding: 0.5rem 0.75rem;
+        color: #fff;
+        cursor: pointer;
+        transition-property: background-color;
+
+        &,
+        span {
+          transition-timing-function: var(--transition-timing-function);
+          transition-duration: var(--transition-duration);
+        }
+
+        span {
+          color: var(--text-color);
+          transition-property: opacity, color;
+
+          &:first-of-type::before {
+            content: attr(data-name);
+          }
+
+          &:last-of-type {
+            font-size: var(--font-size-xs);
+            opacity: 0.8;
+          }
+        }
+
+        &:hover span:first-of-type {
+          &::before {
+            content: attr(data-val);
+          }
+        }
+      }
+    }
   }
 `;
 
@@ -87,10 +97,8 @@ const infos: [string, string?][] = [
   ['浏览器', `${broswer.name} ${broswer.version}`],
 ];
 const colors = ['primary', 'warning', 'error', 'success'];
-const types = ['color-bg', 'color-outline', 'color-border', 'color-hover', 'color', 'color-active'];
-
-injectGlobal([siteEmptyCss]);
-const Empty: FC = () => {
+const types = ['bg', 'outline', 'border', 'hover', 'color', 'active'];
+const Empty: React.FC = () => {
   return (
     <div className="n-md-body site-empty">
       <div className="site-empty-top">
@@ -123,18 +131,18 @@ const Empty: FC = () => {
           return (
             <div key={c} className="site-empty-color">
               {types.map((t) => {
+                const v = `--${c}-${t}`;
+
                 return (
                   <div
                     key={t}
                     className="site-empty-color-item"
                     style={{
-                      backgroundColor: `var(--${c}-${t})`,
+                      backgroundColor: `var(${v})`,
                     }}
                   >
-                    <i>{t.replace(/^color-/, '')}</i>
-                    <i>
-                      {getComputedStyle(document.documentElement).getPropertyValue(`--${c}-${t}`)}
-                    </i>
+                    <span data-val={v} data-name={t} />
+                    <span>{getComputedStyle(document.documentElement).getPropertyValue(v)}</span>
                   </div>
                 );
               })}

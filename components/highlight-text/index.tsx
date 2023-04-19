@@ -1,20 +1,6 @@
-import React, { type CSSProperties, type FC, useEffect, useMemo, useState } from 'react';
-import { injectGlobal } from '@emotion/css';
-import { classNames } from '@moneko/common';
-import prefixCls from '../prefix-cls';
-
-const cls = {
-  text: prefixCls('highlight-text'),
-  hit: prefixCls('highlight-hit'),
-};
-const highlightTextCss = `
-  .${cls.text} {
-    cursor: auto;
-  }
-  .${cls.hit} {
-    color: var(--primary-color, #5794ff);
-  }
-`;
+import React, { useEffect, useMemo, useState } from 'react';
+import { cls } from './style';
+import { cx } from '../emotion';
 
 /**
  * 高亮字符串语法
@@ -33,9 +19,9 @@ export type HighlightTextJson =
   | null;
 export interface HighlightTextProps {
   className?: string;
-  style?: CSSProperties;
+  style?: React.CSSProperties;
   /** 命中高亮部分的样式 */
-  hitStyle?: CSSProperties;
+  hitStyle?: React.CSSProperties;
   /** 命中高亮部分的类名 */
   hitClassName?: string;
   /** 内容 */
@@ -94,7 +80,7 @@ export function strToHighlight(text: string): Highlight[] | null {
   return null;
 }
 
-const HighlightText: FC<HighlightTextProps> = ({
+const HighlightText: React.FC<HighlightTextProps> = ({
   className,
   style,
   hitStyle,
@@ -111,7 +97,7 @@ const HighlightText: FC<HighlightTextProps> = ({
         return item.hit ? (
           <span
             key={item.text + i}
-            className={classNames(cls.hit, hitClassName)}
+            className={cx(cls.hit, hitClassName)}
             data-text={item.text}
             style={hitStyle}
           >
@@ -147,15 +133,12 @@ const HighlightText: FC<HighlightTextProps> = ({
       setTexts(null);
     }
   }, [flag, highlight, text]);
-  useEffect(() => {
-    injectGlobal([highlightTextCss]);
-  }, []);
 
   return (
-    <div className={classNames(cls.text, className)} style={style}>
+    <div className={cx(cls.text, className)} style={style}>
       {hitNode}
       {extra && (
-        <span className={classNames(cls.hit, hitClassName)} style={hitStyle}>
+        <span className={cx(cls.hit, hitClassName)} style={hitStyle}>
           {extra}
         </span>
       )}

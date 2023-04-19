@@ -5,7 +5,7 @@
 
 [data-theme='dark'] {
     --code-color: #eee;
-    --code-bg: var(--component-background, rgb(20 20 20 / 80%));
+    --code-bg: var(--component-background);
     --code-lang-style-color: #fd9170;
     --code-toolbar-bg: rgb(63 63 63 / 20%);
     --token-atrule: #c792ea;
@@ -60,15 +60,15 @@ pre[class*='language-'] ::selection pre[class*='language-']::selection {
 }
 
 .prism-previewer.prism-previewer-easing {
-    margin-top: -76px;
-    margin-left: -30px;
-    width: 60px;
-    height: 60px;
+    margin-block-start: -76px;
+    margin-inline-start: -30px;
+    inline-size: 60px;
+    block-size: 60px;
     background: #333;
 }
 
 .prism-previewer-easing.flipped {
-    margin-bottom: -116px;
+    margin-block-end: -116px;
 }
 
 .prism-previewer-easing circle {
@@ -91,8 +91,8 @@ pre[class*='language-'] ::selection pre[class*='language-']::selection {
 
 .prism-previewer-easing,
 .prism-previewer-easing svg {
-    width: 60px;
-    height: 60px;
+    inline-size: 60px;
+    block-size: 60px;
 }
 
 .prism-previewer-time::before {
@@ -101,12 +101,12 @@ pre[class*='language-'] ::selection pre[class*='language-']::selection {
 }
 
 .prism-previewer-time::after {
-    margin-top: 4px;
+    margin-block-start: 4px;
 }
 
 .prism-previewer-time svg {
-    width: 32px;
-    height: 32px;
+    inline-size: 32px;
+    block-size: 32px;
     transform: rotate(-90deg);
 }
 
@@ -297,7 +297,7 @@ pre:not(.sp-cm) > code {
 .treeview-part .entry-line {
     position: relative;
     display: inline-block;
-    width: 1.2em;
+    inline-size: 1.2em;
     text-indent: -99em;
     vertical-align: top;
 }
@@ -305,10 +305,10 @@ pre:not(.sp-cm) > code {
 .treeview-part .entry-line::before,
 .treeview-part .line-h::after {
     position: absolute;
-    top: 0;
-    left: 50%;
-    width: 50%;
-    height: 100%;
+    inset-block-start: 0;
+    inset-inline-start: 50%;
+    inline-size: 50%;
+    block-size: 100%;
     content: '';
     transition-property: border-color;
 }
@@ -316,13 +316,13 @@ pre:not(.sp-cm) > code {
 .treeview-part .line-h::before,
 .treeview-part .line-v::before,
 .treeview-part .line-v-last::before {
-    border-left: 1px solid var(--border-color, #d9d9d9);
+    border-inline-start: 1px solid var(--border-color);
 }
 
 .treeview-part .line-v-last::before,
 .treeview-part .line-h::after {
-    border-bottom: 1px solid var(--border-color, #d9d9d9);
-    height: 50%;
+    border-block-end: 1px solid var(--border-color);
+    block-size: 50%;
 }
 
 .treeview-part .entry-name {
@@ -337,8 +337,8 @@ pre:not(.sp-cm) > code {
 
 .treeview-part .entry-name::before {
     display: block;
-    float: left;
-    width: 2.5ex;
+    float: inline-start;
+    inline-size: 2.5ex;
     font-size: inherit;
     font-family: prism-treeview, sans-serif;
     color: #9e9e9e;
@@ -528,7 +528,7 @@ pre {
     font-family: 'Liberation Mono', Monaco, Menlo, Consolas, 'Source Code Pro', 'Ubuntu Mono',
         'Microsoft Yahei', '微软雅黑', Courier, 'Helvetica Neue', 'Lantinghei SC', STXihei, WenQuanYi,
         sans-serif;
-    text-align: left;
+    text-align: start;
     white-space: pre;
     word-wrap: normal;
     word-break: normal;
@@ -541,7 +541,7 @@ pre {
 .sandbox-error-msg {
     margin: 0 !important;
     padding: 0 !important;
-    font-size: var(--font-size-sm, 12px) !important;
+    font-size: var(--font-size-sm) !important;
     font-family: 'Liberation Mono', Monaco, Menlo, Consolas, 'Source Code Pro', 'Ubuntu Mono',
         'Microsoft Yahei', '微软雅黑', Courier, 'Helvetica Neue', 'Lantinghei SC', STXihei, WenQuanYi,
         sans-serif !important;
@@ -576,8 +576,8 @@ span .inline-color-wrapper {
     overflow: hidden;
     margin: 0 .333ch;
     border: var(--border-base);
-    width: 1.333ch;
-    height: 1.333ch;
+    inline-size: 1.333ch;
+    block-size: 1.333ch;
     background-position: center;
     background-size: 110%;
     outline: 1px solid rgb(0 0 0 / 50%);
@@ -587,8 +587,8 @@ span .inline-color-wrapper {
 
 span .inline-color {
     display: block;
-    width: 120%;
-    height: 120%;
+    inline-size: 120%;
+    block-size: 120%;
 }
 
 pre:not(.sp-cm) {
@@ -596,9 +596,9 @@ pre:not(.sp-cm) {
     display: block;
     overflow: visible;
     margin: 35px auto;
-    border-radius: var(--border-radius, 8px);
-    max-width: 100%;
-    font-size: var(--font-size, 14px);
+    border-radius: var(--border-radius);
+    max-inline-size: 100%;
+    font-size: var(--font-size);
     white-space: pre-wrap;
     background-color: var(--code-bg, rgb(255 255 255 / 80%));
     box-shadow: 0 2px 8px 0 rgb(0 0 0 / 5%);
@@ -607,24 +607,24 @@ pre:not(.sp-cm) {
 }
 
 pre:not(.sp-cm):last-of-type {
-    margin-bottom: 0;
+    margin-block-end: 0;
 }
 
 pre:not(.sp-cm) .toolbar::after {
     position: absolute;
-    top: 0;
-    left: 0;
+    inset-block-start: 0;
+    inset-inline-start: 0;
     z-index: 1;
     display: block;
     overflow: hidden;
-    border-radius: var(--border-radius, 8px) var(--border-radius, 8px) 0 0;
-    width: 100%;
-    height: 24px;
-    font-size: var(--font-size, 14px);
+    border-radius: var(--border-radius) var(--border-radius) 0 0;
+    inline-size: 100%;
+    block-size: 24px;
+    font-size: var(--font-size);
     font-family: Ubuntu, sans-serif;
     font-weight: bold;
     text-align: center;
-    color: var(--text-color, #4d4d4c);
+    color: var(--text-color);
     background-color: var(--code-toolbar-bg, rgb(220 224 229 / 50%));
     box-shadow: 0 1px 5px rgb(0 0 0 / 10%);
     line-height: 24px;
@@ -636,13 +636,13 @@ pre:not(.sp-cm) .toolbar::after {
 
 pre:not(.sp-cm) .toolbar::before {
     position: absolute;
-    top: 10px;
-    left: 12px;
+    inset-block-start: 10px;
+    inset-inline-start: 12px;
     z-index: 3;
     display: inline-block;
-    border-radius: var(--border-radius, 8px);
-    width: 4px;
-    height: 4px;
+    border-radius: var(--border-radius);
+    inline-size: 4px;
+    block-size: 4px;
     text-align: center;
     background-color: #fc625d;
     box-shadow: 0 0 0 4px #fc625d, 20px 0 0 4px #fdbc40, 40px 0 0 4px #35cd4b;
@@ -652,8 +652,8 @@ pre:not(.sp-cm) .toolbar::before {
 
 pre:not(.sp-cm) .toolbar .toolbar-copy {
     position: absolute;
-    top: 0;
-    right: 8px;
+    inset-block-start: 0;
+    inset-inline-end: 8px;
     z-index: 3;
     border: none;
     padding: 0;
@@ -668,10 +668,10 @@ pre:not(.sp-cm) .toolbar .toolbar-copy:active {
 
 .toolbar .toolbar-copy::after {
     display: block;
-    font-size: var(--font-size, 14px);
+    font-size: var(--font-size);
     font-family: neko-icon, sans-serif;
     font-weight: 600;
-    color: var(--text-color, #4d4d4c);
+    color: var(--text-color,);
     line-height: 24px;
     text-transform: uppercase;
     content: '\e631';
@@ -688,8 +688,8 @@ pre:not(.sp-cm)>code {
     overflow: auto;
     margin: 0 16px 8px;
     padding: 32px 0 8px;
-    max-width: 100%;
-    font-size: var(--font-size, 14px);
+    max-inline-size: 100%;
+    font-size: var(--font-size);
     white-space: pre;
     line-height: 1.8;
     pointer-events: auto;
@@ -704,14 +704,14 @@ pre:not(.sp-cm).line-numbers>code {
 
 pre:not(.sp-cm).line-numbers .line-numbers-rows {
     position: absolute;
-    top: 0;
-    left: 0;
+    inset-block-start: 0;
+    inset-inline-start: 0;
     overflow-y: auto;
-    border-right: 1px solid var(--border-color, #d9d9d9);
-    border-radius: var(--border-radius, 8px) 0 0 var(--border-radius, 8px);
+    border-inline-end: 1px solid var(--border-color);
+    border-radius: var(--border-radius) 0 0 var(--border-radius);
     padding: 32px 0 8px;
-    width: 44px;
-    max-height: inherit;
+    inline-size: 44px;
+    max-block-size: inherit;
     font-size: 100%;
     background-color: var(--code-bg, #fff);
     letter-spacing: -1px;
@@ -727,8 +727,8 @@ pre:not(.sp-cm).line-numbers .line-numbers-rows {
 
 .line-numbers-rows>span::before {
     display: block;
-    padding-right: .8em;
-    text-align: right;
+    padding-inline-end: .8em;
+    text-align: end;
     color: #999;
     opacity: .5;
     content: counter(linenumber);
@@ -755,22 +755,22 @@ pre:not(.sp-cm) ::-webkit-scrollbar {
 
 .prism-previewer,
 .prism-previewer::after {
-    left: 50%;
+    inset-inline-start: 50%;
 }
 
 .prism-previewer {
     z-index: 10;
-    margin-top: -48px;
-    margin-left: -16px;
-    width: 32px;
-    height: 32px;
+    margin-block-start: -48px;
+    margin-inline-start: -16px;
+    inline-size: 32px;
+    block-size: 32px;
     opacity: 0;
     transition: opacity .25s;
 }
 
 .prism-previewer.flipped {
-    margin-top: 0;
-    margin-bottom: -48px;
+    margin-block-start: 0;
+    margin-block-end: -48px;
 }
 
 .prism-previewer::after,
@@ -781,32 +781,32 @@ pre:not(.sp-cm) ::-webkit-scrollbar {
 }
 
 .prism-previewer::before {
-    top: -5px;
-    right: -5px;
-    bottom: -5px;
-    left: -5px;
+    inset-block-start: -5px;
+    inset-inline-end: -5px;
+    inset-block-end: -5px;
+    inset-inline-start: -5px;
     border: 5px solid #fff;
     border-radius: 10px;
     box-shadow: 0 0 3px rgb(0 0 0 / 50%) inset, 0 0 10px rgb(0 0 0 / 75%);
 }
 
 .prism-previewer::after {
-    top: 100%;
+    inset-block-start: 100%;
     margin: 5px 0 0 -7px;
     border: 7px solid transparent;
     border-color: rgb(255 0 0 / 0%);
-    border-top-color: #fff;
-    width: 0;
-    height: 0;
+    border-block-start-color: #fff;
+    inline-size: 0;
+    block-size: 0;
 }
 
 .prism-previewer.flipped::after {
-    top: auto;
-    bottom: 100%;
-    margin-top: 0;
-    margin-bottom: 5px;
-    border-top-color: rgb(255 0 0 / 0%);
-    border-bottom-color: #fff;
+    inset-block-start: auto;
+    inset-block-end: 100%;
+    margin-block-start: 0;
+    margin-block-end: 5px;
+    border-block-start-color: rgb(255 0 0 / 0%);
+    border-block-end-color: #fff;
 }
 
 .prism-previewer.active {
@@ -819,12 +819,12 @@ pre:not(.sp-cm) ::-webkit-scrollbar {
 }
 
 .prism-previewer-angle::after {
-    margin-top: 4px;
+    margin-block-start: 4px;
 }
 
 .prism-previewer-angle svg {
-    width: 32px;
-    height: 32px;
+    inline-size: 32px;
+    block-size: 32px;
     transform: rotate(-90deg);
 }
 
@@ -841,8 +841,8 @@ pre:not(.sp-cm) ::-webkit-scrollbar {
 }
 
 .prism-previewer-gradient {
-    margin-left: -32px;
-    width: 64px;
+    margin-inline-start: -32px;
+    inline-size: 64px;
     background-position: 0 0, 5px 5px;
     background-size: 10px 10px;
     background-image: linear-gradient(45deg,
@@ -860,10 +860,10 @@ pre:not(.sp-cm) ::-webkit-scrollbar {
 
 .prism-previewer-gradient div {
     position: absolute;
-    top: -5px;
-    right: -5px;
-    bottom: -5px;
-    left: -5px;
+    inset-block-start: -5px;
+    inset-inline-end: -5px;
+    inset-block-end: -5px;
+    inset-inline-start: -5px;
     border: 5px solid #fff;
     border-radius: 10px;
     box-shadow: 0 0 3px rgb(0 0 0 / 50%) inset, 0 0 10px rgb(0 0 0 / 75%);

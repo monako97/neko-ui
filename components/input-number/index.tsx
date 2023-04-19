@@ -1,30 +1,8 @@
-import React, {
-  useCallback,
-  useEffect,
-  useRef,
-  useState,
-  type FC,
-  type MouseEventHandler,
-  type KeyboardEventHandler,
-} from 'react';
-import { injectGlobal } from '@emotion/css';
-import { classNames, passiveSupported, throttle } from '@moneko/common';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
+import { passiveSupported, throttle } from '@moneko/common';
+import { cls } from './style';
+import { cx } from '../emotion';
 import { Input, type InputProps } from '../index';
-import prefixCls from '../prefix-cls';
-
-const cls = {
-  inputNumber: prefixCls('input-number'),
-};
-const inputNumberCss = `
-  /** 隐藏原生加减控件 */
-  .${cls.inputNumber}[type='number'] {
-    appearance: textfield;
-  }
-  .${cls.inputNumber}[type='number']::-webkit-inner-spin-button,
-  .${cls.inputNumber}[type='number']::-webkit-outer-spin-button {
-    appearance: none;
-  }
-`;
 
 export interface InputNumberProps extends Omit<InputProps, 'value' | 'defaultValue' | 'onChange'> {
   value?: number;
@@ -39,7 +17,7 @@ export interface InputNumberProps extends Omit<InputProps, 'value' | 'defaultVal
   precision?: number;
 }
 
-const InputNumber: FC<InputNumberProps> = ({
+const InputNumber: React.FC<InputNumberProps> = ({
   value,
   min = Number.MIN_SAFE_INTEGER,
   max = Number.MAX_SAFE_INTEGER,
@@ -72,7 +50,7 @@ const InputNumber: FC<InputNumberProps> = ({
     },
     [max, min, onChange]
   );
-  const handleMouseDown: MouseEventHandler<HTMLInputElement> = useCallback(
+  const handleMouseDown: React.MouseEventHandler<HTMLInputElement> = useCallback(
     (e) => {
       setMove(true);
       onMouseDown?.(e);
@@ -95,7 +73,7 @@ const InputNumber: FC<InputNumberProps> = ({
   const handleMouseUp = useCallback(() => {
     setMove(false);
   }, []);
-  const handleKeyDown: KeyboardEventHandler<HTMLInputElement> = useCallback(
+  const handleKeyDown: React.KeyboardEventHandler<HTMLInputElement> = useCallback(
     (e) => {
       if (e.key === 'ArrowUp') {
         handleMouseMove({ movementX: 0, movementY: 1 });
@@ -122,14 +100,11 @@ const InputNumber: FC<InputNumberProps> = ({
       document.body.removeEventListener('mousemove', handleMouseMove, passiveSupported);
     };
   }, [handleMouseMove, handleMouseUp, move]);
-  useEffect(() => {
-    injectGlobal([inputNumberCss]);
-  }, []);
 
   return (
     <Input
       {...prpos}
-      className={classNames(cls.inputNumber, className)}
+      className={cx(cls.number, className)}
       value={value}
       max={max}
       min={min}

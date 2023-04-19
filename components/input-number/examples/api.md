@@ -8,4 +8,4 @@
 | onChange | 值变更时触发的函数       | (value?: `number`) => void | -      | -    |
 | step     | 每次改变步数，可以为小数 | number                     | -      | -    |
 
-> 更多 api 请查看 [Input](/neko-ui/input) 组件
+!> 更多 api 请查看 [Input](/neko-ui/input) 组件

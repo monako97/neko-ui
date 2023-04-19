@@ -45,15 +45,15 @@
 
 ### SwcOptions
 
-> [SwcOptions][1]
+!> [SwcOptions][1]
 
 ### TerserOptions
 
-> [TerserOptions][2]
+!> [TerserOptions][2]
 
 ## 按需导入 `swc`
 
-> 使用 swc 时的按需导入配置 importOnDemand: { '库名': {...配置项} }
+!> 使用 swc 时的按需导入配置 importOnDemand: { '库名': {...配置项} }
 
 ### SwcImportOnDemandTransform
 
@@ -110,7 +110,7 @@ import isFunction from 'lodash/isFunction';
 
 ## 模块联邦
 
-> Webpack5 Module Federation
+!> Webpack5 Module Federation
 
 ### ModuleFederationOption
 
@@ -201,7 +201,7 @@ export default {
 
 ## 自定义 ts-loader 配置
 
-> 在项目根目录下创建一个 tsloader.config.ts
+!> 在项目根目录下创建一个 tsloader.config.ts
 
 ```javascript
 // tsloader.config.ts

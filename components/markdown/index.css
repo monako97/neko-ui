@@ -30,34 +30,34 @@
 
 [data-copy]::before {
   position: absolute;
-  top: 32px;
-  right: 0;
-  left: 0;
+  inset-block-start: 32px;
+  inset-inline-end: 0;
+  inset-inline-start: 0;
   z-index: 1;
   display: inline-block;
   margin: auto;
   border: 1px solid;
-  border-radius: var(--border-radius, 8px);
+  border-radius: var(--border-radius);
   padding: 4px 8px;
-  width: fit-content;
-  font-size: var(--font-size-sm, 12px);
+  inline-size: fit-content;
+  font-size: var(--font-size-sm);
   transition: background-color .2s, color .2s, border-color .2s;
   animation-fill-mode: forwards;
   content: '\590d\5236\6210\529f';
 }
 
 [data-copy='success']::before {
-  border-color: var(--success-color-border, #b7eb8f);
+  border-color: var(--success-border, #b7eb8f);
   color: var(--success-color, #52c41a);
-  background-color: var(--success-color-bg, #f6ffed);
+  background-color: var(--success-bg, #f6ffed);
   animation: copy-slide-in .3s ease-in-out;
   content: '\590d\5236\6210\529f';
 }
 
 [data-copy='failure']::before {
-  border-color: var(--error-color-border, #ffccc7);
+  border-color: var(--error-border, #ffccc7);
   color: var(--error-color, #ff4d4f);
-  background-color: var(--error-color-bg, #fff2f0);
+  background-color: var(--error-bg, #fff2f0);
   animation: copy-slide-in .3s ease-in-out, error 1s ease-in-out 1s;
   content: '\590d\5236\5931\8d25';
 }
@@ -94,7 +94,7 @@
   position: relative;
   display: flex;
   margin: 0 auto;
-  max-width: 80rem;
+  max-inline-size: 80rem;
   flex-direction: row-reverse;
   gap: 1rem;
 }
@@ -102,10 +102,10 @@
 .n-md-body {
   overflow: hidden;
   margin: 0 auto 1.5rem;
-  border-radius: var(--border-radius, 8px);
+  border-radius: var(--border-radius);
   padding: 1.5rem;
-  max-width: 80rem;
-  background-color: var(--component-background, rgb(255 255 255 / 80%));
+  max-inline-size: 80rem;
+  background-color: var(--component-background);
   box-sizing: border-box;
   overflow-wrap: break-word;
   transition-duration: var(--transition-duration);
@@ -118,7 +118,7 @@
 .n-md-body a {
   position: relative;
   text-decoration: none;
-  color: var(--text-color, rgb(0 0 0 / 65%));
+  color: var(--text-color);
 }
 
 .n-md-toc,
@@ -128,17 +128,17 @@
 
 .n-md-toc {
   position: sticky;
-  top: 0;
-  right: 0;
+  inset-block-start: 0;
+  inset-inline-end: 0;
   z-index: 10;
   display: block;
   overflow-y: auto;
   margin: 0;
-  border-radius: var(--border-radius, 8px);
+  border-radius: var(--border-radius);
   padding: 16px;
-  max-width: 200px;
-  height: fit-content;
-  max-height: calc(100vh - 112px);
+  max-inline-size: 200px;
+  block-size: fit-content;
+  max-block-size: calc(100vb - 112px);
   background-color: var(--toc-bg, rgb(255 255 255 / 80%));
   box-sizing: border-box;
   backdrop-filter: blur(16px);
@@ -150,19 +150,19 @@
 .n-md-toc li,
 .n-md-toc ol {
   display: grid;
-  width: fit-content;
-  max-width: 100%;
+  inline-size: fit-content;
+  max-inline-size: 100%;
   list-style: none;
 }
 
 .n-md-toc li a {
   overflow: hidden;
-  max-width: 100%;
-  font-size: var(--font-size-sm, 12px);
+  max-inline-size: 100%;
+  font-size: var(--font-size-sm);
   text-overflow: ellipsis;
   text-decoration: none;
   white-space: nowrap;
-  color: var(--text-color, rgb(0 0 0 / 65%));
+  color: var(--text-color);
   transition-duration: var(--transition-duration);
   transition-timing-function: var(--transition-timing-function);
   transition-property: color;
@@ -176,11 +176,11 @@
 
 .n-md-body a::after {
   position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  height: 2px;
-  background-color: var(--primary-color-hover, #80b3ff);
+  inset-block-end: 0;
+  inset-inline-start: 0;
+  inline-size: 100%;
+  block-size: 2px;
+  background-color: var(--primary-hover, #80b3ff);
   transform: scaleX(0);
   transform-origin: center;
   transition-duration: var(--transition-duration);
@@ -190,11 +190,11 @@
 }
 
 .n-md-body a:visited {
-  color: var(--text-secondary, #4e4e4e);
+  color: var(--text-secondary);
 }
 
 .n-md-body a:hover {
-  color: var(--primary-color-hover, #80b3ff);
+  color: var(--primary-hover, #80b3ff);
 }
 
 .n-md-body a:hover::after {
@@ -202,7 +202,7 @@
 }
 
 .n-md-body .sp-layout {
-  width: 100%;
+  inline-size: 100%;
 }
 
 .n-md-body .n-md-body {
@@ -251,7 +251,7 @@ h6[data-prefix]::before {
 .n-md-body td > code,
 .n-md-body mark,
 .n-md-body code:not([class]) {
-  border-radius: var(--border-radius, 8px);
+  border-radius: var(--border-radius);
   padding: 2px 7px;
   font-size: 90%;
   color: var(--md-mark-color, #cd9278);
@@ -266,10 +266,10 @@ h6[data-prefix]::before {
 .n-md-body h3,
 .n-md-body h4,
 .n-md-body h5 {
-  margin-top: 1em;
-  margin-bottom: 1em;
+  margin-block-start: 1em;
+  margin-block-end: 1em;
   font-weight: 500;
-  color: var(--text-heading, #1b1b1b);
+  color: var(--text-heading);
   transition-duration: var(--transition-duration);
   transition-timing-function: var(--transition-timing-function);
   transition-property: border-color, background-color, box-shadow, color;
@@ -288,7 +288,7 @@ blockquote p {
 
 .n-md-body p,
 .n-md-body dl {
-  margin-bottom: 1em;
+  margin-block-end: 1em;
   padding: 0;
 }
 
@@ -309,8 +309,8 @@ blockquote p {
 
 .n-md-body h1,
 .n-md-body h2 {
-  border-bottom: 1px dotted var(--border-color, #d9d9d9);
-  padding-bottom: 10px;
+  border-block-end: 1px dotted var(--border-color);
+  padding-block-end: 10px;
 }
 
 .n-md-body h3 {
@@ -332,10 +332,10 @@ blockquote p {
   margin: 16px 0;
   border: 0 none;
   padding: 0;
-  height: 2px;
-  text-align: left;
+  block-size: 2px;
+  text-align: start;
   color: var(--text-color);
-  background-color: var(--border-color, #d9d9d9);
+  background-color: var(--border-color);
 }
 
 .n-md-body p {
@@ -351,15 +351,15 @@ blockquote p {
   position: relative;
   display: block;
   margin: auto;
-  border-radius: var(--border-radius, 8px);
-  max-width: 100%;
+  border-radius: var(--border-radius);
+  max-inline-size: 100%;
   cursor: pointer;
 }
 
 .n-md-body p,
 .n-md-body ul,
 .n-md-body ol {
-  font-size: var(--font-size, 14px);
+  font-size: var(--font-size);
 }
 
 .n-md-body dl {
@@ -367,7 +367,7 @@ blockquote p {
 }
 
 .n-md-body dl dt {
-  margin-top: 16px;
+  margin-block-start: 16px;
   padding: 10px 0;
   font-size: 1em;
   font-weight: bold;
@@ -375,17 +375,17 @@ blockquote p {
 }
 
 .n-md-body dl dd {
-  margin-bottom: 16px;
-  margin-left: 0;
+  margin-block-end: 16px;
+  margin-inline-start: 0;
   padding: 0 16px;
 }
 
 .n-md-body table {
   overflow: hidden;
-  border-bottom: 1px solid var(--border-color, #d9d9d9);
-  border-radius: var(--border-radius, 8px);
-  width: 100%;
-  max-width: 100%;
+  border-block-end: 1px solid var(--border-color);
+  border-radius: var(--border-radius);
+  inline-size: 100%;
+  max-inline-size: 100%;
   border-spacing: 0;
   transition-property: border-color;
   word-break: break-all;
@@ -397,35 +397,35 @@ blockquote p {
 
 .n-md-body table tr[role='row'] th[role='gridcell'] {
   padding: 10px;
-  color: var(--text-heading, #1b1b1b);
-  background-color: var(--border-color, #d9d9d9);
+  color: var(--text-heading);
+  background-color: var(--border-color);
   transition-property: background-color, color;
 }
 
 .n-md-body table td[role='gridcell'] {
   border-style: dotted;
   border-width: 0 0 1px 1px;
-  border-color: var(--border-color, #d9d9d9);
+  border-color: var(--border-color);
   padding: 10px;
   transition-property: border-color;
 }
 
 .n-md-body table td[role='gridcell']:first-of-type {
-  border-left: 1px solid var(--border-color, #d9d9d9);
+  border-inline-start: 1px solid var(--border-color);
 }
 
 .n-md-body table td[role='gridcell']:last-of-type {
-  border-right: 1px solid var(--border-color, #d9d9d9);
+  border-inline-end: 1px solid var(--border-color);
 }
 
 .n-md-body table tr[role='row']:last-of-type td[role='gridcell'] {
-  border-bottom: none;
+  border-block-end: none;
 }
 
 .n-md-body blockquote {
   position: relative;
   margin: 30px 54px;
-  border-radius: var(--border-radius, 8px);
+  border-radius: var(--border-radius);
   padding: 16px;
   font-weight: 500;
   background-color: var(--blockquote-bg, #ecf8ff);
@@ -443,20 +443,20 @@ blockquote p {
 }
 
 .n-md-body blockquote::before {
-  top: -8px;
-  left: 0;
+  inset-block-start: -8px;
+  inset-inline-start: 0;
   transform: translateX(-53px) rotate(180deg);
 }
 
 .n-md-body blockquote::after {
-  right: 0;
-  bottom: -8px;
+  inset-inline-end: 0;
+  inset-block-end: -8px;
   transform: translateX(53px);
 }
 
 .n-md-body blockquote.n-tip {
   margin: 16px 0 16px 8px;
-  border-left: 4px solid var(--primary-color, #5794ff);
+  border-inline-start: 4px solid var(--primary-color, #5794ff);
 }
 
 .n-md-body blockquote.n-tip::after {
@@ -464,11 +464,11 @@ blockquote p {
 }
 
 .n-md-body blockquote.n-tip::before {
-  top: 18px;
-  left: -12px;
+  inset-block-start: 18px;
+  inset-inline-start: -12px;
   border-radius: 100%;
-  width: 20px;
-  height: 20px;
+  inline-size: 20px;
+  block-size: 20px;
   font-size: 14px;
   font-weight: bold;
   text-align: center;
@@ -480,7 +480,7 @@ blockquote p {
 }
 
 .n-md-body blockquote cite {
-  font-size: var(--font-size, 14px);
+  font-size: var(--font-size);
   color: var(--cite-color, #bfbfbf);
   line-height: 20px;
 }
@@ -491,7 +491,7 @@ blockquote p {
 
 .n-md-body blockquote p {
   margin: auto 0;
-  font-size: var(--font-size, 14px);
+  font-size: var(--font-size);
   color: var(--blockquote-color, #5e6d82);
   line-height: 24px;
   transition-property: color;
@@ -499,8 +499,8 @@ blockquote p {
 
 .n-md-body details {
   overflow: hidden;
-  border-left: 5px solid var(--primary-color-border, #5794ff);
-  border-radius: var(--border-radius, 8px);
+  border-inline-start: 5px solid var(--primary-border, #5794ff);
+  border-radius: var(--border-radius);
   padding: 12px 24px;
   background: var(--details-bg, #fafaff);
   box-sizing: border-box;
@@ -516,12 +516,12 @@ blockquote p {
 }
 
 .n-md-body details:not(:last-of-type) {
-  margin-bottom: 16px;
+  margin-block-end: 16px;
 }
 
 .n-md-body details >summary,
 .n-md-body details >summary ~ * {
-  font-size: var(--font-size, 14px);
+  font-size: var(--font-size);
   font-weight: normal;
   font-style: normal;
   line-height: 1.4;
@@ -529,7 +529,7 @@ blockquote p {
 }
 
 .n-md-body details >summary:not(:last-of-type) .n-md-body details >summary ~ *:not(:last-of-type) {
-  margin-bottom: 16px;
+  margin-block-end: 16px;
 }
 
 .n-md-body details >summary {
@@ -547,9 +547,9 @@ blockquote p {
 
 .n-md-body details >summary::before {
   display: inline-block;
-  margin-right: 4px;
-  width: 14px;
-  font-size: var(--font-size-sm, 12px);
+  margin-inline-end: 4px;
+  inline-size: 14px;
+  font-size: var(--font-size-sm);
   font-family: neko-icon, sans-serif;
   font-weight: lighter;
   text-align: center;
@@ -562,11 +562,11 @@ blockquote p {
 }
 
 .n-md-body details[open] >details {
-  margin-top: 10px;
+  margin-block-start: 10px;
 }
 
 .n-md-body details[open] >summary {
-  margin-bottom: 10px;
+  margin-block-end: 10px;
 }
 
 .n-md-body details[open] >summary::before {

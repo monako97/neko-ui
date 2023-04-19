@@ -1,34 +1,7 @@
-import React, { type FC, useMemo, useEffect } from 'react';
-import { injectGlobal } from '@emotion/css';
-import { classNames } from '@moneko/common';
+import React, { useMemo } from 'react';
+import { cls } from './style';
+import { cx } from '../emotion';
 import { Avatar, Tooltip, type AvatarProps } from '../index';
-import prefixCls from '../prefix-cls';
-
-const cls = {
-  group: prefixCls('avatar-group'),
-  more: prefixCls('avatar-more'),
-};
-const avatarGroupCss = `
-  .${cls.group} {
-    display: inline-flex;
-    align-items: center;
-
-    & > *:not(:first-child) {
-      margin-left: -5%;
-    }
-  }
-  .${cls.more} {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    overflow-y: auto;
-    padding: 8px;
-    max-width: 60vw;
-    max-height: 80vh;
-    gap: 16px;
-    flex-wrap: wrap;
-  }
-`;
 
 export interface AvatarGroupProps {
   data: Omit<AvatarProps, 'size'>[];
@@ -37,7 +10,7 @@ export interface AvatarGroupProps {
   maxCount?: number;
 }
 
-const AvatarGroup: FC<AvatarGroupProps> = (props: AvatarGroupProps) => {
+const AvatarGroup: React.FC<AvatarGroupProps> = (props: AvatarGroupProps) => {
   const showAvatar = useMemo(
     () => props.data.slice(0, props.maxCount),
     [props.data, props.maxCount]
@@ -47,12 +20,8 @@ const AvatarGroup: FC<AvatarGroupProps> = (props: AvatarGroupProps) => {
     [props.data.length, props.maxCount]
   );
 
-  useEffect(() => {
-    injectGlobal([avatarGroupCss]);
-  }, []);
-
   return (
-    <div className={classNames(cls.group, props.className)}>
+    <div className={cx(cls.group, props.className)}>
       {showAvatar.map((a, i) => (
         <Avatar key={`${i}-${a.src}`} size={props.size} {...a} />
       ))}

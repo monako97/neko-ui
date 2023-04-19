@@ -1,11 +1,11 @@
-import React, { type FC, useCallback, useEffect, useMemo, useRef } from 'react';
+import React, { useCallback, useEffect, useMemo, useRef } from 'react';
 import { injectGlobal } from '@emotion/css';
 import { updateStyleRule } from '@moneko/common';
 import { myPkgs, MyPkg, useLocation, Link } from '@moneko/core';
 import { Avatar, colorScheme } from 'neko-ui';
 import { type PkgType, projectInfo } from '@/utils';
 
-const siderCss = `
+injectGlobal`
   .site-sider,
   .site-sider-group-title,
   .site-sider-item,
@@ -16,9 +16,9 @@ const siderCss = `
 
   .site-left {
     position: sticky;
-    top: 0;
+    inset-block-start: 0;
     overflow-y: scroll;
-    max-height: 100vh;
+    max-block-size: 100vb;
 
     &::-webkit-scrollbar {
       display: none;
@@ -27,16 +27,16 @@ const siderCss = `
 
   .site-sider {
     position: sticky;
-    top: 0;
+    inset-block-start: 0;
     display: flex;
     overflow-y: scroll;
     margin: 0 1rem 1rem;
-    border-radius: var(--border-radius, 8px);
-    width: 15rem;
-    min-width: 15rem;
+    border-radius: var(--border-radius);
+    inline-size: 15rem;
+    min-inline-size: 15rem;
     flex: 1;
-    max-height: calc(100% - 2rem);
-    color: var(--text-color, rgb(0 0 0 / 65%));
+    max-block-size: calc(100% - 2rem);
+    color: var(--text-color);
     background-color: var(--header-bg, rgb(255 255 255 / 90%));
     box-sizing: border-box;
     backdrop-filter: blur(1rem);
@@ -55,19 +55,19 @@ const siderCss = `
     position: relative;
 
     &:last-of-type {
-      margin-bottom: 1rem;
+      margin-block-end: 1rem;
     }
   }
 
   .site-sider-group-title {
     position: sticky;
-    top: 0;
+    inset-block-start: 0;
     z-index: 10;
     margin: 0 0 0.5rem;
-    border-bottom: var(--border-base);
+    border-block-end: var(--border-base);
     padding: 0.5rem 0;
-    font-size: var(--font-size, 14px);
-    color: var(--text-heading, #1b1b1b);
+    font-size: var(--font-size);
+    color: var(--text-heading);
     backdrop-filter: blur(1rem);
     line-height: 1.25rem;
     transition-property: background-color, color, border-color;
@@ -84,9 +84,9 @@ const siderCss = `
     position: relative;
     display: flex;
     align-items: center;
-    border-radius: var(--border-radius, 8px);
-    min-height: 2.8125rem;
-    color: var(--text-color, rgb(0 0 0 / 65%));
+    border-radius: var(--border-radius);
+    min-block-size: 2.8125rem;
+    color: var(--text-color);
     flex-wrap: wrap;
     cursor: pointer;
     user-select: contain;
@@ -97,12 +97,12 @@ const siderCss = `
 
     &::before {
       position: absolute;
-      right: 0;
+      inset-inline-end: 0;
       display: block;
-      border-radius: 0 var(--border-radius, 8px) var(--border-radius, 8px) 0;
-      width: 0.3125rem;
-      height: 100%;
-      background-color: var(--primary-color-border, #5794ff);
+      border-radius: 0 var(--border-radius) var(--border-radius) 0;
+      inline-size: 0.3125rem;
+      block-size: 100%;
+      background-color: var(--primary-border, #5794ff);
       content: '';
       transition-property: background-color, transform;
       transform: scale(0);
@@ -114,7 +114,8 @@ const siderCss = `
 
     &[data-active='true'] {
       color: var(--primary-color, #5794ff);
-      background-color: var(--primary-color-bg, #f0f8ff);
+      background-color: var(--primary-bg, #f0f8ff);
+      text-shadow: 2px 2px 2px var(--primary-outline);
       transition-property: background-color, transform;
     }
 
@@ -133,8 +134,8 @@ const siderCss = `
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 2rem;
-    height: 100%;
+    inline-size: 2rem;
+    block-size: 100%;
   }
 
   .site-sider-label {
@@ -144,26 +145,26 @@ const siderCss = `
   .site-sider-label,
   .site-sider-subtitle {
     overflow: hidden;
-    width: calc(100% - 2rem);
+    inline-size: calc(100% - 2rem);
     text-overflow: ellipsis;
     white-space: nowrap;
   }
 
   .site-sider-subtitle {
-    margin-left: 2rem;
-    padding-bottom: 0.25rem;
-    font-size: var(--font-size-sm, 12px);
+    margin-inline-start: 2rem;
+    padding-block-end: 0.25rem;
+    font-size: var(--font-size-sm);
     opacity: 0.67;
   }
 
   .site-header {
     position: sticky;
-    top: 0;
+    inset-block-start: 0;
     display: flex;
     align-items: center;
     padding: 1rem 1.5rem;
     gap: 1em;
-    min-height: 2.6875rem;
+    min-block-size: 2.6875rem;
   }
 
   .site-logo {
@@ -176,7 +177,7 @@ const siderCss = `
     margin: 0;
     font-size: 1.5em;
     font-weight: bold;
-    color: var(--text-heading, #1b1b1b);
+    color: var(--text-heading);
     flex: 1;
     flex-direction: column;
     line-height: 1;
@@ -185,7 +186,7 @@ const siderCss = `
     i {
       font-size: x-small;
       font-weight: lighter;
-      color: var(--text-secondary, #4e4e4e);
+      color: var(--text-secondary);
       font-style: normal;
     }
   }
@@ -214,7 +215,6 @@ const siderCss = `
   }
 `;
 
-injectGlobal([siderCss]);
 const menuObj: Record<string, MyPkg[]> = {};
 const extractMenu = (list: MyPkg[]) => {
   return list?.map((item) => {
@@ -232,7 +232,7 @@ const extractMenu = (list: MyPkg[]) => {
 
 extractMenu(myPkgs);
 const menuKeys = Object.keys(menuObj);
-const Sider: FC = () => {
+const Sider: React.FC = () => {
   const { scheme } = colorScheme;
   const menuEl = useRef<HTMLUListElement>(null);
   const location = useLocation();

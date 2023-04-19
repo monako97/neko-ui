@@ -1,6 +1,5 @@
-import React, { type FC, useMemo } from 'react';
-import { injectGlobal } from '@emotion/css';
-import { classNames } from '@moneko/common';
+import React, { useMemo } from 'react';
+import { cx, injectGlobal } from '@emotion/css';
 import { projectBasicInfo, useLocation, useOutlet } from '@moneko/core';
 
 const cover = projectBasicInfo.coverage;
@@ -12,12 +11,13 @@ const conf: Record<CoverageType, string> = {
   conditionals: '条件覆盖率',
   methods: '函数覆盖率',
 };
-const coverageStyle = `
+
+injectGlobal`
   .site-coverage {
     display: flex;
     gap: 1rem;
     margin: 0 auto 1rem;
-    max-width: 80rem;
+    max-inline-size: 80rem;
     flex-wrap: wrap;
   }
 
@@ -37,7 +37,7 @@ const coverageStyle = `
     display: flex;
     overflow: hidden;
     border: 1px solid var(--border-color);
-    border-radius: var(--border-radius, 8px);
+    border-radius: var(--border-radius);
     box-shadow: 0 0 0.125rem 0 var(--border-color), inset 0 0 0.125rem 0 var(--border-color);
     transition-duration: var(--transition-duration);
     transition-timing-function: var(--transition-timing-function);
@@ -53,9 +53,9 @@ const coverageStyle = `
   }
 
   .site-coverage-label {
-    border-right: 1px solid var(--border-color);
+    border-inline-end: 1px solid var(--border-color);
     padding: 0 0.5rem;
-    font-size: var(--font-size, 14px);
+    font-size: var(--font-size);
     font-weight: 500;
     color: white;
     background-color: var(--border-color);
@@ -65,8 +65,8 @@ const coverageStyle = `
 
   .site-coverage-value {
     padding: 0.25rem 0.5rem;
-    min-width: 5rem;
-    font-size: var(--font-size-sm, 12px);
+    min-inline-size: 5rem;
+    font-size: var(--font-size-sm);
     text-align: center;
     line-height: 1rem;
     flex-direction: column;
@@ -74,18 +74,17 @@ const coverageStyle = `
   }
 
   .site-coverage-value > div:first-of-type {
-    border-bottom: 1px solid var(--border-color);
-    width: 100%;
+    border-block-end: 1px solid var(--border-color);
+    inline-size: 100%;
     transition: inherit;
     transition-property: box-shadow, background-color, border-color;
   }
 `;
 
-injectGlobal([coverageStyle]);
 function getNum(num: number) {
   return typeof num === 'number' && !isNaN(num) ? num : '-';
 }
-const Coverage: FC = () => {
+const Coverage: React.FC = () => {
   const readme = useOutlet();
   const location = useLocation();
   const coverage = useMemo(
@@ -105,7 +104,7 @@ const Coverage: FC = () => {
         const stat = coverNum < 50 ? 'error' : coverNum < 80 ? 'warning' : 'success';
 
         return (
-          <div key={k} className={classNames('site-coverage-body', `site-coverage-${stat}`)}>
+          <div key={k} className={cx('site-coverage-body', `site-coverage-${stat}`)}>
             <div className="site-coverage-label">{conf[k as CoverageType]}</div>
             <div className="site-coverage-value">
               <div>{coverNum}%</div>

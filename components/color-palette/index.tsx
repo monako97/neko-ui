@@ -1,16 +1,5 @@
-import React, {
-  useCallback,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-  type CSSProperties,
-  type FC,
-  type HTMLAttributes,
-} from 'react';
-import { injectGlobal } from '@emotion/css';
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import {
-  classNames,
   colorParse,
   passiveSupported,
   setClipboard,
@@ -18,8 +7,9 @@ import {
   type ColorType,
   type HSVA,
 } from '@moneko/common';
+import { cls } from './style';
+import { cx } from '../emotion';
 import { Input, InputNumber } from '../index';
-import prefixCls from '../prefix-cls';
 
 const material = [
   '#f44336',
@@ -44,251 +34,8 @@ const material = [
   'rgba(0,0,0,.65)',
   'transparent',
 ];
-const cls = {
-  palette: prefixCls('color-palette'),
-  picker: prefixCls('color-palette-picker'),
-  preview: prefixCls('color-palette-preview'),
-  form: prefixCls('color-palette-form'),
-  input: prefixCls('color-palette-input'),
-  switch: prefixCls('color-palette-switch'),
-  chooser: prefixCls('color-chooser'),
-  range: prefixCls('color-range'),
-  hue: prefixCls('color-hue'),
-  opacity: prefixCls('color-opacity'),
-  color: prefixCls('color-color'),
-  slider: prefixCls('color-slider'),
-  cmykHue: prefixCls('color-slider-cmyk-hue'),
-};
-const sliderThumb = `
-  position: relative;
-  border-radius: 50%;
-  width: 10px;
-  height: 10px;
-  background: #fff;
-  box-shadow: 0 0 10px rgb(0 0 0 / 10%);
-  transition: 0.2s cubic-bezier(0.12, 0.4, 0.29, 1.46);
-  transform: scale(1.2);
-`;
-const colorPaletteCss = `
-  .${cls.palette} {
-    --alpha-gradient: repeating-conic-gradient(#eee 0 25%, transparent 0 50%) 0 / 10px 10px;
 
-    width: 100%;
-    box-sizing: border-box;
-    user-select: none;
-  }
-  .${cls.preview}, .${cls.preview}&::after, .${cls.switch}, .${cls.color} i,
-  .${cls.color} i::before {
-    border-radius: var(--border-radius);
-  }
-  .${cls.preview} {
-    margin-left: 6px;
-    width: 46px;
-    min-height: 26px;
-    font-family: neko-icon, sans-serif;
-    text-align: center;
-    color: #fff;
-    cursor: pointer;
-    background: var(--alpha-gradient);
-
-    &::after {
-      display: block;
-      width: 100%;
-      height: 100%;
-      background-color: var(--c, #fff);
-      box-shadow: rgb(0 0 0 / 10%) 0 0 0 1px inset, rgb(0 0 0 / 10%) 0 0 4px inset;
-      text-shadow: var(--text-shadow);
-      content: '';
-    }
-
-    &:hover::after {
-      content: '\\e631';
-    }
-
-    &[data-copy='success']::after {
-      content: '✓';
-    }
-  }
-  .${cls.form} {
-    display: flex;
-    gap: 6px;
-  }
-  .${cls.input} {
-    flex: 1;
-
-    input {
-      width: 100%;
-      text-align: center;
-    }
-  }
-  .${cls.switch} {
-    border: none;
-    cursor: pointer;
-    width: 46px;
-    font-size: 12px;
-    text-align: center;
-    color: var(--primary-color);
-    background-color: var(--primary-color-bg);
-    text-transform: uppercase;
-    outline-color: var(--primary-color-outline);
-    transition-property: background-color, color, outline-color, border-radius, transform;
-    transition-timing-function: var(--transition-timing-function);
-    transition-duration: var(--transition-duration);
-
-    &:hover {
-      color: var(--primary-color-hover);
-    }
-
-    &:active {
-      color: var(--primary-color-active);
-      transform: scale(0.98);
-    }
-  }
-  .${cls.picker} {
-    position: relative;
-    border-radius: 4px;
-    height: 150px;
-    background: linear-gradient(to top, hsl(0deg 0% 0% / calc(var(--a))), transparent) 0 / 100%,
-      linear-gradient(
-          to left,
-          hsl(calc(var(--h)) 100% 50% / calc(var(--a))),
-          hsl(0deg 0% 100% / calc(var(--a)))
-        )
-        0 / 100%,
-      var(--alpha-gradient);
-    opacity: 1;
-    transition: opacity 0.3s;
-    user-select: none;
-    cursor: crosshair;
-
-    &:active {
-      opacity: 0.99;
-    }
-
-    &::after {
-      position: absolute;
-      top: calc((100 - var(--v)) * 1%);
-      left: calc(var(--s) * 1%);
-      border-radius: 3px;
-      width: 6px;
-      height: 6px;
-      pointer-events: none;
-      content: '';
-      transform: translate(-50%, -50%);
-      box-shadow: inset 0 0 0 1px #fff, 0 0 1px rgb(0 0 0 / 20%), inset 0 0 2.5px 0 rgb(0 0 0 / 20%);
-    }
-  }
-  .${cls.chooser} {
-    display: flex;
-    padding: 8px 0;
-  }
-  .${cls.range} {
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
-    flex: 1;
-  }
-  .${cls.hue} {
-    background-image: linear-gradient(to right, red, yellow, lime, cyan, blue, magenta, red);
-  }
-  .${cls.opacity} {
-    background: linear-gradient(
-        to right,
-        hsl(calc(var(--h)) 100% 50% / 0%),
-        hsl(calc(var(--h)) 100% 50% / 100%)
-      ),
-      var(--alpha-gradient);
-  }
-  .${cls.slider} {
-    flex: 1;
-    display: block;
-    margin: 0;
-    border-radius: 5px;
-    width: 100%;
-    height: 10px;
-    outline: 0;
-    cursor: pointer;
-    pointer-events: all;
-    appearance: none;
-
-    &::-webkit-slider-runnable-track {
-      position: relative;
-      display: flex;
-      align-items: center;
-    }
-
-    &::-webkit-slider-thumb {
-      appearance: none;
-      ${sliderThumb}
-    }
-
-    &::-moz-range-thumb {
-      ${sliderThumb}
-
-      border: 0;
-      box-sizing: border-box;
-      pointer-events: none;
-    }
-
-    &::-webkit-slider-thumb:active,
-    &:focus::-webkit-slider-thumb {
-      transform: scale(1.5);
-    }
-
-    &::-moz-range-thumb:active,
-    &:focus::-moz-range-thumb {
-      transform: scale(1.5);
-    }
-  }
-
-  .${cls.cmykHue}.${cls.slider} {
-    &::-webkit-slider-thumb {
-      width: 26px;
-      height: 26px;
-    }
-
-    &::-moz-range-thumb {
-      width: 26px;
-      height: 26px;
-    }
-  }
-  .${cls.color} {
-    display: grid;
-    padding-top: 8px;
-    grid-template-columns: repeat(auto-fit, minmax(15px, 20px));
-    grid-gap: 8px;
-
-    i {
-      position: relative;
-      border: 0;
-      padding-top: 100%;
-      padding-bottom: 0;
-      width: 100%;
-      background-color: var(--c);
-      outline: 0;
-      cursor: pointer;
-      transition: 0.15s box-shadow ease;
-
-      &::before {
-        position: absolute;
-        top: 0;
-        left: 0;
-        z-index: -1;
-        width: 100%;
-        height: 100%;
-        background: var(--alpha-gradient);
-        content: '';
-      }
-
-      &:hover,
-      &:focus {
-        box-shadow: 2px 2px 3px 0 var(--c);
-      }
-    }
-  }
-`;
-
-export interface ColorPaletteProps extends Omit<HTMLAttributes<HTMLDivElement>, 'onChange'> {
+export interface ColorPaletteProps extends Omit<React.HTMLAttributes<HTMLDivElement>, 'onChange'> {
   value?: string;
   defaultValue?: string;
   // eslint-disable-next-line no-unused-vars
@@ -367,7 +114,7 @@ const HexaForm: React.FC<HexaFormProps> = ({ value, onChange }) => {
 
   return <Input className={cls.input} name="hex" size="small" value={hex} onChange={hexChange} />;
 };
-const ColorPalette: FC<ColorPaletteProps> = ({
+const ColorPalette: React.FC<ColorPaletteProps> = ({
   className,
   defaultValue = '#5794ff',
   value,
@@ -491,7 +238,7 @@ const ColorPalette: FC<ColorPaletteProps> = ({
   }, [hsva, type]);
   useEffect(() => {
     onChange?.(inputVal.toString());
-  }, [onChange, inputVal, setColor]);
+  }, [onChange, inputVal]);
   useEffect(() => {
     document.documentElement.addEventListener('mousemove', colorPickerMouseMove, passiveSupported);
     document.documentElement.addEventListener('mouseup', colorPickerMouseUp, passiveSupported);
@@ -504,17 +251,14 @@ const ColorPalette: FC<ColorPaletteProps> = ({
       document.documentElement.removeEventListener('mouseup', colorPickerMouseUp, passiveSupported);
     };
   }, [colorPickerMouseMove, colorPickerMouseUp]);
-  useEffect(() => {
-    injectGlobal([colorPaletteCss]);
-  }, []);
 
   return (
-    <div {...props} className={classNames(cls.palette, className)} style={style}>
+    <div {...props} className={cx(cls.palette, className)} style={style}>
       <div className={cls.picker} ref={colorPickerRef} onMouseDown={colorPickerMouseDown} />
       <div className={cls.chooser}>
         <div className={cls.range}>
           <input
-            className={classNames(cls.slider, cls.hue, type === 'cmyk' && cls.cmykHue)}
+            className={cx(cls.slider, cls.hue, type === 'cmyk' && cls.cmykHue)}
             min="0"
             max="360"
             type="range"
@@ -523,7 +267,7 @@ const ColorPalette: FC<ColorPaletteProps> = ({
           />
           {type !== 'cmyk' ? (
             <input
-              className={classNames(cls.slider, cls.opacity)}
+              className={cx(cls.slider, cls.opacity)}
               min="0"
               max="1"
               step="0.01"
@@ -569,7 +313,7 @@ const ColorPalette: FC<ColorPaletteProps> = ({
             style={
               {
                 '--c': c,
-              } as CSSProperties
+              } as React.CSSProperties
             }
             onClick={() => {
               setColor(c);

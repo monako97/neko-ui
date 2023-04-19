@@ -1,0 +1,29 @@
+通过设置`toggle`属性来开启取消选中, 仅支持单选模式;
+重复点击同一项时，如果已选中则取消选中。
+
+```jsx
+function Demo() {
+  return (
+    <Tree
+      toggle
+      data={[
+        {
+          title: '文件地址',
+          subTitle: 'fileAddr',
+          key: 'fileAddr',
+        },
+        {
+          title: '编号',
+          subTitle: 'channelCustNum',
+          key: 'channelCustNum',
+        },
+        {
+          title: '编号2',
+          subTitle: 'string',
+          key: 'string',
+        },
+      ]}
+    />
+  );
+}
+```

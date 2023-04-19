@@ -1,3 +1,7 @@
+## [1.0.47](https://github.com/monako97/neko-ui/compare/1.0.40...1.0.47) (2023-04-19)
+
+
+
 ## [1.0.40](https://github.com/monako97/neko-ui/compare/1.0.36...1.0.40) (2023-04-01)
 
 
