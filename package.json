@@ -52,7 +52,7 @@
     "@moneko/common": "1.0.33",
     "katex": "0.16.6",
     "marked-completed": "1.2.5",
-    "shared-store-object": "1.0.5",
+    "shared-store-object": "1.0.6-beta.0",
     "stylis-px2rem-plugin": "0.1.0"
   },
   "resolutions": {
