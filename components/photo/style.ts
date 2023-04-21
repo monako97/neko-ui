@@ -27,6 +27,7 @@ injectGlobal`
     object-fit: contain;
     content-visibility: auto;
     backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
     border-radius: 8px;
   }
 

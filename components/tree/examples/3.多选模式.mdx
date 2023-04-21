@@ -3,6 +3,7 @@
 
 ```jsx
 function Demo() {
+  const [val, setVal] = React.useState([]);
   const data = [
     {
       title: '文件名称',
@@ -42,6 +43,6 @@ function Demo() {
     },
   ];
 
-  return <Tree data={data} multiple />;
+  return <Tree data={data} multiple value={val} onChange={setVal} />;
 }
 ```

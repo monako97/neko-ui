@@ -9,6 +9,7 @@ export const cls = {
   subTitle: prefixCls('tree-sub-title'),
   active: prefixCls('tree-active'),
   rtl: prefixCls('tree-rtl'),
+  non: prefixCls('tree-non-interactive'),
 };
 
 injectGlobal`
@@ -39,6 +40,9 @@ injectGlobal`
     /* content-visibility: visible;
     contain-intrinsic-size: 25px; */
 
+    &.${cls.non} {
+      cursor: auto;
+    }
     &::before,
     &::after {
       position: absolute;

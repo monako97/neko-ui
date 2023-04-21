@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import React, { useEffect, useRef } from 'react';
 import {
   colorParse,
   passiveSupported,
@@ -7,6 +7,7 @@ import {
   type ColorType,
   type HSVA,
 } from '@moneko/common';
+import sso from 'shared-store-object';
 import { cls } from './style';
 import { cx } from '../emotion';
 import { Input, InputNumber } from '../index';
@@ -91,29 +92,6 @@ const opt: Opt = {
   },
 };
 
-interface HexaFormProps {
-  value?: string;
-  // eslint-disable-next-line no-unused-vars
-  onChange: (hex: string) => void;
-}
-const HexaForm: React.FC<HexaFormProps> = ({ value, onChange }) => {
-  const [hex, setHex] = useState(value);
-  const hexChange = useCallback(
-    (v?: string | number) => {
-      if (typeof v === 'string') {
-        setHex(v);
-        throttle(onChange, 4)(v);
-      }
-    },
-    [onChange]
-  );
-
-  useEffect(() => {
-    setHex(value);
-  }, [value]);
-
-  return <Input className={cls.input} name="hex" size="small" value={hex} onChange={hexChange} />;
-};
 const ColorPalette: React.FC<ColorPaletteProps> = ({
   className,
   defaultValue = '#5794ff',
@@ -121,140 +99,137 @@ const ColorPalette: React.FC<ColorPaletteProps> = ({
   onChange,
   ...props
 }) => {
-  const colorPickerRef = useRef<HTMLDivElement>(null);
-  const color = useRef(colorParse(value || defaultValue));
-  const drag = useRef(false);
-  const [type, setType] = useState(color.current.type);
-  const [hsva, setHSVA] = useState(color.current.value);
-  const [inputVal, setInputVal] = useState(color.current[opt[type].get]() as HSVA);
-  const setColor = useCallback((c?: string | number) => {
-    if (c && color.current[opt[color.current.type].get]().toString() !== c) {
-      const nc = colorParse(c as string);
+  const picker = useRef<HTMLDivElement>(null);
+  const store = useRef(
+    sso(
+      {
+        ...colorParse(value || defaultValue),
+        drag: false,
+        timer: null as NodeJS.Timeout | null,
+        hexa: (value || defaultValue) as string | undefined | number,
+        handleHexa(v?: string | number) {
+          store.current.hexa = v;
+        },
+        handleAlphaRange(e: React.ChangeEvent<HTMLInputElement>) {
+          store.current.setAlpha(Number(e.target.value));
+        },
+        setAlpha(alpha: number) {
+          const next: HSVA = [...store.current.value];
 
-      color.current.setValue(nc.value);
-      color.current.type = nc.type;
-      setInputVal(color.current[opt[color.current.type].get]() as HSVA);
-      setType(color.current.type);
-      setHSVA(color.current.value);
+          next[3] = alpha || 0;
+          store.current.value = next;
+        },
+        setHue(e: React.ChangeEvent<HTMLInputElement>) {
+          const next: HSVA = [...store.current.value];
+
+          next[0] = Number(e.target.value);
+          store.current.value = next;
+        },
+        setColor(c: string = defaultValue) {
+          if (
+            store.current.isColor(c) &&
+            store.current[opt[store.current.type].get]().toString() !== c
+          ) {
+            const next = colorParse(c as string);
+
+            store.current.type = next.type;
+            store.current.value = next.value;
+          }
+        },
+        changeColor(ev: MouseEvent | React.MouseEvent) {
+          if (picker.current) {
+            const next: HSVA = [...store.current.value];
+            const { x, y, width, height } = picker.current.getBoundingClientRect();
+
+            next[1] = Math.floor(Math.min(Math.max(0, ((ev.clientX - x) / width) * 100), 100));
+            next[2] = Math.floor(
+              100 - Math.min(Math.max(0, ((ev.clientY - y) / height) * 100), 100)
+            );
+            store.current.value = next;
+          }
+        },
+        handleChange(i: number, v?: number) {
+          if (typeof v === 'number') {
+            if (i === 3 && store.current.type !== 'cmyk') {
+              store.current.setAlpha(v || 0);
+            } else {
+              const old: HSVA = store.current[opt[store.current.type].get]() as HSVA;
+
+              old[i] = v || 0;
+              store.current.value = colorParse(old.toString()).value;
+            }
+          }
+        },
+        mouseDown(e: React.MouseEvent) {
+          store.current.drag = true;
+          store.current.changeColor(e);
+        },
+        mouseMove(e: MouseEvent) {
+          if (store.current.drag) {
+            store.current.changeColor(e);
+          }
+        },
+        mouseUp() {
+          store.current.drag = false;
+        },
+        switch() {
+          store.current.type = opt[store.current.type].next;
+        },
+        copy(e: React.MouseEvent) {
+          setClipboard(store.current.color.toString(), e.target as HTMLElement);
+        },
+      },
+      {
+        color() {
+          store.current.setValue(store.current.value);
+          return store.current[opt[store.current.type].get]() as HSVA;
+        },
+        style() {
+          return {
+            '--c': store.current.toRgbaString(),
+            '--h': store.current.value[0],
+            '--s': store.current.value[1],
+            '--v': store.current.value[2],
+            '--a': store.current.value[3],
+          } as React.CSSProperties;
+        },
+      }
+    )
+  );
+  const { type, value: hsva, color, style, hexa } = store.current;
+
+  useEffect(() => {
+    throttle(store.current.setColor, 4)(value);
+  }, [defaultValue, value]);
+  useEffect(() => {
+    onChange?.(color.toString());
+  }, [onChange, color]);
+  useEffect(() => {
+    if (store.current.timer) {
+      clearTimeout(store.current.timer);
     }
-  }, []);
-  const changeColor = useCallback((ev: MouseEvent) => {
-    if (colorPickerRef.current) {
-      const _hsva: HSVA = [...color.current.value];
-      const { x, y, width, height } = colorPickerRef.current.getBoundingClientRect();
-
-      _hsva[1] = Math.floor(Math.min(Math.max(0, ((ev.clientX - x) / width) * 100), 100));
-      _hsva[2] = Math.floor(100 - Math.min(Math.max(0, ((ev.clientY - y) / height) * 100), 100));
-      color.current.setValue(_hsva);
-      setHSVA(_hsva);
+    if (type === 'hexa') {
+      store.current.hexa = store.current.toHexaString();
     }
-  }, []);
-  const colorPickerMouseDown = useCallback(
-    (e: React.MouseEvent) => {
-      Object.assign(drag, {
-        current: true,
-      });
-      changeColor(e as unknown as MouseEvent);
-    },
-    [changeColor]
-  );
-  const colorPickerMouseMove = useCallback(
-    (e: MouseEvent) => {
-      if (drag.current) {
-        changeColor(e);
-      }
-    },
-    [changeColor]
-  );
-  const colorPickerMouseUp = useCallback(() => {
-    Object.assign(drag, {
-      current: false,
-    });
-  }, []);
-  const handleSwitch = useCallback(() => {
-    color.current.type = opt[color.current.type].next;
-    setInputVal(color.current[opt[color.current.type].get]() as HSVA);
-    setType(color.current.type);
-  }, []);
-  const handleCopy = useCallback(
-    (e: React.MouseEvent) => {
-      setClipboard(inputVal.toString(), e.target as HTMLElement);
-    },
-    [inputVal]
-  );
-  const setHue = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
-    const _hsva: HSVA = [...color.current.value];
-
-    _hsva[0] = Number(e.target.value);
-    setHSVA(_hsva);
-  }, []);
-  const setAlpha = useCallback((e: { target: { value: string } }) => {
-    const _hsva: HSVA = [...color.current.value];
-
-    _hsva[3] = Number(e.target.value);
-    setHSVA(_hsva);
-  }, []);
-  const handleFliedChange = useCallback(
-    (i: number, v?: number) => {
-      if (typeof v === 'number') {
-        const old: HSVA = color.current[opt[color.current.type].get]() as HSVA;
-
-        old[i] = v || 0;
-        setInputVal(old);
-        if (i === 3 && color.current.type !== 'cmyk') {
-          setAlpha({ target: { value: (v || 0) as unknown as string } });
-        } else {
-          setHSVA(colorParse(old.toString()).value);
-        }
-      }
-    },
-    [setAlpha]
-  );
-  const handleHexChange = useCallback(
-    (hex: string) => {
-      if (color.current.isColor(hex)) {
-        setColor(hex);
-      }
-    },
-    [setColor]
-  );
-  const style = useMemo(() => {
-    return {
-      '--c': color.current.toRgbaString(),
-      '--h': hsva[0],
-      '--s': hsva[1],
-      '--v': hsva[2],
-      '--a': hsva[3],
-    } as React.CSSProperties;
-  }, [hsva]);
-
+  }, [type, hsva]);
   useEffect(() => {
-    throttle(setColor, 4)(value);
-  }, [setColor, value]);
-  useEffect(() => {
-    color.current.setValue(hsva);
-    color.current.type = type;
-    setInputVal(color.current[opt[type].get]() as HSVA);
-  }, [hsva, type]);
-  useEffect(() => {
-    onChange?.(inputVal.toString());
-  }, [onChange, inputVal]);
-  useEffect(() => {
-    document.documentElement.addEventListener('mousemove', colorPickerMouseMove, passiveSupported);
-    document.documentElement.addEventListener('mouseup', colorPickerMouseUp, passiveSupported);
+    const _store = store.current;
+
+    window.addEventListener('mousemove', _store.mouseMove, passiveSupported);
+    window.addEventListener('mouseup', _store.mouseUp, passiveSupported);
     return () => {
-      document.documentElement.removeEventListener(
-        'mousemove',
-        colorPickerMouseMove,
-        passiveSupported
-      );
-      document.documentElement.removeEventListener('mouseup', colorPickerMouseUp, passiveSupported);
+      if (_store.timer) {
+        clearTimeout(_store.timer);
+      }
+      window.removeEventListener('mousemove', _store.mouseMove, passiveSupported);
+      window.removeEventListener('mouseup', _store.mouseUp, passiveSupported);
+      _store();
     };
-  }, [colorPickerMouseMove, colorPickerMouseUp]);
+  }, []);
 
   return (
     <div {...props} className={cx(cls.palette, className)} style={style}>
-      <div className={cls.picker} ref={colorPickerRef} onMouseDown={colorPickerMouseDown} />
+      <div ref={picker} className={cls.picker} onMouseDown={store.current.mouseDown} />
       <div className={cls.chooser}>
         <div className={cls.range}>
           <input
@@ -263,7 +238,7 @@ const ColorPalette: React.FC<ColorPaletteProps> = ({
             max="360"
             type="range"
             value={hsva[0]}
-            onChange={setHue}
+            onChange={store.current.setHue}
           />
           {type !== 'cmyk' ? (
             <input
@@ -273,23 +248,37 @@ const ColorPalette: React.FC<ColorPaletteProps> = ({
               step="0.01"
               type="range"
               value={hsva[3]}
-              onChange={setAlpha}
+              onChange={store.current.handleAlphaRange}
             />
           ) : null}
         </div>
-        <div className={cls.preview} onClick={handleCopy} />
+        <div className={cls.preview} onClick={store.current.copy} />
       </div>
       <div className={cls.form}>
         {type === 'hexa' ? (
-          <HexaForm value={inputVal.toString()} onChange={handleHexChange} />
+          <Input
+            className={cls.input}
+            name="hex"
+            size="small"
+            value={hexa}
+            onChange={store.current.handleHexa}
+            onBlur={(e) => {
+              store.current.setColor(e.target.value);
+            }}
+            onKeyUp={(e) => {
+              if (e.key === 'Enter' && typeof hexa === 'string') {
+                store.current.setColor(hexa);
+              }
+            }}
+          />
         ) : (
-          inputVal.map((n, i) => {
+          color.map((n, i) => {
             const isAlpha = i === 3 && type !== 'cmyk';
 
             return (
               <InputNumber
-                size="small"
                 key={type + i}
+                size="small"
                 className={cls.input}
                 value={n}
                 max={opt[type].max[i]}
@@ -297,12 +286,12 @@ const ColorPalette: React.FC<ColorPaletteProps> = ({
                 step={isAlpha ? 0.01 : 1}
                 formatter={isAlpha ? formatterOpacity : null}
                 parser={isAlpha ? parseOpacity : null}
-                onChange={(v) => handleFliedChange(i, v)}
+                onChange={(v) => store.current.handleChange(i, v)}
               />
             );
           })
         )}
-        <div className={cls.switch} onClick={handleSwitch}>
+        <div className={cls.switch} onClick={store.current.switch}>
           {type}
         </div>
       </div>
@@ -316,7 +305,7 @@ const ColorPalette: React.FC<ColorPaletteProps> = ({
               } as React.CSSProperties
             }
             onClick={() => {
-              setColor(c);
+              store.current.setColor(c);
             }}
           />
         ))}

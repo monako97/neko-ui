@@ -1,73 +1,7 @@
 import React, { useCallback, useState } from 'react';
-import { cx, css } from '../emotion';
+import { cls } from './style';
+import { cx } from '../emotion';
 import { type ComponentSize } from '../index';
-
-const inputCss = css`
-  overflow: hidden;
-  border: none;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  color: inherit;
-  outline: none;
-  flex: 1;
-`;
-const wrapperCss = css`
-  display: flex;
-  border: var(--border-base);
-  border-radius: var(--border-radius);
-  padding: 4px 10px;
-  inline-size: 100%;
-  font-size: var(--font-size);
-  color: var(--text-color);
-  background-color: var(--component-background);
-  transition: all 0.3s;
-  line-height: 1.5715;
-  background-image: none;
-  box-sizing: border-box;
-  accent-color: var(--primary-color, #5794ff);
-
-  &:hover {
-    border-color: var(--primary-hover, #80b3ff);
-    border-inline-end-width: 1px;
-  }
-
-  input {
-    background: none;
-  }
-`;
-const focusCss = css`
-  border-color: var(--primary-hover, #80b3ff);
-  border-inline-end-width: 1px;
-  outline: 0;
-  box-shadow: 0 0 0 2px rgb(45 115 255 / 20%);
-`;
-const disabledCss = css`
-  border-color: var(--border-color);
-  background: var(--disabled-bg, #f5f5f5);
-  cursor: not-allowed;
-`;
-const prefixCss = css`
-  margin-inline-end: 4px;
-`;
-const suffixCss = css`
-  margin-inline-start: 4px;
-`;
-const sizeCss = {
-  small: css`
-    padding: 2px;
-    font-size: var(--font-size-sm);
-    line-height: 20px;
-
-    input {
-      padding: 1px 0;
-    }
-  `,
-  large: css`
-    padding: 6px 16px;
-    font-size: var(--font-size-lg);
-  `,
-  normal: null,
-};
 
 export interface InputProps<T = string | number | undefined>
   extends Omit<
@@ -150,17 +84,17 @@ const Input: React.FC<InputProps> = ({
   return (
     <span
       className={cx(
-        wrapperCss,
-        size && sizeCss[size],
-        disabled && disabledCss,
-        focus && focusCss,
+        cls.wrapper,
+        cls[size || 'normal'],
+        disabled && cls.disabled,
+        focus && cls.focus,
         className
       )}
     >
-      {prefix ? <span className={prefixCss}>{prefix}</span> : null}
+      {prefix ? <span className={cls.prefix}>{prefix}</span> : null}
       <input
         value={getValue(value)}
-        className={inputCss}
+        className={cls.input}
         autoComplete={autoComplete}
         type="text"
         disabled={disabled}
@@ -169,7 +103,7 @@ const Input: React.FC<InputProps> = ({
         onChange={handleChange}
         {...prpos}
       />
-      {suffix ? <span className={suffixCss}>{suffix}</span> : null}
+      {suffix ? <span className={cls.suffix}>{suffix}</span> : null}
     </span>
   );
 };

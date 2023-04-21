@@ -1,8 +1,8 @@
 import React, { memo, useCallback, useEffect, useRef, useState } from 'react';
 import { getMaxZindex, getScrollTop, isEqual, isFunction } from '@moneko/common';
-import { createPortal } from 'react-dom';
 import { cls } from './style';
 import { cx } from '../emotion';
+import Portal from '../portal';
 
 export interface BackTopProps extends React.HTMLAttributes<HTMLDivElement> {
   /** 设置需要监听其滚动事件的元素，值为一个返回对应 DOM 元素 */
@@ -71,15 +71,16 @@ const BackTop: React.FC<BackTopProps> = ({
   }, [show]);
 
   if (show === null) return null;
-  return createPortal(
-    <div
-      {...props}
-      ref={ref}
-      onAnimationEnd={exit}
-      className={cx(className, cls.backtop, show === false && cls.out)}
-      onClick={handleBackTop}
-    />,
-    getPopupContainer?.(target()) || document.body
+  return (
+    <Portal container={getPopupContainer?.(target())}>
+      <div
+        {...props}
+        ref={ref}
+        onAnimationEnd={exit}
+        className={cx(className, cls.backtop, show === false && cls.out)}
+        onClick={handleBackTop}
+      />
+    </Portal>
   );
 };
 

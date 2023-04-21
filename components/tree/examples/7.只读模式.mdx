@@ -2,6 +2,7 @@
 
 ```jsx
 function Demo() {
+  const [val, setVal] = React.useState();
   const data = [
     {
       title: '文件地址',
@@ -41,6 +42,6 @@ function Demo() {
     },
   ];
 
-  return <Tree data={data} readonly />;
+  return <Tree data={data} readonly value={val} onChange={setVal} />;
 }
 ```

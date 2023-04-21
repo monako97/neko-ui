@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useMemo, useRef } from 'react';
+import React, { useCallback, useEffect, useRef } from 'react';
 import { cloneDeep, isFunction, passiveSupported, throttle } from '@moneko/common';
 import sso from 'shared-store-object';
 import { cls } from './style';
@@ -101,60 +101,59 @@ export type TreeProps =
   | TreeSingleSchemaProps;
 
 const Tree: React.FC<TreeProps> = ({
-  className,
-  style,
+  multiple,
+  readonly,
+  toggle,
+  value,
+  direction,
+  onChange,
+  onRowClick,
   fromSchema,
   data,
-  value,
-  onChange,
-  multiple,
-  toggle,
-  direction,
-  readonly,
-  renderRow,
-  onRowClick,
   onRowDoubleClick,
+  renderRow,
+  className,
+  style,
 }) => {
   const el = useRef<HTMLUListElement>(null);
   const store = useRef(
     sso({
-      current: value ? (Array.isArray(value) ? value : [value]) : [],
       treeData: [] as TreeData[],
       lines: [] as string[],
+      current: value ? (Array.isArray(value) ? value : [value]) : [],
       rtl: direction === 'rtl',
-      readonly,
-      toggle,
-      multiple,
-      setCurrent(key: string) {
-        if (!store.current.readonly) {
-          let _current: string[];
-
-          if (store.current.multiple) {
-            _current = [...store.current.current];
-            const idx = _current.indexOf(key);
-
-            if (idx === -1) {
-              _current.push(key);
-            } else {
-              _current.splice(idx, 1);
-            }
-          } else if (store.current.toggle && store.current.current[0] === key) {
-            _current = [];
-          } else {
-            _current = [key];
-          }
-          store.current.current = _current;
-        }
-      },
     })
   );
-  const { current, treeData, rtl, lines } = store.current;
+  const { current, rtl, treeData, lines } = store.current;
+  const handleChange = useCallback(
+    (key: string) => {
+      if (!readonly && isFunction(onChange)) {
+        let _current = [...store.current.current];
+
+        if (multiple) {
+          const idx = _current.indexOf(key);
+
+          if (idx === -1) {
+            _current.push(key);
+          } else {
+            _current.splice(idx, 1);
+          }
+        } else if (toggle && store.current.current[0] === key) {
+          _current = [];
+        } else {
+          _current = [key];
+        }
+        onChange((multiple ? _current : _current[0]) as never);
+      }
+    },
+    [multiple, onChange, readonly, toggle]
+  );
   const handleClick = useCallback(
     (e: React.MouseEvent<HTMLLIElement, MouseEvent>, item: TreeData) => {
-      store.current.setCurrent(item.key);
+      handleChange(item.key);
       onRowClick?.(e, item.key as never, item as TreeData<never>);
     },
-    [onRowClick]
+    [onRowClick, handleChange]
   );
   const renderItem = useCallback(
     (item: TreeData, title: React.ReactNode, subTitle?: React.ReactNode): React.ReactNode[] => {
@@ -162,19 +161,23 @@ const Tree: React.FC<TreeProps> = ({
 
       return rtl ? row.reverse() : row;
     },
-    [renderRow, rtl]
+    [rtl, renderRow]
   );
   const renderTreeRow = useCallback(
     (list: TreeData[], depth = 0) =>
       list.map((item) => {
         const { name, title, subTitle, key, children } = item;
-        const _title = [...new Set([name, title])].filter(Boolean);
+        const _title = name === title || !name ? [title] : [name, title];
 
         return (
           <React.Fragment key={key}>
             <li
               {...{
-                className: cx(cls.row, current.includes(key) && cls.active),
+                className: cx(
+                  cls.row,
+                  current.includes(key) && cls.active,
+                  (readonly || !isFunction(onChange)) && cls.non
+                ),
                 onClick: (e) => handleClick(e, item),
                 onDoubleClick: (e) => onRowDoubleClick?.(e, key, item),
                 // eslint-disable-next-line no-undefined
@@ -199,7 +202,7 @@ const Tree: React.FC<TreeProps> = ({
           </React.Fragment>
         );
       }),
-    [current, renderItem, rtl, handleClick, onRowDoubleClick]
+    [current, readonly, onChange, renderItem, rtl, handleClick, onRowDoubleClick]
   );
   const updateLine = throttle(
     useCallback(function () {
@@ -240,31 +243,16 @@ const Tree: React.FC<TreeProps> = ({
     store.current.rtl = direction === 'rtl';
   }, [direction]);
   useEffect(() => {
-    store.current.readonly = readonly;
-  }, [readonly]);
-  useEffect(() => {
-    store.current.toggle = toggle;
-  }, [toggle]);
-  useEffect(() => {
-    store.current.multiple = multiple;
-  }, [multiple]);
-  useEffect(() => {
     const __data: TreeData[] = cloneDeep(fromSchema ? schema(data) : data) as TreeData[];
     const __lines = [...new Set(countLineLen(__data))];
 
     store.current.lines = __lines;
     store.current.treeData = __data;
-  }, [data, fromSchema]);
-  useEffect(() => {
-    if (isFunction(onChange)) {
-      store.current.current = current;
-      onChange((multiple ? current : current[0]) as never);
-    }
-  }, [current, multiple, onChange]);
+  }, [fromSchema, data]);
+
   useEffect(() => {
     updateLine();
   }, [lines, updateLine]);
-
   useEffect(() => {
     window.addEventListener('resize', updateLine, passiveSupported);
     return () => {
@@ -278,10 +266,9 @@ const Tree: React.FC<TreeProps> = ({
       _store();
     };
   }, []);
-  const slas = useMemo(() => cx(cls.tree, className, rtl && cls.rtl), [className, rtl]);
 
   return (
-    <ul ref={el} className={slas} style={style}>
+    <ul ref={el} className={cx(cls.tree, className, rtl && cls.rtl)} style={style}>
       {renderTreeRow(treeData)}
     </ul>
   );

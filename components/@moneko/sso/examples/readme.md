@@ -38,6 +38,40 @@ const App = () => {
 like.count++;
 ```
 
+## 计算属性
+
+!> 在第二个入参中配置计算属性
+
+```jsx
+// 使用
+const store = sso(
+  {
+    count: 0,
+    inc() {
+      store.count++;
+    },
+  },
+  // 在这里配置计算属性
+  {
+    age() {
+      return store.count * 2 + 1;
+    },
+  }
+);
+
+const App = () => {
+  const { count, age } = store;
+
+  return (
+    <div>
+      <p>count: {count}</p>
+      <p>age: {age}</p>
+      <button onClick={() => store.inc()}>add</button>
+    </div>
+  );
+};
+```
+
 ## 回收
 
 !> 当作 react 的 useState 来使用，并在组件卸载时手动回收

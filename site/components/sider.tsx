@@ -3,7 +3,7 @@ import { injectGlobal } from '@emotion/css';
 import { updateStyleRule } from '@moneko/common';
 import { myPkgs, MyPkg, useLocation, Link } from '@moneko/core';
 import { Avatar, colorScheme } from 'neko-ui';
-import { type PkgType, projectInfo } from '@/utils';
+import { projectInfo } from '@/utils';
 
 injectGlobal`
   .site-sider,
@@ -231,12 +231,19 @@ const extractMenu = (list: MyPkg[]) => {
 };
 
 extractMenu(myPkgs);
+const kv = Object.fromEntries(myPkgs.map((item) => [item.key, item]));
 const menuKeys = Object.keys(menuObj);
 const Sider: React.FC = () => {
   const { scheme } = colorScheme;
   const menuEl = useRef<HTMLUListElement>(null);
-  const location = useLocation();
-  const activeKey = useMemo(() => location.pathname.substring(1), [location]);
+  const { pathname } = useLocation();
+  const activeKey = useMemo(() => pathname.substring(1), [pathname]);
+  const current = useMemo(() => {
+    window.scrollTo({
+      top: 0,
+    });
+    return kv[activeKey] || projectInfo;
+  }, [activeKey]);
   const renderMenu = useCallback(
     (list?: MyPkg[]) => {
       return list?.map((item) => {
@@ -251,10 +258,6 @@ const Sider: React.FC = () => {
         );
       });
     },
-    [activeKey]
-  );
-  const current: PkgType = useMemo(
-    () => (myPkgs.find((item) => item.key === activeKey) as unknown as PkgType) || projectInfo,
     [activeKey]
   );
 
