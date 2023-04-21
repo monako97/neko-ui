@@ -1,7 +1,6 @@
 import React, { useEffect, useRef, memo } from 'react';
-import { injectGlobal } from '@emotion/css';
 import { useLocation, useOutlet } from '@moneko/core';
-import { BackTop } from 'neko-ui';
+import { BackTop, injectGlobal } from 'neko-ui';
 import Bg from '@/components/bg';
 import Coverage from '@/components/coverage';
 import Empty from '@/components/empty';

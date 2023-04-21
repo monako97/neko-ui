@@ -1,4 +1,4 @@
-# Unreleased (2023-04-21)
+## [1.0.48](https://github.com/monako97/neko-ui/compare/1.0.47...1.0.48) (2023-04-21)
 
 
 

@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react';
-import { cx, injectGlobal } from '@emotion/css';
 import { projectBasicInfo, useLocation, useOutlet } from '@moneko/core';
+import { cx, injectGlobal } from 'neko-ui';
 
 const cover = projectBasicInfo.coverage;
 const projectCoverage = cover[projectBasicInfo.programInfo.name] || {};

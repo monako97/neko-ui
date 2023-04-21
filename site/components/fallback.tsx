@@ -1,6 +1,5 @@
 import React from 'react';
-import { injectGlobal } from '@emotion/css';
-import { Skeleton } from 'neko-ui';
+import { Skeleton, injectGlobal } from 'neko-ui';
 
 injectGlobal`
   .site-fallback {

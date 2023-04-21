@@ -61,6 +61,8 @@ export { default as Carousel, type CarouselProps } from './carousel';
 
 export type ComponentSize = 'small' | 'normal' | 'large';
 
+export { default as Portal, type PortalProps } from './portal';
+
 export { default as prefixCls, setPrefixCls } from './prefix-cls';
 
 export { default as highlight } from './highlight';

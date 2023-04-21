@@ -1,5 +1,5 @@
 import React from 'react';
-import { injectGlobal } from '@emotion/css';
+import { injectGlobal } from 'neko-ui';
 import getBrowser from 'neko-ui/utils/broswer';
 import jb_beam from '@/assets/images/jb_beam.svg';
 import { projectInfo } from '@/utils';

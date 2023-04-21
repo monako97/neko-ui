@@ -1,8 +1,7 @@
 import React, { useCallback, useEffect, useMemo, useRef } from 'react';
-import { injectGlobal } from '@emotion/css';
 import { updateStyleRule } from '@moneko/common';
 import { myPkgs, MyPkg, useLocation, Link } from '@moneko/core';
-import { Avatar, colorScheme } from 'neko-ui';
+import { Avatar, colorScheme, injectGlobal } from 'neko-ui';
 import { projectInfo } from '@/utils';
 
 injectGlobal`

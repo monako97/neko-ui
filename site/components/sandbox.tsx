@@ -1,8 +1,7 @@
 import React, { useEffect, useMemo, useRef } from 'react';
-import { cx, injectGlobal } from '@emotion/css';
 import { mdxComponents, type ExampleModule, myDemoKv, sso } from '@moneko/core';
 import { LiveProvider, LiveEditor, LiveError, LivePreview } from '@moneko/react-live';
-import { Markdown, Prism } from 'neko-ui';
+import { cx, injectGlobal, Markdown, Prism } from 'neko-ui';
 
 injectGlobal`
   .sandbox-box {

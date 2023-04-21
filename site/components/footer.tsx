@@ -1,5 +1,5 @@
 import React from 'react';
-import { css } from '@emotion/css';
+import { css } from 'neko-ui';
 import { projectInfo } from '@/utils';
 
 const footer = css`
