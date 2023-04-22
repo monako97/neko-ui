@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { render, fireEvent, waitFor } from '@testing-library/react';
 import { Tree } from 'neko-ui';
 
@@ -48,10 +48,23 @@ describe('test Tree', () => {
   it('normal', async () => {
     const change = jest.fn();
     const onRowClick = jest.fn();
+    const Demo = () => {
+      const [val, setVal] = useState<string[]>([]);
 
-    const { getByText } = render(
-      <Tree value={[]} multiple onRowClick={onRowClick} data={data} onChange={change} />
-    );
+      return (
+        <Tree
+          value={val}
+          multiple
+          onRowClick={onRowClick}
+          data={data}
+          onChange={(v: string[]) => {
+            setVal(v);
+            change();
+          }}
+        />
+      );
+    };
+    const { getByText } = render(<Demo />);
 
     fireEvent.click(getByText('文件名称'));
     fireEvent.click(getByText('文件名称'));
@@ -61,8 +74,22 @@ describe('test Tree', () => {
 
   it('toggle', async () => {
     const onRowDoubleClick = jest.fn();
+    const Demo = () => {
+      const [val, setVal] = useState<string>();
 
-    const { getByText } = render(<Tree toggle onRowDoubleClick={onRowDoubleClick} data={data} />);
+      return (
+        <Tree
+          value={val}
+          toggle
+          onRowDoubleClick={onRowDoubleClick}
+          data={data}
+          onChange={(v: string) => {
+            setVal(v);
+          }}
+        />
+      );
+    };
+    const { getByText } = render(<Demo />);
 
     fireEvent.click(getByText('是否有效'));
     fireEvent.dblClick(getByText('是否有效'));
@@ -124,7 +151,7 @@ describe('test Tree', () => {
     let val: string | undefined = 'a';
 
     const { getByText } = render(
-      <Tree value={val} data={data} readonly onChange={(v) => (val = v)} direction="rtl" />
+      <Tree value={val} data={data} readonly onChange={(v: string) => (val = v)} direction="rtl" />
     );
 
     fireEvent.click(getByText('编号'));
@@ -166,5 +193,50 @@ describe('test Tree', () => {
     );
 
     fireEvent.click(getByText('works'));
+  });
+  it('fromString', async () => {
+    const { getAllByText } = render(
+      <Tree
+        data={`root_folder/
+    |-- components
+    |   |-- index.ts
+    |   \`-- wave-circle
+    |       |-- examples
+    |       |   |-- api.md
+    |       |   \`-- demo.mdx
+    |       |-- index.tsx
+    |       \`-- README.mdx
+    |-- config
+    |   |-- index.ts
+    |   \`-- prod.ts
+    |-- docs
+    |   |-- index.js
+    |   \`-- index.html
+    |-- es
+    |   |-- index.js
+    |   \`-- wave-circle
+    |       \`-- index.js
+    |-- lib
+    |   |-- index.js
+    |   \`-- wave-circle
+    |       \`-- index.js
+    |-- .eslintrc.yaml
+    |-- .gitattributes
+    |-- .prettierrc.yaml
+    |-- .stylelintrc.yaml
+    |-- package.json
+    |-- README.md
+    |-- site
+    |-- tsconfig.json
+    \`-- typings
+        \`-- typings.d.ts`}
+      />
+    );
+
+    expect(getAllByText('wave-circle').length).toBe(3);
+  });
+  it('Invalid file tree structure', async () => {
+    render(<Tree data={`\n/\n/`} />);
+    render(<Tree data={`\n/\n||\n`} />);
   });
 });

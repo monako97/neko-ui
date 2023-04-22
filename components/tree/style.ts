@@ -10,13 +10,22 @@ export const cls = {
   active: prefixCls('tree-active'),
   rtl: prefixCls('tree-rtl'),
   non: prefixCls('tree-non-interactive'),
+  small: prefixCls('tree-small'),
+  normal: prefixCls('tree-normal'),
+  large: prefixCls('tree-large'),
 };
 
+export const sizeCnt = {
+  small: 6,
+  normal: 8,
+  large: 10,
+};
 injectGlobal`
   .${cls.tree} {
     padding-inline-start: 2em;
     inline-size: 100%;
     box-sizing: border-box;
+    --size: 8px;
   }
 
   .${cls.row} {
@@ -31,7 +40,7 @@ injectGlobal`
     list-style: none;
     box-shadow: 0 0 0 1px var(--border-color);
     margin-inline-start: var(--depth);
-    margin-block-end: 8px;
+    margin-block-end: var(--size);
     cursor: pointer;
     box-sizing: border-box;
     min-inline-size: 160px;
@@ -73,7 +82,7 @@ injectGlobal`
         border-radius: var(--r);
         content: var(--c);
         inline-size: 1em;
-        inset-block-start: -8px;
+        inset-block-start: calc(var(--size) * -1);
         inset-inline-start: -1em;
         block-size: var(--line);
         box-sizing: border-box;
@@ -110,7 +119,7 @@ injectGlobal`
     font-weight: normal;
   }
   .${cls.subTitle} {
-    padding: 0 8px;
+    padding: 0 var(--size);
     font-size: 10px;
     color: var(--text-secondary);
     font-style: italic;
@@ -122,5 +131,45 @@ injectGlobal`
     background-color: var(--primary-bg);
     box-shadow: 0 0 0 1px var(--primary-border);
     text-shadow: 2px 2px 2px var(--primary-outline);
+  }
+  .${cls.small} {
+    --size: 6px;
+    .${cls.row} {
+      padding: 1px 9px;
+      &:first-of-type {
+        &[data-path]::after {
+          inset-block-start: 12px;
+        }
+      }
+    }
+    .${cls.title} {
+      font-size: 13px;
+    }
+    .${cls.subTitle} {
+      padding: 0 4px;
+      font-size: 9px;
+    }
+  }
+  .${cls.normal} {
+    --size: 8px;
+  }
+  .${cls.large} {
+    --size: 10px;
+    .${cls.row} {
+      padding: 3px 12px;
+      
+      &:first-of-type {
+        &[data-path]::after {
+          inset-block-start: 17px;
+        }
+      }
+    }
+    .${cls.title} {
+      font-size: 15px;
+    }
+    .${cls.subTitle} {
+      padding: 0 10px;
+      font-size: 12px;
+    }
   }
 `;

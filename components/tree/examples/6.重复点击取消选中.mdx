@@ -3,9 +3,12 @@
 
 ```jsx
 function Demo() {
+  const [val, setVal] = React.useState();
   return (
     <Tree
       toggle
+      value={val}
+      onChange={setVal}
       data={[
         {
           title: '文件地址',

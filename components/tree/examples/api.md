@@ -7,7 +7,7 @@
 | multiple         | 多选模式                                           | `boolean`                                                                                       | `false` | -    |
 | readonly         | 只读                                               | `boolean`                                                                                       | -       | -    |
 | toggle           | 开启取消选中, 仅多选模式生效                       | `boolean`                                                                                       | -       | -    |
-| data             | 数据源                                             | `TreeData[]`                                                                                    | -       | -    |
+| data             | 数据源                                             | `TreeData[]` \| `string`                                                                        | -       | -    |
 | fromSchema       | 开启此选项支持 `JSON Schema`                       | `boolean`                                                                                       | `false` | -    |
 | direction        | 方向                                               | `ltr` \| `rtl`                                                                                  | `ltr`   | -    |
 | value            | 选中的值, 多选模式时为数组                         | `string[]` \| `string`                                                                          | -       | -    |

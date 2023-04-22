@@ -103,6 +103,7 @@ injectGlobal`
     user-select: none;
     touch-action: manipulation;
     box-sizing: border-box;
+    user-select: none;
 
     &:hover:not([disabled]) {
       border-color: var(--btn-hover-color);

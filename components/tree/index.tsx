@@ -1,9 +1,10 @@
 import React, { useCallback, useEffect, useRef } from 'react';
 import { cloneDeep, isFunction, passiveSupported, throttle } from '@moneko/common';
 import sso from 'shared-store-object';
-import { cls } from './style';
+import { cls, sizeCnt } from './style';
 import { cx } from '../emotion';
 import schema from '../from-schema';
+import type { ComponentSize } from '../index';
 
 const path = Symbol('path');
 const pathEnd = Symbol('path-end');
@@ -32,6 +33,45 @@ function countLineLen(tree: TreeData[], depth = 0) {
   return line;
 }
 
+interface TreeStack extends TreeData {
+  depth?: number;
+}
+
+function parseTree(str: string): TreeData[] {
+  const depthRegex = /[^\s|`│├└]/;
+  const lines = str.trim().split('\n');
+  const stack: TreeStack[] = [{ title: lines[0], key: lines[0] }];
+
+  for (let i = 1; i < lines.length; i++) {
+    const depth = lines[i].search(depthRegex);
+
+    if (depth === -1) {
+      continue;
+    }
+    const node: Partial<TreeData> = {
+      title: lines[i].slice(depth + 3),
+      depth,
+    };
+
+    while (stack.length && depth <= (stack[stack.length - 1].depth || 0)) {
+      stack.pop();
+    }
+    if (!stack.length) {
+      return [];
+    }
+    const parent = stack[stack.length - 1];
+
+    if (!parent.children) {
+      parent.children = [];
+    }
+    node.key = `${parent.key}-${node.title}-${depth}-${i}`;
+    parent.children.push(node as TreeData);
+    stack.push(node as TreeData);
+  }
+
+  return [stack[0]];
+}
+
 export interface TreeData<T = string> {
   key: T;
   name?: string;
@@ -41,7 +81,14 @@ export interface TreeData<T = string> {
   children?: TreeData<T>[];
   [path]?: string;
   [pathEnd]?: string;
-  [key: string | number | symbol]: T | string | boolean | TreeData<T>[] | undefined;
+  [key: string | number | symbol]:
+    | T
+    | string
+    | number
+    | symbol
+    | boolean
+    | TreeData<T>[]
+    | undefined;
 }
 
 // type ArrayElementType<T extends unknown[] | unknown> = T extends (infer U)[] ? U : T;
@@ -51,6 +98,7 @@ type OnRowClick = (e: ReactMouseEvent, key: string, item: TreeData) => void;
 export interface TreeBaseProp {
   className?: string;
   style?: React.CSSProperties;
+  size?: ComponentSize;
   readonly?: boolean;
   toggle?: boolean;
   direction?: 'rtl' | 'ltr';
@@ -61,44 +109,49 @@ export interface TreeBaseProp {
 }
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type Imap = { [key: string]: string | true | number | object };
-
-interface TreeSingleProps extends TreeBaseProp {
-  fromSchema?: false;
-  multiple?: false;
-  data: TreeData[];
+interface TreeSingleBaseProps extends TreeBaseProp {
   value?: string;
+  multiple?: false;
   // eslint-disable-next-line no-unused-vars
   onChange?(key?: string): void;
 }
-interface TreeSingleSchemaProps extends TreeBaseProp {
-  fromSchema: true;
-  multiple?: false;
-  data: Imap;
-  value?: string;
+interface TreeMultipleBaseProps extends TreeBaseProp {
+  value?: string[];
+  multiple: true;
   // eslint-disable-next-line no-unused-vars
-  onChange?(key?: string): void;
+  onChange?(key?: string[]): void;
 }
-interface TreeMultipleProps extends TreeBaseProp {
+interface TreeSingleProps extends TreeSingleBaseProps {
   fromSchema?: false;
-  multiple: true;
   data: TreeData[];
-  value: string[];
-  // eslint-disable-next-line no-unused-vars
-  onChange?(key: string[]): void;
 }
-interface TreeMultipleSchemaProps extends TreeBaseProp {
+interface TreeSingleSchemaProps extends TreeSingleBaseProps {
   fromSchema: true;
-  multiple: true;
   data: Imap;
-  value: string[];
-  // eslint-disable-next-line no-unused-vars
-  onChange?(key: string[]): void;
+}
+interface TreeSingleStringProps extends TreeSingleBaseProps {
+  fromSchema?: false;
+  data: string;
+}
+interface TreeMultipleProps extends TreeMultipleBaseProps {
+  fromSchema?: false;
+  data: TreeData[];
+}
+interface TreeMultipleSchemaProps extends TreeMultipleBaseProps {
+  fromSchema: true;
+  data: Imap;
+}
+interface TreeMultipleStringProps extends TreeMultipleBaseProps {
+  fromSchema?: false;
+  data: string;
 }
 export type TreeProps =
   | TreeSingleProps
   | TreeMultipleProps
   | TreeMultipleSchemaProps
-  | TreeSingleSchemaProps;
+  | TreeSingleSchemaProps
+  | TreeMultipleStringProps
+  | TreeSingleStringProps;
 
 const Tree: React.FC<TreeProps> = ({
   multiple,
@@ -114,6 +167,7 @@ const Tree: React.FC<TreeProps> = ({
   renderRow,
   className,
   style,
+  size,
 }) => {
   const el = useRef<HTMLUListElement>(null);
   const store = useRef(
@@ -122,6 +176,7 @@ const Tree: React.FC<TreeProps> = ({
       lines: [] as string[],
       current: value ? (Array.isArray(value) ? value : [value]) : [],
       rtl: direction === 'rtl',
+      size,
     })
   );
   const { current, rtl, treeData, lines } = store.current;
@@ -143,7 +198,7 @@ const Tree: React.FC<TreeProps> = ({
         } else {
           _current = [key];
         }
-        onChange((multiple ? _current : _current[0]) as never);
+        onChange(multiple ? _current : _current[0]);
       }
     },
     [multiple, onChange, readonly, toggle]
@@ -209,6 +264,8 @@ const Tree: React.FC<TreeProps> = ({
       const len = store.current.lines.length;
 
       if (el.current && len) {
+        const prefixSize = sizeCnt[store.current.size || 'normal'];
+
         for (let i = 0; i < len; i++) {
           const al: NodeListOf<HTMLLIElement> = el.current.querySelectorAll(
             `li[data-path="${store.current.lines[i]}"]`
@@ -216,12 +273,12 @@ const Tree: React.FC<TreeProps> = ({
 
           if (al.length) {
             const rect1 = al[0].getBoundingClientRect();
-            let sideLen = rect1.height / 2 + 8;
+            let sideLen = rect1.height / 2 + prefixSize;
 
             if (al.length > 1) {
               const { bottom, height, top } = al[1].getBoundingClientRect();
 
-              sideLen = i === 0 ? top - rect1.top : bottom - rect1.top - height / 2 + 8;
+              sideLen = i === 0 ? top - rect1.top : bottom - rect1.top - height / 2 + prefixSize;
               al[1].style.setProperty('--c', 'none');
             } else if (i === 0) {
               al[0].style.setProperty('--c', 'none');
@@ -243,16 +300,20 @@ const Tree: React.FC<TreeProps> = ({
     store.current.rtl = direction === 'rtl';
   }, [direction]);
   useEffect(() => {
-    const __data: TreeData[] = cloneDeep(fromSchema ? schema(data) : data) as TreeData[];
-    const __lines = [...new Set(countLineLen(__data))];
+    store.current.size = size;
+  }, [size]);
+  useEffect(() => {
+    const _data = cloneDeep(
+      typeof data === 'string' ? parseTree(data) : fromSchema ? schema(data) : data
+    ) as TreeData[];
 
-    store.current.lines = __lines;
-    store.current.treeData = __data;
+    store.current.lines = [...new Set(countLineLen(_data))];
+    store.current.treeData = _data;
   }, [fromSchema, data]);
 
   useEffect(() => {
     updateLine();
-  }, [lines, updateLine]);
+  }, [size, lines, updateLine]);
   useEffect(() => {
     window.addEventListener('resize', updateLine, passiveSupported);
     return () => {
@@ -268,7 +329,11 @@ const Tree: React.FC<TreeProps> = ({
   }, []);
 
   return (
-    <ul ref={el} className={cx(cls.tree, className, rtl && cls.rtl)} style={style}>
+    <ul
+      ref={el}
+      className={cx(cls.tree, size && cls[size], className, rtl && cls.rtl)}
+      style={style}
+    >
       {renderTreeRow(treeData)}
     </ul>
   );
