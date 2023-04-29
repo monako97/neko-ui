@@ -1,11 +1,9 @@
-动态取色
+通过传入一个基础色生成出调色板
 
 ```jsx
 // import { toneColor } from '@moneko/common';
-// import { ColorPicker, colorScheme, generateTheme } from 'neko-ui';
 
 function Demo() {
-  const { scheme } = colorScheme;
   const render = React.useCallback((colors) => {
     const ct = {
       0: colors['100'],

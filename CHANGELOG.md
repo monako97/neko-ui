@@ -1,4 +1,4 @@
-## [1.0.49](https://github.com/monako97/neko-ui/compare/1.0.47...1.0.49) (2023-04-29)
+# [1.1.0](https://github.com/monako97/neko-ui/compare/1.0.47...1.1.0) (2023-04-29)
 
 
 ### Bug Fixes
@@ -8,6 +8,7 @@
 
 ### Features
 
+* typography ([d6c35b8](https://github.com/monako97/neko-ui/commit/d6c35b8c9cd2cbcc1df96dc99e86d41cb0fcfbdb))
 * 树状组件支持tree命令行的树状字符串 ([dd4d32d](https://github.com/monako97/neko-ui/commit/dd4d32dae1daf6932c7af47337a355759c9dc965))
 
 

@@ -20,7 +20,7 @@ themeMedia?.addEventListener('change', ({ matches }: { matches: boolean }) => {
 
 export type ThemeOption = { dark?: boolean; name: string };
 
-/** 获取主题色调
+/** 生成主题色调
  * @param {string} base 基础颜色
  * @param {ThemeOption} option 配置项
  * @returns {Record<string, string>} 主题色调

@@ -1,6 +1,6 @@
 {
   "name": "neko-ui",
-  "version": "1.0.49",
+  "version": "1.1.0",
   "description": "UI库",
   "main": "lib/index.js",
   "scripts": {
@@ -26,7 +26,7 @@
     "@commitlint/cli": "17.6.1",
     "@commitlint/config-conventional": "17.6.1",
     "@moneko/cli": "1.1.15",
-    "@moneko/core": "2.0.60-beta.12",
+    "@moneko/core": "2.0.61",
     "@moneko/postcss": "1.0.29",
     "@moneko/react-live": "3.1.3",
     "@swc/jest": "0.2.26",

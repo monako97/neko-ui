@@ -1,0 +1,22 @@
+通过传入一个基础色生成出主题色调
+
+```tsx
+// import { Button, colorScheme } from 'neko-ui';
+
+function Demo() {
+  const { scheme } = colorScheme;
+  const handleTheme = React.useCallback(() => {
+    colorScheme.scheme = colorScheme.scheme === 'dark' ? 'light' : 'dark';
+  }, []);
+
+  React.useEffect(() => {
+    // 颜色方案发生，变更切换颜色
+    console.log(scheme);
+  }, [scheme]);
+  return (
+    <Button type="primary" flat onClick={handleTheme}>
+      {scheme === 'light' ? '🌞' : '🌛'} {scheme}
+    </Button>
+  );
+}
+```
