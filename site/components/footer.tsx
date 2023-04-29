@@ -5,9 +5,9 @@ import { projectInfo } from '@/utils';
 const footer = css`
   display: flex;
   justify-content: center;
-  padding-block-end: 1rem;
+  padding-block-end: 16px;
   font-size: var(--font-size-sm);
-  line-height: 1rem;
+  line-height: 16px;
 `;
 const link = css`
   color: var(--text-color);

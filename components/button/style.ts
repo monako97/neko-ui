@@ -42,7 +42,7 @@ function btnColor(type: ButtonType | 'danger') {
         --btn-color: var(--${type}-color);
       }
       --btn-border: var(--${type}-border);
-      --btn-bg: var(--${type}-bg);
+      --btn-bg: var(--${type}-selection);
       --btn-hover-color: var(--${type}-hover);
       --btn-active-color: var(--${type}-active);
       --btn-outline-color: var(--${type}-outline);
@@ -57,17 +57,6 @@ function btnColor(type: ButtonType | 'danger') {
 }
 
 injectGlobal`
-  :root {
-    --disable-color: rgb(0 0 0 / 25%);
-    --disable-bg: rgb(0 0 0 / 4%);
-    --disable-border: #d9d9d9;
-  }
-
-  [data-theme='dark'] {
-    --disable-color: rgb(255 255 255 / 25%);
-    --disable-bg: rgb(255 255 255 / 8%);
-    --disable-border: #424242;
-  }
   .${cls.label} {
     display: block;
     line-height: normal;
@@ -123,16 +112,16 @@ injectGlobal`
     }
   }
   .${cls.normal} {
-    --btn-size: 2rem;
+    --btn-size: 32px;
   }
   .${cls.small} {
-    --btn-size: 1.5rem;
+    --btn-size: 24px;
 
     padding: 0 7px;
     font-size: var(--font-size-xs);
   }
   .${cls.large} {
-    --btn-size: 2.5rem;
+    --btn-size: 40px;
 
     font-size: var(--font-size-lg);
   }
@@ -144,7 +133,7 @@ injectGlobal`
   .${cls.default} {
     --btn-outline-color: var(--primary-outline);
     --btn-color: var(--text-color);
-    --btn-bg: var(--component-background);
+    --btn-bg: var(--component-bg);
     --btn-border: var(--border-color);
     --btn-hover-color: var(--primary-hover);
     --btn-active-color: var(--primary-active);
@@ -243,12 +232,12 @@ injectGlobal`
 
     25% {
       opacity: 1;
-      box-shadow: 0 0 0 0.25rem var(--btn-outline-color);
+      box-shadow: 0 0 0 4px var(--btn-outline-color);
     }
 
     100% {
       opacity: 0;
-      box-shadow: 0 0 0 0.375rem var(--btn-outline-color);
+      box-shadow: 0 0 0 6px var(--btn-outline-color);
     }
   }
 `;

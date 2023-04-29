@@ -36,7 +36,7 @@ injectGlobal`
     border-radius: var(--border-radius);
     padding: 2px 10px;
     color: var(--text-color);
-    background-color: var(--component-background);
+    background-color: var(--component-bg);
     list-style: none;
     box-shadow: 0 0 0 1px var(--border-color);
     margin-inline-start: var(--depth);
@@ -127,8 +127,8 @@ injectGlobal`
     opacity: 0.5;
   }
   .${cls.active} {
-    color: var(--primary-color);
-    background-color: var(--primary-bg);
+    color: var(--on-primary-selection);
+    background-color: var(--primary-selection);
     box-shadow: 0 0 0 1px var(--primary-border);
     text-shadow: 2px 2px 2px var(--primary-outline);
   }

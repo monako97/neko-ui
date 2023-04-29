@@ -122,7 +122,7 @@ const tocWheel = (e: Event) => {
   const { currentTarget, deltaY } = e as unknown as React.WheelEvent<HTMLElement>;
   const targetDom = currentTarget as HTMLElement;
 
-  if (targetDom.classList.contains('n-md-toc')) {
+  if (targetDom?.classList.contains('n-md-toc')) {
     targetDom.scrollTop = targetDom.scrollTop + deltaY;
   }
 };

@@ -8,9 +8,9 @@ export const cls = {
 
 injectGlobal`
   :root {
-    --back-top-color: #fff;
-    --back-top-bg: var(--text-secondary);
-    --back-top-hover-bg: var(--text-color);
+    --back-top-color: var(--on-primary-selection);
+    --back-top-bg: var(--primary-border);
+    --back-top-hover-bg: var(--primary-hover);
   }
 
   [data-theme='dark'] {
@@ -36,6 +36,7 @@ injectGlobal`
     cursor: pointer;
     animation: back-top-fade-in 1s forwards;
     backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
 
     &::before {
       content: '';

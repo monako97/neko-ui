@@ -37,6 +37,9 @@ const InputNumber: React.FC<InputNumberProps> = ({
     (val?: string | number) => {
       let _val = typeof val === 'string' ? parseFloat(val) : val;
 
+      if (isNaN(_val as number)) {
+        _val = '' as unknown as number;
+      }
       if (typeof _val !== 'undefined') {
         if (_val < min) _val = min;
         if (_val > max) _val = max;

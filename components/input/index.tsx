@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { cls } from './style';
 import { cx } from '../emotion';
 import { type ComponentSize } from '../index';
@@ -12,6 +12,8 @@ export interface InputProps<T = string | number | undefined>
   suffix?: React.ReactNode;
   prefix?: React.ReactNode;
   size?: ComponentSize;
+  label?: React.ReactNode;
+  status?: 'error' | 'warning' | 'success';
   value?: T;
   // eslint-disable-next-line no-unused-vars
   onChange?: (value?: T) => void;
@@ -29,6 +31,7 @@ const Input: React.FC<InputProps> = ({
   value,
   size,
   type = 'text',
+  status,
   disabled,
   formatter,
   parser,
@@ -36,8 +39,12 @@ const Input: React.FC<InputProps> = ({
   onFocus,
   onBlur,
   autoComplete = 'off',
+  label,
+  placeholder = ' ',
   ...prpos
 }) => {
+  const ref = useRef<HTMLInputElement>(null);
+  const [x, setX] = useState(`${ref.current?.offsetLeft}px`);
   const [focus, setFocus] = useState<boolean>(false);
   const getValue = useCallback(
     (val: InputProps['value']) => {
@@ -81,28 +88,40 @@ const Input: React.FC<InputProps> = ({
     [onBlur]
   );
 
+  useEffect(() => {
+    setX(`${ref.current?.offsetLeft}px`);
+  }, []);
+
   return (
     <span
       className={cx(
         cls.wrapper,
-        cls[size || 'normal'],
+        size && cls[size],
         disabled && cls.disabled,
         focus && cls.focus,
+        status && cls[status],
         className
       )}
     >
       {prefix ? <span className={cls.prefix}>{prefix}</span> : null}
       <input
+        ref={ref}
+        type={type}
         value={getValue(value)}
         className={cls.input}
         autoComplete={autoComplete}
-        type="text"
         disabled={disabled}
         onFocus={handleFocus}
         onBlur={handleBlur}
         onChange={handleChange}
+        placeholder={placeholder}
         {...prpos}
       />
+      {label && (
+        <label className={cls.label} style={{ '--x': x } as React.CSSProperties}>
+          {label}
+        </label>
+      )}
       {suffix ? <span className={cls.suffix}>{suffix}</span> : null}
     </span>
   );

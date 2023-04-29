@@ -1,3 +1,4 @@
+import { toneColor } from '@moneko/common';
 import * as libs from '@pkg/index';
 import { CodeBlock } from 'neko-ui';
 import Box from './box';
@@ -9,4 +10,5 @@ export default {
   Box,
   Sandbox,
   SandboxGroup,
+  toneColor,
 };

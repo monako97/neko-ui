@@ -6,9 +6,9 @@ injectGlobal`
     display: flex;
     margin: auto;
     border-radius: var(--border-radius);
-    padding: 2rem;
-    max-inline-size: 80rem;
-    background-color: var(--component-background);
+    padding: 32px;
+    max-inline-size: 1280px;
+    background-color: var(--component-bg);
     flex: 1;
   }
 `;

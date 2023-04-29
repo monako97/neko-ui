@@ -75,8 +75,8 @@ injectGlobal`
     inline-size: 46px;
     font-size: 12px;
     text-align: center;
-    color: var(--primary-color);
-    background-color: var(--primary-bg);
+    color: var(--on-primary-selection);
+    background-color: var(--primary-selection);
     text-transform: uppercase;
     outline-color: var(--primary-outline);
     transition-property: background-color, color, outline-color, border-radius, transform;

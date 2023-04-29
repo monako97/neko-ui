@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useMemo, useRef } from 'react';
 import { updateStyleRule } from '@moneko/common';
 import { myPkgs, MyPkg, useLocation, Link } from '@moneko/core';
-import { Avatar, colorScheme, injectGlobal } from 'neko-ui';
+import { Avatar, Tooltip, Typography, colorScheme, injectGlobal } from 'neko-ui';
 import { projectInfo } from '@/utils';
 
 injectGlobal`
@@ -29,16 +29,17 @@ injectGlobal`
     inset-block-start: 0;
     display: flex;
     overflow-y: scroll;
-    margin: 0 1rem 1rem;
+    margin: 0 16px 16px;
     border-radius: var(--border-radius);
-    inline-size: 15rem;
-    min-inline-size: 15rem;
+    inline-size: 240px;
+    min-inline-size: 240px;
     flex: 1;
-    max-block-size: calc(100% - 2rem);
+    max-block-size: calc(100% - 32px);
     color: var(--text-color);
-    background-color: var(--header-bg, rgb(255 255 255 / 90%));
+    background-color: var(--component-bg, rgb(255 255 255 / 90%));
     box-sizing: border-box;
-    backdrop-filter: blur(1rem);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
     transition-property: background-color, color;
     flex-direction: column;
   }
@@ -46,7 +47,7 @@ injectGlobal`
   .site-sider > ul {
     position: relative;
     margin: 0;
-    padding: 0 1rem;
+    padding: 0 16px;
     list-style: none;
   }
 
@@ -54,7 +55,7 @@ injectGlobal`
     position: relative;
 
     &:last-of-type {
-      margin-block-end: 1rem;
+      margin-block-end: 16px;
     }
   }
 
@@ -62,20 +63,23 @@ injectGlobal`
     position: sticky;
     inset-block-start: 0;
     z-index: 10;
-    margin: 0 0 0.5rem;
+    margin: 0 0 8px;
     border-block-end: var(--border-base);
-    padding: 0.5rem 0;
+    padding: 8px 0;
     font-size: var(--font-size);
     color: var(--text-heading);
-    backdrop-filter: blur(1rem);
-    line-height: 1.25rem;
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    line-height: 20px;
     transition-property: background-color, color, border-color;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 
   .site-sider-list {
     display: flex;
     flex-direction: column;
-    gap: 0.5rem;
+    gap: 8px;
     padding: 0;
   }
 
@@ -84,7 +88,7 @@ injectGlobal`
     display: flex;
     align-items: center;
     border-radius: var(--border-radius);
-    min-block-size: 2.8125rem;
+    min-block-size: 45px;
     color: var(--text-color);
     flex-wrap: wrap;
     cursor: pointer;
@@ -99,9 +103,9 @@ injectGlobal`
       inset-inline-end: 0;
       display: block;
       border-radius: 0 var(--border-radius) var(--border-radius) 0;
-      inline-size: 0.3125rem;
+      inline-size: 5px;
       block-size: 100%;
-      background-color: var(--primary-border, #5794ff);
+      background-color: var(--primary-hover);
       content: '';
       transition-property: background-color, transform;
       transform: scale(0);
@@ -112,8 +116,8 @@ injectGlobal`
     }
 
     &[data-active='true'] {
-      color: var(--primary-color, #5794ff);
-      background-color: var(--primary-bg, #f0f8ff);
+      color: var(--on-primary-selection);
+      background-color: var(--primary-selection);
       text-shadow: 2px 2px 2px var(--primary-outline);
       transition-property: background-color, transform;
     }
@@ -126,6 +130,7 @@ injectGlobal`
       display: flex;
       flex-wrap: wrap;
       color: inherit;
+      width: 100%;
     }
   }
 
@@ -133,8 +138,9 @@ injectGlobal`
     display: flex;
     justify-content: center;
     align-items: center;
-    inline-size: 2rem;
+    inline-size: 32px;
     block-size: 100%;
+    user-select: none;
   }
 
   .site-sider-label {
@@ -144,14 +150,14 @@ injectGlobal`
   .site-sider-label,
   .site-sider-subtitle {
     overflow: hidden;
-    inline-size: calc(100% - 2rem);
+    inline-size: calc(100% - 32px);
     text-overflow: ellipsis;
     white-space: nowrap;
   }
 
   .site-sider-subtitle {
-    margin-inline-start: 2rem;
-    padding-block-end: 0.25rem;
+    margin-inline-start: 32px;
+    padding-block-end: 4px;
     font-size: var(--font-size-sm);
     opacity: 0.67;
   }
@@ -161,9 +167,10 @@ injectGlobal`
     inset-block-start: 0;
     display: flex;
     align-items: center;
-    padding: 1rem 1.5rem;
+    padding: 16px 24px;
     gap: 1em;
-    min-block-size: 2.6875rem;
+    min-block-size: 43px;
+    max-width: 224px;
   }
 
   .site-logo {
@@ -173,27 +180,28 @@ injectGlobal`
 
   .site-title {
     display: flex;
-    margin: 0;
-    font-size: 1.5em;
-    font-weight: bold;
-    color: var(--text-heading);
     flex: 1;
     flex-direction: column;
-    line-height: 1;
+    line-height: 1.1;
     gap: 5px;
-
+    h1 {
+      margin: 0;
+      font-size: 1.5em;
+      font-weight: bold;
+      color: var(--text-heading);
+    }
     i {
       font-size: x-small;
       font-weight: lighter;
-      color: var(--text-secondary);
+      color: var(--text-color);
       font-style: normal;
     }
   }
 
   .site-theme-btn {
-    font-size: 1.5rem;
+    font-size: 24px;
     transition: transform var(--transition-duration) var(--transition-timing-function);
-    line-height: 2rem;
+    line-height: 32px;
     cursor: pointer;
     user-select: none;
   }
@@ -212,46 +220,103 @@ injectGlobal`
   .site-theme-btn:active {
     transform: scale(0.95);
   }
+  .site-tooltip {
+    .site-sider-label,
+    .site-sider-subtitle {
+      inline-size: 100%;
+    }
+    .site-sider-subtitle {
+      margin-inline-start: 0;
+    }
+  }
+  @media screen and (max-width: 1100px) {
+    .site-sider {
+      min-inline-size: 68px;
+      inline-size: 68px;
+      >ul {
+        padding: 0 8px;
+      }
+    }
+    .site-header {
+      justify-content: center;
+    }
+    .site-sider-group-title {
+      text-align: center;
+    }
+    .site-sider-item {
+      cursor: pointer;
+      a {
+        display: flex;
+        width: 100%;
+        height: 48px;
+        justify-content: center;
+        align-items: center;
+      }
+      &::before {
+        content: none;
+      }
+    }
+    .site-sider-item .site-sider-label,
+    .site-sider-item .site-sider-subtitle,
+    .site-title,
+    .site-theme-btn {
+      display: none;
+    }
+  }
 `;
 
-const menuObj: Record<string, MyPkg[]> = {};
-const extractMenu = (list: MyPkg[]) => {
-  return list?.map((item) => {
-    const type = item?.type || 'default';
-    const prev = menuObj[type] || [];
-
-    Object.assign(menuObj, {
-      [type]: prev.concat({
-        ...item,
-        type,
-      }),
-    });
-  });
-};
-
-extractMenu(myPkgs);
-const kv = Object.fromEntries(myPkgs.map((item) => [item.key, item]));
-const menuKeys = Object.keys(menuObj);
 const Sider: React.FC = () => {
   const { scheme } = colorScheme;
   const menuEl = useRef<HTMLUListElement>(null);
   const { pathname } = useLocation();
+  const { kv, menuKeys, menuObj } = useMemo(() => {
+    const obj: Record<string, MyPkg[]> = {};
+    const extractMenu = (list: MyPkg[]) => {
+      return list?.map((item) => {
+        const type = item?.type || 'default';
+        const prev = obj[type] || [];
+
+        Object.assign(obj, {
+          [type]: prev.concat({
+            ...item,
+            type,
+          }),
+        });
+      });
+    };
+
+    extractMenu(myPkgs);
+
+    return {
+      kv: Object.fromEntries(myPkgs.map((item) => [item.key, item])),
+      menuKeys: Object.keys(obj),
+      menuObj: obj,
+    };
+  }, []);
   const activeKey = useMemo(() => pathname.substring(1), [pathname]);
   const current = useMemo(() => {
     window.scrollTo({
       top: 0,
     });
     return kv[activeKey] || projectInfo;
-  }, [activeKey]);
+  }, [activeKey, kv]);
   const renderMenu = useCallback(
     (list?: MyPkg[]) => {
       return list?.map((item) => {
+        const row = (
+          <>
+            <div className="site-sider-label">{item.title || item.path}</div>
+            {item.subtitle && <div className="site-sider-subtitle">{item.subtitle}</div>}
+          </>
+        );
+
         return (
           <li key={item.key} className="site-sider-item" data-active={activeKey === item.key}>
             <Link to={`/${item.key}`}>
-              <span className="site-sider-icon">{item.icon}</span>
-              <div className="site-sider-label">{item.title || item.path}</div>
-              {item.subtitle && <div className="site-sider-subtitle">{item.subtitle}</div>}
+              <Tooltip trigger="hover" title={<div className="site-tooltip">{row}</div>}>
+                <span className="site-sider-icon">{item.icon}</span>
+              </Tooltip>
+              {row}
             </Link>
           </li>
         );
@@ -276,7 +341,7 @@ const Sider: React.FC = () => {
       behavior: 'smooth',
       block: 'nearest',
     });
-  }, [current, scheme]);
+  }, [current]);
 
   return (
     <section className="site-left">
@@ -284,10 +349,14 @@ const Sider: React.FC = () => {
         <Link to="/">
           <Avatar className="site-logo" />
         </Link>
-        <h1 className="site-title">
-          {projectInfo.title}
-          <i>{current.subtitle}</i>
-        </h1>
+        <div className="site-title">
+          <Typography tag="h1" truncated>
+            {projectInfo.title}
+          </Typography>
+          <Typography tag="i" type="secondary" truncated>
+            {current.subtitle}
+          </Typography>
+        </div>
         <div
           className="site-theme-btn"
           onClick={() => {

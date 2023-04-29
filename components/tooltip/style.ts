@@ -10,12 +10,11 @@ export const cls = {
 
 injectGlobal`
   :root {
-    --tooltip-bg: rgb(255 255 255 / 80%);
+    --tooltip-bg: var(--component-bg);
     --tooltip-shadow-color: rgb(0 0 0 / 10%);
   }
 
   [data-theme='dark'] {
-    --tooltip-bg: rgb(0 0 0 / 80%);
     --tooltip-shadow-color: rgb(255 255 255 / 5%);
   }
 
@@ -39,7 +38,7 @@ injectGlobal`
       drop-shadow(1px 2px 8px var(--tooltip-shadow-color))
       drop-shadow(2px 4px 16px var(--tooltip-shadow-color));
     backdrop-filter: blur(16px);
-
+    -webkit-backdrop-filter: blur(16px);
     &::before {
       position: absolute;
       inset-inline-end: 0;
@@ -51,7 +50,7 @@ injectGlobal`
       background: inherit;
       content: '';
       clip-path: polygon(0% 0%, 50% 100%, 100% 0%);
-      transform: translateY(100%);
+      transform: translate3d(var(--x, 0), 100%, 0);
     }
   }
   .${cls.inUp} {

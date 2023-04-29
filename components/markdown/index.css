@@ -3,24 +3,6 @@
   src: url('./iconfont.woff2') format('woff2');
 }
 
-[data-theme='dark'] {
-  --table-row-hover-bg: #262626;
-  --blockquote-bg: rgb(40 40 40 / 50%);
-  --blockquote-icon-color: #6a483b;
-  --blockquote-color: #b3b3ae;
-  --details-bg: #1d1d1d;
-  --details-border-color: rgb(153 153 153 / 50%);
-  --md-mark-color: #e9887c;
-  --mark-bg: rgb(249 242 244 / 10%);
-  --toc-bg: rgb(23 23 23 / 80%);
-  --shadow-lite: rgb(255 255 255 / 6%);
-}
-
-:root {
-  --table-border-color: rgb(0 0 0 / 6%);
-  --shadow-lite: rgb(0 0 0 / 6%);
-}
-
 .neko-icon {
   font-size: inherit;
   font-family: neko-icon, sans-serif !important;
@@ -94,24 +76,23 @@
   position: relative;
   display: flex;
   margin: 0 auto;
-  max-inline-size: 80rem;
+  max-inline-size: 1280px;
   flex-direction: row-reverse;
-  gap: 1rem;
+  gap: 16px;
 }
 
 .n-md-body {
   overflow: hidden;
-  margin: 0 auto 1.5rem;
+  margin: 0 auto 24px;
   border-radius: var(--border-radius);
-  padding: 1.5rem;
-  max-inline-size: 80rem;
-  background-color: var(--component-background);
+  padding: 24px;
+  max-inline-size: 1280px;
   box-sizing: border-box;
   overflow-wrap: break-word;
   transition-duration: var(--transition-duration);
   transition-timing-function: var(--transition-timing-function);
   transition-property: background-color;
-  backdrop-filter: blur(1rem);
+  backdrop-filter: blur(16px);
   flex: 1;
 }
 
@@ -123,7 +104,8 @@
 
 .n-md-toc,
 .n-md-body {
-  box-shadow: 0 2px 8px 0 rgb(0 0 0 / 5%);
+  background-color: var(--component-bg);
+  box-shadow: 0 2px 8px 0 var(--primary-shadow, rgb(0 0 0 / 5%));
 }
 
 .n-md-toc {
@@ -138,8 +120,9 @@
   padding: 16px;
   max-inline-size: 200px;
   block-size: fit-content;
-  max-block-size: calc(100vb - 112px);
-  background-color: var(--toc-bg, rgb(255 255 255 / 80%));
+  max-block-size: calc(100vb - 98px);
+
+  /* background-color: var(--toc-bg, rgb(255 255 255 / 80%)); */
   box-sizing: border-box;
   backdrop-filter: blur(16px);
   transition-duration: var(--transition-duration);
@@ -171,10 +154,10 @@
 .n-md-toc .active,
 .n-md-toc .active a {
   color: var(--primary-color, #5794ff);
-  text-shadow: 0 1px var(--text-shadow-color);
+  text-shadow: 0 1px var(--primary-shadow);
 }
 
-.n-md-body a::after {
+.n-md-body a[href]::after {
   position: absolute;
   inset-block-end: 0;
   inset-inline-start: 0;
@@ -254,8 +237,8 @@ h6[data-prefix]::before {
   border-radius: var(--border-radius);
   padding: 2px 7px;
   font-size: 90%;
-  color: var(--md-mark-color, #cd9278);
-  background-color: var(--mark-bg, #f9f2f4);
+  color: var(--primary-heading);
+  background-color: var(--text-selection);
   transition-duration: var(--transition-duration);
   transition-timing-function: var(--transition-timing-function);
   transition-property: background-color, color;
@@ -392,7 +375,7 @@ blockquote p {
 }
 
 .n-md-body table tbody tr[role='row']:hover {
-  background-color: var(--table-row-hover-bg, rgb(60 90 100 / 4%));
+  background-color: var(--primary-shadow);
 }
 
 .n-md-body table tr[role='row'] th[role='gridcell'] {
@@ -428,16 +411,16 @@ blockquote p {
   border-radius: var(--border-radius);
   padding: 16px;
   font-weight: 500;
-  background-color: var(--blockquote-bg, #ecf8ff);
+  background-color: var(--primary-selection);
   transition-property: background-color;
 }
 
 .n-md-body blockquote::before,
 .n-md-body blockquote::after {
   position: absolute;
-  font-size: 2rem;
+  font-size: 32px;
   font-family: neko-icon, sans-serif;
-  color: var(--blockquote-icon-color, #fb5);
+  color: var(--primary-active);
   transition-property: color;
   content: '\e68d';
 }
@@ -492,20 +475,19 @@ blockquote p {
 .n-md-body blockquote p {
   margin: auto 0;
   font-size: var(--font-size);
-  color: var(--blockquote-color, #5e6d82);
   line-height: 24px;
   transition-property: color;
 }
 
 .n-md-body details {
   overflow: hidden;
-  border-inline-start: 5px solid var(--primary-border, #5794ff);
+  border-inline-start: 5px solid var(--primary-hover, #5794ff);
   border-radius: var(--border-radius);
   padding: 12px 24px;
-  background: var(--details-bg, #fafaff);
+  background: var(--primary-details-bg);
   box-sizing: border-box;
   user-select: none;
-  box-shadow: 0 2px 8px 0 rgb(0 0 0 / 5%);
+  box-shadow: 0 2px 8px 0 var(--primary-shadow, rgb(0 0 0 / 5%));
 }
 
 .n-md-body details,

@@ -150,8 +150,9 @@ const Tooltip: React.FC<TooltipProps> = ({
     return Object.assign(
       {
         ...popupStyle,
-        left: posi.left,
+        left: Math.abs(posi.left),
         top: posi.top,
+        '--x': -(Math.abs(posi.left) - posi.left) + 'px',
       },
       color && {
         '--tooltip-bg': color,

@@ -7,7 +7,7 @@ injectGlobal`
   .sandbox-box {
     break-inside: avoid;
     box-sizing: border-box;
-    padding-block-end: 1rem;
+    padding-block-end: 16px;
   }
 
   .sandbox-container,
@@ -31,24 +31,24 @@ injectGlobal`
   }
 
   fieldset {
-    padding: 0.5rem 1rem 0;
+    padding: 8px 16px 0;
   }
 
   .sandbox-title {
-    padding: 0 0.5rem;
+    padding: 0 8px;
     font-size: 14px;
     font-weight: 500;
   }
 
   .sandbox-view {
     position: relative;
-    padding-block-end: 2rem;
-    padding-inline: 0.5rem;
+    padding-block-end: 32px;
+    padding-inline: 8px;
   }
 
   .sandbox-view > div {
     display: flex;
-    gap: 0.5rem;
+    gap: 8px;
     flex-wrap: wrap;
     align-items: flex-end;
   }
@@ -59,15 +59,15 @@ injectGlobal`
   }
 
   .sandbox-view pre:first-of-type {
-    margin-block-start: 0.5rem;
+    margin-block-start: 8px;
   }
 
   .sandbox-info {
     border: var(--border-base);
     border-style: dotted;
-    border-width: 0.0625rem 0 0;
-    margin-inline: -1rem;
-    padding: 0 1rem 0.5rem;
+    border-width: 1px 0 0;
+    margin-inline: -16px;
+    padding: 0 16px 8px;
   }
 
   .sandbox-info .sandbox-title::before {
@@ -90,12 +90,12 @@ injectGlobal`
     position: absolute;
     inset-inline-end: -16px;
     inset-block-end: 0;
-    padding: 0.25rem;
+    padding: 4px;
     inline-size: fit-content;
     font-size: var(--font-size-sm);
     cursor: pointer;
     border-start-start-radius: var(--border-radius);
-    line-height: 1rem;
+    line-height: 16px;
     user-select: none;
     transition-property: background-color, color, transform;
   }
@@ -104,7 +104,7 @@ injectGlobal`
     display: inline-block;
     font-size: var(--font-size-xs);
     font-family: neko-icon, sans-serif;
-    text-indent: 0.25rem;
+    text-indent: 4px;
     content: '\\e63e';
   }
 
@@ -114,12 +114,12 @@ injectGlobal`
 
   .sandbox-btn[data-open='true'] {
     color: white;
-    background-color: var(--primary-color, #5794ff);
+    background-color: var(--primary-color);
   }
 
   .sandbox-btn[data-open='false'] {
-    color: var(--primary-color, #5794ff);
-    background-color: var(--primary-bg, #f0f8ff);
+    color: var(--primary-color);
+    background-color: var(--primary-outline);
     border-end-end-radius: var(--border-radius);
   }
 
@@ -132,9 +132,9 @@ injectGlobal`
     --code-color: var(--text-color);
 
     border-style: dotted;
-    border-width: 0.0625rem 0 0;
-    padding: 1rem;
-    margin-inline: -1rem;
+    border-width: 1px 0 0;
+    padding: 16px;
+    margin-inline: -16px;
   }
 
   .sandbox-live-editor.hide {

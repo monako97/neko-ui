@@ -22,7 +22,7 @@ injectGlobal`
     transition: transform 0.3s;
     cursor: pointer;
     user-select: none;
-    background-image: linear-gradient(45deg, #cabdeb 0%, #e9887c 100%);
+    background-image: linear-gradient(45deg, var(--primary-outline) 0%, var(--success-outline) 100%);
     animation: avatar-morph-effect 8s ease-in-out infinite;
 
     &::before,

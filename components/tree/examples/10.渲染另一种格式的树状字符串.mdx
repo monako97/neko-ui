@@ -2,7 +2,7 @@
 
 ```jsx
 function Demo() {
-const data = `.
+  const data = `.
 ├── components
 │   ├── @moneko
 │   │   ├── README.mdx
@@ -18,24 +18,8 @@ const data = `.
 ├── package.json
 ├── tsconfig.json
 └── typings
-    └── typings.d.ts`
+    └── typings.d.ts`;
 
-  return (
-    <Tree
-      data={data}
-      className="treeview-part"
-      renderRow={(item, title, subTitle) => {
-        const ext =
-          item.title.endsWith('/') || item.children ? 'dir' : item.title.match(/[^.]+\w*$/)?.[0];
-
-        return [
-          <span key="title" className={`entry-name ext-${ext} ${ext}`}>
-            {title}
-          </span>,
-          subTitle,
-        ];
-      }}
-    />
-  );
+  return <Tree data={data} />;
 }
 ```

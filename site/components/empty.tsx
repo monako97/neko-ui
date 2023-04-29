@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { injectGlobal } from 'neko-ui';
 import getBrowser from 'neko-ui/utils/broswer';
 import jb_beam from '@/assets/images/jb_beam.svg';
@@ -6,15 +6,15 @@ import { projectInfo } from '@/utils';
 
 injectGlobal`
   .site-empty {
-    min-block-size: calc(100vb - 14.75rem);
+    min-block-size: calc(100vb - 236px);
 
     & > span {
-      margin-inline-start: 1rem;
+      margin-inline-start: 16px;
     }
 
     .site-empty-top {
       display: flex;
-      gap: 1.5rem;
+      gap: 24px;
     }
 
     .site-empty-info {
@@ -23,8 +23,8 @@ injectGlobal`
 
     &-thank {
       img {
-        inline-size: 7.5rem;
-        block-size: 7.5rem;
+        inline-size: 120px;
+        block-size: 120px;
       }
 
       h2::before,
@@ -40,21 +40,21 @@ injectGlobal`
 
     &-colors {
       display: flex;
-      gap: 0.75rem;
+      gap: 12px;
     }
 
     &-color {
       display: flex;
       flex-direction: column;
       flex: 1;
-      gap: 0.3125rem;
+      gap: 5px;
 
       &-item {
         display: flex;
         justify-content: space-between;
         align-items: center;
         border-radius: var(--border-radius);
-        padding: 0.5rem 0.75rem;
+        padding: 8px 12px;
         color: #fff;
         cursor: pointer;
         transition-property: background-color;
@@ -89,16 +89,23 @@ injectGlobal`
   }
 `;
 
-const broswer = getBrowser();
-const infos: [string, string?][] = [
-  ['描述', projectInfo.description],
-  ['版本', projectInfo.version],
-  ['作者', projectInfo.author?.name],
-  ['浏览器', `${broswer.name} ${broswer.version}`],
-];
-const colors = ['primary', 'warning', 'error', 'success'];
-const types = ['bg', 'outline', 'border', 'hover', 'color', 'active'];
 const Empty: React.FC = () => {
+  const { infos, colors, types } = useMemo(() => {
+    const _browser = getBrowser();
+
+    return {
+      broswer: _browser,
+      infos: [
+        ['描述', projectInfo.description],
+        ['版本', projectInfo.version],
+        ['作者', projectInfo.author?.name],
+        ['浏览器', `${_browser.name} ${_browser.version}`],
+      ],
+      colors: ['primary', 'warning', 'error', 'success'],
+      types: ['bg', 'outline', 'border', 'hover', 'color', 'active'],
+    };
+  }, []);
+
   return (
     <div className="n-md-body site-empty">
       <div className="site-empty-top">

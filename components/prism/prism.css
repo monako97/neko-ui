@@ -5,7 +5,6 @@
 
 [data-theme='dark'] {
     --code-color: #eee;
-    --code-bg: var(--component-background);
     --code-lang-style-color: #fd9170;
     --code-toolbar-bg: rgb(63 63 63 / 20%);
     --token-atrule: #c792ea;
@@ -55,8 +54,8 @@ code[class*='language-']::selection,
 pre[class*='language-'] ::selection,
 code[class*='language-'] ::selection pre[class*='language-']::selection,
 pre[class*='language-'] ::selection pre[class*='language-']::selection {
-    background-color: var(--text-selection-bg);
-    text-shadow: 0 1px var(--text-shadow-color);
+    background-color: var(--text-selection);
+    text-shadow: 0 1px var(--primary-shadow);
 }
 
 .language-css>code,
@@ -539,8 +538,8 @@ pre:not(.sp-cm) {
     max-inline-size: 100%;
     font-size: var(--font-size);
     white-space: pre-wrap;
-    background-color: var(--code-bg, rgb(255 255 255 / 80%));
-    box-shadow: 0 2px 8px 0 rgb(0 0 0 / 5%);
+    background-color: var(--primary-component-bg);
+    box-shadow: 0 2px 8px 0 var(--primary-shadow, rgb(0 0 0 / 5%));
     line-height: 20px;
     transition-property: color, background-color, box-shadow;
 }
@@ -652,7 +651,7 @@ pre:not(.sp-cm).line-numbers .line-numbers-rows {
     inline-size: 44px;
     max-block-size: inherit;
     font-size: 100%;
-    background-color: var(--code-bg, #fff);
+    background-color: var(--primary-component-bg);
     letter-spacing: -1px;
     user-select: none;
     pointer-events: none;
