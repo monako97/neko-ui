@@ -1,3 +1,7 @@
+# [1.2.0](https://github.com/monako97/neko-ui/compare/1.1.0...1.2.0) (2023-05-01)
+
+
+
 # [1.1.0](https://github.com/monako97/neko-ui/compare/1.0.47...1.1.0) (2023-04-29)
 
 
@@ -8,6 +12,7 @@
 
 ### Features
 
+* generateTheme 生成主题色调 ([20680b5](https://github.com/monako97/neko-ui/commit/20680b5fb1679debbc805337e4ab1c5c610c37d0))
 * typography ([d6c35b8](https://github.com/monako97/neko-ui/commit/d6c35b8c9cd2cbcc1df96dc99e86d41cb0fcfbdb))
 * 树状组件支持tree命令行的树状字符串 ([dd4d32d](https://github.com/monako97/neko-ui/commit/dd4d32dae1daf6932c7af47337a355759c9dc965))
 

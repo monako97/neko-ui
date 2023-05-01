@@ -1,0 +1,17 @@
+失效状态
+
+```tsx
+function Demo() {
+  const [disabled, setDisabled] = React.useState(true);
+
+  return (
+    <div>
+      <Switch onLabel="开启" offLabel="关闭" value={disabled} onChange={setDisabled} />
+      <br />
+      <Switch value={true} disabled={disabled} />
+      <br />
+      <Switch onLabel="开" offLabel="关" disabled={disabled} />
+    </div>
+  );
+}
+```

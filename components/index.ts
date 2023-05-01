@@ -46,6 +46,7 @@ export { default as Photo, type PhotoProps, type ImageData } from './photo';
 export { default as Carousel, type CarouselProps } from './carousel';
 export { default as Portal, type PortalProps } from './portal';
 export { default as Typography, type TypographyProps } from './typography';
+export { default as Switch, type SwitchProps } from './switch';
 export { default as prefixCls, setPrefixCls } from './prefix-cls';
 export { default as highlight } from './highlight';
 export { default as Prism } from './prism';
