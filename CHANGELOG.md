@@ -1,9 +1,10 @@
-## [1.2.1](https://github.com/monako97/neko-ui/compare/1.1.0...1.2.1) (2023-05-03)
+## [1.2.2](https://github.com/monako97/neko-ui/compare/1.1.0...1.2.2) (2023-05-03)
 
 
 ### Features
 
 * switch ([181bf14](https://github.com/monako97/neko-ui/commit/181bf14a48bddb49c4d2dde5ff5ee369e0a65980))
+* switch按钮支持聚焦、键盘事件 ([20f48c5](https://github.com/monako97/neko-ui/commit/20f48c5a9b6e818f83ee573f36582fe795a30d5a))
 
 
 

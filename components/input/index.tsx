@@ -36,16 +36,12 @@ const Input: React.FC<InputProps> = ({
   formatter,
   parser,
   onChange,
-  onFocus,
-  onBlur,
-  autoComplete = 'off',
   label,
   placeholder = ' ',
   ...prpos
 }) => {
   const ref = useRef<HTMLInputElement>(null);
   const [x, setX] = useState(`${ref.current?.offsetLeft}px`);
-  const [focus, setFocus] = useState<boolean>(false);
   const getValue = useCallback(
     (val: InputProps['value']) => {
       return formatter ? formatter?.(val) : val;
@@ -73,35 +69,15 @@ const Input: React.FC<InputProps> = ({
     },
     [onChange, parserValue]
   );
-  const handleFocus: React.FocusEventHandler<HTMLInputElement> = useCallback(
-    (e) => {
-      setFocus(true);
-      onFocus?.(e);
-    },
-    [onFocus]
-  );
-  const handleBlur: React.FocusEventHandler<HTMLInputElement> = useCallback(
-    (e) => {
-      setFocus(false);
-      onBlur?.(e);
-    },
-    [onBlur]
-  );
 
   useEffect(() => {
     setX(`${ref.current?.offsetLeft}px`);
   }, []);
 
   return (
-    <span
-      className={cx(
-        cls.wrapper,
-        size && cls[size],
-        disabled && cls.disabled,
-        focus && cls.focus,
-        status && cls[status],
-        className
-      )}
+    <fieldset
+      className={cx(cls.fieldset, size && cls[size], status && cls[status], className)}
+      disabled={disabled}
     >
       {prefix ? <span className={cls.prefix}>{prefix}</span> : null}
       <input
@@ -109,10 +85,6 @@ const Input: React.FC<InputProps> = ({
         type={type}
         value={getValue(value)}
         className={cls.input}
-        autoComplete={autoComplete}
-        disabled={disabled}
-        onFocus={handleFocus}
-        onBlur={handleBlur}
         onChange={handleChange}
         placeholder={placeholder}
         {...prpos}
@@ -123,7 +95,7 @@ const Input: React.FC<InputProps> = ({
         </label>
       )}
       {suffix ? <span className={cls.suffix}>{suffix}</span> : null}
-    </span>
+    </fieldset>
   );
 };
 

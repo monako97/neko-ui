@@ -79,9 +79,9 @@ const InputNumber: React.FC<InputNumberProps> = ({
   const handleKeyDown: React.KeyboardEventHandler<HTMLInputElement> = useCallback(
     (e) => {
       if (e.key === 'ArrowUp') {
-        handleMouseMove({ movementX: 0, movementY: 1 });
-      } else if (e.key === 'ArrowDown') {
         handleMouseMove({ movementX: 0, movementY: -1 });
+      } else if (e.key === 'ArrowDown') {
+        handleMouseMove({ movementX: 0, movementY: 1 });
       }
       onKeyDown?.(e);
     },
