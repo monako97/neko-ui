@@ -1,4 +1,9 @@
-# [1.2.0](https://github.com/monako97/neko-ui/compare/1.1.0...1.2.0) (2023-05-01)
+## [1.2.1](https://github.com/monako97/neko-ui/compare/1.1.0...1.2.1) (2023-05-03)
+
+
+### Features
+
+* switch ([181bf14](https://github.com/monako97/neko-ui/commit/181bf14a48bddb49c4d2dde5ff5ee369e0a65980))
 
 
 

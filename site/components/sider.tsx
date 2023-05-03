@@ -349,14 +349,14 @@ const Sider: React.FC = () => {
         <Link to="/">
           <Avatar className="site-logo" />
         </Link>
-        <div className="site-title">
+        <hgroup className="site-title">
           <Typography tag="h1" truncated>
             {projectInfo.title}
           </Typography>
           <Typography tag="i" type="secondary" truncated>
             {current.subtitle}
           </Typography>
-        </div>
+        </hgroup>
         <div
           className="site-theme-btn"
           onClick={() => {

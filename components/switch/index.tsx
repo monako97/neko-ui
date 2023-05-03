@@ -35,6 +35,11 @@ const Switch: React.FC<SwitchProps> = ({
           });
         }
       },
+      onKeyUpCapture({ key }: { key: string }) {
+        if (key === 'Enter') {
+          state.current.change();
+        }
+      },
     })
   );
   const { value: val, loading: load, disabled: disable } = state.current;
@@ -62,7 +67,9 @@ const Switch: React.FC<SwitchProps> = ({
       data-on={onLabel}
       data-off={offLabel}
       data-disabled={disable}
-      onClick={state.current.change}
+      onClickCapture={state.current.change}
+      onKeyUpCapture={state.current.onKeyUpCapture}
+      tabIndex={disable || load ? -1 : 0}
     />
   );
 };

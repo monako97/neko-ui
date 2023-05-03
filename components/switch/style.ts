@@ -15,8 +15,11 @@ injectGlobal`
     padding: 2px;
     font-size: 12px;
     background-color: var(--primary-border);
-    transition-duration: 0.3s;
-    transition-property: background-color, box-shadow, opacity;
+    opacity: 1;
+    outline: 0;
+    box-shadow: inset 0 0 0 0 var(--primary-color), 0 0 0 0 var(--primary-hover),
+      0 0 0 0 var(--primary-border);
+    transition: 0.4s box-shadow, 0.3s background-color, 0.3s opacity;
     cursor: pointer;
     inline-size: fit-content;
     min-inline-size: 42px;
@@ -24,7 +27,6 @@ injectGlobal`
     line-height: 18px;
     user-select: none;
     box-sizing: border-box;
-    opacity: 1;
 
     &::before {
       color: var(--primary-secondary);
@@ -36,47 +38,63 @@ injectGlobal`
 
     &::after {
       position: absolute;
-      border: 2px solid #fff;
-      border-radius: 9px;
-      padding: 5px;
+      margin: auto;
+      border: 1.5px solid #fff;
+      border-radius: 12px;
       background-color: #fff;
       outline: 2.05px solid #fff;
       box-shadow: 0 2px 4px 1px var(--primary-shadow);
+      transition: 0.3s padding, 0.3s background-color 0.1s, 0.3s left, 0.6s transform,
+        0.3s border-color;
       outline-offset: -0.05px;
-      inset-block-start: 4px;
-      transition-duration: 0.3s;
-      transition-property: padding, background-color;
+      inset-block-start: 3px;
+      inset-block-end: 3px;
+      block-size: 14px;
+      min-inline-size: 14px;
       content: '';
       inset-inline-start: 4px;
-      inset-inline-end: unset;
-    }
-
-    &:hover {
-      background-color: var(--primary-secondary-bg);
+      box-sizing: border-box;
     }
 
     &:not([data-disabled]),
     &[data-disabled='false'] {
-      &:not(.${cls.loading}):active::after {
-        padding: 5px 10px;
-        background-color: var(--primary-border);
+      &:not(.${cls.loading}) {
+        &:focus {
+          box-shadow: inset 0 0 0 0 var(--primary-color), 0 0 0 1px var(--primary-hover),
+            0 0 1px 3px var(--primary-border);
+          &.${cls.checked} {
+            box-shadow: inset 0 0 3px 12px var(--primary-color), 0 0 0 1px var(--primary-hover),
+              0 0 1px 3px var(--primary-border);
+          }
+        }
+
+        &:hover {
+          background-color: var(--primary-secondary-bg);
+        }
+
+        &:active {
+          &::after {
+            padding-inline: 10px;
+            background-color: var(--primary-hover);
+          }
+          &.${cls.checked} {
+            &::after {
+              transform: translateX(-10px);
+            }
+          }
+        }
       }
     }
     &.${cls.loading}, &[data-disabled]:not([data-disabled='false']) {
-      opacity: 0.8;
-      cursor: not-allowed;
       color: var(--disable-color);
       background-color: var(--disable-bg);
-    }
-  }
-  .${cls.loading} {
-    &::after {
-      border-block-start-color: var(--primary-color);
-      animation: switch-loading 1s infinite linear;
+      opacity: 0.8;
+      cursor: not-allowed;
     }
   }
   .${cls.checked} {
-    box-shadow: inset 0 0 3px 12px var(--primary-color);
+    box-shadow: inset 0 0 3px 12px var(--primary-color), 0 0 0 0 var(--primary-hover),
+      0 0 0 0 var(--primary-border);
 
     &::before {
       color: #fff;
@@ -85,8 +103,14 @@ injectGlobal`
     }
 
     &::after {
-      inset-inline-end: 4px;
-      inset-inline-start: unset;
+      inset-inline-start: calc(100% - 18px);
+    }
+  }
+  .${cls.loading} {
+    &::after {
+      border-block-start-color: var(--primary-color);
+      border-block-end-color: var(--primary-color);
+      animation: switch-loading 1.5s infinite linear;
     }
   }
 
