@@ -6,7 +6,7 @@ import { type ComponentSize } from '../index';
 export interface InputProps<T = string | number | undefined>
   extends Omit<
     React.InputHTMLAttributes<HTMLInputElement>,
-    'prefix' | 'size' | 'onChange' | 'value'
+    'prefix' | 'size' | 'onChange' | 'value' | 'type'
   > {
   className?: string;
   suffix?: React.ReactNode;
@@ -14,6 +14,7 @@ export interface InputProps<T = string | number | undefined>
   size?: ComponentSize;
   label?: React.ReactNode;
   status?: 'error' | 'warning' | 'success';
+  type?: 'email' | 'hidden' | 'number' | 'password' | 'search' | 'tel' | 'text' | 'url';
   value?: T;
   // eslint-disable-next-line no-unused-vars
   onChange?: (value?: T) => void;

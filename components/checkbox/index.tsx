@@ -3,35 +3,30 @@ import { isFunction } from '@moneko/common';
 import sso from 'shared-store-object';
 import { cls } from './style';
 import { cx } from '../emotion';
+import type { RadioOption } from '../radio';
 
-export type RadioOption = {
-  value: string | number;
+export interface CheckboxOption extends RadioOption {
   label: React.ReactNode;
-  disabled?: boolean;
-  className?: string;
-  style?: React.CSSProperties;
-};
-
-export interface RadioProps {
+}
+export interface CheckboxProps {
   className?: string;
   style?: React.CSSProperties;
   name?: string;
   disabled?: boolean;
-  value?: string | number;
+  value?: (string | number)[];
   options: RadioOption[];
   // eslint-disable-next-line no-unused-vars
-  onChange?: (val: string | number) => void;
+  onChange?: (val: (string | number)[]) => void;
   layout?: 'vertical' | 'horizontal';
 }
-
-const Radio: React.FC<RadioProps> = ({
+const Checkbox: React.FC<CheckboxProps> = ({
   layout = 'horizontal',
   className,
   name,
   style,
   disabled,
   options,
-  value,
+  value = [],
   onChange,
   ...props
 }) => {
@@ -42,10 +37,19 @@ const Radio: React.FC<RadioProps> = ({
       disabled,
       onChange(item: Omit<RadioOption, 'label'>) {
         if (!state.current.disabled && !item.disabled) {
-          if (isFunction(onChange)) {
-            onChange(item.value);
+          const newVal = [...state.current.value];
+          const idx = newVal.indexOf(item.value);
+
+          if (idx !== -1) {
+            newVal.splice(idx, 1);
           } else {
-            state.current.value = item.value;
+            newVal.push(item.value);
+          }
+
+          if (isFunction(onChange)) {
+            onChange(newVal);
+          } else {
+            state.current.value = newVal;
           }
         }
       },
@@ -92,12 +96,12 @@ const Radio: React.FC<RadioProps> = ({
             style={item.style}
           >
             <input
-              className={cls.radio}
-              type="radio"
+              className={cls.checkbox}
+              type="checkbox"
               name={name}
               value={item.value}
               disabled={readOnly}
-              checked={item.value === val}
+              checked={val.includes(item.value)}
               onChange={handleChange}
             />
             {label}
@@ -108,4 +112,4 @@ const Radio: React.FC<RadioProps> = ({
   );
 };
 
-export default Radio;
+export default Checkbox;

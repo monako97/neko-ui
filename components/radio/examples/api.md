@@ -8,10 +8,10 @@
 | value     | 值                                 | `string` \| `number`                 | -            | 1.3.0 |
 | disabled  | 只读                               | `boolean`                            | -            | 1.3.0 |
 | onChange  | 值修改时的回调方法                 | (open: `string` \| `number`) => void | -            | 1.3.0 |
-| options   | 选项数据                           | `Option[]`                           | `[]`         | 1.3.0 |
+| options   | 选项数据                           | `RadioOption[]`                      | `[]`         | 1.3.0 |
 | layout    | 选项排列方式                       | `vertical` \| `horizontal`           | `horizontal` | 1.3.0 |
 
-### Option
+### RadioOption
 
 | 属性      | 说明         | 类型                  | 默认值 | 版本  |
 | --------- | ------------ | --------------------- | ------ | ----- |

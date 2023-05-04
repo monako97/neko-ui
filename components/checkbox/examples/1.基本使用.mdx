@@ -1,11 +1,11 @@
-最简单的用法
+基本使用
 
-```jsx
+```tsx
 function Demo() {
-  const [value, setValue] = React.useState('3');
+  const [value, setValue] = React.useState(['3']);
 
   return (
-    <Radio
+    <Checkbox
       value={value}
       onChange={setValue}
       options={[
