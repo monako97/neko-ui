@@ -1,8 +1,13 @@
+## [1.4.1](https://github.com/monako97/neko-ui/compare/1.4.0...1.4.1) (2023-05-04)
+
+
+
 # [1.4.0](https://github.com/monako97/neko-ui/compare/1.1.0...1.4.0) (2023-05-04)
 
 
 ### Features
 
+* checkbox 复选框 ([6df0d8d](https://github.com/monako97/neko-ui/commit/6df0d8d091c7cbac1c89bd57fd682ba6f2c9335b))
 * input组件支持自动校验并为错误类型添加样式 ([95761db](https://github.com/monako97/neko-ui/commit/95761db1784c6c79a31a9c0e2adaa6f503d5c32d))
 * radio 单选框 ([d0f4c6f](https://github.com/monako97/neko-ui/commit/d0f4c6fd73b1e2f5127f9777cb73edb43940670d))
 * switch ([181bf14](https://github.com/monako97/neko-ui/commit/181bf14a48bddb49c4d2dde5ff5ee369e0a65980))

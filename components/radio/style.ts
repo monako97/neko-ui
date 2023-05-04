@@ -72,8 +72,8 @@ injectGlobal`
       inset-inline-start: 0;
       inset-inline-end: 0;
       content: '';
-      inline-size: 8px;
-      block-size: 8px;
+      inline-size: 10px;
+      block-size: 10px;
       transform: scale(0);
       transition: 120ms transform ease-in-out;
     }
