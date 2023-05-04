@@ -237,6 +237,6 @@ describe('test Tree', () => {
   });
   it('Invalid file tree structure', async () => {
     render(<Tree data={`\n/\n/`} />);
-    render(<Tree data={`\n/\n||\n`} />);
+    render(<Tree data={`\n/\n||\n`} size="large" />);
   });
 });

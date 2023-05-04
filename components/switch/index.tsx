@@ -1,4 +1,5 @@
 import React, { useEffect, useRef } from 'react';
+import { isFunction } from '@moneko/common';
 import sso from 'shared-store-object';
 import { cls } from './style';
 import { cx } from '../emotion';
@@ -21,6 +22,7 @@ const Switch: React.FC<SwitchProps> = ({
   disabled,
   onLabel,
   offLabel,
+  ...props
 }) => {
   const state = useRef(
     sso({
@@ -29,10 +31,11 @@ const Switch: React.FC<SwitchProps> = ({
       loading,
       change() {
         if (!state.current.disabled && !state.current.loading) {
-          state.current('value', (prev) => {
-            onChange?.(!prev);
-            return !prev;
-          });
+          if (isFunction(onChange)) {
+            onChange?.(!state.current.value);
+          } else {
+            state.current('value', (prev) => !prev);
+          }
         }
       },
       onKeyUpCapture({ key }: { key: string }) {
@@ -63,6 +66,7 @@ const Switch: React.FC<SwitchProps> = ({
 
   return (
     <span
+      {...props}
       className={cx(cls.switch, className, val && cls.checked, load && cls.loading)}
       data-on={onLabel}
       data-off={offLabel}

@@ -39,6 +39,7 @@ injectGlobal`
 
     input {
       background: none;
+      appearance: none;
     }
     &:focus-within {
       border-color: var(--primary-hover, #80b3ff);

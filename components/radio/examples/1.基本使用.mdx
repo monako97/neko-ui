@@ -1,0 +1,20 @@
+最简单的用法
+
+```jsx
+function Demo() {
+  const [value, setValue] = React.useState('3');
+
+  return (
+    <Radio
+      value={value}
+      onChange={setValue}
+      options={[
+        { name: 'radio', value: '1', label: 'option-1' },
+        { name: 'radio', value: '2', label: 'option-2' },
+        { name: 'radio', value: '3', label: 'option-3' },
+        { name: 'radio', value: '4', label: 'option-4' },
+      ]}
+    />
+  );
+}
+```

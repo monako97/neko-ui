@@ -37,6 +37,7 @@ export { default as WaveCircle, type WaveCircleProps } from './wave-circle';
 export { default as Button, type ButtonProps, type ButtonType } from './button';
 export { default as Input, type InputProps } from './input';
 export { default as InputNumber, type InputNumberProps } from './input-number';
+export { default as Radio, type RadioProps } from './radio';
 export { default as Tooltip, type TooltipProps, type TooltipTriggerOption } from './tooltip';
 export { default as ColorPalette, type ColorPaletteProps } from './color-palette';
 export { default as ColorPicker, type ColorPickerProps } from './color-picker';
