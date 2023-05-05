@@ -1,4 +1,4 @@
-## [1.4.1](https://github.com/monako97/neko-ui/compare/1.4.0...1.4.1) (2023-05-04)
+## [1.4.2](https://github.com/monako97/neko-ui/compare/1.4.0...1.4.2) (2023-05-05)
 
 
 

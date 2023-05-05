@@ -13,10 +13,11 @@
 
 ### CheckboxOption
 
-| 属性      | 说明         | 类型                  | 默认值 | 版本  |
-| --------- | ------------ | --------------------- | ------ | ----- |
-| className | 自定义类名   | `string`              | -      | 1.4.0 |
-| style     | 自定义样式表 | `React.CSSProperties` | -      | 1.4.0 |
-| value     | 值           | `string` \| `number`  | -      | 1.4.0 |
-| disabled  | 只读         | `boolean`             | -      | 1.4.0 |
-| label     | 选项描述     | `React.ReactNode`     | -      | 1.4.0 |
+| 属性          | 说明         | 类型                  | 默认值 | 版本  |
+| ------------- | ------------ | --------------------- | ------ | ----- |
+| className     | 自定义类名   | `string`              | -      | 1.4.0 |
+| style         | 自定义样式表 | `React.CSSProperties` | -      | 1.4.0 |
+| value         | 值           | `string` \| `number`  | -      | 1.4.0 |
+| disabled      | 只读         | `boolean`             | -      | 1.4.0 |
+| label         | 选项描述     | `React.ReactNode`     | -      | 1.4.0 |
+| indeterminate | 不确定状态   | `boolean`             | -      | 1.4.2 |

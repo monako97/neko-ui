@@ -62,4 +62,43 @@ describe('test Input', () => {
     fireEvent.focus(getByTestId('disabled'));
     fireEvent.click(getByLabelText('option-1'));
   });
+  it('indeterminate', () => {
+    function IndeterminateDemo() {
+      const [value, setValue] = React.useState(['3']);
+      const options = React.useMemo(
+        () => [
+          { value: '1', label: 'option-1' },
+          { value: '2', label: 'option-2' },
+          { value: '3', label: 'option-3' },
+          { value: '4', label: 'option-4' },
+        ],
+        []
+      );
+      const indeterminate = React.useMemo(() => {
+        let _indeterminate = false;
+
+        options.forEach((opt) => {
+          if (value.length && !value.includes(opt.value)) {
+            _indeterminate = true;
+          }
+        });
+        return _indeterminate;
+      }, [options, value]);
+
+      return (
+        <Checkbox
+          data-testid="indeterminate"
+          value={value}
+          onChange={setValue}
+          options={[{ value: 'all', label: '全选', indeterminate: indeterminate }, ...options]}
+        />
+      );
+    }
+    const { getByTestId, getByLabelText } = render(<IndeterminateDemo />);
+
+    expect(getByTestId('indeterminate')).toBeInTheDocument();
+    fireEvent.focus(getByTestId('indeterminate'));
+    fireEvent.click(getByLabelText('全选'));
+    fireEvent.click(getByLabelText('全选'));
+  });
 });

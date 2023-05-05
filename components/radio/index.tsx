@@ -5,7 +5,7 @@ import { cls } from './style';
 import { cx } from '../emotion';
 
 export type RadioOption = {
-  value: string | number;
+  value: string;
   label: React.ReactNode;
   disabled?: boolean;
   className?: string;
@@ -17,10 +17,10 @@ export interface RadioProps {
   style?: React.CSSProperties;
   name?: string;
   disabled?: boolean;
-  value?: string | number;
+  value?: string;
   options: RadioOption[];
   // eslint-disable-next-line no-unused-vars
-  onChange?: (val: string | number) => void;
+  onChange?: (val: string) => void;
   layout?: 'vertical' | 'horizontal';
 }
 

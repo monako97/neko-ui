@@ -1,0 +1,34 @@
+可以通过 `indeterminate` 设置不确定状态, 当需要全选时可以用到
+
+```jsx
+function Demo() {
+  const [value, setValue] = React.useState(['3']);
+  const options = React.useMemo(
+    () => [
+      { value: '1', label: 'option-1' },
+      { value: '2', label: 'option-2' },
+      { value: '3', label: 'option-3' },
+      { value: '4', label: 'option-4' },
+    ],
+    []
+  );
+  const indeterminate = React.useMemo(() => {
+    let _indeterminate = false;
+
+    options.forEach((opt) => {
+      if (value.length && !value.includes(opt.value)) {
+        _indeterminate = true;
+      }
+    });
+    return _indeterminate;
+  }, [options, value]);
+
+  return (
+    <Checkbox
+      value={value}
+      onChange={setValue}
+      options={[{ value: 'all', label: '全选', indeterminate: indeterminate }, ...options]}
+    />
+  );
+}
+```

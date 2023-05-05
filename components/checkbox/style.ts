@@ -69,17 +69,27 @@ injectGlobal`
       margin: auto;
       border-style: solid;
       border-width: 0 0 2px 2px;
-      border-color: var(--primary-outline);
-      transition: 0.2s transform ease-in-out;
+      border-color: transparent;
+      transition-duration: 0.2s;
+      transition-timing-function: ease-in-out;
+      transition-property: background-color, transform, border-color, height;
       box-sizing: border-box;
       inset-block-start: 0;
       inset-block-end: 0;
       inset-inline-start: 0;
       inset-inline-end: 0;
       content: '';
-      inline-size: 70%;
-      block-size: 45%;
-      transform: rotate(-55deg) translateY(-10%) translateX(5%) scale(var(--scale, 0));
+      inline-size: 10px;
+      block-size: 10px;
+      transform: scale(0);
+    }
+
+    &:indeterminate:not(:checked) {
+      &::before {
+        border-radius: 2px;
+        background-color: var(--primary-color);
+        transform: scale(1);
+      }
     }
 
     &:not(:disabled, :checked):hover {
@@ -88,9 +98,14 @@ injectGlobal`
     }
 
     &:checked {
-      --scale: 1;
       --shadow-w: 16px;
       --border-color: var(--primary-color);
+
+      &::before {
+        block-size: 5px;
+        border-color: var(--primary-outline);
+        transform: rotate(-55deg) translateY(-10%) translateX(5%) scale(1);
+      }
     }
 
     &:active {

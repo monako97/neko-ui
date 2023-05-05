@@ -22,7 +22,7 @@ injectGlobal`
     transition: 0.4s box-shadow, 0.3s background-color, 0.3s opacity;
     cursor: pointer;
     inline-size: fit-content;
-    min-inline-size: 42px;
+    min-inline-size: 44px;
     block-size: 22px;
     line-height: 18px;
     user-select: none;
