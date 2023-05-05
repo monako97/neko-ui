@@ -1,4 +1,13 @@
+## [1.5.1](https://github.com/monako97/neko-ui/compare/1.5.0...1.5.1) (2023-05-05)
+
+
+
 # [1.5.0](https://github.com/monako97/neko-ui/compare/1.4.2...1.5.0) (2023-05-05)
+
+
+### Features
+
+* segmented 分段控制器 ([e7c269b](https://github.com/monako97/neko-ui/commit/e7c269b6ea2d763e2577a127602de3d654cd5a41))
 
 
 

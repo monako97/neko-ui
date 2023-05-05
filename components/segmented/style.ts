@@ -1,4 +1,4 @@
-import { css, injectGlobal } from '../emotion';
+import { injectGlobal } from '../emotion';
 import prefixCls from '../prefix-cls';
 
 export const cls = {
@@ -8,7 +8,17 @@ export const cls = {
   icon: prefixCls('segmented-icon'),
 };
 
-const cs = css`
+injectGlobal`
+  :root {
+    --segmented-bg: var(--primary-details-bg);
+    --segmented-current-bg: #fff;
+  }
+
+  :root[data-theme='dark'] {
+    --segmented-bg: #000;
+    --segmented-current-bg: #1f1f1f;
+  }
+
   .${cls.box} {
     position: relative;
     display: flex;
@@ -16,14 +26,14 @@ const cs = css`
     padding: 2px;
     max-inline-size: 100%;
     min-block-size: 28px;
-    background-color: var(--primary-details-bg);
+    background-color: var(--segmented-bg);
     line-height: 28px;
 
     &::before {
       position: absolute;
       display: block;
       border-radius: var(--border-radius);
-      background-color: #fff;
+      background-color: var(--segmented-current-bg);
       box-shadow: 0 2px 8px 0 var(--primary-shadow);
       content: '';
       inline-size: var(--w);
@@ -84,5 +94,3 @@ const cs = css`
     }
   }
 `;
-
-injectGlobal([cs]);
