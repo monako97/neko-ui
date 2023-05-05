@@ -1,4 +1,13 @@
+# [1.5.0](https://github.com/monako97/neko-ui/compare/1.4.2...1.5.0) (2023-05-05)
+
+
+
 ## [1.4.2](https://github.com/monako97/neko-ui/compare/1.4.0...1.4.2) (2023-05-05)
+
+
+### Features
+
+* checkbox supports indeterminate state ([6427d62](https://github.com/monako97/neko-ui/commit/6427d62429c722a8543000faf43a7705ab399997))
 
 
 

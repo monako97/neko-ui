@@ -1,20 +1,15 @@
 最简单的用法
 
 ```jsx
-function Demo() {
-  const [value, setValue] = React.useState('3');
-
-  return (
-    <Radio
-      value={value}
-      onChange={setValue}
-      options={[
-        { value: '1', label: 'option-1' },
-        { value: '2', label: 'option-2' },
-        { value: '3', label: 'option-3' },
-        { value: '4', label: 'option-4' },
-      ]}
-    />
-  );
-}
+<>
+  <Radio options={['A', 'B', { label: 'C', value: 'C', disabled: true }, 'D']} />
+  <Radio
+    options={[
+      { value: '1', label: 'option-1' },
+      { value: '2', label: 'option-2' },
+      { value: '3', label: 'option-3' },
+      { value: '4', label: 'option-4' },
+    ]}
+  />
+</>
 ```

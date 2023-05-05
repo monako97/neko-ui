@@ -32,6 +32,9 @@ function Photo(props: PhotoProps) {
       onOpenChange() {
         props.onOpenChange?.(!photo.current.open);
       },
+      handleWheel(e: React.WheelEvent<HTMLDivElement> | Event) {
+        e.preventDefault();
+      },
     })
   );
   const { open } = photo.current;
@@ -73,6 +76,7 @@ function Photo(props: PhotoProps) {
               props.open === false ? cls.closeing : props.open ? cls.open : ''
             )}
             onAnimationEnd={handleDestroy}
+            onWheel={photo.current.handleWheel}
           >
             {renderDom}
             <span className={cx('neko-icon', cls.close)} onClick={photo.current.onOpenChange} />
@@ -86,12 +90,18 @@ function Photo(props: PhotoProps) {
   useEffect(() => {
     if (props.open === true) {
       photo.current.open = true;
+      document.documentElement.addEventListener('mousewheel', photo.current.handleWheel, {
+        passive: false,
+      });
+    } else {
+      document.documentElement.removeEventListener('mousewheel', photo.current.handleWheel);
     }
   }, [props.open]);
   useEffect(() => {
     const _photo = photo.current;
 
     return () => {
+      document.documentElement.removeEventListener('mousewheel', _photo.handleWheel);
       _photo();
     };
   }, []);

@@ -105,7 +105,7 @@
 .n-md-toc,
 .n-md-body {
   background-color: var(--component-bg);
-  box-shadow: 0 2px 8px 0 var(--primary-shadow, rgb(0 0 0 / 5%));
+  box-shadow: 0 2px 8px 0 var(--primary-shadow);
 }
 
 .n-md-toc {

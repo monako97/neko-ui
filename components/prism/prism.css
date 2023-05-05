@@ -539,7 +539,7 @@ pre:not(.sp-cm) {
     font-size: var(--font-size);
     white-space: pre-wrap;
     background-color: var(--primary-component-bg);
-    box-shadow: 0 2px 8px 0 var(--primary-shadow, rgb(0 0 0 / 5%));
+    box-shadow: 0 2px 8px 0 var(--primary-shadow);
     line-height: 20px;
     transition-property: color, background-color, box-shadow;
 }

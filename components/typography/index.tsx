@@ -3,7 +3,8 @@ import { cls } from './style';
 import { cx } from '../emotion';
 
 export type TypographyType = 'success' | 'danger' | 'warning' | 'primary' | 'secondary' | 'normal';
-export interface TypographyProps {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export interface TypographyProps extends React.DetailedHTMLProps<React.HTMLAttributes<any>, any> {
   className?: string;
   style?: React.CSSProperties;
   type?: TypographyType;

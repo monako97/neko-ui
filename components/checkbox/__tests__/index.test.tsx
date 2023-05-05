@@ -6,6 +6,19 @@ import { Checkbox } from 'neko-ui';
  * @jest-environment jsdom
  */
 describe('test Input', () => {
+  it('string options', () => {
+    const { getByTestId, getByText } = render(
+      <Checkbox
+        data-testid="string options"
+        value={['option-1']}
+        options={['option-1', 'option-2', 'option-3']}
+      />
+    );
+
+    expect(getByTestId('string options')).toBeInTheDocument();
+    fireEvent.click(getByText('option-3'));
+    fireEvent.click(getByText('option-1'));
+  });
   it('normal', () => {
     const { getByTestId, getByLabelText } = render(
       <Checkbox

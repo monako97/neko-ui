@@ -3,29 +3,23 @@ import { isFunction } from '@moneko/common';
 import sso from 'shared-store-object';
 import { cls } from './style';
 import { cx } from '../emotion';
+import type { RadioOption } from '../radio';
 
-export type RadioOption = {
-  value: string;
-  label: React.ReactNode;
-  disabled?: boolean;
-  className?: string;
-  style?: React.CSSProperties;
-};
-
-export interface RadioProps {
+export interface SegmentedOption extends RadioOption {
+  icon?: React.ReactNode;
+}
+export interface SegmentedProps {
   className?: string;
   style?: React.CSSProperties;
   name?: string;
   disabled?: boolean;
   value?: string;
-  options: (RadioOption | string)[];
+  options: (SegmentedOption | string)[];
   // eslint-disable-next-line no-unused-vars
   onChange?: (val: string) => void;
-  layout?: 'vertical' | 'horizontal';
 }
 
-const Radio: React.FC<RadioProps> = ({
-  layout = 'horizontal',
+const Segmented: React.FC<SegmentedProps> = ({
   className,
   name,
   style,
@@ -35,12 +29,14 @@ const Radio: React.FC<RadioProps> = ({
   onChange,
   ...props
 }) => {
+  const box = useRef<HTMLDivElement>(null);
   const state = useRef(
     sso({
       value,
-      options: [] as RadioOption[],
+      options: [] as (SegmentedOption & { el?: HTMLLabelElement })[],
       disabled,
-      onChange(item: RadioOption) {
+      style: {} as React.CSSProperties,
+      onChange(item: SegmentedOption) {
         if (!state.current.disabled && !item.disabled) {
           if (isFunction(onChange)) {
             onChange(item.value);
@@ -49,14 +45,14 @@ const Radio: React.FC<RadioProps> = ({
           }
         }
       },
-      onKeyUpCapture(key: string, item: RadioOption) {
+      onKeyUpCapture(key: string, item: SegmentedOption) {
         if (key === 'Enter') {
           state.current.onChange(item);
         }
       },
     })
   );
-  const { value: val, options: opts, disabled: disable } = state.current;
+  const { value: val, options: opts, disabled: disable, style: offsetStyle } = state.current;
 
   useEffect(() => {
     state.current.disabled = disabled;
@@ -77,6 +73,17 @@ const Radio: React.FC<RadioProps> = ({
     });
   }, [options]);
   useEffect(() => {
+    const el = opts.find((o) => o.value === val)?.el;
+
+    if (el) {
+      state.current.style = {
+        '--w': `${el.offsetWidth}px`,
+        '--h': `${el.offsetHeight}px`,
+        '--left': `${el.offsetLeft}px`,
+      } as React.CSSProperties;
+    }
+  }, [val, opts]);
+  useEffect(() => {
     const _state = state.current;
 
     return () => {
@@ -84,24 +91,20 @@ const Radio: React.FC<RadioProps> = ({
     };
   }, []);
   return (
-    <section {...props} className={cx(cls.box, layout && cls[layout], className)} style={style}>
+    <div
+      {...props}
+      ref={box}
+      className={cx(cls.box, className)}
+      style={{ ...style, ...offsetStyle }}
+    >
       {opts?.map((item, i) => {
         const readOnly = disable || item.disabled;
         const handleChange = () => state.current.onChange(item);
 
         return (
-          <label
-            key={`${item.value}-${i}`}
-            className={cx(cls.label, item.className)}
-            tabIndex={readOnly ? -1 : 0}
-            onKeyUpCapture={({ key }) => state.current.onKeyUpCapture(key, item)}
-            onClickCapture={handleChange}
-            aria-disabled={readOnly}
-            data-disabled={readOnly}
-            style={item.style}
-          >
+          <React.Fragment key={`${item.value}-${i}`}>
             <input
-              className={cls.radio}
+              className={cls.segmented}
               type="radio"
               name={name}
               value={item.value}
@@ -109,12 +112,28 @@ const Radio: React.FC<RadioProps> = ({
               checked={item.value === val}
               onChange={handleChange}
             />
-            {item.label}
-          </label>
+            <label
+              className={cx(cls.label, item.className)}
+              tabIndex={readOnly ? -1 : 0}
+              onKeyUpCapture={({ key }) => state.current.onKeyUpCapture(key, item)}
+              onClickCapture={handleChange}
+              aria-disabled={readOnly}
+              data-disabled={readOnly}
+              style={item.style}
+              ref={(e) => {
+                if (e) {
+                  opts[i].el = e;
+                }
+              }}
+            >
+              {item.icon ? <span className={cls.icon}>{item.icon}</span> : null}
+              {item.label}
+            </label>
+          </React.Fragment>
         );
       })}
-    </section>
+    </div>
   );
 };
 
-export default Radio;
+export default Segmented;

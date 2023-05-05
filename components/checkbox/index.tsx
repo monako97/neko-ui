@@ -14,7 +14,7 @@ export interface CheckboxProps {
   name?: string;
   disabled?: boolean;
   value?: string[];
-  options: CheckboxOption[];
+  options: (CheckboxOption | string)[];
   // eslint-disable-next-line no-unused-vars
   onChange?: (val: string[]) => void;
   layout?: 'vertical' | 'horizontal';
@@ -31,67 +31,45 @@ const Checkbox: React.FC<CheckboxProps> = ({
   ...props
 }) => {
   const state = useRef(
-    sso(
-      {
-        value,
-        options,
-        disabled,
-        onChange(item: CheckboxOption) {
-          if (!state.current.disabled && !item.disabled) {
-            const isIndeterminate = 'indeterminate' in item;
-            let newVal = isIndeterminate ? [] : [...state.current.value];
+    sso({
+      value,
+      options: [] as CheckboxOption[],
+      disabled,
+      all: [] as string[],
+      checkedAll: false,
+      onChange(item: CheckboxOption) {
+        if (!state.current.disabled && !item.disabled) {
+          const isIndeterminate = 'indeterminate' in item;
+          let newVal = isIndeterminate ? [] : [...state.current.value];
 
-            if (isIndeterminate) {
-              if (!state.current.checkedAll) {
-                newVal = state.current.all;
-              }
-            } else {
-              const idx = newVal.indexOf(item.value);
-
-              if (idx !== -1) {
-                newVal.splice(idx, 1);
-              } else {
-                newVal.push(item.value);
-              }
+          if (isIndeterminate) {
+            if (!state.current.checkedAll) {
+              newVal = state.current.all;
             }
-            if (isFunction(onChange)) {
-              onChange(newVal);
+          } else {
+            const idx = newVal.indexOf(item.value);
+
+            if (idx !== -1) {
+              newVal.splice(idx, 1);
             } else {
-              state.current.value = newVal;
+              newVal.push(item.value);
             }
           }
-        },
-        onKeyUpCapture(key: string, item: CheckboxOption) {
-          if (key === 'Enter') {
-            state.current.onChange(item);
+          if (isFunction(onChange)) {
+            onChange(newVal);
+          } else {
+            state.current.value = newVal;
           }
-        },
+        }
       },
-      {
-        checkedAll(): boolean {
-          let checkedAll = true;
-
-          for (let i = 0, len = state.current.all.length; i < len; i++) {
-            if (!state.current.value.includes(state.current.all[i])) {
-              checkedAll = false;
-            }
-          }
-          return checkedAll;
-        },
-        all() {
-          const allVal: string[] = [];
-
-          for (let i = 0, len = state.current.options.length; i < len; i++) {
-            if (!('indeterminate' in state.current.options[i])) {
-              allVal.push(state.current.options[i].value);
-            }
-          }
-          return allVal;
-        },
-      }
-    )
+      onKeyUpCapture(key: string, item: CheckboxOption) {
+        if (key === 'Enter') {
+          state.current.onChange(item);
+        }
+      },
+    })
   );
-  const { value: val, options: opts, disabled: disable, checkedAll } = state.current;
+  const { value: val, options: opts, disabled: disable, all, checkedAll } = state.current;
 
   useEffect(() => {
     state.current.disabled = disabled;
@@ -100,8 +78,29 @@ const Checkbox: React.FC<CheckboxProps> = ({
     state.current.value = value;
   }, [value]);
   useEffect(() => {
-    state.current.options = options;
+    const allVal: string[] = [];
+
+    state.current.options = options.map((item) => {
+      const _item = typeof item === 'string' ? { label: item, value: item } : item;
+
+      if (!('indeterminate' in _item)) {
+        allVal.push(_item.value);
+      }
+
+      return _item;
+    });
+    state.current.all = allVal;
   }, [options]);
+  useEffect(() => {
+    let checked = true;
+
+    for (let i = 0, len = all.length; i < len; i++) {
+      if (!value.includes(all[i])) {
+        checked = false;
+      }
+    }
+    state.current.checkedAll = checked;
+  }, [all, value]);
   useEffect(() => {
     const _state = state.current;
 
@@ -110,7 +109,7 @@ const Checkbox: React.FC<CheckboxProps> = ({
     };
   }, []);
   return (
-    <div {...props} className={cx(cls.box, layout && cls[layout], className)} style={style}>
+    <section {...props} className={cx(cls.box, layout && cls[layout], className)} style={style}>
       {opts?.map((item, i) => {
         const readOnly = disable || item.disabled;
         const handleChange = () => state.current.onChange(item);
@@ -146,7 +145,7 @@ const Checkbox: React.FC<CheckboxProps> = ({
           </label>
         );
       })}
-    </div>
+    </section>
   );
 };
 

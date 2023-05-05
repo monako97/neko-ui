@@ -1,6 +1,6 @@
 import React from 'react';
 import { fireEvent, render } from '@testing-library/react';
-import { Radio } from 'neko-ui';
+import { Segmented } from 'neko-ui';
 
 /**
  * @jest-environment jsdom
@@ -8,7 +8,7 @@ import { Radio } from 'neko-ui';
 describe('test Input', () => {
   it('string options', () => {
     const { getByTestId, getByText } = render(
-      <Radio
+      <Segmented
         data-testid="string options"
         value="1"
         options={['option-1', 'option-2', 'option-3']}
@@ -20,14 +20,13 @@ describe('test Input', () => {
     fireEvent.click(getByText('option-1'));
   });
   it('normal', () => {
-    const { getByTestId, getByLabelText } = render(
-      <Radio
+    const { getByTestId, getByText } = render(
+      <Segmented
         data-testid="normal"
         value="1"
-        layout="vertical"
         options={[
           { value: '1', label: 'option-1', disabled: true },
-          { value: '2', label: 'option-2' },
+          { value: '2', label: 'option-2', icon: 'ss' },
           { value: '3', label: 'option-3' },
         ]}
       />
@@ -36,13 +35,13 @@ describe('test Input', () => {
     expect(getByTestId('normal')).toBeInTheDocument();
     fireEvent.focus(getByTestId('normal'));
     fireEvent.blur(getByTestId('normal'));
-    fireEvent.click(getByLabelText('option-3'));
-    fireEvent.click(getByLabelText('option-1'));
+    fireEvent.click(getByText('option-3'));
+    fireEvent.click(getByText('option-1'));
   });
   it('onChange', () => {
     const change = jest.fn();
-    const { getByTestId, getByLabelText } = render(
-      <Radio
+    const { getByTestId, getByText } = render(
+      <Segmented
         data-testid="onChange"
         options={[
           { value: '2', label: 'option-2' },
@@ -54,13 +53,13 @@ describe('test Input', () => {
 
     expect(getByTestId('onChange')).toBeInTheDocument();
     fireEvent.focus(getByTestId('onChange'));
-    fireEvent.click(getByLabelText('option-3'));
-    fireEvent.click(getByLabelText('option-2'));
-    fireEvent.keyUp(getByLabelText('option-3'), { key: 'Enter' });
+    fireEvent.click(getByText('option-3'));
+    fireEvent.click(getByText('option-2'));
+    fireEvent.keyUp(getByText('option-3'), { key: 'Enter' });
   });
   it('disabled', () => {
-    const { getByTestId, getByLabelText } = render(
-      <Radio
+    const { getByTestId, getByText } = render(
+      <Segmented
         data-testid="disabled"
         value="1"
         disabled
@@ -72,7 +71,8 @@ describe('test Input', () => {
     );
 
     expect(getByTestId('disabled')).toBeInTheDocument();
+
     fireEvent.focus(getByTestId('disabled'));
-    fireEvent.click(getByLabelText('option-1'));
+    fireEvent.click(getByText('option-1'));
   });
 });

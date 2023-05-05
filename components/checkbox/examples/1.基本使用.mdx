@@ -1,20 +1,16 @@
 基本使用
 
 ```tsx
-function Demo() {
-  const [value, setValue] = React.useState(['3']);
-
-  return (
-    <Checkbox
-      value={value}
-      onChange={setValue}
-      options={[
-        { value: '1', label: 'option-1' },
-        { value: '2', label: 'option-2' },
-        { value: '3', label: 'option-3' },
-        { value: '4', label: 'option-4' },
-      ]}
-    />
-  );
-}
+<>
+  <Checkbox value="A" options={['A', 'B', { label: 'C', value: 'C', disabled: true }, 'D']} />
+  <Checkbox
+    value="2"
+    options={[
+      { value: '1', label: 'option-1' },
+      { value: '2', label: 'option-2' },
+      { value: '3', label: 'option-3' },
+      { value: '4', label: 'option-4' },
+    ]}
+  />
+</>
 ```

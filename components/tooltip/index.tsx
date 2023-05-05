@@ -1,8 +1,8 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { getMaxZindex, isString, colorParse } from '@moneko/common';
-import { createPortal } from 'react-dom';
 import { cls } from './style';
 import { cx } from '../emotion';
+import Portal from '../portal';
 
 export type TooltipTriggerOption = 'hover' | 'click' | 'contextMenu';
 type TriggerOptionMap = Record<
@@ -163,8 +163,8 @@ const Tooltip: React.FC<TooltipProps> = ({
 
   return (
     <>
-      {(show !== null || !destroyInactive) &&
-        createPortal(
+      {(show !== null || !destroyInactive) && (
+        <Portal container={container}>
           <div
             ref={ref}
             onAnimationEnd={exit}
@@ -172,9 +172,9 @@ const Tooltip: React.FC<TooltipProps> = ({
             style={style}
           >
             {title}
-          </div>,
-          container
-        )}
+          </div>
+        </Portal>
+      )}
       <span {...childrenProps} className={cx(cls.tooltip, className)} ref={childRef}>
         {children}
       </span>
