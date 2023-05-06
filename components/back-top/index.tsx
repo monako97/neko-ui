@@ -1,5 +1,6 @@
-import React, { memo, useCallback, useEffect, useRef, useState } from 'react';
-import { getMaxZindex, getScrollTop, isEqual, isFunction } from '@moneko/common';
+import React, { useEffect, useRef } from 'react';
+import { getMaxZindex, getScrollTop } from '@moneko/common';
+import sso from 'shared-store-object';
 import { cls } from './style';
 import { cx } from '../emotion';
 import Portal from '../portal';
@@ -9,7 +10,7 @@ export interface BackTopProps extends React.HTMLAttributes<HTMLDivElement> {
   target?: () => HTMLElement;
   /** 挂载到指定的元素，值为一个返回对应 DOM 元素 默认 document.body */
   // eslint-disable-next-line no-unused-vars
-  getPopupContainer?: (node: HTMLElement) => HTMLElement;
+  getPopupContainer?: (node?: HTMLElement) => HTMLElement;
   /** 滚动高度达到此参数值才出现 BackTop */
   visibilityHeight?: number;
 }
@@ -22,66 +23,78 @@ const BackTop: React.FC<BackTopProps> = ({
   ...props
 }) => {
   const ref = useRef<HTMLDivElement>(null);
-  const [show, setShow] = useState<boolean | null>(null);
-  const handleScrollY = useCallback(() => {
-    let scrollTop: number | null = 0;
-    let offsetHeight: number | null = 0;
+  const state = useRef(
+    sso(
+      {
+        show: null as boolean | null,
+        visibilityHeight,
+        exit() {
+          if (state.current.show === false) {
+            state.current.show = null;
+          }
+        },
+        handleScrollY(e: Event) {
+          e.preventDefault();
+          let scrollTop = 0;
+          let offsetHeight = 0;
 
-    if (isFunction(target)) {
-      const ele: HTMLElement = target() as HTMLElement;
+          if (state.current.target) {
+            scrollTop = getScrollTop(state.current.target);
+            offsetHeight = state.current.target.offsetHeight;
+          }
+          const nextShow =
+            scrollTop > offsetHeight / 3 || scrollTop > state.current.visibilityHeight;
 
-      if (ele) {
-        scrollTop = getScrollTop(ele);
-        offsetHeight = ele.offsetHeight;
+          if (Boolean(state.current.show) !== nextShow) {
+            state.current.show = nextShow;
+          }
+          return false;
+        },
+        handleBackTop() {
+          state.current.target?.scrollTo({
+            top: 0,
+            behavior: 'smooth',
+          });
+        },
+      },
+      {
+        target(): HTMLElement | undefined {
+          return target?.();
+        },
+        style(): React.CSSProperties {
+          return {
+            ...props.style,
+            zIndex: getMaxZindex().toString(),
+          };
+        },
       }
-    }
-    const nextShow: boolean = scrollTop > offsetHeight / 3 || scrollTop > visibilityHeight;
-
-    if (Boolean(show) !== nextShow) {
-      setShow(nextShow);
-    }
-  }, [show, target, visibilityHeight]);
-  const handleBackTop = useCallback(() => {
-    target()?.scrollTo({
-      top: 0,
-      behavior: 'smooth',
-    });
-  }, [target]);
+    )
+  );
+  const { show, style } = state.current;
 
   useEffect(() => {
-    if (show && ref.current) {
-      ref.current.style.zIndex = getMaxZindex().toString();
-    }
-  }, [show]);
-  useEffect(() => {
-    if (isFunction(target)) {
-      target()?.addEventListener('scroll', handleScrollY, false);
-    }
+    const _state = state.current;
+
+    _state.target?.addEventListener('scroll', _state.handleScrollY, false);
     return () => {
-      if (isFunction(target)) {
-        target()?.removeEventListener('scroll', handleScrollY, false);
-      }
+      _state.target?.removeEventListener('scroll', _state.handleScrollY, false);
+      _state();
     };
-  }, [handleScrollY, target]);
-
-  const exit = useCallback(() => {
-    if (show === false) {
-      setShow(null);
-    }
-  }, [show]);
+  }, []);
 
   if (show === null) return null;
   return (
-    <Portal container={getPopupContainer?.(target())}>
+    <Portal container={getPopupContainer?.(state.current.target)}>
       <div
         {...props}
         ref={ref}
-        onAnimationEnd={exit}
-        className={cx(className, cls.backtop, show === false && cls.out)}
-        onClick={handleBackTop}
+        onAnimationEnd={state.current.exit}
+        className={cx(cls.backtop, show === false && cls.out, className)}
+        onClick={state.current.handleBackTop}
+        style={style}
       />
     </Portal>
   );
 };
 
-export default memo(BackTop, isEqual);
+export default BackTop;

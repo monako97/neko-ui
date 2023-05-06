@@ -6,7 +6,7 @@
 [data-theme='dark'] {
     --code-color: #eee;
     --code-lang-style-color: #fd9170;
-    --code-toolbar-bg: rgb(63 63 63 / 20%);
+    --code-toolbar-bg: rgb(63 63 63 / 70%);
     --token-atrule: #c792ea;
     --token-attr-name: #ffcb6b;
     --token-attr-value: #a5e844;

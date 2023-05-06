@@ -1,9 +1,14 @@
-## [1.5.2](https://github.com/monako97/neko-ui/compare/1.5.0...1.5.2) (2023-05-06)
+## [1.5.3](https://github.com/monako97/neko-ui/compare/1.5.0...1.5.3) (2023-05-06)
 
 
 ### Bug Fixes
 
 * segmented dark style ([388f99d](https://github.com/monako97/neko-ui/commit/388f99dcefd6838ba5f39e2612c106365c5aef62))
+
+
+### Features
+
+* tootip 自动跟据情况决定展开方向 ([3aa7138](https://github.com/monako97/neko-ui/commit/3aa7138a71736a2a637397e67a8ee6c455d365e6))
 
 
 

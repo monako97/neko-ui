@@ -62,5 +62,10 @@ injectGlobal`
     ${generateTheme('#bb8314', { name: 'warning', dark: true })}
     ${generateTheme('#901c22', { name: 'error', dark: true })}
     ${generateTheme('#419418', { name: 'success', dark: true })}
+    --component-bg: #141414;
+    --primary-shadow: rgb(0 0 0 / 12%);
+    --primary-selection: rgb(255 255 255 / 5%);
+    --primary-details-bg: rgb(255 255 255 / 5%);
+    --primary-component-bg: #000;
   }
 `;

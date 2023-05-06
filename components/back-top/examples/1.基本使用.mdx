@@ -4,30 +4,23 @@
 
 通过 `getPopupContainer` 属性设置返回顶部按钮到插入位置
 
-```tsx
-function List() {
-  return (
-    <div>
-      {new Array(20).fill(0).map((_, i) => (
-        <p key={i}>data {i}</p>
-      ))}
-    </div>
-  );
-}
-
+```jsx
 function Demo() {
   const el = React.useRef<HTMLDivElement>(null);
+
   return (
     <div ref={el} style={{ height: 200, width: '100%', overflow: 'auto', position: 'relative' }}>
-      <List />
+      <div>
+        {new Array(20).fill(0).map((_, i) => (
+          <p key={i}>data {i}</p>
+        ))}
+      </div>
       <BackTop
         visibilityHeight={200}
-        target={() => el.current!}
+        target={() => el.current}
         getPopupContainer={(node) => node}
       />
     </div>
   );
 }
-
-render(<Demo />);
 ```

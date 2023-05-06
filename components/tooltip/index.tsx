@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useRef } from 'react';
-import { getMaxZindex, isString, colorParse, isFunction, passiveSupported } from '@moneko/common';
+import { getMaxZindex, isString, colorParse, isFunction } from '@moneko/common';
 import sso from 'shared-store-object';
 import { cls } from './style';
 import { cx } from '../emotion';
@@ -170,11 +170,11 @@ const Tooltip: React.FC<TooltipProps> = ({
   useEffect(() => {
     const _state = state.current;
 
-    window.addEventListener('click', _state.close, false);
-    window.addEventListener('scroll', _state.close, passiveSupported);
+    document.documentElement.addEventListener('click', _state.close, false);
+    window.addEventListener('scroll', _state.close, false);
     return () => {
-      window.removeEventListener('click', _state.close, false);
-      window.removeEventListener('scroll', _state.close, passiveSupported);
+      document.documentElement.removeEventListener('click', _state.close, false);
+      window.removeEventListener('scroll', _state.close, false);
       _state();
     };
   }, []);

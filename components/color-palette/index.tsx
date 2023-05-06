@@ -1,12 +1,5 @@
 import React, { useEffect, useRef } from 'react';
-import {
-  colorParse,
-  passiveSupported,
-  setClipboard,
-  throttle,
-  type ColorType,
-  type HSVA,
-} from '@moneko/common';
+import { colorParse, passiveSupported, setClipboard, throttle, type HSVA } from '@moneko/common';
 import sso from 'shared-store-object';
 import { cls } from './style';
 import { cx } from '../emotion';
@@ -19,21 +12,13 @@ const material = [
   '#673AB7',
   '#3F51B5',
   '#2196F3',
-  '#03A9F4',
   '#00BCD4',
   '#009688',
   '#4CAF50',
-  '#8BC34A',
   '#CDDC39',
-  '#FFEB3B',
-  '#FFC107',
   '#FF9800',
-  '#FF5722',
   '#795548',
-  '#9E9E9E',
   '#607D8B',
-  'rgba(0,0,0,.65)',
-  'transparent',
 ];
 
 export interface ColorPaletteProps extends Omit<React.HTMLAttributes<HTMLDivElement>, 'onChange'> {
@@ -51,15 +36,14 @@ function parseOpacity(v?: string | number) {
   if (typeof v === 'string') {
     _val = v.replace(/[^\d]/g, '');
   }
-
   return (_val as number) / 100;
 }
 
 type Opt = Record<
-  ColorType,
+  string,
   {
-    get: 'toRgba' | 'toHexa' | 'toHsla' | 'toHsva' | 'toCmyk';
-    next: ColorType;
+    get: 'toRgba' | 'toHexa' | 'toHsla';
+    next: 'rgba' | 'hsla' | 'hexa';
     max: number[];
   }
 >;
@@ -77,18 +61,8 @@ const opt: Opt = {
   },
   hsla: {
     get: 'toHsla',
-    next: 'hsva',
-    max: [360, 100, 100, 1],
-  },
-  hsva: {
-    get: 'toHsva',
-    next: 'cmyk',
-    max: [360, 100, 100, 1],
-  },
-  cmyk: {
-    get: 'toCmyk',
     next: 'hexa',
-    max: [100, 100, 100, 100],
+    max: [360, 100, 100, 1],
   },
 };
 
@@ -177,6 +151,21 @@ const ColorPalette: React.FC<ColorPaletteProps> = ({
         },
         copy(e: React.MouseEvent) {
           setClipboard(store.current.color.toString(), e.target as HTMLElement);
+        },
+        eyeDropper() {
+          if (window.EyeDropper) {
+            new window.EyeDropper()
+              .open()
+              .then((res: { sRGBHex: string }) => {
+                if (res) {
+                  store.current.setColor(res.sRGBHex);
+                }
+              })
+              .catch(() => {
+                /**/
+              });
+            return;
+          }
         },
       },
       {
@@ -296,14 +285,16 @@ const ColorPalette: React.FC<ColorPaletteProps> = ({
         </div>
       </div>
       <div className={cls.color}>
+        {window.EyeDropper && (
+          <i
+            style={{ '--c': 'transparent' } as React.CSSProperties}
+            onClickCapture={store.current.eyeDropper}
+          />
+        )}
         {material.map((c) => (
           <i
             key={c}
-            style={
-              {
-                '--c': c,
-              } as React.CSSProperties
-            }
+            style={{ '--c': c } as React.CSSProperties}
             onClick={() => {
               store.current.setColor(c);
             }}

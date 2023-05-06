@@ -20,6 +20,11 @@ const Bg: React.FC = () => {
       pointer-events: none;
       opacity: 0.05;
     }
+    :root[data-theme='dark'] {
+      .n-site-bg {
+        opacity: 0;
+      }
+    }
   
     @keyframes color-ful-stripe {
       100% {
