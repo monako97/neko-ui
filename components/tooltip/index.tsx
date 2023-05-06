@@ -1,5 +1,6 @@
-import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { getMaxZindex, isString, colorParse } from '@moneko/common';
+import React, { useEffect, useMemo, useRef } from 'react';
+import { getMaxZindex, isString, colorParse, isFunction, passiveSupported } from '@moneko/common';
+import sso from 'shared-store-object';
 import { cls } from './style';
 import { cx } from '../emotion';
 import Portal from '../portal';
@@ -43,57 +44,73 @@ const Tooltip: React.FC<TooltipProps> = ({
 }) => {
   const ref = useRef<HTMLDivElement>(null);
   const childRef = useRef<HTMLSpanElement>(null);
-  const [show, setShow] = useState<boolean | null>(null);
-  const [posi, setPosi] = useState({ left: -9999, top: -9999 });
+  const state = useRef(
+    sso({
+      show: null as boolean | null,
+      up: false,
+      posi: { left: -9999, top: -9999, x: '0px' },
+      exit() {
+        if (state.current.show === false) {
+          state.current.show = null;
+        }
+      },
+      close(e: MouseEvent | Event) {
+        e.preventDefault();
+        e.stopPropagation();
+        if (state.current.show && !ref.current?.contains(e.target as Node)) {
+          state.current.show = false;
+        }
+      },
+      open(e: MouseEvent) {
+        e.preventDefault();
+        e.stopPropagation();
+        state.current.show = true;
+      },
+    })
+  );
+  const { show, posi, up } = state.current;
 
   useEffect(() => {
-    onOpenChange?.(show);
-  }, [onOpenChange, show]);
-
-  useEffect(() => {
-    setShow(open);
+    state.current.show = open;
   }, [open]);
   useEffect(() => {
+    if (isFunction(onOpenChange)) {
+      onOpenChange(show);
+    }
     if (show && ref.current) {
       ref.current.style.zIndex = getMaxZindex().toString();
     }
-  }, [show]);
-  const exit = useCallback(() => {
-    if (show === false) {
-      setShow(null);
+  }, [onOpenChange, show]);
+
+  const container = useMemo(() => {
+    if (isFunction(getPopupContainer)) {
+      return getPopupContainer(childRef.current);
     }
-  }, [show]);
-  const close = useCallback(
-    (e: MouseEvent) => {
-      e.preventDefault();
-      e.stopPropagation();
-      if (show && !ref.current?.contains(e.target as Node)) {
-        setShow(false);
-      }
-    },
-    [show]
-  );
+    return document.body;
+  }, [getPopupContainer]);
 
   useEffect(() => {
     if (!show || !ref.current || !childRef.current) return;
     const elRect = childRef.current.getBoundingClientRect();
-    const portalRectHeight = ref.current.getBoundingClientRect();
+    const portalRect = ref.current.getBoundingClientRect();
 
-    if (elRect && portalRectHeight) {
-      const offsetY = ref.current.offsetHeight + elRect.height / 2;
-      const offsetX = ref.current.offsetWidth / 2 - elRect.width / 2;
+    if (elRect && portalRect) {
+      const portalRectHeight = ref.current.offsetHeight;
+      const offsetY = portalRectHeight + elRect.height / 2;
+      const offsetX = portalRect.width / 2 - elRect.width / 2;
+      const margin = window.innerHeight - elRect.bottom;
+      const _isBottom = margin > portalRectHeight * 0.8 && margin > elRect.top;
+      const _posi = {
+        left: Math.abs(offsetX > elRect.left ? elRect.left : elRect.left - offsetX),
+        top: _isBottom ? elRect.bottom + 8 : elRect.top - offsetY,
+        x: '0px',
+      };
 
-      setPosi({
-        left: elRect.left - offsetX,
-        top: elRect.top - offsetY,
-      });
+      _posi.x = -(_posi.left - elRect.left + offsetX) + 'px';
+      state.current.posi = _posi;
+      state.current.up = !_isBottom;
     }
   }, [show]);
-
-  const container = useMemo(
-    () => getPopupContainer?.(childRef.current) || document.body,
-    [getPopupContainer]
-  );
 
   const childrenProps = useMemo(() => {
     const _props = {
@@ -118,27 +135,16 @@ const Tooltip: React.FC<TooltipProps> = ({
       Object.assign(
         _props,
         openFn && {
-          [openFn]: (e: MouseEvent) => {
-            e.preventDefault();
-            e.stopPropagation();
-            setShow(true);
-          },
+          [openFn]: state.current.open,
         },
         closeFn && {
-          [closeFn]: close,
+          [closeFn]: state.current.close,
         }
       );
     }
 
     return _props;
-  }, [close, props, trigger]);
-
-  useEffect(() => {
-    document.body.addEventListener('click', close, false);
-    return () => {
-      document.body.removeEventListener('click', close, false);
-    };
-  }, [close]);
+  }, [props, trigger]);
 
   const style = useMemo(() => {
     let shadowColor: string | undefined;
@@ -150,16 +156,28 @@ const Tooltip: React.FC<TooltipProps> = ({
     return Object.assign(
       {
         ...popupStyle,
-        left: Math.abs(posi.left),
+        left: posi.left,
         top: posi.top,
-        '--x': -(Math.abs(posi.left) - posi.left) + 'px',
+        '--x': posi.x,
       },
       color && {
         '--tooltip-bg': color,
         '--tooltip-shadow-color': shadowColor,
       }
     ) as React.CSSProperties;
-  }, [color, popupStyle, posi.left, posi.top]);
+  }, [color, popupStyle, posi.left, posi.top, posi.x]);
+
+  useEffect(() => {
+    const _state = state.current;
+
+    window.addEventListener('click', _state.close, false);
+    window.addEventListener('scroll', _state.close, passiveSupported);
+    return () => {
+      window.removeEventListener('click', _state.close, false);
+      window.removeEventListener('scroll', _state.close, passiveSupported);
+      _state();
+    };
+  }, []);
 
   return (
     <>
@@ -167,8 +185,12 @@ const Tooltip: React.FC<TooltipProps> = ({
         <Portal container={container}>
           <div
             ref={ref}
-            onAnimationEnd={exit}
-            className={cx(cls.portal, show ? cls.inUp : cls.outUp, popupClassName)}
+            onAnimationEnd={state.current.exit}
+            className={cx(
+              cls.portal,
+              show ? (up ? cls.inUp : cls.inDown) : up ? cls.outUp : cls.outDown,
+              popupClassName
+            )}
             style={style}
           >
             {title}

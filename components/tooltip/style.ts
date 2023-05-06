@@ -6,12 +6,14 @@ export const cls = {
   portal: prefixCls('tooltip-portal'),
   inUp: prefixCls('tooltip-in-up'),
   outUp: prefixCls('tooltip-out-up'),
+  inDown: prefixCls('tooltip-in-down'),
+  outDown: prefixCls('tooltip-out-down'),
 };
 
 injectGlobal`
   :root {
     --tooltip-bg: var(--component-bg);
-    --tooltip-shadow-color: rgb(0 0 0 / 10%);
+    --tooltip-shadow-color: rgb(0 0 0 / 5%);
   }
 
   [data-theme='dark'] {
@@ -38,7 +40,9 @@ injectGlobal`
       drop-shadow(1px 2px 8px var(--tooltip-shadow-color))
       drop-shadow(2px 4px 16px var(--tooltip-shadow-color));
     backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
+    backdrop-filter: blur(16px);
+    box-sizing: border-box;
+
     &::before {
       position: absolute;
       inset-inline-end: 0;
@@ -53,16 +57,66 @@ injectGlobal`
       transform: translate3d(var(--x, 0), 100%, 0);
     }
   }
+
   .${cls.inUp} {
-    animation: tooltip-slide-down-in-effect 0.3s forwards;
+    animation: tooltip-up-in-effect 0.3s forwards;
     transform: scaleY(1);
   }
   .${cls.outUp} {
-    animation: tooltip-slide-down-out-effect 0.3s forwards;
+    animation: tooltip-up-out-effect 0.3s forwards;
     transform: scaleY(1);
   }
 
-  @keyframes tooltip-slide-down-in-effect {
+  .${cls.inDown} {
+    animation: tooltip-down-in-effect 0.3s forwards;
+    transform: scaleY(1);
+
+    &::before {
+      inset-block-end: unset;
+      inset-block-start: 0;
+      transform: translate3d(var(--x, 0), -100%, 0) rotate(180deg);
+    }
+  }
+  .${cls.outDown} {
+    animation: tooltip-down-out-effect 0.3s forwards;
+    transform: scaleY(1);
+
+    &::before {
+      inset-block-end: unset;
+      inset-block-start: 0;
+      transform: translate3d(var(--x, 0), -100%, 0) rotate(180deg);
+    }
+  }
+
+  @keyframes tooltip-down-in-effect {
+    0% {
+      transform: scaleY(0.8);
+      transform-origin: 0% 0%;
+      opacity: 0;
+    }
+
+    100% {
+      transform: scaleY(1);
+      transform-origin: 0% 0%;
+      opacity: 1;
+    }
+  }
+
+  @keyframes tooltip-down-out-effect {
+    0% {
+      transform: scaleY(1);
+      transform-origin: 0% 0%;
+      opacity: 1;
+    }
+
+    100% {
+      transform: scaleY(0.8);
+      transform-origin: 0% 0%;
+      opacity: 0;
+    }
+  }
+
+  @keyframes tooltip-up-in-effect {
     0% {
       transform: scaleY(0.8);
       transform-origin: 100% 100%;
@@ -76,7 +130,7 @@ injectGlobal`
     }
   }
 
-  @keyframes tooltip-slide-down-out-effect {
+  @keyframes tooltip-up-out-effect {
     0% {
       transform: scaleY(1);
       transform-origin: 100% 100%;
