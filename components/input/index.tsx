@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useImperativeHandle, useRef, useState } from 'react';
 import { cls } from './style';
 import { cx } from '../emotion';
 import { type ComponentSize } from '../index';
@@ -25,7 +25,10 @@ export interface InputProps<T = string | number | undefined>
   parser?: null | ((value?: T) => T);
 }
 
-const Input: React.FC<InputProps> = ({
+const Input: React.ForwardRefRenderFunction<
+  HTMLInputElement,
+  InputProps & { myRef?: React.ForwardedRef<HTMLInputElement> }
+> = ({
   className,
   suffix,
   prefix,
@@ -39,10 +42,14 @@ const Input: React.FC<InputProps> = ({
   onChange,
   label,
   placeholder = ' ',
+  myRef,
   ...prpos
 }) => {
   const ref = useRef<HTMLInputElement>(null);
   const [x, setX] = useState(`${ref.current?.offsetLeft}px`);
+
+  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+  useImperativeHandle(myRef, () => ref.current!);
   const getValue = useCallback(
     (val: InputProps['value']) => {
       return formatter ? formatter?.(val) : val;
@@ -100,4 +107,6 @@ const Input: React.FC<InputProps> = ({
   );
 };
 
-export default Input;
+export default React.forwardRef((props: InputProps, ref: React.ForwardedRef<HTMLInputElement>) => (
+  <Input {...props} myRef={ref} />
+));

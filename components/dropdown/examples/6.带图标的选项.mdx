@@ -1,0 +1,27 @@
+带图标的选项
+
+```tsx
+<Dropdown
+  options={[
+    {
+      value: '宠物',
+      label: '宠物',
+      options: [
+        { label: '狮子', value: '狮子', icon: '🦁' },
+        { label: '大青蛙', value: '大青蛙', icon: '🐸' },
+      ],
+    },
+    {
+      value: '野生动物',
+      label: '野生动物',
+      options: [
+        { value: '大老虎', label: '大老虎', icon: '🐯' },
+        { value: '龙', label: '龙', icon: '🐲' },
+        { value: '牛', label: '牛', icon: '🐮' },
+      ],
+    },
+  ]}
+>
+  <Button>带图标的选项</Button>
+</Dropdown>
+```

@@ -1,8 +1,9 @@
-## [1.5.3](https://github.com/monako97/neko-ui/compare/1.5.0...1.5.3) (2023-05-06)
+# [1.6.0](https://github.com/monako97/neko-ui/compare/1.5.0...1.6.0) (2023-05-09)
 
 
 ### Bug Fixes
 
+* backtop 返回顶部无效 ([ab9c775](https://github.com/monako97/neko-ui/commit/ab9c77586be205eb7fc40245383cf36f485229da))
 * segmented dark style ([388f99d](https://github.com/monako97/neko-ui/commit/388f99dcefd6838ba5f39e2612c106365c5aef62))
 
 

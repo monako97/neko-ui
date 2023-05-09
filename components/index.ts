@@ -40,10 +40,13 @@ export { default as InputNumber, type InputNumberProps } from './input-number';
 export { default as Radio, type RadioProps, type RadioOption } from './radio';
 export { default as Checkbox, type CheckboxProps, type CheckboxOption } from './checkbox';
 export { default as Segmented, type SegmentedProps, type SegmentedOption } from './segmented';
-export { default as Tooltip, type TooltipProps, type TooltipTriggerOption } from './tooltip';
+export { default as Tooltip, type TooltipProps } from './tooltip';
 export { default as ColorPalette, type ColorPaletteProps } from './color-palette';
 export { default as ColorPicker, type ColorPickerProps } from './color-picker';
 export { default as Skeleton } from './skeleton';
+export { default as Dropdown, type DropdownProps } from './dropdown';
+export { default as Popover, type PopoverProps, type TriggerOption } from './popover';
+export { default as Select, type SelectProps } from './select';
 export { default as CodeBlock, type CodeBlockProps } from './code-block';
 export { default as Photo, type PhotoProps, type ImageData } from './photo';
 export { default as Carousel, type CarouselProps } from './carousel';
@@ -53,5 +56,11 @@ export { default as Switch, type SwitchProps } from './switch';
 export { default as prefixCls, setPrefixCls } from './prefix-cls';
 export { default as highlight } from './highlight';
 export { default as Prism } from './prism';
+export {
+  default as getOptions,
+  defaultFieldNames,
+  type FieldNames,
+  type BaseOption,
+} from './get-options';
 
 export type ComponentSize = 'small' | 'normal' | 'large';

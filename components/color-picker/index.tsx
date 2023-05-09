@@ -1,7 +1,8 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { cls } from './style';
 import { cx } from '../emotion';
-import { ColorPalette, Tooltip, type ColorPaletteProps, type ComponentSize } from '../index';
+import { ColorPalette, type ColorPaletteProps, type ComponentSize } from '../index';
+import Popover from '../popover';
 
 export interface ColorPickerProps extends ColorPaletteProps {
   destroyInactive?: boolean;
@@ -31,9 +32,11 @@ const ColorPicker: React.FC<ColorPickerProps> = ({
   }, [defaultValue, onChange, val]);
 
   return (
-    <Tooltip
+    <Popover
       {...props}
-      title={<ColorPalette value={val} onChange={handleChange} />}
+      arrow
+      trigger="click"
+      content={<ColorPalette value={val} onChange={handleChange} />}
       destroyInactive={destroyInactive}
       popupClassName={cx(cls.picker, popupClassName)}
       className={cx(cls.trigger, size && cls[size], className)}
@@ -45,7 +48,7 @@ const ColorPicker: React.FC<ColorPickerProps> = ({
       }
     >
       {null}
-    </Tooltip>
+    </Popover>
   );
 };
 

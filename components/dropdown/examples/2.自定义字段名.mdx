@@ -1,0 +1,31 @@
+自定义节点 `label`、`value`、`options` 的字段
+
+```tsx
+<Dropdown
+  fieldNames={{
+    label: 'name',
+    options: 'children',
+  }}
+  options={[
+    {
+      value: '宠物',
+      name: '宠物',
+      children: [
+        { name: '狮子', value: '狮子', icon: '🦁' },
+        { name: '大青蛙', value: '大青蛙', icon: '🐸' },
+      ],
+    },
+    {
+      value: '野生动物',
+      name: '野生动物',
+      children: [
+        { value: '大老虎', name: '大老虎', icon: '🐯' },
+        { value: '龙', name: '龙', icon: '🐲' },
+        { value: '牛', name: '牛', icon: '🐮' },
+      ],
+    },
+  ]}
+>
+  <Button>自定义字段</Button>
+</Dropdown>
+```
