@@ -9,6 +9,7 @@
 
 ### Features
 
+* dropdown下拉菜单、popover 气泡卡片、select 下拉选择框 ([fdb889e](https://github.com/monako97/neko-ui/commit/fdb889e88c214dac0ac5fc9ac353949c07e4d2c1))
 * dropdown下拉菜单、popover 气泡卡片、select 下拉选择框 ([cc41847](https://github.com/monako97/neko-ui/commit/cc41847d1560c4a74019d024f3c113302cc8275f))
 * tootip 自动跟据情况决定展开方向 ([3aa7138](https://github.com/monako97/neko-ui/commit/3aa7138a71736a2a637397e67a8ee6c455d365e6))
 

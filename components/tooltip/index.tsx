@@ -4,7 +4,7 @@ import { cx } from '../emotion';
 import Popover, { type PopoverProps } from '../popover';
 import prefixCls from '../prefix-cls';
 
-export interface TooltipProps extends Omit<PopoverProps, 'title'> {
+export interface TooltipProps extends Omit<PopoverProps, 'title' | 'content'> {
   children: React.ReactNode;
   title: React.ReactNode;
   color?: string;
