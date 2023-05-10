@@ -1,8 +1,8 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { downloadBlob, isObject } from '@moneko/common';
 import { cls } from './style';
+import Button, { type ButtonProps } from '../button';
 import { cx } from '../emotion';
-import { Button, type ButtonProps } from '../index';
 
 export interface RecorderOptions {
   /** 录制文件名称 */

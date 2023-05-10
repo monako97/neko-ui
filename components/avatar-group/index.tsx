@@ -1,7 +1,8 @@
 import React, { useMemo } from 'react';
 import { cls } from './style';
+import Avatar, { type AvatarProps } from '../avatar';
 import { cx } from '../emotion';
-import { Avatar, Tooltip, type AvatarProps } from '../index';
+import Popover from '../popover';
 
 export interface AvatarGroupProps {
   data: Omit<AvatarProps, 'size'>[];
@@ -26,8 +27,10 @@ const AvatarGroup: React.FC<AvatarGroupProps> = (props: AvatarGroupProps) => {
         <Avatar key={`${i}-${a.src}`} size={props.size} {...a} />
       ))}
       {more > 0 ? (
-        <Tooltip
-          title={
+        <Popover
+          arrow
+          trigger="click"
+          content={
             <div className={cls.more}>
               {props.data.slice(-more).map((a, i) => (
                 <Avatar key={`${i}-${a.src}`} size={props.size} {...a} />
@@ -36,7 +39,7 @@ const AvatarGroup: React.FC<AvatarGroupProps> = (props: AvatarGroupProps) => {
           }
         >
           <Avatar size={props.size} username={`+${more}`} />
-        </Tooltip>
+        </Popover>
       ) : null}
     </div>
   );

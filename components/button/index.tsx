@@ -2,7 +2,7 @@ import React, { useCallback, useRef, useState, useMemo, createElement } from 're
 import { isFunction } from '@moneko/common';
 import { cls, type ButtonType } from './style';
 import { cx } from '../emotion';
-import type { ComponentSize } from '../';
+import type { ComponentSize } from '../index';
 
 export type { ButtonType } from './style';
 export interface ButtonProps extends React.HTMLAttributes<HTMLButtonElement> {

@@ -3,7 +3,7 @@ import { passiveSupported } from '@moneko/common';
 import sso from 'shared-store-object';
 import { cls } from './style';
 import { cx } from '../emotion';
-import { Input, type InputProps } from '../index';
+import Input, { type InputProps } from '../input';
 
 export interface InputNumberProps extends Omit<InputProps, 'value' | 'defaultValue' | 'onChange'> {
   value?: number;

@@ -1,6 +1,6 @@
 import { injectGlobal } from '../emotion';
 import prefixCls from '../prefix-cls';
-import type { ComponentSize } from '../';
+import type { ComponentSize } from '../index';
 
 export type ButtonType = 'success' | 'error' | 'primary' | 'warning' | 'default';
 export const cls: Record<string | ButtonType | ComponentSize | number | symbol, string> = {

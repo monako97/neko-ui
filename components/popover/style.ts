@@ -1,22 +1,17 @@
-import { css, injectGlobal } from '../emotion';
+import { injectGlobal } from '../emotion';
 import prefixCls from '../prefix-cls';
 
 export const cls = {
   popover: prefixCls('popover'),
   portal: prefixCls('popover-portal'),
-  item: prefixCls('popover-item'),
-  group: prefixCls('popover-group'),
-  danger: prefixCls('popover-danger'),
-  active: prefixCls('popover-active'),
   arrow: prefixCls('popover-arrow'),
-  icon: prefixCls('popover-icon'),
   inUp: prefixCls('popover-in-up'),
   outUp: prefixCls('popover-out-up'),
   inDown: prefixCls('popover-in-down'),
   outDown: prefixCls('popover-out-down'),
 };
 
-const cs = css`
+injectGlobal`
   :root {
     --popover-bg: var(--component-bg);
     --popover-shadow-color: rgb(0 0 0 / 5%);
@@ -65,47 +60,6 @@ const cs = css`
       clip-path: polygon(0% 0%, 50% 100%, 100% 0%);
       transform: translate3d(var(--x, 0), 100%, 0);
     }
-  }
-  .${cls.icon} {
-    font-size: 14px;
-    margin-inline-end: 6px;
-  }
-  .${cls.item}, .${cls.group} {
-    border-radius: calc(var(--border-radius) / 1.5);
-    transition: 0.2s background-color ease, 0.2s color ease;
-    cursor: pointer;
-    box-sizing: border-box;
-    line-height: 1.57;
-  }
-  .${cls.item} {
-    padding: 5px 12px;
-    color: var(--text-color);
-
-    &:hover:not(&[aria-disabled]:not([aria-disabled='false'])) {
-      &:not(.${cls.active},.${cls.danger}) {
-        background-color: var(--disable-bg);
-      }
-    }
-
-    &[aria-disabled]:not([aria-disabled='false']) {
-      cursor: not-allowed;
-      color: var(--disable-color);
-    }
-    &.${cls.active} {
-      background-color: var(--primary-selection);
-    }
-    &.${cls.danger} {
-      color: var(--error-color);
-      &.${cls.active}, &:hover {
-        color: #fff;
-        background-color: var(--error-color);
-      }
-    }
-  }
-  .${cls.group} {
-    padding: 5px;
-    font-size: 12px;
-    color: var(--text-secondary);
   }
   .${cls.inUp} {
     --direction: -1;
@@ -205,5 +159,3 @@ const cs = css`
     }
   }
 `;
-
-injectGlobal([cs]);

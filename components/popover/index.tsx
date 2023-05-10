@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useRef } from 'react';
-import { getMaxZindex, isString, isFunction } from '@moneko/common';
+import { getMaxZindex, isString, isFunction, passiveSupported } from '@moneko/common';
 import sso from 'shared-store-object';
 import { cls } from './style';
 import { cx } from '../emotion';
@@ -106,74 +106,75 @@ const Popover: React.FC<PopoverProps> = ({
           }
         }
       },
-      showPortal() {
+      showPortal(e?: Event) {
         if (
           !state.current.show ||
           !ref.current ||
           !childRef.current ||
-          state.current.trigger === 'contextMenu'
+          (!e && state.current.trigger === 'contextMenu')
         ) {
+          return;
+        }
+        if (e?.type === 'scroll' && state.current.trigger === 'contextMenu') {
+          state.current.openChange(false);
           return;
         }
         const elRect = childRef.current.getBoundingClientRect();
         const portalRect = ref.current.getBoundingClientRect();
+        const offsetX = portalRect.width / 2 - elRect.width / 2;
+        const margin = window.innerHeight - elRect.bottom;
+        let _isBottom = true;
+        const arrowHeight = state.current.arrow ? 8 : 4;
+        const _posi: { left: number; top: number; x: string } = {
+          left: -9999,
+          top: -9999,
+          x: '0px',
+        };
 
-        if (elRect && portalRect) {
-          const portalRectHeight = ref.current.offsetHeight;
-          const offsetX = portalRect.width / 2 - elRect.width / 2;
-          const margin = window.innerHeight - elRect.bottom;
-          let _isBottom = margin > portalRectHeight * 0.8 && margin > elRect.top;
-          const arrowHeight = state.current.arrow ? 8 : 4;
-          const _posi: { left: number; top: number; x: string } = {
-            left: Math.abs(offsetX > elRect.left ? elRect.left : elRect.left - offsetX),
-            top: -9999,
-            x: '0px',
-          };
-
-          _posi.x = -(_posi.left - elRect.left + offsetX) + 'px';
-
-          switch (state.current.placement) {
-            case 'bottomLeft':
-              _posi.left = elRect.left;
-              _posi.x = -portalRect.width / 2 + 16 + 'px';
-              _isBottom = true;
-              break;
-            case 'bottom':
-              _posi.left = Math.abs(offsetX > elRect.left ? elRect.left : elRect.left - offsetX);
-              _posi.x = -(_posi.left - elRect.left + offsetX) + 'px';
-              _isBottom = true;
-              break;
-            case 'bottomRight':
-              _posi.left = elRect.right - portalRect.width;
-              _posi.x = portalRect.width / 2 - 16 + 'px';
-              _isBottom = true;
-              break;
-            case 'topLeft':
-              _posi.left = elRect.left;
-              _posi.x = -portalRect.width / 2 + 16 + 'px';
-              _isBottom = false;
-              break;
-            case 'top':
-              _posi.left = Math.abs(offsetX > elRect.left ? elRect.left : elRect.left - offsetX);
-              _posi.x = -(_posi.left - elRect.left + offsetX) + 'px';
-              _isBottom = false;
-              break;
-            case 'topRight':
-              _posi.left = elRect.right - portalRect.width;
-              _posi.x = portalRect.width / 2 - 16 + 'px';
-              _isBottom = false;
-              break;
-            default:
-              break;
-          }
-          if (_isBottom) {
-            _posi.top = elRect.bottom + arrowHeight;
-          } else {
-            _posi.top = elRect.top - portalRectHeight - arrowHeight;
-          }
-          state.current.posi = _posi;
-          state.current.up = !_isBottom;
+        switch (state.current.placement) {
+          case 'bottomLeft':
+            _posi.left = elRect.left;
+            _posi.x = -portalRect.width / 2 + 16 + 'px';
+            _isBottom = true;
+            break;
+          case 'bottom':
+            _posi.left = Math.abs(offsetX > elRect.left ? elRect.left : elRect.left - offsetX);
+            _posi.x = -(_posi.left - elRect.left + offsetX) + 'px';
+            _isBottom = true;
+            break;
+          case 'bottomRight':
+            _posi.left = elRect.right - portalRect.width;
+            _posi.x = portalRect.width / 2 - 16 + 'px';
+            _isBottom = true;
+            break;
+          case 'topLeft':
+            _posi.left = elRect.left;
+            _posi.x = -portalRect.width / 2 + 16 + 'px';
+            _isBottom = false;
+            break;
+          case 'top':
+            _posi.left = Math.abs(offsetX > elRect.left ? elRect.left : elRect.left - offsetX);
+            _posi.x = -(_posi.left - elRect.left + offsetX) + 'px';
+            _isBottom = false;
+            break;
+          case 'topRight':
+            _posi.left = elRect.right - portalRect.width;
+            _posi.x = portalRect.width / 2 - 16 + 'px';
+            _isBottom = false;
+            break;
+          default:
+            _posi.left = Math.abs(offsetX > elRect.left ? elRect.left : elRect.left - offsetX);
+            _posi.x = -(_posi.left - elRect.left + offsetX) + 'px';
+            _isBottom = margin > ref.current.offsetHeight * 0.8 && margin > elRect.top;
+            break;
         }
+        if (_isBottom) {
+          _posi.top = elRect.bottom + arrowHeight;
+        } else {
+          _posi.top = elRect.top - ref.current.offsetHeight - arrowHeight;
+        }
+        state.current.posi = _posi;
+        state.current.up = !_isBottom;
       },
     })
   );
@@ -255,7 +256,7 @@ const Popover: React.FC<PopoverProps> = ({
     if (_state.trigger !== 'none') {
       document.documentElement.addEventListener('click', _state.close, false);
     }
-    window.addEventListener('scroll', _state.showPortal, false);
+    window.addEventListener('scroll', _state.showPortal, passiveSupported);
     return () => {
       if (_state.closeTimer) {
         clearTimeout(_state.closeTimer);
@@ -263,7 +264,7 @@ const Popover: React.FC<PopoverProps> = ({
       if (_state.trigger !== 'none') {
         document.documentElement.removeEventListener('click', _state.close, false);
       }
-      window.removeEventListener('scroll', _state.showPortal, false);
+      window.removeEventListener('scroll', _state.showPortal, passiveSupported);
       _state();
     };
   }, []);

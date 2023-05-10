@@ -3,7 +3,8 @@ import { colorParse, passiveSupported, setClipboard, throttle, type HSVA } from 
 import sso from 'shared-store-object';
 import { cls } from './style';
 import { cx } from '../emotion';
-import { Input, InputNumber } from '../index';
+import Input from '../input';
+import InputNumber from '../input-number';
 
 const material = [
   '#f44336',

@@ -1,8 +1,8 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import clipPath from './clip-path.svg';
 import { cls, svgPrefix } from './style';
-import { type ComponentSize } from '../';
 import { cx } from '../emotion';
+import type { ComponentSize } from '../index';
 
 const clip = decodeURIComponent(clipPath.replace(svgPrefix, ''));
 

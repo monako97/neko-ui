@@ -28,6 +28,8 @@ const Dropdown: React.FC<DropdownProps> = ({
   onOpenChange,
   disabled,
   fieldNames,
+  className,
+  popupClassName,
   ...props
 }) => {
   const state = useRef(
@@ -148,6 +150,8 @@ const Dropdown: React.FC<DropdownProps> = ({
   return (
     <Popover
       {...props}
+      className={cx(cls.dropdown, className)}
+      popupClassName={cx(cls.portal, popupClassName)}
       open={show}
       onOpenChange={state.current.openChange}
       disabled={disabled}

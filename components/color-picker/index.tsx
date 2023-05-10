@@ -1,8 +1,9 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { cls } from './style';
+import ColorPalette, { type ColorPaletteProps } from '../color-palette';
 import { cx } from '../emotion';
-import { ColorPalette, type ColorPaletteProps, type ComponentSize } from '../index';
 import Popover from '../popover';
+import type { ComponentSize } from '../index';
 
 export interface ColorPickerProps extends ColorPaletteProps {
   destroyInactive?: boolean;

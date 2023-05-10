@@ -5,16 +5,22 @@
   arrow
   content="右键触发"
   trigger="contextMenu"
-  className={css`
-    width: 100%;
-    height: 150px;
-    background: var(--disable-bg);
-    border-radius: 8px;
-    line-height: 150px;
-    text-align: center;
-    font-size: x-large;
-  `}
+  style={{
+    width: '100%',
+    height: 150,
+    backgroundColor: 'var(--disable-bg)',
+    borderRadius: 8,
+    lineHeight: '150px',
+    textAlign: 'center',
+    fontSize: 'x-large',
+  }}
 >
-  <div style={{ opacity: 0.4 }}>右键点我</div>
+  <div
+    style={{
+      opacity: 0.4,
+    }}
+  >
+    右键点我
+  </div>
 </Popover>
 ```

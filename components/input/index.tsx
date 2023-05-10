@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useImperativeHandle, useRef, useState } from 'react';
 import { cls } from './style';
 import { cx } from '../emotion';
-import { type ComponentSize } from '../index';
+import type { ComponentSize } from '../index';
 
 export interface InputProps<T = string | number | undefined>
   extends Omit<
