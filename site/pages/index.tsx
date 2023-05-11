@@ -43,6 +43,13 @@ injectGlobal`
 
   .site-doc-main-box {
     box-sizing: border-box;
+    tr > th,
+    tr > td {
+      &:last-child,
+      &:nth-last-child(2) {
+        min-width: 45px;
+      }
+    }
 
     .n-md-toc {
       inset-block-start: 16px;

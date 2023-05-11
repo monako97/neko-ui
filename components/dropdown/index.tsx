@@ -58,6 +58,10 @@ const Dropdown: React.FC<DropdownProps | DropdownMultipleProps> = ({
         ...fieldNames,
       },
       value: [] as (string | number)[],
+      preventDefault(e: MouseEvent | React.MouseEvent) {
+        e.preventDefault();
+        e.stopPropagation();
+      },
       change(item: DropdownOption) {
         if (!item.disabled && !state.current.disabled) {
           let _value = [...state.current.value];
@@ -81,7 +85,9 @@ const Dropdown: React.FC<DropdownProps | DropdownMultipleProps> = ({
           } else {
             state.current.value = _value;
           }
-          state.current.openChange(false);
+          if (!multiple) {
+            state.current.openChange(false);
+          }
         }
       },
       openChange(next: boolean | null) {
@@ -124,9 +130,9 @@ const Dropdown: React.FC<DropdownProps | DropdownMultipleProps> = ({
                 option.selectable && option.activeKey?.includes(item[valueKey]) && cls.active
               )}
               aria-disabled={option.disabled || item.disabled}
+              onMouseDown={state.current.preventDefault}
               onClick={(e) => {
-                e.preventDefault();
-                e.stopPropagation();
+                state.current.preventDefault(e);
                 state.current.change(item);
               }}
               style={item.style}

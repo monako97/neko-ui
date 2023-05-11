@@ -63,7 +63,7 @@ const Select: React.ForwardRefRenderFunction<HTMLInputElement, SelectProps> = ({
           }
         }
       },
-      focus(e: React.FocusEvent) {
+      focus(e: React.FocusEvent | React.MouseEvent) {
         e.preventDefault();
         e.stopPropagation();
         state.current.openChange(true);
@@ -182,6 +182,7 @@ const Select: React.ForwardRefRenderFunction<HTMLInputElement, SelectProps> = ({
           value={(kv[val[0]]?.[fieldName.label] as string) || val[0] || ''}
           onFocus={state.current.focus}
           onBlur={state.current.blur}
+          onClickCapture={state.current.focus}
         />
       )}
     </Dropdown>
