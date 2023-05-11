@@ -59,29 +59,40 @@ injectGlobal`
   }
   .${cls.prev}, .${cls.next} {
     position: absolute;
-    inset-block-start: 0;
-    inset-block-end: 0;
     z-index: 1;
     margin: auto;
     border-radius: var(--border-radius);
+    font-size: 16px;
+    font-weight: bold;
+    transition: transform 0.3s;
+    inset-block-start: 0;
+    inset-block-end: 0;
     inline-size: fit-content;
     block-size: fit-content;
-    transition: transform 0.3s;
     line-height: 1;
     cursor: pointer;
 
     &::before {
-      content: '\ue63d';
+      display: inline-block;
+      transform: rotate(90deg);
     }
   }
   .${cls.prev} {
-    inset-inline-start: 16px;
+    inset-inline-start: 4px;
     transform: translateX(-32px) scaleY(0);
+
+    &::before {
+      content: '﹀';
+    }
   }
 
   .${cls.next} {
-    inset-inline-end: 16px;
-    transform: translateX(32px) rotate(180deg) scaleY(0);
+    inset-inline-end: 4px;
+    transform: translateX(32px) scaleY(0);
+
+    &::before {
+      content: '︿';
+    }
   }
   .${cls.dots} {
     position: absolute;
@@ -129,15 +140,9 @@ injectGlobal`
   }
 
   .${cls.carousel}\:hover {
-    .${cls.prev} {
+    .${cls.prev}, .${cls.next} {
       &:not([data-show='false']) {
         transform: translateX(0) scaleY(1.5);
-      }
-    }
-
-    .${cls.next} {
-      &:not([data-show='false']) {
-        transform: translateX(0) rotate(180deg) scaleY(1.5);
       }
     }
 

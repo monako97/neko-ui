@@ -605,20 +605,18 @@ pre:not(.sp-cm) .toolbar .toolbar-copy:active {
 }
 
 .toolbar .toolbar-copy::after {
+    user-select: none;
     display: block;
-    font-size: var(--font-size);
-    font-family: neko-icon, sans-serif;
-    font-weight: 600;
-    color: var(--text-color,);
+    font-size: 24px;
+    font-family: sans-serif;
+    color: var(--text-color);
     line-height: 24px;
-    text-transform: uppercase;
-    content: '\e631';
+    content: '⎘';
     transition-property: color, transform;
 }
 
 .toolbar .toolbar-copy:hover::after {
     color: var(--primary-color, #5794ff);
-    content: '\e637';
 }
 
 pre:not(.sp-cm)>code {

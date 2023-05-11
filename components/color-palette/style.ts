@@ -33,7 +33,8 @@ injectGlobal`
     margin-inline-start: 6px;
     inline-size: 46px;
     min-block-size: 26px;
-    font-family: neko-icon, sans-serif;
+    line-height: 1;
+    font-family: sans-serif;
     text-align: center;
     color: #fff;
     cursor: pointer;
@@ -50,10 +51,13 @@ injectGlobal`
     }
 
     &:hover::after {
-      content: '\ue631';
+      font-size: 24px;
+      content: '⎘';
     }
 
     &[data-copy='success']::after {
+      font-size: 16px;
+      line-height: 26px;
       content: '✓';
     }
   }
@@ -222,15 +226,15 @@ injectGlobal`
     i {
       position: relative;
       border: 0;
+      font-size: 28px;
+      text-align: center;
       background-color: var(--c, transparent);
       outline: 0;
       cursor: pointer;
       inline-size: 20px;
       block-size: 20px;
       font-style: normal;
-      text-align: center;
       line-height: 17px;
-      font-size: 28px;
 
       &::before,
       &::after {
@@ -243,9 +247,9 @@ injectGlobal`
       }
 
       &::before {
+        z-index: -1;
         background: var(--alpha-gradient);
         content: '⍝';
-        z-index: -1;
       }
 
       &::after {

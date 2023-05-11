@@ -79,7 +79,7 @@ function Photo(props: PhotoProps) {
             onWheel={photo.current.handleWheel}
           >
             {renderDom}
-            <span className={cx('neko-icon', cls.close)} onClick={photo.current.onOpenChange} />
+            <span className={cls.close} onClick={photo.current.onOpenChange} />
           </div>
         </Portal>
       ) : null;

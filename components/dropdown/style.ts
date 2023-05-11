@@ -9,6 +9,7 @@ export const cls = {
   danger: prefixCls('dropdown-danger'),
   active: prefixCls('dropdown-active'),
   icon: prefixCls('dropdown-icon'),
+  selectable: prefixCls('dropdown-selectable'),
 };
 
 injectGlobal`
@@ -30,6 +31,9 @@ injectGlobal`
     line-height: 1.57;
   }
   .${cls.item} {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
     padding: 5px 12px;
     color: var(--text-color);
 
@@ -45,12 +49,33 @@ injectGlobal`
     }
     &.${cls.active} {
       background-color: var(--primary-selection);
+      color: var(--text-heading);
+      &:has(+.${cls.active}) {
+        border-bottom-right-radius: 0;
+        border-bottom-left-radius: 0;
+        
+      }
+      &+& {
+        border-top-right-radius: 0;
+        border-top-left-radius: 0;
+      }
     }
     &.${cls.danger} {
       color: var(--error-color);
       &.${cls.active}, &:hover {
         color: #fff;
         background-color: var(--error-color);
+      }
+    }
+  }
+  .${cls.selectable} {
+    .${cls.active} {
+      padding-right: 0;
+      &::after {
+        content: '✓';
+        opacity: 0.5;
+        display: inline-block;
+        padding: 0 8px;
       }
     }
   }

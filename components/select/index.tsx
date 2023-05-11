@@ -21,7 +21,9 @@ const Select: React.ForwardRefRenderFunction<HTMLInputElement, SelectProps> = ({
   open,
   options,
   label,
-  value = '',
+  multiple,
+  value,
+  toggle,
   disabled,
   onChange,
   onOpenChange,
@@ -32,11 +34,13 @@ const Select: React.ForwardRefRenderFunction<HTMLInputElement, SelectProps> = ({
   const ref = useRef<HTMLInputElement>(null);
   const state = useRef(
     sso({
-      value,
+      value: [] as (string | number)[],
       options: [] as SelectOption[],
       kv: {} as Record<string, SelectOption>,
       disabled,
       open,
+      multiple,
+      toggle,
       fieldNames: {
         ...defaultFieldNames,
         ...fieldNames,
@@ -51,11 +55,11 @@ const Select: React.ForwardRefRenderFunction<HTMLInputElement, SelectProps> = ({
         }
       },
       onChange(val: string | number, item: DropdownOption) {
-        if (!state.current.disabled) {
+        if (!state.current.disabled && !item.disabled) {
           if (isFunction(onChange)) {
             onChange(val, item);
           } else {
-            state.current.value = val || '';
+            state.current.value = Array.isArray(val) ? val : [val];
           }
         }
       },
@@ -87,14 +91,15 @@ const Select: React.ForwardRefRenderFunction<HTMLInputElement, SelectProps> = ({
     kv,
     popupStyle: style,
     fieldNames: fieldName,
+    multiple: isMultiple,
   } = state.current;
 
   useEffect(() => {
     state.current.popupStyle = {
       ...popupStyle,
-      minWidth: ref.current?.parentElement?.offsetWidth,
+      minWidth: (isMultiple ? ref.current : ref.current?.parentElement)?.offsetWidth,
     };
-  }, [popupStyle]);
+  }, [popupStyle, isMultiple, val]);
   useEffect(() => {
     state.current('fieldNames', (prev) => ({ ...prev, ...fieldNames }));
   }, [fieldNames]);
@@ -105,14 +110,17 @@ const Select: React.ForwardRefRenderFunction<HTMLInputElement, SelectProps> = ({
     );
   }, [options]);
   useEffect(() => {
+    state.current.multiple = multiple;
+  }, [multiple]);
+  useEffect(() => {
     state.current.open = open;
   }, [open]);
   useEffect(() => {
     state.current.disabled = disabled;
   }, [disabled]);
   useEffect(() => {
-    state.current.value = value;
-  }, [value]);
+    state.current.value = value ? (Array.isArray(value) ? value : [value]) : [];
+  }, [value, isMultiple]);
   useEffect(() => {
     const _state = state.current;
 
@@ -136,17 +144,46 @@ const Select: React.ForwardRefRenderFunction<HTMLInputElement, SelectProps> = ({
       onOpenChange={state.current.openChange}
       disabled={disable}
       popupStyle={style}
-      value={val}
+      multiple={multiple}
+      toggle={toggle}
+      value={val as unknown as DropdownProps['value']}
       onChange={state.current.onChange}
     >
-      <Input
-        ref={ref}
-        label={label}
-        disabled={disable}
-        value={(kv[val]?.[fieldName.label] as string) || val}
-        onFocus={state.current.focus}
-        onBlur={state.current.blur}
-      />
+      {isMultiple ? (
+        <div
+          ref={ref}
+          className={cls.tags}
+          tabIndex={0}
+          onFocus={state.current.focus}
+          onBlur={state.current.blur}
+          aria-disabled={disable}
+        >
+          {val?.map((v, i) => (
+            <span key={i} className={cls.tag}>
+              {kv[v]?.[fieldName.label] || v}
+              <span
+                className={cls.del}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  e.preventDefault();
+                  state.current('value', (prev) => {
+                    return prev.filter((old) => old !== v);
+                  });
+                }}
+              />
+            </span>
+          ))}
+        </div>
+      ) : (
+        <Input
+          ref={ref}
+          label={label}
+          disabled={disable}
+          value={(kv[val[0]]?.[fieldName.label] as string) || val[0] || ''}
+          onFocus={state.current.focus}
+          onBlur={state.current.blur}
+        />
+      )}
     </Dropdown>
   );
 };

@@ -10,19 +10,32 @@ export interface DropdownOption extends BaseOption {
   options?: DropdownOption[];
 }
 
-export interface DropdownProps extends PopoverProps {
+export interface BaseDropdownProps extends PopoverProps {
   options: (DropdownOption | string)[];
+  selectable?: boolean;
+  fieldNames?: Partial<FieldNames>;
+  toggle?: boolean;
+}
+export interface DropdownProps extends BaseDropdownProps {
   // eslint-disable-next-line no-unused-vars
   onChange?(val: string | number, item: DropdownOption): void;
   value?: string | number;
-  selectable?: boolean;
-  fieldNames?: Partial<FieldNames>;
+  multiple?: false;
 }
-const Dropdown: React.FC<DropdownProps> = ({
+export interface DropdownMultipleProps extends BaseDropdownProps {
+  multiple: true;
+  // eslint-disable-next-line no-unused-vars
+  onChange?(val: (string | number)[], item: DropdownOption): void;
+  value?: (string | number)[];
+}
+
+const Dropdown: React.FC<DropdownProps | DropdownMultipleProps> = ({
   options,
   children,
   open = null,
   selectable,
+  multiple,
+  toggle,
   value,
   onChange,
   onOpenChange,
@@ -38,17 +51,35 @@ const Dropdown: React.FC<DropdownProps> = ({
       options: [] as DropdownOption[],
       disabled,
       selectable,
+      multiple,
+      toggle,
       fieldNames: {
         ...defaultFieldNames,
         ...fieldNames,
       },
-      value,
+      value: [] as (string | number)[],
       change(item: DropdownOption) {
         if (!item.disabled && !state.current.disabled) {
-          if (isFunction(onChange)) {
-            onChange(item[state.current.fieldNames.value], item);
+          let _value = [...state.current.value];
+          const key = item[state.current.fieldNames.value];
+
+          if (state.current.multiple) {
+            const idx = _value.indexOf(key);
+
+            if (idx === -1) {
+              _value.push(key);
+            } else {
+              _value.splice(idx, 1);
+            }
+          } else if (state.current.toggle && _value[0] === key) {
+            _value = [];
           } else {
-            state.current.value = item[state.current.fieldNames.value];
+            _value = [key];
+          }
+          if (isFunction(onChange)) {
+            onChange(multiple ? _value : _value[0], item);
+          } else {
+            state.current.value = _value;
           }
           state.current.openChange(false);
         }
@@ -63,7 +94,7 @@ const Dropdown: React.FC<DropdownProps> = ({
       renderMenu(
         list: DropdownOption[],
         option: {
-          activeKey?: string | number;
+          activeKey?: (string | number)[];
           fieldNames: FieldNames;
           disabled?: boolean;
           selectable?: boolean;
@@ -90,7 +121,7 @@ const Dropdown: React.FC<DropdownProps> = ({
                 cls.item,
                 item.className,
                 item.danger && cls.danger,
-                option.selectable && option.activeKey === item[valueKey] && cls.active
+                option.selectable && option.activeKey?.includes(item[valueKey]) && cls.active
               )}
               aria-disabled={option.disabled || item.disabled}
               onClick={(e) => {
@@ -118,13 +149,16 @@ const Dropdown: React.FC<DropdownProps> = ({
   } = state.current;
 
   useEffect(() => {
+    state.current.toggle = toggle;
+  }, [toggle]);
+  useEffect(() => {
     state.current.open = open;
   }, [open]);
   useEffect(() => {
     state.current.selectable = selectable;
   }, [selectable]);
   useEffect(() => {
-    state.current.value = value;
+    state.current.value = value ? (Array.isArray(value) ? value : [value]) : [];
   }, [value]);
   useEffect(() => {
     state.current.disabled = disabled;
@@ -151,7 +185,7 @@ const Dropdown: React.FC<DropdownProps> = ({
     <Popover
       {...props}
       className={cx(cls.dropdown, className)}
-      popupClassName={cx(cls.portal, popupClassName)}
+      popupClassName={cx(cls.portal, selectable && cls.selectable, popupClassName)}
       open={show}
       onOpenChange={state.current.openChange}
       disabled={disabled}

@@ -28,7 +28,6 @@ injectGlobal`
     object-fit: contain;
     content-visibility: auto;
     backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
   }
 
   .${cls.close} {
@@ -42,8 +41,9 @@ injectGlobal`
     transform: scale(0);
 
     &::before {
-      content: '\\e720';
       padding: 0 16px;
+      font-size: 24px;
+      content: '⛌';
       line-height: 46px;
     }
   }

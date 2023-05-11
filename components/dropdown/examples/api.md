@@ -21,6 +21,8 @@
 | options           | 选项数据                                      | `(DropdownOption\|string)[]`                                                  | `[]`   | 1.6.0 |
 | fieldNames        | 自定义节点 `label`、`value`、`options` 的字段 | `{label:'label',value:'value',options:'options'}`                             | -      | 1.6.0 |
 | selectable        | 可以选中                                      | `boolean`                                                                     | -      | 1.6.0 |
+| multiple          | 可多选                                        | `boolean`                                                                     | -      | 1.7.1 |
+| toggle            | 可取消                                        | `boolean`                                                                     | -      | 1.7.1 |
 
 ### TriggerOption
 

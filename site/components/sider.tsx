@@ -199,7 +199,9 @@ injectGlobal`
   }
 
   .site-theme-btn {
-    font-size: 24px;
+    min-width: 28px;
+    text-align: center;
+    font-size: 28px;
     transition: transform var(--transition-duration) var(--transition-timing-function);
     line-height: 32px;
     cursor: pointer;
@@ -207,13 +209,12 @@ injectGlobal`
   }
 
   .site-theme-btn::before {
-    font-family: neko-icon, sans-serif;
     color: #fc0;
-    content: '\\e645';
+    content: '☀';
   }
 
   [data-theme='dark'] .site-theme-btn::before {
-    content: '\\e647';
+    content: '☪';
     color: #fff;
   }
 

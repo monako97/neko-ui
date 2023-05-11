@@ -215,6 +215,8 @@ const Markdown: React.FC<MarkdownProps> = ({
 
   const handleClick = useCallback(
     (event: React.MouseEvent<HTMLDivElement>) => {
+      event.preventDefault();
+      event.stopPropagation();
       const target = event.target as HTMLElement;
 
       if (isSvgElement(target)) return;

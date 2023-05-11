@@ -103,8 +103,8 @@ function Carousel(props: CarouselProps) {
         <div className={cls.item}>{children[next]}</div>
       </section>
       {header ? <section className={cls.header}>{header(offset)}</section> : null}
-      <div className={cx('neko-icon', cls.prev)} onClick={carousel.current.handlePrev} />
-      <div className={cx('neko-icon', cls.next)} onClick={carousel.current.handleNext} />
+      <div className={cls.prev} onClick={carousel.current.handlePrev} />
+      <div className={cls.next} onClick={carousel.current.handleNext} />
       {dots ? (
         <div className={cls.dots}>
           {dotLen.map((_, i) => (

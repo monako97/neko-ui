@@ -103,9 +103,8 @@ injectGlobal`
   .sandbox-btn::after {
     display: inline-block;
     font-size: var(--font-size-xs);
-    font-family: neko-icon, sans-serif;
     text-indent: 4px;
-    content: '\\e63e';
+    content: '</>';
   }
 
   .sandbox-btn:active {

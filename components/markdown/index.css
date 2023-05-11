@@ -1,15 +1,3 @@
-@font-face {
-  font-family: neko-icon;
-  src: url('./iconfont.woff2') format('woff2');
-}
-
-.neko-icon {
-  font-size: inherit;
-  font-family: neko-icon, sans-serif !important;
-  font-style: normal;
-  line-height: normal;
-}
-
 [data-copy]::before {
   position: absolute;
   inset-block-start: 32px;
@@ -407,7 +395,7 @@ blockquote p {
 
 .n-md-body blockquote {
   position: relative;
-  margin: 30px 54px;
+  margin: 30px 48px;
   border-radius: var(--border-radius);
   padding: 16px;
   font-weight: 500;
@@ -418,23 +406,24 @@ blockquote p {
 .n-md-body blockquote::before,
 .n-md-body blockquote::after {
   position: absolute;
-  font-size: 32px;
-  font-family: neko-icon, sans-serif;
+  font-size: 56px;
+  font-family: sans-serif;
   color: var(--primary-active);
   transition-property: color;
-  content: '\e68d';
+  content: '❞';
+  line-height: 1;
 }
 
 .n-md-body blockquote::before {
   inset-block-start: -8px;
   inset-inline-start: 0;
-  transform: translateX(-53px) rotate(180deg);
+  transform: translateX(-44px) rotate(180deg);
 }
 
 .n-md-body blockquote::after {
   inset-inline-end: 0;
   inset-block-end: -8px;
-  transform: translateX(53px);
+  transform: translateX(44px);
 }
 
 .n-md-body blockquote.n-tip {
@@ -531,12 +520,11 @@ blockquote p {
   display: inline-block;
   margin-inline-end: 4px;
   inline-size: 14px;
-  font-size: var(--font-size-sm);
-  font-family: neko-icon, sans-serif;
   font-weight: lighter;
   text-align: center;
-  opacity: 0.2;
-  content: '\e63f';
+  opacity: 0.5;
+  content: '⛌';
+  transform: rotate(45deg);
 }
 
 .n-md-body details[open] {
@@ -552,7 +540,7 @@ blockquote p {
 }
 
 .n-md-body details[open] >summary::before {
-  transform: rotate(90deg);
+  transform: rotate(0);
 }
 
 .n-md-body .n-katex-block {

@@ -17,6 +17,7 @@ injectGlobal`
     transition: opacity 0.3s;
   }
   .${cls.loading} {
+    cursor: not-allowed;
     .${cls.content} {
       opacity: 0.3;
       pointer-events: none;
@@ -29,9 +30,8 @@ injectGlobal`
       justify-content: center;
       align-items: center;
       margin: auto;
-      border-style: solid;
-      border-width: 1px 0;
-      border-color: var(--text-secondary);
+      border: 1px solid;
+      border-color: var(--text-secondary) transparent;
       border-radius: 16px;
       font-size: large;
       text-align: center;
