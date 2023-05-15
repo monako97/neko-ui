@@ -67,7 +67,7 @@ injectGlobal`
       background-color: var(--primary-selection);
     }
 
-    &[data-disabled]:not([data-disabled='false']) {
+    &[aria-disabled]:not([aria-disabled='false']) {
       cursor: not-allowed;
       color: var(--disable-color);
 
@@ -88,7 +88,7 @@ injectGlobal`
       color: var(--text-heading);
       background-color: transparent;
 
-      &[data-disabled]:not([data-disabled='false']) {
+      &[aria-disabled]:not([aria-disabled='false']) {
         color: var(--disable-color);
       }
     }

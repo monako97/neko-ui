@@ -41,6 +41,7 @@ injectGlobal`
       background: none;
       appearance: none;
     }
+
     &:focus-within {
       border-color: var(--primary-hover, #80b3ff);
       border-inline-end-width: 1px;
@@ -57,7 +58,7 @@ injectGlobal`
         --text-color: var(--error-color);
       }
     }
-    
+
     &.${cls.success} {
       --border-color: var(--success-border);
       --primary-hover: var(--success-hover);
@@ -76,6 +77,7 @@ injectGlobal`
         --text-color: var(--warning-color);
       }
     }
+
     &:disabled {
       --text-color: var(--disable-color);
       --border-color: var(--disable-border);

@@ -26,22 +26,22 @@ function getOptions<T extends BaseOption = BaseOption>(
   return list.map((item) => {
     const { options, label, value } = { ...defaultFieldNames, ...fieldNames };
 
-    if (typeof item === 'string') {
-      return {
-        [label]: item,
-        [value]: item,
-      } as BaseOption;
-    }
-    if (Array.isArray(item[options])) {
+    if (typeof item === 'object') {
+      if (Array.isArray(item[options])) {
+        return {
+          ...item,
+          [options]: getOptions(item[options], fieldNames),
+        };
+      }
       return {
         ...item,
-        [options]: getOptions(item[options], fieldNames),
+        [label]: typeof item[label] === 'undefined' ? item[value] : item[label],
       };
     }
     return {
-      ...item,
-      [label]: typeof item[label] === 'undefined' ? item[value] : item[label],
-    };
+      [label]: item,
+      [value]: item,
+    } as BaseOption;
   });
 }
 

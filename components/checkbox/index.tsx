@@ -145,7 +145,6 @@ const Checkbox: React.FC<CheckboxProps> = ({
             onKeyUpCapture={({ key }) => state.current.onKeyUpCapture(key, item)}
             onClickCapture={handleChange}
             aria-disabled={readOnly}
-            data-disabled={readOnly}
             style={item.style}
           >
             <input

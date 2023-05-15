@@ -30,7 +30,7 @@ injectGlobal`
     gap: 6px;
     outline: 0;
 
-    &:not([data-disabled]:not([data-disabled='false'])):focus .${cls.radio} {
+    &:not([aria-disabled]:not([aria-disabled='false'])):focus .${cls.radio} {
       box-shadow: 0 0 0 3px var(--primary-outline);
 
       &:not(:checked) {
@@ -38,7 +38,7 @@ injectGlobal`
       }
     }
 
-    &[data-disabled]:not([data-disabled='false']) {
+    &[aria-disabled]:not([aria-disabled='false']) {
       cursor: not-allowed;
       color: var(--disable-color);
     }

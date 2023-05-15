@@ -56,8 +56,8 @@ injectGlobal`
       box-sizing: border-box;
     }
 
-    &:not([data-disabled]),
-    &[data-disabled='false'] {
+    &:not([aria-disabled]),
+    &[aria-disabled='false'] {
       &:not(.${cls.loading}) {
         &:focus {
           box-shadow: inset 0 0 0 0 var(--primary-color), 0 0 0 1px var(--primary-hover),
@@ -85,7 +85,7 @@ injectGlobal`
         }
       }
     }
-    &.${cls.loading}, &[data-disabled]:not([data-disabled='false']) {
+    &.${cls.loading}, &[aria-disabled]:not([aria-disabled='false']) {
       color: var(--disable-color);
       background-color: var(--disable-bg);
       opacity: 0.8;

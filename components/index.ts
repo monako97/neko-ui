@@ -45,7 +45,12 @@ export { default as ColorPalette, type ColorPaletteProps } from './color-palette
 export { default as ColorPicker, type ColorPickerProps } from './color-picker';
 export { default as Skeleton } from './skeleton';
 export { default as Dropdown, type DropdownProps } from './dropdown';
-export { default as Popover, type PopoverProps, type TriggerOption } from './popover';
+export {
+  default as Popover,
+  type PopoverProps,
+  type TriggerOption,
+  type Placement,
+} from './popover';
 export { default as Select, type SelectProps } from './select';
 export { default as CodeBlock, type CodeBlockProps } from './code-block';
 export { default as Photo, type PhotoProps, type ImageData } from './photo';
@@ -54,6 +59,7 @@ export { default as Portal, type PortalProps } from './portal';
 export { default as Typography, type TypographyProps } from './typography';
 export { default as Switch, type SwitchProps } from './switch';
 export { default as Loading, type LoadingProps } from './loading';
+export { default as Empty, type EmptyProps } from './empty';
 export { default as prefixCls, setPrefixCls } from './prefix-cls';
 export { default as highlight } from './highlight';
 export { default as Prism } from './prism';

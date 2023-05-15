@@ -109,8 +109,6 @@
   max-inline-size: 200px;
   block-size: fit-content;
   max-block-size: calc(100vb - 98px);
-
-  /* background-color: var(--toc-bg, rgb(255 255 255 / 80%)); */
   box-sizing: border-box;
   backdrop-filter: blur(16px);
   transition-duration: var(--transition-duration);

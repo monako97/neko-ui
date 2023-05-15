@@ -3,6 +3,16 @@ import { prefixer } from 'stylis';
 import px2rem from 'stylis-px2rem-plugin';
 import { generateTheme } from '../color-scheme';
 
+export type {
+  ArrayClassNamesArg,
+  ArrayCSSInterpolation,
+  ClassNamesArg,
+  ComponentSelector,
+  EmotionCache,
+  CSSInterpolation,
+  CSSObject,
+  CSSStyleSheet,
+} from '@emotion/css';
 export const {
   css,
   cx,

@@ -41,6 +41,7 @@ injectGlobal`
     color: var(--text-color);
     background-color: var(--popover-bg);
     backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
     box-sizing: border-box;
     filter: drop-shadow(0.5px calc(var(--direction) * 1px) 4px var(--popover-shadow-color))
       drop-shadow(1px calc(var(--direction) * 2px) 8px var(--popover-shadow-color))

@@ -5,7 +5,6 @@ import { cls } from './style';
 import Dropdown, { type DropdownProps, type DropdownOption } from '../dropdown';
 import { cx } from '../emotion';
 import getOptions, { defaultFieldNames } from '../get-options';
-import Input from '../input';
 
 export interface SelectOption extends DropdownOption {
   children?: SelectOption[];
@@ -21,6 +20,7 @@ const Select: React.ForwardRefRenderFunction<HTMLInputElement, SelectProps> = ({
   open,
   options,
   label,
+  placement = 'left',
   multiple,
   value,
   toggle,
@@ -29,6 +29,8 @@ const Select: React.ForwardRefRenderFunction<HTMLInputElement, SelectProps> = ({
   onOpenChange,
   fieldNames,
   popupStyle,
+  popupClassName,
+  placeholder,
   ...props
 }) => {
   const ref = useRef<HTMLInputElement>(null);
@@ -46,12 +48,53 @@ const Select: React.ForwardRefRenderFunction<HTMLInputElement, SelectProps> = ({
         ...fieldNames,
       },
       popupStyle,
-      closeTimer: null as NodeJS.Timeout | null,
+      current: null,
+      deleteValue(e: React.MouseEvent, v: string | number) {
+        e.stopPropagation();
+        e.preventDefault();
+
+        state.current('value', (prev) => {
+          return prev.filter((old) => old !== v);
+        });
+      },
+      click(e: React.MouseEvent) {
+        if (e.target === document.activeElement) {
+          state.current.openChange(!state.current.open);
+        }
+      },
+      keyDown({ key }: { key: string }) {
+        switch (key) {
+          case 'ArrowDown':
+            // console.log(key);
+            // Object.keys(state.current.kv).indexOf(state.current.value)
+            break;
+          case 'ArrowUp':
+            break;
+          case 'Backspace':
+            state.current('value', (prev) => {
+              const v = [...prev];
+
+              v.splice(-1, 1);
+              return v;
+            });
+            break;
+          case 'Enter':
+            state.current.openChange(!state.current.open);
+            break;
+          case 'Escape':
+            state.current.openChange(false);
+            break;
+          default:
+            break;
+        }
+      },
       openChange(next: boolean | null) {
-        if (isFunction(onOpenChange)) {
-          onOpenChange(next);
-        } else {
-          state.current.open = next;
+        if (!state.current.disabled) {
+          if (isFunction(onOpenChange)) {
+            onOpenChange(next);
+          } else {
+            state.current.open = next;
+          }
         }
       },
       onChange(val: string | number, item: DropdownOption) {
@@ -71,16 +114,23 @@ const Select: React.ForwardRefRenderFunction<HTMLInputElement, SelectProps> = ({
       blur(e: React.FocusEvent) {
         e.preventDefault();
         e.stopPropagation();
-        if (state.current.closeTimer) {
-          clearTimeout(state.current.closeTimer);
-        }
-        state.current.closeTimer = setTimeout(() => {
-          if (state.current.closeTimer) {
-            clearTimeout(state.current.closeTimer);
-            state.current.closeTimer = null;
-          }
+        if (state.current.open) {
           state.current.openChange(false);
-        }, 150);
+        }
+      },
+      getKv(arr: SelectOption[]) {
+        const optKv: Record<string, SelectOption> = {};
+
+        for (let i = 0, len = arr.length; i < len; i++) {
+          const item = arr[i];
+          const _options = item[state.current.fieldNames.options];
+
+          optKv[item[state.current.fieldNames.value]] = item;
+          if (Array.isArray(_options)) {
+            Object.assign(optKv, state.current.getKv(_options));
+          }
+        }
+        return optKv;
       },
     })
   );
@@ -92,6 +142,7 @@ const Select: React.ForwardRefRenderFunction<HTMLInputElement, SelectProps> = ({
     popupStyle: style,
     fieldNames: fieldName,
     multiple: isMultiple,
+    options: selectOptions,
   } = state.current;
 
   useEffect(() => {
@@ -105,9 +156,7 @@ const Select: React.ForwardRefRenderFunction<HTMLInputElement, SelectProps> = ({
   }, [fieldNames]);
   useEffect(() => {
     state.current.options = getOptions(options, state.current.fieldNames);
-    state.current.kv = Object.fromEntries(
-      state.current.options.map((item) => [item[state.current.fieldNames.value], item])
-    );
+    state.current.kv = state.current.getKv(state.current.options);
   }, [options]);
   useEffect(() => {
     state.current.multiple = multiple;
@@ -120,14 +169,11 @@ const Select: React.ForwardRefRenderFunction<HTMLInputElement, SelectProps> = ({
   }, [disabled]);
   useEffect(() => {
     state.current.value = value ? (Array.isArray(value) ? value : [value]) : [];
-  }, [value, isMultiple]);
+  }, [value]);
   useEffect(() => {
     const _state = state.current;
 
     return () => {
-      if (_state.closeTimer) {
-        clearTimeout(_state.closeTimer);
-      }
       _state();
     };
   }, []);
@@ -137,7 +183,9 @@ const Select: React.ForwardRefRenderFunction<HTMLInputElement, SelectProps> = ({
       {...props}
       fieldNames={fieldName}
       className={cx(cls.select, className)}
-      options={options}
+      popupClassName={cx(cls.portal, popupClassName)}
+      options={selectOptions}
+      placement={placement}
       trigger="none"
       selectable
       open={show}
@@ -149,42 +197,33 @@ const Select: React.ForwardRefRenderFunction<HTMLInputElement, SelectProps> = ({
       value={val as unknown as DropdownProps['value']}
       onChange={state.current.onChange}
     >
-      {isMultiple ? (
-        <div
-          ref={ref}
-          className={cls.tags}
-          tabIndex={0}
-          onFocus={state.current.focus}
-          onBlur={state.current.blur}
-          aria-disabled={disable}
-        >
-          {val?.map((v, i) => (
+      <div
+        ref={ref}
+        className={cls.tags}
+        tabIndex={disable ? -1 : 0}
+        onMouseDownCapture={state.current.click}
+        onKeyDownCapture={state.current.keyDown}
+        onFocusCapture={state.current.focus}
+        onBlur={state.current.blur}
+        aria-disabled={disable}
+        aria-label={label}
+        aria-placeholder={placeholder}
+      >
+        {isMultiple ? (
+          val.map((v, i) => (
             <span key={i} className={cls.tag}>
               {kv[v]?.[fieldName.label] || v}
-              <span
-                className={cls.del}
-                onClick={(e) => {
-                  e.stopPropagation();
-                  e.preventDefault();
-                  state.current('value', (prev) => {
-                    return prev.filter((old) => old !== v);
-                  });
-                }}
-              />
+              {!disable && (
+                <span className={cls.del} onClick={(e) => state.current.deleteValue(e, v)} />
+              )}
             </span>
-          ))}
-        </div>
-      ) : (
-        <Input
-          ref={ref}
-          label={label}
-          disabled={disable}
-          value={(kv[val[0]]?.[fieldName.label] as string) || val[0] || ''}
-          onFocus={state.current.focus}
-          onBlur={state.current.blur}
-          onClickCapture={state.current.focus}
-        />
-      )}
+          ))
+        ) : (
+          <span className={cx(cls.value, show && cls.opacity)}>
+            {kv[val[0]]?.[fieldName.label] || val[0]}
+          </span>
+        )}
+      </div>
     </Dropdown>
   );
 };

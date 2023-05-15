@@ -30,7 +30,7 @@ injectGlobal`
     gap: 6px;
     outline: 0;
 
-    &:not([data-disabled]:not([data-disabled='false'])):focus .${cls.checkbox} {
+    &:not([aria-disabled]:not([aria-disabled='false'])):focus .${cls.checkbox} {
       outline: 3px solid var(--primary-outline);
 
       &:not(:checked) {
@@ -38,7 +38,7 @@ injectGlobal`
       }
     }
 
-    &[data-disabled]:not([data-disabled='false']) {
+    &[aria-disabled]:not([aria-disabled='false']) {
       cursor: not-allowed;
       color: var(--disable-color);
     }

@@ -1,4 +1,4 @@
-import { injectGlobal } from '../emotion';
+import { injectGlobal, type CSSInterpolation } from '../emotion';
 import prefixCls from '../prefix-cls';
 import type { ComponentSize } from '../index';
 
@@ -27,7 +27,7 @@ export const cls: Record<string | ButtonType | ComponentSize | number | symbol, 
   normal: prefixCls('btn-normal'),
 };
 
-function btnColor(type: ButtonType | 'danger') {
+function btnColor(type: ButtonType | 'danger'): CSSInterpolation {
   let _cls = `.${cls[type]}`,
     fillCls = `.${cls[type]}.${cls.fill}`;
 

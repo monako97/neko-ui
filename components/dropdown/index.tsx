@@ -3,6 +3,7 @@ import { isFunction } from '@moneko/common';
 import sso from 'shared-store-object';
 import { cls } from './style';
 import { cx } from '../emotion';
+import Empty from '../empty';
 import getOptions, { type FieldNames, type BaseOption, defaultFieldNames } from '../get-options';
 import Popover, { type PopoverProps } from '../popover';
 
@@ -45,6 +46,7 @@ const Dropdown: React.FC<DropdownProps | DropdownMultipleProps> = ({
   popupClassName,
   ...props
 }) => {
+  const portalRef = useRef<HTMLDivElement>(null);
   const state = useRef(
     sso({
       open,
@@ -113,23 +115,21 @@ const Dropdown: React.FC<DropdownProps | DropdownMultipleProps> = ({
             return (
               <React.Fragment key={`${item[valueKey]}-${i}`}>
                 <div className={cx(cls.group, item.className)} style={item.style}>
-                  {item.icon && <span className={cls.icon}>{item.icon}</span>}
-                  {item[label]}
+                  <span className={cls.groupTitle}>
+                    {item.icon && <span className={cls.icon}>{item.icon}</span>}
+                    {item[label]}
+                  </span>
+                  {state.current.renderMenu(item[optionsKey], option)}
                 </div>
-                {state.current.renderMenu(item[optionsKey], option)}
               </React.Fragment>
             );
           }
           return (
             <div
               key={`${item[valueKey]}-${i}`}
-              className={cx(
-                cls.item,
-                item.className,
-                item.danger && cls.danger,
-                option.selectable && option.activeKey?.includes(item[valueKey]) && cls.active
-              )}
+              className={cx(cls.item, item.className, item.danger && cls.danger)}
               aria-disabled={option.disabled || item.disabled}
+              aria-selected={option.selectable && option.activeKey?.includes(item[valueKey])}
               onMouseDown={state.current.preventDefault}
               onClick={(e) => {
                 state.current.preventDefault(e);
@@ -178,6 +178,15 @@ const Dropdown: React.FC<DropdownProps | DropdownMultipleProps> = ({
   useEffect(() => {
     state.current.options = getOptions(options, state.current.fieldNames);
   }, [options]);
+  useEffect(() => {
+    if (show && isSelectable) {
+      setTimeout(() => {
+        portalRef.current?.querySelector(`[aria-selected='true']`)?.scrollIntoView({
+          block: 'nearest',
+        });
+      }, 16);
+    }
+  }, [show, isSelectable]);
 
   useEffect(() => {
     const _state = state.current;
@@ -195,12 +204,20 @@ const Dropdown: React.FC<DropdownProps | DropdownMultipleProps> = ({
       open={show}
       onOpenChange={state.current.openChange}
       disabled={disabled}
-      content={state.current.renderMenu(list, {
-        disabled: disable,
-        fieldNames: fieldName,
-        selectable: isSelectable,
-        activeKey,
-      })}
+      content={
+        <div ref={portalRef} className={cls.container}>
+          {list.length === 0 ? (
+            <Empty />
+          ) : (
+            state.current.renderMenu(list, {
+              disabled: disable,
+              fieldNames: fieldName,
+              selectable: isSelectable,
+              activeKey,
+            })
+          )}
+        </div>
+      }
     >
       {children}
     </Popover>

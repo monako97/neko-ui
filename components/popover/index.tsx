@@ -7,6 +7,15 @@ import Portal from '../portal';
 
 export type TriggerOption = 'hover' | 'click' | 'contextMenu' | 'none';
 type TriggerOptionMap = Record<TriggerOption, keyof React.DOMAttributes<HTMLSpanElement> | null>;
+export type Placement =
+  | 'bottomLeft'
+  | 'bottom'
+  | 'bottomRight'
+  | 'topLeft'
+  | 'top'
+  | 'topRight'
+  | 'left'
+  | 'right';
 export interface PopoverProps
   extends Omit<React.HTMLAttributes<HTMLDivElement>, 'title' | 'content' | 'value' | 'onChange'> {
   children: React.ReactNode;
@@ -25,8 +34,15 @@ export interface PopoverProps
   destroyInactive?: boolean;
   disabled?: boolean;
   arrow?: boolean;
-  placement?: 'bottomLeft' | 'bottom' | 'bottomRight' | 'topLeft' | 'top' | 'topRight';
+  placement?: Placement;
 }
+type Posi = {
+  left?: number;
+  top?: number;
+  right?: number;
+  bottom?: number;
+  '--x'?: string;
+};
 const Popover: React.FC<PopoverProps> = ({
   className,
   popupClassName,
@@ -50,7 +66,7 @@ const Popover: React.FC<PopoverProps> = ({
       show: open as boolean | null,
       closeTimer: null as NodeJS.Timeout | null,
       up: false,
-      posi: { left: -9999, top: -9999, x: '0px' },
+      posi: {} as Posi,
       trigger,
       disabled,
       arrow,
@@ -58,6 +74,7 @@ const Popover: React.FC<PopoverProps> = ({
       exit() {
         if (state.current.show === false) {
           state.current.show = null;
+          state.current.openChange(null);
         }
       },
       close(e: MouseEvent | Event) {
@@ -69,11 +86,13 @@ const Popover: React.FC<PopoverProps> = ({
         }
         state.current.closeTimer = setTimeout(
           () => {
+            const isContains = ref.current?.contains(e.target as Node);
+
             if (state.current.closeTimer) {
               clearTimeout(state.current.closeTimer);
               state.current.closeTimer = null;
             }
-            if (state.current.show) {
+            if ((state.current.show && !isContains) || (isContains && e.type !== 'click')) {
               state.current.openChange(false);
             }
           },
@@ -92,12 +111,12 @@ const Popover: React.FC<PopoverProps> = ({
             ...state.current.posi,
             left: e.clientX,
             top: e.clientY,
-            x: -(ref.current?.getBoundingClientRect().width || 0) / 2 + 16 + 'px',
+            ['--x']: -(ref.current?.getBoundingClientRect().width || 0) / 2 + 16 + 'px',
           };
         }
         state.current.openChange(true);
       },
-      openChange(next: boolean) {
+      openChange(next: boolean | null) {
         if (!state.current.disabled) {
           if (isFunction(onOpenChange)) {
             onOpenChange(next);
@@ -123,55 +142,40 @@ const Popover: React.FC<PopoverProps> = ({
         const portalRect = ref.current.getBoundingClientRect();
         const offsetX = portalRect.width / 2 - elRect.width / 2;
         const margin = window.innerHeight - elRect.bottom;
-        let _isBottom = true;
+        const _placement = state.current.placement;
+        const _isBottom =
+          (!_placement?.startsWith('top') &&
+            margin > ref.current.offsetHeight * 0.8 &&
+            margin > elRect.top) ||
+          _placement?.startsWith('bottom');
         const arrowHeight = state.current.arrow ? 8 : 4;
-        const _posi: { left: number; top: number; x: string } = {
-          left: -9999,
-          top: -9999,
-          x: '0px',
-        };
+        const _posi: Posi = {};
 
         switch (state.current.placement) {
           case 'bottomLeft':
-            _posi.left = elRect.left;
-            _posi.x = -portalRect.width / 2 + 16 + 'px';
-            _isBottom = true;
-            break;
-          case 'bottom':
-            _posi.left = Math.abs(offsetX > elRect.left ? elRect.left : elRect.left - offsetX);
-            _posi.x = -(_posi.left - elRect.left + offsetX) + 'px';
-            _isBottom = true;
-            break;
-          case 'bottomRight':
-            _posi.left = elRect.right - portalRect.width;
-            _posi.x = portalRect.width / 2 - 16 + 'px';
-            _isBottom = true;
-            break;
+          case 'left':
           case 'topLeft':
             _posi.left = elRect.left;
-            _posi.x = -portalRect.width / 2 + 16 + 'px';
-            _isBottom = false;
+            _posi['--x'] = -portalRect.width / 2 + 16 + 'px';
             break;
-          case 'top':
-            _posi.left = Math.abs(offsetX > elRect.left ? elRect.left : elRect.left - offsetX);
-            _posi.x = -(_posi.left - elRect.left + offsetX) + 'px';
-            _isBottom = false;
-            break;
+          case 'bottomRight':
+          case 'right':
           case 'topRight':
             _posi.left = elRect.right - portalRect.width;
-            _posi.x = portalRect.width / 2 - 16 + 'px';
-            _isBottom = false;
+            _posi['--x'] = portalRect.width / 2 - 16 + 'px';
             break;
+          case 'bottom':
+          case 'top':
           default:
             _posi.left = Math.abs(offsetX > elRect.left ? elRect.left : elRect.left - offsetX);
-            _posi.x = -(_posi.left - elRect.left + offsetX) + 'px';
-            _isBottom = margin > ref.current.offsetHeight * 0.8 && margin > elRect.top;
+            _posi['--x'] = -(_posi.left - elRect.left + offsetX) + 'px';
             break;
         }
         if (_isBottom) {
           _posi.top = elRect.bottom + arrowHeight;
         } else {
-          _posi.top = elRect.top - ref.current.offsetHeight - arrowHeight;
+          // _posi.top = elRect.top - ref.current.offsetHeight - arrowHeight;
+          _posi.bottom = window.innerHeight - elRect.top + arrowHeight;
         }
         state.current.posi = _posi;
         state.current.up = !_isBottom;
@@ -186,7 +190,6 @@ const Popover: React.FC<PopoverProps> = ({
     }
     return document.body;
   }, [getPopupContainer]);
-
   const childrenProps = useMemo(() => {
     const _props = {};
     const openEvent: TriggerOptionMap = {
@@ -224,9 +227,7 @@ const Popover: React.FC<PopoverProps> = ({
   const style = useMemo(() => {
     return {
       ...popupStyle,
-      left: posi.left,
-      top: posi.top,
-      '--x': posi.x,
+      ...posi,
       zIndex: getMaxZindex().toString(),
     } as React.CSSProperties;
   }, [popupStyle, posi]);
@@ -236,17 +237,12 @@ const Popover: React.FC<PopoverProps> = ({
   }, [open]);
   useEffect(() => {
     state.current.trigger = trigger;
-  }, [trigger]);
-  useEffect(() => {
     state.current.arrow = arrow;
-  }, [arrow]);
+    state.current.placement = placement;
+  }, [arrow, placement, trigger]);
   useEffect(() => {
     state.current.disabled = disabled;
   }, [disabled]);
-  useEffect(() => {
-    state.current.placement = placement;
-  }, [placement]);
-
   useEffect(() => {
     state.current.showPortal();
   }, [show]);
