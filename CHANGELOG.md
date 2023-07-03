@@ -7,6 +7,7 @@
 * property 'content' is missing in type ([882b700](https://github.com/monako97/neko-ui/commit/882b70017ef104a278bc05de5fc546cda83290a1))
 * segmented dark style ([388f99d](https://github.com/monako97/neko-ui/commit/388f99dcefd6838ba5f39e2612c106365c5aef62))
 * select disabled ([897cc90](https://github.com/monako97/neko-ui/commit/897cc90d28948ed321778c9eb06aac69971c772f))
+* 暂时关闭lint ([7380270](https://github.com/monako97/neko-ui/commit/7380270c42a72181cb15994507feccbc4332414c))
 
 
 ### Features
