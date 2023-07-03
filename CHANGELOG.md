@@ -17,6 +17,7 @@
 * select多选时不关闭面板 ([b295647](https://github.com/monako97/neko-ui/commit/b295647fb32ffbb93d2f37c3579bf3f73bd314f4))
 * select多选菜单、去除多余的iconfont ([6ee7cd7](https://github.com/monako97/neko-ui/commit/6ee7cd779dc8b6bd0e94c2af698e560f2672723e))
 * tootip 自动跟据情况决定展开方向 ([3aa7138](https://github.com/monako97/neko-ui/commit/3aa7138a71736a2a637397e67a8ee6c455d365e6))
+* 重构为webcomponents以兼容各种技术栈 ([12649a2](https://github.com/monako97/neko-ui/commit/12649a2a52b99bffb07346ee3a29179e909aa828))
 
 
 
