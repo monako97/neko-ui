@@ -1,6 +1,6 @@
 {
   "name": "neko-ui",
-  "version": "2.0.0-bate.1",
+  "version": "2.0.0-bate.2",
   "description": "Web Components UI Libraries",
   "main": "lib/index.js",
   "scripts": {
