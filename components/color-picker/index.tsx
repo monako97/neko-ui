@@ -14,7 +14,9 @@ import ColorPalette, { type ColorPaletteProps } from '../color-palette';
 import Popover, { defaultProps } from '../popover';
 import type { ComponentSize, PopoverProps } from '../index';
 
-export interface ColorPickerProps extends ColorPaletteProps, PopoverProps {
+export interface ColorPickerProps
+  extends ColorPaletteProps,
+    Omit<PopoverProps, 'children' | 'content'> {
   destroyInactive?: boolean;
   popupClassName?: string;
   size?: ComponentSize;

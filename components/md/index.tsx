@@ -713,10 +713,10 @@ function MD(_props: MdProps) {
         {css(props.css)}
       </style>
       <Switch>
-        <Match when={props.children?.length}>
+        <Match when={Array.isArray(props.children) && props.children.length}>
           <article class="n-md-box">
             <div class="n-md-body">
-              <For each={props.children}>{(e) => e}</For>
+              <For each={props.children as JSXElement[]}>{(e) => e}</For>
             </div>
           </article>
         </Match>
@@ -747,7 +747,7 @@ export interface MdProps {
   /** 指定滚动的容器 */
   getAnchorContainer?: () => HTMLElement;
   css?: string;
-  children?: JSXElement[];
+  children?: JSXElement[] | JSXElement;
 }
 
 export interface MdElement extends MdProps {
