@@ -1,17 +1,18 @@
-操作仍在执行中
+---
+title: 加载状态
+description: 操作仍在执行中,禁止交互
+---
 
-```tsx
-function Demo() {
-  const [loading, setLoading] = React.useState(true);
+```html
+<n-switch checked-text="开启" un-checked-text="关闭" checked="true" loading="true"></n-switch>
+<n-switch loading="true"></n-switch>
+<n-switch checked-text="开" un-checked-text="关" loading="true"></n-switch>
+```
 
-  return (
-    <div>
-      <Switch onLabel="开启" offLabel="关闭" value={loading} onChange={setLoading} />
-      <br />
-      <Switch value={true} loading={loading} />
-      <br />
-      <Switch onLabel="开" offLabel="关" loading={loading} />
-    </div>
-  );
-}
+```jsx
+<>
+  <n-switch checked-text="开启" un-checked-text="关闭" checked loading />
+  <n-switch loading />
+  <n-switch checked-text="开" un-checked-text="关" loading />
+</>
 ```

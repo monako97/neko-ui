@@ -1,16 +1,20 @@
-export const basic = {
-  type: '反馈',
-  title: '气泡卡片',
-  subtitle: 'Popover',
-  icon: '⌑',
-};
+---
+type: 反馈
+title: 气泡卡片
+subtitle: Popover
+icon: ⌑
+---
+
 import api from './examples/api.md';
 
-<Box>
+<n-md>
+
 # Popover 气泡卡片
 
 > 气泡卡片
 
-<SandboxGroup name="popover" />
-</Box>
-<Box text={api} />
+</n-md>
+
+<site-sandbox-group name="popover"></site-sandbox-group>
+
+<n-md text={api}></n-md>

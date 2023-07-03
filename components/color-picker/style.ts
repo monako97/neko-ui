@@ -1,20 +1,7 @@
-import { injectGlobal } from '../emotion';
-import prefixCls from '../prefix-cls';
+import { css } from '@moneko/css';
 
-export const cls = {
-  picker: prefixCls('color-picker'),
-  trigger: prefixCls('color-picker-trigger'),
-  small: prefixCls('color-picker-small'),
-  large: prefixCls('color-picker-large'),
-  normal: prefixCls('color-picker-normal'),
-};
-
-injectGlobal`
-  body .${cls.picker} {
-    padding: 10px;
-    inline-size: 216px;
-  }
-  .${cls.trigger} {
+export const style = css`
+  .trigger {
     --alpha-gradient: repeating-conic-gradient(#eee 0 25%, transparent 0 50%) 0 / 10px 10px;
 
     display: inline-block;
@@ -35,15 +22,18 @@ injectGlobal`
       cursor: pointer;
     }
   }
-  .${cls.large} {
+
+  .trigger.large {
     inline-size: 45px;
     block-size: 25px;
   }
-  .${cls.small} {
+
+  .trigger.small {
     inline-size: 15px;
     block-size: 15px;
   }
-  .${cls.normal} {
+
+  .trigger.normal {
     inline-size: 25px;
     block-size: 25px;
   }

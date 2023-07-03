@@ -1,22 +1,20 @@
-export const basic = {
-  type: '组件',
-  title: '回到顶部',
-  subtitle: 'BackTop',
-  icon: '⇪',
-};
+---
+type: 通用
+title: 回到顶部
+subtitle: BackTop
+icon: ⇪
+---
+
 import api from './examples/api.md';
 
-<Box>
+<n-md>
 
 # BackTop 回到顶部
 
 > 返回页面顶部的操作按钮。
 
-<SandboxGroup name="back-top" col={1} />
-</Box>
+</n-md>
 
-<Box text={api}>
+<site-sandbox-group name="back-top" col={2}></site-sandbox-group>
 
-## API
-
-</Box>
+<n-md text={api}></n-md>

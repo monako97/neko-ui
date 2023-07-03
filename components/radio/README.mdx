@@ -1,16 +1,20 @@
-export const basic = {
-  type: '数据录入',
-  title: '单选框',
-  subtitle: 'Radio',
-  icon: '◉',
-};
+---
+type: 数据录入
+title: 单选框
+subtitle: n-radio
+icon: ◉
+---
+
 import api from './examples/api.md';
 
-<Box>
+<n-md>
+
 # Radio 单选框
 
 > Radio 用于在多个选项中选中单个选项
 
-<SandboxGroup name="radio" />
-</Box>
-<Box text={api} />
+</n-md>
+
+<site-sandbox-group name="radio"></site-sandbox-group>
+
+<n-md text={api}></n-md>

@@ -1,123 +1,209 @@
-import React, { useEffect, useMemo, useRef } from 'react';
-import { isUndefined } from '@moneko/common';
-import sso from 'shared-store-object';
-import { cls } from './style';
-import { cx } from '../emotion';
+import {
+  Index,
+  type JSXElement,
+  Show,
+  createComponent,
+  createEffect,
+  createMemo,
+  createSignal,
+  mergeProps,
+  onCleanup,
+} from 'solid-js';
+import { isFunction } from '@moneko/common';
+import { css, cx } from '@moneko/css';
+import { customElement } from 'solid-element';
+import { style } from './style';
+import { baseStyle } from '../theme';
 
 export interface CarouselProps {
-  className?: string;
-  style?: React.CSSProperties;
-  children: React.ReactNode[];
+  class?: string;
+  css?: string;
+  children?: JSXElement[];
   offset?: number;
   dots?: boolean;
   autoplay?: number;
   // eslint-disable-next-line no-unused-vars
-  header?: (offset: number) => React.ReactNode;
+  header?: HTMLElement;
   // eslint-disable-next-line no-unused-vars
-  onOffsetChange?: (offset: number) => void;
+  onChange?(e: number): void;
 }
-function Carousel(props: CarouselProps) {
-  const carousel = useRef(
-    sso({
-      prev: props.children.length - 1,
-      offset: props.offset || 0,
-      next: 1,
-      direction: 0 as 1 | -1 | 0,
-      playTimer: null as NodeJS.Timer | null,
-      onOffsetChange() {
-        if (carousel.current.direction === -1) {
-          carousel.current.offset = carousel.current.prev;
-        } else if (carousel.current.direction === 1) {
-          carousel.current.offset = carousel.current.next;
-        }
-        carousel.current.direction = 0;
-        props.onOffsetChange?.(carousel.current.offset);
-      },
-      handlePrev() {
-        carousel.current.direction = -1;
-      },
-      handleNext() {
-        carousel.current.direction = 1;
-      },
-    })
-  );
-  const { offset, prev, next, direction } = carousel.current;
-  const { autoplay = -1, className, style, dots, children, header } = props;
+function Carousel(_props: CarouselProps) {
+  const props = mergeProps({ autoplay: -1, children: [] }, _props);
+  const [left, setLeft] = createSignal(0);
+  const [right, setRight] = createSignal(1);
+  const [offset, setOffset] = createSignal(0);
+  const [direction, setDirection] = createSignal<1 | -1 | 0>(0);
+  let playTimer: NodeJS.Timer | undefined;
 
-  const dotLen = useMemo(
-    () => Array(children.length > 20 ? 20 : children.length).fill(0),
-    [children.length]
-  );
+  function onOffsetChange() {
+    const _dir = direction();
 
-  useEffect(() => {
-    if (carousel.current.playTimer) {
-      clearTimeout(carousel.current.playTimer);
+    if (_dir === -1) {
+      setOffset(left());
+    } else if (_dir === 1) {
+      setOffset(right());
     }
-    if (autoplay > 0) {
-      carousel.current.playTimer = setInterval(() => {
-        if (autoplay < 1 && carousel.current.playTimer) {
-          clearInterval(carousel.current.playTimer);
-        }
-        carousel.current.handleNext();
-      }, autoplay);
+    setDirection(0);
+    if (isFunction(props.onChange)) {
+      props.onChange(offset());
     }
-  }, [autoplay]);
-  useEffect(() => {
-    if (!isUndefined(props.offset)) {
-      carousel.current.offset = props.offset;
+  }
+  function handlePrev() {
+    setDirection(-1);
+  }
+  function handleNext() {
+    setDirection(1);
+  }
+  function handleDot(idx: number, e: Event) {
+    e.stopPropagation();
+    const _offset = offset();
+    const _current = Math.floor(_offset / 20) * 20 + idx;
+
+    if (_current > _offset) {
+      setDirection(1);
+      setRight(_current);
+    } else if (_current < _offset) {
+      setDirection(-1);
+      setLeft(_current);
     }
-  }, [props.offset]);
-  useEffect(() => {
-    let _prev = offset - 1,
-      _next = offset + 1;
+  }
+  function getPrevNext(idx: number, arr: JSXElement[]) {
+    let _prev = idx - 1,
+      _next = idx + 1;
 
     if (_prev < 0) {
-      _prev = children.length - 1;
+      _prev = arr.length - 1;
     }
-    if (_next > children.length - 1) {
+    if (_next > arr.length - 1) {
       _next = 0;
     }
-    carousel.current.prev = _prev;
-    carousel.current.next = _next;
-  }, [children.length, offset]);
+    return [_prev, _next];
+  }
+  const list = createMemo(() => [...props.children]);
+  const dotLen = createMemo(() => Array(list().length > 20 ? 20 : list().length).fill(null));
 
-  useEffect(() => {
-    const _store = carousel.current;
+  createEffect(() => {
+    if (props.offset !== undefined) {
+      setOffset(Number(props.offset));
+    }
+  });
+  createEffect(() => {
+    const [_prev, _next] = getPrevNext(offset(), list());
 
-    return () => {
-      if (_store.playTimer) {
-        clearTimeout(_store.playTimer);
-      }
-      _store();
-    };
-  }, []);
+    setLeft(_prev);
+    setRight(_next);
+  });
+  createEffect(() => {
+    if (playTimer) {
+      clearTimeout(playTimer);
+    }
+    const autoplay = Number(props.autoplay);
+
+    if (autoplay > 0) {
+      playTimer = setInterval(() => {
+        if (autoplay < 1 && playTimer) {
+          clearInterval(playTimer);
+        }
+        handleNext();
+      }, autoplay);
+    }
+  });
+
+  onCleanup(() => {
+    if (playTimer) {
+      clearTimeout(playTimer);
+    }
+  });
   return (
-    <section className={cx(cls.carousel, className)} style={style}>
-      <section
-        className={cls.list}
-        data-dir={direction}
-        onAnimationEnd={carousel.current.onOffsetChange}
-      >
-        <div className={cls.item}>{children[prev]}</div>
-        <div className={cls.item}>{children[offset]}</div>
-        <div className={cls.item}>{children[next]}</div>
+    <>
+      <style>
+        {baseStyle()}
+        {style}
+        {css(props.css)}
+      </style>
+      <section class={cx('carousel', props.class)}>
+        <section class="list" data-dir={direction()}>
+          <div class="item">{list()[left()]}</div>
+          <div class="item" onAnimationEnd={onOffsetChange}>
+            {list()[offset()]}
+          </div>
+          <div class="item">{list()[right()]}</div>
+        </section>
+        <slot name="header" />
+        <Show when={props.header}>
+          <section class="header">{props.header}</section>
+        </Show>
+        <div class="prev" onClick={handlePrev} />
+        <div class="next" onClick={handleNext} />
+        <Show when={props.dots}>
+          <div class="dots">
+            <Index each={dotLen()}>
+              {(_, idx) => {
+                return (
+                  <i
+                    class={cx('dot', idx === (offset() % 20) + direction() && 'active')}
+                    onClick={handleDot.bind(null, idx)}
+                  />
+                );
+              }}
+            </Index>
+          </div>
+        </Show>
       </section>
-      {header ? <section className={cls.header}>{header(offset)}</section> : null}
-      <div className={cls.prev} onClick={carousel.current.handlePrev} />
-      <div className={cls.next} onClick={carousel.current.handleNext} />
-      {dots ? (
-        <div className={cls.dots}>
-          {dotLen.map((_, i) => (
-            <i
-              key={i}
-              className={cx(cls.dot, i === (offset % 20) + direction && cls.active)}
-              onClick={() => (carousel.current.offset = Math.floor(offset / 20) * 20 + i)}
-            />
-          ))}
-        </div>
-      ) : null}
-    </section>
+    </>
   );
 }
 
+export interface CarouselElement extends CarouselProps {
+  ref?: CarouselElement | { current: CarouselElement | null };
+}
+
+interface CustomElementTags {
+  'n-carousel': CarouselElement;
+}
+declare module 'solid-js' {
+  export namespace JSX {
+    export interface IntrinsicElements extends HTMLElementTags, CustomElementTags {}
+  }
+}
+declare global {
+  export namespace JSX {
+    export interface IntrinsicElements extends CustomElementTags, CustomElementTags {}
+  }
+}
+
+customElement(
+  'n-carousel',
+  {
+    children: undefined,
+    autoplay: undefined,
+    class: undefined,
+    css: undefined,
+    offset: undefined,
+    dots: undefined,
+    header: undefined,
+    onChange: undefined,
+  },
+  (_, opt) => {
+    const el = opt.element;
+    const props = mergeProps(
+      {
+        onChange(key: number) {
+          el.offset = key;
+          el.dispatchEvent(
+            new CustomEvent('change', {
+              detail: key,
+            })
+          );
+        },
+      },
+      _
+    );
+
+    createEffect(() => {
+      el.replaceChildren();
+    });
+    return createComponent(Carousel, props);
+  }
+);
 export default Carousel;

@@ -1,10 +1,10 @@
-import React, { useCallback, useMemo } from 'react';
-import { projectBasicInfo, useLocation, useOutlet } from '@moneko/core';
-import { cx, injectGlobal } from 'neko-ui';
+import { For } from 'solid-js';
+import { css, cx } from '@moneko/css';
+import { projectBasicInfo } from '@moneko/solid-js';
+import { baseStyle } from 'neko-ui';
+import { customElement } from 'solid-element';
 
-type CoverageType = 'statements' | 'conditionals' | 'methods';
-
-injectGlobal`
+const style = css`
   .site-coverage {
     display: flex;
     gap: 16px;
@@ -73,56 +73,53 @@ injectGlobal`
   }
 `;
 
-const Coverage: React.FC = () => {
-  const { keys, vals } = useMemo(() => {
-    const obj: Record<CoverageType, string> = {
-      statements: '语句覆盖率',
-      conditionals: '条件覆盖率',
-      methods: '函数覆盖率',
-    };
+type CoverageType = 'statements' | 'conditionals' | 'methods';
 
-    return {
-      keys: Object.keys(obj),
-      vals: obj,
-    };
-  }, []);
-
-  const readme = useOutlet();
-  const location = useLocation();
-  const coverage = useMemo(() => {
-    const cover = projectBasicInfo.coverage;
-
-    if (readme) {
-      return cover[`components.${location.pathname.substring(1)}`] || {};
-    }
-    return cover[projectBasicInfo.programInfo.name] || {};
-  }, [location.pathname, readme]);
-  const getNum = useCallback((num: number) => {
-    return typeof num === 'number' && !isNaN(num) ? num : '-';
-  }, []);
-
-  if (location.pathname.startsWith('/@moneko')) return null;
-  if (['/examples', '/change-log'].includes(location.pathname)) return null;
-  return (
-    <div className="site-coverage">
-      {keys.map((k) => {
-        const c = parseFloat(coverage[k as CoverageType]);
-        const covered = parseFloat(coverage[`covered${k}` as CoverageType]);
-        const coverNum = c === 0 && covered === 0 ? 100 : Math.round((covered / c) * 100) || 0;
-        const stat = coverNum < 50 ? 'error' : coverNum < 80 ? 'warning' : 'success';
-
-        return (
-          <div key={k} className={cx('site-coverage-body', `site-coverage-${stat}`)}>
-            <div className="site-coverage-label">{vals[k as CoverageType]}</div>
-            <div className="site-coverage-value">
-              <div>{coverNum}%</div>
-              <div>{`${getNum(c)} / ${getNum(covered)}`}</div>
-            </div>
-          </div>
-        );
-      })}
-    </div>
-  );
+const obj: Record<CoverageType, string> = {
+  statements: '语句覆盖率',
+  conditionals: '条件覆盖率',
+  methods: '函数覆盖率',
 };
+const keys = Object.keys(obj);
 
-export default Coverage;
+function getNum(num: number) {
+  return typeof num === 'number' && !isNaN(num) ? num : '-';
+}
+function Coverage() {
+  const coverage = projectBasicInfo.coverage[`components.${location.pathname.substring(1)}`] || {};
+
+  return (
+    <>
+      <style>
+        {baseStyle()}
+        {style}
+      </style>
+      <div class="site-coverage">
+        <For each={keys}>
+          {(k) => {
+            const c = parseFloat(coverage[k as never]);
+            const cd = parseFloat(coverage[`covered${k}` as never]),
+              round = Math.round,
+              num = c === 0 && cd === 0 ? 100 : round((cd / c) * 100) || 0;
+            const stat = num < 50 ? 'error' : num < 80 ? 'warning' : 'success';
+
+            return (
+              <div class={cx('site-coverage-body', `site-coverage-${stat}`)}>
+                <div class="site-coverage-label">{obj[k as CoverageType]}</div>
+                <div class="site-coverage-value">
+                  <div>{num}%</div>
+                  <div>{`${getNum(c)} / ${getNum(cd)}`}</div>
+                </div>
+              </div>
+            );
+          }}
+        </For>
+      </div>
+    </>
+  );
+}
+export interface CoverageElement {
+  ref?: CoverageElement | { current: CoverageElement | null };
+}
+
+customElement('site-coverage', Coverage);

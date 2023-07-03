@@ -1,20 +1,7 @@
-import { injectGlobal } from '../emotion';
-import prefixCls from '../prefix-cls';
+import { css } from '@moneko/css';
 
-export const cls = {
-  carousel: prefixCls('carousel'),
-  item: prefixCls('carousel-item'),
-  list: prefixCls('carousel-list'),
-  prev: prefixCls('carousel-prev'),
-  next: prefixCls('carousel-next'),
-  dot: prefixCls('carousel-dot'),
-  active: prefixCls('carousel-dot-active'),
-  dots: prefixCls('carousel-dots'),
-  header: prefixCls('carousel-header'),
-};
-
-injectGlobal`
-  .${cls.carousel} {
+export const style = css`
+  .carousel {
     position: relative;
     display: block;
     overflow: hidden;
@@ -31,7 +18,7 @@ injectGlobal`
     }
   }
 
-  .${cls.item} {
+  .item {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -43,21 +30,24 @@ injectGlobal`
     transform: translate3d(-100%, 0, 0);
   }
 
-  .${cls.list} {
+  .list {
     display: flex;
     border-radius: inherit;
     inline-size: 100%;
     block-size: 100%;
     transform: translate3d(0, 0, 0);
 
-    &[data-dir='-1'] .${cls.item} {
+    &[data-dir='-1'] .item {
       animation: carousel-prev 500ms forwards;
     }
-    &[data-dir='1'] .${cls.item} {
+
+    &[data-dir='1'] .item {
       animation: carousel-next 500ms forwards;
     }
   }
-  .${cls.prev}, .${cls.next} {
+
+  .prev,
+  .next {
     position: absolute;
     z-index: 1;
     margin: auto;
@@ -77,7 +67,8 @@ injectGlobal`
       transform: rotate(90deg);
     }
   }
-  .${cls.prev} {
+
+  .prev {
     inset-inline-start: 4px;
     transform: translateX(-32px) scaleY(0);
 
@@ -86,7 +77,7 @@ injectGlobal`
     }
   }
 
-  .${cls.next} {
+  .next {
     inset-inline-end: 4px;
     transform: translateX(32px) scaleY(0);
 
@@ -94,7 +85,8 @@ injectGlobal`
       content: '︿';
     }
   }
-  .${cls.dots} {
+
+  .dots {
     position: absolute;
     inset-inline-end: 0;
     inset-block-end: 16px;
@@ -105,31 +97,28 @@ injectGlobal`
     margin: 0 auto;
     inline-size: fit-content;
     max-inline-size: calc(100% - 42px);
-    transition: transform 0.3s, opacity 0.3s;
+    transition: transform 0.3s linear, opacity 0.3s linear;
     gap: 4px;
   }
 
-  .${cls.dot} {
+  .dot {
     --offset: 0;
 
     border-radius: 2px;
-    inline-size: 8px;
+    inline-size: 16px;
     min-inline-size: 8px;
     block-size: 3px;
     background-color: rgb(255 255 255 / 80%);
-    transition: background-color 0.3s, width 0.3s;
+    transition: background-color 0.3s linear;
     cursor: pointer;
-    content-visibility: auto;
 
     &:hover,
-    &.${cls.active} {
-      inline-size: 16px;
-      min-inline-size: 16px;
+    &.active {
       background-color: var(--primary-color);
     }
   }
 
-  .${cls.header} {
+  .header {
     position: absolute;
     inset-block-start: 0;
     z-index: 1;
@@ -139,14 +128,15 @@ injectGlobal`
     transform: translate3d(0, -100%, 0);
   }
 
-  .${cls.carousel}\:hover {
-    .${cls.prev}, .${cls.next} {
+  .carousel:hover {
+    .prev,
+    .next {
       &:not([data-show='false']) {
         transform: translateX(0) scaleY(1.5);
       }
     }
 
-    .${cls.header} {
+    .header {
       transform: translate3d(0, 0, 0);
     }
   }

@@ -18,7 +18,7 @@ describe('test Input', () => {
   });
   it('prefix', () => {
     const { container } = render(
-      <Input prefix={<span data-testid="prefix-tag">prefix</span>} disabled />
+      <Input prefix-icon={<span data-testid="prefix-tag">prefix</span>} disabled />
     );
 
     expect(container.textContent).toEqual('prefix');
@@ -31,7 +31,7 @@ describe('test Input', () => {
         data-testid="input-suffix"
         type="number"
         onChange={handleChange}
-        suffix={<span data-testid="suffix-tag">suffix</span>}
+        suffix-icon={<span data-testid="suffix-tag">suffix</span>}
       />
     );
 

@@ -2,8 +2,7 @@
 
 | 属性      | 说明         | 类型                      | 默认值 | 版本  |
 | --------- | ------------ | ------------------------- | ------ | ----- |
-| className | 自定义类名   | string                    | -      | 1.1.0 |
-| style     | 自定义样式表 | `React.CSSProperties`     | -      | 1.1.0 |
+| css       | 自定义样式表 | string                    | -      | 1.1.0 |
 | truncated | 启用超出隐藏 | boolean \| {rows: number} | -      | 1.1.0 |
 | type      | 文本格式     | TypographyType            | -      | 1.1.0 |
 | disabled  | 禁用         | boolean                   | -      | 1.1.0 |
@@ -17,5 +16,5 @@
 | danger    | 危险 |
 | warning   | 警告 |
 | primary   | 主要 |
-| normal    | 默认 |
+| text      | 默认 |
 | secondary | 次要 |

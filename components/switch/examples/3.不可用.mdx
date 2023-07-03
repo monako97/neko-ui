@@ -1,17 +1,16 @@
-失效状态
+---
+title: 不可用状态
+description: 禁止交互
+---
 
-```tsx
-function Demo() {
-  const [disabled, setDisabled] = React.useState(true);
+```html
+<n-switch checked="true" disabled="true"></n-switch>
+<n-switch checked-text="开" un-checked-text="关" disabled="true"></n-switch>
+```
 
-  return (
-    <div>
-      <Switch onLabel="开启" offLabel="关闭" value={disabled} onChange={setDisabled} />
-      <br />
-      <Switch value={true} disabled={disabled} />
-      <br />
-      <Switch onLabel="开" offLabel="关" disabled={disabled} />
-    </div>
-  );
-}
+```jsx
+<>
+  <n-switch checked disabled />
+  <n-switch checked-text="开" un-checked-text="关" disabled />
+</>
 ```

@@ -1,16 +1,20 @@
-export const basic = {
-  type: '数据展示',
-  title: '走马灯',
-  subtitle: 'Carousel',
-  icon: '🎨',
-};
+---
+type: 数据展示
+title: 走马灯
+subtitle: n-carousel
+icon: 🎨
+---
+
 import api from './examples/api.md';
 
-<Box>
+<n-md>
+
 # 走马灯
 
 > 一组轮播的区域
 
-<SandboxGroup name="carousel" col={2} />
-</Box>
-<Box text={api} />
+</n-md>
+
+<site-sandbox-group name="carousel"></site-sandbox-group>
+
+<n-md text={api}></n-md>

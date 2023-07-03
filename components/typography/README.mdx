@@ -1,17 +1,21 @@
-export const basic = {
-  type: '通用',
-  title: '文字排版',
-  subtitle: 'Typography',
-  icon: '🦟',
-};
+---
+type: 通用
+title: 文字排版
+subtitle: Typography
+icon: 🦟
+---
+
 import api from './examples/api.md';
 
-<Box>
+<n-md>
+
 
 # Typography 排版
 
 > 文本的基本格式
 
-<SandboxGroup name="typography" />
-</Box>
-<Box text={api} />
+</n-md>
+
+<site-sandbox-group name="typography"></site-sandbox-group>
+
+<n-md text={api}></n-md>

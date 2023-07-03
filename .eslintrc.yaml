@@ -1,15 +1,40 @@
 extends:
   - neko
+  - plugin:solid/recommended
+plugins:
+  - solid
 ignorePatterns:
   - prism.js
-  - iconfont.js
   - CHANGELOG.md
+  - examples/*.jsx
 rules:
+  no-undefined: 0
+  '@typescript-eslint/no-namespace': 0
   import/no-unresolved:
     - 2
     - ignore:
-      - \\?raw$
-      - ^@pkg
-      - ^@/
-      - components
-      - ^neko-ui
+        - \\?raw$
+        - ^@pkg
+        - ^@/
+        - components
+        - ^neko-ui
+overrides:
+  - files:
+      - '*.mdx'
+      - '*.md'
+    extends: plugin:mdx/recommended
+    parserOptions:
+      ecmaVersion: latest
+    rules:
+      solid/jsx-no-undef: 0
+  - files:
+      - components/*/examples/*.jsx
+      - components/*/examples/*.tsx
+    rules:
+      solid/event-handlers: 0
+      solid/jsx-no-undef: 0
+      solid/style-prop: 0
+      solid/prefer-for: 0
+      no-console: 0
+      no-undef: 0
+      

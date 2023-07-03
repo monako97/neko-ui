@@ -1,17 +1,20 @@
-export const basic = {
-  type: '数据录入',
-  title: '颜色选择器',
-  subtitle: 'ColorPicker',
-  icon: '🍭',
-};
+---
+type: 数据录入
+title: 颜色选择器
+subtitle: ColorPicker
+icon: 🍭
+---
+
 import api from './examples/api.md';
 
-<Box>
+<n-md>
 
 # ColorPicker
 
 > 颜色选择器
 
-<SandboxGroup name="color-picker" />
-</Box>
-<Box text={api} />
+</n-md>
+
+<site-sandbox-group name="color-picker"></site-sandbox-group>
+
+<n-md text={api}></n-md>

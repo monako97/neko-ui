@@ -1,19 +1,20 @@
-export const basic = {
-  type: '数据录入',
-  title: '输入框',
-  subtitle: 'Input',
-  icon: '🍣',
-};
+---
+type: 数据录入
+title: 输入框
+subtitle: n-input
+icon: 🍣
+---
+
 import api from './examples/api.md';
 
-<Box>
+<n-md>
 
 # 输入框
 
 > 在页面中输入文字内容
 
-## 案例
+</n-md>
 
-  <SandboxGroup name="input" />
-</Box>
-<Box text={api} />
+<site-sandbox-group name="input"></site-sandbox-group>
+
+<n-md text={api}></n-md>

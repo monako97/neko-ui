@@ -1,0 +1,62 @@
+{
+    "compilerOptions": {
+        "downlevelIteration": true,
+        "incremental": true,
+        "jsx": "preserve",
+        "jsxImportSource": "solid-js",
+        "isolatedModules": true,
+        "strict": true,
+        "noUnusedLocals": true,
+        "noUnusedParameters": true,
+        "noImplicitReturns": true,
+        "noFallthroughCasesInSwitch": true,
+        "moduleResolution": "node",
+        "esModuleInterop": true,
+        "resolveJsonModule": true,
+        "baseUrl": ".",
+        "paths": {
+            "@/*": [
+                "site/*"
+            ],
+            "@pkg/*": [
+                "components/*"
+            ],
+            "neko-ui/*": [
+                "components/*"
+            ]
+        },
+        "experimentalDecorators": true,
+        "emitDecoratorMetadata": true,
+        "forceConsistentCasingInFileNames": true,
+        "skipLibCheck": true,
+        "target": "es2015",
+        "module": "ESNext",
+        "outDir": "lib",
+        "declaration": true,
+        "emitDeclarationOnly": true,
+        "removeComments": false,
+        "preserveConstEnums": true,
+        "sourceMap": true,
+        "newLine": "lf",
+        "listEmittedFiles": true,
+        "listFiles": false,
+        "noImplicitAny": true,
+        "noImplicitThis": true,
+        "alwaysStrict": true,
+        "traceResolution": false,
+        "lib": [
+            "es2016",
+            "DOM"
+        ],
+        "typeRoots": [
+            "node_modules/@types",
+            "typings"
+        ],
+        "types": [
+            "node",
+            "jest"
+        ]
+    },
+    "include": ["components", "typings"],
+    "exclude": ["*/**/__tests__/*"]
+}

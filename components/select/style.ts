@@ -1,49 +1,86 @@
-import { injectGlobal } from '../emotion';
-import prefixCls from '../prefix-cls';
+import { css } from '@moneko/css';
 
-export const cls = {
-  select: prefixCls('select'),
-  tags: prefixCls('select-tags'),
-  tag: prefixCls('select-tag'),
-  del: prefixCls('select-delete'),
-  value: prefixCls('select-value'),
-  opacity: prefixCls('select-opacity'),
-  portal: prefixCls('select-portal'),
-  container: prefixCls('dropdown-portal-container'),
-};
+export const style = css`
+  .label {
+    position: absolute;
+    border-radius: var(--border-radius);
+    padding: 0 4px;
+    color: var(--text-secondary);
+    transition: transform 0.3s;
+    line-height: inherit;
+    pointer-events: none;
+    transform-origin: left;
+    transform: translate3d(calc(var(--x, 0) - 14px), 0, 1px);
+  }
 
-injectGlobal`
-  .${cls.select} {
-    position: relative;
+  .value,
+  .placeholder {
+    max-inline-size: 100%;
+    padding: 0;
+    transition: 0.3s opacity;
+    pointer-events: none;
+    flex: 1;
+  }
+
+  .placeholder {
+    color: darkgray;
+    opacity: 0;
+  }
+
+  .prefix,
+  .suffix {
     display: flex;
-    margin-block-end: 8px;
+    align-items: center;
   }
-  .${cls.portal} {
-    .${cls.container} {
-      max-block-size: 250px;
-    }
+
+  .tag {
+    display: flex;
+    align-items: center;
+    border: 1px solid var(--primary-border);
+    border-radius: calc(var(--border-radius) / 1.5);
+    padding: 0 8px;
+    font-size: 12px;
+    background-color: var(--primary-outline);
+    line-height: 20px;
+    pointer-events: none;
+    transition: 0.3s opacity;
   }
-  .${cls.tags} {
+
+  .select {
     position: relative;
     display: flex;
     flex-wrap: wrap;
     border: 1px solid var(--border-color);
     border-radius: var(--border-radius);
-    padding: 2px;
+    padding: 4px 10px;
     font-size: var(--font-size);
     color: var(--text-color);
     background-color: var(--component-bg);
-    transition: all 0.3s;
-    inline-size: 100%;
     line-height: 1.5;
     min-inline-size: 200px;
     background-image: none;
     box-sizing: border-box;
     accent-color: var(--primary-color);
-    gap: 2px;
+    gap: 4px;
     min-block-size: 28px;
     cursor: pointer;
     user-select: none;
+
+    &:not(:has(.label)) {
+      & .placeholder {
+        opacity: 0.65;
+      }
+    }
+
+    &:has(.tag) {
+      &:not(:has(.prefix)) {
+        padding-inline-start: 4px;
+      }
+
+      &:not(:has(.suffix)) {
+        padding-inline-end: 4px;
+      }
+    }
 
     &:hover:not([aria-disabled='true']) {
       border-color: var(--primary-hover);
@@ -62,25 +99,28 @@ injectGlobal`
       color: var(--disable-color);
       background-color: var(--disable-bg);
       cursor: not-allowed;
-      .${cls.tag} {
+
+      .tag {
         border-color: var(--disable-border);
         color: var(--disable-color);
         background-color: var(--disable-bg);
       }
     }
+
+    &:focus .label,
+    &:has(.label + .tags > .tag) .label,
+    &:has(.label + .tags > .value) .label {
+      line-height: 1;
+      background: var(--component-bg);
+      transform: translate3d(0, calc(-50% - 0.43em), 1px) scale(0.8);
+
+      & + .tags > .placeholder {
+        opacity: 0.65;
+      }
+    }
   }
-  .${cls.tag} {
-    display: flex;
-    align-items: center;
-    border: 1px solid var(--primary-border);
-    border-radius: calc(var(--border-radius) / 1.5);
-    padding: 0 8px;
-    font-size: 12px;
-    background-color: var(--primary-outline);
-    line-height: 20px;
-    pointer-events: none;
-  }
-  .${cls.del} {
+
+  .del {
     cursor: pointer;
     pointer-events: all;
 
@@ -95,14 +135,30 @@ injectGlobal`
       color: var(--error-color);
     }
   }
-  .${cls.value} {
-    max-inline-size: 100%;
-    padding: 0 10px;
+
+  .value {
     opacity: 1;
-    transition: 0.3s opacity;
-    pointer-events: none;
   }
-  .${cls.opacity} {
-    opacity: 0.3;
+
+  .tags {
+    flex: 1;
+    display: flex;
+    gap: 4px;
+    flex-wrap: wrap;
+  }
+
+  .opacity {
+    opacity: 0.5;
+
+    &:hover {
+      opacity: 1;
+    }
+  }
+
+  .danger {
+    --primary-border: var(--error-border);
+    --primary-outline: var(--error-outline);
+
+    color: var(--error-color);
   }
 `;

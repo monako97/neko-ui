@@ -6,6 +6,8 @@ declare module '*.ts';
 declare module '*.png';
 declare module '*.svg';
 declare module '*.woff2';
+declare module '@pkg';
+declare module 'components/*/examples/*';
 declare module './index.less' {
   const styles: { readonly [key: string]: string };
 
@@ -26,12 +28,6 @@ declare module 'neko-ui' {
   export * from 'components';
 }
 
+declare const SolidJS: unknown;
+
 declare module 'env-flags';
-
-interface PureComponentProps {
-  path: string;
-}
-
-interface Window {
-  Prism?: Prism & typeof Object;
-}

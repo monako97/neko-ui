@@ -1,35 +1,22 @@
-import { injectGlobal } from '../emotion';
-import prefixCls from '../prefix-cls';
+import { css } from '@moneko/css';
 
-export const cls = {
-  palette: prefixCls('color-palette'),
-  picker: prefixCls('color-palette-picker'),
-  preview: prefixCls('color-palette-preview'),
-  form: prefixCls('color-palette-form'),
-  input: prefixCls('color-palette-input'),
-  switch: prefixCls('color-palette-switch'),
-  chooser: prefixCls('color-chooser'),
-  range: prefixCls('color-range'),
-  hue: prefixCls('color-hue'),
-  opacity: prefixCls('color-opacity'),
-  color: prefixCls('color-color'),
-  slider: prefixCls('color-slider'),
-  cmykHue: prefixCls('color-slider-cmyk-hue'),
-};
-
-injectGlobal`
-  .${cls.palette} {
+export const style = css`
+  .palette {
     --alpha-gradient: repeating-conic-gradient(#eee 0 25%, transparent 0 50%) 0 / 10px 10px;
 
     inline-size: 100%;
     box-sizing: border-box;
     user-select: none;
   }
-  .${cls.preview}, .${cls.preview}&::after, .${cls.switch}, .${cls.color} i,
-  .${cls.color} i::before {
+
+  .preview,
+  .preview::after,
+  .color i,
+  .color i::before {
     border-radius: var(--border-radius);
   }
-  .${cls.preview} {
+
+  .preview {
     margin-inline-start: 6px;
     inline-size: 46px;
     min-block-size: 26px;
@@ -61,42 +48,17 @@ injectGlobal`
       content: '✓';
     }
   }
-  .${cls.form} {
+
+  .form {
     display: flex;
     gap: 6px;
   }
-  .${cls.input} {
+
+  .input {
     flex: 1;
-
-    input {
-      inline-size: 100%;
-      text-align: center;
-    }
   }
-  .${cls.switch} {
-    border: none;
-    cursor: pointer;
-    inline-size: 46px;
-    font-size: 12px;
-    text-align: center;
-    color: var(--on-primary-selection);
-    background-color: var(--primary-selection);
-    text-transform: uppercase;
-    outline-color: var(--primary-outline);
-    transition-property: background-color, color, outline-color, border-radius, transform;
-    transition-timing-function: var(--transition-timing-function);
-    transition-duration: var(--transition-duration);
 
-    &:hover {
-      color: var(--primary-hover);
-    }
-
-    &:active {
-      color: var(--primary-active);
-      transform: scale(0.98);
-    }
-  }
-  .${cls.picker} {
+  .picker {
     position: relative;
     border-radius: 4px;
     block-size: 150px;
@@ -130,20 +92,24 @@ injectGlobal`
       box-shadow: inset 0 0 0 1px #fff, 0 0 1px rgb(0 0 0 / 20%), inset 0 0 2.5px 0 rgb(0 0 0 / 20%);
     }
   }
-  .${cls.chooser} {
+
+  .chooser {
     display: flex;
     padding: 8px 0;
   }
-  .${cls.range} {
+
+  .range {
     display: flex;
     flex-direction: column;
     gap: 6px;
     flex: 1;
   }
-  .${cls.hue} {
+
+  .hue {
     background-image: linear-gradient(to right, red, yellow, lime, cyan, blue, magenta, red);
   }
-  .${cls.opacity} {
+
+  .opacity {
     background: linear-gradient(
         to right,
         hsl(calc(var(--h)) 100% 50% / 0%),
@@ -151,7 +117,8 @@ injectGlobal`
       ),
       var(--alpha-gradient);
   }
-  .${cls.slider} {
+
+  .slider {
     flex: 1;
     display: block;
     margin: 0;
@@ -206,18 +173,7 @@ injectGlobal`
     }
   }
 
-  .${cls.cmykHue}.${cls.slider} {
-    &::-webkit-slider-thumb {
-      inline-size: 26px;
-      block-size: 26px;
-    }
-
-    &::-moz-range-thumb {
-      inline-size: 26px;
-      block-size: 26px;
-    }
-  }
-  .${cls.color} {
+  .color {
     display: flex;
     padding-block-start: 8px;
     gap: 5px 9px;
@@ -249,6 +205,9 @@ injectGlobal`
       &::before {
         z-index: -1;
         background: var(--alpha-gradient);
+      }
+
+      &.eye-dropper::before {
         content: '⍝';
       }
 
@@ -263,6 +222,35 @@ injectGlobal`
         transform: translate3d(2px, 2px, 0);
         opacity: 0.3;
       }
+    }
+  }
+`;
+
+export const switchCss = css`
+  .switch {
+    block-size: 25px;
+    line-height: 25px;
+    float: inline-start;
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    inline-size: 46px;
+    font-size: 12px;
+    text-align: center;
+    color: var(--on-primary-selection);
+    background-color: var(--primary-selection);
+    text-transform: uppercase;
+    outline-color: var(--primary-outline);
+    transition-property: background-color, color, outline-color, border-radius, transform;
+    transition-timing-function: var(--transition-timing-function);
+    transition-duration: var(--transition-duration);
+
+    &:hover {
+      color: var(--primary-hover);
+    }
+
+    &:active {
+      color: var(--primary-active);
+      transform: scale(0.98);
     }
   }
 `;

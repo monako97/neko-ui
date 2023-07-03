@@ -1,6 +1,6 @@
 [TOC]
 
-# SSO 共享状态对象
+# SSO React 共享状态对象
 
 !> Shared Store Object `共享状态对象`
 !> 通过 useSyncExternalStore 衔接的外部状态管理

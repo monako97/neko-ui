@@ -1,7 +1,20 @@
-```tsx
-<Carousel dots>
+---
+title: 指示器
+description: 显示当前位置
+---
+
+```html
+<n-carousel dots="true">
+  <div>1</div>
+  <div>2</div>
+  <div>3</div>
+</n-carousel>
+```
+
+```jsx
+<n-carousel dots>
   {Array(100).fill(0).map((_, i) => {
-    return <div key={i}>100 / {i + 1}</div>
+    return <div>100 / {i + 1}</div>
   })}
-</Carousel>
+</n-carousel>
 ```

@@ -1,309 +1,361 @@
-import React, { useEffect, useRef } from 'react';
-import { colorParse, passiveSupported, setClipboard, throttle, type HSVA } from '@moneko/common';
-import sso from 'shared-store-object';
-import { cls } from './style';
-import { cx } from '../emotion';
-import Input from '../input';
-import InputNumber from '../input-number';
+import {
+  For,
+  Index,
+  Show,
+  createComponent,
+  createEffect,
+  createMemo,
+  createSignal,
+  mergeProps,
+  onCleanup,
+  onMount,
+  untrack,
+} from 'solid-js';
+import {
+  type ColorParse,
+  type ColorType,
+  type HSVA,
+  colorParse,
+  passiveSupported,
+  setClipboard,
+  throttle,
+} from '@moneko/common';
+import { cx } from '@moneko/css';
+import { customElement } from 'solid-element';
+import { style, switchCss } from './style';
+import '../dropdown';
+import '../input';
+import '../input-number';
+import type { CSSProperties, InputNumberProps } from '..';
 
-const material = [
-  '#f44336',
-  '#E91E63',
-  '#9C27B0',
-  '#673AB7',
-  '#3F51B5',
-  '#2196F3',
-  '#00BCD4',
-  '#009688',
-  '#4CAF50',
-  '#CDDC39',
-  '#FF9800',
-  '#795548',
-  '#607D8B',
-];
-
-export interface ColorPaletteProps extends Omit<React.HTMLAttributes<HTMLDivElement>, 'onChange'> {
+export interface ColorPaletteProps {
+  style?: CSSProperties;
+  class?: string;
+  css?: string;
   value?: string;
   defaultValue?: string;
   // eslint-disable-next-line no-unused-vars
   onChange?: (color: string) => void;
 }
-function formatterOpacity(v?: number | string) {
-  return v ? Number(((v as number) * 100).toFixed()) : v;
-}
-function parseOpacity(v?: string | number) {
-  let _val = v;
 
-  if (typeof v === 'string') {
-    _val = v.replace(/[^\d]/g, '');
-  }
-  return (_val as number) / 100;
-}
-
-type Opt = Record<
-  string,
-  {
-    get: 'toRgba' | 'toHexa' | 'toHsla';
-    next: 'rgba' | 'hsla' | 'hexa';
-    max: number[];
-  }
->;
-
-const opt: Opt = {
-  hexa: {
-    get: 'toHexa',
-    next: 'rgba',
-    max: [255, 255, 255, 1],
-  },
-  rgba: {
-    get: 'toRgba',
-    next: 'hsla',
-    max: [255, 255, 255, 1],
-  },
-  hsla: {
-    get: 'toHsla',
-    next: 'hexa',
-    max: [360, 100, 100, 1],
-  },
-};
-
-const ColorPalette: React.FC<ColorPaletteProps> = ({
-  className,
-  defaultValue = '#5794ff',
-  value,
-  onChange,
-  ...props
-}) => {
-  const picker = useRef<HTMLDivElement>(null);
-  const store = useRef(
-    sso(
-      {
-        ...colorParse(value || defaultValue),
-        drag: false,
-        timer: null as NodeJS.Timeout | null,
-        hexa: (value || defaultValue) as string | undefined | number,
-        handleHexa(v?: string | number) {
-          store.current.hexa = v;
-        },
-        handleAlphaRange(e: React.ChangeEvent<HTMLInputElement>) {
-          store.current.setAlpha(Number(e.target.value));
-        },
-        setAlpha(alpha: number) {
-          const next: HSVA = [...store.current.value];
-
-          next[3] = alpha || 0;
-          store.current.value = next;
-        },
-        setHue(e: React.ChangeEvent<HTMLInputElement>) {
-          const next: HSVA = [...store.current.value];
-
-          next[0] = Number(e.target.value);
-          store.current.value = next;
-        },
-        setColor(c: string = defaultValue) {
-          if (
-            store.current.isColor(c) &&
-            store.current[opt[store.current.type].get]().toString() !== c
-          ) {
-            const next = colorParse(c as string);
-
-            store.current.type = next.type;
-            store.current.value = next.value;
-          }
-        },
-        changeColor(ev: MouseEvent | React.MouseEvent) {
-          if (picker.current) {
-            const next: HSVA = [...store.current.value];
-            const { x, y, width, height } = picker.current.getBoundingClientRect();
-
-            next[1] = Math.floor(Math.min(Math.max(0, ((ev.clientX - x) / width) * 100), 100));
-            next[2] = Math.floor(
-              100 - Math.min(Math.max(0, ((ev.clientY - y) / height) * 100), 100)
-            );
-            store.current.value = next;
-          }
-        },
-        handleChange(i: number, v?: number) {
-          if (typeof v === 'number') {
-            if (i === 3 && store.current.type !== 'cmyk') {
-              store.current.setAlpha(v || 0);
-            } else {
-              const old: HSVA = store.current[opt[store.current.type].get]() as HSVA;
-
-              old[i] = v || 0;
-              store.current.value = colorParse(old.toString()).value;
-            }
-          }
-        },
-        mouseDown(e: React.MouseEvent) {
-          store.current.drag = true;
-          store.current.changeColor(e);
-        },
-        mouseMove(e: MouseEvent) {
-          if (store.current.drag) {
-            store.current.changeColor(e);
-          }
-        },
-        mouseUp() {
-          store.current.drag = false;
-        },
-        switch() {
-          store.current.type = opt[store.current.type].next;
-        },
-        copy(e: React.MouseEvent) {
-          setClipboard(store.current.color.toString(), e.target as HTMLElement);
-        },
-        eyeDropper() {
-          if (window.EyeDropper) {
-            new window.EyeDropper()
-              .open()
-              .then((res: { sRGBHex: string }) => {
-                if (res) {
-                  store.current.setColor(res.sRGBHex);
-                }
-              })
-              .catch(() => {
-                /**/
-              });
-            return;
-          }
-        },
-      },
-      {
-        color() {
-          store.current.setValue(store.current.value);
-          return store.current[opt[store.current.type].get]() as HSVA;
-        },
-        style() {
-          return {
-            '--c': store.current.toRgbaString(),
-            '--h': store.current.value[0],
-            '--s': store.current.value[1],
-            '--v': store.current.value[2],
-            '--a': store.current.value[3],
-          } as React.CSSProperties;
-        },
-      }
-    )
+function ColorPalette(props: ColorPaletteProps) {
+  let picker: HTMLDivElement | undefined;
+  const types = [
+    { label: 'RGBA', value: 'rgba', handleClosed: false },
+    { label: 'HSLA', value: 'hsla', handleClosed: false },
+    { label: 'HEXA', value: 'hexa', handleClosed: false },
+  ];
+  const material = [
+    '#f44336',
+    '#E91E63',
+    '#9C27B0',
+    '#673AB7',
+    '#3F51B5',
+    '#2196F3',
+    '#00BCD4',
+    '#009688',
+    '#4CAF50',
+    '#CDDC39',
+    '#FF9800',
+    '#795548',
+    '#607D8B',
+  ];
+  const inputProps: InputNumberProps = {
+    class: 'input',
+    size: 'small',
+    css: '.input{text-align:center;font-size:12px;}',
+  };
+  const [hsva, setHsva] = createSignal<ColorParse<HSVA>>(
+    // eslint-disable-next-line solid/reactivity
+    colorParse(props.value || props.defaultValue || '#5794ff')
   );
-  const { type, value: hsva, color, style, hexa } = store.current;
+  const [drag, setDrag] = createSignal(false);
 
-  useEffect(() => {
-    throttle(store.current.setColor, 4)(value);
-  }, [defaultValue, value]);
-  useEffect(() => {
-    onChange?.(color.toString());
-  }, [onChange, color]);
-  useEffect(() => {
-    if (store.current.timer) {
-      clearTimeout(store.current.timer);
-    }
-    if (type === 'hexa') {
-      store.current.hexa = store.current.toHexaString();
-    }
-  }, [type, hsva]);
-  useEffect(() => {
-    const _store = store.current;
+  type HsvaToColorVoid = 'toHexa' | 'toRgba' | 'toHsla' | 'toCmyk' | 'toHsva';
 
-    window.addEventListener('mousemove', _store.mouseMove, passiveSupported);
-    window.addEventListener('mouseup', _store.mouseUp, passiveSupported);
-    return () => {
-      if (_store.timer) {
-        clearTimeout(_store.timer);
+  function formatterOpacity(v?: number | string) {
+    return v ? Number(((v as number) * 100).toFixed()) : v;
+  }
+  function parseOpacity(v?: string | number) {
+    let _val = v;
+
+    if (typeof v === 'string') {
+      _val = v.replace(/[^\d]/g, '');
+    }
+    return (_val as number) / 100;
+  }
+  function capFirst(str: string) {
+    return `to${str[0].toUpperCase() + str.slice(1)}` as HsvaToColorVoid;
+  }
+  const color = createMemo(() => {
+    const s = hsva();
+    const c = s[capFirst(s.type)]();
+
+    if (c.toString() !== props.value) {
+      props.onChange?.(c.toString());
+    }
+    return c;
+  });
+
+  function setColor(c = props.defaultValue) {
+    if (untrack(color).toString() !== c) {
+      setHsva(colorParse(c as string));
+    }
+  }
+  function handleHexa(e: CustomEvent & { target: HTMLInputElement }) {
+    if (e.target) {
+      e.target.value = e.detail;
+    }
+  }
+  function handleHexaBlur(e: FocusEvent & { target: { value: string } }) {
+    if (e.target?.value) {
+      setColor(e.target.value);
+    }
+  }
+  function handleHexaEnter(e: KeyboardEvent & { target: { value: string } }) {
+    if (e.key === 'Enter' && typeof e.target?.value === 'string') {
+      setColor(e.target.value);
+    }
+  }
+  function changeColor(ev: MouseEvent) {
+    if (picker) {
+      const { x, y, width, height } = picker.getBoundingClientRect();
+      const prev = untrack(hsva);
+      const next = prev.value;
+
+      next[1] = Math.floor(Math.min(Math.max(0, ((ev.clientX - x) / width) * 100), 100));
+      next[2] = Math.floor(100 - Math.min(Math.max(0, ((ev.clientY - y) / height) * 100), 100));
+
+      setHsva({ ...prev, value: next });
+    }
+  }
+
+  function handleChange(i: number, v?: number, t?: ColorType) {
+    if (typeof v === 'number') {
+      const prev = untrack(hsva);
+      const changeHsv = i === 3 || t === 'hsva';
+      const next = changeHsv ? prev.value : (untrack(color) as HSVA);
+
+      next[i] = v || 0;
+      if (changeHsv) {
+        setHsva({
+          ...prev,
+          value: next,
+        });
+      } else {
+        setHsva(colorParse(next.toString()));
       }
-      window.removeEventListener('mousemove', _store.mouseMove, passiveSupported);
-      window.removeEventListener('mouseup', _store.mouseUp, passiveSupported);
-      _store();
-    };
-  }, []);
+    }
+  }
+  function mouseDown(e: MouseEvent) {
+    setDrag(true);
+    changeColor(e);
+  }
+  function mouseMove(e: MouseEvent) {
+    if (untrack(drag)) {
+      changeColor(e);
+    }
+  }
+  function mouseUp() {
+    setDrag(false);
+  }
+  function handleSwitch(e: CustomEvent) {
+    setHsva((prev) => ({
+      ...prev,
+      type: e.detail.key,
+    }));
+  }
+
+  function copy(e: MouseEvent) {
+    setClipboard(untrack(color).toString(), e.target as HTMLElement);
+  }
+  async function eyeDropper() {
+    if (window.EyeDropper) {
+      const res = await new window.EyeDropper().open();
+
+      if (res.sRGBHex) {
+        setColor(res.sRGBHex);
+      }
+      return;
+    }
+  }
+  const colorVar = createMemo(() => {
+    const h = hsva(),
+      value = h.value;
+
+    return `.palette {--c:${h.toRgbaString()};--h:${value[0]};--s:${value[1]};--v:${value[2]};--a:${
+      value[3]
+    };}`;
+  });
+
+  createEffect(() => {
+    throttle(setColor, 4)(props.value);
+  });
+
+  onMount(() => {
+    document.body.addEventListener('mousemove', mouseMove, passiveSupported);
+    document.body.addEventListener('mouseup', mouseUp, passiveSupported);
+  });
+  onCleanup(() => {
+    document.body.removeEventListener('mousemove', mouseMove, passiveSupported);
+    document.body.removeEventListener('mouseup', mouseUp, passiveSupported);
+  });
 
   return (
-    <div {...props} className={cx(cls.palette, className)} style={style}>
-      <div ref={picker} className={cls.picker} onMouseDown={store.current.mouseDown} />
-      <div className={cls.chooser}>
-        <div className={cls.range}>
-          <input
-            className={cx(cls.slider, cls.hue, type === 'cmyk' && cls.cmykHue)}
-            min="0"
-            max="360"
-            type="range"
-            value={hsva[0]}
-            onChange={store.current.setHue}
-          />
-          {type !== 'cmyk' ? (
+    <>
+      <style>
+        {style}
+        {colorVar()}
+      </style>
+      <div class={cx('palette', props.class)}>
+        <div ref={picker} class="picker" onMouseDown={mouseDown} />
+        <div class="chooser">
+          <div class="range">
             <input
-              className={cx(cls.slider, cls.opacity)}
+              class="slider hue"
+              min="0"
+              max="360"
+              type="range"
+              value={hsva().value[0]}
+              onInput={(e) => handleChange(0, Number(e.target.value), 'hsva')}
+            />
+            <input
+              class="slider opacity"
               min="0"
               max="1"
               step="0.01"
               type="range"
-              value={hsva[3]}
-              onChange={store.current.handleAlphaRange}
+              value={hsva().value[3]}
+              onInput={(e) => handleChange(3, Number(e.target.value))}
             />
-          ) : null}
+          </div>
+          <div class="preview" onClick={copy} />
         </div>
-        <div className={cls.preview} onClick={store.current.copy} />
-      </div>
-      <div className={cls.form}>
-        {type === 'hexa' ? (
-          <Input
-            className={cls.input}
-            name="hex"
-            size="small"
-            value={hexa}
-            onChange={store.current.handleHexa}
-            onBlur={(e) => {
-              store.current.setColor(e.target.value);
-            }}
-            onKeyUp={(e) => {
-              if (e.key === 'Enter' && typeof hexa === 'string') {
-                store.current.setColor(hexa);
-              }
-            }}
-          />
-        ) : (
-          color.map((n, i) => {
-            const isAlpha = i === 3 && type !== 'cmyk';
+        <div class="form">
+          <Show
+            when={hsva().type === 'hexa'}
+            fallback={
+              <>
+                <Index each={color()}>
+                  {(n, i) => {
+                    const inp = Object.assign(
+                      {},
+                      inputProps,
+                      i === 3 && {
+                        step: 0.01,
+                        formatter: formatterOpacity,
+                        parse: parseOpacity,
+                      }
+                    );
 
-            return (
-              <InputNumber
-                key={type + i}
-                size="small"
-                className={cls.input}
-                value={n}
-                max={opt[type].max[i]}
-                min={0}
-                step={isAlpha ? 0.01 : 1}
-                formatter={isAlpha ? formatterOpacity : null}
-                parser={isAlpha ? parseOpacity : null}
-                onChange={(v) => store.current.handleChange(i, v)}
+                    return (
+                      <n-input-number
+                        {...inp}
+                        value={n() as number}
+                        max={
+                          (
+                            untrack(color) as HSVA & {
+                              max: [360, 100, 100, 1];
+                            }
+                          ).max[i]
+                        }
+                        min={0}
+                        onChange={(e) => {
+                          handleChange(i, e.detail);
+                        }}
+                      />
+                    );
+                  }}
+                </Index>
+              </>
+            }
+          >
+            <n-input
+              {...inputProps}
+              value={hsva().toHexaString()}
+              onChange={handleHexa}
+              onBlur={handleHexaBlur}
+              onKeyUp={handleHexaEnter}
+            />
+          </Show>
+          <n-dropdown
+            css={switchCss}
+            value={hsva().type}
+            options={types}
+            placement="right"
+            trigger="click"
+            selectable={true}
+            onChange={handleSwitch}
+          >
+            <span class="switch">{hsva().type}</span>
+          </n-dropdown>
+        </div>
+        <div class="color">
+          <Show
+            when={window.EyeDropper}
+            fallback={
+              <i
+                style={{ '--c': 'rgba(168,16,16,0.15)' }}
+                onClick={setColor.bind(null, 'rgba(168,16,16,0.15)')}
               />
-            );
-          })
-        )}
-        <div className={cls.switch} onClick={store.current.switch}>
-          {type}
+            }
+          >
+            <i class="eye-dropper" style={{ '--c': 'transparent' }} onClick={eyeDropper} />
+          </Show>
+          <For each={material}>
+            {(c) => <i style={{ '--c': c }} onClick={setColor.bind(null, c)} />}
+          </For>
         </div>
       </div>
-      <div className={cls.color}>
-        {window.EyeDropper && (
-          <i
-            style={{ '--c': 'transparent' } as React.CSSProperties}
-            onClickCapture={store.current.eyeDropper}
-          />
-        )}
-        {material.map((c) => (
-          <i
-            key={c}
-            style={{ '--c': c } as React.CSSProperties}
-            onClick={() => {
-              store.current.setColor(c);
-            }}
-          />
-        ))}
-      </div>
-    </div>
+    </>
   );
+}
+
+export interface ColorPaletteElement extends Omit<ColorPaletteProps, 'onChange'> {
+  ref?: ColorPaletteElement | { current: ColorPaletteElement | null };
+  // eslint-disable-next-line no-unused-vars
+  onChange?(e: CustomEvent<string | undefined>): void;
+}
+
+interface CustomElementTags {
+  'n-color-palette': ColorPaletteElement;
+}
+declare module 'solid-js' {
+  export namespace JSX {
+    export interface IntrinsicElements extends HTMLElementTags, CustomElementTags {}
+  }
+}
+declare global {
+  export namespace JSX {
+    export interface IntrinsicElements extends CustomElementTags, CustomElementTags {}
+  }
+}
+
+export const defaultColorPaletteProps = {
+  class: undefined,
+  style: undefined,
+  css: undefined,
+  value: undefined,
+  defaultValue: undefined,
+  onChange: undefined,
 };
+
+customElement('n-color-palette', defaultColorPaletteProps, (_, opts) => {
+  const el = opts.element;
+  const props = mergeProps(
+    {
+      onChange(val?: string) {
+        el.dispatchEvent(
+          new CustomEvent('change', {
+            detail: val,
+          })
+        );
+      },
+    },
+    _
+  );
+
+  return createComponent(ColorPalette, props);
+});
 
 export default ColorPalette;
