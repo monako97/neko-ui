@@ -1,11 +1,11 @@
 import * as Solid from 'solid-js';
 import { css, cx } from '@moneko/css';
 import { type ExampleModule, examples } from '@moneko/solid-js';
-import 'n-code-live';
 import { baseStyle } from 'neko-ui';
 import { customElement } from 'solid-element';
 import h from 'solid-js/h';
 import { render } from 'solid-js/web';
+import type { CodeLiveProps } from 'n-code-live';
 
 const { For, Show, createEffect, createMemo, createSignal, mergeProps, onMount } = Solid;
 
@@ -199,7 +199,7 @@ function Fragment(p: Solid.VoidProps) {
   return p.children;
 }
 
-const scope = {
+const scope: CodeLiveProps['scope'] = {
   jsx: $$jsx,
   Fragment: Fragment,
   ...Solid,
@@ -335,28 +335,32 @@ interface SandboxGroupProps {
 }
 
 function SandboxGroup(_props: SandboxGroupProps) {
-  const props = mergeProps({ col: 2, ignore: [] as string[] }, _props);
-  const sand = createMemo(() => {
-    return (
-      examples[props.name]
-        ?.sort((a, b) => (a.order || 0) - (b.order || 0))
-        .filter((e) => (e.title ? !props.ignore.includes(e.title) : true)) || []
-    );
+  const props = mergeProps({ col: 2 }, _props);
+  const [api, setApi] = createSignal<string | null>(null);
+  const data = createMemo(() => examples[props.name] || []);
+
+  createEffect(async () => {
+    try {
+      setApi((await import(`@pkg/${props.name}/api.md?raw`)).default);
+    } catch (error) {
+      setApi(null);
+    }
   });
 
   return (
     <>
-      <style>
-        {baseStyle()}
-        {groupCss}
-      </style>
-      <div class="sandbox-group" style={{ 'column-count': props.col }}>
-        <For each={sand()}>
-          {(m) => {
-            return <site-sandbox {...m} />;
-          }}
-        </For>
-      </div>
+      <Show when={data().length}>
+        <style>
+          {baseStyle()}
+          {groupCss}
+        </style>
+        <div class="sandbox-group" style={{ 'column-count': props.col }}>
+          <For each={data()}>{(m) => <site-sandbox {...m} />}</For>
+        </div>
+      </Show>
+      <Show when={api()}>
+        <n-md text={api() as string} />
+      </Show>
     </>
   );
 }

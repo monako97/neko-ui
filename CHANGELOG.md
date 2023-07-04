@@ -1,9 +1,10 @@
-# [2.0.0-bate.2](https://github.com/monako97/neko-ui/compare/1.5.0...2.0.0-bate.2) (2023-07-03)
+# [2.0.0-beta.3](https://github.com/monako97/neko-ui/compare/1.5.0...2.0.0-beta.3) (2023-07-04)
 
 
 ### Bug Fixes
 
 * backtop 返回顶部无效 ([ab9c775](https://github.com/monako97/neko-ui/commit/ab9c77586be205eb7fc40245383cf36f485229da))
+* md、color-picker类型 ([7fa6865](https://github.com/monako97/neko-ui/commit/7fa6865c418b703098f406e5e9394376b7d0a6bf))
 * md、color-picker类型 ([696c16a](https://github.com/monako97/neko-ui/commit/696c16ac1b21ac36180214bd4e92196d538048a7))
 * property 'content' is missing in type ([882b700](https://github.com/monako97/neko-ui/commit/882b70017ef104a278bc05de5fc546cda83290a1))
 * segmented dark style ([388f99d](https://github.com/monako97/neko-ui/commit/388f99dcefd6838ba5f39e2612c106365c5aef62))

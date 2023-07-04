@@ -154,6 +154,7 @@ function App() {
         </Show>
         <div class="site-page-view">
           <Outlet />
+          <site-sandbox-group name={location.pathname.substring(1)} />
           <site-pagination />
         </div>
         <site-footer />

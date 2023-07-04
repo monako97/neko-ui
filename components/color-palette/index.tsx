@@ -24,9 +24,9 @@ import { cx } from '@moneko/css';
 import { customElement } from 'solid-element';
 import { style, switchCss } from './style';
 import '../dropdown';
+import { type CSSProperties, type InputNumberProps, baseStyle } from '../index';
 import '../input';
 import '../input-number';
-import type { CSSProperties, InputNumberProps } from '..';
 
 export interface ColorPaletteProps {
   style?: CSSProperties;
@@ -204,6 +204,7 @@ function ColorPalette(props: ColorPaletteProps) {
   return (
     <>
       <style>
+        {baseStyle()}
         {style}
         {colorVar()}
       </style>

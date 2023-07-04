@@ -1,6 +1,7 @@
 import { For, Show } from 'solid-js';
 import { css } from '@moneko/css';
 import { baseStyle } from 'neko-ui';
+import log from '../CHANGELOG.md?raw';
 import jb_beam from '@/assets/images/jb_beam.svg';
 import { projectInfo } from '@/utils';
 
@@ -11,6 +12,7 @@ const style = css`
     min-block-size: calc(100vb - 236px);
     background-color: var(--component-bg);
     box-shadow: 0 2px 14px 0 var(--primary-shadow);
+    margin-block-end: 24px;
 
     & > span {
       margin-inline-start: 16px;
@@ -164,6 +166,7 @@ function Empty() {
           </For>
         </div>
       </div>
+      <n-md text={`# Change log\n${log}`} />
     </>
   );
 }

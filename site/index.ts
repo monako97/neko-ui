@@ -5,13 +5,11 @@ import { type RouteDefinition } from '@solidjs/router';
 const router: RouteDefinition[] = [
   {
     path: '/',
-    component: lazy(() => import(/* webpackChunkName: "pages/index" */ '@/pages/index')),
+    component: lazy(() => import(/* webpackChunkName: "layout" */ '@/layout')),
     children: [
       {
         path: '/',
-        component: lazy(
-          () => import(/* webpackChunkName: "components/about" */ '@/components/about')
-        ),
+        component: lazy(() => import(/* webpackChunkName: "about" */ '@/about')),
       },
       ...routes,
     ],

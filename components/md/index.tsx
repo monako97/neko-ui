@@ -713,10 +713,10 @@ function MD(_props: MdProps) {
         {css(props.css)}
       </style>
       <Switch>
-        <Match when={Array.isArray(props.children) && props.children.length}>
+        <Match when={(props.children as [])?.length}>
           <article class="n-md-box">
             <div class="n-md-body">
-              <For each={props.children as JSXElement[]}>{(e) => e}</For>
+              <For each={props.children as []}>{(e) => <>{e}</>}</For>
             </div>
           </article>
         </Match>
@@ -790,7 +790,6 @@ customElement(
         tools: el.tools,
         lineNumber: el.lineNumber,
         pictureViewer: el.pictureViewer,
-        children: el.children,
         getAnchorContainer: el.getAnchorContainer,
       },
       _

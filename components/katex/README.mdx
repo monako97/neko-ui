@@ -5,8 +5,6 @@ subtitle: KaTeX
 icon: 🔱
 ---
 
-<n-md>
-
 # 数学公式
 
 > 使用该组件你需要安装 **[n-katex](https://www.npmjs.com/package/n-katex)**
@@ -24,7 +22,7 @@ npm install n-katex
 ```jsx
 import 'n-katex';
 
-<n-katex>{'\\underbrace{a+b+\\dots+n}_{m2}'}</n-katex>
+<n-katex>{'\\underbrace{a+b+\\dots+n}_{m2}'}</n-katex>;
 ```
 
 ## 在 html5 中使用
@@ -38,11 +36,3 @@ import 'n-katex';
   <n-katex>\underbrace{a+b+\dots+n}_{m2}</n-katex>
 </body>
 ```
-
-</n-md>
-
-<site-sandbox-group name="katex"></site-sandbox-group>
-
-import api from './examples/api.md';
-
-<n-md text={api}></n-md>

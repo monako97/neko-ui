@@ -12,6 +12,19 @@ const themeMedia = window.matchMedia('(prefers-color-scheme: light)');
 /** 共享的颜色方案 */
 export const [theme, setTheme] = createStore({
   scheme: (themeMedia?.matches ? 'light' : 'dark') as ColorScheme,
+  light: {
+    primary: '#5794ff',
+    warning: '#faad14',
+    error: '#ff4d4f',
+    success: '#52c41a',
+  },
+  dark: {
+    primary: '#4d81dc',
+    warning: '#bb8314',
+    error: '#901c22',
+    success: '#419418',
+  },
+  tokens: {},
 });
 
 // 监听 prefers-color-scheme 媒体查询变化，自动更新颜色方案
@@ -56,58 +69,78 @@ export function generateTheme(base: string, option: ThemeOption): Record<string,
   };
 }
 
-const darkCss = css`
-  :root,
-  :host {
-    ${generateTheme('#4d81dc', { name: 'primary', dark: true })}
-    ${generateTheme('#bb8314', { name: 'warning', dark: true })}
-    ${generateTheme('#901c22', { name: 'error', dark: true })}
-    ${generateTheme('#419418', { name: 'success', dark: true })}
-    --disable-color: rgb(255 255 255 / 25%);
-    --disable-bg: rgb(255 255 255 / 8%);
-    --disable-border: #424242;
-    --border-color: #303030;
-    --component-bg: #141414;
-    --primary-shadow: rgb(0 0 0 / 12%);
-    --primary-selection: rgb(255 255 255 / 5%);
-    --primary-details-bg: rgb(255 255 255 / 5%);
-    --primary-component-bg: #000;
-    --skeleton-bg: rgb(255 255 255 / 6%);
-    --skeleton-bg-active: linear-gradient(
-        100deg,
-        rgb(255 255 255 / 5%) 40%,
-        rgb(255 255 255 / 15%) 50%,
-        rgb(255 255 255 / 5%) 60%
-      )
-      transparent 180%/200% 100%;
-    --segmented-bg: #000;
-    --segmented-current-bg: #1f1f1f;
-  }
-`;
-const lightCss = css`
-  :root,
-  :host {
-    ${generateTheme('#5794ff', { name: 'primary' })}
-    ${generateTheme('#faad14', { name: 'warning' })}
-    ${generateTheme('#ff4d4f', { name: 'error' })}
-    ${generateTheme('#52c41a', { name: 'success' })}
+const primary = createMemo(() => generateTheme(theme.light.primary, { name: 'primary' }));
+const warning = createMemo(() => generateTheme(theme.light.warning, { name: 'warning' }));
+const success = createMemo(() => generateTheme(theme.light.success, { name: 'success' }));
+const error = createMemo(() => generateTheme(theme.light.error, { name: 'error' }));
+
+const lightCss = createMemo(() => {
+  return css`
+    :root,
+    :host {
+      ${primary()}
+      ${warning()}
+      ${success()}
+      ${error()}
     --disable-color: rgb(0 0 0 / 25%);
-    --disable-bg: rgb(0 0 0 / 4%);
-    --disable-border: #d9d9d9;
-    --border-color: var(--primary-border);
-    --component-bg: var(--primary-bg);
-    --skeleton-bg: rgb(0 0 0 / 6%);
-    --skeleton-bg-active: linear-gradient(
-        100deg,
-        rgb(0 0 0 / 5%) 40%,
-        rgb(0 0 0 / 15%) 50%,
-        rgb(0 0 0 / 5%) 60%
-      )
-      transparent 180%/200% 100%;
-    --segmented-bg: var(--primary-details-bg);
-    --segmented-current-bg: #fff;
-  }
-`;
+      --disable-bg: rgb(0 0 0 / 4%);
+      --disable-border: #d9d9d9;
+      --border-color: var(--primary-border);
+      --component-bg: var(--primary-bg);
+      --skeleton-bg: rgb(0 0 0 / 6%);
+      --skeleton-bg-active: linear-gradient(
+          100deg,
+          rgb(0 0 0 / 5%) 40%,
+          rgb(0 0 0 / 15%) 50%,
+          rgb(0 0 0 / 5%) 60%
+        )
+        transparent 180%/200% 100%;
+      --segmented-bg: var(--primary-details-bg);
+      --segmented-current-bg: #fff;
+    }
+  `;
+});
+const darkPrimary = createMemo(() =>
+  generateTheme(theme.dark.primary, { name: 'primary', dark: true })
+);
+const darkWarning = createMemo(() =>
+  generateTheme(theme.dark.warning, { name: 'warning', dark: true })
+);
+const darkSuccess = createMemo(() =>
+  generateTheme(theme.dark.success, { name: 'success', dark: true })
+);
+const darkError = createMemo(() => generateTheme(theme.dark.error, { name: 'error', dark: true }));
+
+const darkCss = createMemo(() => {
+  return css`
+    :root,
+    :host {
+      ${darkPrimary()}
+      ${darkWarning()}
+      ${darkError()}
+      ${darkSuccess()}
+      --disable-color: rgb(255 255 255 / 25%);
+      --disable-bg: rgb(255 255 255 / 8%);
+      --disable-border: #424242;
+      --border-color: #303030;
+      --component-bg: #141414;
+      --primary-shadow: rgb(0 0 0 / 12%);
+      --primary-selection: rgb(255 255 255 / 5%);
+      --primary-details-bg: rgb(255 255 255 / 5%);
+      --primary-component-bg: #000;
+      --skeleton-bg: rgb(255 255 255 / 6%);
+      --skeleton-bg-active: linear-gradient(
+          100deg,
+          rgb(255 255 255 / 5%) 40%,
+          rgb(255 255 255 / 15%) 50%,
+          rgb(255 255 255 / 5%) 60%
+        )
+        transparent 180%/200% 100%;
+      --segmented-bg: #000;
+      --segmented-current-bg: #1f1f1f;
+    }
+  `;
+});
 const baseCss = css`
   :root,
   :host {
@@ -142,5 +175,5 @@ const baseCss = css`
 `;
 
 export const baseStyle = createMemo(() => {
-  return baseCss + (theme.scheme === 'dark' ? darkCss : lightCss);
+  return baseCss + (theme.scheme === 'dark' ? darkCss() : lightCss());
 });

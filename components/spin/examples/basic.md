@@ -1,3 +1,8 @@
+---
+title: 基本使用
+order: 1
+---
+
 ```html
 <n-switch checked="true"></n-switch>
 <n-spin spin="true">
