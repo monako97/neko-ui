@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - main
+      - web-component
 
 permissions:
   contents: read
@@ -38,6 +39,8 @@ jobs:
         run: yarn
       - name: 'lint'
         run: yarn lint
+      - name: 'Build UMD'
+        run: yarn build config=umd
       - name: 'Build Artifact'
         run: yarn build config=deploy
       - name: 'Publish to npm'

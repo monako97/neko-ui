@@ -1,0 +1,38 @@
+---
+type: 数据展示
+title: 数学公式
+subtitle: KaTeX
+icon: 🔱
+---
+
+# 数学公式
+
+> 使用该组件你需要安装 **[n-katex](https://www.npmjs.com/package/n-katex)**
+
+## Install
+
+```shell
+yarn add n-katex -S
+# or
+npm install n-katex
+```
+
+## 在 jsx 中使用
+
+```jsx
+import 'n-katex';
+
+<n-katex>{'\\underbrace{a+b+\\dots+n}_{m2}'}</n-katex>;
+```
+
+## 在 html5 中使用
+
+```html
+<!-- 引入 CDN 资源 -->
+<script src="https://cdn.jsdelivr.net/npm/n-katex@1.0.5/umd/index.js"></script>
+<!-- 使用 -->
+<body>
+  行内公式
+  <n-katex>\underbrace{a+b+\dots+n}_{m2}</n-katex>
+</body>
+```

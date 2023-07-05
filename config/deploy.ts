@@ -1,14 +1,14 @@
-import { PACKAGENAME } from '@moneko/core/build';
-import type { PartialConfigType } from '@moneko/core';
+import { type ConfigType } from '@moneko/core';
 
-const conf: PartialConfigType = {
+const conf: Partial<ConfigType<'swc'>> = {
   devtool: false,
+  bar: false,
   seo: {
     domain: 'monako97.github.io',
     nojekyll: true,
   },
-  routeBaseName: `/${PACKAGENAME}/`,
-  publicPath: `/${PACKAGENAME}/`,
+  routeBaseName: '/neko-ui/',
+  publicPath: '/neko-ui/',
   bundleAnalyzer: false,
   fixBrowserRouter: {
     pathSegmentsToKeep: 1,

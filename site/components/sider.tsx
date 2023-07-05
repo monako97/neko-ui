@@ -1,10 +1,11 @@
-import React, { useCallback, useEffect, useMemo, useRef } from 'react';
-import { updateStyleRule } from '@moneko/common';
-import { myPkgs, MyPkg, useLocation, Link } from '@moneko/core';
-import { Avatar, Tooltip, Typography, colorScheme, injectGlobal } from 'neko-ui';
-import { projectInfo } from '@/utils';
+import { For, Show, createEffect, createMemo } from 'solid-js';
+import { css } from '@moneko/css';
+import { type RouterProps, projectBasicInfo, routes } from '@moneko/solid-js';
+import { A, useLocation } from '@solidjs/router';
+import { ComponentOptions, baseStyle, setTheme, theme } from 'neko-ui';
+import { customElement } from 'solid-element';
 
-injectGlobal`
+const style = css`
   .site-sider,
   .site-sider-group-title,
   .site-sider-item,
@@ -15,9 +16,14 @@ injectGlobal`
 
   .site-left {
     position: sticky;
+    display: inline-block;
     inset-block-start: 0;
     overflow-y: scroll;
     max-block-size: 100vb;
+
+    a {
+      text-decoration: none;
+    }
 
     &::-webkit-scrollbar {
       display: none;
@@ -26,22 +32,24 @@ injectGlobal`
 
   .site-sider {
     position: sticky;
-    inset-block-start: 0;
     display: flex;
     overflow-y: scroll;
     margin: 0 16px 16px;
     border-radius: var(--border-radius);
+    color: var(--text-color);
+    background-color: var(--component-bg, rgb(255 255 255 / 90%));
+    inset-block-start: 0;
     inline-size: 240px;
     min-inline-size: 240px;
     flex: 1;
-    max-block-size: calc(100% - 32px);
-    color: var(--text-color);
-    background-color: var(--component-bg, rgb(255 255 255 / 90%));
+    max-block-size: calc(100vb - 32px);
     box-sizing: border-box;
     backdrop-filter: blur(16px);
+    /* stylelint-disable-next-line */
     -webkit-backdrop-filter: blur(16px);
     transition-property: background-color, color;
     flex-direction: column;
+    box-shadow: 0 2px 14px 0 var(--primary-shadow);
   }
 
   .site-sider > ul {
@@ -61,19 +69,20 @@ injectGlobal`
 
   .site-sider-group-title {
     position: sticky;
-    inset-block-start: 0;
     z-index: 10;
+    overflow: hidden;
     margin: 0 0 8px;
-    border-block-end: var(--border-base);
     padding: 8px 0;
     font-size: var(--font-size);
+    text-overflow: ellipsis;
     color: var(--text-heading);
+    inset-block-start: 0;
+    border-block-end: var(--border-base);
     backdrop-filter: blur(16px);
+    /* stylelint-disable-next-line */
     -webkit-backdrop-filter: blur(16px);
     line-height: 20px;
     transition-property: background-color, color, border-color;
-    overflow: hidden;
-    text-overflow: ellipsis;
   }
 
   .site-sider-list {
@@ -130,7 +139,7 @@ injectGlobal`
       display: flex;
       flex-wrap: wrap;
       color: inherit;
-      width: 100%;
+      inline-size: 100%;
     }
   }
 
@@ -170,12 +179,7 @@ injectGlobal`
     padding: 16px 24px;
     gap: 1em;
     min-block-size: 43px;
-    max-width: 224px;
-  }
-
-  .site-logo {
-    background-image: none;
-    animation: none;
+    max-inline-size: 224px;
   }
 
   .site-title {
@@ -184,12 +188,14 @@ injectGlobal`
     flex-direction: column;
     line-height: 1.1;
     gap: 5px;
+
     h1 {
       margin: 0;
       font-size: 1.5em;
       font-weight: bold;
       color: var(--text-heading);
     }
+
     i {
       font-size: x-small;
       font-weight: lighter;
@@ -199,10 +205,10 @@ injectGlobal`
   }
 
   .site-theme-btn {
-    min-width: 28px;
-    text-align: center;
     font-size: 28px;
+    text-align: center;
     transition: transform var(--transition-duration) var(--transition-timing-function);
+    min-inline-size: 28px;
     line-height: 32px;
     cursor: pointer;
     user-select: none;
@@ -221,42 +227,41 @@ injectGlobal`
   .site-theme-btn:active {
     transform: scale(0.95);
   }
-  .site-tooltip {
-    .site-sider-label,
-    .site-sider-subtitle {
-      inline-size: 100%;
-    }
-    .site-sider-subtitle {
-      margin-inline-start: 0;
-    }
-  }
-  @media screen and (max-width: 1100px) {
+
+  @media screen and (width <= 1100px) {
     .site-sider {
       min-inline-size: 68px;
       inline-size: 68px;
-      >ul {
+
+      > ul {
         padding: 0 8px;
       }
     }
+
     .site-header {
       justify-content: center;
     }
+
     .site-sider-group-title {
       text-align: center;
     }
+
     .site-sider-item {
       cursor: pointer;
+
       a {
         display: flex;
-        width: 100%;
-        height: 48px;
+        inline-size: 100%;
+        block-size: 48px;
         justify-content: center;
         align-items: center;
       }
+
       &::before {
         content: none;
       }
     }
+
     .site-sider-item .site-sider-label,
     .site-sider-item .site-sider-subtitle,
     .site-title,
@@ -266,119 +271,164 @@ injectGlobal`
   }
 `;
 
-const Sider: React.FC = () => {
-  const { scheme } = colorScheme;
-  const menuEl = useRef<HTMLUListElement>(null);
-  const { pathname } = useLocation();
-  const { kv, menuKeys, menuObj } = useMemo(() => {
-    const obj: Record<string, MyPkg[]> = {};
-    const extractMenu = (list: MyPkg[]) => {
-      return list?.map((item) => {
-        const type = item?.type || 'default';
-        const prev = obj[type] || [];
+export type MyPkg = Partial<RouterProps> & {
+  type?: string;
+  title?: string;
+  path?: string;
+  subtitle?: string;
+  icon?: string;
+  order?: number;
+  key?: string;
+};
+const obj: Record<string, MyPkg[]> = {},
+  menuKeys: string[] = [],
+  kv: Record<string, MyPkg> = {};
 
-        Object.assign(obj, {
-          [type]: prev.concat({
-            ...item,
-            type,
-          }),
-        });
+let all: MyPkg[] = [];
+
+function extractMenu(list: RouterProps[]) {
+  return list.forEach(({ key, meta, children }) => {
+    if (meta) {
+      const type = meta.type || '默认',
+        prev = obj[type as string] || [];
+
+      obj[type as string] = prev.concat({
+        ...meta,
+        type: type as string,
+        key,
       });
-    };
-
-    extractMenu(myPkgs);
-
-    return {
-      kv: Object.fromEntries(myPkgs.map((item) => [item.key, item])),
-      menuKeys: Object.keys(obj),
-      menuObj: obj,
-    };
-  }, []);
-  const activeKey = useMemo(() => pathname.substring(1), [pathname]);
-  const current = useMemo(() => {
-    window.scrollTo({
-      top: 0,
-    });
-    return kv[activeKey] || projectInfo;
-  }, [activeKey, kv]);
-  const renderMenu = useCallback(
-    (list?: MyPkg[]) => {
-      return list?.map((item) => {
-        const row = (
-          <>
-            <div className="site-sider-label">{item.title || item.path}</div>
-            {item.subtitle && <div className="site-sider-subtitle">{item.subtitle}</div>}
-          </>
-        );
-
-        return (
-          <li key={item.key} className="site-sider-item" data-active={activeKey === item.key}>
-            <Link to={`/${item.key}`}>
-              <Tooltip trigger="hover" title={<div className="site-tooltip">{row}</div>}>
-                <span className="site-sider-icon">{item.icon}</span>
-              </Tooltip>
-              {row}
-            </Link>
-          </li>
-        );
-      });
-    },
-    [activeKey]
-  );
-
-  useEffect(() => {
-    if (document.documentElement.getAttribute('data-theme') !== scheme) {
-      document.documentElement.setAttribute('data-theme', scheme);
+      if (!menuKeys.includes(type as string)) {
+        menuKeys.push(type as string);
+      }
+      kv[key] = {
+        ...meta,
+        type: type as string,
+        key,
+      };
     }
-    updateStyleRule(
-      {
-        'color-scheme': scheme,
-      },
-      ':root'
-    );
-  }, [scheme]);
-  useEffect(() => {
-    document.querySelector('.site-sider-item[data-active="true"] > a')?.scrollIntoView({
-      behavior: 'smooth',
-      block: 'nearest',
-    });
-  }, [current]);
+    if (Array.isArray(children) && children.length) {
+      extractMenu(children);
+    }
+  });
+}
+
+extractMenu(routes);
+
+for (const key in obj) {
+  if (Object.prototype.hasOwnProperty.call(obj, key)) {
+    obj[key] = obj[key].sort((a, b) => (a.order || 0) - (b.order || 0));
+    all = all.concat(obj[key]);
+  }
+}
+
+export { all, kv };
+function Sider(_: object, opt: ComponentOptions<object>) {
+  const location = useLocation();
+  let menuEl: HTMLUListElement | undefined;
+
+  const activeKey = createMemo(() => location.pathname.substring(1));
+
+  createEffect(() => {
+    if (activeKey()) {
+      opt.element.renderRoot
+        .querySelector('.site-sider-item[data-active="true"] > a')
+        ?.scrollIntoView({
+          behavior: 'smooth',
+          block: 'nearest',
+        });
+    }
+  });
+
+  createEffect(() => {
+    document.documentElement.setAttribute('data-theme', theme.scheme);
+  });
+  const avatarCss = css`
+    .avatar {
+      background-image: none;
+      animation: none;
+    }
+  `;
 
   return (
-    <section className="site-left">
-      <header className="site-header">
-        <Link to="/">
-          <Avatar className="site-logo" />
-        </Link>
-        <hgroup className="site-title">
-          <Typography tag="h1" truncated>
-            {projectInfo.title}
-          </Typography>
-          <Typography tag="i" type="secondary" truncated>
-            {current.subtitle}
-          </Typography>
-        </hgroup>
-        <div
-          className="site-theme-btn"
-          onClick={() => {
-            colorScheme.scheme = scheme === 'dark' ? 'light' : 'dark';
-          }}
-        />
-      </header>
-      <section className="site-sider">
-        <ul ref={menuEl}>
-          {menuKeys.map((key) => {
-            return (
-              <li key={key} className="site-sider-group">
-                <p className="site-sider-group-title">{key}</p>
-                <ul className="site-sider-list">{renderMenu(menuObj[key])}</ul>
-              </li>
-            );
-          })}
-        </ul>
+    <>
+      <style>
+        {baseStyle()}
+        {style}
+      </style>
+      <section class="site-left">
+        <header class="site-header">
+          <A href="/">
+            <n-avatar css={avatarCss} />
+          </A>
+          <hgroup class="site-title">
+            <h1 data-truncated>{projectBasicInfo.projectName.replace(/-/g, ' ')}</h1>
+            <i>{(kv[activeKey()] || projectBasicInfo).subtitle}</i>
+          </hgroup>
+          <div
+            class="site-theme-btn"
+            onClick={() => {
+              setTheme('scheme', (prev) => (prev === 'dark' ? 'light' : 'dark'));
+            }}
+          />
+        </header>
+        <section class="site-sider">
+          <ul ref={menuEl}>
+            <For each={menuKeys}>
+              {(key) => {
+                return (
+                  <li class="site-sider-group">
+                    <p class="site-sider-group-title">{key}</p>
+                    <ul class="site-sider-list">
+                      <For each={obj[key]}>
+                        {(item) => {
+                          return (
+                            <li class="site-sider-item" data-active={activeKey() === item.key}>
+                              <A href={item.key as string}>
+                                <n-popover
+                                  class="site-sider-icon"
+                                  arrow={true}
+                                  content={() => (
+                                    <div style={{ padding: '0 4px' }}>
+                                      <n-typography tag="strong" style={{ 'font-size': '14px' }}>
+                                        {item.title || item.path}
+                                      </n-typography>
+                                      <Show when={item.subtitle}>
+                                        <br />
+                                        <n-typography
+                                          type="secondary"
+                                          style={{ 'font-size': '12px' }}
+                                        >
+                                          {item.subtitle}
+                                        </n-typography>
+                                      </Show>
+                                    </div>
+                                  )}
+                                >
+                                  <span>{item.icon}</span>
+                                </n-popover>
+                                <div class="site-sider-label">{item.title || item.path}</div>
+                                <Show when={item.subtitle}>
+                                  <div class="site-sider-subtitle">{item.subtitle}</div>
+                                </Show>
+                              </A>
+                            </li>
+                          );
+                        }}
+                      </For>
+                    </ul>
+                  </li>
+                );
+              }}
+            </For>
+          </ul>
+        </section>
       </section>
-    </section>
+    </>
   );
-};
+}
 
-export default Sider;
+customElement('site-sider', Sider);
+
+export interface SiderElement {
+  ref?: SiderElement | { current: SiderElement | null };
+}

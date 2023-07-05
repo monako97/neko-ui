@@ -2,8 +2,9 @@
     "compilerOptions": {
         "downlevelIteration": true,
         "incremental": true,
-        "jsx": "react",
-        "isolatedModules": false,
+        "jsx": "preserve",
+        "jsxImportSource": "solid-js",
+        "isolatedModules": true,
         "strict": true,
         "noUnusedLocals": true,
         "noUnusedParameters": true,
@@ -52,9 +53,7 @@
         ],
         "types": [
             "node",
-            "jest",
-            "@testing-library/jest-dom"
+            "jest"
         ]
-    },
-    "exclude": []
+    }
 }

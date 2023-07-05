@@ -38,7 +38,6 @@ root_folder/
 |-- tsconfig.json
 `-- typings
     `-- typings.d.ts
-
 ```
 
 </details>
@@ -96,7 +95,7 @@ root_folder/
   ```jsx
   import readme from './readme.md?raw';
 
-  <Box text={readme} />;
+  <n-md text={readme} />;
   ```
 
 - **README.mdx 文件中需要添加如下代码**
@@ -121,7 +120,7 @@ import DemoRaw from './examples/default.jsx?raw';
 ```md
 // 案例 1
 
-<SandboxGroup name="wave-circle" />
+<site-sandbox-group name="wave-circle" />
 ```
 
 ## 直接在 mdx 中编写文档

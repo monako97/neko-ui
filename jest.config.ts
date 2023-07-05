@@ -1,7 +1,7 @@
-import globals from '@moneko/core/build/envFlags';
+import { envFlags } from '@moneko/core';
 import type { Config } from 'jest';
 
-const { name } = JSON.parse(globals.programInfo);
+const { name } = JSON.parse(envFlags.programInfo);
 
 /**
  * 单元测试的几个指标:
@@ -36,7 +36,7 @@ const config: Config = {
   ],
   transformIgnorePatterns: ['<rootDir>/lib/', '<rootDir>/es/', '<rootDir>/docs/'],
   transform: {
-    '^.+\\.(t|j)sx?$': '@swc/jest',
+    '^.+\\.(t|j)sx?$': '@swc-node/jest',
   },
   setupFilesAfterEnv: [
     '<rootDir>/test/setup.ts',
@@ -51,12 +51,12 @@ const config: Config = {
   moduleNameMapper: {
     '\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$':
       '<rootDir>/test/file.mock.ts',
-    '\\.(css|less)$': 'identity-obj-proxy',
+    '\\.(css|less)$': 'i<rootDir>/test/obj-proxy.ts',
     '\\?raw$': '<rootDir>/test/file.mock.ts',
     'iconfont.js$': '<rootDir>/test/file.mock.ts',
     [name]: '<rootDir>/components/index.ts',
   },
-  globals: globals,
+  globals: envFlags,
 };
 
 export default config;

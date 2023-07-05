@@ -1,6 +1,17 @@
-import React, { useEffect, useMemo, useState } from 'react';
-import { cls } from './style';
-import { cx } from '../emotion';
+import { createEffect, createMemo, createSignal } from 'solid-js';
+import { css, cx } from '@moneko/css';
+import { customElement } from 'solid-element';
+import { baseStyle } from '../theme';
+
+const style = css`
+  .text {
+    cursor: auto;
+  }
+
+  .hit {
+    color: var(--primary-color, #5794ff);
+  }
+`;
 
 /**
  * 高亮字符串语法
@@ -18,12 +29,8 @@ export type HighlightTextJson =
     }[]
   | null;
 export interface HighlightTextProps {
-  className?: string;
-  style?: React.CSSProperties;
-  /** 命中高亮部分的样式 */
-  hitStyle?: React.CSSProperties;
-  /** 命中高亮部分的类名 */
-  hitClassName?: string;
+  class?: string;
+  css?: string;
   /** 内容 */
   text?: string;
   /** 需要高亮的内容 */
@@ -80,70 +87,87 @@ export function strToHighlight(text: string): Highlight[] | null {
   return null;
 }
 
-const HighlightText: React.FC<HighlightTextProps> = ({
-  className,
-  style,
-  hitStyle,
-  hitClassName,
-  text,
-  highlight,
-  extra,
-  flag = 'g',
-}) => {
-  const [texts, setTexts] = useState<Highlight[] | null>();
-  const hitNode = useMemo(() => {
+const HighlightText = (props: HighlightTextProps) => {
+  const [texts, setTexts] = createSignal<Highlight[] | null>();
+  const hitNode = createMemo(() => {
     return (
-      texts?.map((item, i) => {
+      texts()?.map((item) => {
         return item.hit ? (
-          <span
-            key={item.text + i}
-            className={cx(cls.hit, hitClassName)}
-            data-text={item.text}
-            style={hitStyle}
-          >
+          <span class="hit" data-text={item.text}>
             {item.text}
           </span>
         ) : (
           item.text
         );
-      }) ?? text
+      }) ?? props.text
     );
-  }, [hitClassName, hitStyle, text, texts]);
+  });
 
-  useEffect(() => {
-    if (typeof text === 'string' && highlight) {
-      let str = text;
+  createEffect(() => {
+    if (typeof props.text === 'string' && props.highlight) {
+      let str = props.text;
 
-      if (Array.isArray(highlight)) {
-        for (let i = 0, len = highlight.length; i < len; i++) {
-          const item = highlight[i];
+      if (Array.isArray(props.highlight)) {
+        for (let i = 0, len = props.highlight.length; i < len; i++) {
+          const item = props.highlight[i];
           const isOne = typeof item === 'string';
           const hitStr = isOne ? item : item.highlight;
-          const iFlag = isOne ? flag : item.flag;
+          const iFlag = isOne ? props.flag : item.flag;
 
           if (hitStr.length) {
             str = str.replace(new RegExp(hitStr, iFlag), `%c:${hitStr}:c%`);
           }
         }
-      } else if (highlight.length) {
-        str = str.replace(new RegExp(highlight, flag), `%c:${highlight}:c%`);
+      } else if (props.highlight.length) {
+        str = str.replace(new RegExp(props.highlight, props.flag), `%c:${props.highlight}:c%`);
       }
       setTexts(strToHighlight(str));
     } else {
       setTexts(null);
     }
-  }, [flag, highlight, text]);
+  });
 
   return (
-    <div className={cx(cls.text, className)} style={style}>
-      {hitNode}
-      {extra && (
-        <span className={cx(cls.hit, hitClassName)} style={hitStyle}>
-          {extra}
-        </span>
-      )}
-    </div>
+    <>
+      <style>
+        {baseStyle()}
+        {style}
+      </style>
+      <div class={cx('text', props.class)}>
+        {hitNode()}
+        {props.extra && <span class="hit">{props.extra}</span>}
+      </div>
+    </>
   );
 };
 
+export interface HighlightTextElement extends HighlightTextProps {
+  ref?: HighlightTextElement | { current: HighlightTextElement | null };
+}
+
+interface CustomElementTags {
+  'n-highlight-text': HighlightTextElement;
+}
+declare module 'solid-js' {
+  export namespace JSX {
+    export interface IntrinsicElements extends HTMLElementTags, CustomElementTags {}
+  }
+}
+declare global {
+  export namespace JSX {
+    export interface IntrinsicElements extends CustomElementTags, CustomElementTags {}
+  }
+}
+customElement(
+  'n-highlight-text',
+  {
+    class: undefined,
+    css: undefined,
+    text: undefined,
+    highlight: undefined,
+    flag: undefined,
+    extra: undefined,
+  },
+  HighlightText
+);
 export default HighlightText;

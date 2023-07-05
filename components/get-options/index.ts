@@ -1,11 +1,15 @@
+import { type JSXElement } from 'solid-js';
+import { ComponentStatus } from '..';
+
 export type BaseOption = {
-  icon?: React.ReactNode;
+  icon?: JSXElement;
   value?: string;
-  label?: React.ReactNode;
+  label?: JSXElement;
   disabled?: boolean;
-  className?: string;
-  style?: React.CSSProperties;
+  class?: string;
+  style?: unknown;
   danger?: boolean;
+  status?: ComponentStatus;
   options?: BaseOption[];
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   [key: string]: any;
@@ -20,9 +24,10 @@ export const defaultFieldNames = {
 };
 
 function getOptions<T extends BaseOption = BaseOption>(
-  list: (T | string)[],
+  list?: (T | string)[],
   fieldNames?: Partial<FieldNames>
 ): BaseOption[] {
+  if (!list) return [];
   return list.map((item) => {
     const { options, label, value } = { ...defaultFieldNames, ...fieldNames };
 

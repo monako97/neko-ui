@@ -1,48 +1,57 @@
-import React from 'react';
-import { injectGlobal } from 'neko-ui';
+import { css } from '@moneko/css';
+import { customElement } from 'solid-element';
 import { projectInfo } from '@/utils';
 
-injectGlobal`
-  .n-site-footer {
-    display: flex;
-    justify-content: center;
-    padding-block-end: 16px;
-    font-size: var(--font-size-sm);
-    line-height: 16px;
-  }
-  .n-site-footer-link {
-    color: var(--text-color);
-    transition-duration: var(--transition-duration);
-    transition-timing-function: var(--transition-timing-function);
-    transition-property: background-color, color;
-  }
-`;
+function Footer() {
+  const year = new Date().getFullYear();
+  const style = css`
+    .n-site-footer {
+      display: flex;
+      justify-content: center;
+      font-size: var(--font-size-sm);
+      padding-block: 32px;
+      line-height: 16px;
+    }
 
-const year = new Date().getFullYear();
-const Footer = () => {
+    .n-site-footer-link {
+      text-decoration: none;
+      color: var(--text-color);
+      transition-duration: var(--transition-duration);
+      transition-timing-function: var(--transition-timing-function);
+      transition-property: background-color, color;
+    }
+  `;
+
   return (
-    <footer className="n-site-footer">
-      <p>
-        <a
-          className="n-site-footer-link"
-          href={projectInfo.repository?.url}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          {projectInfo.title}&nbsp;
-        </a>
-        Ⓒ {year} Made with ❤️‍🔥 by&nbsp;
-        <a
-          className="n-site-footer-link"
-          href={projectInfo.author?.url}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          {projectInfo.author?.name}
-        </a>
-      </p>
-    </footer>
+    <>
+      <style>{style}</style>
+      <footer class="n-site-footer">
+        <p>
+          <a
+            class="n-site-footer-link"
+            href={projectInfo.repository?.url}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            {projectInfo.title}&nbsp;
+          </a>
+          Ⓒ {year} Made with ❤️‍🔥 by&nbsp;
+          <a
+            class="n-site-footer-link"
+            href={projectInfo.author?.url}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            {projectInfo.author?.name}
+          </a>
+        </p>
+      </footer>
+    </>
   );
-};
+}
 
-export default Footer;
+export interface FooterElement {
+  ref?: FooterElement | { current: FooterElement | null };
+}
+
+customElement('site-footer', Footer);

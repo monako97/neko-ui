@@ -1,38 +1,20 @@
-import { injectGlobal } from '../emotion';
-import prefixCls from '../prefix-cls';
+import { css } from '@moneko/css';
 
-export const cls = {
-  popover: prefixCls('popover'),
-  portal: prefixCls('popover-portal'),
-  arrow: prefixCls('popover-arrow'),
-  inUp: prefixCls('popover-in-up'),
-  outUp: prefixCls('popover-out-up'),
-  inDown: prefixCls('popover-in-down'),
-  outDown: prefixCls('popover-out-down'),
-};
-
-injectGlobal`
-  :root {
-    --popover-bg: var(--component-bg);
-    --popover-shadow-color: rgb(0 0 0 / 5%);
-  }
-
-  [data-theme='dark'] {
-    --popover-bg: #1f1f1f;
-  }
-
-  .${cls.popover} {
+export const popoverCss = css`
+  .popover {
     position: relative;
     display: inline-block;
+    box-sizing: border-box;
 
     &::-webkit-scrollbar {
       inline-size: 1px;
     }
   }
-  .${cls.portal} {
+`;
+export const portalCss = css`
+  .portal {
     --direction: 1;
 
-    min-inline-size: 100px;
     position: fixed;
     display: inline-block;
     border-radius: var(--border-radius);
@@ -40,14 +22,15 @@ injectGlobal`
     font-size: var(--font-size);
     color: var(--text-color);
     background-color: var(--popover-bg);
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
-    box-sizing: border-box;
     filter: drop-shadow(0.5px calc(var(--direction) * 1px) 4px var(--popover-shadow-color))
       drop-shadow(1px calc(var(--direction) * 2px) 8px var(--popover-shadow-color))
       drop-shadow(2px calc(var(--direction) * 4px) 16px var(--popover-shadow-color));
+    min-inline-size: 100px;
+    backdrop-filter: blur(16px);
+    box-sizing: border-box;
   }
-  .${cls.arrow} {
+
+  .arrow {
     &::before {
       position: absolute;
       inset-inline-end: 0;
@@ -62,20 +45,22 @@ injectGlobal`
       transform: translate3d(var(--x, 0), 100%, 0);
     }
   }
-  .${cls.inUp} {
+
+  .in-up {
     --direction: -1;
 
     animation: popover-up-in-effect 0.3s forwards;
     transform: scaleY(1);
   }
-  .${cls.outUp} {
+
+  .out-up {
     --direction: -1;
 
     animation: popover-up-out-effect 0.3s forwards;
     transform: scaleY(1);
   }
 
-  .${cls.inDown} {
+  .in-down {
     --direction: 1;
 
     animation: popover-down-in-effect 0.3s forwards;
@@ -87,7 +72,8 @@ injectGlobal`
       transform: translate3d(var(--x, 0), -100%, 0) rotate(180deg);
     }
   }
-  .${cls.outDown} {
+
+  .out-down {
     --direction: 1;
 
     animation: popover-down-out-effect 0.3s forwards;

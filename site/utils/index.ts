@@ -1,4 +1,4 @@
-import { projectBasicInfo } from '@moneko/core';
+import { projectBasicInfo } from '@moneko/solid-js';
 
 type ProgramInfo = typeof projectBasicInfo.programInfo;
 

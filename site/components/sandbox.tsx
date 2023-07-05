@@ -1,9 +1,23 @@
-import React, { useEffect, useMemo, useRef } from 'react';
-import { mdxComponents, type ExampleModule, myDemoKv, sso } from '@moneko/core';
-import { LiveProvider, LiveEditor, LiveError, LivePreview } from '@moneko/react-live';
-import { cx, injectGlobal, Markdown, Prism } from 'neko-ui';
+import * as Solid from 'solid-js';
+import { css, cx } from '@moneko/css';
+import { type ExampleModule, examples } from '@moneko/solid-js';
+import { baseStyle } from 'neko-ui';
+import { customElement } from 'solid-element';
+import h from 'solid-js/h';
+import { render } from 'solid-js/web';
+import type { CodeLiveProps } from 'n-code-live';
 
-injectGlobal`
+const { For, Show, createEffect, createMemo, createSignal, mergeProps, onMount } = Solid;
+
+const sandboxCss = css`
+  :host {
+    display: inline-block;
+    inline-size: 100%;
+    max-inline-size: 100%;
+    break-inside: avoid;
+    color: var(--text-color);
+  }
+
   .sandbox-box {
     break-inside: avoid;
     box-sizing: border-box;
@@ -53,6 +67,18 @@ injectGlobal`
     align-items: flex-end;
   }
 
+  .sandbox-view > .lang-btn {
+    position: absolute;
+    z-index: 1;
+    display: inline-block;
+    margin: auto;
+    inline-size: fit-content;
+    inset-inline-start: 0;
+    inset-inline-end: 0;
+    inset-block-end: 0;
+    transform: translateY(calc(50%)) scale(0.8);
+  }
+
   .sandbox-view .n-md-box,
   .sandbox-view pre {
     inline-size: 100%;
@@ -67,6 +93,7 @@ injectGlobal`
     border-style: dotted;
     border-width: 1px 0 0;
     margin-inline: -16px;
+    margin-block-start: -12px;
     padding: 0 16px 8px;
   }
 
@@ -90,21 +117,21 @@ injectGlobal`
     position: absolute;
     inset-inline-end: -16px;
     inset-block-end: 0;
-    padding: 4px;
+    padding: 0 4px;
     inline-size: fit-content;
     font-size: var(--font-size-sm);
     cursor: pointer;
     border-start-start-radius: var(--border-radius);
-    line-height: 16px;
+    line-height: 24px;
     user-select: none;
     transition-property: background-color, color, transform;
   }
 
   .sandbox-btn::after {
     display: inline-block;
-    font-size: var(--font-size-xs);
     text-indent: 4px;
-    content: '</>';
+    line-height: 1;
+    content: '{ ... }';
   }
 
   .sandbox-btn:active {
@@ -123,86 +150,183 @@ injectGlobal`
   }
 
   .sandbox-btn.sandbox-btn-desc {
-    transform: translateY(13px);
+    transform: translateY(12px);
     border-end-end-radius: 0;
+    border-end-start-radius: var(--border-radius);
   }
 
   .sandbox-live-editor {
-    --code-color: var(--text-color);
-
+    display: block;
+    margin: 0 -16px;
     border-style: dotted;
     border-width: 1px 0 0;
-    padding: 16px;
-    margin-inline: -16px;
+    inline-size: calc(100% + 32px);
   }
 
   .sandbox-live-editor.hide {
     display: none;
   }
 
-  .sandbox-error-msg {
+  .sandbox-error-msg,
+  .n-preview-error {
     color: var(--error-color);
-  }
-
-  .sandbox-group {
-    inline-size: 100%;
   }
 `;
 
-const Sandbox: React.FC<ExampleModule> = ({ title, description, ...props }) => {
-  const store = useRef(
-    sso({
-      open: false,
-    })
+const mdNoShadowCss = css`
+  .n-md-body {
+    padding: 0;
+    margin-block-end: 0;
+    background-color: transparent;
+    box-shadow: none;
+  }
+`;
+const codeNoShadowCss = css`
+  .n-editor,
+  pre {
+    border-radius: 0 0 var(--border-radius) var(--border-radius);
+    box-shadow: none;
+  }
+`;
+
+function $$jsx(type: Solid.Component, p: Solid.VoidProps, ...children: Solid.JSXElement[]) {
+  return h(type, {
+    ...p,
+    children,
+  });
+}
+function Fragment(p: Solid.VoidProps) {
+  return p.children;
+}
+
+const scope: CodeLiveProps['scope'] = {
+  jsx: $$jsx,
+  Fragment: Fragment,
+  ...Solid,
+};
+
+function Sandbox(_props: ExampleModule) {
+  const props = mergeProps({ codes: {} }, _props);
+  const [sources, setSources] = createSignal<Record<string, string>>({});
+  const [current, setCurrent] = createSignal({
+    code: '',
+    jsx: false,
+    lang: '',
+  });
+  const [open, setOpen] = createSignal(false);
+  const hasDesc = createMemo(() => {
+    if (typeof props.description === 'string') {
+      return !!props.description?.trim().length;
+    }
+    return false;
+  });
+
+  createEffect(() => {
+    setSources({ ...(props.codes || {}) });
+  });
+  function langChange(e: CustomEvent<string>) {
+    setCurrent({
+      code: sources()[e.detail],
+      jsx: e.detail !== 'html',
+      lang: e.detail,
+    });
+  }
+  function codeChange(e: CustomEvent<string>) {
+    const old = current();
+
+    setCurrent({ ...old, code: e.detail });
+    setSources((prev) => ({ ...prev, [old.lang]: e.detail }));
+  }
+  const langs = createMemo(() =>
+    Object.keys(props.codes).map((k) => ({ value: k, label: k.toLocaleUpperCase() }))
   );
-  const { open } = store.current;
-  const hasDesc = useMemo(() => !!description?.trim().length, [description]);
 
-  useEffect(() => {
-    const _store = store.current;
+  onMount(() => {
+    const l = langs()[0].value;
 
-    return () => {
-      _store();
-    };
-  }, []);
+    setCurrent({
+      jsx: l !== 'html',
+      code: props.codes[l],
+      lang: l,
+    });
+  });
 
   return (
-    <LiveProvider
-      {...props}
-      scope={mdxComponents}
-      theme={{
-        plain: {},
-        styles: [],
-      }}
-    >
-      <section className="sandbox-box">
-        <fieldset className="sandbox-container">
-          <legend className="sandbox-title">{title}</legend>
-          <section className="sandbox-view">
-            <LiveError className="sandbox-error-msg" />
-            <LivePreview />
+    <>
+      <style>{sandboxCss}</style>
+      <section class="sandbox-box">
+        <fieldset class="sandbox-container">
+          <legend class="sandbox-title">{props.title}</legend>
+          <section class="sandbox-view">
+            <n-code-live
+              source={sources()[current().lang]}
+              jsx={current().jsx}
+              scope={scope}
+              render-jsx={render}
+            />
+            <Show when={langs().length > 1}>
+              <n-segmented
+                class="lang-btn"
+                value={current().lang}
+                options={langs()}
+                onChange={langChange}
+              />
+            </Show>
             <span
-              className={cx('sandbox-btn', hasDesc && 'sandbox-btn-desc')}
-              data-open={open}
-              onClick={() => store.current('open', (prev) => !prev)}
+              class={cx('sandbox-btn', hasDesc() && 'sandbox-btn-desc')}
+              data-open={open()}
+              onClick={() => setOpen((prev) => !prev)}
             >
-              编辑示例代码
+              编辑
             </span>
           </section>
-          {hasDesc ? (
-            <fieldset className="sandbox-info">
-              <legend className="sandbox-title">描述</legend>
-              <div className="sandbox-description">
-                <Markdown text={description} />
+          <Show when={hasDesc()}>
+            <fieldset class="sandbox-info">
+              <legend class="sandbox-title">描述</legend>
+              <div class="sandbox-description">
+                <n-md text={props.description} css={mdNoShadowCss} />
               </div>
             </fieldset>
-          ) : null}
-          <LiveEditor className={`sandbox-live-editor ${open ? '' : 'hide'}`} prism={Prism} />
+          </Show>
+          <Show when={open()}>
+            <n-code
+              class={cx('sandbox-live-editor', !open() && 'hide')}
+              code={sources()[current().lang]}
+              lang={current().lang === 'SolidJS' ? 'tsx' : current().lang}
+              edit="true"
+              css={codeNoShadowCss}
+              onChange={codeChange}
+            />
+          </Show>
         </fieldset>
       </section>
-    </LiveProvider>
+    </>
   );
-};
+}
+
+customElement(
+  'site-sandbox',
+  {
+    title: undefined,
+    description: undefined,
+    codes: {},
+    order: undefined,
+  },
+  Sandbox
+);
+
+const groupCss = css`
+  .sandbox-group {
+    margin: 0 auto 24px;
+    border-radius: var(--border-radius);
+    padding: 24px;
+    background-color: var(--component-bg);
+    box-shadow: 0 2px 8px 0 var(--primary-shadow);
+    inline-size: 100%;
+    max-inline-size: 1280px;
+    box-sizing: border-box;
+  }
+`;
 
 interface SandboxGroupProps {
   name: string;
@@ -210,21 +334,51 @@ interface SandboxGroupProps {
   ignore?: string[];
 }
 
-export const SandboxGroup: React.FC<SandboxGroupProps> = ({ name, col = 2, ignore = [] }) => {
-  return (
-    <div
-      className="sandbox-group"
-      style={{
-        columnCount: col,
-      }}
-    >
-      {myDemoKv[name]
-        ?.filter((e) => (e.title ? !ignore.includes(e.title) : true))
-        .map((m, i) => (
-          <Sandbox key={i} {...m} />
-        ))}
-    </div>
-  );
-};
+function SandboxGroup(_props: SandboxGroupProps) {
+  const props = mergeProps({ col: 2 }, _props);
+  const [api, setApi] = createSignal<string | null>(null);
+  const data = createMemo(() => examples[props.name] || []);
 
-export default React.memo(Sandbox, () => true);
+  createEffect(async () => {
+    try {
+      setApi((await import(`@pkg/${props.name}/api.md?raw`)).default);
+    } catch (error) {
+      setApi(null);
+    }
+  });
+
+  return (
+    <>
+      <Show when={data().length}>
+        <style>
+          {baseStyle()}
+          {groupCss}
+        </style>
+        <div class="sandbox-group" style={{ 'column-count': props.col }}>
+          <For each={data()}>{(m) => <site-sandbox {...m} />}</For>
+        </div>
+      </Show>
+      <Show when={api()}>
+        <n-md text={api() as string} />
+      </Show>
+    </>
+  );
+}
+
+customElement(
+  'site-sandbox-group',
+  {
+    col: 2,
+    ignore: [],
+    name: '',
+  },
+  SandboxGroup
+);
+
+export interface SandboxElement extends ExampleModule {
+  ref?: SandboxElement | { current: SandboxElement | null };
+}
+
+export interface SandboxGroupElement extends SandboxGroupProps {
+  ref?: SandboxGroupElement | { current: SandboxGroupElement | null };
+}

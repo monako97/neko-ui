@@ -13,7 +13,7 @@ function fromSchema(schema: Record<string, any>, pid?: string): TreeData<string>
         ...item,
         name: name,
         subTitle: item.type,
-        key: `${pid ? pid + '.' : ''}${name}`,
+        key: `${pid ? `${pid}.` : ''}${name}`,
       };
 
       if (item.type === 'object') {

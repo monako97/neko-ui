@@ -1,18 +1,30 @@
-import React, { useEffect, useRef } from 'react';
+import {
+  For,
+  Show,
+  createComponent,
+  createEffect,
+  createMemo,
+  createSignal,
+  mergeProps,
+  onMount,
+  splitProps,
+  untrack,
+} from 'solid-js';
 import { isFunction } from '@moneko/common';
-import sso from 'shared-store-object';
-import { cls } from './style';
-import { cx } from '../emotion';
+import { cx } from '@moneko/css';
+import { customElement, noShadowDOM } from 'solid-element';
+import { style } from './style';
 import Empty from '../empty';
-import getOptions, { type FieldNames, type BaseOption, defaultFieldNames } from '../get-options';
-import Popover, { type PopoverProps } from '../popover';
+import getOptions, { type BaseOption, type FieldNames, defaultFieldNames } from '../get-options';
+import Popover, { type PopoverProps, defaultProps as popoverProps } from '../popover';
 
 export interface DropdownOption extends BaseOption {
+  handleClosed?: boolean;
   options?: DropdownOption[];
 }
 
-export interface BaseDropdownProps extends PopoverProps {
-  options: (DropdownOption | string)[];
+export interface BaseDropdownProps extends Omit<PopoverProps, 'content'> {
+  options?: (DropdownOption | string)[];
   selectable?: boolean;
   fieldNames?: Partial<FieldNames>;
   toggle?: boolean;
@@ -21,207 +33,241 @@ export interface DropdownProps extends BaseDropdownProps {
   // eslint-disable-next-line no-unused-vars
   onChange?(val: string | number, item: DropdownOption): void;
   value?: string | number;
+  defaultValue?: string | number;
   multiple?: false;
 }
 export interface DropdownMultipleProps extends BaseDropdownProps {
-  multiple: true;
+  multiple?: true;
   // eslint-disable-next-line no-unused-vars
   onChange?(val: (string | number)[], item: DropdownOption): void;
   value?: (string | number)[];
+  defaultValue?: (string | number)[];
 }
 
-const Dropdown: React.FC<DropdownProps | DropdownMultipleProps> = ({
-  options,
-  children,
-  open = null,
-  selectable,
-  multiple,
-  toggle,
-  value,
-  onChange,
-  onOpenChange,
-  disabled,
-  fieldNames,
-  className,
-  popupClassName,
-  ...props
-}) => {
-  const portalRef = useRef<HTMLDivElement>(null);
-  const state = useRef(
-    sso({
-      open,
-      options: [] as DropdownOption[],
-      disabled,
-      selectable,
-      multiple,
-      toggle,
-      fieldNames: {
-        ...defaultFieldNames,
-        ...fieldNames,
-      },
-      value: [] as (string | number)[],
-      preventDefault(e: MouseEvent | React.MouseEvent) {
-        e.preventDefault();
-        e.stopPropagation();
-      },
-      change(item: DropdownOption) {
-        if (!item.disabled && !state.current.disabled) {
-          let _value = [...state.current.value];
-          const key = item[state.current.fieldNames.value];
+function Dropdown(props: DropdownProps | DropdownMultipleProps) {
+  const [local, other] = splitProps(props, [
+    'popupClass',
+    'popupCss',
+    'value',
+    'defaultValue',
+    'onChange',
+    'open',
+    'onOpenChange',
+    'selectable',
+    'fieldNames',
+    'options',
+    'multiple',
+    'toggle',
+  ]);
+  let portalRef: HTMLDivElement | undefined;
+  const [open, setOpen] = createSignal<boolean | null>(null);
+  const [value, setValue] = createSignal<(string | number)[]>([]);
 
-          if (state.current.multiple) {
-            const idx = _value.indexOf(key);
+  const fieldNames = createMemo(() => ({
+    ...defaultFieldNames,
+    ...local.fieldNames,
+  }));
+  const options = createMemo(() => {
+    return getOptions(local.options, fieldNames());
+  });
 
-            if (idx === -1) {
-              _value.push(key);
-            } else {
-              _value.splice(idx, 1);
-            }
-          } else if (state.current.toggle && _value[0] === key) {
-            _value = [];
-          } else {
-            _value = [key];
-          }
-          if (isFunction(onChange)) {
-            onChange(multiple ? _value : _value[0], item);
-          } else {
-            state.current.value = _value;
-          }
-          if (!multiple) {
-            state.current.openChange(false);
-          }
-        }
-      },
-      openChange(next: boolean | null) {
-        if (isFunction(onOpenChange)) {
-          onOpenChange(next);
+  function preventDefault(e: MouseEvent) {
+    e.preventDefault();
+    e.stopPropagation();
+  }
+  function openChange(next: boolean | null) {
+    if (isFunction(local.onOpenChange)) {
+      local.onOpenChange(next);
+    }
+    if (local.open === undefined) {
+      setOpen(next);
+    }
+  }
+  function change(item: DropdownOption, e: MouseEvent) {
+    e.preventDefault();
+    if (!item.disabled && !other.disabled) {
+      let _value = [...untrack(value)];
+      const key = item[untrack(fieldNames).value];
+
+      if (local.multiple) {
+        const idx = _value.indexOf(key);
+
+        if (idx === -1) {
+          _value.push(key);
         } else {
-          state.current.open = next;
+          _value.splice(idx, 1);
         }
-      },
-      renderMenu(
-        list: DropdownOption[],
-        option: {
-          activeKey?: (string | number)[];
-          fieldNames: FieldNames;
-          disabled?: boolean;
-          selectable?: boolean;
-        }
-      ) {
-        const { options: optionsKey, label, value: valueKey } = option.fieldNames;
+      } else if (local.toggle && _value[0] === key) {
+        _value = [];
+      } else {
+        _value = [key];
+      }
+      if (isFunction(local.onChange)) {
+        local.onChange((local.multiple ? _value : _value[0]) as never, item);
+      }
+      if (local.value === undefined) {
+        setValue(_value);
+      }
 
-        return list.map((item, i) => {
+      if (!local.multiple) {
+        openChange(false);
+      }
+    }
+  }
+
+  function renderMenu(list: DropdownOption[]) {
+    const { options: optionsKey, label, value: valueKey } = fieldNames();
+
+    return (
+      <For each={list}>
+        {(item) => {
           if (Array.isArray(item[optionsKey])) {
             return (
-              <React.Fragment key={`${item[valueKey]}-${i}`}>
-                <div className={cx(cls.group, item.className)} style={item.style}>
-                  <span className={cls.groupTitle}>
-                    {item.icon && <span className={cls.icon}>{item.icon}</span>}
-                    {item[label]}
-                  </span>
-                  {state.current.renderMenu(item[optionsKey], option)}
-                </div>
-              </React.Fragment>
+              <div class={cx('group', item.class)}>
+                <span class="group-title">
+                  <Show when={item.icon}>
+                    <span class="icon">{item.icon}</span>
+                  </Show>
+                  {item[label]}
+                </span>
+                {renderMenu(item[optionsKey])}
+              </div>
             );
           }
+
           return (
             <div
-              key={`${item[valueKey]}-${i}`}
-              className={cx(cls.item, item.className, item.danger && cls.danger)}
-              aria-disabled={option.disabled || item.disabled}
-              aria-selected={option.selectable && option.activeKey?.includes(item[valueKey])}
-              onMouseDown={state.current.preventDefault}
-              onClick={(e) => {
-                state.current.preventDefault(e);
-                state.current.change(item);
-              }}
-              style={item.style}
+              class={cx('item', item.class, item.danger && 'danger')}
+              handle-closed={item.handleClosed}
+              aria-disabled={other.disabled || item.disabled}
+              aria-selected={local.selectable && value().includes(item[valueKey])}
+              onMouseDown={preventDefault}
+              onClick={change.bind(null, item)}
             >
-              {item.icon && <span className={cls.icon}>{item.icon}</span>}
+              <Show when={item.icon}>
+                <span class="icon">{item.icon}</span>
+              </Show>
               {item[label]}
             </div>
           );
-        });
-      },
-    })
-  );
-  const {
-    open: show,
-    options: list,
-    disabled: disable,
-    value: activeKey,
-    selectable: isSelectable,
-    fieldNames: fieldName,
-  } = state.current;
+        }}
+      </For>
+    );
+  }
 
-  useEffect(() => {
-    state.current.toggle = toggle;
-  }, [toggle]);
-  useEffect(() => {
-    state.current.open = open;
-  }, [open]);
-  useEffect(() => {
-    state.current.selectable = selectable;
-  }, [selectable]);
-  useEffect(() => {
-    state.current.value = value ? (Array.isArray(value) ? value : [value]) : [];
-  }, [value]);
-  useEffect(() => {
-    state.current.disabled = disabled;
-  }, [disabled]);
-  useEffect(() => {
-    state.current('fieldNames', (prev) => ({
-      ...prev,
-      ...fieldNames,
-    }));
-  }, [fieldNames]);
-  useEffect(() => {
-    state.current.options = getOptions(options, state.current.fieldNames);
-  }, [options]);
-  useEffect(() => {
-    if (show && isSelectable) {
+  createEffect(() => {
+    if (open() && local.selectable) {
       setTimeout(() => {
-        portalRef.current?.querySelector(`[aria-selected='true']`)?.scrollIntoView({
+        portalRef?.querySelector('[aria-selected="true"]')?.scrollIntoView({
           block: 'nearest',
         });
       }, 16);
     }
-  }, [show, isSelectable]);
+  });
+  createEffect(() => {
+    if (local.open !== undefined && untrack(open) !== local.open) {
+      setOpen(local.open);
+    }
+  });
+  createEffect(() => {
+    setValue(local.value ? (Array.isArray(local.value) ? local.value : [local.value]) : []);
+  });
 
-  useEffect(() => {
-    const _state = state.current;
+  onMount(() => {
+    if (props.value === undefined) {
+      const val = local.defaultValue;
 
-    return () => {
-      _state();
-    };
-  }, []);
+      setValue(val ? (Array.isArray(val) ? val : [val]) : []);
+    }
+  });
 
   return (
     <Popover
-      {...props}
-      className={cx(cls.dropdown, className)}
-      popupClassName={cx(cls.portal, selectable && cls.selectable, popupClassName)}
-      open={show}
-      onOpenChange={state.current.openChange}
-      disabled={disabled}
+      popupClass={cx(local.selectable && 'selectable', local.popupClass)}
+      popupCss={style + (local.popupCss || '')}
+      open={open()}
+      onOpenChange={openChange}
       content={
-        <div ref={portalRef} className={cls.container}>
-          {list.length === 0 ? (
-            <Empty />
-          ) : (
-            state.current.renderMenu(list, {
-              disabled: disable,
-              fieldNames: fieldName,
-              selectable: isSelectable,
-              activeKey,
-            })
-          )}
+        <div ref={portalRef} class="container">
+          <Show when={options().length} fallback={<Empty style={{ width: '100%' }} />}>
+            {renderMenu(options())}
+          </Show>
         </div>
       }
-    >
-      {children}
-    </Popover>
+      {...other}
+    />
   );
+}
+
+export interface DropdownSingleElement extends Omit<DropdownProps, 'onChange' | 'onOpenChange'> {
+  ref?: DropdownSingleElement | { current: DropdownSingleElement | null };
+  // eslint-disable-next-line no-unused-vars
+  onChange?(e: CustomEvent<{ key: string | number; item: DropdownOption }>): void;
+  // eslint-disable-next-line no-unused-vars
+  onOpenChange?(open: CustomEvent<boolean | null>): void;
+}
+
+export interface DropdownMultipleElement
+  extends Omit<DropdownMultipleProps, 'onChange' | 'onOpenChange'> {
+  ref?: DropdownMultipleElement | { current: DropdownMultipleElement | null };
+  // eslint-disable-next-line no-unused-vars
+  onChange?(e: CustomEvent<{ key: Array<string | number>; item: DropdownOption }>): void;
+  // eslint-disable-next-line no-unused-vars
+  onOpenChange?(open: CustomEvent<boolean | null>): void;
+}
+
+interface CustomElementTags {
+  'n-dropdown': DropdownSingleElement | DropdownMultipleElement;
+}
+declare module 'solid-js' {
+  export namespace JSX {
+    export interface IntrinsicElements extends HTMLElementTags, CustomElementTags {}
+  }
+}
+declare global {
+  export namespace JSX {
+    export interface IntrinsicElements extends CustomElementTags, CustomElementTags {}
+  }
+}
+
+export const defaultProps = {
+  ...popoverProps,
+  selectable: undefined,
+  fieldNames: undefined,
+  toggle: undefined,
+  value: undefined,
+  defaultValue: undefined,
+  onChange: undefined,
+  multiple: undefined,
+  options: undefined,
 };
 
+customElement('n-dropdown', defaultProps, (_, opt) => {
+  if (!_.useShadow) {
+    noShadowDOM();
+  }
+  const el = opt.element;
+  const props = mergeProps(
+    {
+      onChange(key, item) {
+        el.dispatchEvent(
+          new CustomEvent('change', {
+            detail: { key, item },
+          })
+        );
+      },
+      onOpenChange(key: boolean | null) {
+        el.dispatchEvent(
+          new CustomEvent('openchange', {
+            detail: key,
+          })
+        );
+      },
+      children: [...el.childNodes.values()],
+    } as DropdownProps,
+    _
+  );
+
+  return createComponent(Dropdown, props);
+});
 export default Dropdown;

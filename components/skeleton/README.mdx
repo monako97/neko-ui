@@ -1,18 +1,10 @@
-export const basic = {
-  type: '反馈',
-  title: '骨架屏',
-  subtitle: 'Skeleton',
-  icon: '👀',
-};
-import api from './examples/api.md';
+---
+type: 反馈
+title: 骨架屏
+subtitle: n-skeleton
+icon: 👀
+---
 
-<Box>
 # 骨架屏
 
 > 网络较慢，需要长时间等待加载处理的情况下、图文信息内容较多的列表/卡片中、第一次加载数据的时候使用
-
-  <Sandbox code="<Skeleton />" title="示例代码" />
-  <SandboxGroup name="skeleton" col={2} />
-  <Sandbox code="<Skeleton avatar title />" title="显示标题" />
-</Box>
-<Box text={api} />
