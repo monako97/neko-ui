@@ -7,7 +7,7 @@ const conf: Partial<ConfigType<'swc'>> = {
     domain: 'monako97.github.io',
     nojekyll: true,
   },
-  routeBaseName: '/neko-ui/',
+  routeBaseName: '/neko-ui',
   publicPath: '/neko-ui/',
   bundleAnalyzer: false,
   fixBrowserRouter: {

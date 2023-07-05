@@ -112,7 +112,7 @@ function Pagination(_: object, opt: ComponentOptions<object>) {
             return (
               <div class="btn">
                 <Show when={item()}>
-                  <A class="link" href={item()?.key as string}>
+                  <A class="link" href={`/${item()?.key}`}>
                     <div>
                       <strong>{item()?.title}</strong>
                       <p class="secondary">{item()?.subtitle}</p>
