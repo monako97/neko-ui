@@ -4,6 +4,11 @@ import { customElement } from 'solid-element';
 import { baseStyle } from '../theme';
 
 const style = css`
+  :host {
+    display: block;
+    inline-size: 100%;
+  }
+
   .skeleton {
     display: flex;
     inline-size: 100%;
