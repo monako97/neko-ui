@@ -12,6 +12,7 @@ import { customElement } from 'solid-element';
 import { Dynamic } from 'solid-js/web';
 import { style } from './style';
 import { type ComponentSize } from '../index';
+import { baseStyle } from '../theme';
 
 export type ButtonType = 'success' | 'error' | 'primary' | 'warning' | 'default';
 
@@ -77,7 +78,10 @@ function Button(_: ButtonProps) {
 
   return (
     <>
-      <style>{style}</style>
+      <style>
+        {baseStyle()}
+        {style}
+      </style>
       <Dynamic
         ref={ref}
         component={tag()}
