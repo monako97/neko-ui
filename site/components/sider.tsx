@@ -382,7 +382,7 @@ function Sider(_: object, opt: ComponentOptions<object>) {
                         {(item) => {
                           return (
                             <li class="site-sider-item" data-active={active() === item.key}>
-                              <A href={item.key as string}>
+                              <A href={`/${item.key}` as string}>
                                 <n-popover
                                   class="site-sider-icon"
                                   arrow={true}

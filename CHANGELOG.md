@@ -4,6 +4,7 @@
 ### Features
 
 * button组件 ([5758241](https://github.com/monako97/neko-ui/commit/5758241a32f01d705481053d175beb9d0b3ad35a))
+* update docs ([29b0ebd](https://github.com/monako97/neko-ui/commit/29b0ebde3d276f89b5a9d74af3ed7ab676fd397a))
 
 
 
