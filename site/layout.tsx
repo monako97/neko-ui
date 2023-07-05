@@ -3,6 +3,7 @@ import { css } from '@moneko/css';
 import { Outlet, useLocation } from '@solidjs/router';
 import { baseStyle } from 'neko-ui';
 import '@/components';
+import { activeKey } from '@/utils';
 
 const style = css`
   #root {
@@ -144,17 +145,12 @@ function App() {
       <div class="n-site-bg" />
       <site-sider />
       <main ref={box} class="site-doc-main">
-        <Show
-          when={
-            !location.pathname.startsWith('/@moneko') &&
-            !['/examples', '/change-log'].includes(location.pathname)
-          }
-        >
+        <Show when={!['/examples', '/change-log', '/@moneko'].includes(activeKey(location))}>
           <site-coverage />
         </Show>
         <div class="site-page-view">
           <Outlet />
-          <site-sandbox-group name={location.pathname.substring(1)} />
+          <site-sandbox-group name={activeKey(location)} />
           <site-pagination />
         </div>
         <site-footer />

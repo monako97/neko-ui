@@ -1,6 +1,10 @@
 import { css } from '@moneko/css';
 
 export const style = css`
+  :host {
+    inline-size: 100%;
+  }
+
   .carousel {
     position: relative;
     display: block;

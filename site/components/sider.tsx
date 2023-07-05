@@ -4,6 +4,7 @@ import { type RouterProps, projectBasicInfo, routes } from '@moneko/solid-js';
 import { A, useLocation } from '@solidjs/router';
 import { ComponentOptions, baseStyle, setTheme, theme } from 'neko-ui';
 import { customElement } from 'solid-element';
+import { activeKey } from '@/utils';
 
 const style = css`
   .site-sider,
@@ -324,11 +325,10 @@ export { all, kv };
 function Sider(_: object, opt: ComponentOptions<object>) {
   const location = useLocation();
   let menuEl: HTMLUListElement | undefined;
-
-  const activeKey = createMemo(() => location.pathname.substring(1));
+  const active = createMemo(() => activeKey(location));
 
   createEffect(() => {
-    if (activeKey()) {
+    if (active()) {
       opt.element.renderRoot
         .querySelector('.site-sider-item[data-active="true"] > a')
         ?.scrollIntoView({
@@ -361,7 +361,7 @@ function Sider(_: object, opt: ComponentOptions<object>) {
           </A>
           <hgroup class="site-title">
             <h1 data-truncated>{projectBasicInfo.projectName.replace(/-/g, ' ')}</h1>
-            <i>{(kv[activeKey()] || projectBasicInfo).subtitle}</i>
+            <i>{(kv[active()] || projectBasicInfo).subtitle}</i>
           </hgroup>
           <div
             class="site-theme-btn"
@@ -381,7 +381,7 @@ function Sider(_: object, opt: ComponentOptions<object>) {
                       <For each={obj[key]}>
                         {(item) => {
                           return (
-                            <li class="site-sider-item" data-active={activeKey() === item.key}>
+                            <li class="site-sider-item" data-active={active() === item.key}>
                               <A href={item.key as string}>
                                 <n-popover
                                   class="site-sider-icon"

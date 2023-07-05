@@ -4,6 +4,7 @@ import { A, useLocation } from '@solidjs/router';
 import { customElement } from 'solid-element';
 import { type MyPkg, all, kv } from './sider';
 import type { ComponentOptions } from 'neko-ui';
+import { activeKey } from '@/utils';
 
 const style = css`
   .site-pagination {
@@ -71,15 +72,15 @@ const style = css`
 `;
 
 function Pagination(_: object, opt: ComponentOptions<object>) {
-  let timer: NodeJS.Timeout | undefined;
   const location = useLocation();
+  let timer: NodeJS.Timeout | undefined;
   const [prev, setPrev] = createSignal<MyPkg>();
   const [next, setNext] = createSignal<MyPkg>();
   const [w, setW] = createSignal<string>('');
 
   createEffect(() => {
     batch(() => {
-      const active = location.pathname.substring(1);
+      const active = activeKey(location);
       const current = all.findIndex((e) => active === e.key);
       const _prev = all[current - 1]?.key;
       const _next = all[current + 1]?.key;

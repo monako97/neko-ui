@@ -1,6 +1,11 @@
 # [2.0.0-beta.4](https://github.com/monako97/neko-ui/compare/1.7.3...2.0.0-beta.4) (2023-07-05)
 
 
+### Features
+
+* button组件 ([5758241](https://github.com/monako97/neko-ui/commit/5758241a32f01d705481053d175beb9d0b3ad35a))
+
+
 
 ## [1.7.3](https://github.com/monako97/neko-ui/compare/1.5.0...1.7.3) (2023-05-15)
 

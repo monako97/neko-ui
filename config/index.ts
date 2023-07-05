@@ -15,6 +15,8 @@ const conf: Partial<ConfigType<'swc'>> = {
       },
     ],
   },
+  routeBaseName: '/neko-ui',
+  publicPath: '/neko-ui/',
   fallbackCompPath: '@/components/fallback',
   designSize: 1920,
   externals: [/(.+)\/__tests__\/(.+)/i],
