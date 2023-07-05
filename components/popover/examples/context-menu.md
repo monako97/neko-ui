@@ -5,7 +5,7 @@ order: 3
 ---
 
 ```html
-<n-popover trigger="contextMenu">
+<n-popover trigger="contextMenu" style="width: 100%;">
   <div style="width: 100%;opacity: 0.4;">右键点我</div>
 </n-popover>
 <script>
@@ -31,6 +31,7 @@ order: 3
 ```jsx
 <n-popover
   content={<a style="color: red;">右键触发</a>}
+  style={{ width: '100%' }}
   trigger="contextMenu"
   css={`
     .popover {

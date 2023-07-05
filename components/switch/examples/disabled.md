@@ -1,6 +1,7 @@
 ---
 title: 不可用状态
 description: 禁止交互
+order: 3
 ---
 
 ```html
@@ -9,8 +10,6 @@ description: 禁止交互
 ```
 
 ```jsx
-<>
-  <n-switch checked disabled />
-  <n-switch checked-text="开" un-checked-text="关" disabled />
-</>
+<n-switch checked disabled />
+<n-switch checked-text="开" un-checked-text="关" disabled />
 ```

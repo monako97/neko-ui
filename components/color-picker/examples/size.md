@@ -5,17 +5,13 @@ order: 2
 ---
 
 ```html
-<div style="display: flex;align-items:flex-end; gap: 16px;">
-  <n-color-picker value="#fedaaa" size="small"></n-color-picker>
-  <n-color-picker value="red" size="normal"></n-color-picker>
-  <n-color-picker value="green" size="large"></n-color-picker>
-</div>
+<n-color-picker value="#fedaaa" size="small"></n-color-picker>
+<n-color-picker value="red" size="normal"></n-color-picker>
+<n-color-picker value="green" size="large"></n-color-picker>
 ```
 
 ```jsx
-<div style={{ display: 'flex', 'align-items': 'flex-end', gap: 16 }}>
-  <n-color-picker value="#fedaaa" size="small" />
-  <n-color-picker value="red" size="normal" />
-  <n-color-picker value="green" size="large" />
-</div>
+<n-color-picker value="#fedaaa" size="small" />
+<n-color-picker value="red" size="normal" />
+<n-color-picker value="green" size="large" />
 ```

@@ -1,6 +1,7 @@
 ---
 title: 自动切换
 description: 定时切换下一张。
+order: 2
 ---
 
 ```html

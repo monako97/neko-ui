@@ -32,30 +32,28 @@ order: 5
 ```
 
 ```jsx
-<>
-  <n-dropdown arrow placement="left">
-    <n-button>left</n-button>
-  </n-dropdown>
-  <n-dropdown arrow placement="bottomLeft">
-    <n-button>bottomLeft</n-button>
-  </n-dropdown>
-  <n-dropdown arrow placement="bottom">
-    <n-button>bottom</n-button>
-  </n-dropdown>
-  <n-dropdown arrow placement="bottomRight">
-    <n-button>bottomRight</n-button>
-  </n-dropdown>
-  <n-dropdown arrow placement="topLeft">
-    <n-button>topLeft</n-button>
-  </n-dropdown>
-  <n-dropdown arrow placement="top">
-    <n-button>top</n-button>
-  </n-dropdown>
-  <n-dropdown arrow placement="topRight">
-    <n-button>topRight</n-button>
-  </n-dropdown>
-  <n-dropdown arrow placement="right">
-    <n-button>right</n-button>
-  </n-dropdown>
-</>
+<n-dropdown arrow placement="left">
+  <n-button>left</n-button>
+</n-dropdown>
+<n-dropdown arrow placement="bottomLeft">
+  <n-button>bottomLeft</n-button>
+</n-dropdown>
+<n-dropdown arrow placement="bottom">
+  <n-button>bottom</n-button>
+</n-dropdown>
+<n-dropdown arrow placement="bottomRight">
+  <n-button>bottomRight</n-button>
+</n-dropdown>
+<n-dropdown arrow placement="topLeft">
+  <n-button>topLeft</n-button>
+</n-dropdown>
+<n-dropdown arrow placement="top">
+  <n-button>top</n-button>
+</n-dropdown>
+<n-dropdown arrow placement="topRight">
+  <n-button>topRight</n-button>
+</n-dropdown>
+<n-dropdown arrow placement="right">
+  <n-button>right</n-button>
+</n-dropdown>
 ```

@@ -5,15 +5,15 @@ order: 1
 ---
 
 ```html
-<p>
+<div style="width:100%;">
   <n-back-top css=":host{float:right;}"></n-back-top>
   根据 window 滚动浮现在
-</p>
+</div>
 ```
 
 ```jsx
-<p>
+<div style={{ width: '100%' }}>
   根据 window 滚动浮现在
   <n-back-top css=":host{float:right;}" />
-</p>
+</div>
 ```

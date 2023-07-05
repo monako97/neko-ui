@@ -18,14 +18,18 @@ const styles = css`
     --x: 0;
 
     position: absolute;
+    overflow: hidden;
     border-radius: var(--border-radius);
     padding: 0 4px;
+    text-overflow: ellipsis;
     color: var(--text-secondary);
     opacity: 0;
     transition: transform 0.3s, opacity 0.3s, color 0.3s, background-color 0.3s;
     line-height: 1.45;
     pointer-events: none;
     transform-origin: left;
+    max-inline-size: 100%;
+    word-break: keep-all;
   }
 
   .normal {

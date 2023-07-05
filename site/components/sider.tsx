@@ -10,8 +10,7 @@ const style = css`
   .site-sider-group-title,
   .site-sider-item,
   .site-sider-item::before {
-    transition-duration: var(--transition-duration);
-    transition-timing-function: var(--transition-timing-function);
+    transition-duration: 0.3s;
   }
 
   .site-left {

@@ -6,6 +6,7 @@ export {
   type FieldNames,
   type BaseOption,
 } from './get-options';
+export { default as Button, type ButtonType, type ButtonElement } from './button';
 export { default as Avatar, type AvatarElement, type AvatarProps } from './avatar';
 export {
   default as AvatarGroup,

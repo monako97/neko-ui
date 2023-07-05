@@ -5,13 +5,9 @@ order: 1
 ---
 
 ```html
-<p>
-  <n-avatar src="https://gw.alipayobjects.com/zos/alicdn/HJtErOC0O/avatar.png"></n-avatar>
-</p>
+<n-avatar src="https://gw.alipayobjects.com/zos/alicdn/HJtErOC0O/avatar.png"></n-avatar>
 ```
 
 ```jsx
-<p>
-  <n-avatar src="https://gw.alipayobjects.com/zos/alicdn/HJtErOC0O/avatar.png" />
-</p>
+<n-avatar src="https://gw.alipayobjects.com/zos/alicdn/HJtErOC0O/avatar.png" />
 ```

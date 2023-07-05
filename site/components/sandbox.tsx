@@ -171,6 +171,12 @@ const sandboxCss = css`
   .n-preview-error {
     color: var(--error-color);
   }
+
+  n-code-live::part(root) {
+    display: flex;
+    gap: 4px;
+    flex-wrap: wrap;
+  }
 `;
 
 const mdNoShadowCss = css`

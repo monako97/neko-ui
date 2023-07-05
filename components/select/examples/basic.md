@@ -26,21 +26,19 @@ order: 1
 ```
 
 ```jsx
-<>
-  <n-select default-value="C" label="最简单的配置" options={['A', 'B', 'C', 'D']} />
-  <div>或者</div>
-  <n-select
-    default-value={2}
-    options={[
-      {
-        label: '分组1',
-        options: [
-          { value: 1, label: '选项 1' },
-          { value: 2, label: '选项 2' },
-        ],
-      },
-      { label: '分组2', options: [{ value: 4, label: '选项 4' }] },
-    ]}
-  />
-</>
+<n-select default-value="C" label="最简单的配置" options={['A', 'B', 'C', 'D']} />
+<div>或者</div>
+<n-select
+  default-value={2}
+  options={[
+    {
+      label: '分组1',
+      options: [
+        { value: 1, label: '选项 1' },
+        { value: 2, label: '选项 2' },
+      ],
+    },
+    { label: '分组2', options: [{ value: 4, label: '选项 4' }] },
+  ]}
+/>
 ```

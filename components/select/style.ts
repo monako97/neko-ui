@@ -3,14 +3,18 @@ import { css } from '@moneko/css';
 export const style = css`
   .label {
     position: absolute;
+    overflow: hidden;
     border-radius: var(--border-radius);
     padding: 0 4px;
+    text-overflow: ellipsis;
     color: var(--text-secondary);
     transition: transform 0.3s;
     line-height: inherit;
     pointer-events: none;
     transform-origin: left;
     transform: translate3d(calc(var(--x, 0) - 14px), 0, 1px);
+    max-inline-size: 100%;
+    word-break: keep-all;
   }
 
   .value,

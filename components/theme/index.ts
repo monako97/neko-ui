@@ -1,5 +1,5 @@
 import { createMemo } from 'solid-js';
-import { colorParse, toneColor } from '@moneko/common';
+import { colorParse, mixColor, toneColor } from '@moneko/common';
 import { css } from '@moneko/css';
 import { createStore } from 'solid-js/store';
 
@@ -50,10 +50,12 @@ export function generateTheme(base: string, option: ThemeOption): Record<string,
     [`--${option.name}-heading`]: obj[5],
     [`--${option.name}-active`]: obj[30],
     [`--${option.name}-color`]: obj[40],
-    [`--${option.name}-hover`]: obj[50],
+    // [`--${option.name}-hover`]: obj[50],
+    [`--${option.name}-hover`]: mixColor(obj[40], obj[30], 15),
     [`--${option.name}-secondary-bg`]: obj[70],
     [`--${option.name}-border`]: obj[80],
-    [`--${option.name}-outline`]: obj[90],
+    // [`--${option.name}-outline`]: obj[90],
+    [`--${option.name}-outline`]: mixColor(obj[90], obj[40], 5),
     [`--${option.name}-selection`]: obj[90],
     [`--on-${option.name}-selection`]: obj[10],
     [`--${option.name}-shadow`]: baseColor.setAlpha(0.12).toHexaString(),

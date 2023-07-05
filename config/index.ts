@@ -11,7 +11,7 @@ const conf: Partial<ConfigType<'swc'>> = {
       },
       {
         tag: 'script',
-        src: 'https://cdn.jsdelivr.net/npm/n-code-live@1.0.0/umd/index.js',
+        src: 'https://cdn.jsdelivr.net/npm/n-code-live@1.0.4/umd/index.js',
       },
     ],
   },

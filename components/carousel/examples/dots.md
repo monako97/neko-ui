@@ -1,6 +1,7 @@
 ---
 title: 指示器
 description: 显示当前位置
+order: 3
 ---
 
 ```html

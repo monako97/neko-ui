@@ -5,7 +5,7 @@ order: 7
 ---
 
 ```html
-<n-dropdown class="dropdown" trigger="contextMenu">
+<n-dropdown class="dropdown" style="width: 100%;" trigger="contextMenu">
   <div style="width: 100%;opacity: 0.4;">右键点我</div>
 </n-dropdown>
 <script>
@@ -34,6 +34,7 @@ order: 7
 ```jsx
 <n-dropdown
   class="dropdown"
+  style={{ width: '100%' }}
   options={[
     { value: '1', label: 'option-1' },
     { value: '2', label: 'option-2', disabled: true },

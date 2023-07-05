@@ -5,21 +5,17 @@ order: 2
 ---
 
 ```html
-<div>
-  <n-avatar size="100" username="100"></n-avatar>
-  <n-avatar size="50" username="50"></n-avatar>
-  <n-avatar size="large" username="large"></n-avatar>
-  <n-avatar size="normal" username="normal"></n-avatar>
-  <n-avatar size="small" username="small"></n-avatar>
-</div>
+<n-avatar size="100" username="100"></n-avatar>
+<n-avatar size="50" username="50"></n-avatar>
+<n-avatar size="large" username="large"></n-avatar>
+<n-avatar size="normal" username="normal"></n-avatar>
+<n-avatar size="small" username="small"></n-avatar>
 ```
 
 ```jsx
-<div>
-  <n-avatar size="100" username="100"></n-avatar>
-  <n-avatar size="50" username="50"></n-avatar>
-  <n-avatar size="large" username="large"></n-avatar>
-  <n-avatar size="normal" username="normal"></n-avatar>
-  <n-avatar size="small" username="small"></n-avatar>
-</div>
+<n-avatar size="100" username="100"></n-avatar>
+<n-avatar size="50" username="50"></n-avatar>
+<n-avatar size="large" username="large"></n-avatar>
+<n-avatar size="normal" username="normal"></n-avatar>
+<n-avatar size="small" username="small"></n-avatar>
 ```

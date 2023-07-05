@@ -1,5 +1,7 @@
 ---
+title: 超出隐藏
 description: 添加 `truncated` 属性启用文本超出隐藏, 添加 `truncated.rows` 属性设置文本超出多少行后隐藏
+order: 2
 ---
 
 ```html
