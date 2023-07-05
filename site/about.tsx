@@ -110,7 +110,7 @@ function Empty() {
         {style}
         {baseStyle()}
       </style>
-      <div class="n-md-body site-empty">
+      <div class="site-empty">
         <div class="site-empty-top">
           <div class="site-empty-info">
             <For each={infos}>

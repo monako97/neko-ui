@@ -173,9 +173,8 @@ const sandboxCss = css`
   }
 
   n-code-live::part(root) {
-    display: flex;
+    display: block;
     gap: 4px;
-    flex-wrap: wrap;
   }
 `;
 
@@ -195,22 +194,6 @@ const codeNoShadowCss = css`
   }
 `;
 
-function $$jsx(type: Solid.Component, p: Solid.VoidProps, ...children: Solid.JSXElement[]) {
-  return h(type, {
-    ...p,
-    children,
-  });
-}
-function Fragment(p: Solid.VoidProps) {
-  return p.children;
-}
-
-const scope: CodeLiveProps['scope'] = {
-  jsx: $$jsx,
-  Fragment: Fragment,
-  ...Solid,
-};
-
 function Sandbox(_props: ExampleModule) {
   const props = mergeProps({ codes: {} }, _props);
   const [sources, setSources] = createSignal<Record<string, string>>({});
@@ -220,6 +203,22 @@ function Sandbox(_props: ExampleModule) {
     lang: '',
   });
   const [open, setOpen] = createSignal(false);
+
+  function $$jsx(type: Solid.Component, p: Solid.VoidProps, ...children: Solid.JSXElement[]) {
+    return h(type, {
+      ...p,
+      children,
+    });
+  }
+  function Fragment(p: Solid.VoidProps) {
+    return p.children;
+  }
+  const scope: CodeLiveProps['scope'] = {
+    jsx: $$jsx,
+    Fragment: Fragment,
+    ...Solid,
+  };
+
   const hasDesc = createMemo(() => {
     if (typeof props.description === 'string') {
       return !!props.description?.trim().length;

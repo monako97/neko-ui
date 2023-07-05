@@ -5,6 +5,16 @@ import { baseStyle } from 'neko-ui';
 import '@/components';
 import { activeKey } from '@/utils';
 
+const noBg = css`
+  .n-md-body:has(n-md):not(.site-empty) {
+    padding: 0;
+    background-color: transparent;
+    box-shadow: unset;
+    backdrop-filter: unset;
+    margin-block-end: 0;
+  }
+`;
+
 const style = css`
   #root {
     flex-wrap: wrap;
@@ -145,11 +155,15 @@ function App() {
       <div class="n-site-bg" />
       <site-sider />
       <main ref={box} class="site-doc-main">
-        <Show when={!['/examples', '/change-log', '/@moneko'].includes(activeKey(location))}>
+        <Show when={!activeKey(location).startsWith('@moneko')}>
           <site-coverage />
         </Show>
         <div class="site-page-view">
-          <Outlet />
+          <n-md css={noBg} not-render={true}>
+            <div>
+              <Outlet />
+            </div>
+          </n-md>
           <site-sandbox-group name={activeKey(location)} />
           <site-pagination />
         </div>

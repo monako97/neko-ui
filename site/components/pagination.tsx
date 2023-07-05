@@ -91,11 +91,18 @@ function Pagination(_: object, opt: ComponentOptions<object>) {
     clearTimeout(timer);
     timer = setTimeout(() => {
       clearTimeout(timer);
-      const mdWidth = opt.element.parentElement
-        .querySelector('n-md')
-        ?.shadowRoot?.querySelector('.n-md-body')
-        ?.getBoundingClientRect().width;
 
+      let mdWidth = 'unset';
+      let el = opt.element.parentElement
+        .querySelector('n-md')
+        ?.shadowRoot?.querySelector('.n-md-body');
+
+      mdWidth = el?.getBoundingClientRect().width;
+      el = el.querySelector('n-md')?.shadowRoot?.querySelector('.n-md-body');
+
+      if (el) {
+        mdWidth = el?.getBoundingClientRect().width;
+      }
       setW(`.site-pagination {--max-w: ${mdWidth ? `${mdWidth}px` : 'unset'};}`);
     }, 32);
   });

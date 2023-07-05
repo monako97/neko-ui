@@ -748,6 +748,8 @@ export interface MdProps {
   getAnchorContainer?: () => HTMLElement;
   css?: string;
   children?: JSXElement[] | JSXElement;
+  /** 不进行解析 */
+  notRender?: boolean;
 }
 
 export interface MdElement extends MdProps {
@@ -780,12 +782,13 @@ customElement(
     getAnchorContainer: undefined,
     css: undefined,
     children: undefined,
+    notRender: undefined,
   },
   (_, opt) => {
     const el = opt.element;
     const props = mergeProps(
       {
-        text: el.textContent || el.text,
+        text: (!_.notRender && el.textContent) || el.text,
         css: el.css,
         tools: el.tools,
         lineNumber: el.lineNumber,
