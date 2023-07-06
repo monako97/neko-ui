@@ -1,7 +1,7 @@
 import {
   type JSXElement,
   createComponent,
-  createMemo,
+  createEffect,
   createSignal,
   mergeProps,
   splitProps,
@@ -74,7 +74,6 @@ function Button(_: ButtonProps) {
   function handleAnimationEnd() {
     setAnimating(false);
   }
-  const tag = createMemo(() => (local.link ? 'a' : 'button'));
 
   return (
     <>
@@ -84,7 +83,7 @@ function Button(_: ButtonProps) {
       </style>
       <Dynamic
         ref={ref}
-        component={tag()}
+        component={local.link ? 'a' : 'button'}
         class={cx(
           'btn',
           local.type,
@@ -145,12 +144,18 @@ customElement(
     danger: undefined,
     size: undefined,
     onClick: undefined,
-    children: undefined,
   },
   (_, opt) => {
     const el = opt.element;
-    const props = mergeProps(_, {
-      children: [...el.childNodes.values()],
+    const props = mergeProps(
+      {
+        children: [...el.childNodes.values()],
+      },
+      _
+    );
+
+    createEffect(() => {
+      el.replaceChildren();
     });
 
     return createComponent(Button, props);

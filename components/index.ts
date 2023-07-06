@@ -52,6 +52,11 @@ export {
 } from './color-picker';
 export { default as Empty, type EmptyProps, type EmptyElement } from './empty';
 export {
+  default as CaptureScreen,
+  type CaptureScreenProps,
+  type CaptureScreenElement,
+} from './capture-screen';
+export {
   theme,
   setTheme,
   generateTheme,
