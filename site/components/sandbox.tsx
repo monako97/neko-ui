@@ -1,6 +1,7 @@
 import * as Solid from 'solid-js';
 import { css, cx } from '@moneko/css';
 import { type ExampleModule, examples } from '@moneko/solid-js';
+import * as All from '@pkg';
 import { baseStyle } from 'neko-ui';
 import { customElement } from 'solid-element';
 import h from 'solid-js/h';
@@ -217,6 +218,8 @@ function Sandbox(_props: ExampleModule) {
     jsx: $$jsx,
     Fragment: Fragment,
     ...Solid,
+    ...All,
+    css,
   };
 
   const hasDesc = createMemo(() => {

@@ -7,6 +7,7 @@ import { activeKey } from '@/utils';
 
 const noBg = css`
   .n-md-body:has(n-md):not(.site-empty) {
+    overflow: initial;
     padding: 0;
     background-color: transparent;
     box-shadow: unset;

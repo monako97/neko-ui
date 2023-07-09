@@ -61,6 +61,7 @@ export {
   setTheme,
   generateTheme,
   baseStyle,
+  toneColor,
   type ThemeOption,
   type ColorScheme,
 } from './theme';

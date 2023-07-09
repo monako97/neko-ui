@@ -102,7 +102,7 @@ function Empty() {
       ['作者', projectInfo.author?.name],
     ],
     colors = ['primary', 'warning', 'error', 'success'],
-    types = ['bg', 'outline', 'border', 'hover', 'color', 'active'];
+    types = ['bg', 'outline', 'border', 'color', 'hover', 'active'];
 
   return (
     <>

@@ -2,9 +2,9 @@ import { createMemo } from 'solid-js';
 import { colorParse, mixColor, toneColor } from '@moneko/common';
 import { css } from '@moneko/css';
 import { createStore } from 'solid-js/store';
-
+export { toneColor } from '@moneko/common';
 /** 颜色方案枚举，支持的值为 'light' 或 'dark' */
-export type ColorScheme = 'light' | 'dark';
+export type ColorScheme = 'light' | 'dark' | string;
 
 /** 检测 prefers-color-scheme 媒体查询是否为 light 模式 */
 const themeMedia = window.matchMedia('(prefers-color-scheme: light)');

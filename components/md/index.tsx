@@ -714,8 +714,8 @@ function MD(_props: MdProps) {
       </style>
       <Switch>
         <Match when={(props.children as [])?.length}>
-          <article class="n-md-box">
-            <div class="n-md-body">
+          <article class="n-md-box" part="box">
+            <div class="n-md-body" part="body">
               <For each={props.children as []}>{(e) => <>{e}</>}</For>
             </div>
           </article>
@@ -724,6 +724,7 @@ function MD(_props: MdProps) {
           <article
             ref={ref}
             class={cx('n-md-box', props.class)}
+            part="box"
             // eslint-disable-next-line solid/no-innerhtml
             innerHTML={htmlString()}
             onWheel={handleWheel}

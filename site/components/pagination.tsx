@@ -14,6 +14,7 @@ const style = css`
     justify-content: space-between;
     gap: 24px;
     max-inline-size: var(--max-w);
+    margin: auto;
 
     .link {
       display: flex;
@@ -92,19 +93,23 @@ function Pagination(_: object, opt: ComponentOptions<object>) {
     timer = setTimeout(() => {
       clearTimeout(timer);
 
-      let mdWidth = 'unset';
       let el = opt.element.parentElement
-        .querySelector('n-md')
-        ?.shadowRoot?.querySelector('.n-md-body');
+          .querySelector('n-md')
+          ?.shadowRoot?.querySelector('.n-md-body'),
+        rect = el?.getBoundingClientRect();
 
-      mdWidth = el?.getBoundingClientRect().width;
       el = el.querySelector('n-md')?.shadowRoot?.querySelector('.n-md-body');
 
       if (el) {
-        mdWidth = el?.getBoundingClientRect().width;
+        rect = el?.getBoundingClientRect();
+        el = el.querySelector('n-md')?.shadowRoot?.querySelector('.n-md-body');
       }
-      setW(`.site-pagination {--max-w: ${mdWidth ? `${mdWidth}px` : 'unset'};}`);
-    }, 32);
+      if (el) {
+        rect = el?.getBoundingClientRect();
+      }
+
+      setW(`.site-pagination {--max-w: ${rect ? `${rect.width}px` : 'unset'};}`);
+    }, 100);
   });
 
   return (

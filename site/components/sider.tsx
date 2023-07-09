@@ -204,31 +204,11 @@ const style = css`
     }
   }
 
-  .site-theme-btn {
-    font-size: 28px;
-    text-align: center;
-    transition: transform var(--transition-duration) var(--transition-timing-function);
-    min-inline-size: 28px;
-    line-height: 32px;
-    cursor: pointer;
-    user-select: none;
-  }
-
-  .site-theme-btn::before {
-    color: #fc0;
-    content: '☀';
-  }
-
-  [data-theme='dark'] .site-theme-btn::before {
-    content: '☪';
-    color: #fff;
-  }
-
-  .site-theme-btn:active {
-    transform: scale(0.95);
-  }
-
   @media screen and (width <= 1100px) {
+    :host {
+      inline-size: 100px;
+    }
+
     .site-sider {
       min-inline-size: 68px;
       inline-size: 68px;
@@ -265,9 +245,35 @@ const style = css`
     .site-sider-item .site-sider-label,
     .site-sider-item .site-sider-subtitle,
     .site-title,
-    .site-theme-btn {
+    n-dropdown {
       display: none;
     }
+  }
+`;
+
+const switchThemeCss = css`
+  .site-theme-btn {
+    font-size: 28px;
+    text-align: center;
+    transition: transform var(--transition-duration) var(--transition-timing-function);
+    min-inline-size: 28px;
+    line-height: 32px;
+    cursor: pointer;
+    user-select: none;
+  }
+
+  .site-theme-btn::before {
+    color: #fc0;
+    content: '☀';
+  }
+
+  [data-theme='dark'] .site-theme-btn::before {
+    content: '☪';
+    color: #fff;
+  }
+
+  .site-theme-btn:active {
+    transform: scale(0.95);
   }
 `;
 
@@ -324,6 +330,10 @@ for (const key in obj) {
 export { all, kv };
 function Sider(_: object, opt: ComponentOptions<object>) {
   const location = useLocation();
+  const themes = [
+    { label: '暗黑', value: 'dark', icon: <span>☪</span> },
+    { label: '明亮', value: 'light', icon: <span>☀</span> },
+  ];
   let menuEl: HTMLUListElement | undefined;
   const active = createMemo(() => activeKey(location));
 
@@ -363,12 +373,18 @@ function Sider(_: object, opt: ComponentOptions<object>) {
             <h1 data-truncated>{projectBasicInfo.projectName.replace(/-/g, ' ')}</h1>
             <i>{(kv[active()] || projectBasicInfo).subtitle}</i>
           </hgroup>
-          <div
-            class="site-theme-btn"
-            onClick={() => {
-              setTheme('scheme', (prev) => (prev === 'dark' ? 'light' : 'dark'));
+          <n-dropdown
+            value={theme.scheme}
+            selectable={true}
+            options={themes}
+            trigger="click"
+            css={switchThemeCss}
+            onChange={(e: CustomEvent) => {
+              setTheme('scheme', e.detail.key);
             }}
-          />
+          >
+            <div class="site-theme-btn" />
+          </n-dropdown>
         </header>
         <section class="site-sider">
           <ul ref={menuEl}>
