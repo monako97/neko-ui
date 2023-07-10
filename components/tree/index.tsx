@@ -283,7 +283,7 @@ export interface TreeBaseProp {
   onRowClick?: OnRowClick;
   onRowDoubleClick?: OnRowClick;
   // eslint-disable-next-line no-unused-vars
-  onRenderRow?(item: TreeData, title: JSXElement, subTitle?: JSXElement): JSXElement[];
+  renderRow?(item: TreeData, title: JSXElement, subTitle?: JSXElement): JSXElement[];
 }
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type Imap = { [key: string]: string | true | number | object };
@@ -365,7 +365,7 @@ function Tree(props: TreeProps) {
     props.onRowClick?.(e, item.key as never, item as TreeData<never>);
   }
   function renderItem(item: TreeData, title: JSXElement, subTitle?: JSXElement): JSXElement[] {
-    const row = props.onRenderRow?.(item, title, subTitle) || [title, subTitle];
+    const row = props.renderRow?.(item, title, subTitle) || [title, subTitle];
 
     return rtl() ? row.reverse() : row;
   }
@@ -391,13 +391,11 @@ function Tree(props: TreeProps) {
                 data-path-end={item[pathEnd]}
                 data-path={item[path]}
               >
-                <slot name={key}>
-                  {renderItem(
-                    item,
-                    <span class="title">{(rtl() ? _title.reverse() : _title).join(': ')}</span>,
-                    subTitle && <span class="sub-title">{subTitle}</span>
-                  )}
-                </slot>
+                {renderItem(
+                  item,
+                  <span class="title">{(rtl() ? _title.reverse() : _title).join(': ')}</span>,
+                  subTitle && <span class="sub-title">{subTitle}</span>
+                )}
               </li>
               {children ? renderTreeRow(children, depth + 1) : null}
             </>
@@ -535,7 +533,7 @@ customElement(
     direction: undefined,
     onRowClick: undefined,
     onRowDoubleClick: undefined,
-    onRenderRow: undefined,
+    renderRow: undefined,
   },
   (_, opt) => {
     const el = opt.element;
@@ -572,14 +570,14 @@ customElement(
             })
           );
         },
-        onRenderRow(item: TreeData, title: JSXElement, subTitle?: JSXElement) {
-          el.dispatchEvent(
-            new CustomEvent('rowdoubleclick', {
-              detail: [item, title, subTitle],
-            })
-          );
-          return [title, subTitle];
-        },
+        // renderRow(item: TreeData, title: JSXElement, subTitle?: JSXElement) {
+        //   el.dispatchEvent(
+        //     new CustomEvent('rowdoubleclick', {
+        //       detail: [item, title, subTitle],
+        //     })
+        //   );
+        //   return [title, subTitle];
+        // },
       },
       _
     );

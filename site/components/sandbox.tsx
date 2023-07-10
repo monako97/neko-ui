@@ -325,6 +325,7 @@ customElement(
 
 const groupCss = css`
   .sandbox-group {
+    display: flex;
     margin: 0 auto 24px;
     border-radius: var(--border-radius);
     padding: 24px;
@@ -333,17 +334,16 @@ const groupCss = css`
     inline-size: 100%;
     max-inline-size: 1280px;
     box-sizing: border-box;
+    flex-wrap: wrap;
   }
 `;
 
 interface SandboxGroupProps {
   name: string;
-  col?: number;
   ignore?: string[];
 }
 
-function SandboxGroup(_props: SandboxGroupProps) {
-  const props = mergeProps({ col: 2 }, _props);
+function SandboxGroup(props: SandboxGroupProps) {
   const [api, setApi] = createSignal<string | null>(null);
   const data = createMemo(() => examples[props.name] || []);
 
@@ -362,8 +362,8 @@ function SandboxGroup(_props: SandboxGroupProps) {
           {baseStyle()}
           {groupCss}
         </style>
-        <div class="sandbox-group" style={{ 'column-count': props.col }}>
-          <For each={data()}>{(m) => <site-sandbox {...m} />}</For>
+        <div class="sandbox-group">
+          <For each={data()}>{(m) => <site-sandbox style={{ flex: m.col || '50%' }} {...m} />}</For>
         </div>
       </Show>
       <Show when={api()}>
@@ -376,7 +376,6 @@ function SandboxGroup(_props: SandboxGroupProps) {
 customElement(
   'site-sandbox-group',
   {
-    col: 2,
     ignore: [],
     name: '',
   },

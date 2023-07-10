@@ -2,7 +2,6 @@
 title: 调色板、生成、设置主题色
 description: 通过传入一个基础色生成出主题色调
 order: 1
-col: 1
 ---
 
 ```jsx

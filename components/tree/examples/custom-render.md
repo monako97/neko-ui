@@ -1,25 +1,26 @@
 ---
 title: 自定义渲染
-description: 通过数据渲染
+description: 通过`renderRow`函数自定义渲染每一行的内容
 order: 4
 ---
 
 ```html
-<n-tree>
-  <span slot="c2">
-    <i style="color: pink;">是否有效</i>
-    <b>boolean</b>
-    <i style="flex: 1; text-align: right;">x</i>
-  </span>
-  <span slot="a.b">
-    <i style="color: pink;">备注</i>
-    <b>object</b>
-    <i style="flex: 1; text-align: right;">x</i>
-  </span>
-</n-tree>
+<n-tree></n-tree>
 <script>
   const el = container.querySelector('n-tree');
 
+  el.renderRow = function (item, title, subTitle) {
+    const _tit = document.createElement('span'),
+      _close = document.createElement('i');
+
+    _tit.style.color = 'pink';
+    _tit.textContent = item.title;
+    _close.style.flex = 1;
+    _close.style.textAlign = 'right';
+    _close.textContent = 'x';
+
+    return [_tit, subTitle, _close];
+  };
   el.data = [
     {
       title: '文件名称',
@@ -102,19 +103,13 @@ function Demo() {
     },
   ];
 
-  return (
-    <n-tree data={data}>
-      <span slot="c2">
-        <i style={{ color: 'pink' }}>是否有效</i>
-        <b>boolean</b>
-        <i style={{ flex: 1, textAlign: 'right' }}>x</i>
-      </span>
-      <span slot="a.b">
-        <i style={{ color: 'pink' }}>备注</i>
-        <b>object</b>
-        <i style={{ flex: 1, textAlign: 'right' }}>x</i>
-      </span>
-    </n-tree>
-  );
+  function renderRow(item, title, subTitle) {
+    return [
+      <span style={{ color: 'red' }}>{item.title}</span>,
+      subTitle,
+      <i style={{ flex: 1, 'text-align': 'right' }}>x</i>,
+    ];
+  }
+  return <n-tree data={data} render-row={() => renderRow} />;
 }
 ```

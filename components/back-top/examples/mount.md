@@ -1,7 +1,7 @@
 ---
 title: 指定挂载位置
 description: 指定返回顶部的按钮挂载位置, 默认为 n-back-top 所在位置的 shadowRoot 中
-order: 3
+order: 2
 ---
 
 ```html
