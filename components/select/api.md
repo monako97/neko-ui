@@ -43,4 +43,5 @@
 | disabled | 只读       | `boolean`        | -      | 1.6.0 |
 | label    | 选项描述   | `JSXElement`     | -      | 1.6.0 |
 | icon     | 图标       | `JSXElement`     | -      | 1.6.0 |
+| suffix   | 后缀       | `JSXElement`     | -      | 2.0.0 |
 | options  | 子选项     | `SelectOption[]` | -      | 1.6.0 |

@@ -2,6 +2,7 @@ import { createComponent, createEffect, createSignal, mergeProps } from 'solid-j
 import { css, cx } from '@moneko/css';
 import { customElement } from 'solid-element';
 import { baseStyle } from '../theme';
+import type { CustomElement } from '..';
 
 const style = css`
   .switch {
@@ -13,9 +14,14 @@ const style = css`
     background-color: var(--primary-border);
     opacity: 1;
     outline: 0;
-    box-shadow: inset 0 0 0 0 var(--primary-color), 0 0 0 0 var(--primary-hover),
+    box-shadow:
+      inset 0 0 0 0 var(--primary-color),
+      0 0 0 0 var(--primary-hover),
       0 0 0 0 var(--primary-border);
-    transition: 0.4s box-shadow, 0.3s background-color, 0.3s opacity;
+    transition:
+      0.4s box-shadow,
+      0.3s background-color,
+      0.3s opacity;
     cursor: pointer;
     inline-size: fit-content;
     min-inline-size: 44px;
@@ -40,7 +46,11 @@ const style = css`
       background-color: #fff;
       outline: 2.05px solid #fff;
       box-shadow: 0 2px 4px 1px var(--primary-shadow);
-      transition: 0.3s padding, 0.3s background-color 0.1s, 0.3s left, 0.6s transform,
+      transition:
+        0.3s padding,
+        0.3s background-color 0.1s,
+        0.3s left,
+        0.6s transform,
         0.3s border-color;
       outline-offset: -0.05px;
       inset-block-start: 3px;
@@ -56,11 +66,15 @@ const style = css`
     &[aria-disabled='false'] {
       &:not(.loading) {
         &:focus {
-          box-shadow: inset 0 0 0 0 var(--primary-color), 0 0 0 1px var(--primary-hover),
+          box-shadow:
+            inset 0 0 0 0 var(--primary-color),
+            0 0 0 1px var(--primary-hover),
             0 0 1px 3px var(--primary-border);
 
           &.checked {
-            box-shadow: inset 0 0 3px 12px var(--primary-color), 0 0 0 1px var(--primary-hover),
+            box-shadow:
+              inset 0 0 3px 12px var(--primary-color),
+              0 0 0 1px var(--primary-hover),
               0 0 1px 3px var(--primary-border);
           }
         }
@@ -94,7 +108,9 @@ const style = css`
   }
 
   .checked {
-    box-shadow: inset 0 0 3px 12px var(--primary-color), 0 0 0 0 var(--primary-hover),
+    box-shadow:
+      inset 0 0 3px 12px var(--primary-color),
+      0 0 0 0 var(--primary-hover),
       0 0 0 0 var(--primary-border);
 
     &::before {
@@ -179,25 +195,8 @@ function Switch(props: SwitchProps) {
   );
 }
 
-export interface SwitchElement extends Omit<SwitchProps, 'onChange'> {
-  ref?: SwitchElement | { current: SwitchElement | null };
-  // eslint-disable-next-line no-unused-vars
-  onChange?(e: CustomEvent<boolean>): void;
-}
+export type SwitchElement = CustomElement<SwitchProps>;
 
-interface CustomElementTags {
-  'n-switch': SwitchElement;
-}
-declare module 'solid-js' {
-  export namespace JSX {
-    export interface IntrinsicElements extends HTMLElementTags, CustomElementTags {}
-  }
-}
-declare global {
-  export namespace JSX {
-    export interface IntrinsicElements extends CustomElementTags, CustomElementTags {}
-  }
-}
 customElement(
   'n-switch',
   {
@@ -225,14 +224,14 @@ customElement(
           el.dispatchEvent(
             new CustomEvent('change', {
               detail: val,
-            })
+            }),
           );
         },
       },
-      _
+      _,
     );
 
     return createComponent(Switch, props);
-  }
+  },
 );
 export default Switch;

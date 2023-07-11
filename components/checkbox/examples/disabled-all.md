@@ -16,7 +16,7 @@ order: 3
 </script>
 ```
 
-```jsx
+```tsx
 <n-checkbox
   value={[1]}
   disabled

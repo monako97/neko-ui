@@ -17,7 +17,9 @@ export const style = css`
       block-size: 100%;
       background: var(--c, #fff);
       opacity: var(--a, 1);
-      box-shadow: rgb(0 0 0 / 10%) 0 0 0 1px inset, rgb(0 0 0 / 10%) 0 0 4px inset;
+      box-shadow:
+        rgb(0 0 0 / 10%) 0 0 0 1px inset,
+        rgb(0 0 0 / 10%) 0 0 4px inset;
       content: '';
       cursor: pointer;
     }

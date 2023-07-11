@@ -1,7 +1,7 @@
 import { For } from 'solid-js';
 import { css, cx } from '@moneko/css';
 import { projectBasicInfo } from '@moneko/solid-js';
-import { baseStyle } from 'neko-ui';
+import { type CustomElement, baseStyle } from 'neko-ui';
 import { customElement } from 'solid-element';
 
 const style = css`
@@ -30,7 +30,9 @@ const style = css`
     overflow: hidden;
     border: 1px solid var(--border-color);
     border-radius: var(--border-radius);
-    box-shadow: 0 0 2px 0 var(--border-color), inset 0 0 2px 0 var(--border-color);
+    box-shadow:
+      0 0 2px 0 var(--border-color),
+      inset 0 0 2px 0 var(--border-color);
     transition-duration: var(--transition-duration);
     transition-timing-function: var(--transition-timing-function);
     transition-property: box-shadow, background-color, border-color, color;
@@ -118,8 +120,6 @@ function Coverage() {
     </>
   );
 }
-export interface CoverageElement {
-  ref?: CoverageElement | { current: CoverageElement | null };
-}
+export type CoverageElement = CustomElement;
 
 customElement('site-coverage', Coverage);

@@ -3,7 +3,7 @@ import { css } from '@moneko/css';
 import { A, useLocation } from '@solidjs/router';
 import { customElement } from 'solid-element';
 import { type MyPkg, all, kv } from './sider';
-import type { ComponentOptions } from 'neko-ui';
+import type { ComponentOptions, CustomElement } from 'neko-ui';
 import { activeKey } from '@/utils';
 
 const style = css`
@@ -142,6 +142,4 @@ function Pagination(_: object, opt: ComponentOptions<object>) {
 
 customElement('site-pagination', Pagination);
 
-export interface PaginationElement {
-  ref?: PaginationElement | { current: PaginationElement | null };
-}
+export type PaginationElement = CustomElement;

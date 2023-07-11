@@ -20,3 +20,4 @@
 | disabled | 只读       | `boolean`    | -      | 1.5.0 |
 | label    | 选项描述   | `JSXElement` | -      | 1.5.0 |
 | icon     | 图标       | `JSXElement` | -      | 1.5.0 |
+| suffix   | 后缀       | `JSXElement` | -      | 2.0.0 |

@@ -28,7 +28,7 @@ function fromSchema(schema: Record<string, any>, pid?: string): TreeData<string>
               },
             },
           },
-          node.key
+          node.key,
         );
       }
       treeData.push(node);

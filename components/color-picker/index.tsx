@@ -12,7 +12,7 @@ import { customElement } from 'solid-element';
 import { style } from './style';
 import ColorPalette, { type ColorPaletteProps } from '../color-palette';
 import Popover, { defaultProps } from '../popover';
-import type { ComponentSize, PopoverProps } from '../index';
+import type { ComponentSize, CustomElement, PopoverProps } from '../index';
 
 export interface ColorPickerProps
   extends ColorPaletteProps,
@@ -23,6 +23,7 @@ export interface ColorPickerProps
   defaultValue?: string;
   popupClass?: string;
 }
+export type ColorPickerElement = CustomElement<ColorPickerProps>;
 
 function ColorPicker(props: ColorPickerProps) {
   const [local, others] = splitProps(props, [
@@ -52,7 +53,7 @@ function ColorPicker(props: ColorPickerProps) {
     }
   });
   const popupCss = createMemo(
-    () => `.color-picker {padding: 10px;inline-size: 216px;}${local.popupCss || ''}`
+    () => `.color-picker {padding: 10px;inline-size: 216px;}${local.popupCss || ''}`,
   );
   const css = createMemo(() => `${style + (local.css || '')}.trigger {--c: ${color()};}`);
 
@@ -69,26 +70,6 @@ function ColorPicker(props: ColorPickerProps) {
       <span class={cx('trigger', local.size)} />
     </Popover>
   );
-}
-
-export interface ColorPickerElement extends Omit<ColorPickerProps, 'onChange'> {
-  ref?: ColorPickerElement | { current: ColorPickerElement | null };
-  // eslint-disable-next-line no-unused-vars
-  onChange?(e: CustomEvent<string>): void;
-}
-
-interface CustomElementTags {
-  'n-color-picker': ColorPickerElement;
-}
-declare module 'solid-js' {
-  export namespace JSX {
-    export interface IntrinsicElements extends HTMLElementTags, CustomElementTags {}
-  }
-}
-declare global {
-  export namespace JSX {
-    export interface IntrinsicElements extends CustomElementTags, CustomElementTags {}
-  }
 }
 
 customElement(
@@ -108,16 +89,16 @@ customElement(
           el.dispatchEvent(
             new CustomEvent('change', {
               detail: val,
-            })
+            }),
           );
         },
         children: el.children,
       },
-      _
+      _,
     );
 
     return createComponent(ColorPicker, props);
-  }
+  },
 );
 
 export default ColorPicker;

@@ -2,10 +2,12 @@ import * as Solid from 'solid-js';
 import { css, cx } from '@moneko/css';
 import { type ExampleModule, examples } from '@moneko/solid-js';
 import * as All from '@pkg';
-import { baseStyle } from 'neko-ui';
+import { CustomElement, baseStyle } from 'neko-ui';
 import { customElement } from 'solid-element';
 import h from 'solid-js/h';
 import { render } from 'solid-js/web';
+import htmlHelp from './html.md?raw';
+import jsxHelp from './jsx.md?raw';
 import type { CodeLiveProps } from 'n-code-live';
 
 const { For, Show, createEffect, createMemo, createSignal, mergeProps, onMount } = Solid;
@@ -195,7 +197,12 @@ const codeNoShadowCss = css`
   }
 `;
 
-function Sandbox(_props: ExampleModule) {
+interface SandboxProps extends Omit<ExampleModule, 'title'> {
+  legend: string;
+  codes: Record<string, string>;
+  description?: string;
+}
+function Sandbox(_props: SandboxProps) {
   const props = mergeProps({ codes: {} }, _props);
   const [sources, setSources] = createSignal<Record<string, string>>({});
   const [current, setCurrent] = createSignal({
@@ -245,8 +252,31 @@ function Sandbox(_props: ExampleModule) {
     setCurrent({ ...old, code: e.detail });
     setSources((prev) => ({ ...prev, [old.lang]: e.detail }));
   }
+  const noMargin = '.n-md-body {margin: 0;}';
   const langs = createMemo(() =>
-    Object.keys(props.codes).map((k) => ({ value: k, label: k.toLocaleUpperCase() }))
+    Object.keys(props.codes).map((k) => ({
+      value: k,
+      label: k.toLocaleUpperCase(),
+      suffix: () => (
+        <n-popover
+          arrow={true}
+          popup-css=".portal {font-size:13px;max-width: 50vw;}"
+          content={() => <n-md css={noMargin} text={k === 'html' ? htmlHelp : jsxHelp} />}
+        >
+          <span
+            style={{
+              'margin-left': '4px',
+              padding: '0 5.5px',
+              background: 'var(--disable-bg)',
+              'border-radius': '50%',
+              cursor: 'pointer',
+            }}
+          >
+            ?
+          </span>
+        </n-popover>
+      ),
+    })),
   );
 
   onMount(() => {
@@ -264,7 +294,7 @@ function Sandbox(_props: ExampleModule) {
       <style>{sandboxCss}</style>
       <section class="sandbox-box">
         <fieldset class="sandbox-container">
-          <legend class="sandbox-title">{props.title}</legend>
+          <legend class="sandbox-title">{props.legend}</legend>
           <section class="sandbox-view">
             <n-code-live
               source={sources()[current().lang]}
@@ -315,12 +345,12 @@ function Sandbox(_props: ExampleModule) {
 customElement(
   'site-sandbox',
   {
-    title: undefined,
+    legend: '',
     description: undefined,
     codes: {},
     order: undefined,
   },
-  Sandbox
+  Sandbox,
 );
 
 const groupCss = css`
@@ -363,7 +393,11 @@ function SandboxGroup(props: SandboxGroupProps) {
           {groupCss}
         </style>
         <div class="sandbox-group">
-          <For each={data()}>{(m) => <site-sandbox style={{ flex: m.col || '50%' }} {...m} />}</For>
+          <For each={data()}>
+            {({ title, ...m }) => (
+              <site-sandbox style={{ flex: m.col || '50%' }} legend={title} {...m} />
+            )}
+          </For>
         </div>
       </Show>
       <Show when={api()}>
@@ -379,13 +413,8 @@ customElement(
     ignore: [],
     name: '',
   },
-  SandboxGroup
+  SandboxGroup,
 );
 
-export interface SandboxElement extends ExampleModule {
-  ref?: SandboxElement | { current: SandboxElement | null };
-}
-
-export interface SandboxGroupElement extends SandboxGroupProps {
-  ref?: SandboxGroupElement | { current: SandboxGroupElement | null };
-}
+export type SandboxElement = CustomElement<ExampleModule>;
+export type SandboxGroupElement = CustomElement<SandboxGroupProps>;

@@ -1,58 +1,19 @@
 import { For, Show, createMemo, mergeProps, splitProps } from 'solid-js';
-import { css, cx } from '@moneko/css';
+import { cx } from '@moneko/css';
 import { customElement } from 'solid-element';
+import { moreCss, style } from './style';
 import '../popover';
+import type { ComponentSize, CustomElement } from '..';
 import type { AvatarProps } from '../avatar';
-
-const style = css`
-  .group {
-    display: inline-flex;
-    align-items: center;
-
-    & > n-avatar {
-      display: flex;
-    }
-
-    & > n-avatar:not(:first-child),
-    & > n-popover {
-      margin-inline-start: -4%;
-      transition: margin-inline-start 0.3s;
-
-      &:hover:not(n-popover) {
-        margin-inline-start: 4px;
-
-        &:has(+ n-avatar),
-        &:has(+ n-popover) {
-          margin-inline-end: calc(4% + 4px);
-        }
-      }
-    }
-  }
-`;
-const moreCss = css`
-  .more {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    overflow-y: auto;
-    padding: 8px;
-    max-inline-size: 60vi;
-    max-block-size: 80vb;
-    gap: 8px;
-    flex-wrap: wrap;
-
-    & > n-avatar {
-      display: flex;
-    }
-  }
-`;
 
 export interface AvatarGroupProps {
   data: Omit<AvatarProps, 'size'>[];
-  size?: AvatarProps['size'];
+  size?: ComponentSize;
   class?: string;
   maxCount?: number;
 }
+export type AvatarGroupElement = CustomElement<AvatarGroupProps>;
+
 const defaultProps: AvatarGroupProps = {
   data: [],
   size: undefined,
@@ -76,8 +37,8 @@ function AvatarGroup(_props: AvatarGroupProps) {
   return (
     <>
       <style>{style}</style>
-      <div class={cx('group', local.class)} {...other}>
-        <For each={showAvatar()}>{(a) => <n-avatar size={local.size} {...a} />}</For>
+      <div {...other} class={cx('group', local.class)}>
+        <For each={showAvatar()}>{(a) => <n-avatar {...a} size={local.size} />}</For>
         <Show when={more().length}>
           <n-popover
             arrow={true}
@@ -85,7 +46,7 @@ function AvatarGroup(_props: AvatarGroupProps) {
             popup-css={moreCss}
             content={
               <div class="more">
-                <For each={more()}>{(a) => <n-avatar size={local.size} {...a} />}</For>
+                <For each={more()}>{(a) => <n-avatar {...a} size={local.size} />}</For>
               </div>
             }
           >
@@ -97,22 +58,5 @@ function AvatarGroup(_props: AvatarGroupProps) {
   );
 }
 
-export interface AvatarGroupElement extends AvatarGroupProps {
-  ref?: AvatarGroupElement | { current: AvatarGroupElement | null };
-}
-
-interface CustomElementTags {
-  'n-avatar-group': AvatarGroupElement;
-}
-declare module 'solid-js' {
-  export namespace JSX {
-    export interface IntrinsicElements extends HTMLElementTags, CustomElementTags {}
-  }
-}
-declare global {
-  export namespace JSX {
-    export interface IntrinsicElements extends CustomElementTags, CustomElementTags {}
-  }
-}
 customElement('n-avatar-group', defaultProps, AvatarGroup);
 export default AvatarGroup;

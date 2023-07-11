@@ -14,7 +14,9 @@ export const style = css`
   .item,
   .group {
     border-radius: calc(var(--border-radius) / 1.5);
-    transition: 0.2s background-color ease, 0.2s color ease;
+    transition:
+      0.2s background-color ease,
+      0.2s color ease;
     box-sizing: border-box;
     line-height: 1.57;
   }
@@ -64,7 +66,7 @@ export const style = css`
     }
   }
 
-  .selectable {
+  /* .selectable {
     .container {
       div.item[aria-selected='true'] {
         padding-inline-end: 0;
@@ -77,7 +79,7 @@ export const style = css`
         }
       }
     }
-  }
+  } */
 
   .group {
     position: relative;
@@ -86,7 +88,9 @@ export const style = css`
   .group-title {
     position: sticky;
     z-index: 1;
-    display: block;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     padding: 5px;
     font-size: 12px;
     color: var(--text-secondary);

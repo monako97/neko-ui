@@ -16,6 +16,7 @@ import {
   type ColorType,
   type HSVA,
   colorParse,
+  isFunction,
   passiveSupported,
   setClipboard,
   throttle,
@@ -24,9 +25,10 @@ import { cx } from '@moneko/css';
 import { customElement } from 'solid-element';
 import { style, switchCss } from './style';
 import '../dropdown';
-import { type CSSProperties, type InputNumberProps, baseStyle } from '../index';
 import '../input';
 import '../input-number';
+import { baseStyle } from '../theme';
+import type { CSSProperties, CustomElement, InputNumberProps } from '../index';
 
 export interface ColorPaletteProps {
   style?: CSSProperties;
@@ -37,6 +39,7 @@ export interface ColorPaletteProps {
   // eslint-disable-next-line no-unused-vars
   onChange?: (color: string) => void;
 }
+export type ColorPaletteElement = CustomElement<ColorPaletteProps>;
 
 function ColorPalette(props: ColorPaletteProps) {
   let picker: HTMLDivElement | undefined;
@@ -67,7 +70,7 @@ function ColorPalette(props: ColorPaletteProps) {
   };
   const [hsva, setHsva] = createSignal<ColorParse<HSVA>>(
     // eslint-disable-next-line solid/reactivity
-    colorParse(props.value || props.defaultValue || '#5794ff')
+    colorParse(props.value || props.defaultValue || '#5794ff'),
   );
   const [drag, setDrag] = createSignal(false);
 
@@ -91,8 +94,8 @@ function ColorPalette(props: ColorPaletteProps) {
     const s = hsva();
     const c = s[capFirst(s.type)]();
 
-    if (c.toString() !== props.value) {
-      props.onChange?.(c.toString());
+    if (isFunction(props.onChange) && c.toString() !== props.value) {
+      props.onChange(c.toString());
     }
     return c;
   });
@@ -102,9 +105,9 @@ function ColorPalette(props: ColorPaletteProps) {
       setHsva(colorParse(c as string));
     }
   }
-  function handleHexa(e: CustomEvent & { target: HTMLInputElement }) {
+  function handleHexa(e: CustomEvent) {
     if (e.target) {
-      e.target.value = e.detail;
+      (e.target as HTMLInputElement).value = e.detail;
     }
   }
   function handleHexaBlur(e: FocusEvent & { target: { value: string } }) {
@@ -189,7 +192,7 @@ function ColorPalette(props: ColorPaletteProps) {
   });
 
   createEffect(() => {
-    throttle(setColor, 4)(props.value);
+    throttle(setColor, 8)(props.value);
   });
 
   onMount(() => {
@@ -246,7 +249,7 @@ function ColorPalette(props: ColorPaletteProps) {
                         step: 0.01,
                         formatter: formatterOpacity,
                         parse: parseOpacity,
-                      }
+                      },
                     );
 
                     return (
@@ -312,26 +315,6 @@ function ColorPalette(props: ColorPaletteProps) {
   );
 }
 
-export interface ColorPaletteElement extends Omit<ColorPaletteProps, 'onChange'> {
-  ref?: ColorPaletteElement | { current: ColorPaletteElement | null };
-  // eslint-disable-next-line no-unused-vars
-  onChange?(e: CustomEvent<string | undefined>): void;
-}
-
-interface CustomElementTags {
-  'n-color-palette': ColorPaletteElement;
-}
-declare module 'solid-js' {
-  export namespace JSX {
-    export interface IntrinsicElements extends HTMLElementTags, CustomElementTags {}
-  }
-}
-declare global {
-  export namespace JSX {
-    export interface IntrinsicElements extends CustomElementTags, CustomElementTags {}
-  }
-}
-
 export const defaultColorPaletteProps = {
   class: undefined,
   style: undefined,
@@ -349,11 +332,11 @@ customElement('n-color-palette', defaultColorPaletteProps, (_, opts) => {
         el.dispatchEvent(
           new CustomEvent('change', {
             detail: val,
-          })
+          }),
         );
       },
     },
-    _
+    _,
   );
 
   return createComponent(ColorPalette, props);

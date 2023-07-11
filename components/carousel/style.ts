@@ -101,7 +101,9 @@ export const style = css`
     margin: 0 auto;
     inline-size: fit-content;
     max-inline-size: calc(100% - 42px);
-    transition: transform 0.3s linear, opacity 0.3s linear;
+    transition:
+      transform 0.3s linear,
+      opacity 0.3s linear;
     gap: 4px;
   }
 

@@ -12,6 +12,7 @@ import { css, cx } from '@moneko/css';
 import { customElement } from 'solid-element';
 import getOptions, { type BaseOption, type FieldNames, defaultFieldNames } from '../get-options';
 import { baseStyle } from '../theme';
+import type { CustomElement } from '..';
 
 const style = css`
   .box {
@@ -49,7 +50,9 @@ const style = css`
     padding: 0 12px;
     color: var(--text-color);
     outline: 0;
-    transition: 0.2s background-color ease, 0.3s color ease;
+    transition:
+      0.2s background-color ease,
+      0.3s color ease;
     cursor: pointer;
     box-sizing: border-box;
     /* stylelint-disable-next-line */
@@ -147,7 +150,7 @@ function Segmented(props: SegmentedProps) {
 
       if (el) {
         setOffsetStyle(
-          `.box {--w: ${el.offsetWidth}px;--h: ${el.offsetHeight}px;--left: ${el.offsetLeft}px;}`
+          `.box {--w: ${el.offsetWidth}px;--h: ${el.offsetHeight}px;--left: ${el.offsetLeft}px;}`,
         );
       } else {
         setOffsetStyle('');
@@ -189,10 +192,13 @@ function Segmented(props: SegmentedProps) {
                   aria-disabled={readOnly}
                   ref={options()[i()].ref}
                 >
-                  <Show when={item.icon}>
-                    <span class="icon">{item.icon}</span>
+                  <Show when={item[fieldName.icon]}>
+                    <span class="icon">{item[fieldName.icon]}</span>
                   </Show>
                   {item[fieldName.label]}
+                  <Show when={item[fieldName.suffix]}>
+                    <n-typography type="secondary">{item[fieldName.suffix]}</n-typography>
+                  </Show>
                 </label>
               </>
             );
@@ -203,25 +209,8 @@ function Segmented(props: SegmentedProps) {
   );
 }
 
-export interface SegmentedElement extends Omit<SegmentedProps, 'onChange'> {
-  ref?: SegmentedElement | { current: SegmentedElement | null };
-  // eslint-disable-next-line no-unused-vars
-  onChange?(val: CustomEvent<string>): void;
-}
+export type SegmentedElement = CustomElement<SegmentedProps>;
 
-interface CustomElementTags {
-  'n-segmented': SegmentedElement;
-}
-declare module 'solid-js' {
-  export namespace JSX {
-    export interface IntrinsicElements extends HTMLElementTags, CustomElementTags {}
-  }
-}
-declare global {
-  export namespace JSX {
-    export interface IntrinsicElements extends CustomElementTags, CustomElementTags {}
-  }
-}
 customElement(
   'n-segmented',
   {
@@ -249,14 +238,14 @@ customElement(
           el.dispatchEvent(
             new CustomEvent('change', {
               detail: next,
-            })
+            }),
           );
         },
       },
-      _
+      _,
     );
 
     return createComponent(Segmented, props);
-  }
+  },
 );
 export default Segmented;

@@ -14,10 +14,11 @@ import {
 } from 'solid-js';
 import { isFunction } from '@moneko/common';
 import { cx } from '@moneko/css';
-import { customElement, noShadowDOM } from 'solid-element';
+import { customElement } from 'solid-element';
 import { style } from './style';
 import Dropdown, { type DropdownOption, type DropdownProps, defaultProps } from '../dropdown';
 import getOptions, { FieldNames, defaultFieldNames } from '../get-options';
+import type { CustomElement } from '..';
 
 export interface SelectOption extends DropdownOption {
   children?: SelectOption[];
@@ -176,11 +177,11 @@ function Select(props: SelectProps) {
     }
   });
   const prefix = createMemo(() =>
-    isFunction(local.prefixIcon) ? local.prefixIcon() : local.prefixIcon
+    isFunction(local.prefixIcon) ? local.prefixIcon() : local.prefixIcon,
   );
   const label = createMemo(() => (isFunction(local.label) ? local.label() : local.label));
   const suffix = createMemo(() =>
-    isFunction(local.suffixIcon) ? local.suffixIcon() : local.suffixIcon
+    isFunction(local.suffixIcon) ? local.suffixIcon() : local.suffixIcon,
   );
 
   return (
@@ -255,35 +256,16 @@ function Select(props: SelectProps) {
     </Dropdown>
   );
 }
-export interface SelectSingleElement extends Omit<SelectProps, 'onChange' | 'ref'> {
-  ref?: SelectSingleElement | { current: SelectSingleElement | null };
-  // eslint-disable-next-line no-unused-vars
-  onChange?(e: CustomEvent<{ key: string | number; item: SelectOption }>): void;
-  defaultValue?: string | number;
-}
 
-export interface SelectMultipleElement
-  extends Omit<SelectProps, 'onChange' | 'value' | 'defaultValue' | 'ref'> {
-  ref?: SelectMultipleElement | { current: SelectMultipleElement | null };
-  value?: Array<string | number>;
-  defaultValue?: Array<string | number>;
-  // eslint-disable-next-line no-unused-vars
-  onChange?(e: CustomEvent<{ key: Array<string | number>; item: SelectOption }>): void;
-}
-
-interface CustomElementTags {
-  'n-select': SelectSingleElement | SelectMultipleElement;
-}
-declare module 'solid-js' {
-  export namespace JSX {
-    export interface IntrinsicElements extends HTMLElementTags, CustomElementTags {}
+export type SelectSingleElement = CustomElement<SelectProps & { defaultValue?: string | number }>;
+export type SelectMultipleElement = CustomElement<
+  Omit<SelectProps, 'onChange' | 'value' | 'defaultValue'> & {
+    value?: Array<string | number>;
+    defaultValue?: Array<string | number>;
+    // eslint-disable-next-line no-unused-vars
+    onChange?(e: CustomEvent<{ key: Array<string | number>; item: SelectOption }>): void;
   }
-}
-declare global {
-  export namespace JSX {
-    export interface IntrinsicElements extends CustomElementTags, CustomElementTags {}
-  }
-}
+>;
 
 customElement(
   'n-select',
@@ -296,9 +278,6 @@ customElement(
     suffixIcon: undefined,
   },
   (_, opt) => {
-    if (!_.useShadow) {
-      noShadowDOM();
-    }
     const el = opt.element;
     const props = mergeProps(
       {
@@ -306,14 +285,14 @@ customElement(
           el.dispatchEvent(
             new CustomEvent('change', {
               detail: { key, item },
-            })
+            }),
           );
         },
       },
-      _
+      _,
     );
 
     return createComponent(Select, props);
-  }
+  },
 );
 export default Select;

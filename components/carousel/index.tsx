@@ -14,6 +14,7 @@ import { css, cx } from '@moneko/css';
 import { customElement } from 'solid-element';
 import { style } from './style';
 import { baseStyle } from '../theme';
+import type { CustomElement } from '../index';
 
 export interface CarouselProps {
   class?: string;
@@ -27,6 +28,8 @@ export interface CarouselProps {
   // eslint-disable-next-line no-unused-vars
   onChange?(e: number): void;
 }
+export type CarouselElement = CustomElement<CarouselProps>;
+
 function Carousel(_props: CarouselProps) {
   const props = mergeProps({ autoplay: -1, children: [] }, _props);
   const [left, setLeft] = createSignal(0);
@@ -154,24 +157,6 @@ function Carousel(_props: CarouselProps) {
   );
 }
 
-export interface CarouselElement extends CarouselProps {
-  ref?: CarouselElement | { current: CarouselElement | null };
-}
-
-interface CustomElementTags {
-  'n-carousel': CarouselElement;
-}
-declare module 'solid-js' {
-  export namespace JSX {
-    export interface IntrinsicElements extends HTMLElementTags, CustomElementTags {}
-  }
-}
-declare global {
-  export namespace JSX {
-    export interface IntrinsicElements extends CustomElementTags, CustomElementTags {}
-  }
-}
-
 customElement(
   'n-carousel',
   {
@@ -193,17 +178,17 @@ customElement(
           el.dispatchEvent(
             new CustomEvent('change', {
               detail: key,
-            })
+            }),
           );
         },
       },
-      _
+      _,
     );
 
     createEffect(() => {
       el.replaceChildren();
     });
     return createComponent(Carousel, props);
-  }
+  },
 );
 export default Carousel;

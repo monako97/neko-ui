@@ -32,7 +32,9 @@ export const style = css`
       inline-size: 100%;
       block-size: 100%;
       background-color: var(--c);
-      box-shadow: rgb(0 0 0 / 10%) 0 0 0 1px inset, rgb(0 0 0 / 10%) 0 0 4px inset;
+      box-shadow:
+        rgb(0 0 0 / 10%) 0 0 0 1px inset,
+        rgb(0 0 0 / 10%) 0 0 4px inset;
       text-shadow: var(--text-shadow);
       content: '';
     }
@@ -62,7 +64,8 @@ export const style = css`
     position: relative;
     border-radius: 4px;
     block-size: 150px;
-    background: linear-gradient(to top, hsl(0deg 0% 0% / calc(var(--a))), transparent) 0 / 100%,
+    background:
+      linear-gradient(to top, hsl(0deg 0% 0% / calc(var(--a))), transparent) 0 / 100%,
       linear-gradient(
           to left,
           hsl(calc(var(--h)) 100% 50% / calc(var(--a))),
@@ -89,7 +92,10 @@ export const style = css`
       pointer-events: none;
       content: '';
       transform: translate(-50%, -50%);
-      box-shadow: inset 0 0 0 1px #fff, 0 0 1px rgb(0 0 0 / 20%), inset 0 0 2.5px 0 rgb(0 0 0 / 20%);
+      box-shadow:
+        inset 0 0 0 1px #fff,
+        0 0 1px rgb(0 0 0 / 20%),
+        inset 0 0 2.5px 0 rgb(0 0 0 / 20%);
     }
   }
 
@@ -215,7 +221,9 @@ export const style = css`
         border-radius: inherit;
         background-color: var(--c, transparent);
         opacity: 0;
-        transition: 0.3s transform ease, 0.3s opacity ease;
+        transition:
+          0.3s transform ease,
+          0.3s opacity ease;
       }
 
       &:hover::after {

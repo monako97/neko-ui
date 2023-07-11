@@ -2,6 +2,7 @@ import { For, type JSXElement } from 'solid-js';
 import { css, cx } from '@moneko/css';
 import { customElement } from 'solid-element';
 import { baseStyle } from '../theme';
+import type { CustomElement } from '..';
 
 const style = css`
   .box {
@@ -81,26 +82,11 @@ function Spin(props: SpinProps) {
   );
 }
 
-export interface SpinElement extends SpinProps {
-  ref?: SpinElement | { current: SpinElement | null };
-}
+export type SpinElement = CustomElement<SpinProps>;
 
-interface CustomElementTags {
-  'n-spin': SpinElement;
-}
-declare module 'solid-js' {
-  export namespace JSX {
-    export interface IntrinsicElements extends HTMLElementTags, CustomElementTags {}
-  }
-}
-declare global {
-  export namespace JSX {
-    export interface IntrinsicElements extends CustomElementTags, CustomElementTags {}
-  }
-}
 customElement(
   'n-spin',
   { class: undefined, css: undefined, spin: undefined, children: undefined },
-  Spin
+  Spin,
 );
 export default Spin;

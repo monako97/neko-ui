@@ -17,7 +17,10 @@ const baseCss = css`
     padding: 4px 8px;
     inline-size: fit-content;
     font-size: var(--font-size-sm);
-    transition: background-color 0.2s, color 0.2s, border-color 0.2s;
+    transition:
+      background-color 0.2s,
+      color 0.2s,
+      border-color 0.2s;
     animation-fill-mode: forwards;
     content: '复制成功';
   }
@@ -34,7 +37,9 @@ const baseCss = css`
     border-color: var(--error-border);
     color: var(--error-color);
     background-color: var(--error-bg);
-    animation: copy-slide-in 0.3s ease-in-out, error 1s ease-in-out 1s;
+    animation:
+      copy-slide-in 0.3s ease-in-out,
+      error 1s ease-in-out 1s;
     content: '复制失败';
   }
 
@@ -355,7 +360,10 @@ const baseCss = css`
     block-size: 4px;
     text-align: center;
     background-color: #fc625d;
-    box-shadow: 0 0 0 4px #fc625d, 20px 0 0 4px #fdbc40, 40px 0 0 4px #35cd4b;
+    box-shadow:
+      0 0 0 4px #fc625d,
+      20px 0 0 4px #fdbc40,
+      40px 0 0 4px #35cd4b;
     cursor: pointer;
     content: '';
   }
@@ -486,7 +494,7 @@ const darkCss = css`
 `;
 
 export const prismCss = createMemo(() => {
-  return baseCss + (theme.scheme === 'dark' ? darkCss : '');
+  return `${theme.scheme === 'dark' ? darkCss : ''}${baseCss}`;
 });
 
 export default Prism;

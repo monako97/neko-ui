@@ -1,7 +1,7 @@
 import { css, cx } from '@moneko/css';
 import { customElement } from 'solid-element';
 import Typography from '../typography';
-import type { CSSProperties } from '..';
+import type { CSSProperties, CustomElement } from '..';
 
 const style = css`
   .empty-container {
@@ -24,6 +24,8 @@ export interface EmptyProps {
   css?: string;
   style?: CSSProperties;
 }
+export type EmptyElement = CustomElement<EmptyProps>;
+
 function Empty(props: EmptyProps) {
   return (
     <>
@@ -37,23 +39,6 @@ function Empty(props: EmptyProps) {
   );
 }
 
-export interface EmptyElement extends EmptyProps {
-  ref?: EmptyElement | { current: EmptyElement | null };
-}
-
-interface CustomElementTags {
-  'n-empty': EmptyElement;
-}
-declare module 'solid-js' {
-  export namespace JSX {
-    export interface IntrinsicElements extends HTMLElementTags, CustomElementTags {}
-  }
-}
-declare global {
-  export namespace JSX {
-    export interface IntrinsicElements extends CustomElementTags, CustomElementTags {}
-  }
-}
 customElement(
   'n-empty',
   {
@@ -61,7 +46,7 @@ customElement(
     css: undefined,
     style: undefined,
   },
-  Empty
+  Empty,
 );
 
 export default Empty;

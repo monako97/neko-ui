@@ -10,8 +10,8 @@ import {
 import { isFunction } from '@moneko/common';
 import { css, cx } from '@moneko/css';
 import { customElement } from 'solid-element';
-import { type ComponentSize } from '../index';
 import { baseStyle } from '../theme';
+import type { ComponentSize, CustomElement } from '../index';
 
 const styles = css`
   .label {
@@ -24,7 +24,11 @@ const styles = css`
     text-overflow: ellipsis;
     color: var(--text-secondary);
     opacity: 0;
-    transition: transform 0.3s, opacity 0.3s, color 0.3s, background-color 0.3s;
+    transition:
+      transform 0.3s,
+      opacity 0.3s,
+      color 0.3s,
+      background-color 0.3s;
     line-height: 1.45;
     pointer-events: none;
     transform-origin: left;
@@ -77,7 +81,9 @@ const styles = css`
 
     &::placeholder {
       opacity: 0;
-      transition: color 0.3s, opacity 0.3s;
+      transition:
+        color 0.3s,
+        opacity 0.3s;
     }
 
     &:focus::placeholder {
@@ -303,25 +309,7 @@ function Input(props: InputProps) {
   );
 }
 
-export interface InputElement extends Omit<InputProps, 'onChange' | 'ref'> {
-  ref?: InputElement | { current: InputElement | null };
-  // eslint-disable-next-line no-unused-vars
-  onChange?(e: CustomEvent<string | number | undefined>): void;
-}
-
-interface CustomElementTags {
-  'n-input': InputElement;
-}
-declare module 'solid-js' {
-  export namespace JSX {
-    export interface IntrinsicElements extends HTMLElementTags, CustomElementTags {}
-  }
-}
-declare global {
-  export namespace JSX {
-    export interface IntrinsicElements extends CustomElementTags, CustomElementTags {}
-  }
-}
+export type InputElement = CustomElement<InputProps>;
 
 export const defaultInportProps = {
   class: undefined,
@@ -357,11 +345,11 @@ customElement('n-input', defaultInportProps, (_, opt) => {
         el.dispatchEvent(
           new CustomEvent('change', {
             detail: val,
-          })
+          }),
         );
       },
     },
-    _
+    _,
   );
 
   return createComponent(Input, props);

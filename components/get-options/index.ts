@@ -21,11 +21,13 @@ export const defaultFieldNames = {
   label: 'label',
   value: 'value',
   options: 'options',
+  icon: 'icon',
+  suffix: 'suffix',
 };
 
 function getOptions<T extends BaseOption = BaseOption>(
   list?: (T | string)[],
-  fieldNames?: Partial<FieldNames>
+  fieldNames?: Partial<FieldNames>,
 ): BaseOption[] {
   if (!list) return [];
   return list.map((item) => {

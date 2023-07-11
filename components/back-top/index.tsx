@@ -12,85 +12,15 @@ import { getMaxZindex, getScrollTop } from '@moneko/common';
 import { css, cx } from '@moneko/css';
 import { customElement } from 'solid-element';
 import { Portal } from 'solid-js/web';
+import { style } from './style';
 import { baseStyle, theme } from '../theme';
+import type { CustomElement } from '..';
 
 const themeStyle = createMemo(() => {
   const bg = theme.scheme === 'dark' ? 'rgb(255 255 255 / 45%)' : 'var(--primary-border)';
 
   return `:host {--back-top-bg: ${bg};}`;
 });
-
-const style = css`
-  :host {
-    --back-top-color: var(--on-primary-selection);
-    --back-top-hover-bg: var(--primary-hover);
-  }
-
-  .back-top {
-    position: sticky;
-    z-index: 9;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border-radius: 50%;
-    color: var(--back-top-color);
-    background-color: var(--back-top-bg);
-    box-shadow: var(--box-shadow-base);
-    transition: background-color var(--transition-duration), color var(--transition-duration);
-    inset-block-end: 50px;
-    inset-inline-start: calc(100% - 100px);
-    inline-size: 40px;
-    min-inline-size: 40px;
-    block-size: 40px;
-    min-block-size: 40px;
-    cursor: pointer;
-    animation: back-top-fade-in 1s forwards;
-    backdrop-filter: blur(16px);
-    pointer-events: all;
-
-    &::before {
-      content: '';
-      display: block;
-      inline-size: 16px;
-      block-size: 8px;
-      background-color: var(--back-top-color);
-      clip-path: polygon(0 100%, 50% 0, 100% 100%);
-    }
-
-    &:hover {
-      background-color: var(--back-top-hover-bg);
-    }
-  }
-
-  .back-top-out {
-    animation: back-top-fade-out 1s forwards;
-  }
-
-  @keyframes back-top-fade-in {
-    from {
-      transform: translate3d(0, 16px, 0) scale(1);
-      opacity: 0;
-    }
-
-    to {
-      transform: translate3d(0, 0, 0) scale(1);
-      opacity: 1;
-    }
-  }
-
-  @keyframes back-top-fade-out {
-    0%,
-    20% {
-      transform: translate3d(0, 0, 0);
-      opacity: 1;
-    }
-
-    100% {
-      transform: translate3d(0, 16px, 0);
-      opacity: 0;
-    }
-  }
-`;
 
 export interface BackTopProps {
   /** 设置需要监听其滚动事件的元素，值为一个selectors */
@@ -106,7 +36,7 @@ export interface BackTopProps {
 function BackTop(_props: BackTopProps) {
   const props = mergeProps(
     { target: window as unknown as HTMLElement, visibilityHeight: 400 },
-    _props
+    _props,
   );
   const [show, setShow] = createSignal<boolean | null>(null);
 
@@ -165,23 +95,7 @@ function BackTop(_props: BackTopProps) {
   );
 }
 
-export interface BackTopElement extends BackTopProps {
-  ref?: BackTopElement | { current: BackTopElement | null };
-}
-
-interface CustomElementTags {
-  'n-back-top': BackTopElement;
-}
-declare module 'solid-js' {
-  export namespace JSX {
-    export interface IntrinsicElements extends HTMLElementTags, CustomElementTags {}
-  }
-}
-declare global {
-  export namespace JSX {
-    export interface IntrinsicElements extends CustomElementTags, CustomElementTags {}
-  }
-}
+export type BackTopElement = CustomElement<BackTopProps>;
 
 customElement(
   'n-back-top',
@@ -210,13 +124,13 @@ customElement(
         mount: el.renderRoot as HTMLElement,
         target: el.target,
       },
-      _
+      _,
     );
 
     createEffect(() => {
       el.removeAttribute('css');
     });
     return createComponent(BackTop, props);
-  }
+  },
 );
 export default BackTop;

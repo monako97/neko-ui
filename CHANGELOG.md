@@ -1,4 +1,4 @@
-# [2.0.0-beta.10](https://github.com/monako97/neko-ui/compare/1.7.3...2.0.0-beta.10) (2023-07-10)
+# [2.0.0-beta.11](https://github.com/monako97/neko-ui/compare/1.7.3...2.0.0-beta.11) (2023-07-11)
 
 
 ### Features

@@ -3,7 +3,7 @@ import { css, cx } from '@moneko/css';
 import { customElement } from 'solid-element';
 import { Dynamic } from 'solid-js/web';
 import { baseStyle } from '../theme';
-import type { CSSProperties } from '..';
+import type { CSSProperties, CustomElement } from '..';
 
 export type TypographyType = 'success' | 'danger' | 'warning' | 'primary' | 'secondary' | 'text';
 export interface TypographyProps {
@@ -23,7 +23,7 @@ function Typography(props: TypographyProps) {
       type: 'text',
       tag: 'span',
     },
-    props
+    props,
   );
   const customCss = createMemo(() => {
     let color = props.type === 'secondary' ? '--text-secondary' : `--${props.type}-color`;
@@ -76,23 +76,8 @@ function Typography(props: TypographyProps) {
   );
 }
 
-export interface TypographyElement extends TypographyProps {
-  ref?: TypographyElement | { current: TypographyElement | null };
-}
+export type TypographyElement = CustomElement<TypographyProps>;
 
-interface CustomElementTags {
-  'n-typography': TypographyElement;
-}
-declare module 'solid-js' {
-  export namespace JSX {
-    export interface IntrinsicElements extends HTMLElementTags, CustomElementTags {}
-  }
-}
-declare global {
-  export namespace JSX {
-    export interface IntrinsicElements extends CustomElementTags, CustomElementTags {}
-  }
-}
 customElement(
   'n-typography',
   {
@@ -110,13 +95,13 @@ customElement(
       {
         children: [...el.childNodes.values()],
       },
-      _
+      _,
     );
 
     createEffect(() => {
       el.replaceChildren();
     });
     return createComponent(Typography, props);
-  }
+  },
 );
 export default Typography;

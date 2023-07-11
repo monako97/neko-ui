@@ -1,5 +1,6 @@
 import { css } from '@moneko/css';
 import { customElement } from 'solid-element';
+import type { CustomElement } from 'neko-ui';
 import { projectInfo } from '@/utils';
 
 function Footer() {
@@ -50,8 +51,6 @@ function Footer() {
   );
 }
 
-export interface FooterElement {
-  ref?: FooterElement | { current: FooterElement | null };
-}
+export type FooterElement = CustomElement;
 
 customElement('site-footer', Footer);

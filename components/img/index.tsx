@@ -11,6 +11,7 @@ import { cx } from '@moneko/css';
 import { customElement } from 'solid-element';
 import { Portal } from 'solid-js/web';
 import { imgCss, style } from './style';
+import type { CustomElement } from '..';
 
 export interface ImgProps {
   src?: string;
@@ -21,6 +22,7 @@ export interface ImgProps {
   maskClosable?: boolean;
   escClosable?: boolean;
 }
+export type ImgElement = CustomElement<ImgProps>;
 
 function Img(props: ImgProps) {
   const [open, setOpen] = createSignal<boolean | null>(null);
@@ -86,10 +88,6 @@ function Img(props: ImgProps) {
     });
   });
 
-  // onCleanup(() => {
-  //   setOpen(null);
-  // });
-
   return (
     <>
       <style>{imgCss}</style>
@@ -121,24 +119,6 @@ function Img(props: ImgProps) {
   );
 }
 
-export interface ImgElement extends ImgProps {
-  ref?: ImgElement | { current: ImgElement | null };
-}
-
-interface CustomElementTags {
-  'n-img': ImgElement;
-}
-declare module 'solid-js' {
-  export namespace JSX {
-    export interface IntrinsicElements extends HTMLElementTags, CustomElementTags {}
-  }
-}
-declare global {
-  export namespace JSX {
-    export interface IntrinsicElements extends CustomElementTags, CustomElementTags {}
-  }
-}
-
 customElement(
   'n-img',
   {
@@ -156,14 +136,14 @@ customElement(
           opt.element.dispatchEvent(
             new CustomEvent('openchange', {
               detail: open,
-            })
+            }),
           );
         },
       },
-      _
+      _,
     );
 
     return createComponent(Img, props);
-  }
+  },
 );
 export default Img;

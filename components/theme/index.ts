@@ -58,16 +58,16 @@ export function generateTheme(base: string, option: ThemeOption): Record<string,
     [`--${option.name}-outline`]: mixColor(obj[90], obj[40], 5),
     [`--${option.name}-selection`]: obj[90],
     [`--on-${option.name}-selection`]: obj[10],
-    [`--${option.name}-shadow`]: baseColor.setAlpha(0.12).toHexaString(),
+    [`--${option.name}-shadow`]: baseColor.setAlpha(0.12).toRgbaString(),
     [`--${option.name}-details-bg`]: obj[95],
     [`--${option.name}-component-bg`]: obj[98],
     [`--${option.name}-bg`]: obj[99],
     [`--on-${option.name}-bg`]: obj[5],
     [`--${option.name}-base-shadow`]: `0 3px 6px -4px ${baseColor
       .setAlpha(0.12)
-      .toHexaString()}, 0 6px 16px 0 ${baseColor
+      .toRgbaString()}, 0 6px 16px 0 ${baseColor
       .setAlpha(0.08)
-      .toHexaString()}, 0 9px 28px 8px ${baseColor.setAlpha(0.05).toHexaString()}`,
+      .toRgbaString()}, 0 9px 28px 8px ${baseColor.setAlpha(0.05).toRgbaString()}`,
   };
 }
 
@@ -103,13 +103,13 @@ const lightCss = createMemo(() => {
   `;
 });
 const darkPrimary = createMemo(() =>
-  generateTheme(theme.dark.primary, { name: 'primary', dark: true })
+  generateTheme(theme.dark.primary, { name: 'primary', dark: true }),
 );
 const darkWarning = createMemo(() =>
-  generateTheme(theme.dark.warning, { name: 'warning', dark: true })
+  generateTheme(theme.dark.warning, { name: 'warning', dark: true }),
 );
 const darkSuccess = createMemo(() =>
-  generateTheme(theme.dark.success, { name: 'success', dark: true })
+  generateTheme(theme.dark.success, { name: 'success', dark: true }),
 );
 const darkError = createMemo(() => generateTheme(theme.dark.error, { name: 'error', dark: true }));
 

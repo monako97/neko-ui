@@ -10,6 +10,7 @@ import { passiveSupported } from '@moneko/common';
 import { css, cx } from '@moneko/css';
 import { customElement } from 'solid-element';
 import Input, { type InputProps, defaultInportProps } from '../input';
+import type { CustomElement } from '..';
 
 const style = css`
   /** 隐藏原生加减控件 */
@@ -35,6 +36,7 @@ export interface InputNumberProps extends Omit<InputProps, 'value' | 'defaultVal
   /** 数值精度 */
   precision?: number;
 }
+export type InputNumberElement = CustomElement<InputNumberProps>;
 
 function InputNumber(props: InputNumberProps) {
   const [move, setMove] = createSignal(false);
@@ -81,7 +83,7 @@ function InputNumber(props: InputNumberProps) {
       css: style + (props.css || ''),
       // eslint-disable-next-line @typescript-eslint/no-use-before-define
       onChange: change,
-    }
+    },
   );
 
   function change(val?: string | number) {
@@ -120,25 +122,6 @@ function InputNumber(props: InputNumberProps) {
 
   return createComponent(Input, _ as InputProps);
 }
-export interface InputNumberElement extends Omit<InputNumberProps, 'onChange' | 'ref'> {
-  ref?: InputNumberElement | { current: InputNumberElement | null };
-  // eslint-disable-next-line no-unused-vars
-  onChange?(e: CustomEvent<number | undefined>): void;
-}
-
-interface CustomElementTags {
-  'n-input-number': InputNumberElement;
-}
-declare module 'solid-js' {
-  export namespace JSX {
-    export interface IntrinsicElements extends HTMLElementTags, CustomElementTags {}
-  }
-}
-declare global {
-  export namespace JSX {
-    export interface IntrinsicElements extends CustomElementTags, CustomElementTags {}
-  }
-}
 
 customElement(
   'n-input-number',
@@ -160,15 +143,15 @@ customElement(
           el.dispatchEvent(
             new CustomEvent('change', {
               detail: val,
-            })
+            }),
           );
         },
       },
-      _
+      _,
     );
 
     return createComponent(InputNumber, props);
-  }
+  },
 );
 
 export default InputNumber;

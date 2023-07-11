@@ -1,5 +1,6 @@
 import {
   For,
+  type JSXElement,
   Show,
   createComponent,
   createEffect,
@@ -12,14 +13,16 @@ import {
 } from 'solid-js';
 import { isFunction } from '@moneko/common';
 import { cx } from '@moneko/css';
-import { customElement, noShadowDOM } from 'solid-element';
+import { customElement } from 'solid-element';
 import { style } from './style';
 import Empty from '../empty';
 import getOptions, { type BaseOption, type FieldNames, defaultFieldNames } from '../get-options';
 import Popover, { type PopoverProps, defaultProps as popoverProps } from '../popover';
+import type { CustomElement } from '..';
 
 export interface DropdownOption extends BaseOption {
   handleClosed?: boolean;
+  suffix?: JSXElement;
   options?: DropdownOption[];
 }
 
@@ -43,6 +46,8 @@ export interface DropdownMultipleProps extends BaseDropdownProps {
   value?: (string | number)[];
   defaultValue?: (string | number)[];
 }
+export type DropdownSingleElement = CustomElement<DropdownProps>;
+export type DropdownMultipleElement = CustomElement<DropdownMultipleProps>;
 
 function Dropdown(props: DropdownProps | DropdownMultipleProps) {
   const [local, other] = splitProps(props, [
@@ -116,7 +121,7 @@ function Dropdown(props: DropdownProps | DropdownMultipleProps) {
   }
 
   function renderMenu(list: DropdownOption[]) {
-    const { options: optionsKey, label, value: valueKey } = fieldNames();
+    const { options: optionsKey, label, value: valueKey, icon, suffix } = fieldNames();
 
     return (
       <For each={list}>
@@ -125,10 +130,13 @@ function Dropdown(props: DropdownProps | DropdownMultipleProps) {
             return (
               <div class={cx('group', item.class)}>
                 <span class="group-title">
-                  <Show when={item.icon}>
-                    <span class="icon">{item.icon}</span>
+                  <Show when={item[icon]}>
+                    <span class="icon">{item[icon]}</span>
                   </Show>
                   {item[label]}
+                  <Show when={item[suffix]}>
+                    <n-typography type="secondary">{item[suffix]}</n-typography>
+                  </Show>
                 </span>
                 {renderMenu(item[optionsKey])}
               </div>
@@ -144,10 +152,13 @@ function Dropdown(props: DropdownProps | DropdownMultipleProps) {
               onMouseDown={preventDefault}
               onClick={change.bind(null, item)}
             >
-              <Show when={item.icon}>
-                <span class="icon">{item.icon}</span>
+              <Show when={item[icon]}>
+                <span class="icon">{item[icon]}</span>
               </Show>
               {item[label]}
+              <Show when={item[suffix]}>
+                <n-typography type="secondary">{item[suffix]}</n-typography>
+              </Show>
             </div>
           );
         }}
@@ -199,37 +210,6 @@ function Dropdown(props: DropdownProps | DropdownMultipleProps) {
   );
 }
 
-export interface DropdownSingleElement extends Omit<DropdownProps, 'onChange' | 'onOpenChange'> {
-  ref?: DropdownSingleElement | { current: DropdownSingleElement | null };
-  // eslint-disable-next-line no-unused-vars
-  onChange?(e: CustomEvent<{ key: string | number; item: DropdownOption }>): void;
-  // eslint-disable-next-line no-unused-vars
-  onOpenChange?(open: CustomEvent<boolean | null>): void;
-}
-
-export interface DropdownMultipleElement
-  extends Omit<DropdownMultipleProps, 'onChange' | 'onOpenChange'> {
-  ref?: DropdownMultipleElement | { current: DropdownMultipleElement | null };
-  // eslint-disable-next-line no-unused-vars
-  onChange?(e: CustomEvent<{ key: Array<string | number>; item: DropdownOption }>): void;
-  // eslint-disable-next-line no-unused-vars
-  onOpenChange?(open: CustomEvent<boolean | null>): void;
-}
-
-interface CustomElementTags {
-  'n-dropdown': DropdownSingleElement | DropdownMultipleElement;
-}
-declare module 'solid-js' {
-  export namespace JSX {
-    export interface IntrinsicElements extends HTMLElementTags, CustomElementTags {}
-  }
-}
-declare global {
-  export namespace JSX {
-    export interface IntrinsicElements extends CustomElementTags, CustomElementTags {}
-  }
-}
-
 export const defaultProps = {
   ...popoverProps,
   selectable: undefined,
@@ -243,9 +223,6 @@ export const defaultProps = {
 };
 
 customElement('n-dropdown', defaultProps, (_, opt) => {
-  if (!_.useShadow) {
-    noShadowDOM();
-  }
   const el = opt.element;
   const props = mergeProps(
     {
@@ -253,19 +230,19 @@ customElement('n-dropdown', defaultProps, (_, opt) => {
         el.dispatchEvent(
           new CustomEvent('change', {
             detail: { key, item },
-          })
+          }),
         );
       },
       onOpenChange(key: boolean | null) {
         el.dispatchEvent(
           new CustomEvent('openchange', {
             detail: key,
-          })
+          }),
         );
       },
       children: [...el.childNodes.values()],
     } as DropdownProps,
-    _
+    _,
   );
 
   return createComponent(Dropdown, props);

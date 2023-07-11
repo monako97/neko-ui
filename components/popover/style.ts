@@ -27,6 +27,8 @@ export const portalCss = css`
       drop-shadow(2px calc(var(--direction) * 4px) 16px var(--popover-shadow-color));
     min-inline-size: 100px;
     backdrop-filter: blur(16px);
+    /* stylelint-disable-next-line */
+    -webkit-backdrop-filter: blur(16px);
     box-sizing: border-box;
   }
 

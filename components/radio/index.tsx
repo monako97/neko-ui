@@ -3,6 +3,7 @@ import { css, cx } from '@moneko/css';
 import { customElement } from 'solid-element';
 import getOptions, { type BaseOption, type FieldNames, defaultFieldNames } from '../get-options';
 import { baseStyle } from '../theme';
+import type { CustomElement } from '..';
 
 const style = css`
   .box {
@@ -119,7 +120,7 @@ const style = css`
   ${['success', 'error', 'warning']
     .map(
       (s) =>
-        `.${s} {--border-color: var(--${s}-border);--primary-hover: var(--${s}-hover);--primary-outline: var(--${s}-outline);--primary-color: var(--${s}-color);--primary-active: var(--${s}-active);--component-bg: var(--${s}-bg);}`
+        `.${s} {--border-color: var(--${s}-border);--primary-hover: var(--${s}-hover);--primary-outline: var(--${s}-outline);--primary-color: var(--${s}-color);--primary-active: var(--${s}-active);--component-bg: var(--${s}-bg);}`,
     )
     .join('')}
 `;
@@ -210,25 +211,8 @@ function Radio(props: RadioProps) {
   );
 }
 
-export interface RadioElement extends Omit<RadioProps, 'onChange'> {
-  ref?: RadioElement | { current: RadioElement | null };
-  // eslint-disable-next-line no-unused-vars
-  onChange?(val: CustomEvent<string>): void;
-}
+export type RadioElement = CustomElement<RadioProps>;
 
-interface CustomElementTags {
-  'n-radio': RadioElement;
-}
-declare module 'solid-js' {
-  export namespace JSX {
-    export interface IntrinsicElements extends HTMLElementTags, CustomElementTags {}
-  }
-}
-declare global {
-  export namespace JSX {
-    export interface IntrinsicElements extends CustomElementTags, CustomElementTags {}
-  }
-}
 customElement(
   'n-radio',
   {
@@ -251,14 +235,14 @@ customElement(
           el.dispatchEvent(
             new CustomEvent('change', {
               detail: next,
-            })
+            }),
           );
         },
       },
-      _
+      _,
     );
 
     return createComponent(Radio, props);
-  }
+  },
 );
 export default Radio;

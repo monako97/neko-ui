@@ -13,7 +13,8 @@ import { downloadBlob, isFunction } from '@moneko/common';
 import { cx } from '@moneko/css';
 import { customElement } from 'solid-element';
 import { style } from './style';
-import { type ButtonProps } from '../button';
+import { baseStyle } from '../theme';
+import type { ButtonType, CustomElement } from '../index';
 
 declare interface MediaRecorderDataAvailableEvent extends Event {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -66,6 +67,7 @@ export interface CaptureScreenProps {
   // eslint-disable-next-line no-unused-vars
   onSaveRecorder?: (blob: Blob, fileName: string) => void;
 }
+export type CaptureScreenElement = CustomElement<CaptureScreenProps>;
 
 const displayMediaOptions: MediaStreamConstraints = {
   video: true,
@@ -76,7 +78,7 @@ const displayMediaOptions: MediaStreamConstraints = {
   },
 };
 
-const btnStatusDic: Record<MediaRecorder['state'], ButtonProps['type']> = {
+const btnStatusDic: Record<MediaRecorder['state'], ButtonType> = {
   inactive: 'primary',
   paused: 'warning',
   recording: 'success',
@@ -94,7 +96,7 @@ function CaptureScreen(_: CaptureScreenProps) {
       recorderingText: '录制中',
       onErrorRecorder: null,
     },
-    _
+    _,
   );
   const [local, props] = splitProps(_props, [
     'options',
@@ -265,7 +267,10 @@ function CaptureScreen(_: CaptureScreenProps) {
 
   return (
     <>
-      <style>{style}</style>
+      <style>
+        {baseStyle()}
+        {style}
+      </style>
       <div class={cx('capture-screen', local.class)} {...props}>
         <div class="controller">
           <n-button onClick={startCapture} class="btn">
@@ -300,7 +305,7 @@ function CaptureScreen(_: CaptureScreenProps) {
             <span
               class={cx(
                 recordState() === 'recording' && 'recording',
-                recordState() === 'paused' && 'paused'
+                recordState() === 'paused' && 'paused',
               )}
             />
             <video ref={videoElem} autoplay controls={local.controls && mediaStream() !== null} />
@@ -309,24 +314,6 @@ function CaptureScreen(_: CaptureScreenProps) {
       </div>
     </>
   );
-}
-
-export interface CaptureScreenElement extends CaptureScreenProps {
-  ref?: CaptureScreenElement | { current: CaptureScreenElement | null };
-}
-
-interface CustomElementTags {
-  'n-capture-screen': CaptureScreenElement;
-}
-declare module 'solid-js' {
-  export namespace JSX {
-    export interface IntrinsicElements extends HTMLElementTags, CustomElementTags {}
-  }
-}
-declare global {
-  export namespace JSX {
-    export interface IntrinsicElements extends CustomElementTags, CustomElementTags {}
-  }
 }
 
 customElement(
@@ -362,64 +349,64 @@ customElement(
           el.dispatchEvent(
             new CustomEvent('recordererror', {
               detail: e,
-            })
+            }),
           );
         },
         onStopRecorder() {
           el.dispatchEvent(
             new CustomEvent('stoprecorder', {
               detail: null,
-            })
+            }),
           );
         },
         onStartRecorder(state: MediaRecorder['state']) {
           el.dispatchEvent(
             new CustomEvent('startrecorder', {
               detail: state,
-            })
+            }),
           );
         },
         onRecorderDataAvailable(e: MediaRecorderDataAvailableEvent) {
           el.dispatchEvent(
             new CustomEvent('recorderdataavailable', {
               detail: e,
-            })
+            }),
           );
         },
         onErrorCapture(e: Error) {
           el.dispatchEvent(
             new CustomEvent('errorcapture', {
               detail: e,
-            })
+            }),
           );
         },
         onStopCapture() {
           el.dispatchEvent(
             new CustomEvent('stopcapture', {
               detail: null,
-            })
+            }),
           );
         },
         onStartCapture(stream?: MediaStream) {
           el.dispatchEvent(
             new CustomEvent('startcapture', {
               detail: stream,
-            })
+            }),
           );
         },
         onSaveRecorder(blob: Blob, fileName: string) {
           el.dispatchEvent(
             new CustomEvent('saverecorder', {
-              detail: { blob, fileName },
-            })
+              detail: [blob, fileName],
+            }),
           );
         },
       },
-      _
+      _,
     );
 
     return createComponent(CaptureScreen, props);
-  }
+  },
 );
 
 export default CaptureScreen;

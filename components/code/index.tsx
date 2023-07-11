@@ -11,79 +11,10 @@ import {
 import { isFunction, setClipboard, throttle } from '@moneko/common';
 import { css, cx } from '@moneko/css';
 import { customElement } from 'solid-element';
+import { style } from './style';
 import Prism, { prismCss } from '../prism';
 import { baseStyle } from '../theme';
-
-const codeEditorCss = css`
-  .not-toolbar code {
-    padding-block-start: 8px !important;
-
-    .line-numbers-rows {
-      padding-block-start: 8px !important;
-    }
-  }
-
-  .n-editor {
-    --font-size: 13px;
-
-    margin-block-start: 0;
-    position: relative;
-
-    textarea {
-      position: absolute;
-      z-index: 1;
-      margin: 0;
-      border: none;
-      padding: 0;
-      font-size: var(--font-size);
-      white-space: inherit;
-      color: transparent;
-      background-color: transparent;
-      outline: none;
-      resize: none;
-      box-sizing: border-box;
-      inset-block-start: 32px;
-      inset-inline-start: 16px;
-      inset-inline-end: 16px;
-      inset-block-end: 8px;
-      min-block-size: 64px;
-      caret-color: var(--text-color);
-      block-size: fit-content;
-      line-height: inherit !important;
-
-      &.line-numbers {
-        inset-inline-start: 54px;
-        inset-inline-end: 10px;
-      }
-
-      &.not-toolbar {
-        inset-block-start: 8px;
-        min-block-size: 20px;
-      }
-    }
-
-    pre {
-      margin-block-start: 0 !important;
-      pointer-events: none;
-      inline-size: 100%;
-      block-size: 100%;
-      min-block-size: 65px;
-      line-height: inherit !important;
-
-      &.not-toolbar {
-        min-block-size: 36px;
-      }
-
-      .toolbar {
-        pointer-events: all;
-      }
-
-      code {
-        line-height: inherit !important;
-      }
-    }
-  }
-`;
+import type { CustomElement } from '..';
 
 export interface CodeProps {
   class?: string;
@@ -97,6 +28,8 @@ export interface CodeProps {
   // eslint-disable-next-line no-unused-vars
   onChange?(code: string): void;
 }
+
+export type CodeElement = CustomElement<CodeProps>;
 
 function Code(props: CodeProps) {
   let codeEl: HTMLPreElement;
@@ -114,7 +47,7 @@ function Code(props: CodeProps) {
           `language-${props.lang}`,
           props.lineNumber && 'line-numbers',
           !props.toolbar && 'not-toolbar',
-          !props.edit && props.class
+          !props.edit && props.class,
         )}
       >
         <Show when={props.toolbar}>
@@ -169,7 +102,7 @@ function Code(props: CodeProps) {
       <style>
         {baseStyle()}
         {prismCss()}
-        {codeEditorCss}
+        {style}
         {css(props.css || '')}
       </style>
       <Show when={props.edit} fallback={pre()}>
@@ -185,26 +118,6 @@ function Code(props: CodeProps) {
       </Show>
     </>
   );
-}
-
-export interface CodeElement extends Omit<CodeProps, 'onChange'> {
-  ref?: CodeElement | { current: CodeElement | null };
-  // eslint-disable-next-line no-unused-vars
-  onChange?(event: CustomEvent<string>): void;
-}
-
-interface CustomElementTags {
-  'n-code': CodeElement;
-}
-declare module 'solid-js' {
-  export namespace JSX {
-    export interface IntrinsicElements extends HTMLElementTags, CustomElementTags {}
-  }
-}
-declare global {
-  export namespace JSX {
-    export interface IntrinsicElements extends CustomElementTags, CustomElementTags {}
-  }
 }
 
 customElement(
@@ -230,11 +143,11 @@ customElement(
           el.dispatchEvent(
             new CustomEvent('change', {
               detail: val,
-            })
+            }),
           );
         },
       },
-      _
+      _,
     );
 
     createEffect(() => {
@@ -243,6 +156,6 @@ customElement(
     });
 
     return createComponent(Code, props);
-  }
+  },
 );
 export default Code;

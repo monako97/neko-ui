@@ -14,7 +14,7 @@ import { css, cx } from '@moneko/css';
 import { customElement } from 'solid-element';
 import schema from '../from-schema';
 import { baseStyle } from '../theme';
-import type { ComponentSize } from '../index';
+import type { ComponentSize, CustomElement } from '../index';
 
 const sizeCnt = {
   small: 6,
@@ -337,7 +337,7 @@ function Tree(props: TreeProps) {
   const [treeData, setTreeData] = createSignal<TreeData[]>([]);
   const rtl = createMemo(() => props.direction === 'rtl');
   const current = createMemo(() =>
-    props.value ? (Array.isArray(props.value) ? props.value : [props.value]) : []
+    props.value ? (Array.isArray(props.value) ? props.value : [props.value]) : [],
   );
 
   function handleChange(key: string) {
@@ -383,7 +383,7 @@ function Tree(props: TreeProps) {
                 class={cx(
                   'row',
                   current().includes(key) && 'active',
-                  (props.readonly || !isFunction(props.onChange)) && 'non'
+                  (props.readonly || !isFunction(props.onChange)) && 'non',
                 )}
                 onClick={(e) => handleClick(e, item)}
                 onDblClick={(e) => props.onRowDoubleClick?.(e, key, item)}
@@ -394,7 +394,7 @@ function Tree(props: TreeProps) {
                 {renderItem(
                   item,
                   <span class="title">{(rtl() ? _title.reverse() : _title).join(': ')}</span>,
-                  subTitle && <span class="sub-title">{subTitle}</span>
+                  subTitle && <span class="sub-title">{subTitle}</span>,
                 )}
               </li>
               {children ? renderTreeRow(children, depth + 1) : null}
@@ -436,7 +436,7 @@ function Tree(props: TreeProps) {
     const data = props.data;
 
     const _data = cloneDeep(
-      typeof data === 'string' ? parseTree(data) : props.fromSchema ? schema(data) : data
+      typeof data === 'string' ? parseTree(data) : props.fromSchema ? schema(data) : data,
     ) as TreeData[];
 
     setLines([...new Set(countLineLen(_data))]);
@@ -471,51 +471,13 @@ function Tree(props: TreeProps) {
   );
 }
 
-// eslint-disable-next-line no-unused-vars
-type TreeChange = (e: CustomEvent<string>) => void;
-// eslint-disable-next-line no-unused-vars
-type TreeMultipleChange = (e: CustomEvent<string[]>) => void;
-export interface TreeSingleElement extends Omit<TreeSingleProps, 'onChange'> {
-  ref?: TreeSingleElement | { current: TreeSingleElement | null };
-  onChange?: TreeChange;
-}
+export type TreeSingleElement = CustomElement<TreeSingleProps>;
+export type TreeSingleSchemaElement = CustomElement<TreeSingleSchemaProps>;
+export type TreeSingleStringElement = CustomElement<TreeSingleStringProps>;
 
-export interface TreeSingleSchemaElement extends Omit<TreeSingleSchemaProps, 'onChange'> {
-  ref?: TreeSingleSchemaElement | { current: TreeSingleSchemaElement | null };
-  onChange?: TreeChange;
-}
-export interface TreeSingleStringElement extends Omit<TreeSingleStringProps, 'onChange'> {
-  ref?: TreeSingleStringElement | { current: TreeSingleStringElement | null };
-  onChange?: TreeChange;
-}
-
-export interface TreeMultipleElement extends Omit<TreeMultipleProps, 'onChange'> {
-  ref?: TreeMultipleElement | { current: TreeMultipleElement | null };
-  onChange?: TreeMultipleChange;
-}
-
-export interface TreeMultipleSchemaElement extends Omit<TreeMultipleSchemaProps, 'onChange'> {
-  ref?: TreeMultipleSchemaElement | { current: TreeMultipleSchemaElement | null };
-  onChange?: TreeMultipleChange;
-}
-export interface TreeMultipleStringElement extends Omit<TreeMultipleStringProps, 'onChange'> {
-  ref?: TreeMultipleStringElement | { current: TreeMultipleStringElement | null };
-  onChange?: TreeMultipleChange;
-}
-
-interface CustomElementTags {
-  'n-tree': TreeSingleElement | TreeMultipleElement;
-}
-declare module 'solid-js' {
-  export namespace JSX {
-    export interface IntrinsicElements extends HTMLElementTags, CustomElementTags {}
-  }
-}
-declare global {
-  export namespace JSX {
-    export interface IntrinsicElements extends CustomElementTags, CustomElementTags {}
-  }
-}
+export type TreeMultipleElement = CustomElement<TreeMultipleProps>;
+export type TreeMultipleSchemaElement = CustomElement<TreeMultipleSchemaProps>;
+export type TreeMultipleStringElement = CustomElement<TreeMultipleStringProps>;
 
 customElement(
   'n-tree',
@@ -553,36 +515,28 @@ customElement(
           el.dispatchEvent(
             new CustomEvent('change', {
               detail: key,
-            })
+            }),
           );
         },
         onRowClick(e: MouseEvent, key: string, item: TreeData) {
           el.dispatchEvent(
             new CustomEvent('rowclick', {
               detail: [e, key, item],
-            })
+            }),
           );
         },
         onRowDoubleClick(e: MouseEvent, key: string, item: TreeData) {
           el.dispatchEvent(
             new CustomEvent('rowdoubleclick', {
               detail: [e, key, item],
-            })
+            }),
           );
         },
-        // renderRow(item: TreeData, title: JSXElement, subTitle?: JSXElement) {
-        //   el.dispatchEvent(
-        //     new CustomEvent('rowdoubleclick', {
-        //       detail: [item, title, subTitle],
-        //     })
-        //   );
-        //   return [title, subTitle];
-        // },
       },
-      _
+      _,
     );
 
     return createComponent(Tree, props);
-  }
+  },
 );
 export default Tree;

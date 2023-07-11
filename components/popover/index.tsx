@@ -12,11 +12,11 @@ import {
 } from 'solid-js';
 import { isElementInside, isFunction, passiveSupported } from '@moneko/common';
 import { css, cx } from '@moneko/css';
-import { customElement, noShadowDOM } from 'solid-element';
+import { customElement } from 'solid-element';
 import { Portal } from 'solid-js/web';
 import { popoverCss, portalCss } from './style';
 import { baseStyle, theme } from '../theme';
-import type { CSSProperties, ComponentSize } from '..';
+import type { CSSProperties, ComponentSize, CustomElement } from '..';
 
 export type TriggerOption = 'hover' | 'click' | 'contextMenu' | 'none';
 
@@ -73,7 +73,7 @@ function Popover(props: PopoverProps) {
     {
       trigger: 'hover' as TriggerOption,
     },
-    props
+    props,
   );
   const [local] = splitProps(mp, [
     'class',
@@ -148,7 +148,7 @@ function Popover(props: PopoverProps) {
           openChange(false);
         }
       },
-      local.trigger === 'hover' ? 300 : 0
+      local.trigger === 'hover' ? 300 : 0,
     );
   }
   function showPortal(e?: Event) {
@@ -249,7 +249,7 @@ function Popover(props: PopoverProps) {
       },
       closeFn && {
         [closeFn]: close,
-      }
+      },
     );
 
     return _props;
@@ -268,7 +268,7 @@ function Popover(props: PopoverProps) {
       local.arrow && 'arrow',
       `${open() ? 'in' : 'out'}-${up() ? 'up' : 'down'}`,
       local.size,
-      local.popupClass
+      local.popupClass,
     );
   });
   const hostStyle = createMemo(() => {
@@ -326,27 +326,7 @@ function Popover(props: PopoverProps) {
   );
 }
 
-export interface PopoverElement extends Omit<PopoverProps, 'onOpenChange' | 'ref'> {
-  ref?: PopoverElement | { current: PopoverElement | null };
-  // eslint-disable-next-line no-unused-vars
-  onOpenChange?(open: CustomEvent<boolean | null>): void;
-  useShadow?: boolean;
-}
-
-interface CustomElementTags {
-  'n-popover': PopoverElement;
-}
-
-declare module 'solid-js' {
-  export namespace JSX {
-    export interface IntrinsicElements extends HTMLElementTags, CustomElementTags {}
-  }
-}
-declare global {
-  export namespace JSX {
-    export interface IntrinsicElements extends Object, CustomElementTags {}
-  }
-}
+export type PopoverElement = CustomElement<PopoverProps>;
 
 export const defaultProps = {
   class: undefined,
@@ -363,12 +343,8 @@ export const defaultProps = {
   placement: undefined,
   css: undefined,
   dropdownMatchSelectWidth: undefined,
-  useShadow: true,
 };
 customElement('n-popover', defaultProps, (_, opt) => {
-  if (!_.useShadow) {
-    noShadowDOM();
-  }
   const el = opt.element;
   const props = mergeProps(
     {
@@ -376,12 +352,12 @@ customElement('n-popover', defaultProps, (_, opt) => {
         el.dispatchEvent(
           new CustomEvent('openchange', {
             detail: next,
-          })
+          }),
         );
       },
       children: [...el.childNodes.values()],
     },
-    _
+    _,
   );
 
   return createComponent(Popover, props);

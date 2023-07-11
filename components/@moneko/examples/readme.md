@@ -11,23 +11,14 @@ root_folder/
 |   |-- index.ts
 |   `-- wave-circle/ 组件源码
 |       |-- examples/ 组件案例
-|       |   `-- 案例代码 demo.mdx
+|       |   `-- 案例代码 demo.md
 |       |-- index.tsx
-|       `-- 文档排版，配合案例代码使用 README.mdx
+|       `-- README.mdx 文档, 将视为单独一个页面
 |-- config/
-|   `-- 默认环境配置 index.ts
-|   `-- 额外配置，当运行 `npm start --config=prod` 时会加载 prod.ts
+|   |-- index.ts 默认环境配置
+|   `-- prod.ts 额外配置，当运行 `yarn build config=prod` 时会加载 prod.ts 文件对默认配置进行补充
 |-- docs/ 编译的文档
-|   |-- index.js
-|   `-- index.html
-|-- es/ 编译的组件
-|   |-- index.js
-|   `-- wave-circle/
-|       `-- index.js
 |-- lib/ 编译的组件
-|   |-- index.js
-|   `-- wave-circle/
-|       `-- index.js
 |-- .eslintrc.yaml
 |-- .gitattributes
 |-- .prettierrc.yaml
@@ -88,8 +79,6 @@ root_folder/
   export default Demo;
   ```
 
-- **components 中的组件源码，开发中不能导入 node_modules 及 components 文件夹之外的代码，以及不能导入 README.mdx 和 examples 命名的文件夹下的代码，编译后不包含 README.mdx 和 examples**
-
 - **README.mdx 不支持 gmf，比如 table，如需要如需要使用可通过以下方式导入外部.md 文件在 .mdx 文件中使用**
 
   ```jsx
@@ -98,13 +87,28 @@ root_folder/
   <n-md text={readme} />;
   ```
 
-- **README.mdx 文件中需要添加如下代码**
+  或者按照 remark-gmf,并在 `config/index.ts` 中配置
 
   ```js
-  export const basic = {
-    title: '状态标识组件', // 文档组件菜单标题
-    subtitle: 'StatusTag', // 文档组件菜单副标题
+  import remarkGfm from 'remark-gfm';
+
+  export default {
+    mdx: {
+      remarkPlugins: [remarkGmf],
+    },
   };
+  ```
+
+- **README.mdx 文件中需要添加如下代码**
+
+  ```yaml
+  ---
+  title: '文档组件菜单标题',
+  subtitle: '文档组件菜单副标题',
+  type: '将文档页面进行分组'
+  icon: '图标'
+  order: 0 # 顺序
+  ---
   ```
 
 ## 读取文件并展示出文件代码
@@ -112,16 +116,26 @@ root_folder/
 ```jsx
 import DemoRaw from './examples/default.jsx?raw';
 
-<CodeBlock code={DemoRaw} lang="jsx" />;
+<n-code code={DemoRaw} lang="jsx" />;
 ```
 
-## 在.mdx 中通过 组件文件夹 name （components 目录下代码所在位置） 预览组件案例及代码 Snapshot
+## examples 下的 \*.md 文件将作为案例代码进行渲染
 
-```md
-// 案例 1
+````md
+---
+title: 这里描述代码块的标题, 比如 "最简单的使用方式"
+description: 这里对代码块进行详细的说明, 每一个代码块都将作为一个完整的案例进行展示,并且可以直接在页面上修改实时渲染
+order: 1 # 在页面中将通过这个值进行排序
+---
 
-<site-sandbox-group name="wave-circle" />
+```html
+<n-button>按钮</n-button>
 ```
+
+```jsx
+<n-button>按钮</n-button>
+```
+````
 
 ## 直接在 mdx 中编写文档
 

@@ -17,7 +17,7 @@ import { customElement } from 'solid-element';
 import '../code';
 import '../img';
 import { baseStyle } from '../theme';
-import type { BaseElementTags } from '../index';
+import type { CustomElement } from '..';
 
 const mdCss = css`
   .n-photo-header > span,
@@ -539,7 +539,7 @@ renderer.code = function (code, lang) {
   const toolbar = !!this.options.langToolbar?.length;
 
   return `<n-code class="n-code" toolbar="${toolbar}" lang="${lang}" line-number="${langLineNumber}">${encodeURIComponent(
-    code
+    code,
   )}</n-code>`;
 };
 renderer.katexBlock = function (code: string) {
@@ -622,7 +622,7 @@ function MD(_props: MdProps) {
       tools: ['copy'],
       getAnchorContainer: () => window as unknown as HTMLElement,
     },
-    _props
+    _props,
   );
 
   let ref: HTMLDivElement | undefined;
@@ -687,7 +687,7 @@ function MD(_props: MdProps) {
       ref.querySelectorAll('.n-md-toc li a')?.forEach((e) => {
         const a = e as HTMLAnchorElement;
         const _el = ref?.querySelector(
-          decodeURIComponent((a as HTMLAnchorElement)?.hash)
+          decodeURIComponent((a as HTMLAnchorElement)?.hash),
         ) as HTMLElement;
 
         anchors.push({
@@ -753,24 +753,7 @@ export interface MdProps {
   notRender?: boolean;
 }
 
-export interface MdElement extends MdProps {
-  ref?: MdElement | { current: MdElement | null };
-}
-
-interface CustomElementTags {
-  'n-md': MdElement;
-}
-
-declare module 'solid-js' {
-  export namespace JSX {
-    export interface IntrinsicElements extends HTMLElementTags, CustomElementTags {}
-  }
-}
-declare global {
-  export namespace JSX {
-    export interface IntrinsicElements extends BaseElementTags, CustomElementTags {}
-  }
-}
+export type MdElement = CustomElement<MdProps>;
 
 customElement(
   'n-md',
@@ -796,7 +779,7 @@ customElement(
         pictureViewer: el.pictureViewer,
         getAnchorContainer: el.getAnchorContainer,
       },
-      _
+      _,
     );
 
     createEffect(() => {
@@ -804,6 +787,6 @@ customElement(
       el.replaceChildren();
     });
     return createComponent(MD, props);
-  }
+  },
 );
 export default MD;

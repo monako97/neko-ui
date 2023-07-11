@@ -11,8 +11,8 @@ import { cx } from '@moneko/css';
 import { customElement } from 'solid-element';
 import { Dynamic } from 'solid-js/web';
 import { style } from './style';
-import { type ComponentSize } from '../index';
 import { baseStyle } from '../theme';
+import type { ComponentSize, CustomElement } from '../index';
 
 export type ButtonType = 'success' | 'error' | 'primary' | 'warning' | 'default';
 
@@ -41,8 +41,9 @@ export interface ButtonProps extends Partial<Omit<HTMLButtonElement, 'type' | 'c
   onClick?: HTMLButtonElement['onclick'];
   class?: string;
   css?: string;
-  children?: JSXElement;
+  children?: JSXElement | JSXElement[];
 }
+export type ButtonElement = CustomElement<ButtonProps>;
 
 function Button(_: ButtonProps) {
   const _props = mergeProps({ size: 'normal' as ComponentSize, type: 'default' as ButtonType }, _);
@@ -82,6 +83,7 @@ function Button(_: ButtonProps) {
         {style}
       </style>
       <Dynamic
+        {...(props as unknown as object)}
         ref={ref}
         component={local.link ? 'a' : 'button'}
         class={cx(
@@ -98,11 +100,10 @@ function Button(_: ButtonProps) {
           local.link && 'link',
           props.disabled && 'disabled',
           animating() && 'without',
-          local.class
+          local.class,
         )}
         onClick={handleClick}
         onAnimationEnd={handleAnimationEnd}
-        {...(props as unknown as object)}
       >
         <span class="label">{local.children}</span>
       </Dynamic>
@@ -110,23 +111,6 @@ function Button(_: ButtonProps) {
   );
 }
 
-export interface ButtonElement extends ButtonProps {
-  ref?: ButtonElement | { current: ButtonElement | null };
-}
-
-interface CustomElementTags {
-  'n-button': ButtonElement;
-}
-declare module 'solid-js' {
-  export namespace JSX {
-    export interface IntrinsicElements extends HTMLElementTags, CustomElementTags {}
-  }
-}
-declare global {
-  export namespace JSX {
-    export interface IntrinsicElements extends CustomElementTags, CustomElementTags {}
-  }
-}
 customElement(
   'n-button',
   {
@@ -151,7 +135,7 @@ customElement(
       {
         children: [...el.childNodes.values()],
       },
-      _
+      _,
     );
 
     createEffect(() => {
@@ -159,6 +143,6 @@ customElement(
     });
 
     return createComponent(Button, props);
-  }
+  },
 );
 export default Button;

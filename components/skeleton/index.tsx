@@ -2,6 +2,7 @@ import { For, Show, createComponent, createMemo, mergeProps } from 'solid-js';
 import { css, cx } from '@moneko/css';
 import { customElement } from 'solid-element';
 import { baseStyle } from '../theme';
+import type { CustomElement } from '..';
 
 const style = css`
   :host {
@@ -116,23 +117,7 @@ function Skeleton(props: SkeletonProps) {
   );
 }
 
-export interface SkeletonElement extends SkeletonProps {
-  ref?: SkeletonElement | { current: SkeletonElement | null };
-}
-
-interface CustomElementTags {
-  'n-skeleton': SkeletonElement;
-}
-declare module 'solid-js' {
-  export namespace JSX {
-    export interface IntrinsicElements extends HTMLElementTags, CustomElementTags {}
-  }
-}
-declare global {
-  export namespace JSX {
-    export interface IntrinsicElements extends CustomElementTags, CustomElementTags {}
-  }
-}
+export type SkeletonElement = CustomElement<SkeletonProps>;
 customElement(
   'n-skeleton',
   {
@@ -154,10 +139,10 @@ customElement(
         css: el.css,
         class: el.class,
       },
-      _
+      _,
     );
 
     return createComponent(Skeleton, props);
-  }
+  },
 );
 export default Skeleton;

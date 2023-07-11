@@ -2,6 +2,7 @@
 title: 调色板、生成、设置主题色
 description: 通过传入一个基础色生成出主题色调
 order: 1
+col: 100%
 ---
 
 ```jsx
@@ -29,7 +30,6 @@ function Item({ name, dark }) {
   const colors = createMemo(() => {
     return toneColor(theme[dark ? 'dark' : 'light'][name], dark);
   });
-  const [val, setVal] = createSignal(colors()[40]);
 
   return (
     <div
@@ -37,17 +37,30 @@ function Item({ name, dark }) {
         display: 'flex',
         'align-items': 'center',
         'flex-wrap': 'wrap',
-        gap: '8px',
         width: '100%',
+        'font-size': '8px',
+        'font-weight': 100,
+        'text-align': 'center',
       }}
     >
+      <strong
+        style={{
+          width: '30px',
+          'text-align': 'right',
+          'margin-right': '8px',
+          color: `var(--${name}-color)`,
+        }}
+      >
+        {name}:
+      </strong>
       <n-color-picker
-        style={{ display: 'block', height: '25px' }}
-        value={colors()[40]}
+        style={{ 'margin-right': '8px' }}
+        value={theme[dark ? 'dark' : 'light'][name]}
         onChange={(e) => {
           setTheme(dark ? 'dark' : 'light', (prev) => {
             return { ...prev, [name]: e.detail };
           });
+          e.target.value = e.detail;
         }}
       />
       {Object.keys(colors()).map((c, i) => {
@@ -62,11 +75,7 @@ function Item({ name, dark }) {
             class="item"
             style={{
               flex: 1,
-              'padding-block': '4px',
-              'text-align': 'center',
-              'border-radius': 'var(--border-radius)',
-              'font-size': '8px',
-              'font-weight': 100,
+              padding: '4px',
             }}
           >
             <div>{c}</div>
@@ -88,12 +97,9 @@ render(
           style={{
             display: 'flex',
             'flex-direction': 'column',
-            gap: '8px',
             padding: '8px',
             'margin-bottom': '16px',
-            'border-radius': '8px',
             width: '100%',
-            border: 'var(--border-base)',
             'background-color': c,
             'overflow-x': 'auto',
           }}

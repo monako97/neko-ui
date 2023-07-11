@@ -56,7 +56,7 @@ const store = sso(
     age() {
       return store.count * 2 + 1;
     },
-  }
+  },
 );
 
 const App = () => {
