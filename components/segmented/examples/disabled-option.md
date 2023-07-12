@@ -5,7 +5,7 @@ order: 3
 ---
 
 ```html
-<n-segmented value="1"></n-segmented>
+<n-segmented default-value="1"></n-segmented>
 <script>
   const el = container.querySelector('n-segmented');
 
@@ -19,7 +19,7 @@ order: 3
 
 ```jsx
 <n-segmented
-  value={1}
+  default-value={1}
   options={[
     { value: 1, label: '选项1' },
     { value: 2, label: '选项2', disabled: true },

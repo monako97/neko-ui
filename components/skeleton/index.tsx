@@ -1,7 +1,7 @@
 import { For, Show, createComponent, createMemo, mergeProps } from 'solid-js';
 import { css, cx } from '@moneko/css';
 import { customElement } from 'solid-element';
-import { baseStyle } from '../theme';
+import { baseStyle, theme } from '../theme';
 import type { CustomElement } from '..';
 
 const style = css`
@@ -92,11 +92,41 @@ export interface SkeletonProps {
 function Skeleton(props: SkeletonProps) {
   const activeCls = createMemo(() => props.active && 'active');
   const rows = createMemo(() => Array(props.rows).fill(0));
+  const cssVar = createMemo(() => {
+    if (theme.scheme === 'dark') {
+      return css`
+        :host {
+          --skeleton-bg: rgb(255 255 255 / 6%);
+          --skeleton-bg-active: linear-gradient(
+              100deg,
+              rgb(255 255 255 / 5%) 40%,
+              rgb(255 255 255 / 15%) 50%,
+              rgb(255 255 255 / 5%) 60%
+            )
+            transparent 180%/200% 100%;
+        }
+      `;
+    }
+
+    return css`
+      :host {
+        --skeleton-bg: rgb(0 0 0 / 6%);
+        --skeleton-bg-active: linear-gradient(
+            100deg,
+            rgb(0 0 0 / 5%) 40%,
+            rgb(0 0 0 / 15%) 50%,
+            rgb(0 0 0 / 5%) 60%
+          )
+          transparent 180%/200% 100%;
+      }
+    `;
+  });
 
   return (
     <>
       <style>
         {baseStyle()}
+        {cssVar()}
         {style}
         {css(props.css)}
       </style>

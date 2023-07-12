@@ -8,7 +8,7 @@ col: 100%
 ```jsx
 function Demo() {
   const handleTheme = () => {
-    setTheme('scheme', (prev) => (prev.scheme === 'dark' ? 'light' : 'dark'));
+    setTheme('scheme', (prev) => (prev === 'dark' ? 'light' : 'dark'));
   };
 
   const label = createMemo(() => (theme.scheme === 'dark' ? '🌛 ' : '🌞 ') + theme.scheme);

@@ -75,6 +75,16 @@ export const style = css`
     box-sizing: border-box;
     user-select: none;
 
+    &:focus:not(.disabled) {
+      border-color: var(--btn-hover-color);
+      background-color: var(--btn-bg);
+      outline: none;
+
+      .label {
+        color: var(--btn-hover-color);
+      }
+    }
+
     &:hover:not(.disabled) {
       border-color: var(--btn-hover-color);
       background-color: var(--btn-bg);

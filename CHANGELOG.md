@@ -1,4 +1,4 @@
-# [2.0.0-beta.11](https://github.com/monako97/neko-ui/compare/1.7.3...2.0.0-beta.11) (2023-07-11)
+# [2.0.0-beta.12](https://github.com/monako97/neko-ui/compare/1.7.3...2.0.0-beta.12) (2023-07-12)
 
 
 ### Features
@@ -13,6 +13,7 @@
 * update docs ([92436f7](https://github.com/monako97/neko-ui/commit/92436f7efd697c8dc112f64fe97163e43be7d66c))
 * update docs ([822547a](https://github.com/monako97/neko-ui/commit/822547ac263ec6ccb64ae0fb6072c30ffad8727c))
 * update docs ([29b0ebd](https://github.com/monako97/neko-ui/commit/29b0ebde3d276f89b5a9d74af3ed7ab676fd397a))
+* 优化 IntrinsicElements 写法 ([7a25a90](https://github.com/monako97/neko-ui/commit/7a25a9078646bcef6c553d4e30bff9487bb40d52))
 
 
 

@@ -64,6 +64,7 @@ export {
   type CaptureScreenProps,
   type CaptureScreenElement,
 } from './capture-screen';
+export { default as Tabs, type TabsProps, type TabsElement, type TabOption } from './tabs';
 export {
   theme,
   setTheme,

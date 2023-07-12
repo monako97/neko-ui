@@ -84,21 +84,11 @@ const lightCss = createMemo(() => {
       ${warning()}
       ${success()}
       ${error()}
-    --disable-color: rgb(0 0 0 / 25%);
+      --disable-color: rgb(0 0 0 / 25%);
       --disable-bg: rgb(0 0 0 / 4%);
       --disable-border: #d9d9d9;
       --border-color: var(--primary-border);
       --component-bg: var(--primary-bg);
-      --skeleton-bg: rgb(0 0 0 / 6%);
-      --skeleton-bg-active: linear-gradient(
-          100deg,
-          rgb(0 0 0 / 5%) 40%,
-          rgb(0 0 0 / 15%) 50%,
-          rgb(0 0 0 / 5%) 60%
-        )
-        transparent 180%/200% 100%;
-      --segmented-bg: var(--primary-details-bg);
-      --segmented-current-bg: #fff;
     }
   `;
 });
@@ -130,16 +120,6 @@ const darkCss = createMemo(() => {
       --primary-selection: rgb(255 255 255 / 5%);
       --primary-details-bg: rgb(255 255 255 / 5%);
       --primary-component-bg: #000;
-      --skeleton-bg: rgb(255 255 255 / 6%);
-      --skeleton-bg-active: linear-gradient(
-          100deg,
-          rgb(255 255 255 / 5%) 40%,
-          rgb(255 255 255 / 15%) 50%,
-          rgb(255 255 255 / 5%) 60%
-        )
-        transparent 180%/200% 100%;
-      --segmented-bg: #000;
-      --segmented-current-bg: #1f1f1f;
     }
   `;
 });
@@ -159,6 +139,8 @@ const baseCss = css`
     --box-shadow-base: var(--primary-base-shadow);
     --transition-duration: 0.3s;
     --transition-timing-function: cubic-bezier(0.94, -0.1, 0.1, 1.2);
+
+    font-size: var(--font-size);
   }
 
   [disabled]:not([disabled='false']) {

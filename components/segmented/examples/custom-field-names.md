@@ -5,7 +5,7 @@ order: 6
 ---
 
 ```html
-<n-segmented value="3"></n-segmented>
+<n-segmented default-value="3"></n-segmented>
 <script>
   const el = container.querySelector('n-segmented');
 
@@ -26,7 +26,7 @@ order: 6
 
 ```jsx
 <n-segmented
-  value={3}
+  default-value={3}
   field-names={{
     label: 'name',
     value: 'code',

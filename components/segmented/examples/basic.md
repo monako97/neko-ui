@@ -5,15 +5,14 @@ order: 1
 ---
 
 ```html
-<n-segmented></n-segmented>
+<n-segmented default-value="Vue"></n-segmented>
 <script>
   const el = container.querySelector('n-segmented');
 
   el.options = ['React', 'Vue', 'SolidJS', 'Flutter'];
-  el.value = "Vue";
 </script>
 ```
 
 ```jsx
-<n-segmented value="Vue" options={['React', 'Vue', 'SolidJS', 'Flutter']} />
+<n-segmented default-value="Vue" options={['React', 'Vue', 'SolidJS', 'Flutter']} />
 ```

@@ -8,10 +8,11 @@ import {
   createSignal,
   mergeProps,
 } from 'solid-js';
+import { isFunction } from '@moneko/common';
 import { css, cx } from '@moneko/css';
 import { customElement } from 'solid-element';
 import getOptions, { type BaseOption, type FieldNames, defaultFieldNames } from '../get-options';
-import { baseStyle } from '../theme';
+import { baseStyle, theme } from '../theme';
 import type { CustomElement } from '..';
 
 const style = css`
@@ -61,6 +62,7 @@ const style = css`
     -webkit-line-clamp: var(--rows, 1);
     word-break: break-word;
     word-wrap: break-word;
+    font-size: var(--font-size);
 
     &:hover,
     &:focus {
@@ -106,6 +108,7 @@ export interface SegmentedProps {
   name?: string;
   disabled?: boolean;
   value?: string;
+  defaultValue?: string;
   options: (SegmentedOption | string)[];
   fieldNames?: FieldNames;
   // eslint-disable-next-line no-unused-vars
@@ -113,9 +116,26 @@ export interface SegmentedProps {
 }
 
 function Segmented(props: SegmentedProps) {
-  const [value, setValue] = createSignal();
+  const [value, setValue] = createSignal(props.defaultValue);
   const [offsetStyle, setOffsetStyle] = createSignal('');
   let box: HTMLDivElement | undefined;
+  const cssVar = createMemo(() => {
+    if (theme.scheme === 'dark') {
+      return css`
+        :host {
+          --segmented-bg: #000;
+          --segmented-current-bg: #1f1f1f;
+        }
+      `;
+    }
+
+    return css`
+      :host {
+        --segmented-bg: var(--primary-details-bg);
+        --segmented-current-bg: #fff;
+      }
+    `;
+  });
   const fieldNames = createMemo(() => ({
     ...defaultFieldNames,
     ...props.fieldNames,
@@ -125,8 +145,12 @@ function Segmented(props: SegmentedProps) {
     if (!props.disabled && !item.disabled) {
       const next = item[fieldNames().value];
 
-      setValue(next);
-      props.onChange?.(next);
+      if (isFunction(props.onChange)) {
+        props.onChange(next);
+      }
+      if (props.value === undefined) {
+        setValue(next);
+      }
     }
   }
   function onKeyUp(key: string, item: SegmentedOption) {
@@ -139,7 +163,7 @@ function Segmented(props: SegmentedProps) {
   });
 
   createEffect(() => {
-    setValue(props.value);
+    setValue((props.value !== undefined && props.value) || props.defaultValue);
   });
 
   createEffect(() => {
@@ -162,6 +186,7 @@ function Segmented(props: SegmentedProps) {
     <>
       <style>
         {baseStyle()}
+        {cssVar()}
         {style}
         {offsetStyle()}
         {css(props.css)}
@@ -219,6 +244,7 @@ customElement(
     name: undefined,
     disabled: undefined,
     value: undefined,
+    defaultValue: undefined,
     options: undefined,
     onChange: undefined,
     fieldNames: undefined,
@@ -232,6 +258,7 @@ customElement(
         name: el.name,
         disabled: el.disabled,
         value: el.value,
+        defaultValue: el.defaultValue,
         options: el.options || [],
         fieldNames: el.fieldNames,
         onChange(next: string) {

@@ -1,5 +1,6 @@
 import {
   type JSXElement,
+  Show,
   createComponent,
   createEffect,
   createSignal,
@@ -41,7 +42,10 @@ export interface ButtonProps extends Partial<Omit<HTMLButtonElement, 'type' | 'c
   onClick?: HTMLButtonElement['onclick'];
   class?: string;
   css?: string;
+  icon?: JSXElement;
   children?: JSXElement | JSXElement[];
+  // eslint-disable-next-line no-unused-vars
+  onKeyUp?(e: KeyboardEvent): void;
 }
 export type ButtonElement = CustomElement<ButtonProps>;
 
@@ -61,6 +65,8 @@ function Button(_: ButtonProps) {
     'size',
     'type',
     'class',
+    'icon',
+    'css',
   ]);
   let ref: HTMLButtonElement | undefined;
   const [animating, setAnimating] = createSignal(false);
@@ -81,11 +87,13 @@ function Button(_: ButtonProps) {
       <style>
         {baseStyle()}
         {style}
+        {local.css || ''}
       </style>
       <Dynamic
         {...(props as unknown as object)}
         ref={ref}
         component={local.link ? 'a' : 'button'}
+        tabIndex={props.disabled ? -1 : 0}
         class={cx(
           'btn',
           local.type,
@@ -102,10 +110,18 @@ function Button(_: ButtonProps) {
           animating() && 'without',
           local.class,
         )}
+        part="button"
         onClick={handleClick}
         onAnimationEnd={handleAnimationEnd}
       >
-        <span class="label">{local.children}</span>
+        <Show when={local.icon}>
+          <span class="icon" part="icon">
+            {local.icon}
+          </span>
+        </Show>
+        <span class="label" part="label">
+          {local.children}
+        </span>
       </Dynamic>
     </>
   );
@@ -133,6 +149,7 @@ customElement(
     const el = opt.element;
     const props = mergeProps(
       {
+        css: el.css,
         children: [...el.childNodes.values()],
       },
       _,
@@ -140,6 +157,7 @@ customElement(
 
     createEffect(() => {
       el.replaceChildren();
+      el.removeAttribute('css');
     });
 
     return createComponent(Button, props);

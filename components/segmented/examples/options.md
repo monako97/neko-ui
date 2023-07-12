@@ -5,7 +5,7 @@ order: 2
 ---
 
 ```html
-<n-segmented value="3"></n-segmented>
+<n-segmented default-value="3"></n-segmented>
 <script>
   const el = container.querySelector('n-segmented');
 
@@ -15,7 +15,7 @@ order: 2
 
 ```jsx
 <n-segmented
-  value={3}
+  default-value={3}
   options={['HTML', 'CSS', { value: 3, label: 'TypeScript' }, 'Dart', 'Swift', 'Rust']}
 />
 ```

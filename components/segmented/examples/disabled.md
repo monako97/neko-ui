@@ -5,7 +5,7 @@ order: 4
 ---
 
 ```html
-<n-segmented value="Vue" disabled="true"></n-segmented>
+<n-segmented default-value="Vue" disabled="true"></n-segmented>
 <script>
   const el = container.querySelector('n-segmented');
 
@@ -14,5 +14,5 @@ order: 4
 ```
 
 ```jsx
-<n-segmented value="Vue" disabled options={['React', 'Vue', 'SolidJS', 'Flutter']} />
+<n-segmented default-value="Vue" disabled options={['React', 'Vue', 'SolidJS', 'Flutter']} />
 ```

@@ -24,7 +24,6 @@ const sandboxCss = css`
   .sandbox-box {
     break-inside: avoid;
     box-sizing: border-box;
-    padding-block-end: 16px;
   }
 
   .sandbox-container,
@@ -260,20 +259,20 @@ function Sandbox(_props: SandboxProps) {
       suffix: () => (
         <n-popover
           arrow={true}
+          trigger="click"
+          css={css`
+            .label {
+              border-radius: 50%;
+              padding: 0 5.5px;
+              background: var(--disable-bg);
+              margin-inline-start: 4px;
+              cursor: pointer;
+            }
+          `}
           popup-css=".portal {font-size:13px;max-width: 50vw;}"
           content={() => <n-md css={noMargin} text={k === 'html' ? htmlHelp : jsxHelp} />}
         >
-          <span
-            style={{
-              'margin-left': '4px',
-              padding: '0 5.5px',
-              background: 'var(--disable-bg)',
-              'border-radius': '50%',
-              cursor: 'pointer',
-            }}
-          >
-            ?
-          </span>
+          <span class="label">?</span>
         </n-popover>
       ),
     })),
@@ -365,6 +364,7 @@ const groupCss = css`
     max-inline-size: 1280px;
     box-sizing: border-box;
     flex-wrap: wrap;
+    gap: 16px 24px;
   }
 `;
 
@@ -395,7 +395,7 @@ function SandboxGroup(props: SandboxGroupProps) {
         <div class="sandbox-group">
           <For each={data()}>
             {({ title, ...m }) => (
-              <site-sandbox style={{ flex: m.col || '50%' }} legend={title} {...m} />
+              <site-sandbox style={{ flex: m.col || 'calc(50% - 24px)' }} legend={title} {...m} />
             )}
           </For>
         </div>
