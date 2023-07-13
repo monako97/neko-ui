@@ -24,7 +24,7 @@ order: 4
       options: [
         { value: '4', label: '赵六' },
         { value: '7', label: '王五3' },
-        { value: '8', label: '赵六4' },
+        { value: '8', label: '赵六4', type: 'warning' },
         { value: '5', label: '张三1', disabled: true },
         { value: '6', label: '李四2', danger: true },
       ],
@@ -51,7 +51,7 @@ order: 4
       options: [
         { value: '4', label: '赵六' },
         { value: '7', label: '王五3' },
-        { value: '8', label: '赵六4' },
+        { value: '8', label: '赵六4', type: 'warning' },
         { value: '5', label: '张三1', disabled: true },
         { value: '6', label: '李四2', danger: true },
       ],

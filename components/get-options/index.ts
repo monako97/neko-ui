@@ -28,7 +28,7 @@ export const defaultFieldNames = {
 function getOptions<T extends BaseOption = BaseOption>(
   list?: (T | string)[],
   fieldNames?: Partial<FieldNames>,
-): BaseOption[] {
+): T[] {
   if (!list) return [];
   return list.map((item) => {
     const { options, label, value } = { ...defaultFieldNames, ...fieldNames };
@@ -48,7 +48,7 @@ function getOptions<T extends BaseOption = BaseOption>(
     return {
       [label]: item,
       [value]: item,
-    } as BaseOption;
+    } as T;
   });
 }
 

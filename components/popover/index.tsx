@@ -260,7 +260,7 @@ function Popover(props: PopoverProps) {
 
     return `.portal {${Object.keys(p)
       .map((k) => `${k}:${p[k as keyof Posi]}px;`)
-      .join('')}z-index: 1;}`;
+      .join('')}z-index: 1;max-block-size: calc(100vb - ${(up() ? p.bottom : p.top) || 0}px);}`;
   });
   const portalCls = createMemo(() => {
     return cx(

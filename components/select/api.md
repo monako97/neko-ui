@@ -36,12 +36,15 @@
 
 ### SelectOption
 
-| 属性     | 说明       | 类型             | 默认值 | 版本  |
-| -------- | ---------- | ---------------- | ------ | ----- |
-| class    | 自定义类名 | `string`         | -      | 1.6.0 |
-| value    | 值         | `string`         | -      | 1.6.0 |
-| disabled | 只读       | `boolean`        | -      | 1.6.0 |
-| label    | 选项描述   | `JSXElement`     | -      | 1.6.0 |
-| icon     | 图标       | `JSXElement`     | -      | 1.6.0 |
-| suffix   | 后缀       | `JSXElement`     | -      | 2.0.0 |
-| options  | 子选项     | `SelectOption[]` | -      | 1.6.0 |
+| 属性     | 说明       | 类型                                                        | 默认值 | 版本  |
+| -------- | ---------- | ----------------------------------------------------------- | ------ | ----- |
+| class    | 自定义类名 | `string`                                                    | -      | 1.6.0 |
+| value    | 值         | `string`                                                    | -      | 1.6.0 |
+| disabled | 只读       | `boolean`                                                   | -      | 1.6.0 |
+| label    | 选项描述   | `JSXElement`                                                | -      | 1.6.0 |
+| icon     | 图标       | `JSXElement`                                                | -      | 1.6.0 |
+| suffix   | 后缀       | `JSXElement`                                                | -      | 2.0.0 |
+| options  | 子选项     | `SelectOption[]`                                            | -      | 1.6.0 |
+| icon     | 图标       | `JSXElement`                                                | -      | 2.0.0 |
+| type     | 预置类型   | `primary` \| `success` \| `error` \| `warning` \| `default` | -      | 2.0.0 |
+| color    | 自定义颜色 | `string`                                                    | -      | 2.0.0 |

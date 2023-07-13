@@ -270,7 +270,17 @@ function Sandbox(_props: SandboxProps) {
             }
           `}
           popup-css=".portal {font-size:13px;max-width: 50vw;}"
-          content={() => <n-md css={noMargin} text={k === 'html' ? htmlHelp : jsxHelp} />}
+          content={() => (
+            <n-md
+              style={{
+                display: 'block',
+                overflow: 'auto',
+                'max-block-size': '-webkit-fill-available',
+              }}
+              css={noMargin}
+              text={k === 'html' ? htmlHelp : jsxHelp}
+            />
+          )}
         >
           <span class="label">?</span>
         </n-popover>

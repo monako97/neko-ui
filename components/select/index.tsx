@@ -18,16 +18,19 @@ import { customElement } from 'solid-element';
 import { style } from './style';
 import Dropdown, { type DropdownOption, type DropdownProps, defaultProps } from '../dropdown';
 import getOptions, { FieldNames, defaultFieldNames } from '../get-options';
-import type { CustomElement } from '..';
+import type { CustomElement, TagProps } from '..';
 
 export interface SelectOption extends DropdownOption {
   children?: SelectOption[];
+  type: TagProps['type'];
+  color: TagProps['color'];
+  icon: TagProps['icon'];
 }
 
 export interface SelectProps extends Omit<DropdownProps, 'options' | 'children'> {
   label?: JSXElement | (() => JSXElement);
   placeholder?: string;
-  options?: SelectOption[];
+  options?: (SelectOption | string)[];
   prefixIcon?: JSXElement | (() => JSXElement);
   suffixIcon?: JSXElement | (() => JSXElement);
 }
@@ -239,12 +242,17 @@ function Select(props: SelectProps) {
               }
             >
               {(v) => (
-                <span class={cx('tag', open() && 'opacity', kv()[v].danger && 'danger')}>
+                <n-tag
+                  class={cx('tag', open() && 'opacity')}
+                  type={kv()[v].danger ? 'error' : kv()[v].type || 'primary'}
+                  color={kv()[v].color}
+                  icon={kv()[v].icon}
+                  close-icon={!other.disabled && !kv()[v].disabled}
+                  onClose={deleteValue.bind(null, v)}
+                  disabled={other.disabled || kv()[v].disabled}
+                >
                   {kv()[v]?.[fieldNames().label] || v}
-                  <Show when={!other.disabled && !kv()[v].disabled}>
-                    <span class="del" onClick={deleteValue.bind(null, v)} />
-                  </Show>
-                </span>
+                </n-tag>
               )}
             </For>
           </Show>
@@ -263,7 +271,7 @@ export type SelectMultipleElement = CustomElement<
     value?: Array<string | number>;
     defaultValue?: Array<string | number>;
     // eslint-disable-next-line no-unused-vars
-    onChange?(e: CustomEvent<{ key: Array<string | number>; item: SelectOption }>): void;
+    onChange?(key: Array<string | number>, item: SelectOption): void;
   }
 >;
 
@@ -284,7 +292,7 @@ customElement(
         onChange(key: string | number, item: SelectOption) {
           el.dispatchEvent(
             new CustomEvent('change', {
-              detail: { key, item },
+              detail: [key, item],
             }),
           );
         },

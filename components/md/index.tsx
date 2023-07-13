@@ -17,7 +17,7 @@ import { customElement } from 'solid-element';
 import '../code';
 import '../img';
 import { baseStyle } from '../theme';
-import type { CustomElement } from '..';
+import type { CSSProperties, CustomElement } from '..';
 
 const mdCss = css`
   .n-photo-header > span,
@@ -739,6 +739,7 @@ export interface MdProps {
   class?: string;
   /** md内容 */
   text?: string;
+  style?: CSSProperties;
   /** 开启图片查看器 */
   pictureViewer?: boolean;
   /** 显示代码块行号 */

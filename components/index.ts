@@ -65,6 +65,7 @@ export {
   type CaptureScreenElement,
 } from './capture-screen';
 export { default as Tabs, type TabsProps, type TabsElement, type TabOption } from './tabs';
+export { default as Tag, type TagProps, type TagElement } from './tag';
 export {
   theme,
   setTheme,
@@ -105,6 +106,8 @@ import type {
   SkeletonElement,
   SpinElement,
   SwitchElement,
+  TabsElement,
+  TagElement,
   TreeMultipleElement,
   TreeSingleElement,
   TypographyElement,
@@ -177,6 +180,8 @@ interface CustomElementTags {
   'n-switch': SwitchElement;
   'n-tree': TreeSingleElement | TreeMultipleElement;
   'n-typography': TypographyElement;
+  'n-tabs': TabsElement;
+  'n-tag': TagElement;
 }
 declare module 'solid-js' {
   export namespace JSX {

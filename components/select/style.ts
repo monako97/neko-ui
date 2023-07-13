@@ -37,19 +37,6 @@ export const style = css`
     align-items: center;
   }
 
-  .tag {
-    display: flex;
-    align-items: center;
-    border: 1px solid var(--primary-border);
-    border-radius: calc(var(--border-radius) / 1.5);
-    padding: 0 8px;
-    font-size: 12px;
-    background-color: var(--primary-outline);
-    line-height: 20px;
-    pointer-events: none;
-    transition: 0.3s opacity;
-  }
-
   .select {
     position: relative;
     display: flex;
@@ -69,6 +56,7 @@ export const style = css`
     min-block-size: 28px;
     cursor: pointer;
     user-select: none;
+    transition: border-color 0.3s ease;
 
     &:not(:has(.label)) {
       & .placeholder {
@@ -103,12 +91,6 @@ export const style = css`
       color: var(--disable-color);
       background-color: var(--disable-bg);
       cursor: not-allowed;
-
-      .tag {
-        border-color: var(--disable-border);
-        color: var(--disable-color);
-        background-color: var(--disable-bg);
-      }
     }
 
     &:focus .label,
@@ -121,22 +103,6 @@ export const style = css`
       & + .tags > .placeholder {
         opacity: 0.65;
       }
-    }
-  }
-
-  .del {
-    cursor: pointer;
-    pointer-events: all;
-
-    &::before {
-      font-size: 12px;
-      opacity: 0.5;
-      content: '⛌';
-      margin-inline-start: 5px;
-    }
-
-    &:hover {
-      color: var(--error-color);
     }
   }
 
@@ -153,16 +119,10 @@ export const style = css`
 
   .opacity {
     opacity: 0.5;
+    transition: opacity 0.3s ease;
 
     &:hover {
       opacity: 1;
     }
-  }
-
-  .danger {
-    --primary-border: var(--error-border);
-    --primary-outline: var(--error-outline);
-
-    color: var(--error-color);
   }
 `;
