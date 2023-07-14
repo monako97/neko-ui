@@ -53,7 +53,6 @@ function Menu(props: MenuProps | MenuMultipleProps) {
   });
   const fieldNames = createMemo(() => ({
     ...defaultFieldNames,
-    children: 'children',
     ...local.fieldNames,
   }));
   const options = createMemo(() => getOptions(local.items, fieldNames()));
@@ -91,94 +90,94 @@ function Menu(props: MenuProps | MenuMultipleProps) {
     }
   }
 
-  const RowTitle = (_props: { item: MenuOption }) => {
-    return (
-      <>
-        <Show when={_props.item[fieldNames().icon]}>
-          <span class="icon">{_props.item[fieldNames().icon]}</span>
-        </Show>
-        {_props.item[fieldNames().label]}
-        <span class="suffix">{_props.item[fieldNames().suffix]}</span>
-      </>
-    );
-  };
-
-  function Children(_props: { item: MenuOption }) {
-    let el: HTMLDivElement | undefined;
-    const isOpen = createMemo(() => openKeys().includes(_props.item[fieldNames().value]));
-    const [show, setShow] = createSignal<boolean>(untrack(isOpen));
-
-    createEffect(() => {
-      if (isOpen()) {
-        setShow(true);
-      }
-    });
-    function handleOpen(e: MouseEvent) {
-      preventDefault(e);
-      let _openKeys = untrack(openKeys);
-      const { value: vkey } = untrack(fieldNames);
-
-      if (_openKeys.includes(_props.item[vkey])) {
-        _openKeys = _openKeys.filter((v) => v !== _props.item[vkey]);
-      } else {
-        _openKeys = _openKeys.concat(_props.item[vkey]);
-      }
-
-      if (isFunction(local.onOpenChange)) {
-        local.onOpenChange(_openKeys);
-      }
-      if (local.openKeys === undefined) {
-        setOpenKeys(_openKeys);
-      }
-    }
-
-    const Child = () => {
-      const [hei, setHei] = createSignal();
-
-      createEffect(() => {
-        setHei(el?.offsetHeight || 0);
-      });
-      return (
-        <div
-          class="sub-menu-children"
-          style={{
-            '--h': `${hei()}px`,
-          }}
-          onAnimationEnd={() => {
-            if (!untrack(isOpen)) {
-              setShow(false);
-            }
-          }}
-        >
-          <div ref={el}>
-            {/* eslint-disable-next-line @typescript-eslint/no-use-before-define */}
-            <RenderMenu list={_props.item[fieldNames().children]} />
-          </div>
-        </div>
-      );
-    };
-
-    return (
-      <div
-        class={cx('sub-menu', _props.item.class, `sub-menu-${isOpen() ? 'open' : 'close'}`)}
-        onMouseDown={preventDefault}
-      >
-        <span class="sub-menu-title" onClick={handleOpen}>
-          <RowTitle item={_props.item} />
-          <span class="arrow" />
-        </span>
-        <Show when={show()}>
-          <Child />
-        </Show>
-      </div>
-    );
+  interface RenderMenuProps {
+    list: MenuOption[];
+    fieldNames: FieldNames;
   }
-  function RenderMenu(_: { list: MenuOption[] }) {
-    const { options: optionsKey, children, value: valueKey } = fieldNames();
-
+  function RenderMenu(_: RenderMenuProps) {
     return (
       <For each={_.list}>
         {(item) => {
+          function RowTitle() {
+            return (
+              <>
+                <Show when={item[_.fieldNames.icon]}>
+                  <span class="icon">{item[_.fieldNames.icon]}</span>
+                </Show>
+                {item[_.fieldNames.label]}
+                <span class="suffix">{item[_.fieldNames.suffix]}</span>
+              </>
+            );
+          }
+
+          function SubMenu() {
+            const isOpen = createMemo(() => openKeys().includes(item[_.fieldNames.value]));
+            const [show, setShow] = createSignal<boolean>(untrack(isOpen));
+
+            createEffect(() => {
+              if (isOpen()) {
+                setShow(true);
+              }
+            });
+            function handleOpen(e: MouseEvent) {
+              preventDefault(e);
+              let _openKeys = untrack(openKeys);
+
+              if (_openKeys.includes(item[_.fieldNames.value])) {
+                _openKeys = _openKeys.filter((v) => v !== item[_.fieldNames.value]);
+              } else {
+                _openKeys = _openKeys.concat(item[_.fieldNames.value]);
+              }
+
+              if (isFunction(local.onOpenChange)) {
+                local.onOpenChange(_openKeys);
+              }
+              if (local.openKeys === undefined) {
+                setOpenKeys(_openKeys);
+              }
+            }
+            function Child() {
+              let el: HTMLDivElement | undefined;
+              const [hei, setHei] = createSignal();
+
+              createEffect(() => {
+                setHei(el?.offsetHeight || 0);
+              });
+              function onAnimationEnd() {
+                if (!untrack(isOpen)) {
+                  setShow(false);
+                }
+              }
+              return (
+                <div
+                  class="sub-menu-children"
+                  style={{
+                    '--h': `${hei()}px`,
+                  }}
+                  onAnimationEnd={onAnimationEnd}
+                >
+                  <div ref={el}>
+                    <RenderMenu fieldNames={_.fieldNames} list={item[_.fieldNames.children]} />
+                  </div>
+                </div>
+              );
+            }
+
+            return (
+              <div
+                class={cx('sub-menu', item.class, `sub-menu-${isOpen() ? 'open' : 'close'}`)}
+                onMouseDown={preventDefault}
+              >
+                <span class="sub-menu-title" onClick={handleOpen}>
+                  <RowTitle />
+                  <span class="arrow" />
+                </span>
+                <Show when={show()}>
+                  <Child />
+                </Show>
+              </div>
+            );
+          }
           return (
             <Switch
               fallback={
@@ -186,23 +185,23 @@ function Menu(props: MenuProps | MenuMultipleProps) {
                   class={cx('item', item.class, item.type)}
                   handle-closed={item.handleClosed}
                   aria-disabled={local.disabled || item.disabled}
-                  aria-selected={value().includes(item[valueKey])}
+                  aria-selected={value().includes(item[_.fieldNames.value])}
                   onMouseDown={preventDefault}
                   onClick={change.bind(null, item)}
                 >
-                  <RowTitle item={item} />
+                  <RowTitle />
                 </div>
               }
             >
-              <Match when={Array.isArray(item[children])}>
-                <Children item={item} />
+              <Match when={Array.isArray(item[_.fieldNames.children])}>
+                <SubMenu />
               </Match>
-              <Match when={Array.isArray(item[optionsKey])}>
+              <Match when={Array.isArray(item[_.fieldNames.options])}>
                 <div class={cx('group', item.class)} onMouseDown={preventDefault}>
                   <span class="group-title">
-                    <RowTitle item={item} />
+                    <RowTitle />
                   </span>
-                  <RenderMenu list={item[optionsKey]} />
+                  <RenderMenu fieldNames={_.fieldNames} list={item[_.fieldNames.options]} />
                 </div>
               </Match>
             </Switch>
@@ -231,7 +230,7 @@ function Menu(props: MenuProps | MenuMultipleProps) {
         {css(local.css)}
       </style>
       <span {...other} class="menu">
-        <RenderMenu list={options()} />
+        <RenderMenu fieldNames={fieldNames()} list={options()} />
       </span>
     </>
   );

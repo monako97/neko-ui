@@ -39,7 +39,7 @@ function getOptions<T extends BaseOption = BaseOption>(
 ): T[] {
   if (!list) return [];
   return list.map((item, i) => {
-    const { options, label, value } = { ...defaultFieldNames, ...fieldNames };
+    const { options, children, label, value } = { ...defaultFieldNames, ...fieldNames };
 
     if (typeof item === 'object') {
       const _label = (typeof item[label] === 'undefined' ? item[value] : item[label]) || i;
@@ -50,11 +50,15 @@ function getOptions<T extends BaseOption = BaseOption>(
         [value]: _value,
       };
 
+      if (Array.isArray(item[children])) {
+        Object.assign(_item, {
+          [children]: getOptions(item[children], fieldNames),
+        });
+      }
       if (Array.isArray(item[options])) {
-        return {
-          ..._item,
+        Object.assign(_item, {
           [options]: getOptions(item[options], fieldNames),
-        };
+        });
       }
       return _item;
     }
