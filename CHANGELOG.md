@@ -1,6 +1,11 @@
 # [2.0.0-beta.17](https://github.com/monako97/neko-ui/compare/1.7.3...2.0.0-beta.17) (2023-07-14)
 
 
+### Bug Fixes
+
+* menu fieldNames ([6768c37](https://github.com/monako97/neko-ui/commit/6768c371a6df935a29460b0cb089a131db292975))
+
+
 ### Features
 
 * button组件 ([5758241](https://github.com/monako97/neko-ui/commit/5758241a32f01d705481053d175beb9d0b3ad35a))
