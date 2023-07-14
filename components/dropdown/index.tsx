@@ -92,13 +92,13 @@ function Dropdown(props: DropdownProps | DropdownMultipleProps) {
           <Show when={local.items?.length} fallback={<Empty style={{ width: '100%' }} />}>
             <n-menu
               items={local.items}
-              value={value()}
               default-value={local.defaultValue}
               multiple={local.multiple as true}
               field-names={local.fieldNames}
-              onChange={change}
               toggle={local.toggle}
               disabled={other.disabled}
+              value={value()}
+              onChange={change}
               open-keys={menuOpenKeys()}
               onOpenChange={menuOpenKeysChange}
             />

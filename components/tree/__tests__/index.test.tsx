@@ -144,14 +144,14 @@ describe('test Tree', () => {
             },
           ]}
         />
-      </>
+      </>,
     );
   });
   it('readonly', async () => {
     let val: string | undefined = 'a';
 
     const { getByText } = render(
-      <Tree value={val} data={data} readonly onChange={(v: string) => (val = v)} direction="rtl" />
+      <Tree value={val} data={data} readonly onChange={(v: string) => (val = v)} direction="rtl" />,
     );
 
     fireEvent.click(getByText('编号'));
@@ -189,7 +189,7 @@ describe('test Tree', () => {
             },
           },
         }}
-      />
+      />,
     );
 
     fireEvent.click(getByText('works'));
@@ -230,7 +230,7 @@ describe('test Tree', () => {
     |-- tsconfig.json
     \`-- typings
         \`-- typings.d.ts`}
-      />
+      />,
     );
 
     expect(getAllByText('wave-circle').length).toBe(3);

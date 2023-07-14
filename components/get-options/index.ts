@@ -19,6 +19,7 @@ export type FieldNames = {
   label: string;
   value: string;
   options: string;
+  children: string;
   icon: string;
   suffix: string;
 };
@@ -27,6 +28,7 @@ export const defaultFieldNames = {
   label: 'label',
   value: 'value',
   options: 'options',
+  children: 'children',
   icon: 'icon',
   suffix: 'suffix',
 };

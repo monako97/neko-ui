@@ -1,6 +1,6 @@
 ---
-title: 后缀
-description: 可以使用 `suffix` 给选项添加后缀
+title: 给选项添加后缀
+description: 可以使用 `suffix` 给选项添加一个描述
 order: 8
 ---
 
@@ -25,13 +25,22 @@ order: 8
         };
         return add;
       },
-      options: [
+      children: [
         // 也可以是string
-        { value: '1', label: '张三', suffix: 'zhangsan' },
-        { value: '2', label: '李四', suffix: 'lishi' },
-        { value: '3', label: '王五', suffix: 'wangwu' },
+        { value: 1, label: '张三', suffix: 'zhangsan' },
+        { value: 2, label: '李四', suffix: 'lishi' },
+        { value: 3, label: '王五', suffix: 'wangwu' },
       ],
     },
+    {
+      label: '其他',
+      options: [
+        // 也可以是string
+        { value: '11', label: '张三', suffix: 'zhangsan' },
+        { value: '22', label: '李四', suffix: 'lishi' },
+        { value: '33', label: '王五', suffix: 'wangwu' },
+      ],
+    }
   ];
 </script>
 ```

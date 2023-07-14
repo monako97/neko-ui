@@ -19,7 +19,7 @@ order: 7
   segmented.onchange = function (e) {
     tree.size = e.detail;
   };
-  const timer = setTimeout(function() {
+  const timer = setTimeout(function () {
     clearTimeout(timer);
     segmented.value = 'normal';
   }, 32);

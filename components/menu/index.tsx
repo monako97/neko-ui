@@ -90,85 +90,95 @@ function Menu(props: MenuProps | MenuMultipleProps) {
       }
     }
   }
-  function handleOpen(item: MenuOption, e: MouseEvent) {
-    preventDefault(e);
-    let _openKeys = untrack(openKeys);
-    const { value: valueKey } = untrack(fieldNames);
 
-    if (_openKeys.includes(item[valueKey])) {
-      _openKeys = _openKeys.filter((v) => v !== item[valueKey]);
-    } else {
-      _openKeys = _openKeys.concat(item[valueKey]);
+  const RowTitle = (_props: { item: MenuOption }) => {
+    return (
+      <>
+        <Show when={_props.item[fieldNames().icon]}>
+          <span class="icon">{_props.item[fieldNames().icon]}</span>
+        </Show>
+        {_props.item[fieldNames().label]}
+        <span class="suffix">{_props.item[fieldNames().suffix]}</span>
+      </>
+    );
+  };
+
+  function Children(_props: { item: MenuOption }) {
+    let el: HTMLDivElement | undefined;
+    const isOpen = createMemo(() => openKeys().includes(_props.item[fieldNames().value]));
+    const [show, setShow] = createSignal<boolean>(untrack(isOpen));
+
+    createEffect(() => {
+      if (isOpen()) {
+        setShow(true);
+      }
+    });
+    function handleOpen(e: MouseEvent) {
+      preventDefault(e);
+      let _openKeys = untrack(openKeys);
+      const { value: vkey } = untrack(fieldNames);
+
+      if (_openKeys.includes(_props.item[vkey])) {
+        _openKeys = _openKeys.filter((v) => v !== _props.item[vkey]);
+      } else {
+        _openKeys = _openKeys.concat(_props.item[vkey]);
+      }
+
+      if (isFunction(local.onOpenChange)) {
+        local.onOpenChange(_openKeys);
+      }
+      if (local.openKeys === undefined) {
+        setOpenKeys(_openKeys);
+      }
     }
 
-    if (isFunction(local.onOpenChange)) {
-      local.onOpenChange(_openKeys);
-    }
-    if (local.openKeys === undefined) {
-      setOpenKeys(_openKeys);
-    }
-  }
-  function renderMenu(list: MenuOption[]) {
-    const { options: optionsKey, children, label, value: valueKey, icon, suffix } = fieldNames();
+    const Child = () => {
+      const [hei, setHei] = createSignal();
+
+      createEffect(() => {
+        setHei(el?.offsetHeight || 0);
+      });
+      return (
+        <div
+          class="sub-menu-children"
+          style={{
+            '--h': `${hei()}px`,
+          }}
+          onAnimationEnd={() => {
+            if (!untrack(isOpen)) {
+              setShow(false);
+            }
+          }}
+        >
+          <div ref={el}>
+            {/* eslint-disable-next-line @typescript-eslint/no-use-before-define */}
+            <RenderMenu list={_props.item[fieldNames().children]} />
+          </div>
+        </div>
+      );
+    };
 
     return (
-      <For each={list}>
+      <div
+        class={cx('sub-menu', _props.item.class, `sub-menu-${isOpen() ? 'open' : 'close'}`)}
+        onMouseDown={preventDefault}
+      >
+        <span class="sub-menu-title" onClick={handleOpen}>
+          <RowTitle item={_props.item} />
+          <span class="arrow" />
+        </span>
+        <Show when={show()}>
+          <Child />
+        </Show>
+      </div>
+    );
+  }
+  function RenderMenu(_: { list: MenuOption[] }) {
+    const { options: optionsKey, children, value: valueKey } = fieldNames();
+
+    return (
+      <For each={_.list}>
         {(item) => {
-          const RowTitle = () => (
-            <>
-              <Show when={item[icon]}>
-                <span class="icon">{item[icon]}</span>
-              </Show>
-              {item[label]}
-              <span class="suffix">{item[suffix]}</span>
-            </>
-          );
-
-          function Children() {
-            let el: HTMLDivElement | undefined;
-            const isOpen = createMemo(() => openKeys().includes(item[valueKey]));
-            const [show, setShow] = createSignal<boolean>(untrack(isOpen));
-
-            createEffect(() => {
-              if (isOpen()) {
-                setShow(true);
-              }
-            });
-            const Child = () => {
-              const [hei, setHei] = createSignal();
-
-              createEffect(() => {
-                setHei(el?.offsetHeight || 0);
-              });
-              return (
-                <div
-                  class="sub-menu-children"
-                  style={{
-                    '--h': `${hei()}px`,
-                  }}
-                  onAnimationEnd={() => {
-                    if (!untrack(isOpen)) {
-                      setShow(false);
-                    }
-                  }}
-                >
-                  <div ref={el}>{renderMenu(item[children])}</div>
-                </div>
-              );
-            };
-
-            return (
-              <div class={cx('sub-menu', item.class, `sub-menu-${isOpen() ? 'open' : 'close'}`)}>
-                <span class="sub-menu-title" onClick={handleOpen.bind(null, item)}>
-                  <RowTitle />
-                  <span class="arrow" />
-                </span>
-                <Show when={show()}>
-                  <Child />
-                </Show>
-              </div>
-            );
-          }
           return (
             <Switch
               fallback={
@@ -180,19 +190,19 @@ function Menu(props: MenuProps | MenuMultipleProps) {
                   onMouseDown={preventDefault}
                   onClick={change.bind(null, item)}
                 >
-                  <RowTitle />
+                  <RowTitle item={item} />
                 </div>
               }
             >
               <Match when={Array.isArray(item[children])}>
-                <Children />
+                <Children item={item} />
               </Match>
               <Match when={Array.isArray(item[optionsKey])}>
-                <div class={cx('group', item.class)}>
+                <div class={cx('group', item.class)} onMouseDown={preventDefault}>
                   <span class="group-title">
-                    <RowTitle />
+                    <RowTitle item={item} />
                   </span>
-                  {renderMenu(item[optionsKey])}
+                  <RenderMenu list={item[optionsKey]} />
                 </div>
               </Match>
             </Switch>
@@ -221,7 +231,7 @@ function Menu(props: MenuProps | MenuMultipleProps) {
         {css(local.css)}
       </style>
       <span {...other} class="menu">
-        {renderMenu(options())}
+        <RenderMenu list={options()} />
       </span>
     </>
   );

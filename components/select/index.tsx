@@ -66,6 +66,12 @@ function Select(props: SelectProps) {
       if (Array.isArray(_options)) {
         Object.assign(optKv, getKv(_options, fieldDic));
       }
+      const _children = item[fieldDic.children];
+
+      optKv[item[fieldDic.value]] = item;
+      if (Array.isArray(_children)) {
+        Object.assign(optKv, getKv(_children, fieldDic));
+      }
     }
     return optKv;
   }
@@ -286,6 +292,13 @@ customElement(
           el.dispatchEvent(
             new CustomEvent('change', {
               detail: [key, item],
+            }),
+          );
+        },
+        onOpenChange(open: boolean | null) {
+          el.dispatchEvent(
+            new CustomEvent('openchange', {
+              detail: open,
             }),
           );
         },

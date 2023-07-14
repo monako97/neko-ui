@@ -12,6 +12,12 @@ export const popoverCss = css`
   }
 `;
 export const portalCss = css`
+  .container {
+    overflow-y: auto;
+    /* stylelint-disable-next-line */
+    max-block-size: -webkit-fill-available;
+  }
+
   .portal {
     --direction: 1;
 

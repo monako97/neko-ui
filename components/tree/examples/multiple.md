@@ -105,8 +105,8 @@ function Demo() {
       value={[]}
       onChange={(e) => {
         if (el) {
-        el.value = e.detail;
-        console.log('jsx', e.detail);
+          el.value = e.detail;
+          console.log('jsx', e.detail);
         }
       }}
     />
