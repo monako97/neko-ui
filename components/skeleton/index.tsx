@@ -62,7 +62,7 @@ const style = css`
     &::after {
       display: block;
       block-size: 100%;
-      animation: skeleton-effect 1.4s ease-in-out infinite;
+      animation: skeleton-effect 1.4s var(--transition-timing-function) infinite;
       background: var(--skeleton-bg-active);
       content: '';
       transition: background-color var(--transition-duration) var(--transition-timing-function);

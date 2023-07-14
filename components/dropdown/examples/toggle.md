@@ -11,7 +11,7 @@ order: 10
 <script>
   const el = container.querySelector('n-dropdown');
 
-  el.options = [
+  el.items = [
     { value: '1', label: '张三' },
     { value: '2', label: '李四' },
     { value: '3', label: '王五' },
@@ -24,7 +24,7 @@ order: 10
 <n-dropdown
   toggle
   selectable
-  options={[
+  items={[
     { value: '1', label: '张三' },
     { value: '2', label: '李四' },
     { value: '3', label: '王五' },

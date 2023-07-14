@@ -18,9 +18,9 @@ const baseCss = css`
     inline-size: fit-content;
     font-size: var(--font-size-sm);
     transition:
-      background-color 0.2s,
-      color 0.2s,
-      border-color 0.2s;
+      background-color 0.3s,
+      color 0.3s,
+      border-color 0.3s;
     animation-fill-mode: forwards;
     content: '复制成功';
   }
@@ -29,7 +29,7 @@ const baseCss = css`
     border-color: var(--success-border);
     color: var(--success-color);
     background-color: var(--success-bg);
-    animation: copy-slide-in 0.3s ease-in-out;
+    animation: copy-slide-in var(--transition-duration) var(--transition-timing-function);
     content: '复制成功';
   }
 
@@ -38,13 +38,13 @@ const baseCss = css`
     color: var(--error-color);
     background-color: var(--error-bg);
     animation:
-      copy-slide-in 0.3s ease-in-out,
-      error 1s ease-in-out 1s;
+      copy-slide-in var(--transition-duration) var(--transition-timing-function),
+      error 1s var(--transition-timing-function) 1s;
     content: '复制失败';
   }
 
   [data-copy-exit]::before {
-    animation: copy-slide-out 0.3s forwards ease-in-out;
+    animation: copy-slide-out var(--transition-duration) forwards var(--transition-timing-function);
   }
 
   @keyframes copy-slide-in {

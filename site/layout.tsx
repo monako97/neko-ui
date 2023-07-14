@@ -78,7 +78,7 @@ const style = css`
     opacity: 0.2;
     content: '';
     transform: translateY(-100px);
-    animation: colorful-stripe 15s ease infinite;
+    animation: colorful-stripe 15s var(--transition-timing-function) infinite;
   }
 
   .n-site-bg {
@@ -124,7 +124,7 @@ const style = css`
       position: fixed;
       inset-inline-end: 16px;
       transform: translateX(100%);
-      transition: transform 0.3s 0.3s;
+      transition: transform var(--transition-duration) var(--transition-timing-function);
 
       &:hover {
         transform: translateX(0);

@@ -58,7 +58,7 @@ export const style = css`
     border-radius: var(--border-radius);
     font-size: 16px;
     font-weight: bold;
-    transition: transform 0.3s;
+    transition: transform var(--transition-duration);
     inset-block-start: 0;
     inset-block-end: 0;
     inline-size: fit-content;
@@ -102,8 +102,8 @@ export const style = css`
     inline-size: fit-content;
     max-inline-size: calc(100% - 42px);
     transition:
-      transform 0.3s linear,
-      opacity 0.3s linear;
+      transform var(--transition-duration) linear,
+      opacity var(--transition-duration) linear;
     gap: 4px;
   }
 
@@ -115,7 +115,7 @@ export const style = css`
     min-inline-size: 8px;
     block-size: 3px;
     background-color: rgb(255 255 255 / 80%);
-    transition: background-color 0.3s linear;
+    transition: background-color var(--transition-duration) linear;
     cursor: pointer;
 
     &:hover,
@@ -130,7 +130,7 @@ export const style = css`
     z-index: 1;
     display: flex;
     inline-size: 100%;
-    transition: transform 0.3s;
+    transition: transform var(--transition-duration);
     transform: translate3d(0, -100%, 0);
   }
 

@@ -25,9 +25,9 @@ export { default as Typography, type TypographyProps, type TypographyElement } f
 export {
   default as Tree,
   type TreeProps,
-  type TreeSingleElement,
-  type TreeSingleSchemaElement,
-  type TreeSingleStringElement,
+  type TreeElement,
+  type TreeSchemaElement,
+  type TreeStringElement,
   type TreeMultipleElement,
   type TreeMultipleSchemaElement,
   type TreeMultipleStringElement,
@@ -44,10 +44,10 @@ export {
 export { default as Popover, type PopoverProps, type PopoverElement } from './popover';
 export {
   default as Dropdown,
-  type DropdownSingleElement,
+  type DropdownElement,
   type DropdownMultipleElement,
 } from './dropdown';
-export { default as Select, type SelectSingleElement, type SelectMultipleElement } from './select';
+export { default as Select, type SelectElement, type SelectMultipleElement } from './select';
 export {
   default as ColorPalette,
   type ColorPaletteProps,
@@ -66,6 +66,14 @@ export {
 } from './capture-screen';
 export { default as Tabs, type TabsProps, type TabsElement, type TabOption } from './tabs';
 export { default as Tag, type TagProps, type TagElement } from './tag';
+export {
+  default as Menu,
+  type MenuProps,
+  type MenuMultipleProps,
+  type MenuElement,
+  type MenuMultipleElement,
+  type MenuOption,
+} from './menu';
 export {
   theme,
   setTheme,
@@ -90,26 +98,32 @@ import type {
   CodeElement,
   ColorPaletteElement,
   ColorPickerElement,
+  DropdownElement,
   DropdownMultipleElement,
-  DropdownSingleElement,
   EmptyElement,
   HighlightTextElement,
   ImgElement,
   InputElement,
   InputNumberElement,
   MdElement,
+  MenuElement,
+  MenuMultipleElement,
   PopoverElement,
   RadioElement,
   SegmentedElement,
+  SelectElement,
   SelectMultipleElement,
-  SelectSingleElement,
   SkeletonElement,
   SpinElement,
   SwitchElement,
   TabsElement,
   TagElement,
+  TreeElement,
   TreeMultipleElement,
-  TreeSingleElement,
+  TreeMultipleSchemaElement,
+  TreeMultipleStringElement,
+  TreeSchemaElement,
+  TreeStringElement,
   TypographyElement,
 } from 'neko-ui';
 
@@ -164,7 +178,7 @@ interface CustomElementTags {
   'n-code': CodeElement;
   'n-color-palette': ColorPaletteElement;
   'n-color-picker': ColorPickerElement;
-  'n-dropdown': DropdownSingleElement | DropdownMultipleElement;
+  'n-dropdown': DropdownElement | DropdownMultipleElement;
   'n-empty': EmptyElement;
   'n-highlight-text': HighlightTextElement;
   'n-img': ImgElement;
@@ -174,14 +188,21 @@ interface CustomElementTags {
   'n-popover': PopoverElement;
   'n-radio': RadioElement;
   'n-segmented': SegmentedElement;
-  'n-select': SelectSingleElement | SelectMultipleElement;
+  'n-select': SelectElement | SelectMultipleElement;
   'n-skeleton': SkeletonElement;
   'n-spin': SpinElement;
   'n-switch': SwitchElement;
-  'n-tree': TreeSingleElement | TreeMultipleElement;
+  'n-tree':
+    | TreeElement
+    | TreeStringElement
+    | TreeSchemaElement
+    | TreeMultipleElement
+    | TreeMultipleStringElement
+    | TreeMultipleSchemaElement;
   'n-typography': TypographyElement;
   'n-tabs': TabsElement;
   'n-tag': TagElement;
+  'n-menu': MenuElement | MenuMultipleElement;
 }
 declare module 'solid-js' {
   export namespace JSX {

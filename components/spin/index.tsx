@@ -12,7 +12,7 @@ const style = css`
 
   .content {
     opacity: 1;
-    transition: opacity 0.3s;
+    transition: opacity var(--transition-duration);
   }
 
   .spin {

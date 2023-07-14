@@ -25,10 +25,10 @@ const styles = css`
     color: var(--text-secondary);
     opacity: 0;
     transition:
-      transform 0.3s,
-      opacity 0.3s,
-      color 0.3s,
-      background-color 0.3s;
+      transform var(--transition-duration),
+      opacity var(--transition-duration),
+      color var(--transition-duration),
+      background-color var(--transition-duration);
     line-height: 1.45;
     pointer-events: none;
     transform-origin: left;
@@ -82,8 +82,8 @@ const styles = css`
     &::placeholder {
       opacity: 0;
       transition:
-        color 0.3s,
-        opacity 0.3s;
+        color var(--transition-duration),
+        opacity var(--transition-duration);
     }
 
     &:focus::placeholder {
@@ -113,7 +113,7 @@ const styles = css`
     border-radius: var(--border-radius);
     color: var(--text-color);
     background-color: var(--component-bg);
-    transition: all 0.3s;
+    transition: all var(--transition-duration);
     inline-size: 100%;
     background-image: none;
     box-sizing: border-box;

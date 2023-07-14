@@ -195,7 +195,7 @@ export const style = css`
   }
 
   .without:not(.link, .flat)::before {
-    animation: btn-wave-effect 0.3s cubic-bezier(1, 1, 1, 1);
+    animation: btn-wave-effect var(--transition-duration) cubic-bezier(1, 1, 1, 1);
     position: absolute;
     z-index: -1;
     display: block;

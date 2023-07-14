@@ -74,7 +74,7 @@ export const style = css`
         0 / 100%,
       var(--alpha-gradient);
     opacity: 1;
-    transition: opacity 0.3s;
+    transition: opacity var(--transition-duration);
     user-select: none;
     cursor: crosshair;
 
@@ -150,7 +150,7 @@ export const style = css`
       block-size: 10px;
       background: #fff;
       box-shadow: 0 0 10px rgb(0 0 0 / 10%);
-      transition: 0.2s cubic-bezier(0.12, 0.4, 0.29, 1.46);
+      transition: 0.3s cubic-bezier(0.12, 0.4, 0.29, 1.46);
       transform: scale(1.2);
     }
 
@@ -160,7 +160,7 @@ export const style = css`
       border-radius: 50%;
       background: #fff;
       box-shadow: 0 0 10px rgb(0 0 0 / 10%);
-      transition: 0.2s cubic-bezier(0.12, 0.4, 0.29, 1.46);
+      transition: 0.3s cubic-bezier(0.12, 0.4, 0.29, 1.46);
       inline-size: 10px;
       block-size: 10px;
       transform: scale(1.2);
@@ -222,8 +222,8 @@ export const style = css`
         background-color: var(--c, transparent);
         opacity: 0;
         transition:
-          0.3s transform ease,
-          0.3s opacity ease;
+          var(--transition-duration) transform var(--transition-timing-function),
+          var(--transition-duration) opacity var(--transition-timing-function);
       }
 
       &:hover::after {

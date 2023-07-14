@@ -11,13 +11,13 @@ order: 3
 <script>
   const el = container.querySelector('n-dropdown');
 
-  el.options = [
+  el.items = [
     { value: '2', label: 'group one', options: ['A', 'B'] },
     {
       value: '1',
       label: 'group two',
       options: [
-        { value: '3', label: 'option-3', danger: true },
+        { value: '3', label: 'option-3', type: 'error' },
         { value: '4', label: 'option-4', disabled: true },
       ],
     },
@@ -27,13 +27,13 @@ order: 3
 
 ```jsx
 <n-dropdown
-  options={[
+  items={[
     { value: '2', label: 'option-2', options: ['A', 'B'] },
     {
       value: '1',
       label: 'option-1',
       options: [
-        { value: '3', label: 'option-3', danger: true },
+        { value: '3', label: 'option-3', type: 'error' },
         { value: '4', label: 'option-4', disabled: true },
       ],
     },

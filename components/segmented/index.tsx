@@ -39,7 +39,7 @@ const style = css`
       inset-block-start: 2px;
       inset-inline-start: var(--left);
       transition-duration: var(--transition-duration);
-      transition-timing-function: ease;
+      transition-timing-function: var(--transition-timing-function);
       transition-property: inline-size, block-size, inset-inline-start, background-color;
     }
   }
@@ -52,8 +52,8 @@ const style = css`
     color: var(--text-color);
     outline: 0;
     transition:
-      0.2s background-color ease,
-      0.3s color ease;
+      0.3s background-color var(--transition-timing-function),
+      var(--transition-duration) color var(--transition-timing-function);
     cursor: pointer;
     box-sizing: border-box;
     /* stylelint-disable-next-line */

@@ -48,7 +48,7 @@ const style = css`
       inline-size: 10px;
       block-size: 10px;
       transform: scale(0);
-      transition: 120ms transform ease-in-out;
+      transition: 120ms transform var(--transition-timing-function);
     }
 
     &:active {

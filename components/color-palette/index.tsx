@@ -165,7 +165,7 @@ function ColorPalette(props: ColorPaletteProps) {
   function handleSwitch(e: CustomEvent) {
     setHsva((prev) => ({
       ...prev,
-      type: e.detail.key,
+      type: e.detail[0],
     }));
   }
 
@@ -285,10 +285,9 @@ function ColorPalette(props: ColorPaletteProps) {
           <n-dropdown
             css={switchCss}
             value={hsva().type}
-            options={types}
+            items={types}
             placement="right"
             trigger="click"
-            selectable={true}
             onChange={handleSwitch}
           >
             <span class="switch">{hsva().type}</span>

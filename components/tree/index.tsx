@@ -287,7 +287,7 @@ export interface TreeBaseProp {
 }
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type Imap = { [key: string]: string | true | number | object };
-interface TreeSingleBaseProps extends TreeBaseProp {
+interface TreeBaseProps extends TreeBaseProp {
   value?: string;
   multiple?: false;
   // eslint-disable-next-line no-unused-vars
@@ -299,39 +299,40 @@ interface TreeMultipleBaseProps extends TreeBaseProp {
   // eslint-disable-next-line no-unused-vars
   onChange?(key?: string[]): void;
 }
-interface TreeSingleProps extends TreeSingleBaseProps {
+export interface TreeProps extends TreeBaseProps {
   fromSchema?: false;
   data: TreeData[];
 }
-interface TreeSingleSchemaProps extends TreeSingleBaseProps {
+export interface TreeSchemaProps extends TreeBaseProps {
   fromSchema: true;
   data: Imap;
 }
-interface TreeSingleStringProps extends TreeSingleBaseProps {
+export interface TreeStringProps extends TreeBaseProps {
   fromSchema?: false;
   data: string;
 }
-interface TreeMultipleProps extends TreeMultipleBaseProps {
+export interface TreeMultipleProps extends TreeMultipleBaseProps {
   fromSchema?: false;
   data: TreeData[];
 }
-interface TreeMultipleSchemaProps extends TreeMultipleBaseProps {
+export interface TreeMultipleSchemaProps extends TreeMultipleBaseProps {
   fromSchema: true;
   data: Imap;
 }
-interface TreeMultipleStringProps extends TreeMultipleBaseProps {
+export interface TreeMultipleStringProps extends TreeMultipleBaseProps {
   fromSchema?: false;
   data: string;
 }
-export type TreeProps =
-  | TreeSingleProps
-  | TreeMultipleProps
-  | TreeMultipleSchemaProps
-  | TreeSingleSchemaProps
-  | TreeMultipleStringProps
-  | TreeSingleStringProps;
 
-function Tree(props: TreeProps) {
+function Tree(
+  props:
+    | TreeProps
+    | TreeMultipleProps
+    | TreeMultipleSchemaProps
+    | TreeSchemaProps
+    | TreeMultipleStringProps
+    | TreeStringProps,
+) {
   let el: HTMLUListElement | undefined;
   const [lines, setLines] = createSignal<string[]>([]);
   const [treeData, setTreeData] = createSignal<TreeData[]>([]);
@@ -471,10 +472,9 @@ function Tree(props: TreeProps) {
   );
 }
 
-export type TreeSingleElement = CustomElement<TreeSingleProps>;
-export type TreeSingleSchemaElement = CustomElement<TreeSingleSchemaProps>;
-export type TreeSingleStringElement = CustomElement<TreeSingleStringProps>;
-
+export type TreeElement = CustomElement<TreeProps>;
+export type TreeSchemaElement = CustomElement<TreeSchemaProps>;
+export type TreeStringElement = CustomElement<TreeStringProps>;
 export type TreeMultipleElement = CustomElement<TreeMultipleProps>;
 export type TreeMultipleSchemaElement = CustomElement<TreeMultipleSchemaProps>;
 export type TreeMultipleStringElement = CustomElement<TreeMultipleStringProps>;

@@ -13,7 +13,7 @@ export const style = css`
     align-items: center;
     inline-size: 32px;
     block-size: 32px;
-    transition: transform 0.3s;
+    transition: transform var(--transition-duration);
     cursor: pointer;
     user-select: none;
     background-image: linear-gradient(
@@ -21,7 +21,7 @@ export const style = css`
       var(--primary-outline) 0%,
       var(--success-outline) 100%
     );
-    animation: avatar-morph-effect 8s ease-in-out infinite;
+    animation: avatar-morph-effect 8s var(--transition-timing-function) infinite;
 
     &::before,
     &::after {
@@ -32,7 +32,7 @@ export const style = css`
       inline-size: 100%;
       block-size: 100%;
       content: '';
-      transition: transform 0.3s;
+      transition: transform var(--transition-duration);
     }
 
     &::before {
@@ -45,7 +45,7 @@ export const style = css`
     }
 
     span {
-      transition: transform 0.3s;
+      transition: transform var(--transition-duration);
     }
 
     &:hover {
@@ -62,7 +62,7 @@ export const style = css`
       inline-size: 100%;
       block-size: 100%;
       clip-path: url('#clipPathAvatar');
-      transition: transform 0.3s;
+      transition: transform var(--transition-duration);
     }
   }
 

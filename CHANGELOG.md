@@ -1,4 +1,4 @@
-# [2.0.0-beta.14](https://github.com/monako97/neko-ui/compare/1.7.3...2.0.0-beta.14) (2023-07-13)
+# [2.0.0-beta.15](https://github.com/monako97/neko-ui/compare/1.7.3...2.0.0-beta.15) (2023-07-14)
 
 
 ### Features
@@ -7,6 +7,7 @@
 * capture-screen ([5289dce](https://github.com/monako97/neko-ui/commit/5289dce2e5a9d840860be2d49ffc01e47ee92235))
 * n-md添加part、theme demo ([586d319](https://github.com/monako97/neko-ui/commit/586d319c3c62f46c05cb41ac47be2f1e769774ad))
 * tabs选项卡 ([d4b2717](https://github.com/monako97/neko-ui/commit/d4b2717b55d68e6cb22ee40f6a2681c1fcf46067))
+* tag 🏷️标签 ([6de77c4](https://github.com/monako97/neko-ui/commit/6de77c4373729fb31ae67de65becd8c0a125ba97))
 * update docs ([e42ade0](https://github.com/monako97/neko-ui/commit/e42ade00cc0343b31da40b2bc9165d6d31840a84))
 * update docs ([13339c3](https://github.com/monako97/neko-ui/commit/13339c351a50d4616553ad643a288b0085fff063))
 * update docs ([4eccf7b](https://github.com/monako97/neko-ui/commit/4eccf7b8e27c01a2a555bef347a82c76dcb35710))

@@ -15,7 +15,13 @@ export type BaseOption = {
   [key: string]: any;
 };
 
-export type FieldNames = { label: string; value: string; options: string };
+export type FieldNames = {
+  label: string;
+  value: string;
+  options: string;
+  icon: string;
+  suffix: string;
+};
 
 export const defaultFieldNames = {
   label: 'label',
@@ -30,20 +36,25 @@ function getOptions<T extends BaseOption = BaseOption>(
   fieldNames?: Partial<FieldNames>,
 ): T[] {
   if (!list) return [];
-  return list.map((item) => {
+  return list.map((item, i) => {
     const { options, label, value } = { ...defaultFieldNames, ...fieldNames };
 
     if (typeof item === 'object') {
+      const _label = (typeof item[label] === 'undefined' ? item[value] : item[label]) || i;
+      const _value = (typeof item[value] === 'undefined' ? _label : item[value]) || i;
+      const _item = {
+        ...item,
+        [label]: _label,
+        [value]: _value,
+      };
+
       if (Array.isArray(item[options])) {
         return {
-          ...item,
+          ..._item,
           [options]: getOptions(item[options], fieldNames),
         };
       }
-      return {
-        ...item,
-        [label]: typeof item[label] === 'undefined' ? item[value] : item[label],
-      };
+      return _item;
     }
     return {
       [label]: item,

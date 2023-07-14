@@ -1,52 +1,26 @@
 import {
-  For,
-  type JSXElement,
   Show,
   createComponent,
   createEffect,
-  createMemo,
   createSignal,
   mergeProps,
-  onMount,
   splitProps,
   untrack,
 } from 'solid-js';
 import { isFunction } from '@moneko/common';
-import { cx } from '@moneko/css';
 import { customElement } from 'solid-element';
-import { style } from './style';
 import Empty from '../empty';
-import getOptions, { type BaseOption, type FieldNames, defaultFieldNames } from '../get-options';
-import Popover, { type PopoverProps, defaultProps as popoverProps } from '../popover';
-import type { CustomElement } from '..';
+import Popover, { defaultProps as popoverProps } from '../popover';
+import type { CustomElement, MenuMultipleProps, MenuOption, MenuProps, PopoverProps } from '..';
 
-export interface DropdownOption extends BaseOption {
-  handleClosed?: boolean;
-  suffix?: JSXElement;
-  options?: DropdownOption[];
-}
-
-export interface BaseDropdownProps extends Omit<PopoverProps, 'content'> {
-  options?: (DropdownOption | string)[];
-  selectable?: boolean;
-  fieldNames?: Partial<FieldNames>;
-  toggle?: boolean;
-}
-export interface DropdownProps extends BaseDropdownProps {
-  // eslint-disable-next-line no-unused-vars
-  onChange?(val: string | number, item: DropdownOption): void;
-  value?: string | number;
-  defaultValue?: string | number;
-  multiple?: false;
-}
-export interface DropdownMultipleProps extends BaseDropdownProps {
-  multiple?: true;
-  // eslint-disable-next-line no-unused-vars
-  onChange?(val: (string | number)[], item: DropdownOption): void;
-  value?: (string | number)[];
-  defaultValue?: (string | number)[];
-}
-export type DropdownSingleElement = CustomElement<DropdownProps>;
+export interface BaseDropdownProps extends Omit<PopoverProps, 'content'> {}
+export interface DropdownProps
+  extends Omit<MenuProps, 'openKeys' | 'onOpenChange'>,
+    BaseDropdownProps {}
+export interface DropdownMultipleProps
+  extends Omit<MenuMultipleProps, 'openKeys' | 'onOpenChange'>,
+    BaseDropdownProps {}
+export type DropdownElement = CustomElement<DropdownProps>;
 export type DropdownMultipleElement = CustomElement<DropdownMultipleProps>;
 
 function Dropdown(props: DropdownProps | DropdownMultipleProps) {
@@ -58,28 +32,16 @@ function Dropdown(props: DropdownProps | DropdownMultipleProps) {
     'onChange',
     'open',
     'onOpenChange',
-    'selectable',
     'fieldNames',
-    'options',
+    'items',
     'multiple',
     'toggle',
   ]);
   let portalRef: HTMLDivElement | undefined;
-  const [open, setOpen] = createSignal<boolean | null>(null);
   const [value, setValue] = createSignal<(string | number)[]>([]);
+  const [open, setOpen] = createSignal<boolean | null>(null);
+  const [menuOpenKeys, setMenuOpenKeys] = createSignal<(string | number)[]>([]);
 
-  const fieldNames = createMemo(() => ({
-    ...defaultFieldNames,
-    ...local.fieldNames,
-  }));
-  const options = createMemo(() => {
-    return getOptions(local.options, fieldNames());
-  });
-
-  function preventDefault(e: MouseEvent) {
-    e.preventDefault();
-    e.stopPropagation();
-  }
   function openChange(next: boolean | null) {
     if (isFunction(local.onOpenChange)) {
       local.onOpenChange(next);
@@ -88,91 +50,29 @@ function Dropdown(props: DropdownProps | DropdownMultipleProps) {
       setOpen(next);
     }
   }
-  function change(item: DropdownOption, e: MouseEvent) {
-    e.preventDefault();
-    if (!item.disabled && !other.disabled) {
-      let _value = [...untrack(value)];
-      const key = item[untrack(fieldNames).value];
 
-      if (local.multiple) {
-        const idx = _value.indexOf(key);
+  function change(
+    e: CustomEvent<[val: (string | number)[] | (string | number), item: MenuOption]>,
+  ) {
+    const [key, item] = e.detail;
 
-        if (idx === -1) {
-          _value.push(key);
-        } else {
-          _value.splice(idx, 1);
-        }
-      } else if (local.toggle && _value[0] === key) {
-        _value = [];
-      } else {
-        _value = [key];
-      }
-      if (isFunction(local.onChange)) {
-        local.onChange((local.multiple ? _value : _value[0]) as never, item);
-      }
-      if (local.value === undefined) {
-        setValue(_value);
-      }
-
-      if (!local.multiple) {
-        openChange(false);
-      }
+    if (isFunction(local.onChange)) {
+      local.onChange(key, item);
+    }
+    if (local.value === undefined) {
+      setValue(Array.isArray(key) ? key : [key]);
+    }
+    if (!local.multiple) {
+      openChange(false);
     }
   }
-
-  function renderMenu(list: DropdownOption[]) {
-    const { options: optionsKey, label, value: valueKey, icon, suffix } = fieldNames();
-
-    return (
-      <For each={list}>
-        {(item) => {
-          if (Array.isArray(item[optionsKey])) {
-            return (
-              <div class={cx('group', item.class)}>
-                <span class="group-title">
-                  <Show when={item[icon]}>
-                    <span class="icon">{item[icon]}</span>
-                  </Show>
-                  {item[label]}
-                  <Show when={item[suffix]}>
-                    <n-typography type="secondary">{item[suffix]}</n-typography>
-                  </Show>
-                </span>
-                {renderMenu(item[optionsKey])}
-              </div>
-            );
-          }
-
-          return (
-            <div
-              class={cx('item', item.class, item.danger && 'danger')}
-              handle-closed={item.handleClosed}
-              aria-disabled={other.disabled || item.disabled}
-              aria-selected={local.selectable && value().includes(item[valueKey])}
-              onMouseDown={preventDefault}
-              onClick={change.bind(null, item)}
-            >
-              <Show when={item[icon]}>
-                <span class="icon">{item[icon]}</span>
-              </Show>
-              {item[label]}
-              <Show when={item[suffix]}>
-                <n-typography type="secondary">{item[suffix]}</n-typography>
-              </Show>
-            </div>
-          );
-        }}
-      </For>
-    );
+  function menuOpenKeysChange(e: CustomEvent<(string | number)[]>) {
+    setMenuOpenKeys(e.detail);
   }
 
   createEffect(() => {
-    if (open() && local.selectable) {
-      setTimeout(() => {
-        portalRef?.querySelector('[aria-selected="true"]')?.scrollIntoView({
-          block: 'nearest',
-        });
-      }, 16);
+    if (typeof local.value !== 'undefined') {
+      setValue(local.value ? (Array.isArray(local.value) ? local.value : [local.value]) : []);
     }
   });
   createEffect(() => {
@@ -180,28 +80,28 @@ function Dropdown(props: DropdownProps | DropdownMultipleProps) {
       setOpen(local.open);
     }
   });
-  createEffect(() => {
-    setValue(local.value ? (Array.isArray(local.value) ? local.value : [local.value]) : []);
-  });
-
-  onMount(() => {
-    if (props.value === undefined) {
-      const val = local.defaultValue;
-
-      setValue(val ? (Array.isArray(val) ? val : [val]) : []);
-    }
-  });
 
   return (
     <Popover
-      popupClass={cx(local.selectable && 'selectable', local.popupClass)}
-      popupCss={style + (local.popupCss || '')}
+      popupClass={local.popupClass}
+      popupCss={local.popupCss}
       open={open()}
       onOpenChange={openChange}
       content={
         <div ref={portalRef} class="container">
-          <Show when={options().length} fallback={<Empty style={{ width: '100%' }} />}>
-            {renderMenu(options())}
+          <Show when={local.items?.length} fallback={<Empty style={{ width: '100%' }} />}>
+            <n-menu
+              items={local.items}
+              value={value()}
+              default-value={local.defaultValue}
+              multiple={local.multiple as true}
+              field-names={local.fieldNames}
+              onChange={change}
+              toggle={local.toggle}
+              disabled={other.disabled}
+              open-keys={menuOpenKeys()}
+              onOpenChange={menuOpenKeysChange}
+            />
           </Show>
         </div>
       }
@@ -212,39 +112,48 @@ function Dropdown(props: DropdownProps | DropdownMultipleProps) {
 
 export const defaultProps = {
   ...popoverProps,
-  selectable: undefined,
   fieldNames: undefined,
   toggle: undefined,
   value: undefined,
   defaultValue: undefined,
   onChange: undefined,
   multiple: undefined,
-  options: undefined,
+  disabled: undefined,
+  type: undefined,
+  onOpenChange: undefined,
+  openKeys: undefined,
 };
 
-customElement('n-dropdown', defaultProps, (_, opt) => {
-  const el = opt.element;
-  const props = mergeProps(
-    {
-      onChange(key, item) {
-        el.dispatchEvent(
-          new CustomEvent('change', {
-            detail: { key, item },
-          }),
-        );
-      },
-      onOpenChange(key: boolean | null) {
-        el.dispatchEvent(
-          new CustomEvent('openchange', {
-            detail: key,
-          }),
-        );
-      },
-      children: [...el.childNodes.values()],
-    } as DropdownProps,
-    _,
-  );
+customElement(
+  'n-dropdown',
+  {
+    ...defaultProps,
+    items: [],
+  },
+  (_, opt) => {
+    const el = opt.element;
+    const props = mergeProps(
+      {
+        onChange(key, item) {
+          el.dispatchEvent(
+            new CustomEvent('change', {
+              detail: [key, item],
+            }),
+          );
+        },
+        onOpenChange(open: boolean | null) {
+          el.dispatchEvent(
+            new CustomEvent('openchange', {
+              detail: open,
+            }),
+          );
+        },
+        children: [...el.childNodes.values()],
+      } as DropdownProps,
+      _,
+    );
 
-  return createComponent(Dropdown, props);
-});
+    return createComponent(Dropdown, props);
+  },
+);
 export default Dropdown;

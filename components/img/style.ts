@@ -5,7 +5,7 @@ export const imgCss = css`
     max-inline-size: 100%;
     max-block-size: 100%;
     object-fit: contain;
-    transition: opacity 0.2s;
+    transition: opacity 0.3s;
   }
 
   .none {
@@ -20,7 +20,7 @@ export const style = css`
     inset-inline-end: 0;
     z-index: 1;
     color: #fff;
-    transition: transform 0.3s;
+    transition: transform var(--transition-duration);
     cursor: pointer;
     transform: scale(0);
 
@@ -70,11 +70,11 @@ export const style = css`
   }
 
   .open {
-    animation: photo-in 0.3s forwards;
+    animation: photo-in var(--transition-duration) forwards;
   }
 
   .closeing {
-    animation: photo-out 0.3s forwards;
+    animation: photo-out var(--transition-duration) forwards;
   }
 
   @keyframes photo-in {

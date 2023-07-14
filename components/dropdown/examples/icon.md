@@ -11,7 +11,7 @@ order: 6
 <script>
   const el = container.querySelector('n-dropdown');
 
-  el.options = [
+  el.items = [
     { label: '狮子', value: '狮子', icon: '🦁' },
     { label: '大青蛙', value: '大青蛙', icon: '🐸' },
   ];
@@ -20,7 +20,7 @@ order: 6
 
 ```jsx
 <n-dropdown
-  options={[
+  items={[
     { label: '狮子', value: '狮子', icon: '🦁' },
     { label: '大青蛙', value: '大青蛙', icon: '🐸' },
   ]}

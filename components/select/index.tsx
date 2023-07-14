@@ -16,21 +16,14 @@ import { isFunction } from '@moneko/common';
 import { cx } from '@moneko/css';
 import { customElement } from 'solid-element';
 import { style } from './style';
-import Dropdown, { type DropdownOption, type DropdownProps, defaultProps } from '../dropdown';
+import Dropdown, { type DropdownProps, defaultProps } from '../dropdown';
 import getOptions, { FieldNames, defaultFieldNames } from '../get-options';
-import type { CustomElement, TagProps } from '..';
+import type { CustomElement, MenuOption } from '..';
 
-export interface SelectOption extends DropdownOption {
-  children?: SelectOption[];
-  type: TagProps['type'];
-  color: TagProps['color'];
-  icon: TagProps['icon'];
-}
-
-export interface SelectProps extends Omit<DropdownProps, 'options' | 'children'> {
+export interface SelectProps extends Omit<DropdownProps, 'items' | 'children'> {
   label?: JSXElement | (() => JSXElement);
   placeholder?: string;
-  options?: (SelectOption | string)[];
+  options?: (MenuOption | string)[];
   prefixIcon?: JSXElement | (() => JSXElement);
   suffixIcon?: JSXElement | (() => JSXElement);
 }
@@ -54,16 +47,16 @@ function Select(props: SelectProps) {
   const [open, setOpen] = createSignal<boolean | null>(null);
   const [value, setValue] = createSignal<(string | number)[]>([]);
   const [x, setX] = createSignal<string>('');
-  const [options, setOptions] = createSignal<SelectOption[]>([]);
-  const [kv, setKv] = createSignal<Record<string, SelectOption>>({});
+  const [options, setOptions] = createSignal<MenuOption[]>([]);
+  const [kv, setKv] = createSignal<Record<string, MenuOption>>({});
 
   const fieldNames = createMemo(() => ({
     ...defaultFieldNames,
     ...other.fieldNames,
   }));
 
-  function getKv(arr: SelectOption[], fieldDic: FieldNames) {
-    const optKv: Record<string, SelectOption> = {};
+  function getKv(arr: MenuOption[], fieldDic: FieldNames) {
+    const optKv: Record<string, MenuOption> = {};
 
     for (let i = 0, len = arr.length; i < len; i++) {
       const item = arr[i];
@@ -105,7 +98,7 @@ function Select(props: SelectProps) {
       openChange(!untrack(open));
     }
   }
-  function onChange(val: (string | number)[] | string | number | undefined, item: DropdownOption) {
+  function onChange(val: (string | number)[] | string | number | undefined, item: MenuOption) {
     if (local.value === undefined) {
       setValue(val ? (Array.isArray(val) ? val : [val]) : []);
     }
@@ -189,16 +182,15 @@ function Select(props: SelectProps) {
 
   return (
     <Dropdown
+      {...other}
       placement="left"
       css={style + x() + (local.css || '')}
       trigger="none"
-      selectable={true}
-      options={options()}
+      items={options()}
       value={value() as unknown as string}
       onChange={onChange}
       open={open()}
       onOpenChange={openChange}
-      {...other}
     >
       <div
         ref={ref}
@@ -244,7 +236,7 @@ function Select(props: SelectProps) {
               {(v) => (
                 <n-tag
                   class={cx('tag', open() && 'opacity')}
-                  type={kv()[v].danger ? 'error' : kv()[v].type || 'primary'}
+                  type={kv()[v].type || 'primary'}
                   color={kv()[v].color}
                   icon={kv()[v].icon}
                   close-icon={!other.disabled && !kv()[v].disabled}
@@ -265,13 +257,13 @@ function Select(props: SelectProps) {
   );
 }
 
-export type SelectSingleElement = CustomElement<SelectProps & { defaultValue?: string | number }>;
+export type SelectElement = CustomElement<SelectProps & { defaultValue?: string | number }>;
 export type SelectMultipleElement = CustomElement<
   Omit<SelectProps, 'onChange' | 'value' | 'defaultValue'> & {
     value?: Array<string | number>;
     defaultValue?: Array<string | number>;
     // eslint-disable-next-line no-unused-vars
-    onChange?(key: Array<string | number>, item: SelectOption): void;
+    onChange?(key: Array<string | number>, item: MenuOption): void;
   }
 >;
 
@@ -279,6 +271,7 @@ customElement(
   'n-select',
   {
     ...defaultProps,
+    options: [],
     label: undefined,
     placeholder: '请选择',
     dropdownMatchSelectWidth: true,
@@ -289,7 +282,7 @@ customElement(
     const el = opt.element;
     const props = mergeProps(
       {
-        onChange(key: string | number, item: SelectOption) {
+        onChange(key: string | number, item: MenuOption) {
           el.dispatchEvent(
             new CustomEvent('change', {
               detail: [key, item],

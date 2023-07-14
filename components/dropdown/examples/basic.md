@@ -8,10 +8,10 @@ order: 1
 <script>
   const el = container.querySelector('n-dropdown');
 
-  el.options = ['A', 'B', { value: 'C', disabled: true }, 'D'];
+  el.items = ['A', 'B', { value: 'C', disabled: true }, 'D'];
 </script>
 ```
 
 ```jsx
-<n-dropdown options={['A', 'B', { value: 'C', disabled: true }, 'D']}>hover</n-dropdown>
+<n-dropdown items={['A', 'B', { value: 'C', disabled: true }, 'D']}>hover</n-dropdown>
 ```

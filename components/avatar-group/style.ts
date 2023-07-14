@@ -12,7 +12,7 @@ export const style = css`
     & > n-avatar:not(:first-child),
     & > n-popover {
       margin-inline-start: -4%;
-      transition: margin-inline-start 0.3s;
+      transition: margin-inline-start var(--transition-duration);
 
       &:hover:not(n-popover) {
         margin-inline-start: 4px;

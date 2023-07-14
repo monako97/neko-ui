@@ -17,10 +17,9 @@
 | arrow             | 添加一个箭头显示                              | `boolean`                                                                                         | -      | 1.6.0 |
 | placement         | 指定弹出显示的方向                            | `bottomLeft` \| `bottom` \| `bottomRight` \| `topLeft` \| `top` \| `topRight` \| `left` \|`right` | `left` | 1.6.0 |
 | value             | 值                                            | `string` \|`number`                                                                               | -      | 1.6.0 |
-| onChange          | 值修改时的回调方法                            | (val: `string\|number`,item: `DropdownOption`) => void                                            | -      | 1.6.0 |
-| options           | 选项数据                                      | `(DropdownOption\|string)[]`                                                                      | `[]`   | 1.6.0 |
+| onChange          | 值修改时的回调方法                            | (val: `string\|number`,item: `MenuOption`) => void                                                | -      | 1.6.0 |
+| items             | 选项数据                                      | `(MenuOption\|string)[]`                                                                          | `[]`   | 1.6.0 |
 | fieldNames        | 自定义节点 `label`、`value`、`options` 的字段 | `{label:'label',value:'value',options:'options'}`                                                 | -      | 1.6.0 |
-| selectable        | 可以选中                                      | `boolean`                                                                                         | -      | 1.6.0 |
 | multiple          | 可多选                                        | `boolean`                                                                                         | -      | 1.7.1 |
 | toggle            | 可取消                                        | `boolean`                                                                                         | -      | 1.7.1 |
 
@@ -33,14 +32,6 @@
 | contextMenu | 右键     |
 | none        | 无       |
 
-### DropdownOption
+### MenuOption
 
-| 属性     | 说明       | 类型               | 默认值 | 版本  |
-| -------- | ---------- | ------------------ | ------ | ----- |
-| class    | 自定义类名 | `string`           | -      | 1.6.0 |
-| value    | 值         | `string`           | -      | 1.6.0 |
-| disabled | 只读       | `boolean`          | -      | 1.6.0 |
-| label    | 选项描述   | `JSXElement`       | -      | 1.6.0 |
-| icon     | 图标       | `JSXElement`       | -      | 1.6.0 |
-| suffix   | 后缀       | `JSXElement`       | -      | 2.0.0 |
-| options  | 子选项     | `DropdownOption[]` | -      | 1.6.0 |
+!> 前往 [Menu](/neko-ui/menu) 组件查看

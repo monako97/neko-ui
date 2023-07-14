@@ -20,8 +20,8 @@ const style = css`
       0 0 0 0 var(--primary-border);
     transition:
       0.4s box-shadow,
-      0.3s background-color,
-      0.3s opacity;
+      var(--transition-duration) background-color,
+      var(--transition-duration) opacity;
     cursor: pointer;
     inline-size: fit-content;
     min-inline-size: 44px;
@@ -33,7 +33,7 @@ const style = css`
     &::before {
       color: var(--primary-secondary);
       padding-inline: 20px 8px;
-      transition-duration: 0.3s;
+      transition-duration: var(--transition-duration);
       transition-property: color, padding, background-color;
       content: attr(text-off) '';
     }
@@ -47,11 +47,11 @@ const style = css`
       outline: 2.05px solid #fff;
       box-shadow: 0 2px 4px 1px var(--primary-shadow);
       transition:
-        0.3s padding,
-        0.3s background-color 0.1s,
-        0.3s left,
+        var(--transition-duration) padding,
+        var(--transition-duration) background-color 0.1s,
+        var(--transition-duration) left,
         0.6s transform,
-        0.3s border-color;
+        var(--transition-duration) border-color;
       outline-offset: -0.05px;
       inset-block-start: 3px;
       inset-block-end: 3px;

@@ -60,7 +60,7 @@ const style = css`
   }
 
   .slide-in {
-    animation: slide-in ease-in-out 0.3s;
+    animation: slide-in var(--transition-timing-function) var(--transition-duration);
   }
 
   @keyframes slide-in {
@@ -90,7 +90,7 @@ const style = css`
       position: absolute;
       z-index: 1;
       opacity: 0;
-      transition: opacity 0.3s;
+      transition: opacity var(--transition-duration);
       content: '';
       pointer-events: none;
     }
@@ -123,7 +123,7 @@ const style = css`
       block-size: 2px;
       inset-block-end: -0.5px;
       transition-duration: var(--transition-duration);
-      transition-timing-function: ease;
+      transition-timing-function: var(--transition-timing-function);
       transition-property: inline-size, block-size, inset-inline-start, background-color;
     }
   }
@@ -137,8 +137,8 @@ const style = css`
       border-radius: var(--border-radius) var(--border-radius) 0 0;
       background-color: var(--tab-bg);
       transition:
-        border-color ease 0.3s,
-        background-color ease 0.3s;
+        border-color var(--transition-timing-function) var(--transition-duration),
+        background-color var(--transition-timing-function) var(--transition-duration);
 
       &.active {
         background-color: var(--tab-current-bg);
@@ -168,7 +168,7 @@ const btnCss = css`
     font-size: 12px;
     font-weight: 400;
     color: var(--text-secondary);
-    transition: color ease 0.3s;
+    transition: color var(--transition-timing-function) var(--transition-duration);
     margin-inline-start: 8px;
 
     &:hover {
@@ -181,7 +181,7 @@ const btnCss = css`
   }
 `;
 
-export interface TabOption extends BaseOption {
+export interface TabOption extends Omit<BaseOption, 'options'> {
   icon?: JSXElement;
   content?: JSXElement;
   closable?: boolean;

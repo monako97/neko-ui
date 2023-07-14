@@ -1,32 +1,31 @@
 ---
 title: 多选模式
 description: 将 `multiple` 属性设置为 true, 进行多选操作, 当设置 `value` 时值受控
-order: 9
+order: 2
 ---
 
 ```html
-<n-dropdown selectable="true" multiple="true">
+<n-menu selectable="true" multiple="true">
   <div>可多选</div>
-</n-dropdown>
+</n-menu>
 <script>
-  const el = container.querySelector('n-dropdown');
+  const el = container.querySelector('n-menu');
 
   el.items = [
     { value: 'a', label: '张三' },
     { value: 'b', label: '李四' },
-    { value: 'c', label: '王五' },
+    { value: 'c', label: '王五', type: 'error' },
     { value: 'd', label: '赵六' },
   ];
   el.value = ['a', 'c'];
   el.onchange = function (e) {
-    const [key] = e.detail;
-    e.target.value = key;
+    e.target.value = e.detail.key;
   };
 </script>
 ```
 
 ```jsx
-<n-dropdown
+<n-menu
   multiple
   selectable
   value={['2', '4']}
@@ -37,9 +36,7 @@ order: 9
     { value: '4', label: '赵六' },
   ]}
   onChange={(e) => {
-    e.target.value = e.detail[0];
+    e.target.value = e.detail.key;
   }}
->
-  <div>可多选</div>
-</n-dropdown>
+/>
 ```

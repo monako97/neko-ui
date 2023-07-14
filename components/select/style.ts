@@ -8,7 +8,7 @@ export const style = css`
     padding: 0 4px;
     text-overflow: ellipsis;
     color: var(--text-secondary);
-    transition: transform 0.3s;
+    transition: transform var(--transition-duration);
     line-height: inherit;
     pointer-events: none;
     transform-origin: left;
@@ -21,7 +21,7 @@ export const style = css`
   .placeholder {
     max-inline-size: 100%;
     padding: 0;
-    transition: 0.3s opacity;
+    transition: var(--transition-duration) opacity;
     pointer-events: none;
     flex: 1;
   }
@@ -56,7 +56,7 @@ export const style = css`
     min-block-size: 28px;
     cursor: pointer;
     user-select: none;
-    transition: border-color 0.3s ease;
+    transition: border-color var(--transition-duration) var(--transition-timing-function);
 
     &:not(:has(.label)) {
       & .placeholder {
@@ -119,7 +119,7 @@ export const style = css`
 
   .opacity {
     opacity: 0.5;
-    transition: opacity 0.3s ease;
+    transition: opacity var(--transition-duration) var(--transition-timing-function);
 
     &:hover {
       opacity: 1;

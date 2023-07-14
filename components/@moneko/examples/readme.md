@@ -54,8 +54,8 @@ root_folder/
     );
     transform: rotate(-120deg);
     color: color: rgba(147, 32, 34, 0.8);
-    transition-timing-function: ease-in-out;
-    transition-duration: 0.3s;
+    transition-timing-function: var(--transition-timing-function);
+    transition-duration: var(--transition-duration);
   }
   .user-name::before {
     background-image: repeating-linear-gradient(10deg, rgba(255, 0, 0, 0), rgba(255, 0, 0, 1) 10px, rgba(255, 0, 0, 0) 20px);

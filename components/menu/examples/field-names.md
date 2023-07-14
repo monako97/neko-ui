@@ -1,19 +1,18 @@
 ---
 title: 自定义字段名
 description: 自定义节点 `label`、`value`、`options` 的字段
-order: 12
+order: 4
 ---
 
 ```html
-<n-dropdown>
-  <n-button>自定义字段</n-button>
-</n-dropdown>
+<n-menu></n-menu>
 <script>
-  const el = container.querySelector('n-dropdown');
+  const el = container.querySelector('n-menu');
 
   el.fieldNames = {
     label: 'name',
     options: 'children',
+    children: 'options',
   };
   el.items = [
     {
@@ -26,10 +25,11 @@ order: 12
 ```
 
 ```jsx
-<n-dropdown
+<n-menu
   field-names={{
     label: 'name',
     options: 'children',
+    children: 'options',
   }}
   items={[
     {
@@ -38,7 +38,5 @@ order: 12
       children: ['牛', '马'],
     },
   ]}
->
-  <n-button>自定义字段</n-button>
-</n-dropdown>
+/>
 ```

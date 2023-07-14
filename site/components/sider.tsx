@@ -11,7 +11,7 @@ const style = css`
   .site-sider-group-title,
   .site-sider-item,
   .site-sider-item::before {
-    transition-duration: 0.3s;
+    transition-duration: var(--transition-duration);
   }
 
   .site-left {
@@ -375,12 +375,11 @@ function Sider(_: object, opt: ComponentOptions<object>) {
           </hgroup>
           <n-dropdown
             value={theme.scheme}
-            selectable={true}
-            options={themes}
+            items={themes}
             trigger="click"
             css={switchThemeCss}
             onChange={(e: CustomEvent) => {
-              setTheme('scheme', e.detail.key);
+              setTheme('scheme', e.detail[0]);
             }}
           >
             <div class="site-theme-btn" />

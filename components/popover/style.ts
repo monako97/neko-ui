@@ -51,21 +51,21 @@ export const portalCss = css`
   .in-up {
     --direction: -1;
 
-    animation: popover-up-in-effect 0.3s forwards;
+    animation: popover-up-in-effect var(--transition-duration) forwards;
     transform: scaleY(1);
   }
 
   .out-up {
     --direction: -1;
 
-    animation: popover-up-out-effect 0.3s forwards;
+    animation: popover-up-out-effect var(--transition-duration) forwards;
     transform: scaleY(1);
   }
 
   .in-down {
     --direction: 1;
 
-    animation: popover-down-in-effect 0.3s forwards;
+    animation: popover-down-in-effect var(--transition-duration) forwards;
     transform: scaleY(1);
 
     &::before {
@@ -78,7 +78,7 @@ export const portalCss = css`
   .out-down {
     --direction: 1;
 
-    animation: popover-down-out-effect 0.3s forwards;
+    animation: popover-down-out-effect var(--transition-duration) forwards;
     transform: scaleY(1);
 
     &::before {

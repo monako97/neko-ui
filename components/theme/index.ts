@@ -138,7 +138,9 @@ const baseCss = css`
     --text-selection: var(--primary-selection);
     --box-shadow-base: var(--primary-base-shadow);
     --transition-duration: 0.3s;
-    --transition-timing-function: cubic-bezier(0.94, -0.1, 0.1, 1.2);
+
+    /* --transition-timing-function: cubic-bezier(0.94, -0.1, 0.1, 1.2); */
+    --transition-timing-function: cubic-bezier(0.645, 0.045, 0.355, 1);
 
     font-size: var(--font-size);
   }

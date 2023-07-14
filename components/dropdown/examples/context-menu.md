@@ -23,10 +23,10 @@ order: 7
       font-size: x-large;
     }
   `;
-  el.options = [
+  el.items = [
     { value: '1', label: 'option-1' },
     { value: '2', label: 'option-2', disabled: true },
-    { value: '3', label: 'option-3', danger: true },
+    { value: '3', label: 'option-3', type: 'error' },
   ];
 </script>
 ```
@@ -35,10 +35,10 @@ order: 7
 <n-dropdown
   class="dropdown"
   style={{ width: '100%' }}
-  options={[
+  items={[
     { value: '1', label: 'option-1' },
     { value: '2', label: 'option-2', disabled: true },
-    { value: '3', label: 'option-3', danger: true },
+    { value: '3', label: 'option-3', type: 'error' },
   ]}
   trigger="contextMenu"
   css={`

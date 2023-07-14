@@ -39,9 +39,9 @@ export const style = css`
       outline: 0 solid transparent;
       box-shadow: inset 0 0 0 var(--shadow-w, 0) var(--primary-color);
       transition:
-        0.2s border-color linear,
-        0.2s box-shadow linear,
-        0.2s outline linear;
+        0.3s border-color var(--transition-timing-function),
+        0.3s box-shadow var(--transition-timing-function),
+        0.3s outline var(--transition-timing-function);
       appearance: none;
       inline-size: 16px;
       block-size: 16px;
@@ -65,8 +65,8 @@ export const style = css`
         border-style: solid;
         border-width: 0 0 2px 2px;
         border-color: transparent;
-        transition-duration: 0.2s;
-        transition-timing-function: ease-in-out;
+        transition-duration: 0.3s;
+        transition-timing-function: var(--transition-timing-function);
         transition-property: background-color, transform, border-color, height;
         box-sizing: border-box;
         inset-block-start: 0;
