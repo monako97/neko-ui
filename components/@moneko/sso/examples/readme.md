@@ -5,11 +5,22 @@
 !> Shared Store Object `共享状态对象`
 !> 通过 useSyncExternalStore 衔接的外部状态管理
 
+## 安装依赖
+
+```shell
+npm install shared-store-object -S
+# or
+yarn add shared-store-object -S
+```
+
 ## 使用方式
 
 !> 页面 render 后在任意位置使用, 可通过简单的方式进行创建、修改、回收（回收的对象将无法继续使用）
 
 ```jsx
+// 引入 或 import { sso } from '@moneko/react';
+import sso from 'shared-store-object';
+
 // 创建公共状态
 const like = sso({
   count: 0,
