@@ -98,7 +98,7 @@ function Pagination(_: object, opt: ComponentOptions<object>) {
           ?.shadowRoot?.querySelector('.n-md-body'),
         rect = el?.getBoundingClientRect();
 
-      el = el.querySelector('n-md')?.shadowRoot?.querySelector('.n-md-body');
+      el = el?.querySelector('n-md')?.shadowRoot?.querySelector('.n-md-body');
 
       if (el) {
         rect = el?.getBoundingClientRect();

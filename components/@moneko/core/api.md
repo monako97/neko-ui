@@ -75,7 +75,7 @@
 | dashed_case | 破折号式: 每个单词全小写或全大写，多单词使用`-`隔开                                                        |
 | snake_case  | 蛇形命名: 每个单词全小写或全大写，多单词使用`_`隔开                                                        |
 
-### 配置案例
+### 配置案例 MemberTransformer
 
 ```javascript
 const conf = {
@@ -149,7 +149,7 @@ import isFunction from 'lodash/isFunction';
 | strictVersion   | 如果版本无效,则不接受共享模块(默认为是,如果本地后备模块可用并且共享模块不是单例,否则为 no,如果未指定所需的版本,则无效) | boolean | -      |
 | version         | 所提供模块的版本,将替换较低的匹配版本,但不会替换较高的版本                                                             | number  | -      |
 
-### 配置案例
+### 配置案例 moduleFederation
 
 ```javascript
 import { PACKAGENAME } from '@moneko/core/build/process-env';

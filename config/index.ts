@@ -7,11 +7,13 @@ const conf: Partial<ConfigType<'swc'>> = {
     tags: [
       {
         tag: 'script',
-        src: 'https://cdn.jsdelivr.net/npm/n-katex@1.0.6/umd/index.js',
+        type: 'text/javascript',
+        src: 'https://rawcdn.githack.com/monako97/cdn/main/npm/n-katex/1.0.6/umd/index.js',
       },
       {
         tag: 'script',
-        src: 'https://cdn.jsdelivr.net/npm/n-code-live@1.0.4/umd/index.js',
+        type: 'text/javascript',
+        src: 'https://rawcdn.githack.com/monako97/cdn/main/npm/n-code-live/1.0.4/umd/index.js',
       },
     ],
   },

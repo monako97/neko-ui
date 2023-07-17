@@ -6,6 +6,30 @@ icon: 🕸️
 order: 3
 ---
 
-import readme from './examples/readme.md';
+# @moneko/request
 
-<n-md text={readme} />
+> 数据请求
+
+## 设置响应拦截器、请求前缀
+
+```typescript
+// @/services/index.ts
+import { extend } from '@moneko/request';
+export { request } from '@moneko/request';
+
+extend({
+  interceptor: {
+    response: (resp) => resp,
+  },
+  prefixUrl: '/api',
+});
+```
+
+## 调用 request 案例
+
+```typescript
+import { request } from '@/services';
+
+export const getApi = () => request('/metrics');
+export const postApi = (params = {}) => request('/metrics', { data: params, method: 'POST' });
+```

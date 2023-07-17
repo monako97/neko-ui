@@ -31,16 +31,27 @@ const style = css`
     margin: 16px auto 0;
     min-block-size: calc(100vb - 132px);
 
-    tr > th,
-    tr > td {
-      &:last-child,
-      &:nth-last-child(2) {
-        min-inline-size: 45px;
-      }
+    n-md::part(body) > div:empty {
+      margin: 0;
+      padding: 0;
+      background-color: none;
+      backdrop-filter: none;
+      box-shadow: none;
+      pointer-events: none;
     }
 
-    .n-md-toc {
+    n-md::part(toc) {
       inset-block-start: 16px;
+    }
+
+    n-md::part(body) {
+      tr > th,
+      tr > td {
+        &:last-child,
+        &:nth-last-child(2) {
+          min-inline-size: 45px;
+        }
+      }
     }
   }
 
@@ -112,7 +123,7 @@ const style = css`
   }
 
   @media screen and (width <= 1100px) {
-    .n-md-box {
+    n-md::part(box) {
       max-inline-size: auto;
     }
 
@@ -120,7 +131,7 @@ const style = css`
       inline-size: calc(100% - 116px);
     }
 
-    .site-doc-main-box .n-md-toc {
+    .site-doc-main-box n-md::part(toc) {
       position: fixed;
       inset-inline-end: 16px;
       transform: translateX(100%);
