@@ -1,6 +1,6 @@
 {
   "name": "neko-ui",
-  "version": "2.0.0-beta.17",
+  "version": "2.0.0-beta.18",
   "description": "Web Components UI Libraries",
   "main": "lib/index.js",
   "scripts": {
@@ -48,7 +48,7 @@
     "jest": "29.6.1",
     "jest-environment-jsdom": "29.6.1",
     "n-code-live": "1.0.4",
-    "n-katex": "1.0.6",
+    "n-katex": "1.0.7",
     "remark-frontmatter": "4.0.1",
     "stylelint-config-moneko": "1.0.17",
     "ts-node": "10.9.1",

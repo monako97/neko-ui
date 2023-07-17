@@ -258,9 +258,10 @@ function Popover(props: PopoverProps) {
   const portalStyle = createMemo(() => {
     const p = posi();
 
+    // max-block-size: calc(100vb - ${(up() ? p.bottom : p.top) || 0}px);
     return `.portal {${Object.keys(p)
       .map((k) => `${k}:${p[k as keyof Posi]}px;`)
-      .join('')}z-index: 1;max-block-size: calc(100vb - ${(up() ? p.bottom : p.top) || 0}px);}`;
+      .join('')}z-index: 1;}`;
   });
   const portalCls = createMemo(() => {
     return cx(
