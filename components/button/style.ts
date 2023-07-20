@@ -1,7 +1,7 @@
 import { type CSSInterpolation, css } from '@moneko/css';
-import type { ButtonType } from '.';
+import type { ButtonProps } from '.';
 
-function btnColor(type: ButtonType): CSSInterpolation {
+function btnColor(type: ButtonProps['type']): CSSInterpolation {
   let _cls = `.${type}`,
     fillCls = `.${type}.fill`;
 
