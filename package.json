@@ -36,7 +36,7 @@
     "@commitlint/cli": "17.6.6",
     "@commitlint/config-conventional": "17.6.6",
     "@moneko/cli": "2.0.0-beta.5",
-    "@moneko/core": "3.0.0-beta.51",
+    "@moneko/core": "3.0.0-beta.52",
     "@moneko/postcss": "1.0.30",
     "@moneko/solid-js": "1.0.6",
     "@swc/jest": "0.2.26",

@@ -3,6 +3,7 @@
 
 ### Bug Fixes
 
+* has no exported member 'ButtonType' ([3c2c4b2](https://github.com/monako97/neko-ui/commit/3c2c4b22dbddae291bf4e5b9b7c9fbdc95058e02))
 * menu fieldNames ([6768c37](https://github.com/monako97/neko-ui/commit/6768c371a6df935a29460b0cb089a131db292975))
 * popover max-block-size ([c885a0d](https://github.com/monako97/neko-ui/commit/c885a0ddebb07218ccdce3f0f2959ee0e12b8eeb))
 
