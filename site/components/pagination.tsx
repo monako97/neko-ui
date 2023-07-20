@@ -1,10 +1,10 @@
 import { For, Show, batch, createEffect, createSignal } from 'solid-js';
 import { css } from '@moneko/css';
+import { getPathName } from '@moneko/solid-js';
 import { A, useLocation } from '@solidjs/router';
 import { customElement } from 'solid-element';
 import { type MyPkg, all, kv } from './sider';
 import type { ComponentOptions, CustomElement } from 'neko-ui';
-import { activeKey } from '@/utils';
 
 const style = css`
   .site-pagination {
@@ -81,7 +81,7 @@ function Pagination(_: object, opt: ComponentOptions<object>) {
 
   createEffect(() => {
     batch(() => {
-      const active = activeKey(location);
+      const active = getPathName(location);
       const current = all.findIndex((e) => active === e.key);
       const _prev = all[current - 1]?.key;
       const _next = all[current + 1]?.key;

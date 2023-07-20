@@ -1,45 +1,12 @@
-import { type JSXElement } from 'solid-js';
-import { ComponentStatus } from '..';
-
-export type BaseOption = {
-  icon?: JSXElement;
-  value?: string;
-  label?: JSXElement;
-  disabled?: boolean;
-  class?: string;
-  style?: unknown;
-  danger?: boolean;
-  status?: ComponentStatus;
-  options?: BaseOption[];
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  [key: string]: any;
-};
-
-export type FieldNames = {
-  label: string;
-  value: string;
-  options: string;
-  children: string;
-  icon: string;
-  suffix: string;
-};
-
-export const defaultFieldNames = {
-  label: 'label',
-  value: 'value',
-  options: 'options',
-  children: 'children',
-  icon: 'icon',
-  suffix: 'suffix',
-};
+import { type BaseOption, type BasicConfig, FieldName } from '..';
 
 function getOptions<T extends BaseOption = BaseOption>(
   list?: (T | string)[],
-  fieldNames?: Partial<FieldNames>,
+  fieldNames?: BasicConfig['fieldName'],
 ): T[] {
   if (!list) return [];
   return list.map((item, i) => {
-    const { options, children, label, value } = { ...defaultFieldNames, ...fieldNames };
+    const { options, children, label, value } = Object.assign({}, FieldName, fieldNames);
 
     if (typeof item === 'object') {
       const _label = (typeof item[label] === 'undefined' ? item[value] : item[label]) || i;

@@ -1,6 +1,5 @@
 import {
   For,
-  type JSXElement,
   Show,
   createComponent,
   createEffect,
@@ -11,106 +10,33 @@ import {
 import { isFunction } from '@moneko/common';
 import { css, cx } from '@moneko/css';
 import { customElement } from 'solid-element';
-import getOptions, { type BaseOption, type FieldNames, defaultFieldNames } from '../get-options';
+import { style } from './style';
+import { type BaseOption, type BasicConfig, type CustomElement, FieldName } from '../basic-config';
+import getOptions from '../get-options';
 import { baseStyle, theme } from '../theme';
-import type { CustomElement } from '..';
 
-const style = css`
-  .box {
-    position: relative;
-    display: flex;
-    border-radius: var(--border-radius);
-    padding: 2px;
-    max-inline-size: 100%;
-    min-block-size: 28px;
-    background-color: var(--segmented-bg);
-    line-height: 28px;
-    inline-size: fit-content;
-
-    &::before {
-      position: absolute;
-      display: block;
-      border-radius: var(--border-radius);
-      background-color: var(--segmented-current-bg);
-      box-shadow: 0 2px 8px 0 var(--primary-shadow);
-      content: '';
-      inline-size: var(--w);
-      block-size: var(--h);
-      inset-block-start: 2px;
-      inset-inline-start: var(--left);
-      transition-duration: var(--transition-duration);
-      transition-timing-function: var(--transition-timing-function);
-      transition-property: inline-size, block-size, inset-inline-start, background-color;
-    }
-  }
-
-  .label {
-    position: relative;
-    overflow: hidden;
-    border-radius: var(--border-radius);
-    padding: 0 12px;
-    color: var(--text-color);
-    outline: 0;
-    transition:
-      0.3s background-color var(--transition-timing-function),
-      var(--transition-duration) color var(--transition-timing-function);
-    cursor: pointer;
-    box-sizing: border-box;
-    /* stylelint-disable-next-line */
-    display: -webkit-box;
-    -webkit-box-orient: block-axis;
-    -webkit-line-clamp: var(--rows, 1);
-    word-break: break-word;
-    word-wrap: break-word;
-    font-size: var(--font-size);
-
-    &:hover,
-    &:focus {
-      background-color: var(--primary-selection);
-    }
-
-    &[aria-disabled]:not([aria-disabled='false']) {
-      cursor: not-allowed;
-      color: var(--disable-color);
-
-      &:hover,
-      &:focus {
-        background-color: transparent;
-      }
-    }
-
-    .icon {
-      margin-inline-end: 6px;
-    }
-  }
-
-  .segmented {
-    display: none;
-    pointer-events: none;
-
-    &:checked + .label {
-      color: var(--text-heading);
-      background-color: transparent;
-
-      &[aria-disabled]:not([aria-disabled='false']) {
-        color: var(--disable-color);
-      }
-    }
-  }
-`;
-
-export interface SegmentedOption extends BaseOption {
-  icon?: JSXElement;
-}
 export interface SegmentedProps {
+  /** 自定义类名 */
   class?: string;
+  /** 自定义样式表 */
   css?: string;
+  /** `input[type="radio"]` 的 name 属性 */
   name?: string;
+  /** 只读 */
   disabled?: boolean;
+  /** 值 */
   value?: string;
+  /** 默认值 */
   defaultValue?: string;
-  options: (SegmentedOption | string)[];
-  fieldNames?: FieldNames;
+  /** 选项数据
+   * @see {@link /neko-ui/basic-config|BaseOption}
+   */
+  options: (BaseOption | string)[];
+  /** 自定义节点 `label`、`value`、`options` 的字段
+   * @see {@link /neko-ui/basic-config|BasicConfig}
+   */
+  fieldNames?: BasicConfig['fieldName'];
+  /** 值修改时的回调方法 */
   // eslint-disable-next-line no-unused-vars
   onChange?(val: string): void;
 }
@@ -136,12 +62,9 @@ function Segmented(props: SegmentedProps) {
       }
     `;
   });
-  const fieldNames = createMemo(() => ({
-    ...defaultFieldNames,
-    ...props.fieldNames,
-  }));
+  const fieldNames = createMemo(() => Object.assign({}, FieldName, props.fieldNames));
 
-  function onChange(item: SegmentedOption) {
+  function onChange(item: BaseOption) {
     if (!props.disabled && !item.disabled) {
       const next = item[fieldNames().value];
 
@@ -153,7 +76,7 @@ function Segmented(props: SegmentedProps) {
       }
     }
   }
-  function onKeyUp(key: string, item: SegmentedOption) {
+  function onKeyUp(key: string, item: BaseOption) {
     if (key === 'Enter') {
       onChange(item);
     }

@@ -16,15 +16,21 @@ import { isFunction } from '@moneko/common';
 import { cx } from '@moneko/css';
 import { customElement } from 'solid-element';
 import { style } from './style';
+import { FieldName } from '../basic-config';
 import Dropdown, { type DropdownProps, defaultProps } from '../dropdown';
-import getOptions, { FieldNames, defaultFieldNames } from '../get-options';
+import getOptions from '../get-options';
 import type { CustomElement, MenuOption } from '..';
 
 export interface SelectProps extends Omit<DropdownProps, 'items' | 'children'> {
+  /** 标题 */
   label?: JSXElement | (() => JSXElement);
+  /** 占位符 */
   placeholder?: string;
+  /** 选项 */
   options?: (MenuOption | string)[];
+  /** 前缀图标 */
   prefixIcon?: JSXElement | (() => JSXElement);
+  /** 后缀图标 */
   suffixIcon?: JSXElement | (() => JSXElement);
 }
 
@@ -50,25 +56,22 @@ function Select(props: SelectProps) {
   const [options, setOptions] = createSignal<MenuOption[]>([]);
   const [kv, setKv] = createSignal<Record<string, MenuOption>>({});
 
-  const fieldNames = createMemo(() => ({
-    ...defaultFieldNames,
-    ...other.fieldNames,
-  }));
+  const fieldNames = createMemo(() => Object.assign({}, FieldName, other.fieldNames));
 
-  function getKv(arr: MenuOption[], fieldDic: FieldNames) {
+  function getKv(arr: MenuOption[], fieldDic: typeof FieldName) {
     const optKv: Record<string, MenuOption> = {};
 
     for (let i = 0, len = arr.length; i < len; i++) {
       const item = arr[i];
       const _options = item[fieldDic.options];
 
-      optKv[item[fieldDic.value]] = item;
+      optKv[item[fieldDic.value]!] = item;
       if (Array.isArray(_options)) {
         Object.assign(optKv, getKv(_options, fieldDic));
       }
       const _children = item[fieldDic.children];
 
-      optKv[item[fieldDic.value]] = item;
+      optKv[item[fieldDic.value]!] = item;
       if (Array.isArray(_children)) {
         Object.assign(optKv, getKv(_children, fieldDic));
       }

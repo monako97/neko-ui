@@ -2,32 +2,48 @@ import { For, createComponent, createEffect, createMemo, createSignal, mergeProp
 import { cx } from '@moneko/css';
 import { customElement } from 'solid-element';
 import { style } from './style';
-import getOptions, { type BaseOption, type FieldNames, defaultFieldNames } from '../get-options';
+import { type BaseOption, type BasicConfig, type CustomElement, FieldName } from '../basic-config';
+import getOptions from '../get-options';
 import { baseStyle } from '../theme';
-import type { CustomElement } from '..';
 
-export interface CheckboxOption extends Omit<BaseOption, 'danger' | 'icon'> {
+/** 复选框选项
+ * @since 1.0.0
+ */
+export interface CheckboxOption extends BaseOption {
+  /** 不确定状态 */
   indeterminate?: boolean;
 }
+
 export interface CheckboxProps {
+  /** 自定义类名 */
   class?: string;
+  /** 自定义样式表 */
   css?: string;
+  /** `input[type="checkbox"]` 的 name 属性 */
   name?: string;
+  /** 只读 */
   disabled?: boolean;
+  /** 全选 */
   checkAll?: boolean;
+  /** 值 */
   value?: string[];
+  /** 选项数据 */
   options: (CheckboxOption | string)[];
+  /** 值修改时的回调方法 */
   // eslint-disable-next-line no-unused-vars
   onChange: (val: string[]) => void;
+  /** 选项排列方式
+   * @default `horizontal`
+   */
   layout?: 'vertical' | 'horizontal';
-  fieldNames?: Partial<FieldNames>;
+  /** 自定义节点 `label`、`value`、`options` 的字段
+   * @see {@link /neko-ui/basic-config|BasicConfig}
+   */
+  fieldNames?: BasicConfig['fieldName'];
 }
 function Checkbox(props: CheckboxProps) {
   const [value, setValue] = createSignal<string[]>([]);
-  const fieldNames = createMemo(() => ({
-    ...defaultFieldNames,
-    ...props.fieldNames,
-  }));
+  const fieldNames = createMemo(() => Object.assign({}, FieldName, props.fieldNames));
 
   createEffect(() => {
     let val: string[] = [];
@@ -56,7 +72,7 @@ function Checkbox(props: CheckboxProps) {
 
     options().forEach((item) => {
       if (!('indeterminate' in item) && typeof item[fieldName.value] !== 'undefined') {
-        allVal.push(item[fieldName.value]);
+        allVal.push(item[fieldName.value]!);
       }
     });
 
@@ -90,7 +106,7 @@ function Checkbox(props: CheckboxProps) {
     if (!props.disabled && !item.disabled) {
       const isIndeterminate = 'indeterminate' in item;
       let newVal = isIndeterminate ? [] : [...value()];
-      const val: string = item[fieldNames().value];
+      const val = item[fieldNames().value]!;
 
       if (isIndeterminate) {
         if (!checkedAll()) {
@@ -126,7 +142,7 @@ function Checkbox(props: CheckboxProps) {
           {(item) => {
             const readOnly = props.disabled || item.disabled;
             const fieldName = fieldNames();
-            const realVal = item[fieldName.value];
+            const realVal = item[fieldName.value]!;
 
             if ('indeterminate' in item) {
               createEffect(() => {

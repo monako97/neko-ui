@@ -1,4 +1,4 @@
-import { createEffect, createMemo, createSignal } from 'solid-js';
+import { type JSX, createEffect, createMemo, createSignal } from 'solid-js';
 import { css, cx } from '@moneko/css';
 import { customElement } from 'solid-element';
 import { baseStyle } from '../theme';
@@ -29,24 +29,34 @@ export type HighlightTextJson =
       text: string;
     }[]
   | null;
-export interface HighlightTextProps {
-  class?: string;
+export interface HighlightTextProps extends JSX.HTMLAttributes<HTMLDivElement> {
+  /** 自定义样式表 */
   css?: string;
+  /** 自定义类名 */
+  class?: string;
   /** 内容 */
   text?: string;
   /** 需要高亮的内容 */
-  highlight?: string | ({ highlight: string; flag: HighlightFlag } | string)[];
-  flag?: HighlightFlag;
+  highlight?: string | (HighlightRule | string)[];
+  /** RegExp flag */
+  flag?: HighlightRule['flag'];
   /** 额外需要高亮的内容 */
   extra?: string;
 }
-export type HighlightFlag = 'g' | 'i' | 'm' | 'u' | 'y';
-export type Highlight = {
+
+interface HighlightRule {
+  /** 需要高亮的内容 */
+  highlight: string;
+  /** RegExp flag */
+  flag?: 'g' | 'i' | 'm' | 'u' | 'y';
+}
+
+export interface Highlight {
   /** 命中高亮 */
   hit?: boolean;
   /** 内容 */
   text: string;
-};
+}
 
 /**
  * 字符串转换成高亮字符的Json格式
@@ -88,7 +98,7 @@ export function strToHighlight(text: string): Highlight[] | null {
   return null;
 }
 
-const HighlightText = (props: HighlightTextProps) => {
+function HighlightText(props: HighlightTextProps) {
   const [texts, setTexts] = createSignal<Highlight[] | null>();
   const hitNode = createMemo(() => {
     return (
@@ -140,7 +150,7 @@ const HighlightText = (props: HighlightTextProps) => {
       </div>
     </>
   );
-};
+}
 
 export type HighlightTextElement = CustomElement<HighlightTextProps>;
 customElement(

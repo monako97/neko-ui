@@ -8,7 +8,7 @@ order: 1
 <n-typography>normal text</n-typography>
 <n-typography type="secondary">secondary text</n-typography>
 <n-typography type="success">success text</n-typography>
-<n-typography type="danger">danger text</n-typography>
+<n-typography type="error">danger text</n-typography>
 <n-typography type="warning">warning text</n-typography>
 <n-typography type="primary">primary text</n-typography>
 <n-typography type="primary" disabled="true"> disabled text </n-typography>
@@ -18,7 +18,7 @@ order: 1
 <n-typography>normal text</n-typography>
 <n-typography type="secondary">secondary text</n-typography>
 <n-typography type="success">success text</n-typography>
-<n-typography type="danger">danger text</n-typography>
+<n-typography type="error">danger text</n-typography>
 <n-typography type="warning">warning text</n-typography>
 <n-typography type="primary">primary text</n-typography>
 <n-typography type="primary" disabled>

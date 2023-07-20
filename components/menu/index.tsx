@@ -16,18 +16,9 @@ import { isFunction } from '@moneko/common';
 import { css, cx } from '@moneko/css';
 import { customElement } from 'solid-element';
 import { style } from './style';
-import getOptions, { defaultFieldNames } from '../get-options';
+import { type BaseOption, type BasicConfig, type CustomElement, FieldName } from '../basic-config';
+import getOptions from '../get-options';
 import { baseStyle, theme } from '../theme';
-import type { BaseOption, CustomElement, FieldNames } from '..';
-
-export interface MenuOption extends BaseOption {
-  icon?: JSXElement;
-  content?: JSXElement;
-  closable?: boolean;
-  type?: 'primary' | 'success' | 'error' | 'warning';
-  color?: string;
-  children?: MenuOption[];
-}
 
 function Menu(props: MenuProps | MenuMultipleProps) {
   const [local, other] = splitProps(props, [
@@ -51,10 +42,7 @@ function Menu(props: MenuProps | MenuMultipleProps) {
     }
     return ':host {--sub-menu-bg: rgb(0 0 0 / 1%);}';
   });
-  const fieldNames = createMemo(() => ({
-    ...defaultFieldNames,
-    ...local.fieldNames,
-  }));
+  const fieldNames = createMemo(() => Object.assign({}, FieldName, local.fieldNames));
   const options = createMemo(() => getOptions(local.items, fieldNames()));
 
   function preventDefault(e: MouseEvent) {
@@ -66,7 +54,7 @@ function Menu(props: MenuProps | MenuMultipleProps) {
     e.preventDefault();
     if (!item.disabled && !local.disabled) {
       let _value = [...untrack(value)];
-      const key = item[untrack(fieldNames).value];
+      const key = item[untrack(fieldNames).value]!;
 
       if (local.multiple) {
         const idx = _value.indexOf(key);
@@ -92,7 +80,7 @@ function Menu(props: MenuProps | MenuMultipleProps) {
 
   interface RenderMenuProps {
     list: MenuOption[];
-    fieldNames: FieldNames;
+    fieldNames: { [key in keyof typeof FieldName]: string };
   }
   function RenderMenu(_: RenderMenuProps) {
     return (
@@ -111,7 +99,7 @@ function Menu(props: MenuProps | MenuMultipleProps) {
           }
 
           function SubMenu() {
-            const isOpen = createMemo(() => openKeys().includes(item[_.fieldNames.value]));
+            const isOpen = createMemo(() => openKeys().includes(item[_.fieldNames.value]!));
             const [show, setShow] = createSignal<boolean>(untrack(isOpen));
 
             createEffect(() => {
@@ -123,10 +111,10 @@ function Menu(props: MenuProps | MenuMultipleProps) {
               preventDefault(e);
               let _openKeys = untrack(openKeys);
 
-              if (_openKeys.includes(item[_.fieldNames.value])) {
+              if (_openKeys.includes(item[_.fieldNames.value]!)) {
                 _openKeys = _openKeys.filter((v) => v !== item[_.fieldNames.value]);
               } else {
-                _openKeys = _openKeys.concat(item[_.fieldNames.value]);
+                _openKeys = _openKeys.concat(item[_.fieldNames.value]!);
               }
 
               if (isFunction(local.onOpenChange)) {
@@ -157,7 +145,7 @@ function Menu(props: MenuProps | MenuMultipleProps) {
                   onAnimationEnd={onAnimationEnd}
                 >
                   <div ref={el}>
-                    <RenderMenu fieldNames={_.fieldNames} list={item[_.fieldNames.children]} />
+                    <RenderMenu fieldNames={_.fieldNames} list={item[_.fieldNames.children]!} />
                   </div>
                 </div>
               );
@@ -185,7 +173,7 @@ function Menu(props: MenuProps | MenuMultipleProps) {
                   class={cx('item', item.class, item.type)}
                   handle-closed={item.handleClosed}
                   aria-disabled={local.disabled || item.disabled}
-                  aria-selected={value().includes(item[_.fieldNames.value])}
+                  aria-selected={value().includes(item[_.fieldNames.value]!)}
                   onMouseDown={preventDefault}
                   onClick={change.bind(null, item)}
                 >
@@ -201,7 +189,7 @@ function Menu(props: MenuProps | MenuMultipleProps) {
                   <span class="group-title">
                     <RowTitle />
                   </span>
-                  <RenderMenu fieldNames={_.fieldNames} list={item[_.fieldNames.options]} />
+                  <RenderMenu fieldNames={_.fieldNames} list={item[_.fieldNames.options]!} />
                 </div>
               </Match>
             </Switch>
@@ -237,31 +225,71 @@ function Menu(props: MenuProps | MenuMultipleProps) {
 }
 
 export interface BaseMenuProps {
-  css?: string;
+  /** 自定义类名 */
   class?: string;
+  /** 自定义样式表 */
+  css?: string;
+  /** 菜单展开的keys */
   openKeys?: (string | number)[];
+  /** 菜单展开时触发的方法 */
   // eslint-disable-next-line no-unused-vars
-  onOpenChange?(keys: (string | number)[]): void;
+  onOpenChange?: (keys: (string | number)[]) => void;
+  /** 选项数据 */
   items: (string | MenuOption)[];
-  fieldNames?: Partial<FieldNames>;
+  /** 自定义节点 `label`、`value`、`options` 的字段
+   * @see {@link /neko-ui/basic-config|BasicConfig}
+   */
+  fieldNames?: BasicConfig['fieldName'];
+  /** 不可用状态 */
   disabled?: boolean;
+  /** 可以取消 */
   toggle?: boolean;
 }
 
 export interface MenuProps extends BaseMenuProps {
+  /** 值修改时的回调方法 */
   // eslint-disable-next-line no-unused-vars
   onChange?(val: string | number, item: MenuOption): void;
+  /** 值 */
   value?: string | number;
+  /** 默认值 */
   defaultValue?: string | number;
+  /** 可多选
+   * @default false
+   */
   multiple?: false;
 }
+
 export interface MenuMultipleProps extends BaseMenuProps {
+  /** 可多选
+   * @default true
+   */
   multiple?: true;
+  /** 值修改时的回调方法 */
   // eslint-disable-next-line no-unused-vars
   onChange?(val: (string | number)[], item: MenuOption): void;
+  /** 值 */
   value?: (string | number)[];
+  /** 默认值 */
   defaultValue?: (string | number)[];
 }
+
+/** 菜单选项
+ * @see {@link /neko-ui/basic-config|BaseOption}
+ */
+export interface MenuOption extends BaseOption {
+  /** 图标 */
+  icon?: JSXElement;
+  /** 内置类型(状态) */
+  type?: 'primary' | 'success' | 'error' | 'warning';
+  /** 自定义颜色 */
+  color?: string;
+  /** 子菜单 */
+  children?: MenuOption[];
+  /** 分组子选项 */
+  options?: MenuOption[];
+}
+
 export type MenuElement = CustomElement<MenuProps>;
 export type MenuMultipleElement = CustomElement<MenuMultipleProps>;
 

@@ -12,17 +12,27 @@ import { customElement } from 'solid-element';
 import clipPath from './clip-path.svg';
 import { style } from './style';
 import { baseStyle } from '../theme';
-import type { ComponentSize, CustomElement } from '../index';
+import type { BasicConfig, CustomElement } from '../index';
 
 const clip = decodeURIComponent(clipPath.replace('data:image/svg+xml,', ''));
 
 export interface AvatarProps {
+  /** 头像 */
   src?: string;
+  /** 替代文本 */
   alt?: string;
-  size?: number | ComponentSize;
+  /** 尺寸
+   * @default `normal`
+   * @see {@link /neko-ui/basic-config|BasicConfig}
+   */
+  size?: number | BasicConfig['size'];
+  /** 用户名 */
   username?: string;
+  /** 背景颜色 */
   color?: string;
+  /** 自定义类名 */
   class?: string;
+  /** 自定义样式表 */
   css?: string;
 }
 export type AvatarElement = CustomElement<AvatarProps>;

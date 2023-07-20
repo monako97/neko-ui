@@ -1,7 +1,7 @@
 export * from '@moneko/css';
 export { default as Prism } from './prism';
-export { default as getOptions, type FieldNames, type BaseOption } from './get-options';
-export { default as Button, type ButtonType, type ButtonElement } from './button';
+export { default as getOptions } from './get-options';
+export { default as Button, type ButtonProps, type ButtonElement } from './button';
 export { default as Avatar, type AvatarElement, type AvatarProps } from './avatar';
 export {
   default as AvatarGroup,
@@ -74,6 +74,7 @@ export {
   type MenuMultipleElement,
   type MenuOption,
 } from './menu';
+export { default as Cron, type CronProps, type CronElement } from './cron';
 export {
   theme,
   setTheme,
@@ -81,10 +82,17 @@ export {
   baseStyle,
   toneColor,
   type ThemeOption,
-  type ColorScheme,
+  ColorScheme,
 } from './theme';
-export type ComponentSize = 'small' | 'normal' | 'large';
-export type ComponentStatus = 'normal' | 'success' | 'warning' | 'error' | 'info';
+export {
+  FieldName,
+  Size,
+  Status,
+  type BasicConfig,
+  type BaseOption,
+  type CustomElement,
+} from './basic-config';
+
 import type { ICustomElement } from 'component-register';
 import type { PropertiesHyphen } from 'csstype';
 import type {
@@ -98,6 +106,7 @@ import type {
   CodeElement,
   ColorPaletteElement,
   ColorPickerElement,
+  CronElement,
   DropdownElement,
   DropdownMultipleElement,
   EmptyElement,
@@ -137,35 +146,6 @@ export interface BaseElementTags {
 export interface ComponentOptions<T> {
   element: T & ICustomElement;
 }
-// eslint-disable-next-line no-unused-vars
-type IEvent<T> = (e: CustomEvent<T>) => void;
-// eslint-disable-next-line no-unused-vars
-type ICustomEvent<T, K extends keyof T> = T extends { [key in K]?: (v: infer V) => void }
-  ? IEvent<V>
-  : // eslint-disable-next-line no-unused-vars
-  T extends { [key in K]?: (...args: infer Args) => void }
-  ? IEvent<Args>
-  : never;
-
-type IOmit<T, Keys extends keyof T> = Omit<T, Keys> & {
-  [K in Keys]?: ICustomEvent<T, K>;
-};
-
-export type CustomElement<T extends Partial<ICustomElement> = ICustomElement> = IOmit<
-  T,
-  | 'onChange'
-  | 'onOpenChange'
-  | 'onErrorRecorder'
-  | 'onStopRecorder'
-  | 'onStartRecorder'
-  | 'onRecorderDataAvailable'
-  | 'onErrorCapture'
-  | 'onStopCapture'
-  | 'onStartCapture'
-  | 'onSaveRecorder'
-> & {
-  ref?: CustomElement<T> | { current: CustomElement<T> | null };
-};
 
 interface CustomElementTags {
   'n-avatar': AvatarElement;
@@ -203,6 +183,7 @@ interface CustomElementTags {
   'n-tabs': TabsElement;
   'n-tag': TagElement;
   'n-menu': MenuElement | MenuMultipleElement;
+  'n-cron': CronElement;
 }
 declare module 'solid-js' {
   export namespace JSX {

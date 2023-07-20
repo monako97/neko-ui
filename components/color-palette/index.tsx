@@ -1,6 +1,7 @@
 import {
   For,
   Index,
+  type JSX,
   Show,
   createComponent,
   createEffect,
@@ -28,14 +29,20 @@ import '../dropdown';
 import '../input';
 import '../input-number';
 import { baseStyle } from '../theme';
-import type { CSSProperties, CustomElement, InputNumberProps } from '../index';
+import type { CustomElement, InputNumberProps } from '../index';
 
-export interface ColorPaletteProps {
-  style?: CSSProperties;
+export interface ColorPaletteProps extends Omit<JSX.HTMLAttributes<HTMLDivElement>, 'onChange'> {
+  /** 自定义类名 */
   class?: string;
+  /** 自定义样式表 */
   css?: string;
+  /** 颜色值 */
   value?: string;
+  /** 默认值
+   * @default '#5794ff'
+   */
   defaultValue?: string;
+  /** 变更时触发的方法 */
   // eslint-disable-next-line no-unused-vars
   onChange?: (color: string) => void;
 }
@@ -319,7 +326,7 @@ export const defaultColorPaletteProps = {
   style: undefined,
   css: undefined,
   value: undefined,
-  defaultValue: undefined,
+  defaultValue: '#5794ff',
   onChange: undefined,
 };
 

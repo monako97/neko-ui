@@ -14,7 +14,7 @@ import { cx } from '@moneko/css';
 import { customElement } from 'solid-element';
 import { style } from './style';
 import { baseStyle } from '../theme';
-import type { ButtonType, CustomElement } from '../index';
+import type { CustomElement } from '../index';
 
 declare interface MediaRecorderDataAvailableEvent extends Event {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -22,8 +22,11 @@ declare interface MediaRecorderDataAvailableEvent extends Event {
 }
 
 export interface CaptureScreenProps {
+  /** 自定义类名 */
   class?: string;
+  /** 自定义样式表 */
   css?: string;
+  /** MediaStreamConstraints */
   options?: MediaStreamConstraints;
   /** 是否预览 */
   preview?: boolean;
@@ -78,7 +81,7 @@ const displayMediaOptions: MediaStreamConstraints = {
   },
 };
 
-const btnStatusDic: Record<MediaRecorder['state'], ButtonType> = {
+const btnStatusDic: Record<MediaRecorder['state'], 'primary' | 'warning' | 'success'> = {
   inactive: 'primary',
   paused: 'warning',
   recording: 'success',

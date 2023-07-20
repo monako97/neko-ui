@@ -1,20 +1,29 @@
-import { type JSXElement, createComponent, createEffect, createMemo, mergeProps } from 'solid-js';
+import { type JSX, createComponent, createEffect, createMemo, mergeProps } from 'solid-js';
 import { css, cx } from '@moneko/css';
 import { customElement } from 'solid-element';
 import { Dynamic } from 'solid-js/web';
 import { baseStyle } from '../theme';
-import type { CSSProperties, CustomElement } from '..';
+import type { CustomElement } from '..';
 
-export type TypographyType = 'success' | 'danger' | 'warning' | 'primary' | 'secondary' | 'text';
-export interface TypographyProps {
+export interface TypographyProps extends Omit<JSX.HTMLAttributes<HTMLDivElement>, 'onChange'> {
+  /** 自定义类名 */
   class?: string;
+  /** 自定义样式表 */
   css?: string;
-  type?: TypographyType;
+  /** 文本格式
+   * @default 'text'
+   */
+  type?: 'primary' | 'warning' | 'success' | 'error' | 'text' | 'secondary';
+  /** 启用超出隐藏
+   * @default false
+   */
   truncated?: boolean | number;
+  /** 自定义标签名
+   * @default 'span'
+   */
   tag?: string;
+  /** 禁用 */
   disabled?: boolean;
-  children?: JSXElement;
-  style?: CSSProperties;
 }
 
 function Typography(props: TypographyProps) {
@@ -28,7 +37,7 @@ function Typography(props: TypographyProps) {
   const customCss = createMemo(() => {
     let color = props.type === 'secondary' ? '--text-secondary' : `--${props.type}-color`;
 
-    if (props.type === 'danger') {
+    if (props.type === 'error') {
       color = '--error-color';
     } else if (props.disabled) {
       color = '--disable-color';

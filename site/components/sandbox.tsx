@@ -384,16 +384,7 @@ interface SandboxGroupProps {
 }
 
 function SandboxGroup(props: SandboxGroupProps) {
-  const [api, setApi] = createSignal<string | null>(null);
   const data = createMemo(() => examples[props.name] || []);
-
-  createEffect(async () => {
-    try {
-      setApi((await import(`@pkg/${props.name}/api.md?raw`)).default);
-    } catch (error) {
-      setApi(null);
-    }
-  });
 
   return (
     <>
@@ -409,9 +400,6 @@ function SandboxGroup(props: SandboxGroupProps) {
             )}
           </For>
         </div>
-      </Show>
-      <Show when={api()}>
-        <n-md text={api() as string} />
       </Show>
     </>
   );

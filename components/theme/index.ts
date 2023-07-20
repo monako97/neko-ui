@@ -3,15 +3,20 @@ import { colorParse, mixColor, toneColor } from '@moneko/common';
 import { css } from '@moneko/css';
 import { createStore } from 'solid-js/store';
 export { toneColor } from '@moneko/common';
-/** 颜色方案枚举，支持的值为 'light' 或 'dark' */
-export type ColorScheme = 'light' | 'dark';
+/** 颜色方案枚举 */
+export enum ColorScheme {
+  /** 明亮 */
+  light = 'light',
+  /** 暗黑 */
+  dark = 'dark',
+}
 
 /** 检测 prefers-color-scheme 媒体查询是否为 light 模式 */
 const themeMedia = window.matchMedia('(prefers-color-scheme: light)');
 
 /** 共享的颜色方案 */
 export const [theme, setTheme] = createStore({
-  scheme: (themeMedia?.matches ? 'light' : 'dark') as ColorScheme,
+  scheme: themeMedia?.matches ? ColorScheme.light : ColorScheme.dark,
   light: {
     primary: '#5794ff',
     warning: '#faad14',
@@ -29,10 +34,17 @@ export const [theme, setTheme] = createStore({
 
 // 监听 prefers-color-scheme 媒体查询变化，自动更新颜色方案
 themeMedia.addEventListener('change', ({ matches }: { matches: boolean }) => {
-  setTheme('scheme', () => (matches ? 'light' : 'dark'));
+  setTheme('scheme', () => (matches ? ColorScheme.light : ColorScheme.dark));
 });
 
-export type ThemeOption = { dark?: boolean; name: string };
+export interface ThemeOption {
+  /** 是否采用暗色算法
+   * @default false
+   */
+  dark?: boolean;
+  /** 颜色名称 */
+  name: string;
+}
 
 /** 生成主题色调
  * @param {string} base 基础颜色

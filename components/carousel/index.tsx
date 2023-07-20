@@ -17,16 +17,26 @@ import { baseStyle } from '../theme';
 import type { CustomElement } from '../index';
 
 export interface CarouselProps {
+  /** 自定义类名 */
   class?: string;
+  /** 自定义样式表 */
   css?: string;
+  /** 轮播的内容 */
   children?: JSXElement[];
+  /** 当前内容的位置
+   * @default 0
+   */
   offset?: number;
+  /** 开启指示器 */
   dots?: boolean;
+  /** 设置自动播放时长, 不设置时不自动播放 */
   autoplay?: number;
+  /** 自定义头部 */
   // eslint-disable-next-line no-unused-vars
   header?: HTMLElement;
+  /** 切换显示的位置时的回调方法 */
   // eslint-disable-next-line no-unused-vars
-  onChange?(e: number): void;
+  onChange?: (e: number) => void;
 }
 export type CarouselElement = CustomElement<CarouselProps>;
 

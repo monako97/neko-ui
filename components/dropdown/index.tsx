@@ -13,13 +13,22 @@ import Empty from '../empty';
 import Popover, { defaultProps as popoverProps } from '../popover';
 import type { CustomElement, MenuMultipleProps, MenuOption, MenuProps, PopoverProps } from '..';
 
-export interface BaseDropdownProps extends Omit<PopoverProps, 'content'> {}
+export interface BaseDropdownProps extends Omit<PopoverProps, 'content'> {
+  /** 打开内容气泡 */
+  open?: boolean | null;
+}
 export interface DropdownProps
   extends Omit<MenuProps, 'openKeys' | 'onOpenChange'>,
-    BaseDropdownProps {}
+    BaseDropdownProps {
+  /** 打开内容气泡 */
+  open?: boolean | null;
+}
 export interface DropdownMultipleProps
   extends Omit<MenuMultipleProps, 'openKeys' | 'onOpenChange'>,
-    BaseDropdownProps {}
+    BaseDropdownProps {
+  /** 打开内容气泡 */
+  open?: boolean | null;
+}
 export type DropdownElement = CustomElement<DropdownProps>;
 export type DropdownMultipleElement = CustomElement<DropdownMultipleProps>;
 

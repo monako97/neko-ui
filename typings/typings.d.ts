@@ -29,5 +29,3 @@ declare module 'neko-ui' {
 }
 
 declare const SolidJS: unknown;
-
-declare module 'env-flags';

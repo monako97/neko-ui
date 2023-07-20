@@ -1,4 +1,5 @@
 import {
+  type JSX,
   type JSXElement,
   Show,
   createComponent,
@@ -16,43 +17,78 @@ import { customElement } from 'solid-element';
 import { Portal } from 'solid-js/web';
 import { popoverCss, portalCss } from './style';
 import { baseStyle, theme } from '../theme';
-import type { CSSProperties, ComponentSize, CustomElement } from '..';
+import type { BasicConfig, CustomElement } from '..';
 
-export type TriggerOption = 'hover' | 'click' | 'contextMenu' | 'none';
-
-export type Placement =
-  | 'bottomLeft'
-  | 'bottom'
-  | 'bottomRight'
-  | 'topLeft'
-  | 'top'
-  | 'topRight'
-  | 'left'
-  | 'right';
-export interface PopoverProps {
+export interface PopoverProps extends Omit<JSX.HTMLAttributes<HTMLDivElement>, 'onChange'> {
+  /** 自定义类名 */
   class?: string;
+  /** 自定义样式表 */
   css?: string;
-  style?: CSSProperties;
-  children: JSXElement;
+  /** 内容 */
   content: JSXElement | (() => JSXElement);
   /** 挂载到指定的元素，值为一个返回对应 DOM 元素 默认 document.body */
   // eslint-disable-next-line no-unused-vars
   getPopupContainer?: (node?: HTMLElement | null) => HTMLElement;
-  /** 触发行为 */
-  trigger?: TriggerOption;
+  /** 触发行为
+   * @default 'hover'
+   */
+  trigger?: keyof typeof TriggerOption;
+  /** 打开内容气泡 */
   open?: boolean | null;
+  /** 内容打开关闭时的回调方法 */
   // eslint-disable-next-line no-unused-vars
-  onOpenChange?(open: boolean | null): void;
+  onOpenChange?: (open: boolean | null) => void;
+  /** 气泡的自定义类名 */
   popupClass?: string;
+  /** 气泡的自定义样式表 */
   popupCss?: string;
   /** 关闭后是否销毁  */
   destroyInactive?: boolean;
+  /** 不可用状态  */
   disabled?: boolean;
+  /** 添加一个箭头显示  */
   arrow?: boolean;
-  placement?: Placement;
+  /** 指定气泡显示的方向 */
+  placement?: keyof typeof Placement;
+  /** 气泡宽度与触发dom一致  */
   dropdownMatchSelectWidth?: boolean;
-  size?: ComponentSize;
+  /** 尺寸
+   * @default 'normal'
+   * @see {@link /neko-ui/basic-config|BasicConfig}
+   */
+  size?: BasicConfig['size'];
 }
+
+export enum TriggerOption {
+  /** 鼠标移入 */
+  hover = 'hover',
+  /** 点击 */
+  click = 'click',
+  /** 右键 */
+  contextMenu = 'contextMenu',
+  /** 无 */
+  none = 'none',
+}
+
+export enum Placement {
+  /** 左下 */
+  bottomLeft = 'bottomLeft',
+  /** 下 */
+  bottom = 'bottom',
+  /** 右下 */
+  bottomRight = 'bottomRight',
+  /** 左上 */
+  topLeft = 'topLeft',
+  /** 上 */
+  top = 'top',
+  /** 右上 */
+  topRight = 'topRight',
+  /** 左 */
+  left = 'left',
+  /** 右 */
+  right = 'right',
+}
+
 type Posi = {
   left?: number;
   top?: number;
@@ -71,7 +107,7 @@ type EventMap = {
 function Popover(props: PopoverProps) {
   const mp = mergeProps(
     {
-      trigger: 'hover' as TriggerOption,
+      trigger: 'hover',
     },
     props,
   );

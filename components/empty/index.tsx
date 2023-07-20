@@ -1,7 +1,8 @@
+import type { JSX } from 'solid-js';
 import { css, cx } from '@moneko/css';
 import { customElement } from 'solid-element';
 import Typography from '../typography';
-import type { CSSProperties, CustomElement } from '..';
+import type { CustomElement } from '..';
 
 const style = css`
   .empty-container {
@@ -19,10 +20,11 @@ const style = css`
   }
 `;
 
-export interface EmptyProps {
-  class?: string;
+export interface EmptyProps extends JSX.HTMLAttributes<HTMLDivElement> {
+  /** 自定义样式表 */
   css?: string;
-  style?: CSSProperties;
+  /** 自定义类名 */
+  class?: string;
 }
 export type EmptyElement = CustomElement<EmptyProps>;
 

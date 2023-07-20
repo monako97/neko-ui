@@ -1,5 +1,5 @@
 import {
-  type JSXElement,
+  type JSX,
   Show,
   createComponent,
   createEffect,
@@ -16,17 +16,24 @@ import Prism, { prismCss } from '../prism';
 import { baseStyle } from '../theme';
 import type { CustomElement } from '..';
 
-export interface CodeProps {
+export interface CodeProps extends Omit<JSX.HTMLAttributes<HTMLDivElement>, 'onChange'> {
+  /** 自定义类名 */
   class?: string;
-  code?: string;
-  lang?: string;
+  /** 自定义样式表 */
   css?: string;
+  /** 内容 */
+  code?: string;
+  /** 语言 */
+  lang?: string;
+  /** 显示代码行号 */
   lineNumber?: boolean;
-  children?: JSXElement;
-  edit?: boolean | 'true' | 'false';
+  /** 支持编辑 */
+  edit?: boolean;
+  /** 开启代码块工具条 */
   toolbar?: boolean;
+  /** 编辑修改时的回调 */
   // eslint-disable-next-line no-unused-vars
-  onChange?(code: string): void;
+  onChange?: (code: string) => void;
 }
 
 export type CodeElement = CustomElement<CodeProps>;

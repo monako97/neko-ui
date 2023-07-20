@@ -1,4 +1,4 @@
-import { For, Show, createComponent, createMemo, mergeProps } from 'solid-js';
+import { For, type JSX, Show, createComponent, createMemo, mergeProps } from 'solid-js';
 import { css, cx } from '@moneko/css';
 import { customElement } from 'solid-element';
 import { baseStyle, theme } from '../theme';
@@ -76,17 +76,27 @@ const style = css`
   }
 `;
 
-export interface SkeletonProps {
-  /** 行 */
-  rows?: number;
-  /** 显示动画 */
-  active?: boolean;
-  /** 显示头像 */
-  avatar?: boolean;
-  /** 显示标题 */
-  title?: boolean;
-  class?: string;
+export interface SkeletonProps extends Omit<JSX.HTMLAttributes<HTMLDivElement>, 'title'> {
+  /** 自定义样式表 */
   css?: string;
+  /** 自定义类名 */
+  class?: string;
+  /** 行
+   * @default 3
+   */
+  rows?: number;
+  /** 显示动画
+   * @default false
+   */
+  active?: boolean;
+  /** 显示头像
+   * @default false
+   */
+  avatar?: boolean;
+  /** 显示标题
+   * @default false
+   */
+  title?: boolean;
 }
 
 function Skeleton(props: SkeletonProps) {

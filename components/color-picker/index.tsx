@@ -12,16 +12,29 @@ import { customElement } from 'solid-element';
 import { style } from './style';
 import ColorPalette, { type ColorPaletteProps } from '../color-palette';
 import Popover, { defaultProps } from '../popover';
-import type { ComponentSize, CustomElement, PopoverProps } from '../index';
+import type { BasicConfig, CustomElement, PopoverProps } from '../index';
 
+/** 颜色选择器
+ * @since 2.0.0
+ * @see {@link /neko-ui/color-palette|ColorPaletteProps}
+ * @see {@link /neko-ui/popover|PopoverProps}
+ */
 export interface ColorPickerProps
   extends ColorPaletteProps,
     Omit<PopoverProps, 'children' | 'content'> {
+  /** 自定义类名 */
+  class?: string;
+  /** 自定义样式表 */
+  css?: string;
+  /** 关闭后是否销毁  */
   destroyInactive?: boolean;
-  popupClassName?: string;
-  size?: ComponentSize;
+  /** 尺寸
+   * @default 'normal'
+   * @see {@link /neko-ui/basic-config|BasicConfig}
+   */
+  size?: BasicConfig['size'];
+  /** 默认值  */
   defaultValue?: string;
-  popupClass?: string;
 }
 export type ColorPickerElement = CustomElement<ColorPickerProps>;
 

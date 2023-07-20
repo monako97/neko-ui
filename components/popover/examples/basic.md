@@ -14,7 +14,7 @@ order: 1
     const c = document.createElement('div');
 
     c.innerHTML = `<n-typography type="success">success</n-typography>
-      <n-typography type="danger">danger</n-typography>`;
+      <n-typography type="error">danger</n-typography>`;
     return c;
   };
 </script>
@@ -27,7 +27,7 @@ order: 1
   content={() => (
     <div>
       <n-typography type="success">success</n-typography>
-      <n-typography type="danger">danger</n-typography>
+      <n-typography type="error">danger</n-typography>
     </div>
   )}
 >

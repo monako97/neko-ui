@@ -2,7 +2,7 @@ import React from 'react';
 import { render, screen } from '@testing-library/react';
 import { prefixCls, Skeleton } from 'neko-ui';
 
-/**
+/*
  * @jest-environment jsdom
  */
 

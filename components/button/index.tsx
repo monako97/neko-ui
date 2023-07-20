@@ -1,4 +1,5 @@
 import {
+  type JSX,
   type JSXElement,
   Show,
   createComponent,
@@ -13,13 +14,16 @@ import { customElement } from 'solid-element';
 import { Dynamic } from 'solid-js/web';
 import { style } from './style';
 import { baseStyle } from '../theme';
-import type { ComponentSize, CustomElement } from '../index';
+import type { BasicConfig, CustomElement } from '../index';
 
-export type ButtonType = 'success' | 'error' | 'primary' | 'warning' | 'default';
-
-export interface ButtonProps extends Partial<Omit<HTMLButtonElement, 'type' | 'children'>> {
+export interface ButtonProps
+  extends Omit<JSX.ButtonHTMLAttributes<HTMLButtonElement>, 'type' | 'ref'> {
+  /** 自定义类名 */
+  class?: string;
+  /** 自定义样式表 */
+  css?: string;
   /** 按钮类型 */
-  type?: ButtonType;
+  type?: 'success' | 'error' | 'primary' | 'warning' | 'default';
   /** 透明背景 */
   ghost?: boolean;
   /** 实色背景 */
@@ -38,19 +42,20 @@ export interface ButtonProps extends Partial<Omit<HTMLButtonElement, 'type' | 'c
   link?: boolean;
   /** 危险按钮 */
   danger?: boolean;
-  size?: ComponentSize;
-  onClick?: HTMLButtonElement['onclick'];
-  class?: string;
-  css?: string;
+  /** 按钮尺寸
+   * @default 'normal'
+   * @see {@link /neko-ui/basic-config|BasicConfig}
+   */
+  size?: BasicConfig['size'];
+  /** 按钮前面添加一个图标 */
   icon?: JSXElement;
-  children?: JSXElement | JSXElement[];
   // eslint-disable-next-line no-unused-vars
   onKeyUp?(e: KeyboardEvent): void;
 }
 export type ButtonElement = CustomElement<ButtonProps>;
 
 function Button(_: ButtonProps) {
-  const _props = mergeProps({ size: 'normal' as ComponentSize, type: 'default' as ButtonType }, _);
+  const _props = mergeProps({ size: 'normal', type: 'default' }, _);
   const [local, props] = splitProps(_props, [
     'ghost',
     'fill',

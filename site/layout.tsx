@@ -1,9 +1,9 @@
 import { Show, createEffect } from 'solid-js';
 import { css } from '@moneko/css';
+import { ApiView, getPathName } from '@moneko/solid-js';
 import { Outlet, useLocation } from '@solidjs/router';
 import { baseStyle } from 'neko-ui';
 import '@/components';
-import { activeKey } from '@/utils';
 
 const noBg = css`
   .n-md-body:has(n-md):not(.site-empty) {
@@ -167,7 +167,7 @@ function App() {
       <div class="n-site-bg" />
       <site-sider />
       <main ref={box} class="site-doc-main">
-        <Show when={!activeKey(location).startsWith('@moneko')}>
+        <Show when={!getPathName(location).startsWith('@moneko')}>
           <site-coverage />
         </Show>
         <div class="site-page-view">
@@ -176,7 +176,8 @@ function App() {
               <Outlet />
             </div>
           </n-md>
-          <site-sandbox-group name={activeKey(location)} />
+          <site-sandbox-group name={getPathName(location)} />
+          <ApiView />
           <site-pagination />
         </div>
         <site-footer />

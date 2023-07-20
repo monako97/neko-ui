@@ -10,180 +10,18 @@ import {
   onMount,
 } from 'solid-js';
 import { cloneDeep, isFunction, passiveSupported } from '@moneko/common';
-import { css, cx } from '@moneko/css';
+import { cx } from '@moneko/css';
 import { customElement } from 'solid-element';
+import { style } from './style';
 import schema from '../from-schema';
 import { baseStyle } from '../theme';
-import type { ComponentSize, CustomElement } from '../index';
+import type { BasicConfig, CustomElement } from '../index';
 
 const sizeCnt = {
   small: 6,
   normal: 8,
   large: 10,
 };
-const style = css`
-  .tree {
-    --size: 8px;
-
-    padding-inline-start: 2em;
-    inline-size: 100%;
-    box-sizing: border-box;
-  }
-
-  .row {
-    position: relative;
-    z-index: 0;
-    display: flex;
-    align-items: baseline;
-    border-radius: var(--border-radius);
-    padding: 2px 10px;
-    color: var(--text-color);
-    background-color: var(--component-bg);
-    list-style: none;
-    box-shadow: 0 0 0 1px var(--border-color);
-    margin-inline-start: var(--depth);
-    margin-block-end: var(--size);
-    cursor: pointer;
-    box-sizing: border-box;
-    min-inline-size: 160px;
-    inline-size: fit-content;
-  }
-
-  .row.non {
-    cursor: auto;
-  }
-
-  .row::before,
-  .row::after {
-    position: absolute;
-    pointer-events: none;
-    z-index: -1;
-    inset-inline-start: 0;
-    transition-property: border-color;
-  }
-
-  .row:not(:first-of-type, :last-of-type, [data-path-end])::before {
-    content: '';
-    inset-inline-start: -1em;
-    inset-block-start: 50%;
-    inline-size: 1em;
-    block-size: 100%;
-    border-block-start: 1px solid var(--border-color);
-    box-sizing: border-box;
-  }
-
-  .row[data-path] {
-    --r: 0 0 0 var(--border-radius);
-    --c: '';
-
-    &::after {
-      border-style: solid;
-      border-width: 0 0 1px 1px;
-      border-color: var(--border-color);
-      border-radius: var(--r);
-      content: var(--c);
-      inline-size: 1em;
-      inset-block-start: calc(var(--size) * -1);
-      inset-inline-start: -1em;
-      block-size: var(--line);
-      box-sizing: border-box;
-    }
-  }
-
-  .row:first-of-type {
-    --r: var(--border-radius) 0 0 var(--border-radius);
-
-    &[data-path]::after {
-      border-width: 1px 0 1px 1px;
-      inset-block-start: 15px;
-    }
-  }
-
-  .row:last-of-type {
-    margin-block-end: 0;
-  }
-
-  .title {
-    font-size: 14px;
-    font-weight: normal;
-  }
-
-  .sub-title {
-    padding: 0 var(--size);
-    font-size: 10px;
-    color: var(--text-secondary);
-    font-style: italic;
-    text-transform: capitalize;
-    opacity: 0.5;
-  }
-
-  .row.active {
-    color: var(--on-primary-selection);
-    background-color: var(--primary-selection);
-    box-shadow: 0 0 0 1px var(--primary-border);
-    text-shadow: 2px 2px 2px var(--primary-outline);
-  }
-
-  .rtl {
-    direction: rtl;
-  }
-
-  .rtl .row {
-    flex-direction: row-reverse;
-    justify-content: flex-end;
-
-    &::before,
-    &::after {
-      transform: scaleX(-1);
-    }
-  }
-
-  .normal {
-    --size: 8px;
-  }
-
-  .small {
-    --size: 6px;
-  }
-
-  .small .row {
-    padding: 1px 9px;
-
-    &:first-of-type[data-path]::after {
-      inset-block-start: 12px;
-    }
-  }
-
-  .small .title {
-    font-size: 13px;
-  }
-
-  .small .sub-title {
-    padding: 0 4px;
-    font-size: 9px;
-  }
-
-  .large {
-    --size: 10px;
-  }
-
-  .large .row {
-    padding: 3px 12px;
-
-    &:first-of-type[data-path]::after {
-      inset-block-start: 17px;
-    }
-  }
-
-  .large .title {
-    font-size: 15px;
-  }
-
-  .large .sub-title {
-    padding: 0 10px;
-    font-size: 12px;
-  }
-`;
 
 const path = Symbol('path');
 const pathEnd = Symbol('path-end');
@@ -210,10 +48,6 @@ function countLineLen(tree: TreeData[], depth = 0) {
     }
   }
   return line;
-}
-
-interface TreeStack extends TreeData {
-  depth?: number;
 }
 
 function parseTree(str: string): TreeData[] {
@@ -251,76 +85,105 @@ function parseTree(str: string): TreeData[] {
   return [stack[0]];
 }
 
-export interface TreeData<T = string> {
-  key: T;
-  name?: string;
-  title?: string;
-  subTitle?: string;
-  description?: string;
-  children?: TreeData<T>[];
-  [path]?: string;
-  [pathEnd]?: string;
-  [key: string | number | symbol]:
-    | T
-    | string
-    | number
-    | symbol
-    | boolean
-    | TreeData<T>[]
-    | undefined;
-}
-
 // type ArrayElementType<T extends unknown[] | unknown> = T extends (infer U)[] ? U : T;
 // eslint-disable-next-line no-unused-vars
 type OnRowClick = (e: MouseEvent, key: string, item: TreeData) => void;
+
 export interface TreeBaseProp {
+  /** 自定义类名 */
   class?: string;
+  /** 自定义样式表 */
   css?: string;
-  size?: ComponentSize;
+  /** 尺寸
+   * @default 'normal'
+   * @see {@link /neko-ui/basic-config|BasicConfig}
+   */
+  size?: BasicConfig['size'];
+  /** 只读 */
   readonly?: boolean;
+  /** 开启取消选中, 仅多选模式生效 */
   toggle?: boolean;
+  /** 方向
+   * @default 'ltr'
+   */
   direction?: 'rtl' | 'ltr';
+  /** 点击行时的回调函数 */
   onRowClick?: OnRowClick;
+  /** 双击行时的回调函数 */
   onRowDoubleClick?: OnRowClick;
+  /** 自定义渲染行 */
   // eslint-disable-next-line no-unused-vars
-  renderRow?(item: TreeData, title: JSXElement, subTitle?: JSXElement): JSXElement[];
+  renderRow?: (item: TreeData, title: JSXElement, subTitle?: JSXElement) => JSXElement[];
 }
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type Imap = { [key: string]: string | true | number | object };
 interface TreeBaseProps extends TreeBaseProp {
+  /** 选中的值, 多选模式时为数组 */
   value?: string;
+  /** 多选模式
+   * @default false
+   */
   multiple?: false;
+  /** 选中的值发生修改时的回调函数, 多选模式时入参为数组 */
   // eslint-disable-next-line no-unused-vars
   onChange?(key?: string): void;
 }
 interface TreeMultipleBaseProps extends TreeBaseProp {
+  /** 选中的值 */
   value?: string[];
+  /** 多选模式
+   * @default true
+   */
   multiple: true;
   // eslint-disable-next-line no-unused-vars
   onChange?(key?: string[]): void;
 }
 export interface TreeProps extends TreeBaseProps {
+  /** 开启此选项支持 `JSON Schema`
+   * @default false
+   */
   fromSchema?: false;
+  /** 数据源 */
   data: TreeData[];
 }
 export interface TreeSchemaProps extends TreeBaseProps {
+  /** 开启此选项支持 `JSON Schema`
+   * @default true
+   */
   fromSchema: true;
+  /** 数据源 */
   data: Imap;
 }
 export interface TreeStringProps extends TreeBaseProps {
+  /** 开启此选项支持 `JSON Schema`
+   * @default false
+   */
   fromSchema?: false;
+  /** 数据源 */
   data: string;
 }
 export interface TreeMultipleProps extends TreeMultipleBaseProps {
+  /** 开启此选项支持 `JSON Schema`
+   * @default false
+   */
   fromSchema?: false;
+  /** 数据源 */
   data: TreeData[];
 }
 export interface TreeMultipleSchemaProps extends TreeMultipleBaseProps {
+  /** 开启此选项支持 `JSON Schema`
+   * @default true
+   */
   fromSchema: true;
+  /** 数据源 */
   data: Imap;
 }
 export interface TreeMultipleStringProps extends TreeMultipleBaseProps {
+  /** 开启此选项支持 `JSON Schema`
+   * @default false
+   */
   fromSchema?: false;
+  /** 数据源 */
   data: string;
 }
 
@@ -478,6 +341,36 @@ export type TreeStringElement = CustomElement<TreeStringProps>;
 export type TreeMultipleElement = CustomElement<TreeMultipleProps>;
 export type TreeMultipleSchemaElement = CustomElement<TreeMultipleSchemaProps>;
 export type TreeMultipleStringElement = CustomElement<TreeMultipleStringProps>;
+
+interface TreeStack extends TreeData {
+  /** 深度 */
+  depth?: number;
+}
+
+export interface TreeData<T = string> {
+  /** key(唯一值) */
+  key: T;
+  /** 属性 */
+  name?: string;
+  /** 标题 */
+  title?: string;
+  /** 副标题 */
+  subTitle?: string;
+  /** 详细描述 */
+  description?: string;
+  /** 子项 */
+  children?: TreeData<T>[];
+  [path]?: string;
+  [pathEnd]?: string;
+  [key: string | number | symbol]:
+    | T
+    | string
+    | number
+    | symbol
+    | boolean
+    | TreeData<T>[]
+    | undefined;
+}
 
 customElement(
   'n-tree',

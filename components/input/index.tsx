@@ -11,7 +11,7 @@ import { isFunction } from '@moneko/common';
 import { css, cx } from '@moneko/css';
 import { customElement } from 'solid-element';
 import { baseStyle } from '../theme';
-import type { ComponentSize, CustomElement } from '../index';
+import type { BasicConfig, CustomElement } from '../index';
 
 const styles = css`
   .label {
@@ -193,21 +193,40 @@ const styles = css`
 `;
 
 export interface InputProps {
-  name?: string;
+  /** 自定义类名 */
   class?: string;
+  /** 自定义样式表 */
   css?: string;
-  suffixIcon?: JSXElement;
+  /** 前缀 */
   prefixIcon?: JSXElement;
+  /** 后缀 */
+  suffixIcon?: JSXElement;
+  /** 禁用 */
   disabled?: boolean;
+  /** 自动完成 */
   autoComplete?: string;
+  /** 填充文本 */
   placeholder?: string;
-  size?: ComponentSize;
+  /** 组件尺寸
+   * @default 'normal'
+   * @see {@link /neko-ui/basic-config|BasicConfig}
+   */
+  size?: BasicConfig['size'];
+  /** 描述 */
   label?: JSXElement;
+  /** 状态 */
   status?: 'error' | 'warning' | 'success';
+  /** 类型
+   * @default 'text'
+   */
   type?: 'email' | 'hidden' | 'number' | 'password' | 'search' | 'tel' | 'text' | 'url';
+  /** HTML input accep */
   accept?: string;
+  /** 值 */
   value?: string | number;
+  /** 默认值 */
   defaultValue?: string | number;
+  /** 值变更时触发的函数 */
   // eslint-disable-next-line no-unused-vars
   onChange?: (value: InputProps['value'], e: Event) => void;
   // eslint-disable-next-line no-unused-vars
@@ -221,8 +240,9 @@ export interface InputProps {
   /** 指定输入框展示值的格式 */
   // eslint-disable-next-line no-unused-vars
   formatter?: ((value?: InputProps['value']) => InputProps['value']) | null;
+  /** 搭配 formatter 使用, 将转换后的值转回原来的值 */
   // eslint-disable-next-line no-unused-vars
-  parser?: null | ((value?: InputProps['value']) => InputProps['value']);
+  parser?: ((value?: InputProps['value']) => InputProps['value']) | null;
 }
 
 function Input(props: InputProps) {

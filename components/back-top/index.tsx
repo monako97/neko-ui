@@ -29,8 +29,10 @@ export interface BackTopProps {
   mount?: HTMLElement;
   /** 滚动高度达到此参数值才出现 BackTop */
   visibilityHeight?: number;
-  css?: string;
+  /** 自定义类名 */
   class?: string;
+  /** 自定义样式表 */
+  css?: string;
 }
 
 function BackTop(_props: BackTopProps) {

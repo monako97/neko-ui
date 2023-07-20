@@ -173,17 +173,8 @@ export const style = css`
     content: attr(data-prefix) !important;
   }
 
-  p > code,
-  h1 > code,
-  h2 > code,
-  h3 > code,
-  h4 > code,
-  h5 > code,
-  h6 > code,
-  li > code,
-  td > code,
-  mark,
-  code:not([class]) {
+  code:not([class]),
+  mark {
     border-radius: var(--border-radius);
     padding: 2px 7px;
     font-size: 90%;
@@ -192,6 +183,11 @@ export const style = css`
     transition-duration: var(--transition-duration);
     transition-timing-function: var(--transition-timing-function);
     transition-property: background-color, color;
+  }
+
+  [data-prefix] code,
+  [data-prefix] mark {
+    font-size: 60%;
   }
 
   h1,
@@ -299,6 +295,7 @@ export const style = css`
 
   table {
     overflow: hidden;
+    margin-block-end: 16px;
     border-block-end: 1px solid var(--border-color);
     border-radius: var(--border-radius);
     inline-size: 100%;
@@ -308,12 +305,17 @@ export const style = css`
     word-break: break-all;
   }
 
+  table:last-child {
+    margin-block-end: 0;
+  }
+
   table tbody tr:hover {
     background-color: var(--primary-shadow);
   }
 
   table tr th {
     padding: 10px;
+    min-inline-size: 54px;
     color: var(--text-heading);
     background-color: var(--border-color);
     transition-property: background-color, color;
@@ -510,9 +512,10 @@ export const style = css`
 
   .n-code {
     display: block;
+    margin-block-end: 16px;
   }
 
-  .n-code + .n-code {
-    margin-block-start: 16px;
+  .n-code:last-child {
+    margin-block-end: 0;
   }
 `;

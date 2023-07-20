@@ -1,10 +1,9 @@
 import { For, Show, createEffect, createMemo } from 'solid-js';
 import { css } from '@moneko/css';
-import { type RouterProps, projectBasicInfo, routes } from '@moneko/solid-js';
+import { type RouterProps, getPathName, projectBasicInfo, routes } from '@moneko/solid-js';
 import { A, useLocation } from '@solidjs/router';
 import { ComponentOptions, baseStyle, setTheme, theme } from 'neko-ui';
 import { customElement } from 'solid-element';
-import { activeKey } from '@/utils';
 
 const style = css`
   .site-sider,
@@ -335,7 +334,7 @@ function Sider(_: object, opt: ComponentOptions<object>) {
     { label: '明亮', value: 'light', icon: <span>☀</span> },
   ];
   let menuEl: HTMLUListElement | undefined;
-  const active = createMemo(() => activeKey(location));
+  const active = createMemo(() => getPathName(location));
 
   createEffect(() => {
     if (active()) {

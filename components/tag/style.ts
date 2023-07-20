@@ -16,6 +16,11 @@ export const style = css`
     background-color: var(--component-bg);
     gap: 5px;
     line-height: 20px;
+
+    a {
+      text-decoration: unset;
+      color: inherit;
+    }
   }
 
   .icon {

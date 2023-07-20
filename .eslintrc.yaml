@@ -17,7 +17,6 @@ rules:
         - ^@/
         - components
         - ^neko-ui
-        - ^env-flags
 overrides:
   - files:
       - '*.mdx'

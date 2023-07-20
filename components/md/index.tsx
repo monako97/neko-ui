@@ -1,6 +1,6 @@
 import {
   For,
-  type JSXElement,
+  type JSX,
   Match,
   Switch,
   createComponent,
@@ -18,7 +18,7 @@ import { style } from './style';
 import '../code';
 import '../img';
 import { baseStyle } from '../theme';
-import type { CSSProperties, CustomElement } from '..';
+import type { CustomElement } from '..';
 
 const renderer = new marked.Renderer();
 
@@ -53,19 +53,6 @@ marked.setOptions({
   smartypants: true,
   xhtml: true,
 });
-
-export type PhotoViewDataType = {
-  src?: string;
-  intro?: string;
-  key: string | number;
-};
-
-export type CodeToolType = Array<'copy'>;
-
-export type AnchorType = {
-  anchor: HTMLAnchorElement;
-  top: number;
-};
 
 const toggleAnchor = (anchor: HTMLAnchorElement) => {
   anchor.offsetParent?.querySelectorAll('li')?.forEach((a) => {
@@ -223,23 +210,38 @@ function MD(_props: MdProps) {
   );
 }
 
-export interface MdProps {
+export interface MdProps extends JSX.HTMLAttributes<HTMLDivElement> {
+  /* 自定义类名 */
   class?: string;
+  /* 自定义样式表 */
+  css?: string;
   /** md内容 */
   text?: string;
-  style?: CSSProperties;
-  /** 开启图片查看器 */
+  /** 开启图片查看器
+   * @default true
+   */
   pictureViewer?: boolean;
-  /** 显示代码块行号 */
+  /** 显示代码块行号
+   * @default true
+   */
   lineNumber?: boolean;
-  /** 开启代码块工具条 */
-  tools?: CodeToolType;
-  /** 指定滚动的容器 */
+  /** 开启代码块工具条
+   * @default ['copy']
+   */
+  tools?: ['copy'];
+  /** 指定滚动的容器
+   * @default () => window
+   */
   getAnchorContainer?: () => HTMLElement;
-  css?: string;
-  children?: JSXElement[] | JSXElement;
-  /** 不进行解析 */
+  /** 不进行解析
+   * @default false
+   */
   notRender?: boolean;
+}
+
+interface AnchorType {
+  anchor: HTMLAnchorElement;
+  top: number;
 }
 
 export type MdElement = CustomElement<MdProps>;
