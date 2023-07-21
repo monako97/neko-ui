@@ -124,23 +124,8 @@ const style = css`
   }
 
   @media screen and (width <= 1100px) {
-    n-md::part(box) {
-      max-inline-size: auto;
-    }
-
     .site-doc-main {
       inline-size: calc(100% - 116px);
-    }
-
-    .site-doc-main-box n-md::part(toc) {
-      position: fixed;
-      inset-inline-end: 16px;
-      transform: translateX(100%);
-      transition: transform var(--transition-duration) var(--transition-timing-function);
-
-      &:hover {
-        transform: translateX(0);
-      }
     }
   }
 `;

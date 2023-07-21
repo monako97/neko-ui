@@ -521,4 +521,23 @@ export const style = css`
   .n-code:last-child {
     margin-block-end: 0;
   }
+
+  @media screen and (width <= 1100px) {
+    .n-md-box,
+    .n-md-box:not(.site-doc-main),
+    .n-md-body {
+      max-inline-size: auto;
+    }
+
+    .n-md-toc {
+      position: fixed;
+      inset-inline-end: 16px;
+      transform: translateX(100%);
+      transition: transform var(--transition-duration) var(--transition-timing-function);
+
+      &:hover {
+        transform: translateX(0);
+      }
+    }
+  }
 `;

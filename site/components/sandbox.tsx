@@ -238,11 +238,11 @@ function Sandbox(_props: SandboxProps) {
   createEffect(() => {
     setSources({ ...(props.codes || {}) });
   });
-  function langChange(e: CustomEvent<string>) {
+  function langChange(e: CustomEvent<string | number>) {
     setCurrent({
-      code: sources()[e.detail],
+      code: sources()[e.detail as string],
       jsx: e.detail !== 'html',
-      lang: e.detail,
+      lang: e.detail as string,
     });
   }
   function codeChange(e: CustomEvent<string>) {
@@ -340,7 +340,7 @@ function Sandbox(_props: SandboxProps) {
               class={cx('sandbox-live-editor', !open() && 'hide')}
               code={sources()[current().lang]}
               lang={current().lang === 'SolidJS' ? 'tsx' : current().lang}
-              edit="true"
+              edit={true}
               css={codeNoShadowCss}
               onChange={codeChange}
             />
@@ -375,6 +375,12 @@ const groupCss = css`
     box-sizing: border-box;
     flex-wrap: wrap;
     gap: 16px 24px;
+  }
+
+  @media screen and (width <= 580px) {
+    site-sandbox {
+      flex: 100% !important;
+    }
   }
 `;
 
