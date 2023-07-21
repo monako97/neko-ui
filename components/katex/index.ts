@@ -36,7 +36,7 @@ export interface KaTexProps {
   maxExpand?: number;
   /** 线的边界指定最小厚度 */
   minRuleThickness?: number;
-  /** 当`throwOnError`设置为`false`时, 无效的`LaTeX`呈现的颜色
+  /** 当`throwOnError`设置为 `false` 时, 无效的 `LaTeX` 呈现的颜色
    * @default '#cc0000'
    */
   errorColor?: string;

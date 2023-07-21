@@ -54,7 +54,6 @@ export interface PopoverProps extends Omit<JSX.HTMLAttributes<HTMLDivElement>, '
   dropdownMatchSelectWidth?: boolean;
   /** 尺寸
    * @default 'normal'
-   * @see {@link /neko-ui/basic-config|BasicConfig}
    */
   size?: BasicConfig['size'];
 }

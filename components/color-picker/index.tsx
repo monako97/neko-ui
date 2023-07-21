@@ -16,8 +16,6 @@ import type { BasicConfig, CustomElement, PopoverProps } from '../index';
 
 /** 颜色选择器
  * @since 2.0.0
- * @see {@link /neko-ui/color-palette|ColorPaletteProps}
- * @see {@link /neko-ui/popover|PopoverProps}
  */
 export interface ColorPickerProps
   extends ColorPaletteProps,
@@ -30,7 +28,6 @@ export interface ColorPickerProps
   destroyInactive?: boolean;
   /** 尺寸
    * @default 'normal'
-   * @see {@link /neko-ui/basic-config|BasicConfig}
    */
   size?: BasicConfig['size'];
   /** 默认值  */

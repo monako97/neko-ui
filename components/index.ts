@@ -33,7 +33,13 @@ export {
   type TreeMultipleStringElement,
 } from './tree';
 export { default as Radio, type RadioProps, type RadioElement } from './radio';
-export { default as Checkbox, type CheckboxProps, type CheckboxElement } from './checkbox';
+export {
+  default as Checkbox,
+  type CheckboxGroupProps,
+  type CheckboxBoolProps,
+  type CheckboxBoolElement,
+  type CheckboxGroupElement,
+} from './checkbox';
 export { default as BackTop, type BackTopProps, type BackTopElement } from './back-top';
 export { default as Input, type InputProps, type InputElement } from './input';
 export {
@@ -92,9 +98,7 @@ export {
   type BaseOption,
   type CustomElement,
 } from './basic-config';
-
 import type { ICustomElement } from 'component-register';
-import type { PropertiesHyphen } from 'csstype';
 import type {
   AvatarElement,
   AvatarGroupElement,
@@ -102,7 +106,8 @@ import type {
   ButtonElement,
   CaptureScreenElement,
   CarouselElement,
-  CheckboxElement,
+  CheckboxBoolElement,
+  CheckboxGroupElement,
   CodeElement,
   ColorPaletteElement,
   ColorPickerElement,
@@ -136,13 +141,6 @@ import type {
   TypographyElement,
 } from 'neko-ui';
 
-export interface CSSProperties extends PropertiesHyphen {
-  // Override
-  [key: `-${string}`]: string | number | undefined;
-}
-export interface BaseElementTags {
-  div: HTMLDivElement;
-}
 export interface ComponentOptions<T> {
   element: T & ICustomElement;
 }
@@ -154,7 +152,7 @@ interface CustomElementTags {
   'n-button': ButtonElement;
   'n-capture-screen': CaptureScreenElement;
   'n-carousel': CarouselElement;
-  'n-checkbox': CheckboxElement;
+  'n-checkbox': CheckboxBoolElement | CheckboxGroupElement;
   'n-code': CodeElement;
   'n-color-palette': ColorPaletteElement;
   'n-color-picker': ColorPickerElement;

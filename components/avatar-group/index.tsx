@@ -11,7 +11,6 @@ export interface AvatarGroupProps {
   data: Omit<AvatarProps, 'size'>[];
   /** 头像尺寸
    * @default 'normal'
-   * @see {@link /neko-ui/basic-config|BasicConfig}
    */
   size?: BasicConfig['size'];
   /** 最多显示个数 */

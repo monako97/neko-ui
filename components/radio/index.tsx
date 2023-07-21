@@ -16,7 +16,7 @@ export interface RadioProps {
   class?: string;
   /** 自定义样式表 */
   css?: string;
-  /** `input[type="radio"]` 的 name 属性 */
+  /** input[type="radio"] 的 name 属性 */
   name?: string;
   /** 只读 */
   disabled?: boolean;
@@ -26,15 +26,13 @@ export interface RadioProps {
   defaultValue?: string;
   /** 选项数据 */
   options: (RadioOption | string)[];
-  /** 自定义节点 `label`、`value`、`options` 的字段
-   * @see {@link /neko-ui/basic-config|BasicConfig}
-   */
+  /** 自定义节点 'label'、'value'、'options' 的字段 */
   fieldNames?: BasicConfig['fieldName'];
   /** 值修改时的回调方法 */
   // eslint-disable-next-line no-unused-vars
   onChange?(val: string): void;
   /** 选项排列方式
-   * @default `horizontal`
+   * @default 'horizontal'
    */
   layout?: 'vertical' | 'horizontal';
 }

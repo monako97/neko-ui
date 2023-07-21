@@ -10,7 +10,7 @@ export interface BasicConfig {
    * @default 'normal'
    */
   size: keyof typeof Size;
-  /** 自定义 `label`、`value`、`options` 等映射的key */
+  /** 自定义 'label'、'value'、'options' 等映射的key */
   fieldName: Partial<{ [key in keyof typeof FieldName]: string }>;
 }
 
@@ -42,7 +42,7 @@ export interface BaseOption {
   /** 图标 */
   icon?: JSXElement;
   /** 值 */
-  value?: string;
+  value?: string | number;
   /** 标题 */
   label?: JSXElement;
   /** 不可用状态 */

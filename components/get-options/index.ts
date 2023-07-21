@@ -1,7 +1,7 @@
 import { type BaseOption, type BasicConfig, FieldName } from '..';
 
 function getOptions<T extends BaseOption = BaseOption>(
-  list?: (T | string)[],
+  list?: (T | string | number)[],
   fieldNames?: BasicConfig['fieldName'],
 ): T[] {
   if (!list) return [];

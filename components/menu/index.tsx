@@ -236,9 +236,7 @@ export interface BaseMenuProps {
   onOpenChange?: (keys: (string | number)[]) => void;
   /** 选项数据 */
   items: (string | MenuOption)[];
-  /** 自定义节点 `label`、`value`、`options` 的字段
-   * @see {@link /neko-ui/basic-config|BasicConfig}
-   */
+  /** 自定义节点 'label'、'value'、'options' 的字段 */
   fieldNames?: BasicConfig['fieldName'];
   /** 不可用状态 */
   disabled?: boolean;
@@ -274,9 +272,7 @@ export interface MenuMultipleProps extends BaseMenuProps {
   defaultValue?: (string | number)[];
 }
 
-/** 菜单选项
- * @see {@link /neko-ui/basic-config|BaseOption}
- */
+/** 菜单选项 */
 export interface MenuOption extends BaseOption {
   /** 图标 */
   icon?: JSXElement;

@@ -6,6 +6,55 @@ import { type BaseOption, type BasicConfig, type CustomElement, FieldName } from
 import getOptions from '../get-options';
 import { baseStyle } from '../theme';
 
+/** 通用API
+ * @since 1.0.0
+ */
+export interface CheckboxBaseProps {
+  /** 自定义类名 */
+  class?: string;
+  /** 自定义样式表 */
+  css?: string;
+  /** input[type="checkbox"] 的 name 属性 */
+  name?: string;
+  /** 只读 */
+  disabled?: boolean;
+  /** 选项排列方式
+   * @default 'horizontal'
+   */
+  layout?: 'vertical' | 'horizontal';
+  /** 自定义节点 'label'、'value'、'options' 的字段 */
+  fieldNames?: BasicConfig['fieldName'];
+}
+/** 复选框API */
+export interface CheckboxBoolProps extends CheckboxBaseProps {
+  /** 一个 bool 值; */
+  value?: boolean;
+  /** 默认值 */
+  defaultValue?: boolean;
+  /** 值修改时的回调方法 */
+  // eslint-disable-next-line no-unused-vars
+  onChange: (val: boolean) => void;
+  options?: never;
+}
+/** 通过数据渲染一组复选框按钮的API */
+export interface CheckboxGroupProps extends CheckboxBaseProps {
+  /** 全选 */
+  checkAll?: boolean;
+  /** 值;
+   * 当设置了value时, 将是受控模式;
+   * 受控模式可通过 onChange 事件更新 value
+   **/
+  value?: (string | number)[];
+  /** 默认值 */
+  defaultValue?: (string | number)[];
+  /** 渲染选项所使用的数据,
+   * 当没有设置该值时, 将渲染一个切换 bool 值的按钮
+   * */
+  options?: (CheckboxOption | string)[];
+  /** 值修改时的回调方法 */
+  // eslint-disable-next-line no-unused-vars
+  onChange: (val: (string | number)[]) => void;
+}
 /** 复选框选项
  * @since 1.0.0
  */
@@ -14,50 +63,28 @@ export interface CheckboxOption extends BaseOption {
   indeterminate?: boolean;
 }
 
-export interface CheckboxProps {
-  /** 自定义类名 */
-  class?: string;
-  /** 自定义样式表 */
-  css?: string;
-  /** `input[type="checkbox"]` 的 name 属性 */
-  name?: string;
-  /** 只读 */
-  disabled?: boolean;
-  /** 全选 */
-  checkAll?: boolean;
-  /** 值 */
-  value?: string[];
-  /** 选项数据 */
-  options: (CheckboxOption | string)[];
-  /** 值修改时的回调方法 */
-  // eslint-disable-next-line no-unused-vars
-  onChange: (val: string[]) => void;
-  /** 选项排列方式
-   * @default `horizontal`
-   */
-  layout?: 'vertical' | 'horizontal';
-  /** 自定义节点 `label`、`value`、`options` 的字段
-   * @see {@link /neko-ui/basic-config|BasicConfig}
-   */
-  fieldNames?: BasicConfig['fieldName'];
-}
-function Checkbox(props: CheckboxProps) {
-  const [value, setValue] = createSignal<string[]>([]);
+function Checkbox(props: CheckboxBoolProps | CheckboxGroupProps) {
+  const [value, setValue] = createSignal<(string | number)[]>([]);
   const fieldNames = createMemo(() => Object.assign({}, FieldName, props.fieldNames));
 
   createEffect(() => {
-    let val: string[] = [];
+    const _val = typeof props.value === 'undefined' ? props.defaultValue : props.value;
+    let val: (string | number)[] = [];
 
-    if (Array.isArray(props.value)) {
-      val = props.value;
-    } else if (typeof props.value !== 'undefined') {
-      val = [props.value];
+    if (Array.isArray(_val)) {
+      val = _val;
+    } else if (typeof _val !== 'undefined') {
+      val = [_val as unknown as string];
     }
 
     setValue(val);
   });
   const options = createMemo(() => {
     const fieldName = fieldNames();
+
+    if (typeof props.options === 'undefined') {
+      return getOptions([{ value: 1 } as CheckboxOption], fieldName);
+    }
     const checkAll: CheckboxOption[] = [
       { [fieldName.value]: 'all', [fieldName.label]: '全选', indeterminate: false },
     ];
@@ -67,7 +94,7 @@ function Checkbox(props: CheckboxProps) {
   });
 
   const all = createMemo(() => {
-    const allVal: string[] = [];
+    const allVal: (string | number)[] = [];
     const fieldName = fieldNames();
 
     options().forEach((item) => {
@@ -121,7 +148,10 @@ function Checkbox(props: CheckboxProps) {
           newVal.push(val);
         }
       }
-      props.onChange(newVal);
+      if (typeof props.value === 'undefined') {
+        setValue(newVal);
+      }
+      props.onChange((typeof props.options === 'undefined' ? !!newVal[0] : newVal) as never);
     }
   }
   function onKeyUp(item: CheckboxOption, e: KeyboardEvent) {
@@ -162,7 +192,7 @@ function Checkbox(props: CheckboxProps) {
                   class="checkbox"
                   type="checkbox"
                   name={props.name}
-                  value={realVal}
+                  value={realVal as string}
                   disabled={readOnly}
                   checked={'indeterminate' in item ? checkedAll() : value().includes(realVal)}
                   onChange={onChange.bind(null, item)}
@@ -177,7 +207,8 @@ function Checkbox(props: CheckboxProps) {
   );
 }
 
-export type CheckboxElement = CustomElement<CheckboxProps>;
+export type CheckboxGroupElement = CustomElement<CheckboxGroupProps>;
+export type CheckboxBoolElement = CustomElement<CheckboxBoolProps>;
 
 customElement(
   'n-checkbox',
@@ -187,7 +218,8 @@ customElement(
     name: undefined,
     disabled: undefined,
     value: undefined,
-    options: [],
+    defaultValue: undefined,
+    options: undefined,
     onChange: undefined,
     fieldNames: undefined,
     checkAll: undefined,
@@ -198,7 +230,7 @@ customElement(
     const props = mergeProps(
       {
         layout: el.layout || 'horizontal',
-        onChange(next: string[]) {
+        onChange(next: (string | number)[] | boolean) {
           el.dispatchEvent(
             new CustomEvent('change', {
               detail: next,

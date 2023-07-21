@@ -1,6 +1,6 @@
 ---
 title: 自定义字段名
-description: 自定义节点 `label`、`value`、`options` 的字段
+description: 自定义节点 'label'、'value'、'options' 的字段
 order: 5
 ---
 

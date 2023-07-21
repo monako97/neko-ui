@@ -1,6 +1,6 @@
 ---
 title: 不同尺寸
-description: 输入框内置有大、中、小三种尺寸。通过设置 `size` 为 `large`、`small` 分别把尺寸设为大、小尺寸。若不设置 `size`，则尺寸为中 `normal`。
+description: 输入框内置有大、中、小三种尺寸。通过设置 `size` 为 `large`、`small` 分别把尺寸设为大、小尺寸。若不设置 `size`，则尺寸为中 'normal'。
 order: 2
 ---
 

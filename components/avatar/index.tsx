@@ -22,8 +22,7 @@ export interface AvatarProps {
   /** 替代文本 */
   alt?: string;
   /** 尺寸
-   * @default `normal`
-   * @see {@link /neko-ui/basic-config|BasicConfig}
+   * @default 'normal'
    */
   size?: number | BasicConfig['size'];
   /** 用户名 */

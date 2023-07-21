@@ -1,8 +1,9 @@
-# [2.0.0-beta.19](https://github.com/monako97/neko-ui/compare/1.7.3...2.0.0-beta.19) (2023-07-20)
+# [2.0.0-beta.20](https://github.com/monako97/neko-ui/compare/1.7.3...2.0.0-beta.20) (2023-07-21)
 
 
 ### Bug Fixes
 
+* docs the feature watch recursively is unavailable on the current platform ([a13e06e](https://github.com/monako97/neko-ui/commit/a13e06e5afe5e9631f20b49b512358a8aec8916e))
 * docs the feature watch recursively is unavailable on the current platform ([369a8d3](https://github.com/monako97/neko-ui/commit/369a8d31da542f36599fd7e888a5ca036cba0565))
 * has no exported member 'ButtonType' ([3c2c4b2](https://github.com/monako97/neko-ui/commit/3c2c4b22dbddae291bf4e5b9b7c9fbdc95058e02))
 * menu fieldNames ([6768c37](https://github.com/monako97/neko-ui/commit/6768c371a6df935a29460b0cb089a131db292975))

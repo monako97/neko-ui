@@ -3,6 +3,7 @@ import { css } from '@moneko/css';
 import { ApiView, getPathName } from '@moneko/solid-js';
 import { Outlet, useLocation } from '@solidjs/router';
 import { baseStyle } from 'neko-ui';
+import log from '../CHANGELOG.md?raw';
 import '@/components';
 
 const noBg = css`
@@ -178,6 +179,9 @@ function App() {
           </n-md>
           <site-sandbox-group name={getPathName(location)} />
           <ApiView />
+          <Show when={!getPathName(location)}>
+            <n-md text={`# Change log\n${log}`} />
+          </Show>
           <site-pagination />
         </div>
         <site-footer />

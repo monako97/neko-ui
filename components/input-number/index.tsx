@@ -26,7 +26,6 @@ const style = css`
 
 /** API
  * @since 2.0.0
- * @see {@link /neko-ui/input|InputProps}
  */
 export interface InputNumberProps extends Omit<InputProps, 'value' | 'defaultValue' | 'onChange'> {
   /** 值 */

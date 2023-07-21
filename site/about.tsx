@@ -1,23 +1,11 @@
 import { For, Show } from 'solid-js';
 import { css } from '@moneko/css';
 import { baseStyle } from 'neko-ui';
-import log from '../CHANGELOG.md?raw';
 import jb_beam from '@/assets/images/jb_beam.svg';
 import { projectInfo } from '@/utils';
 
 const style = css`
   .site-empty {
-    border-radius: var(--border-radius);
-    padding: 24px;
-    min-block-size: calc(100vb - 236px);
-    background-color: var(--component-bg);
-    box-shadow: 0 2px 14px 0 var(--primary-shadow);
-    margin-block-end: 24px;
-
-    & > span {
-      margin-inline-start: 16px;
-    }
-
     .site-empty-top {
       display: flex;
       gap: 24px;
@@ -25,6 +13,10 @@ const style = css`
 
     .site-empty-info {
       flex: 1;
+    }
+
+    strong {
+      margin-inline-end: 8px;
     }
 
     &-thank {
@@ -166,7 +158,6 @@ function Empty() {
           </For>
         </div>
       </div>
-      <n-md text={`# Change log\n${log}`} />
     </>
   );
 }

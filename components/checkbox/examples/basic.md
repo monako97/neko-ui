@@ -5,23 +5,27 @@ order: 1
 ---
 
 ```html
-<n-checkbox value="B"></n-checkbox>
+<n-checkbox label="启用"></n-checkbox>
+<n-checkbox default-value="B"></n-checkbox>
 <script>
-  const el = container.querySelector('n-checkbox');
+  const el = container.querySelectorAll('n-checkbox');
 
-  el.options = ['A', 'B', 'C', 'D'];
-  el.onchange = function (e) {
-    el.value = e.detail;
+  el[0].onchange = function (e) {
+    console.log(e.detail);
+  };
+  el[1].options = ['A', 'B', 'C', 'D'];
+  el[1].onchange = function (e) {
+    console.log(e.detail);
   };
 </script>
 ```
 
 ```jsx
 <n-checkbox
-  value={['B']}
+  default-value={['B']}
   options={['A', 'B', 'C', 'D']}
   onChange={(e) => {
-    e.target.value = e.detail;
+    console.log(e.detail);
   }}
 />
 ```

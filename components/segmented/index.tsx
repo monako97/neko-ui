@@ -20,25 +20,21 @@ export interface SegmentedProps {
   class?: string;
   /** 自定义样式表 */
   css?: string;
-  /** `input[type="radio"]` 的 name 属性 */
+  /** input[type="radio"] 的 name 属性 */
   name?: string;
   /** 只读 */
   disabled?: boolean;
   /** 值 */
-  value?: string;
+  value?: string | number;
   /** 默认值 */
-  defaultValue?: string;
-  /** 选项数据
-   * @see {@link /neko-ui/basic-config|BaseOption}
-   */
-  options: (BaseOption | string)[];
-  /** 自定义节点 `label`、`value`、`options` 的字段
-   * @see {@link /neko-ui/basic-config|BasicConfig}
-   */
+  defaultValue?: string | number;
+  /** 选项数据 */
+  options: (BaseOption | string | number)[];
+  /** 自定义节点 'label'、'value'、'options' 的字段 */
   fieldNames?: BasicConfig['fieldName'];
   /** 值修改时的回调方法 */
   // eslint-disable-next-line no-unused-vars
-  onChange?(val: string): void;
+  onChange?(val: string | number): void;
 }
 
 function Segmented(props: SegmentedProps) {

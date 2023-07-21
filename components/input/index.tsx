@@ -209,7 +209,6 @@ export interface InputProps {
   placeholder?: string;
   /** 组件尺寸
    * @default 'normal'
-   * @see {@link /neko-ui/basic-config|BasicConfig}
    */
   size?: BasicConfig['size'];
   /** 描述 */

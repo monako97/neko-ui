@@ -27,16 +27,14 @@ export interface TabsProps {
   /** 只读 */
   disabled?: boolean;
   /** 值(指定值时为受控模式,配合onChange使用) */
-  value?: string;
+  value?: string | number;
   /** 默认值 */
-  defaultValue?: string;
+  defaultValue?: string | number;
   /** 选项数据 */
   items: (TabOption | string)[];
   /** 标签页居中 */
   centered?: boolean;
-  /** 自定义节点 `label`、`value`、`options` 的字段
-   * @see {@link /neko-ui/basic-config|BasicConfig}
-   */
+  /** 自定义节点 'label'、'value'、'options' 的字段 */
   fieldNames?: BasicConfig['fieldName'];
   /** 标签页的显示类型
    * @default 'line'
@@ -64,7 +62,7 @@ export interface TabOption extends Omit<BaseOption, 'options'> {
 function Tabs(props: TabsProps) {
   let box: HTMLDivElement | undefined;
   let add: ButtonElement | undefined;
-  const [value, setValue] = createSignal<string>();
+  const [value, setValue] = createSignal<string | number>();
   const [offsetStyle, setOffsetStyle] = createSignal('');
   const [wrap, setWrap] = createSignal({ left: false, right: false });
   let wrapRef: HTMLDivElement | undefined;

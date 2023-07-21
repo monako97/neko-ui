@@ -310,11 +310,10 @@ export const style = css`
   }
 
   table tbody tr:hover {
-    background-color: var(--primary-shadow);
+    background-color: var(--primary-details-bg);
   }
 
   table tr th {
-    padding: 10px;
     min-inline-size: 54px;
     color: var(--text-heading);
     background-color: var(--border-color);
@@ -325,8 +324,12 @@ export const style = css`
     border-style: dotted;
     border-width: 0 0 1px 1px;
     border-color: var(--border-color);
-    padding: 10px;
     transition-property: border-color;
+  }
+
+  table tr th,
+  table td {
+    padding: 5px 10px;
   }
 
   table td:first-of-type {

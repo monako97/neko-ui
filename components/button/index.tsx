@@ -44,7 +44,6 @@ export interface ButtonProps
   danger?: boolean;
   /** 按钮尺寸
    * @default 'normal'
-   * @see {@link /neko-ui/basic-config|BasicConfig}
    */
   size?: BasicConfig['size'];
   /** 按钮前面添加一个图标 */

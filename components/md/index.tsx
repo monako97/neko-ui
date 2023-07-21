@@ -41,6 +41,15 @@ renderer.image = function (src: string | null, title: string | null, alt: string
     title ? `title="${title}"` : ''
   } style="display:flex;border-radius:var(--border-radius);overflow:hidden;"></n-img>`;
 };
+renderer.text = function (text: string) {
+  const colorRegExp = /\\color{([^}]+)}{([^}]+)}/;
+  const match = text.match(colorRegExp);
+
+  if (Array.isArray(match)) {
+    return `<font color="${match[1]}">${match[2]}</font>`;
+  }
+  return text;
+};
 
 marked.setOptions({
   renderer,
@@ -211,9 +220,9 @@ function MD(_props: MdProps) {
 }
 
 export interface MdProps extends JSX.HTMLAttributes<HTMLDivElement> {
-  /* 自定义类名 */
+  /** 自定义类名 */
   class?: string;
-  /* 自定义样式表 */
+  /** 自定义样式表 */
   css?: string;
   /** md内容 */
   text?: string;

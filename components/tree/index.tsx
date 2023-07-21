@@ -96,7 +96,6 @@ export interface TreeBaseProp {
   css?: string;
   /** 尺寸
    * @default 'normal'
-   * @see {@link /neko-ui/basic-config|BasicConfig}
    */
   size?: BasicConfig['size'];
   /** 只读 */
@@ -115,8 +114,9 @@ export interface TreeBaseProp {
   // eslint-disable-next-line no-unused-vars
   renderRow?: (item: TreeData, title: JSXElement, subTitle?: JSXElement) => JSXElement[];
 }
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-type Imap = { [key: string]: string | true | number | object };
+
+type JSONSchema = { [key: string]: string | true | number | object };
+
 interface TreeBaseProps extends TreeBaseProp {
   /** 选中的值, 多选模式时为数组 */
   value?: string;
@@ -139,7 +139,7 @@ interface TreeMultipleBaseProps extends TreeBaseProp {
   onChange?(key?: string[]): void;
 }
 export interface TreeProps extends TreeBaseProps {
-  /** 开启此选项支持 `JSON Schema`
+  /** 开启此选项支持 `JSONSchema`
    * @default false
    */
   fromSchema?: false;
@@ -147,15 +147,15 @@ export interface TreeProps extends TreeBaseProps {
   data: TreeData[];
 }
 export interface TreeSchemaProps extends TreeBaseProps {
-  /** 开启此选项支持 `JSON Schema`
+  /** 开启此选项支持 `JSONSchema`
    * @default true
    */
   fromSchema: true;
   /** 数据源 */
-  data: Imap;
+  data: JSONSchema;
 }
 export interface TreeStringProps extends TreeBaseProps {
-  /** 开启此选项支持 `JSON Schema`
+  /** 开启此选项支持 `JSONSchema`
    * @default false
    */
   fromSchema?: false;
@@ -163,7 +163,7 @@ export interface TreeStringProps extends TreeBaseProps {
   data: string;
 }
 export interface TreeMultipleProps extends TreeMultipleBaseProps {
-  /** 开启此选项支持 `JSON Schema`
+  /** 开启此选项支持 `JSONSchema`
    * @default false
    */
   fromSchema?: false;
@@ -171,15 +171,15 @@ export interface TreeMultipleProps extends TreeMultipleBaseProps {
   data: TreeData[];
 }
 export interface TreeMultipleSchemaProps extends TreeMultipleBaseProps {
-  /** 开启此选项支持 `JSON Schema`
+  /** 开启此选项支持 `JSONSchema`
    * @default true
    */
   fromSchema: true;
   /** 数据源 */
-  data: Imap;
+  data: JSONSchema;
 }
 export interface TreeMultipleStringProps extends TreeMultipleBaseProps {
-  /** 开启此选项支持 `JSON Schema`
+  /** 开启此选项支持 `JSONSchema`
    * @default false
    */
   fromSchema?: false;

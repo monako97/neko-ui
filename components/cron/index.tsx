@@ -3,21 +3,21 @@ import { customElement } from 'solid-element';
 import type { CustomElement } from '../index';
 
 export interface CronProps extends Omit<JSX.HTMLAttributes<HTMLDivElement>, 'onChange'> {
-  /* 值 */
+  /** 值 */
   value?: string;
-  /* 默认值 */
+  /** 默认值 */
   defaultValue?: string;
-  /* 值改变触发 */
+  /** 值改变触发 */
   // eslint-disable-next-line no-unused-vars
   onChange(val?: string): void;
-  /* 是否隐藏 从*开始到*每*执行一次 */
+  /** 是否隐藏 从*开始到*每*执行一次 */
   hiddenBegin?: boolean;
   /** 是否显示 crontab 表达式 input
    * @default true
    * @since 2.0.0
    */
   showCrontab?: boolean;
-  /* 隐藏域 */
+  /** 隐藏域 */
   exclude?: string[];
 }
 
