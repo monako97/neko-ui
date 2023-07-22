@@ -14,3 +14,10 @@
      <n-input @change="(e) => console.log(e)" />
    </template>
    ```
+
+3. 在 `Vue` 中使用时, 你可能需要先这样做
+
+   ```js
+   // 将使用到的 web component 添加到忽略名单中
+   Vue.config.ignoredElements = ['n-code', 'n-md'];
+   ```

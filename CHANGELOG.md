@@ -1,4 +1,4 @@
-# [2.0.0-beta.20](https://github.com/monako97/neko-ui/compare/1.7.3...2.0.0-beta.20) (2023-07-21)
+# [2.0.0-beta.20](https://github.com/monako97/neko-ui/compare/1.7.3...2.0.0-beta.20) (2023-07-22)
 
 
 ### Bug Fixes
@@ -26,6 +26,7 @@
 * update docs ([822547a](https://github.com/monako97/neko-ui/commit/822547ac263ec6ccb64ae0fb6072c30ffad8727c))
 * update docs ([29b0ebd](https://github.com/monako97/neko-ui/commit/29b0ebde3d276f89b5a9d74af3ed7ab676fd397a))
 * 优化 IntrinsicElements 写法 ([7a25a90](https://github.com/monako97/neko-ui/commit/7a25a9078646bcef6c553d4e30bff9487bb40d52))
+* 优化文档生成体验 ([cdcf58a](https://github.com/monako97/neko-ui/commit/cdcf58ac1408bfebbfff98a07683239742efeaad))
 * 优化文档生成体验 ([31e427f](https://github.com/monako97/neko-ui/commit/31e427fafa5716ce049bfc8b5b104ddb8e0da404))
 * 通过ts声明的类型和注释自动生成Api文档 ([2e5400a](https://github.com/monako97/neko-ui/commit/2e5400af3ecb10a2f7670a6f3310f605585322d9))
 
