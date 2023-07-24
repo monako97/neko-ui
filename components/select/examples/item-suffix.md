@@ -40,7 +40,7 @@ order: 8
         { value: '22', label: '李四', suffix: 'lishi' },
         { value: '33', label: '王五', suffix: 'wangwu' },
       ],
-    }
+    },
   ];
 </script>
 ```

@@ -48,7 +48,8 @@ export interface ColorPaletteProps extends Omit<JSX.HTMLAttributes<HTMLDivElemen
 }
 export type ColorPaletteElement = CustomElement<ColorPaletteProps>;
 
-function ColorPalette(props: ColorPaletteProps) {
+function ColorPalette(_: ColorPaletteProps) {
+  const props = mergeProps({ defaultValue: '#5794ff' }, _);
   let picker: HTMLDivElement | undefined;
   const types = [
     { label: 'RGBA', value: 'rgba', handleClosed: false },
@@ -77,7 +78,7 @@ function ColorPalette(props: ColorPaletteProps) {
   };
   const [hsva, setHsva] = createSignal<ColorParse<HSVA>>(
     // eslint-disable-next-line solid/reactivity
-    colorParse(props.value || props.defaultValue || '#5794ff'),
+    colorParse(props.value || props.defaultValue),
   );
   const [drag, setDrag] = createSignal(false);
 
@@ -326,7 +327,7 @@ export const defaultColorPaletteProps = {
   style: undefined,
   css: undefined,
   value: undefined,
-  defaultValue: '#5794ff',
+  defaultValue: undefined,
   onChange: undefined,
 };
 

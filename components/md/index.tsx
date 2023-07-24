@@ -41,15 +41,6 @@ renderer.image = function (src: string | null, title: string | null, alt: string
     title ? `title="${title}"` : ''
   } style="display:flex;border-radius:var(--border-radius);overflow:hidden;"></n-img>`;
 };
-renderer.text = function (text: string) {
-  const colorRegExp = /\\color{([^}]+)}{([^}]+)}/;
-  const match = text.match(colorRegExp);
-
-  if (Array.isArray(match)) {
-    return `<font color="${match[1]}">${match[2]}</font>`;
-  }
-  return text;
-};
 
 marked.setOptions({
   renderer,

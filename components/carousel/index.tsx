@@ -32,10 +32,8 @@ export interface CarouselProps {
   /** 设置自动播放时长, 不设置时不自动播放 */
   autoplay?: number;
   /** 自定义头部 */
-  // eslint-disable-next-line no-unused-vars
-  header?: HTMLElement;
+  header?: (current: number) => JSXElement | ((current: number) => JSXElement);
   /** 切换显示的位置时的回调方法 */
-  // eslint-disable-next-line no-unused-vars
   onChange?: (e: number) => void;
 }
 export type CarouselElement = CustomElement<CarouselProps>;
@@ -127,6 +125,10 @@ function Carousel(_props: CarouselProps) {
       clearTimeout(playTimer);
     }
   });
+  const header = createMemo(() =>
+    isFunction(props.header) ? props.header(offset()) : props.header,
+  );
+
   return (
     <>
       <style>
@@ -143,8 +145,8 @@ function Carousel(_props: CarouselProps) {
           <div class="item">{list()[right()]}</div>
         </section>
         <slot name="header" />
-        <Show when={props.header}>
-          <section class="header">{props.header}</section>
+        <Show when={header()}>
+          <section class="header">{header()}</section>
         </Show>
         <div class="prev" onClick={handlePrev} />
         <div class="next" onClick={handleNext} />

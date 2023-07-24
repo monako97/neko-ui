@@ -1,27 +1,23 @@
-import React from 'react';
-import { fireEvent, render } from '@testing-library/react';
-import { Radio } from 'neko-ui';
+import { fireEvent, render } from '@solidjs/testing-library';
+import { screen } from 'shadow-dom-testing-library';
 
-/**
- * @jest-environment jsdom
- */
-describe('test Input', () => {
+describe('Radio', () => {
   it('string options', () => {
-    const { getByTestId, getByText } = render(
-      <Radio
-        data-testid="string options"
-        value="1"
+    const { getByTestId } = render(() => (
+      <n-radio
+        data-testid="string"
+        default-value="option-1"
         options={['option-1', 'option-2', 'option-3']}
       />
-    );
+    ));
 
-    expect(getByTestId('string options')).toBeInTheDocument();
-    fireEvent.click(getByText('option-3'));
-    fireEvent.click(getByText('option-1'));
+    expect(getByTestId('string')).toBeInTheDocument();
+    fireEvent.click(screen.getByShadowText('option-3'));
+    fireEvent.click(screen.getByShadowText('option-1'));
   });
   it('normal', () => {
-    const { getByTestId, getByLabelText } = render(
-      <Radio
+    const { getByTestId } = render(() => (
+      <n-radio
         data-testid="normal"
         value="1"
         layout="vertical"
@@ -31,18 +27,18 @@ describe('test Input', () => {
           { value: '3', label: 'option-3' },
         ]}
       />
-    );
+    ));
 
     expect(getByTestId('normal')).toBeInTheDocument();
     fireEvent.focus(getByTestId('normal'));
     fireEvent.blur(getByTestId('normal'));
-    fireEvent.click(getByLabelText('option-3'));
-    fireEvent.click(getByLabelText('option-1'));
+    fireEvent.click(screen.getByShadowLabelText('option-3'));
+    fireEvent.click(screen.getByShadowLabelText('option-1'));
   });
   it('onChange', () => {
     const change = jest.fn();
-    const { getByTestId, getByLabelText } = render(
-      <Radio
+    const { getByTestId } = render(() => (
+      <n-radio
         data-testid="onChange"
         options={[
           { value: '2', label: 'option-2' },
@@ -50,17 +46,17 @@ describe('test Input', () => {
         ]}
         onChange={change}
       />
-    );
+    ));
 
     expect(getByTestId('onChange')).toBeInTheDocument();
     fireEvent.focus(getByTestId('onChange'));
-    fireEvent.click(getByLabelText('option-3'));
-    fireEvent.click(getByLabelText('option-2'));
-    fireEvent.keyUp(getByLabelText('option-3'), { key: 'Enter' });
+    fireEvent.click(screen.getByShadowLabelText('option-3'));
+    fireEvent.click(screen.getByShadowLabelText('option-2'));
+    fireEvent.keyUp(screen.getByShadowLabelText('option-3'), { key: 'Enter' });
   });
   it('disabled', () => {
-    const { getByTestId, getByLabelText } = render(
-      <Radio
+    const { getByTestId } = render(() => (
+      <n-radio
         data-testid="disabled"
         value="1"
         disabled
@@ -69,10 +65,10 @@ describe('test Input', () => {
           { value: '2', label: 'option-2' },
         ]}
       />
-    );
+    ));
 
     expect(getByTestId('disabled')).toBeInTheDocument();
     fireEvent.focus(getByTestId('disabled'));
-    fireEvent.click(getByLabelText('option-1'));
+    fireEvent.click(screen.getByShadowLabelText('option-1'));
   });
 });

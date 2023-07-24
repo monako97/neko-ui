@@ -1,90 +1,55 @@
-import React from 'react';
-import { render } from '@testing-library/react';
-import { HighlightText, strToHighlight, RegExp_HighLight } from 'neko-ui';
+import { render } from '@solidjs/testing-library';
 
-/**
- * @jest-environment jsdom
- */
-test('测试 HighlightText 默认', () => {
-  const { container } = render(
-    <HighlightText
-      text="s"
-      highlight="s"
-      className="csca"
-      style={{
-        color: 'red',
-      }}
-      hitClassName="hit"
-      hitStyle={{
-        color: 'blue',
-      }}
-    />
-  );
+describe('HighlightText', () => {
+  it('basic', () => {
+    const { container } = render(() => (
+      <n-highlight-text
+        text="s"
+        highlight="s"
+        class="csca"
+        style={{
+          color: 'red',
+        }}
+      />
+    ));
 
-  expect(container).toBeInTheDocument();
-});
+    expect(container).toBeInTheDocument();
+  });
 
-/**
- * @jest-environment jsdom
- */
-test('测试 HighlightText 未匹配', () => {
-  const { container } = render(<HighlightText text="sasc" highlight={'d'} />);
+  it('未匹配', () => {
+    const { container } = render(() => <n-highlight-text text="sasc" highlight={'d'} />);
 
-  expect(container).toBeInTheDocument();
-});
+    expect(container).toBeInTheDocument();
+  });
 
-/**
- * @jest-environment jsdom
- */
-test('测试 HighlightText 无匹配内容', () => {
-  const { container } = render(<HighlightText text="sasc" />);
+  it('无匹配内容', () => {
+    const { container } = render(() => <n-highlight-text text="sasc" />);
 
-  expect(container).toBeInTheDocument();
-});
+    expect(container).toBeInTheDocument();
+  });
 
-/**
- * @jest-environment jsdom
- */
-test('测试 HighlightText 多条件', () => {
-  const { container } = render(<HighlightText text="sasc" highlight={['a', 'c']} extra="csa" />);
+  it('多条件', () => {
+    const { container } = render(() => (
+      <n-highlight-text text="sasc" highlight={['a', 'c']} extra="csa" />
+    ));
 
-  expect(container).toBeInTheDocument();
-});
+    expect(container).toBeInTheDocument();
+  });
 
-/**
- * @jest-environment jsdom
- */
-test('测试 HighlightText 多条件', () => {
-  const { container } = render(
-    <HighlightText
-      text="sasc"
-      highlight={[
-        'a',
-        {
-          highlight: 'c',
-          flag: 'i',
-        },
-      ]}
-    />
-  );
+  it('多条件', () => {
+    const { container } = render(() => (
+      <n-highlight-text
+        text="sasc"
+        highlight={[
+          'a',
+          {
+            highlight: 'c',
+            flag: 'i',
+          },
+        ]}
+      />
+    ));
 
-  expect(container).toBeInTheDocument();
-});
-
-/**
- * @jest-environment jsdom
- */
-test('测试 RegExp_HighLight', () => {
-  const list = RegExp_HighLight.exec('a%c:sas:c%');
-
-  expect('sas').toEqual((list as RegExpExecArray)[1]);
-});
-
-/**
- * @jest-environment jsdom
- */
-test('测试 strToHighlight', () => {
-  const list = strToHighlight('a%c:sas:c%');
-
-  expect([{ text: 'a' }, { hit: true, text: 'sas' }]).toEqual(list);
+    expect(container).toBeInTheDocument();
+  });
 });

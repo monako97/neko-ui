@@ -7,7 +7,7 @@ export {
   default as AvatarGroup,
   type AvatarGroupElement,
   type AvatarGroupProps,
-} from './avatar-group';
+} from './avatar/group';
 export { default as Md, type MdElement, type MdProps } from './md';
 export { default as Code, type CodeProps, type CodeElement } from './code';
 export { default as Img, type ImgProps, type ImgElement } from './img';
@@ -98,6 +98,7 @@ export {
   type BaseOption,
   type CustomElement,
 } from './basic-config';
+export { default as fromSchema } from './from-schema';
 import type { ICustomElement } from 'component-register';
 import type {
   AvatarElement,
@@ -187,9 +188,11 @@ declare module 'solid-js' {
   export namespace JSX {
     export interface IntrinsicElements extends HTMLElementTags, CustomElementTags {}
   }
+  interface HTMLElementTagNameMap extends CustomElementTags {}
 }
 declare global {
   export namespace JSX {
     export interface IntrinsicElements extends CustomElementTags, CustomElementTags {}
   }
+  interface HTMLElementTagNameMap extends CustomElementTags {}
 }

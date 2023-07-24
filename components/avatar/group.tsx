@@ -1,12 +1,56 @@
-import { For, Show, createMemo, mergeProps, splitProps } from 'solid-js';
-import { cx } from '@moneko/css';
+import { For, type JSX, Show, createMemo, mergeProps, splitProps } from 'solid-js';
+import { css, cx } from '@moneko/css';
 import { customElement } from 'solid-element';
-import { moreCss, style } from './style';
 import '../popover';
 import type { BasicConfig, CustomElement } from '..';
 import type { AvatarProps } from '../avatar';
 
-export interface AvatarGroupProps {
+const style = css`
+  .group {
+    display: inline-flex;
+    align-items: center;
+
+    & > n-avatar {
+      display: flex;
+    }
+
+    & > n-avatar:not(:first-child),
+    & > n-popover {
+      margin-inline-start: -4%;
+      transition: margin-inline-start var(--transition-duration);
+
+      &:hover:not(n-popover) {
+        margin-inline-start: 4px;
+
+        &:has(+ n-avatar),
+        &:has(+ n-popover) {
+          margin-inline-end: calc(4% + 4px);
+        }
+      }
+    }
+  }
+`;
+
+const moreCss = css`
+  .more {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow-y: auto;
+    padding: 8px;
+    max-inline-size: 60vi;
+    max-block-size: 80vb;
+    gap: 8px;
+    flex-wrap: wrap;
+
+    & > n-avatar {
+      display: flex;
+    }
+  }
+`;
+
+export interface AvatarGroupProps
+  extends Omit<JSX.ButtonHTMLAttributes<HTMLDivElement>, 'onChange' | 'ref'> {
   /** 头像数据 */
   data: Omit<AvatarProps, 'size'>[];
   /** 头像尺寸
@@ -71,4 +115,5 @@ function AvatarGroup(_props: AvatarGroupProps) {
 }
 
 customElement('n-avatar-group', defaultProps, AvatarGroup);
+
 export default AvatarGroup;

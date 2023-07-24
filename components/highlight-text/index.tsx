@@ -14,15 +14,6 @@ const style = css`
   }
 `;
 
-/**
- * 高亮字符串语法
- * @example
- * ```
- * const str = '%c:高亮文字:c%';
- * ```
- */
-export const RegExp_HighLight = /%c:(.+?):c%/i;
-
 export type HighlightTextJson =
   | {
       highlight?: boolean;
@@ -58,46 +49,6 @@ export interface Highlight {
   text: string;
 }
 
-/**
- * 字符串转换成高亮字符的Json格式
- * @param {string} text 字符串
- * @returns {HighlightTextJson} 高亮字符的Json
- */
-export function strToHighlight(text: string): Highlight[] | null {
-  let str = text,
-    strArr = RegExp_HighLight.exec(str);
-
-  if (strArr) {
-    const textArr: Highlight[] = [];
-
-    for (; strArr !== null; strArr = RegExp_HighLight.exec(str)) {
-      // 普通部分
-      let normalText: string | null = str.substring(0, strArr.index);
-
-      if (normalText.trim().length) {
-        textArr.push({
-          text: normalText,
-        });
-      }
-
-      // 高亮部分
-      textArr.push({
-        hit: true,
-        text: strArr[1],
-      });
-      str = str.substring(strArr[0].length + strArr.index);
-      normalText = null;
-    }
-    if (str.trim().length) {
-      textArr.push({
-        text: str,
-      });
-    }
-    return textArr;
-  }
-  return null;
-}
-
 function HighlightText(props: HighlightTextProps) {
   const [texts, setTexts] = createSignal<Highlight[] | null>();
   const hitNode = createMemo(() => {
@@ -113,6 +64,54 @@ function HighlightText(props: HighlightTextProps) {
       }) ?? props.text
     );
   });
+
+  /**
+   * 字符串转换成高亮字符的Json格式
+   * @param {string} text 字符串
+   * @returns {HighlightTextJson} 高亮字符的Json
+   */
+  function strToHighlight(text: string): Highlight[] | null {
+    /**
+     * 高亮字符串语法
+     * @example
+     * ```
+     * const str = '%c:高亮文字:c%';
+     * ```
+     */
+    const RegExp_HighLight = /%c:(.+?):c%/i;
+    let str = text,
+      strArr = RegExp_HighLight.exec(str);
+
+    if (strArr) {
+      const textArr: Highlight[] = [];
+
+      for (; strArr !== null; strArr = RegExp_HighLight.exec(str)) {
+        // 普通部分
+        let normalText: string | null = str.substring(0, strArr.index);
+
+        if (normalText.trim().length) {
+          textArr.push({
+            text: normalText,
+          });
+        }
+
+        // 高亮部分
+        textArr.push({
+          hit: true,
+          text: strArr[1],
+        });
+        str = str.substring(strArr[0].length + strArr.index);
+        normalText = null;
+      }
+      if (str.trim().length) {
+        textArr.push({
+          text: str,
+        });
+      }
+      return textArr;
+    }
+    return null;
+  }
 
   createEffect(() => {
     if (typeof props.text === 'string' && props.highlight) {

@@ -1,4 +1,4 @@
-import { For, type JSX, type JSXElement } from 'solid-js';
+import { type JSX, createComponent, mergeProps } from 'solid-js';
 import { css, cx } from '@moneko/css';
 import { customElement } from 'solid-element';
 import { baseStyle } from '../theme';
@@ -66,7 +66,7 @@ export interface SpinProps extends Omit<JSX.HTMLAttributes<HTMLDivElement>, 'onC
   /** 加载状态 */
   spin?: boolean;
   /** 内容 */
-  children?: JSXElement[];
+  children?: JSX.Element | JSX.Element[];
 }
 
 function Spin(props: SpinProps) {
@@ -78,9 +78,7 @@ function Spin(props: SpinProps) {
         {css(props.css)}
       </style>
       <div class={cx('box', props.spin && 'spin', props.class)}>
-        <div class="content">
-          <For each={props.children}>{(item) => item}</For>
-        </div>
+        <div class="content">{props.children}</div>
       </div>
     </>
   );
@@ -88,9 +86,15 @@ function Spin(props: SpinProps) {
 
 export type SpinElement = CustomElement<SpinProps>;
 
-customElement(
-  'n-spin',
-  { class: undefined, css: undefined, spin: undefined, children: undefined },
-  Spin,
-);
+customElement('n-spin', { class: undefined, css: undefined, spin: undefined }, (_, opt) => {
+  const el = opt.element;
+  const props = mergeProps(
+    {
+      children: [...el.childNodes.values()],
+    },
+    _,
+  );
+
+  return createComponent(Spin, props);
+});
 export default Spin;

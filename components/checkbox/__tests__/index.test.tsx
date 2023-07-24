@@ -1,27 +1,23 @@
-import React from 'react';
-import { fireEvent, render } from '@testing-library/react';
-import { Checkbox } from 'neko-ui';
+import { fireEvent, render } from '@solidjs/testing-library';
+import { screen } from 'shadow-dom-testing-library';
 
-/**
- * @jest-environment jsdom
- */
-describe('test Input', () => {
+describe('Checkbox', () => {
   it('string options', () => {
-    const { getByTestId, getByText } = render(
-      <Checkbox
+    render(() => (
+      <n-checkbox
         data-testid="string options"
         value={['option-1']}
         options={['option-1', 'option-2', 'option-3']}
       />
-    );
+    ));
 
-    expect(getByTestId('string options')).toBeInTheDocument();
-    fireEvent.click(getByText('option-3'));
-    fireEvent.click(getByText('option-1'));
+    expect(screen.getByTestId('string options')).toBeInTheDocument();
+    fireEvent.click(screen.getByShadowText('option-3'));
+    fireEvent.click(screen.getByShadowText('option-1'));
   });
   it('normal', () => {
-    const { getByTestId, getByLabelText } = render(
-      <Checkbox
+    const { getByTestId } = render(() => (
+      <n-checkbox
         data-testid="normal"
         value={['1']}
         layout="vertical"
@@ -31,18 +27,18 @@ describe('test Input', () => {
           { value: '3', label: 'option-3' },
         ]}
       />
-    );
+    ));
 
     expect(getByTestId('normal')).toBeInTheDocument();
     fireEvent.focus(getByTestId('normal'));
     fireEvent.blur(getByTestId('normal'));
-    fireEvent.click(getByLabelText('option-3'));
-    fireEvent.click(getByLabelText('option-1'));
+    fireEvent.click(screen.getByShadowText('option-3'));
+    fireEvent.click(screen.getByShadowText('option-1'));
   });
   it('onChange', () => {
     const change = jest.fn();
-    const { getByTestId, getByLabelText } = render(
-      <Checkbox
+    const { getByTestId } = render(() => (
+      <n-checkbox
         data-testid="onChange"
         options={[
           { value: '2', label: 'option-2' },
@@ -50,17 +46,17 @@ describe('test Input', () => {
         ]}
         onChange={change}
       />
-    );
+    ));
 
     expect(getByTestId('onChange')).toBeInTheDocument();
     fireEvent.focus(getByTestId('onChange'));
-    fireEvent.click(getByLabelText('option-3'));
-    fireEvent.click(getByLabelText('option-2'));
-    fireEvent.keyUp(getByLabelText('option-3'), { key: 'Enter' });
+    fireEvent.click(screen.getByShadowText('option-3'));
+    fireEvent.click(screen.getByShadowText('option-2'));
+    fireEvent.keyUp(screen.getByShadowText('option-3'), { key: 'Enter' });
   });
   it('disabled', () => {
-    const { getByTestId, getByLabelText } = render(
-      <Checkbox
+    const { getByTestId } = render(() => (
+      <n-checkbox
         data-testid="disabled"
         value={['1']}
         disabled
@@ -69,49 +65,35 @@ describe('test Input', () => {
           { value: '2', label: 'option-2' },
         ]}
       />
-    );
+    ));
 
     expect(getByTestId('disabled')).toBeInTheDocument();
     fireEvent.focus(getByTestId('disabled'));
-    fireEvent.click(getByLabelText('option-1'));
+    fireEvent.click(screen.getByShadowText('option-1'));
   });
-  it('indeterminate', () => {
-    function IndeterminateDemo() {
-      const [value, setValue] = React.useState(['3']);
-      const options = React.useMemo(
-        () => [
-          { value: '1', label: 'option-1' },
-          { value: '2', label: 'option-2' },
-          { value: '3', label: 'option-3' },
-          { value: '4', label: 'option-4' },
-        ],
-        []
-      );
-      const indeterminate = React.useMemo(() => {
-        let _indeterminate = false;
-
-        options.forEach((opt) => {
-          if (value.length && !value.includes(opt.value)) {
-            _indeterminate = true;
+  it('check all', () => {
+    const { getByTestId } = render(() => (
+      <n-checkbox
+        data-testid="indeterminate"
+        check-all={true}
+        options={[
+          { value: 1, label: '选项-1' },
+          { value: 2, label: '选项-2' },
+          { value: 3, label: '选项-3' },
+          { value: 4, label: '选项-4' },
+        ]}
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        onChange={(e: { target: any; detail: unknown[] }) => {
+          if (e.target) {
+            e.target.value = e.detail;
           }
-        });
-        return _indeterminate;
-      }, [options, value]);
-
-      return (
-        <Checkbox
-          data-testid="indeterminate"
-          value={value}
-          onChange={setValue}
-          options={[{ value: 'all', label: '全选', indeterminate: indeterminate }, ...options]}
-        />
-      );
-    }
-    const { getByTestId, getByLabelText } = render(<IndeterminateDemo />);
+        }}
+      />
+    ));
 
     expect(getByTestId('indeterminate')).toBeInTheDocument();
     fireEvent.focus(getByTestId('indeterminate'));
-    fireEvent.click(getByLabelText('全选'));
-    fireEvent.click(getByLabelText('全选'));
+    fireEvent.click(screen.getByShadowText('全选'));
+    fireEvent.click(screen.getByShadowText('全选'));
   });
 });

@@ -1,6 +1,5 @@
 import { lazy } from 'solid-js';
-import { routes } from '@moneko/solid-js';
-import { type RouteDefinition } from '@solidjs/router';
+import { type RouteDefinition, routes } from '@moneko/solid-js';
 
 const router: RouteDefinition[] = [
   {

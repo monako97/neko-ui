@@ -25,7 +25,7 @@ export interface PopoverProps extends Omit<JSX.HTMLAttributes<HTMLDivElement>, '
   /** 自定义样式表 */
   css?: string;
   /** 内容 */
-  content: JSXElement | (() => JSXElement);
+  content: (() => JSXElement) | JSXElement;
   /** 挂载到指定的元素，值为一个返回对应 DOM 元素 默认 document.body */
   // eslint-disable-next-line no-unused-vars
   getPopupContainer?: (node?: HTMLElement | null) => HTMLElement;

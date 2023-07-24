@@ -1,4 +1,5 @@
 import {
+  type JSX,
   Match,
   Switch,
   createEffect,
@@ -6,6 +7,7 @@ import {
   createSignal,
   mergeProps,
   onMount,
+  splitProps,
 } from 'solid-js';
 import { css, cx } from '@moneko/css';
 import { customElement } from 'solid-element';
@@ -16,7 +18,8 @@ import type { BasicConfig, CustomElement } from '../index';
 
 const clip = decodeURIComponent(clipPath.replace('data:image/svg+xml,', ''));
 
-export interface AvatarProps {
+export interface AvatarProps
+  extends Omit<JSX.ButtonHTMLAttributes<HTMLDivElement>, 'onChange' | 'ref' | 'children'> {
   /** 头像 */
   src?: string;
   /** 替代文本 */
@@ -42,8 +45,17 @@ const avatarSize: Record<string, string> = {
   large: '40px',
 };
 
-function Avatar(_props: AvatarProps) {
-  const props = mergeProps({ size: 32 }, _props);
+function Avatar(_: AvatarProps) {
+  const props = mergeProps({ size: 32 }, _);
+  const [local, other] = splitProps(props, [
+    'class',
+    'css',
+    'src',
+    'alt',
+    'size',
+    'color',
+    'username',
+  ]);
   let box: HTMLDivElement | undefined;
   let label: HTMLSpanElement | undefined;
   const [scale, setScale] = createSignal(1);
@@ -59,11 +71,11 @@ function Avatar(_props: AvatarProps) {
     }
   });
   const _style = createMemo(() => {
-    const size = avatarSize[props.size] || `${props.size}px` || '32px';
+    const size = avatarSize[local.size] || `${local.size}px`;
 
     return css`
       .avatar {
-        --avatar-color: ${props.color};
+        --avatar-color: ${local.color};
 
         inline-size: ${size};
         block-size: ${size};
@@ -85,16 +97,16 @@ function Avatar(_props: AvatarProps) {
         {baseStyle()}
         {style}
         {_style()}
-        {css(props.css)}
+        {css(local.css)}
       </style>
-      <div ref={box} class={cx('avatar', props.class)}>
+      <div ref={box} class={cx('avatar', local.class)} {...other}>
         <Switch>
-          <Match when={typeof props.src === 'string'}>
-            <img src={props.src} alt={props.alt} />
+          <Match when={typeof local.src === 'string'}>
+            <img src={local.src} alt={local.alt} />
           </Match>
-          <Match when={props.username}>
+          <Match when={local.username}>
             <span ref={label} style={{ transform: `scale(${scale()})` }}>
-              {props.username}
+              {local.username}
             </span>
           </Match>
         </Switch>

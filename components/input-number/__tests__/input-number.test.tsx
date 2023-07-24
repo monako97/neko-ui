@@ -1,73 +1,75 @@
-import React from 'react';
-import { fireEvent, render, screen } from '@testing-library/react';
-import { InputNumber } from 'neko-ui';
+import { fireEvent, render } from '@solidjs/testing-library';
 
-/**
- * @jest-environment jsdom
- */
-describe('test InputNumber', () => {
+describe('InputNumber', () => {
   it('formatter & parser & mouseMove', () => {
     const handleChange = jest.fn();
 
-    render(
-      <InputNumber
+    const { getByTestId } = render(() => (
+      <n-input-number
         data-testid="input-formatter"
         formatter={(v) => `${((v as number) || 0) * 100}%`}
         parser={(v) => parseFloat(v?.toString().replace(/%$/, '') || '0') / 100}
         onChange={handleChange}
       />
-    );
+    ));
 
-    fireEvent.change(screen.getByTestId('input-formatter'), {
+    const inp = getByTestId('input-formatter').shadowRoot!.querySelector('input')!;
+
+    fireEvent.change(inp, {
       target: {
         value: 1,
       },
     });
-    fireEvent.keyDown(screen.getByTestId('input-formatter'), {
+    fireEvent.keyDown(inp, {
       key: 'ArrowUp',
     });
-    fireEvent.keyDown(screen.getByTestId('input-formatter'), {
+    fireEvent.keyDown(inp, {
       key: 'ArrowDown',
     });
-    fireEvent.mouseDown(screen.getByTestId('input-formatter'));
+    fireEvent.keyDown(inp, {
+      key: 'Enter',
+    });
+    fireEvent.mouseDown(inp);
     fireEvent.mouseMove(document.body, {
       movementX: 1,
       movementY: 1,
     });
     fireEvent.mouseUp(document.body);
-    fireEvent.change(screen.getByTestId('input-formatter'), {
+    fireEvent.change(inp, {
       target: {
         value: '1-1',
       },
     });
-    expect(screen.getByTestId('input-formatter')).toBeInTheDocument();
+    expect(inp).toBeInTheDocument();
   });
   it('max & min', async () => {
-    const testId = 'input-min-max';
+    const { getByTestId } = render(() => (
+      <n-input-number data-testid="input-min-max" min={1} max={100} />
+    ));
 
-    render(<InputNumber data-testid={testId} min={1} max={100} />);
+    const inp = getByTestId('input-min-max').shadowRoot!.querySelector('input')!;
 
-    fireEvent.change(screen.getByTestId(testId), {
+    fireEvent.change(inp, {
       target: {
         value: 0,
       },
     });
-    fireEvent.change(screen.getByTestId(testId), {
+    fireEvent.change(inp, {
       target: {
         value: 101,
       },
     });
-    fireEvent.change(screen.getByTestId(testId), {
+    fireEvent.change(inp, {
       target: {
         value: 'a-2',
       },
     });
-    fireEvent.mouseDown(screen.getByTestId(testId));
+    fireEvent.mouseDown(inp);
     fireEvent.mouseMove(document.body, {
       movementX: 1,
       movementY: 1,
     });
     fireEvent.mouseUp(document.body);
-    expect(screen.getByTestId(testId)).toBeInTheDocument();
+    expect(inp).toBeInTheDocument();
   });
 });

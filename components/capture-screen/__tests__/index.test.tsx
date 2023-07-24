@@ -1,7 +1,5 @@
-import React from 'react';
-import { render, screen, fireEvent, act } from '@testing-library/react';
-import { CaptureScreen } from 'neko-ui';
-
+import { fireEvent, render, waitFor } from '@solidjs/testing-library';
+import { screen } from 'shadow-dom-testing-library';
 const mockMedia = (ondataavailable?: boolean) => {
   global.URL.revokeObjectURL = jest.fn(() => '');
   global.URL.createObjectURL = jest.fn(() => '');
@@ -89,31 +87,27 @@ const mockMedia = (ondataavailable?: boolean) => {
   });
 };
 
-/**
- * @jest-environment jsdom
- */
-describe('test CaptureScreen', () => {
+describe('CaptureScreen', () => {
   it('not supports', async () => {
     const onErrorCapture = jest.fn();
 
-    render(<CaptureScreen onErrorCapture={onErrorCapture} />);
+    render(() => <n-capture-screen onErrorCapture={onErrorCapture} />);
 
-    await act(async () => {
-      fireEvent.click(screen.getByText('捕获屏幕'));
+    await waitFor(async () => {
+      fireEvent.click(screen.getByShadowText('捕获屏幕'));
     });
     expect(onErrorCapture).toHaveBeenCalled();
   });
   it('basic', () => {
-    const { container } = render(<CaptureScreen />);
+    const { container } = render(() => <n-capture-screen />);
 
     expect(container).toBeInTheDocument();
   });
   it('event', async () => {
     mockMedia();
-    render(
-      <CaptureScreen
-        id="CaptureScreen"
-        className="CaptureScreen"
+    render(() => (
+      <n-capture-screen
+        class="CaptureScreen"
         captureScreenText="捕获屏幕"
         stopCaptureText="停止捕获"
         recorderingText="recorderingText"
@@ -121,16 +115,16 @@ describe('test CaptureScreen', () => {
         pausedRecorderText="pausedRecorderText"
         startRecorderText="开始录制"
         options={{}}
-        controls
-        recorder
+        controls={true}
+        recorder={true}
       />
-    );
+    ));
 
-    await act(async () => {
-      fireEvent.click(screen.getByText('捕获屏幕'));
+    await waitFor(async () => {
+      fireEvent.click(screen.getByShadowText('捕获屏幕'));
     });
-    await act(async () => {
-      fireEvent.click(screen.getByText('开始录制'));
+    await waitFor(async () => {
+      fireEvent.click(screen.getByShadowText('开始录制'));
     });
   });
   it('supports', async () => {
@@ -142,46 +136,46 @@ describe('test CaptureScreen', () => {
     const onStopRecorder = jest.fn();
     const onStartRecorder = jest.fn();
 
-    render(
-      <CaptureScreen
+    render(() => (
+      <n-capture-screen
         onStartCapture={onStartCapture}
         onRecorderDataAvailable={onRecorderDataAvailable}
-        onRecorderError={onRecorderError}
+        onErrorRecorder={onRecorderError}
         onStopCapture={onStopCapture}
         onStopRecorder={onStopRecorder}
         onStartRecorder={onStartRecorder}
-        recorder={{ filename: '录制文件' }}
-        preview
+        recorder={true}
+        preview={true}
       />
-    );
-    await act(async () => {
-      fireEvent.click(screen.getByText('捕获屏幕'));
+    ));
+    await waitFor(async () => {
+      fireEvent.click(screen.getByShadowText('捕获屏幕'));
     });
     expect(onStartCapture).toHaveBeenCalled();
-    await act(async () => {
-      fireEvent.click(screen.getByText('开始录制'));
+    await waitFor(async () => {
+      fireEvent.click(screen.getByShadowText('开始录制'));
     });
     expect(onStartRecorder).toHaveBeenCalled();
-    await act(async () => {
-      fireEvent.click(screen.getByText('停止捕获'));
+    await waitFor(async () => {
+      fireEvent.click(screen.getByShadowText('停止捕获'));
     });
-    await act(async () => {
-      fireEvent.click(screen.getByText('捕获屏幕'));
+    await waitFor(async () => {
+      fireEvent.click(screen.getByShadowText('捕获屏幕'));
     });
-    await act(async () => {
-      fireEvent.click(screen.getByText('开始录制'));
+    await waitFor(async () => {
+      fireEvent.click(screen.getByShadowText('开始录制'));
     });
-    await act(async () => {
-      fireEvent.click(screen.getByText('录制中'));
+    await waitFor(async () => {
+      fireEvent.click(screen.getByShadowText('录制中'));
     });
-    await act(async () => {
-      fireEvent.click(screen.getByText('暂停录制'));
+    await waitFor(async () => {
+      fireEvent.click(screen.getByShadowText('暂停录制'));
     });
-    await act(async () => {
-      fireEvent.click(screen.getByText('停止录制'));
+    await waitFor(async () => {
+      fireEvent.click(screen.getByShadowText('停止录制'));
     });
     expect(onStopRecorder).toHaveBeenCalled();
-    fireEvent.click(screen.getByText('停止捕获'));
+    fireEvent.click(screen.getByShadowText('停止捕获'));
     expect(onStopCapture).toHaveBeenCalled();
   });
 
@@ -189,15 +183,15 @@ describe('test CaptureScreen', () => {
     mockMedia(true);
     const onSaveRecorder = jest.fn();
 
-    render(<CaptureScreen recorder onSaveRecorder={onSaveRecorder} />);
-    await act(async () => {
-      fireEvent.click(screen.getByText('捕获屏幕'));
+    render(() => <n-capture-screen recorder={true} onSaveRecorder={onSaveRecorder} />);
+    await waitFor(async () => {
+      fireEvent.click(screen.getByShadowText('捕获屏幕'));
     });
-    await act(async () => {
-      fireEvent.click(screen.getByText('开始录制'));
+    await waitFor(async () => {
+      fireEvent.click(screen.getByShadowText('开始录制'));
     });
-    await act(async () => {
-      fireEvent.click(screen.getByText('停止捕获'));
+    await waitFor(async () => {
+      fireEvent.click(screen.getByShadowText('停止捕获'));
     });
     expect(onSaveRecorder).toHaveBeenCalled();
   });

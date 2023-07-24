@@ -13,6 +13,6 @@ console.log(`foo: ${foo}`);
 ```jsx
 <n-code line-number lang="javascript">
 {`const foo = bar.baz([1, 2, 3]) + 1;
-console.log(`foo: ${foo}`);`}
+console.log(\`foo: $\{foo}\`);`}
 </n-code>
 ```

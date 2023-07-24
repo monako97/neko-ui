@@ -24,7 +24,13 @@ order: 2
   min={0}
   max={1}
   step={0.01}
-  formatter={() => (v = 0) => `${Number((v * 100).toFixed(2))}%`}
-  parser={() => (v = '0%') => Number(v.replace(/%$/, '')) / 100}
+  formatter={() =>
+    (v = 0) =>
+      `${Number((v * 100).toFixed(2))}%`
+    }
+  parser={() =>
+    (v = '0%') =>
+      Number(v.replace(/%$/, '')) / 100
+    }
 />
 ```

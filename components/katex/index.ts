@@ -16,9 +16,9 @@ export interface KaTexProps {
   strict?: boolean;
   /** Run KaTeX code in the global group. */
   globalGroup?: boolean;
-  /** 如果`true`, 则显示数学用`a2em`左边距渲染刷新左 */
+  /** 如果 true, 则显示数学用`a2em`左边距渲染刷新左 */
   fleqn?: boolean;
-  /** 如果`true`, 显示数学的`\tag`呈现在左侧而不是右侧 */
+  /** 如果 true, 显示数学的`\tag`呈现在左侧而不是右侧 */
   leqno?: boolean;
   /** 显示模式
    * @default false
@@ -36,7 +36,7 @@ export interface KaTexProps {
   maxExpand?: number;
   /** 线的边界指定最小厚度 */
   minRuleThickness?: number;
-  /** 当`throwOnError`设置为 `false` 时, 无效的 `LaTeX` 呈现的颜色
+  /** 当`throwOnError`设置为 false 时, 无效的 `LaTeX` 呈现的颜色
    * @default '#cc0000'
    */
   errorColor?: string;

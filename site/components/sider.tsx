@@ -1,7 +1,13 @@
 import { For, Show, createEffect, createMemo } from 'solid-js';
 import { css } from '@moneko/css';
-import { type RouterProps, getPathName, projectBasicInfo, routes } from '@moneko/solid-js';
-import { A, useLocation } from '@solidjs/router';
+import {
+  A,
+  type RouterProps,
+  getPathName,
+  projectBasicInfo,
+  routes,
+  useLocation,
+} from '@moneko/solid-js';
 import { ComponentOptions, baseStyle, setTheme, theme } from 'neko-ui';
 import { customElement } from 'solid-element';
 

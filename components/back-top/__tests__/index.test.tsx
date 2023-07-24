@@ -1,68 +1,57 @@
-import React from 'react';
-import { render, screen, fireEvent, act } from '@testing-library/react';
-import { BackTop, type BackTopProps } from 'neko-ui';
+import { For } from 'solid-js';
+import { fireEvent, render, waitFor } from '@solidjs/testing-library';
+import { screen } from 'shadow-dom-testing-library';
 
-/**
- * @jest-environment jsdom
- */
-describe('test BackTop', () => {
-  afterEach(() => {
-    jest.useFakeTimers();
-    jest.clearAllTimers();
-  });
+describe('BackTop', () => {
+  it('basic', () => {
+    render(() => <n-back-top mount={document.body} target={document.body} />);
 
-  const testPopupContainer = (hasGetPopupContainer: boolean) => {
-    const data = new Array(20).fill(0);
-    const props: BackTopProps = {};
-    const testid = 'box' + hasGetPopupContainer;
-    const backTopTestId = 'back-top-' + hasGetPopupContainer;
-
-    if (hasGetPopupContainer) props.getPopupContainer = (node) => node;
-
-    render(
-      <div
-        data-testid={testid}
-        id="box"
-        style={{ blockSize: 100, overflow: 'auto', position: 'relative' }}
-      >
-        <div>
-          {data.map((_, i) => {
-            return <p key={i}>data-{i}</p>;
-          })}
-        </div>
-        <BackTop
-          data-testid={backTopTestId}
-          visibilityHeight={200}
-          target={() => document.querySelector('#box') || document.body}
-          {...props}
-        />
-      </div>
-    );
-    screen.getByTestId(testid).scrollTo = jest.fn();
-
-    act(() => {
-      screen.getByTestId(testid).scrollTop = 1000;
-      fireEvent.scroll(screen.getByTestId(testid));
-    });
-    act(() => {
-      fireEvent.click(screen.getByTestId(backTopTestId));
-      screen.getByTestId(testid).scrollTop = 0;
-      fireEvent.scroll(screen.getByTestId(testid));
-    });
-    fireEvent.animationEnd(screen.getByTestId(backTopTestId));
-  };
-
-  it('测试 BackTop 默认', () => {
-    const { container } = render(<BackTop />);
-
-    expect(container).toBeInTheDocument();
     fireEvent.scroll(window);
   });
 
-  it('test getPopupContainer', () => {
-    testPopupContainer(false);
-  });
-  it('test getPopupContainer', () => {
-    testPopupContainer(true);
+  it('target', async () => {
+    Object.defineProperty(HTMLElement.prototype, 'offsetHeight', {
+      configurable: true,
+      value: 100,
+    });
+    const data = new Array(40).fill(0);
+    const testid = 'box';
+    const backTopTestId = 'back-top';
+
+    const { getByTestId } = render(() => {
+      let box: HTMLDivElement | undefined;
+
+      return (
+        <div
+          data-testid={testid}
+          ref={box}
+          style={{ height: '100px', overflow: 'auto', position: 'relative' }}
+        >
+          <div>
+            <For each={data}>
+              {(_, i) => (
+                <p>
+                  data
+                  <br />
+                  {i()}
+                </p>
+              )}
+            </For>
+          </div>
+          <n-back-top data-testid={backTopTestId} visibility-height={200} target={() => box!} />
+        </div>
+      );
+    });
+
+    getByTestId(testid).scrollTo = jest.fn();
+    getByTestId(testid).scrollTop = 30;
+
+    await waitFor(() => {
+      fireEvent.scroll(screen.getByTestId(testid));
+    });
+
+    // fireEvent.click(screen.getByShadowTestId(backTopTestId));
+    // fireEvent.scroll(screen.getByTestId(testid));
+    // fireEvent.animationEnd(screen.getByShadowTestId(backTopTestId));
   });
 });

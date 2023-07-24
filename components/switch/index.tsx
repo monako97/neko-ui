@@ -14,14 +14,13 @@ export interface SwitchProps {
   checked?: boolean;
   /** 只读 */
   disabled?: boolean;
-  /** 设置 为 `true` 时的文案 */
+  /** 设置 为 true 时的文案 */
   checkedText?: string;
-  /** 设置 为 `false` 时的文案 */
+  /** 设置 为 false 时的文案 */
   unCheckedText?: string;
   /** 加载状态 */
   loading?: boolean;
   /** 值修改时的回调方法 */
-  // eslint-disable-next-line no-unused-vars
   onChange?: (val: boolean) => void;
 }
 
@@ -37,7 +36,7 @@ function Switch(props: SwitchProps) {
     }
   }
 
-  function onKeyUpCapture({ key }: { key: string }) {
+  function onKeyUp({ key }: { key: string }) {
     if (key === 'Enter') {
       change();
     }
@@ -60,7 +59,7 @@ function Switch(props: SwitchProps) {
         text-off={props.unCheckedText}
         aria-disabled={props.disabled}
         onClick={change}
-        onKeyUp={onKeyUpCapture}
+        onKeyUp={onKeyUp}
         tabIndex={props.disabled || props.loading ? -1 : 0}
       />
     </>

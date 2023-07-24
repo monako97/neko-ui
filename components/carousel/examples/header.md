@@ -11,35 +11,28 @@ order: 4
 </n-carousel>
 <script>
   const el = container.querySelector('n-carousel');
-  const header = document.createElement('div');
-  header.style.padding = '16px';
-  header.innerHTML = '3 / 1';
-  el.header = header;
-  el.onchange = function (e) {
-    header.innerHTML = `3 / ${e.detail + 1}`;
-    el.header = header;
+  el.header = function (current) {
+    const header = document.createElement('div');
+    header.style.padding = '16px';
+    header.innerHTML = '3 / ' + (current + 1);
+    return header;
   };
 </script>
 ```
 
 ```jsx
-function Demo() {
-  const list = Array(10000)
-    .fill(0)
-    .map((_, i) => <div>10000 / {i + 1}</div>);
+const list = Array(10000)
+  .fill(0)
+  .map((_, i) => <div>10000 / {i + 1}</div>);
 
-  return (
-    <n-carousel
-      dots
-      header={<div style="padding: 16px;">10000 / 1</div>}
-      onchange={(e) => {
-        e.target.header = <div style="padding: 16px;">10000 / {e.detail + 1}</div>;
-      }}
-    >
-      {list}
-    </n-carousel>
-  );
-}
-
-render(<Demo />);
+render(
+  <n-carousel
+    dots
+    header={() => (num: number) => {
+      return <div style="padding: 16px;">10000 / {num + 1}</div>;
+    }}
+  >
+    {list}
+  </n-carousel>
+);
 ```

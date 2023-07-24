@@ -1,10 +1,9 @@
 import { Show, createEffect } from 'solid-js';
 import { css } from '@moneko/css';
-import { ApiView, getPathName } from '@moneko/solid-js';
-import { Outlet, useLocation } from '@solidjs/router';
+import { ApiView, Outlet, getPathName, useLocation } from '@moneko/solid-js';
 import { baseStyle } from 'neko-ui';
+import './components';
 import log from '../CHANGELOG.md?raw';
-import '@/components';
 
 const noBg = css`
   .n-md-body:has(n-md):not(.site-empty) {

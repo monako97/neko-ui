@@ -1,9 +1,9 @@
 import {
   type JSX,
-  type JSXElement,
   Show,
   createComponent,
   createEffect,
+  createMemo,
   createSignal,
   mergeProps,
   splitProps,
@@ -47,7 +47,7 @@ export interface ButtonProps
    */
   size?: BasicConfig['size'];
   /** 按钮前面添加一个图标 */
-  icon?: JSXElement;
+  icon?: (() => JSX.Element) | JSX.Element;
   // eslint-disable-next-line no-unused-vars
   onKeyUp?(e: KeyboardEvent): void;
 }
@@ -55,7 +55,7 @@ export type ButtonElement = CustomElement<ButtonProps>;
 
 function Button(_: ButtonProps) {
   const _props = mergeProps({ size: 'normal', type: 'default' }, _);
-  const [local, props] = splitProps(_props, [
+  const [local, other] = splitProps(_props, [
     'ghost',
     'fill',
     'circle',
@@ -65,26 +65,32 @@ function Button(_: ButtonProps) {
     'danger',
     'children',
     'block',
-    'onClick',
     'size',
     'type',
     'class',
     'icon',
     'css',
+    'onClick',
+    'onAnimationEnd',
+    'part',
+    'tabIndex',
+    'disabled',
   ]);
   let ref: HTMLButtonElement | undefined;
   const [animating, setAnimating] = createSignal(false);
 
   function handleClick(e: Event) {
-    if (props.disabled) return;
-    setAnimating(true);
-    if (isFunction(local.onClick)) {
-      local.onClick(e);
+    if (!local.disabled) {
+      setAnimating(true);
+      if (isFunction(local.onClick)) {
+        local.onClick(e);
+      }
     }
   }
   function handleAnimationEnd() {
     setAnimating(false);
   }
+  const icon = createMemo(() => (isFunction(local.icon) ? local.icon() : local.icon));
 
   return (
     <>
@@ -94,10 +100,9 @@ function Button(_: ButtonProps) {
         {local.css || ''}
       </style>
       <Dynamic
-        {...(props as unknown as object)}
         ref={ref}
         component={local.link ? 'a' : 'button'}
-        tabIndex={props.disabled ? -1 : 0}
+        tabIndex={local.disabled ? -1 : 0}
         class={cx(
           'btn',
           local.type,
@@ -110,17 +115,19 @@ function Button(_: ButtonProps) {
           local.dashed && 'dashed',
           local.ghost && 'ghost',
           local.link && 'link',
-          props.disabled && 'disabled',
+          local.disabled && 'disabled',
           animating() && 'without',
           local.class,
         )}
         part="button"
         onClick={handleClick}
         onAnimationEnd={handleAnimationEnd}
+        disabled={local.disabled}
+        {...other}
       >
         <Show when={local.icon}>
           <span class="icon" part="icon">
-            {local.icon}
+            {icon()}
           </span>
         </Show>
         <span class="label" part="label">
@@ -148,6 +155,7 @@ customElement(
     danger: undefined,
     size: undefined,
     onClick: undefined,
+    icon: undefined,
   },
   (_, opt) => {
     const el = opt.element;

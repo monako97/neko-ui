@@ -1,53 +1,29 @@
-import React from 'react';
-import { render, screen } from '@testing-library/react';
-import { prefixCls, Skeleton } from 'neko-ui';
-
-/*
- * @jest-environment jsdom
- */
+import { render } from '@solidjs/testing-library';
 
 describe('Skeleton', () => {
   it('basic', () => {
-    const testid = 'skeleton-basic-test-id';
+    const { getByTestId } = render(() => <n-skeleton data-testid="basic" />);
 
-    render(<Skeleton data-testid={testid} />);
-    expect(screen.getByTestId(testid)).toBeInTheDocument();
+    expect(getByTestId('basic')).toBeInTheDocument();
   });
   it('rows', () => {
-    const testid = 'skeleton-rows-test-id',
-      rows = 6;
+    const { getByTestId } = render(() => <n-skeleton data-testid="rows" rows={6} />);
 
-    render(<Skeleton data-testid={testid} rows={6} />);
-
-    expect(
-      screen.getByTestId(testid).querySelectorAll(`.${prefixCls('skeleton-paragraph')} div`).length
-    ).toBe(rows);
+    expect(getByTestId('rows').shadowRoot!.querySelectorAll('.paragraph div').length).toBe(6);
   });
   it('avatar', () => {
-    const testid = 'skeleton-avatar-test-id';
+    const { getByTestId } = render(() => <n-skeleton data-testid="avatar" avatar={true} />);
 
-    render(<Skeleton data-testid={testid} avatar />);
-
-    expect(
-      screen.getByTestId(testid).querySelector(`.${prefixCls('skeleton-avatar')}`)
-    ).toBeInTheDocument();
+    expect(getByTestId('avatar').shadowRoot!.querySelector('.avatar')).toBeInTheDocument();
   });
   it('active', () => {
-    const testid = 'skeleton-active-test-id';
+    const { getByTestId } = render(() => <n-skeleton data-testid="active" active={true} />);
 
-    render(<Skeleton data-testid={testid} active />);
-
-    expect(
-      screen.getByTestId(testid).querySelector(`.${prefixCls('skeleton-active')}`)
-    ).toBeInTheDocument();
+    expect(getByTestId('active').shadowRoot!.querySelector('.active')).toBeInTheDocument();
   });
   it('title', () => {
-    const testid = 'skeleton-title-test-id';
+    const { getByTestId } = render(() => <n-skeleton data-testid="title" title={true} />);
 
-    render(<Skeleton data-testid={testid} title />);
-
-    expect(
-      screen.getByTestId(testid).querySelector(`.${prefixCls('skeleton-title')}`)
-    ).toBeInTheDocument();
+    expect(getByTestId('title').shadowRoot!.querySelector('.title')).toBeInTheDocument();
   });
 });

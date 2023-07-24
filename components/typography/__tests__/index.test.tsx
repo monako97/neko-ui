@@ -1,27 +1,23 @@
-import React from 'react';
-import { render } from '@testing-library/react';
-import { Typography } from 'neko-ui';
+import { render } from '@solidjs/testing-library';
+import { screen } from 'shadow-dom-testing-library';
 
-/**
- * @jest-environment jsdom
- */
 describe('test Input', () => {
   it('normal', () => {
-    const { getByTestId } = render(
-      <Typography data-testid="normal" type="primary">
+    render(() => (
+      <n-typography data-testid="normal" type="primary">
         primary text
-      </Typography>
-    );
+      </n-typography>
+    ));
 
-    expect(getByTestId('normal')).toBeInTheDocument();
+    expect(screen.getByShadowText('primary text')).toBeInTheDocument();
   });
   it('truncated', () => {
-    const { getByTestId } = render(
-      <Typography data-testid="truncated" truncated={{ rows: 2 }}>
+    render(() => (
+      <n-typography data-testid="truncated" truncated={2}>
         truncated
-      </Typography>
-    );
+      </n-typography>
+    ));
 
-    expect(getByTestId('truncated')).toBeInTheDocument();
+    expect(screen.getByShadowText('truncated')).toBeInTheDocument();
   });
 });

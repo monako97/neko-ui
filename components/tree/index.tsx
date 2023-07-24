@@ -17,78 +17,6 @@ import schema from '../from-schema';
 import { baseStyle } from '../theme';
 import type { BasicConfig, CustomElement } from '../index';
 
-const sizeCnt = {
-  small: 6,
-  normal: 8,
-  large: 10,
-};
-
-const path = Symbol('path');
-const pathEnd = Symbol('path-end');
-
-function countLineLen(tree: TreeData[], depth = 0) {
-  const lastIdx = tree.length - 1;
-  const last = tree[lastIdx];
-  const frist = tree[0];
-  let line: string[] = [];
-
-  for (let i = 0, len = tree.length; i < len; i++) {
-    const item = tree[i],
-      isLast = i === lastIdx;
-
-    if (i === 0 || isLast) {
-      item[path] = frist.key + (tree.length === 1 ? '' : `>${last.key}`);
-      if (isLast) {
-        item[pathEnd] = '';
-      }
-      line.push(item[path]);
-    }
-    if (item.children) {
-      line = line.concat(countLineLen(item.children, depth + 1));
-    }
-  }
-  return line;
-}
-
-function parseTree(str: string): TreeData[] {
-  const depthRegex = /[^\s|`│├└]/;
-  const lines = str.trim().split('\n');
-  const stack: TreeStack[] = [{ title: lines[0], key: lines[0] }];
-
-  for (let i = 1; i < lines.length; i++) {
-    const depth = lines[i].search(depthRegex);
-
-    if (depth === -1) {
-      continue;
-    }
-    const node: Partial<TreeData> = {
-      title: lines[i].slice(depth + 3),
-      depth,
-    };
-
-    while (stack.length && depth <= (stack[stack.length - 1].depth || 0)) {
-      stack.pop();
-    }
-    if (!stack.length) {
-      return [];
-    }
-    const parent = stack[stack.length - 1];
-
-    if (!parent.children) {
-      parent.children = [];
-    }
-    node.key = `${parent.key}-${node.title}-${depth}-${i}`;
-    parent.children.push(node as TreeData);
-    stack.push(node as TreeData);
-  }
-
-  return [stack[0]];
-}
-
-// type ArrayElementType<T extends unknown[] | unknown> = T extends (infer U)[] ? U : T;
-// eslint-disable-next-line no-unused-vars
-type OnRowClick = (e: MouseEvent, key: string, item: TreeData) => void;
-
 export interface TreeBaseProp {
   /** 自定义类名 */
   class?: string;
@@ -107,11 +35,10 @@ export interface TreeBaseProp {
    */
   direction?: 'rtl' | 'ltr';
   /** 点击行时的回调函数 */
-  onRowClick?: OnRowClick;
+  onRowClick?: (e: MouseEvent, key: string, item: TreeData) => void;
   /** 双击行时的回调函数 */
-  onRowDoubleClick?: OnRowClick;
+  onRowDoubleClick?: (e: MouseEvent, key: string, item: TreeData) => void;
   /** 自定义渲染行 */
-  // eslint-disable-next-line no-unused-vars
   renderRow?: (item: TreeData, title: JSXElement, subTitle?: JSXElement) => JSXElement[];
 }
 
@@ -196,6 +123,12 @@ function Tree(
     | TreeMultipleStringProps
     | TreeStringProps,
 ) {
+  const sizeCnt = {
+    small: 6,
+    normal: 8,
+    large: 10,
+  };
+
   let el: HTMLUListElement | undefined;
   const [lines, setLines] = createSignal<string[]>([]);
   const [treeData, setTreeData] = createSignal<TreeData[]>([]);
@@ -203,6 +136,68 @@ function Tree(
   const current = createMemo(() =>
     props.value ? (Array.isArray(props.value) ? props.value : [props.value]) : [],
   );
+
+  const path = Symbol('path');
+  const pathEnd = Symbol('path-end');
+
+  function countLineLen(tree: TreeData[], depth = 0) {
+    const lastIdx = tree.length - 1;
+    const last = tree[lastIdx];
+    const frist = tree[0];
+    let line: string[] = [];
+
+    for (let i = 0, len = tree.length; i < len; i++) {
+      const item = tree[i],
+        isLast = i === lastIdx;
+
+      if (i === 0 || isLast) {
+        item[path] = frist.key + (tree.length === 1 ? '' : `>${last.key}`);
+        if (isLast) {
+          item[pathEnd] = '';
+        }
+        line.push(item[path]);
+      }
+      if (item.children) {
+        line = line.concat(countLineLen(item.children, depth + 1));
+      }
+    }
+    return line;
+  }
+
+  function parseTree(str: string): TreeData[] {
+    const depthRegex = /[^\s|`│├└]/;
+    const rows = str.trim().split('\n');
+    const stack: TreeStack[] = [{ title: rows[0], key: rows[0] }];
+
+    for (let i = 1; i < rows.length; i++) {
+      const depth = rows[i].search(depthRegex);
+
+      if (depth === -1) {
+        continue;
+      }
+      const node: Partial<TreeData> = {
+        title: rows[i].slice(depth + 3),
+        depth,
+      };
+
+      while (stack.length && depth <= (stack[stack.length - 1].depth || 0)) {
+        stack.pop();
+      }
+      if (!stack.length) {
+        return [];
+      }
+      const parent = stack[stack.length - 1];
+
+      if (!parent.children) {
+        parent.children = [];
+      }
+      node.key = `${parent.key}-${node.title}-${depth}-${i}`;
+      parent.children.push(node as TreeData);
+      stack.push(node as TreeData);
+    }
+
+    return [stack[0]];
+  }
 
   function handleChange(key: string) {
     if (!props.readonly && isFunction(props.onChange)) {
@@ -360,8 +355,6 @@ export interface TreeData<T = string> {
   description?: string;
   /** 子项 */
   children?: TreeData<T>[];
-  [path]?: string;
-  [pathEnd]?: string;
   [key: string | number | symbol]:
     | T
     | string

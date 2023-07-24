@@ -1,30 +1,19 @@
-import React from 'react';
-import { render, screen, fireEvent, act } from '@testing-library/react';
-import { ColorPicker } from 'neko-ui';
+import { fireEvent, render, waitFor } from '@solidjs/testing-library';
 
-/**
- * @jest-environment jsdom
- */
-describe('test ColorPicker', () => {
+describe('ColorPicker', () => {
   it('normal', async () => {
-    const testId = 'ColorPicker-test-id';
+    const { getByTestId } = render(() => (
+      <n-color-picker data-testid="ColorPicker" popup-class="ColorPicker-overlay" size="small" />
+    ));
 
-    render(<ColorPicker data-testid={testId} popupClassName="ColorPicker-overlay" size="small" />);
-
-    await act(async () => {
-      fireEvent.click(screen.getByTestId(testId));
+    await waitFor(async () => {
+      fireEvent.click(getByTestId('ColorPicker'));
     });
-    await act(async () => {
-      fireEvent.click(document.body);
+    await waitFor(async () => {
+      fireEvent.click(document.body.firstChild!);
     });
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    fireEvent.animationEnd(document.querySelector('.ColorPicker-overlay')!);
   });
   it('size', () => {
-    const testId = 'ColorPicker-size-test-id';
-
-    render(<ColorPicker data-testid={testId} size="small" />);
-
-    // expect(screen.getByTestId(testId).className.includes('-color-small')).toBe(true);
+    render(() => <n-color-picker data-testid="ColorPicker" size="small" />);
   });
 });

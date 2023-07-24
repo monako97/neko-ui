@@ -1,11 +1,7 @@
-import React, { useState } from 'react';
-import { render, fireEvent, waitFor } from '@testing-library/react';
-import { Tree } from 'neko-ui';
+import { fireEvent, render, waitFor } from '@solidjs/testing-library';
+import { screen } from 'shadow-dom-testing-library';
 
-/**
- * @jest-environment jsdom
- */
-describe('test Tree', () => {
+describe('Tree', () => {
   const data = [
     {
       title: '文件名称',
@@ -48,59 +44,32 @@ describe('test Tree', () => {
   it('normal', async () => {
     const change = jest.fn();
     const onRowClick = jest.fn();
-    const Demo = () => {
-      const [val, setVal] = useState<string[]>([]);
 
-      return (
-        <Tree
-          value={val}
-          multiple
-          onRowClick={onRowClick}
-          data={data}
-          onChange={(v: string[]) => {
-            setVal(v);
-            change();
-          }}
-        />
-      );
-    };
-    const { getByText } = render(<Demo />);
+    render(() => (
+      <n-tree value={[]} multiple={true} onRowClick={onRowClick} data={data} onChange={change} />
+    ));
 
-    fireEvent.click(getByText('文件名称'));
-    fireEvent.click(getByText('文件名称'));
+    fireEvent.click(screen.getByShadowText('文件名称'));
+    fireEvent.click(screen.getByShadowText('文件名称'));
     expect(onRowClick).toHaveBeenCalled();
     expect(change).toHaveBeenCalled();
   });
 
   it('toggle', async () => {
     const onRowDoubleClick = jest.fn();
-    const Demo = () => {
-      const [val, setVal] = useState<string>();
 
-      return (
-        <Tree
-          value={val}
-          toggle
-          onRowDoubleClick={onRowDoubleClick}
-          data={data}
-          onChange={(v: string) => {
-            setVal(v);
-          }}
-        />
-      );
-    };
-    const { getByText } = render(<Demo />);
+    render(() => <n-tree toggle={true} onRowDoubleClick={onRowDoubleClick} data={data} />);
 
-    fireEvent.click(getByText('是否有效'));
-    fireEvent.dblClick(getByText('是否有效'));
-    fireEvent.click(getByText('是否有效'));
+    fireEvent.click(screen.getByShadowText('是否有效'));
+    fireEvent.dblClick(screen.getByShadowText('是否有效'));
+    fireEvent.click(screen.getByShadowText('是否有效'));
     expect(onRowDoubleClick).toHaveBeenCalled();
   });
 
   it('one item', async () => {
-    render(
+    render(() => (
       <>
-        <Tree
+        <n-tree
           data={[
             {
               title: 'oneb',
@@ -118,7 +87,7 @@ describe('test Tree', () => {
             },
           ]}
         />
-        <Tree
+        <n-tree
           data={[
             {
               title: 'one',
@@ -126,7 +95,7 @@ describe('test Tree', () => {
             },
           ]}
         />
-        <Tree
+        <n-tree
           data={[
             {
               title: 'one11',
@@ -144,23 +113,22 @@ describe('test Tree', () => {
             },
           ]}
         />
-      </>,
-    );
+      </>
+    ));
   });
   it('readonly', async () => {
-    let val: string | undefined = 'a';
+    const val: string | undefined = 'a';
 
-    const { getByText } = render(
-      <Tree value={val} data={data} readonly onChange={(v: string) => (val = v)} direction="rtl" />,
-    );
+    render(() => <n-tree value={val} data={data} readonly={true} direction="rtl" />);
 
-    fireEvent.click(getByText('编号'));
-    await waitFor(() => getByText('编号'));
+    fireEvent.click(screen.getByShadowText('编号'));
+    await waitFor(() => screen.getByShadowText('编号'));
     expect(val).toEqual('a');
   });
   it('fromSchema', async () => {
-    const { getByText } = render(
-      <Tree
+    render(() => (
+      <n-tree
+        from-schema={true}
         fromSchema
         data={{
           $schema: 'http://json-schema.org/draft-07/schema',
@@ -189,14 +157,14 @@ describe('test Tree', () => {
             },
           },
         }}
-      />,
-    );
+      />
+    ));
 
-    fireEvent.click(getByText('works'));
+    fireEvent.click(screen.getByShadowText('works'));
   });
   it('fromString', async () => {
-    const { getAllByText } = render(
-      <Tree
+    render(() => (
+      <n-tree
         data={`root_folder/
     |-- components
     |   |-- index.ts
@@ -230,13 +198,13 @@ describe('test Tree', () => {
     |-- tsconfig.json
     \`-- typings
         \`-- typings.d.ts`}
-      />,
-    );
+      />
+    ));
 
-    expect(getAllByText('wave-circle').length).toBe(3);
+    expect(screen.getAllByShadowText('wave-circle').length).toBe(3);
   });
   it('Invalid file tree structure', async () => {
-    render(<Tree data={`\n/\n/`} />);
-    render(<Tree data={`\n/\n||\n`} size="large" />);
+    render(() => <n-tree data={'\n/\n/'} />);
+    render(() => <n-tree data={'\n/\n||\n'} size="large" />);
   });
 });

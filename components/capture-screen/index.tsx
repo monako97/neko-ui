@@ -1,4 +1,5 @@
 import {
+  type JSX,
   Show,
   createComponent,
   createEffect,
@@ -22,7 +23,7 @@ declare interface MediaRecorderDataAvailableEvent extends Event {
   data: any;
 }
 
-export interface CaptureScreenProps {
+export interface CaptureScreenProps extends JSX.ButtonHTMLAttributes<HTMLDivElement> {
   /** 自定义类名 */
   class?: string;
   /** 自定义样式表 */
@@ -50,7 +51,7 @@ export interface CaptureScreenProps {
   /** 录制中按钮文字 */
   recorderingText?: string;
   /** 录制错误回调方法 */
-  onErrorRecorder?: MediaRecorder['onerror'];
+  onErrorRecorder?: (e: Event) => void;
   /** 停止录制回调方法 */
   onStopRecorder?: () => void;
   /** 开始录制回调方法 */
@@ -123,6 +124,8 @@ function CaptureScreen(_: CaptureScreenProps) {
     'onErrorCapture',
     'onSaveRecorder',
     'class',
+    'ref',
+    'children',
   ]);
   let videoElem: HTMLVideoElement | undefined;
   const chunks: Blob[] = [];
@@ -351,7 +354,7 @@ customElement(
       {
         onErrorRecorder(e: Event) {
           el.dispatchEvent(
-            new CustomEvent('recordererror', {
+            new CustomEvent('errorrecorder', {
               detail: e,
             }),
           );

@@ -68,12 +68,17 @@ export const style = css`
     color: var(--btn-color);
     background-color: var(--btn-bg);
     outline-offset: 4px;
+    gap: 3px;
     line-height: 1;
     cursor: pointer;
     transition-property: color, background-color, border-color, width, height, transform;
     touch-action: manipulation;
     box-sizing: border-box;
     user-select: none;
+
+    &:has(.icon) {
+      padding: 4px 10px;
+    }
 
     &:focus:not(.disabled) {
       border-color: var(--btn-hover-color);
@@ -103,23 +108,33 @@ export const style = css`
         color: var(--btn-active-color);
       }
     }
-  }
 
-  .normal {
-    --btn-size: 32px;
-  }
+    &.normal {
+      --btn-size: 32px;
+    }
 
-  .small {
-    --btn-size: 24px;
+    &.small {
+      --btn-size: 24px;
 
-    padding: 0 7px;
-    font-size: var(--font-size-xs);
-  }
+      gap: 2px;
+      padding: 0 7px;
+      font-size: var(--font-size-xs);
 
-  .large {
-    --btn-size: 40px;
+      &:has(.icon) {
+        padding: 4px 5px;
+      }
+    }
 
-    font-size: var(--font-size-lg);
+    &.large {
+      --btn-size: 40px;
+
+      font-size: var(--font-size-lg);
+      gap: 4px;
+
+      &:has(.icon) {
+        padding: 4px 12px;
+      }
+    }
   }
 
   .default:not(.disabled) {

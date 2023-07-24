@@ -33,7 +33,8 @@ export interface CheckboxBoolProps extends CheckboxBaseProps {
   defaultValue?: boolean;
   /** 值修改时的回调方法 */
   // eslint-disable-next-line no-unused-vars
-  onChange: (val: boolean) => void;
+  onChange?: (val: boolean) => void;
+  checkAll?: never;
   options?: never;
 }
 /** 通过数据渲染一组复选框按钮的API */
@@ -53,7 +54,7 @@ export interface CheckboxGroupProps extends CheckboxBaseProps {
   options?: (CheckboxOption | string)[];
   /** 值修改时的回调方法 */
   // eslint-disable-next-line no-unused-vars
-  onChange: (val: (string | number)[]) => void;
+  onChange?: (val: (string | number)[]) => void;
 }
 /** 复选框选项
  * @since 1.0.0
@@ -151,7 +152,7 @@ function Checkbox(props: CheckboxBoolProps | CheckboxGroupProps) {
       if (typeof props.value === 'undefined') {
         setValue(newVal);
       }
-      props.onChange((typeof props.options === 'undefined' ? !!newVal[0] : newVal) as never);
+      props.onChange?.((typeof props.options === 'undefined' ? !!newVal[0] : newVal) as never);
     }
   }
   function onKeyUp(item: CheckboxOption, e: KeyboardEvent) {

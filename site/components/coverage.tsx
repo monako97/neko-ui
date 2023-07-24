@@ -1,6 +1,6 @@
-import { For } from 'solid-js';
+import { For, createMemo } from 'solid-js';
 import { css, cx } from '@moneko/css';
-import { projectBasicInfo } from '@moneko/solid-js';
+import { getPathName, projectBasicInfo, useLocation } from '@moneko/solid-js';
 import { type CustomElement, baseStyle } from 'neko-ui';
 import { customElement } from 'solid-element';
 
@@ -77,18 +77,22 @@ const style = css`
 
 type CoverageType = 'statements' | 'conditionals' | 'methods';
 
-const obj: Record<CoverageType, string> = {
-  statements: '语句覆盖率',
-  conditionals: '条件覆盖率',
-  methods: '函数覆盖率',
-};
-const keys = Object.keys(obj);
-
-function getNum(num: number) {
-  return typeof num === 'number' && !isNaN(num) ? num : '-';
-}
 function Coverage() {
-  const coverage = projectBasicInfo.coverage[`components.${location.pathname.substring(1)}`] || {};
+  const location = useLocation();
+  const coverage = createMemo(
+    () =>
+      projectBasicInfo.coverage[getPathName(location) || projectBasicInfo.programInfo.name] || {},
+  );
+
+  function getNum(num: number) {
+    return typeof num === 'number' && !isNaN(num) ? num : '-';
+  }
+  const obj: Record<CoverageType, string> = {
+    statements: '语句覆盖率',
+    conditionals: '条件覆盖率',
+    methods: '函数覆盖率',
+  };
+  const keys = Object.keys(obj);
 
   return (
     <>
@@ -99,18 +103,21 @@ function Coverage() {
       <div class="site-coverage">
         <For each={keys}>
           {(k) => {
-            const c = parseFloat(coverage[k as never]);
-            const cd = parseFloat(coverage[`covered${k}` as never]),
-              round = Math.round,
-              num = c === 0 && cd === 0 ? 100 : round((cd / c) * 100) || 0;
-            const stat = num < 50 ? 'error' : num < 80 ? 'warning' : 'success';
+            const c = createMemo(() => parseFloat(coverage()[k as never]));
+            const cd = createMemo(() => parseFloat(coverage()[`covered${k}` as never]));
+            const num = createMemo(() =>
+              c() === 0 && cd() === 0 ? 100 : Math.round((cd() / c()) * 100) || 0,
+            );
+            const stat = createMemo(() =>
+              num() < 50 ? 'error' : num() < 80 ? 'warning' : 'success',
+            );
 
             return (
-              <div class={cx('site-coverage-body', `site-coverage-${stat}`)}>
+              <div class={cx('site-coverage-body', `site-coverage-${stat()}`)}>
                 <div class="site-coverage-label">{obj[k as CoverageType]}</div>
                 <div class="site-coverage-value">
-                  <div>{num}%</div>
-                  <div>{`${getNum(c)} / ${getNum(cd)}`}</div>
+                  <div>{num()}%</div>
+                  <div>{`${getNum(c())} / ${getNum(cd())}`}</div>
                 </div>
               </div>
             );

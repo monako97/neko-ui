@@ -1,60 +1,65 @@
-import React from 'react';
-import { render, screen, fireEvent, waitFor } from '@testing-library/react';
-import { Button } from 'neko-ui';
+import { fireEvent, render } from '@solidjs/testing-library';
+import { screen } from 'shadow-dom-testing-library';
 
-/**
- * @jest-environment jsdom
- */
-describe('test Button', () => {
-  afterEach(() => {
-    jest.useFakeTimers();
-    jest.clearAllTimers();
-  });
+describe('Avatar', () => {
   it('normal', () => {
-    render(
-      <Button data-testid="btn" infinite>
-        cascacsa
-      </Button>
-    );
+    render(() => (
+      <n-button data-testid="btn" icon={() => <span>icon</span>}>
+        button
+      </n-button>
+    ));
 
     expect(screen.getByTestId('btn')).toBeInTheDocument();
     fireEvent.click(screen.getByTestId('btn'));
   });
   it('args', () => {
-    render(
-      <Button type="primary" link circle ghost flat dashed fill infinite data-testid="btn">
-        type ghost circle dashed flat fill infinite
-      </Button>
-    );
+    render(() => (
+      <n-button
+        type="primary"
+        link={true}
+        circle={true}
+        ghost={true}
+        flat={true}
+        dashed={true}
+        block={true}
+        fill={true}
+        danger={true}
+        icon={<span>icon</span>}
+        data-testid="btn"
+      >
+        button
+      </n-button>
+    ));
   });
   it('event', async () => {
     const click = jest.fn();
 
-    render(
-      <Button onClick={click} data-testid="btn">
-        cascacsa
-      </Button>
-    );
+    render(() => (
+      <n-button onClick={click} data-testid="btn">
+        button
+      </n-button>
+    ));
+    const btn = screen.getByTestId('btn').shadowRoot?.querySelector<Element>('button');
 
-    fireEvent.click(screen.getByTestId('btn'));
-    fireEvent.animationEnd(screen.getByTestId('btn'));
+    expect(btn).toBeInTheDocument();
+    fireEvent.click(btn!);
+    fireEvent.animationEnd(btn!);
 
-    jest.advanceTimersByTime(1000);
-    await waitFor(() => screen.getByTestId('btn'));
     expect(click).toHaveBeenCalled();
   });
   it('disabled', async () => {
     const click = jest.fn();
 
-    render(
-      <Button onClick={click} disabled data-testid="btn">
-        cascacsa
-      </Button>
-    );
+    render(() => (
+      <n-button onClick={click} disabled={true} data-testid="btn">
+        button
+      </n-button>
+    ));
 
-    fireEvent.click(screen.getByTestId('btn'));
+    const btn = screen.getByTestId('btn').shadowRoot?.querySelector<Element>('button');
 
-    await waitFor(() => screen.getByTestId('btn'));
+    expect(btn).toBeInTheDocument();
+    fireEvent.click(btn!);
     expect(click).not.toHaveBeenCalled();
   });
 });
