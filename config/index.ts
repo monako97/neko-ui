@@ -2,6 +2,8 @@ import frontmatter from 'remark-frontmatter';
 import type { ConfigType } from '@moneko/core';
 
 const conf: Partial<ConfigType<'swc'>> = {
+  routeBaseName: '/neko-ui',
+  publicPath: '/neko-ui/',
   htmlPluginOption: {
     favicon: './site/assets/images/favicon.ico',
     tags: [

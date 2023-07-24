@@ -79,10 +79,14 @@ type CoverageType = 'statements' | 'conditionals' | 'methods';
 
 function Coverage() {
   const location = useLocation();
-  const coverage = createMemo(
-    () =>
-      projectBasicInfo.coverage[getPathName(location) || projectBasicInfo.programInfo.name] || {},
-  );
+  const coverage = createMemo(() => {
+    const name = getPathName(location);
+
+    return (
+      projectBasicInfo.coverage[name ? `components.${name}` : projectBasicInfo.programInfo.name] ||
+      {}
+    );
+  });
 
   function getNum(num: number) {
     return typeof num === 'number' && !isNaN(num) ? num : '-';
