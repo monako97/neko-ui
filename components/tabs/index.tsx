@@ -49,12 +49,15 @@ export interface TabsProps {
   // eslint-disable-next-line no-unused-vars
   onEdit?: (type: 'add' | 'remove', item: TabOption, e: Event) => void;
   /** 给标签页左右添加的附加内容 */
-  extra?: { left?: JSXElement; right?: JSXElement };
+  extra?: {
+    left?: JSXElement | (() => JSXElement | (() => JSXElement));
+    right?: JSXElement | (() => JSXElement | (() => JSXElement));
+  };
 }
 
 export interface TabOption extends Omit<BaseOption, 'options'> {
   /** 内容 */
-  content?: JSXElement;
+  content?: JSXElement | (() => JSXElement | (() => JSXElement));
   /** 标签可关闭 */
   closable?: boolean;
 }
@@ -215,6 +218,17 @@ function Tabs(props: TabsProps) {
     setAni('slide-in');
     return current()?.content;
   });
+  const left = createMemo(() =>
+    isFunction(props.extra?.left) ? (props.extra!.left() as JSXElement) : props.extra?.left,
+  );
+  const right = createMemo(() =>
+    isFunction(props.extra?.right) ? (props.extra!.right() as JSXElement) : props.extra?.right,
+  );
+  const content = createMemo(() => {
+    const _content = current()?.content;
+
+    return isFunction(_content) ? (_content() as JSXElement) : _content;
+  });
 
   return (
     <>
@@ -231,7 +245,7 @@ function Tabs(props: TabsProps) {
         onWheel={handleWheel}
         aria-disabled={props.disabled}
       >
-        <Show when={props.extra?.left}>{props.extra!.left}</Show>
+        <Show when={left()}>{left()}</Show>
         <div
           ref={wrapRef}
           class={cx('items', wrap().left && 'warp-left', wrap().right && 'warp-right')}
@@ -282,7 +296,7 @@ function Tabs(props: TabsProps) {
             ＋
           </n-button>
         </Show>
-        <Show when={props.extra?.right}>{props.extra!.right}</Show>
+        <Show when={right()}>{right()}</Show>
       </div>
       <Show when={current()?.content}>
         <div
@@ -291,7 +305,7 @@ function Tabs(props: TabsProps) {
             setAni('');
           }}
         >
-          {current()!.content}
+          {content()}
         </div>
       </Show>
     </>

@@ -10,7 +10,7 @@ import {
   onCleanup,
   onMount,
 } from 'solid-js';
-import { getScrollTop, isUndefined, passiveSupported, throttle } from '@moneko/common';
+import { getScrollTop, isUndefined, throttle } from '@moneko/common';
 import { css, cx } from '@moneko/css';
 import marked from 'marked-completed';
 import { customElement } from 'solid-element';
@@ -59,15 +59,14 @@ const toggleAnchor = (anchor: HTMLAnchorElement) => {
     a.classList.remove('active');
   });
   anchor.parentElement?.classList.add('active');
-  const box = anchor.offsetParent?.getBoundingClientRect();
-  const anchorRect = anchor.getBoundingClientRect();
+  const box = anchor.offsetParent as HTMLElement;
 
   if (box) {
     let scrollLogicalPosition: ScrollLogicalPosition | null = null;
 
-    if (box.top > anchorRect.top) {
+    if (box.offsetTop > anchor.offsetTop) {
       scrollLogicalPosition = 'nearest';
-    } else if (box.height + box.top < anchorRect.top + anchorRect.height) {
+    } else if (box.offsetHeight + box.offsetTop < anchor.offsetTop + anchor.offsetHeight) {
       scrollLogicalPosition = 'nearest';
     }
     if (scrollLogicalPosition !== null) {
@@ -78,15 +77,6 @@ const toggleAnchor = (anchor: HTMLAnchorElement) => {
     }
   }
 };
-const tocWheel = throttle((e: Event) => {
-  e.preventDefault();
-  const { currentTarget, deltaY } = e as unknown as WheelEvent;
-  const targetDom = currentTarget as HTMLElement;
-
-  if (targetDom?.classList.contains('n-md-toc')) {
-    targetDom.scrollTop = targetDom.scrollTop + deltaY;
-  }
-}, 200);
 
 function MD(_props: MdProps) {
   const props = mergeProps(
@@ -107,10 +97,12 @@ function MD(_props: MdProps) {
     e.preventDefault();
     e.stopPropagation();
     toggleAnchor(e.target as HTMLAnchorElement);
-    ref?.querySelector(decodeURIComponent((e.target as HTMLAnchorElement)?.hash))?.scrollIntoView({
-      behavior: 'smooth',
-      block: 'nearest',
-    });
+    ref
+      ?.querySelector(decodeURIComponent((e.target as HTMLAnchorElement)?.hash))
+      ?.scrollIntoView?.({
+        behavior: 'smooth',
+        block: 'nearest',
+      });
   }
   const htmlString = createMemo(() => {
     if (!props.text) {
@@ -121,23 +113,6 @@ function MD(_props: MdProps) {
       langToolbar: props.tools,
     });
   });
-  const handleWheel = (event: WheelEvent) => {
-    const offsetParent = (event.target as HTMLElement).offsetParent;
-
-    if (!offsetParent || offsetParent.tagName !== 'PRE') {
-      return;
-    }
-    const rows = offsetParent?.getElementsByClassName('line-numbers-rows');
-
-    if (rows?.length) {
-      const codeTag: HTMLElement = offsetParent.getElementsByTagName('code')[0];
-
-      if (codeTag.scrollHeight - codeTag.offsetHeight && rows[0].scrollTop !== codeTag.scrollTop) {
-        // 可滚动高度大于0
-        rows[0].scrollTop = codeTag.scrollTop;
-      }
-    }
-  };
   const handleScroll = throttle((e: Event) => {
     if (anchors.length) {
       const el = e.target as HTMLElement;
@@ -171,12 +146,9 @@ function MD(_props: MdProps) {
         });
         (e as HTMLAnchorElement).onclick = handleAnchor;
       });
-
-      ref.querySelector('ol.n-md-toc')?.addEventListener('wheel', tocWheel, passiveSupported);
     }
   });
   onCleanup(() => {
-    ref?.querySelector('ol.n-md-toc')?.removeEventListener('wheel', tocWheel, passiveSupported);
     props.getAnchorContainer?.().removeEventListener('scroll', handleScroll);
   });
 
@@ -202,7 +174,6 @@ function MD(_props: MdProps) {
             part="box"
             // eslint-disable-next-line solid/no-innerhtml
             innerHTML={htmlString()}
-            onWheel={handleWheel}
           />
         </Match>
       </Switch>

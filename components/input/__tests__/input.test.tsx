@@ -1,8 +1,6 @@
 import { fireEvent, render } from '@solidjs/testing-library';
 import { screen } from 'shadow-dom-testing-library';
-/**
- * @jest-environment jsdom
- */
+
 describe('test Input', () => {
   it('normal', () => {
     const { getByTestId } = render(() => <n-input data-testid="btn" />);

@@ -105,14 +105,12 @@ function Carousel(_props: CarouselProps) {
     setRight(_next);
   });
   createEffect(() => {
-    if (playTimer) {
-      clearTimeout(playTimer);
-    }
+    clearInterval(playTimer);
     const autoplay = Number(props.autoplay);
 
     if (autoplay > 0) {
       playTimer = setInterval(() => {
-        if (autoplay < 1 && playTimer) {
+        if (autoplay < 1) {
           clearInterval(playTimer);
         }
         handleNext();
@@ -121,9 +119,7 @@ function Carousel(_props: CarouselProps) {
   });
 
   onCleanup(() => {
-    if (playTimer) {
-      clearTimeout(playTimer);
-    }
+    clearInterval(playTimer);
   });
   const header = createMemo(() =>
     isFunction(props.header) ? props.header(offset()) : props.header,

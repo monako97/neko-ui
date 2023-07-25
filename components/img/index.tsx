@@ -36,11 +36,16 @@ export type ImgElement = CustomElement<ImgProps>;
 
 function Img(props: ImgProps) {
   const [open, setOpen] = createSignal<boolean | null>(null);
-  const [posi, setPosi] = createSignal<DOMRect>();
+  const [posi, setPosi] = createSignal({
+    width: 0,
+    height: 0,
+    left: 0,
+    top: 0,
+  });
   let portal: HTMLDivElement | undefined;
 
   function getCss() {
-    const { width = 0, height = 0, top = 0, left = 0 } = posi() || {};
+    const { width, height, top, left } = posi();
 
     return `.portal { --img: url(${props.src});inline-size: ${width}px; block-size: ${height}px;inset-block-start: ${top}px;inset-inline-start: ${left}px;}`;
   }
@@ -48,9 +53,18 @@ function Img(props: ImgProps) {
     setOpen(visi);
     props.onOpenChange?.(visi);
   }
-  function close(e: Event) {
+  function preventDefault(e: Event) {
     e.preventDefault();
-    openChange(false);
+  }
+  function close(e: KeyboardEvent | Event) {
+    preventDefault(e);
+    if (e.type === 'keydown') {
+      if (props.escClosable && (e as KeyboardEvent).key === 'Escape') {
+        openChange(false);
+      }
+    } else {
+      openChange(false);
+    }
   }
   function handleDestroy() {
     if (open() === false) {
@@ -59,18 +73,15 @@ function Img(props: ImgProps) {
   }
   function handleOpen(e: Event) {
     e.stopPropagation();
-    e.preventDefault();
+    preventDefault(e);
     setPosi((e.target as HTMLImageElement)?.getBoundingClientRect());
     openChange(true);
   }
   function portalClick(e: Event) {
-    e.preventDefault();
+    preventDefault(e);
     if (props.maskClosable && e.target === portal) {
       openChange(false);
     }
-  }
-  function handleWheel(e: WheelEvent | Event) {
-    e.preventDefault();
   }
 
   createEffect(() => {
@@ -83,11 +94,11 @@ function Img(props: ImgProps) {
       const op = open();
 
       if (op === true) {
-        document.documentElement.addEventListener('mousewheel', handleWheel, {
+        document.documentElement.addEventListener('mousewheel', preventDefault, {
           passive: false,
         });
       } else {
-        document.documentElement.removeEventListener('mousewheel', handleWheel);
+        document.documentElement.removeEventListener('mousewheel', preventDefault);
       }
 
       if (op === true && props.escClosable) {

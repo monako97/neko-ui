@@ -17,22 +17,13 @@ import { cx } from '@moneko/css';
 import { customElement } from 'solid-element';
 import { style } from './style';
 import { FieldName } from '../basic-config';
-import Dropdown, { type DropdownProps, defaultProps } from '../dropdown';
+import Dropdown, {
+  type DropdownMultipleProps,
+  type DropdownProps,
+  defaultProps,
+} from '../dropdown';
 import getOptions from '../get-options';
 import type { CustomElement, MenuOption } from '..';
-
-export interface SelectProps extends Omit<DropdownProps, 'items' | 'children'> {
-  /** 标题 */
-  label?: JSXElement | (() => JSXElement);
-  /** 占位符 */
-  placeholder?: string;
-  /** 选项 */
-  options?: (MenuOption | string)[];
-  /** 前缀图标 */
-  prefixIcon?: JSXElement | (() => JSXElement);
-  /** 后缀图标 */
-  suffixIcon?: JSXElement | (() => JSXElement);
-}
 
 function Select(props: SelectProps) {
   const [local, other] = splitProps(props, [
@@ -67,13 +58,13 @@ function Select(props: SelectProps) {
 
       optKv[item[fieldDic.value]!] = item;
       if (Array.isArray(_options)) {
-        Object.assign(optKv, getKv(_options, fieldDic));
+        Object.assign(optKv, getKv(_options as MenuOption[], fieldDic));
       }
       const _children = item[fieldDic.children];
 
       optKv[item[fieldDic.value]!] = item;
       if (Array.isArray(_children)) {
-        Object.assign(optKv, getKv(_children, fieldDic));
+        Object.assign(optKv, getKv(_children as MenuOption[], fieldDic));
       }
     }
     return optKv;
@@ -182,16 +173,17 @@ function Select(props: SelectProps) {
     }
   });
   const prefix = createMemo(() =>
-    isFunction(local.prefixIcon) ? local.prefixIcon() : local.prefixIcon,
+    isFunction(local.prefixIcon) ? (local.prefixIcon() as JSXElement) : local.prefixIcon,
   );
-  const label = createMemo(() => (isFunction(local.label) ? local.label() : local.label));
+  const label = createMemo(() =>
+    isFunction(local.label) ? (local.label() as JSXElement) : local.label,
+  );
   const suffix = createMemo(() =>
-    isFunction(local.suffixIcon) ? local.suffixIcon() : local.suffixIcon,
+    isFunction(local.suffixIcon) ? (local.suffixIcon() as JSXElement) : local.suffixIcon,
   );
 
   return (
     <Dropdown
-      {...other}
       placement="left"
       css={style + x() + (local.css || '')}
       trigger="none"
@@ -200,6 +192,7 @@ function Select(props: SelectProps) {
       onChange={onChange}
       open={open()}
       onOpenChange={openChange}
+      {...other}
     >
       <div
         ref={ref}
@@ -266,15 +259,37 @@ function Select(props: SelectProps) {
   );
 }
 
-export type SelectElement = CustomElement<SelectProps & { defaultValue?: string | number }>;
-export type SelectMultipleElement = CustomElement<
-  Omit<SelectProps, 'onChange' | 'value' | 'defaultValue'> & {
-    value?: Array<string | number>;
-    defaultValue?: Array<string | number>;
-    // eslint-disable-next-line no-unused-vars
-    onChange?(key: Array<string | number>, item: MenuOption): void;
-  }
->;
+/** 通用API */
+interface SelectBaseProps {
+  /** 占位符 */
+  placeholder?: string;
+  /** 选项 */
+  options?: (MenuOption | string)[];
+  /** 标题 */
+  label?: JSXElement | (() => JSXElement | (() => JSXElement));
+  /** 前缀图标 */
+  prefixIcon?: JSXElement | (() => JSXElement | (() => JSXElement));
+  /** 后缀图标 */
+  suffixIcon?: JSXElement | (() => JSXElement | (() => JSXElement));
+}
+
+/** 单选 */
+export interface SelectProps extends Omit<DropdownProps, 'items' | 'children'>, SelectBaseProps {
+  /** 值 */
+  value?: string | number;
+}
+
+/** 多选 */
+export interface SelectMultipleProps
+  extends Omit<DropdownMultipleProps, 'items' | 'children'>,
+    SelectBaseProps {
+  /** 值
+   * @default []
+   */
+  value?: (string | number)[];
+}
+export type SelectElement = CustomElement<SelectProps>;
+export type SelectMultipleElement = CustomElement<SelectMultipleProps>;
 
 customElement(
   'n-select',

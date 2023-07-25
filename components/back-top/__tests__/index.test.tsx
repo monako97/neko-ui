@@ -1,5 +1,5 @@
 import { For } from 'solid-js';
-import { fireEvent, render, waitFor } from '@solidjs/testing-library';
+import { fireEvent, render } from '@solidjs/testing-library';
 import { screen } from 'shadow-dom-testing-library';
 
 describe('BackTop', () => {
@@ -15,43 +15,31 @@ describe('BackTop', () => {
       value: 100,
     });
     const data = new Array(40).fill(0);
-    const testid = 'box';
-    const backTopTestId = 'back-top';
 
-    const { getByTestId } = render(() => {
-      let box: HTMLDivElement | undefined;
-
+    render(() => {
       return (
-        <div
-          data-testid={testid}
-          ref={box}
-          style={{ height: '100px', overflow: 'auto', position: 'relative' }}
-        >
-          <div>
+        <>
+          <div data-testid="box">
             <For each={data}>
               {(_, i) => (
-                <p>
+                <div style={{ height: '100px' }}>
                   data
                   <br />
                   {i()}
-                </p>
+                </div>
               )}
             </For>
           </div>
-          <n-back-top data-testid={backTopTestId} visibility-height={200} target={() => box!} />
-        </div>
+          <n-back-top data-testid="back-top" visibility-height={200} target={() => document.body} />
+        </>
       );
     });
 
-    getByTestId(testid).scrollTo = jest.fn();
-    getByTestId(testid).scrollTop = 30;
+    document.body.style.height = '100px';
+    document.body.style.overflow = 'auto';
 
-    await waitFor(() => {
-      fireEvent.scroll(screen.getByTestId(testid));
-    });
-
-    // fireEvent.click(screen.getByShadowTestId(backTopTestId));
-    // fireEvent.scroll(screen.getByTestId(testid));
-    // fireEvent.animationEnd(screen.getByShadowTestId(backTopTestId));
+    fireEvent.scroll(document.body);
+    fireEvent.click(screen.getByTestId('back-top'));
+    // fireEvent.animationEnd(screen.getByTestId('back-top').shadowRoot?.querySelector('.back-top'));
   });
 });

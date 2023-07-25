@@ -91,7 +91,7 @@ function AvatarGroup(_props: AvatarGroupProps) {
     <>
       <style>
         {style}
-        {local.css || ''}
+        {css(local.css)}
       </style>
       <div {...other} class={cx('group', local.class)}>
         <For each={showAvatar()}>{(a) => <n-avatar {...a} size={local.size} />}</For>

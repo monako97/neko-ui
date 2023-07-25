@@ -273,7 +273,7 @@ export interface MenuMultipleProps extends BaseMenuProps {
 }
 
 /** 菜单选项 */
-export interface MenuOption extends BaseOption {
+export interface MenuOption extends Omit<BaseOption, 'children' | 'options'> {
   /** 图标 */
   icon?: JSXElement;
   /** 内置类型(状态) */
@@ -281,9 +281,9 @@ export interface MenuOption extends BaseOption {
   /** 自定义颜色 */
   color?: string;
   /** 子菜单 */
-  children?: MenuOption[];
+  children?: (string | MenuOption)[];
   /** 分组子选项 */
-  options?: MenuOption[];
+  options?: (string | MenuOption)[];
 }
 
 export type MenuElement = CustomElement<MenuProps>;

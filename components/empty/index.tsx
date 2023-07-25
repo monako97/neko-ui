@@ -1,7 +1,6 @@
-import type { JSX } from 'solid-js';
+import { type JSX, Show } from 'solid-js';
 import { css, cx } from '@moneko/css';
 import { customElement } from 'solid-element';
-import Typography from '../typography';
 import type { CustomElement } from '..';
 
 const style = css`
@@ -25,17 +24,29 @@ export interface EmptyProps extends JSX.HTMLAttributes<HTMLDivElement> {
   css?: string;
   /** 自定义类名 */
   class?: string;
+  /** 描述 */
+  label?: JSX.Element;
 }
 export type EmptyElement = CustomElement<EmptyProps>;
 
 function Empty(props: EmptyProps) {
   return (
     <>
-      <style>{style}</style>
+      <style>
+        {style}
+        {css(props.css)}
+      </style>
       <div class={cx('empty-container', props.class)}>
-        <Typography class="empty-label" type="secondary">
-          无数据
-        </Typography>
+        <Show
+          when={props.label}
+          fallback={
+            <n-typography class="empty-label" type="secondary">
+              无数据
+            </n-typography>
+          }
+        >
+          {props.label}
+        </Show>
       </div>
     </>
   );
@@ -47,6 +58,7 @@ customElement(
     class: undefined,
     css: undefined,
     style: undefined,
+    label: undefined,
   },
   Empty,
 );

@@ -110,7 +110,7 @@ function Code(props: CodeProps) {
         {baseStyle()}
         {prismCss()}
         {style}
-        {css(props.css || '')}
+        {css(props.css)}
       </style>
       <Show when={props.edit} fallback={pre()}>
         <div class={cx('n-editor', props.class)}>

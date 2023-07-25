@@ -2,6 +2,13 @@ import { fireEvent, render } from '@solidjs/testing-library';
 import { screen } from 'shadow-dom-testing-library';
 
 describe('ColorPalette', () => {
+  function portal(container: HTMLElement, selector: string) {
+    return (
+      container.parentElement!.lastElementChild!.shadowRoot!.querySelector(
+        'n-menu',
+      )! as unknown as HTMLElement
+    ).shadowRoot!.querySelector(selector)!;
+  }
   it('ColorPalette', () => {
     const { getByTestId } = render(() => <n-color-palette data-testid="palette" />);
 
@@ -47,47 +54,41 @@ describe('ColorPalette', () => {
   it('input change', () => {
     const testId = 'palette';
 
-    const { getByTestId } = render(() => <n-color-palette data-testid={'palette'} />);
-    const hexEl = getByTestId(testId).shadowRoot?.querySelectorAll<HTMLInputElement>('.input')[0];
+    const { container, getByTestId } = render(() => <n-color-palette data-testid={'palette'} />);
+    const hexEl = getByTestId(testId)
+      .shadowRoot?.querySelectorAll<HTMLInputElement>('.input')[0]!
+      .shadowRoot!.querySelector('input') as HTMLInputElement;
 
     expect(hexEl).toBeInTheDocument();
-    fireEvent.input(hexEl as HTMLInputElement, {
+    fireEvent.change(hexEl, {
       target: {
-        value: 101,
+        value: '101',
       },
     });
+    fireEvent.keyUp(hexEl, { key: 'Enter' });
+    fireEvent.blur(hexEl);
 
     getByTestId<HTMLInputElement>(testId).value = 'rgba(255,255,255,1)';
 
-    const [r, g, b, a] = getByTestId(testId).shadowRoot!.querySelectorAll(
-      'n-input-number',
-    ) as unknown as HTMLInputElement[];
+    getByTestId(testId)
+      .shadowRoot!.querySelectorAll('n-input-number')
+      .forEach((e, i) => {
+        fireEvent.input((e as HTMLElement).shadowRoot!.querySelector('input')!, {
+          target: {
+            value: i === 3 ? -0.1 : 101,
+          },
+        });
+        fireEvent.change((e as HTMLElement).shadowRoot!.querySelector('input')!, {
+          target: {
+            value: i === 3 ? -0.1 : 101,
+          },
+        });
+      }) as unknown as HTMLInputElement[];
 
-    expect(r).toBeInTheDocument();
-    expect(g).toBeInTheDocument();
-    expect(b).toBeInTheDocument();
-    expect(a).toBeInTheDocument();
+    const a = (
+      getByTestId(testId).shadowRoot!.querySelectorAll('n-input-number')[3]! as HTMLElement
+    ).shadowRoot!.querySelector('input')!;
 
-    fireEvent.change(r, {
-      target: {
-        value: 101,
-      },
-    });
-    fireEvent.input(r, {
-      target: {
-        value: 101,
-      },
-    });
-    fireEvent.input(g, {
-      target: {
-        value: 101,
-      },
-    });
-    fireEvent.input(b, {
-      target: {
-        value: 101,
-      },
-    });
     fireEvent.input(a, {
       target: {
         value: -0.1,
@@ -113,22 +114,17 @@ describe('ColorPalette', () => {
         value: 0.51,
       },
     });
-    fireEvent(
-      a,
-      new FakeMouseEvent('mousedown', {
-        bubbles: true,
-        cancelable: true,
-        offsetX: 1,
-      }),
+    fireEvent.mouseDown(getByTestId(testId).shadowRoot!.querySelector('.picker')!);
+    fireEvent.mouseMove(document.body, {
+      movementX: -100,
+    });
+    fireEvent.mouseUp(document.body);
+    fireEvent.mouseDown(
+      (
+        getByTestId(testId).shadowRoot!.querySelector('n-dropdown')! as unknown as HTMLElement
+      ).shadowRoot!.querySelector('.switch')!,
     );
-    fireEvent(
-      a,
-      new FakeMouseEvent('mousemove', {
-        bubbles: true,
-        cancelable: true,
-        movementX: -100,
-      }),
-    );
+    fireEvent.click(portal(container, '.item'));
     fireEvent.input(a, {
       target: {
         value: 'NAN',

@@ -3,7 +3,7 @@ import { type BaseOption, type BasicConfig, FieldName } from '..';
 function getOptions<T extends BaseOption = BaseOption>(
   list?: (T | string | number)[],
   fieldNames?: BasicConfig['fieldName'],
-): T[] {
+): (T & Record<string, unknown>)[] {
   if (!list) return [];
   return list.map((item, i) => {
     const { options, children, label, value } = Object.assign({}, FieldName, fieldNames);

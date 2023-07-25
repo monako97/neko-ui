@@ -338,7 +338,7 @@ function Popover(props: PopoverProps) {
       <style>
         {baseStyle()}
         {popoverCss}
-        {css(local.css || '')}
+        {css(local.css)}
       </style>
       <span ref={childRef} class={cx('popover', local.size, local.class)} {...childrenProps()}>
         {local.children}

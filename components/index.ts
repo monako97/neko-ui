@@ -53,7 +53,13 @@ export {
   type DropdownElement,
   type DropdownMultipleElement,
 } from './dropdown';
-export { default as Select, type SelectElement, type SelectMultipleElement } from './select';
+export {
+  default as Select,
+  type SelectElement,
+  type SelectProps,
+  type SelectMultipleElement,
+  type SelectMultipleProps,
+} from './select';
 export {
   default as ColorPalette,
   type ColorPaletteProps,

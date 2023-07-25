@@ -9,7 +9,7 @@ import {
   splitProps,
 } from 'solid-js';
 import { isFunction } from '@moneko/common';
-import { cx } from '@moneko/css';
+import { css, cx } from '@moneko/css';
 import { customElement } from 'solid-element';
 import { Dynamic } from 'solid-js/web';
 import { style } from './style';
@@ -97,7 +97,7 @@ function Button(_: ButtonProps) {
       <style>
         {baseStyle()}
         {style}
-        {local.css || ''}
+        {css(local.css)}
       </style>
       <Dynamic
         ref={ref}

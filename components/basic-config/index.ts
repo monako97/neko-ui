@@ -56,7 +56,7 @@ export interface BaseOption {
    */
   status?: Status;
   /** 分组子选项 */
-  options?: BaseOption[];
+  options?: (BaseOption | string)[];
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   [key: string]: any;
 }
