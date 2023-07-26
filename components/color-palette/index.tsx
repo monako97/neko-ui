@@ -43,7 +43,6 @@ export interface ColorPaletteProps extends Omit<JSX.HTMLAttributes<HTMLDivElemen
    */
   defaultValue?: string;
   /** 变更时触发的方法 */
-  // eslint-disable-next-line no-unused-vars
   onChange?: (color: string) => void;
 }
 export type ColorPaletteElement = CustomElement<ColorPaletteProps>;
@@ -76,10 +75,7 @@ function ColorPalette(_: ColorPaletteProps) {
     size: 'small',
     css: '.input{text-align:center;font-size:12px;}',
   };
-  const [hsva, setHsva] = createSignal<ColorParse<HSVA>>(
-    // eslint-disable-next-line solid/reactivity
-    colorParse(props.value || props.defaultValue),
-  );
+  const [hsva, setHsva] = createSignal<ColorParse<HSVA>>(colorParse(props.defaultValue));
   const [drag, setDrag] = createSignal(false);
 
   type HsvaToColorVoid = 'toHexa' | 'toRgba' | 'toHsla' | 'toCmyk' | 'toHsva';

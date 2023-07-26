@@ -55,21 +55,16 @@ export interface CaptureScreenProps extends JSX.ButtonHTMLAttributes<HTMLDivElem
   /** 停止录制回调方法 */
   onStopRecorder?: () => void;
   /** 开始录制回调方法 */
-  // eslint-disable-next-line no-unused-vars
   onStartRecorder?: (state: MediaRecorder['state']) => void;
   /** 记录媒体时触发 */
-  // eslint-disable-next-line no-unused-vars
   onRecorderDataAvailable?: (e: MediaRecorderDataAvailableEvent) => void;
   /** 捕获屏幕错误回调方法 */
-  // eslint-disable-next-line no-unused-vars, @typescript-eslint/no-explicit-any
-  onErrorCapture?: (err: any) => void;
+  onErrorCapture?: (err: unknown) => void;
   /** 停止捕获屏幕回调方法 */
   onStopCapture?: () => void;
   /** 开始捕获屏幕回调方法 */
-  // eslint-disable-next-line no-unused-vars
   onStartCapture?: (stream?: MediaStream) => void;
   /** 自定义保存录制文件方法 */
-  // eslint-disable-next-line no-unused-vars
   onSaveRecorder?: (blob: Blob, fileName: string) => void;
 }
 export type CaptureScreenElement = CustomElement<CaptureScreenProps>;
@@ -380,7 +375,7 @@ customElement(
             }),
           );
         },
-        onErrorCapture(e: Error) {
+        onErrorCapture(e: unknown) {
           el.dispatchEvent(
             new CustomEvent('errorcapture', {
               detail: e,

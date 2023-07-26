@@ -16,12 +16,12 @@ export const style = css`
     transition: transform var(--transition-duration);
     cursor: pointer;
     user-select: none;
+    animation: avatar-morph-effect 8s var(--transition-timing-function) infinite;
     background-image: linear-gradient(
       45deg,
       var(--primary-outline) 0%,
       var(--success-outline) 100%
     );
-    animation: avatar-morph-effect 8s var(--transition-timing-function) infinite;
 
     &::before,
     &::after {
@@ -32,11 +32,9 @@ export const style = css`
       inline-size: 100%;
       block-size: 100%;
       content: '';
-      transition: transform var(--transition-duration);
     }
 
     &::before {
-      background-color: var(--avatar-color);
       clip-path: url('#clipPathAvatar');
     }
 
@@ -44,16 +42,8 @@ export const style = css`
       background: url(${faviconBg}) no-repeat center/contain;
     }
 
-    span {
-      transition: transform var(--transition-duration);
-    }
-
     &:hover {
-      > *,
-      &::after,
-      &::before {
-        transform: scale(1.2);
-      }
+      transform: scale(1.2);
     }
 
     img {
@@ -62,7 +52,6 @@ export const style = css`
       inline-size: 100%;
       block-size: 100%;
       clip-path: url('#clipPathAvatar');
-      transition: transform var(--transition-duration);
     }
   }
 

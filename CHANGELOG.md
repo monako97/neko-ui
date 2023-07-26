@@ -1,8 +1,9 @@
-# [2.0.0-beta.22](https://github.com/monako97/neko-ui/compare/1.7.3...2.0.0-beta.22) (2023-07-25)
+# [2.0.0-beta.22](https://github.com/monako97/neko-ui/compare/1.7.3...2.0.0-beta.22) (2023-07-26)
 
 
 ### Bug Fixes
 
+* coverage ([ed798b5](https://github.com/monako97/neko-ui/commit/ed798b59c7c5aa30624ec4c44876eb01f61ce588))
 * coverage ([ba9a022](https://github.com/monako97/neko-ui/commit/ba9a022afb106d9d8559456fe7eeba62912c4969))
 * docs the feature watch recursively is unavailable on the current platform ([a13e06e](https://github.com/monako97/neko-ui/commit/a13e06e5afe5e9631f20b49b512358a8aec8916e))
 * docs the feature watch recursively is unavailable on the current platform ([369a8d3](https://github.com/monako97/neko-ui/commit/369a8d31da542f36599fd7e888a5ca036cba0565))

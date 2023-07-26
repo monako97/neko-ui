@@ -1,8 +1,9 @@
 import { fromSchema } from 'neko-ui';
+import type { Schema } from '..';
 
 describe('fromSchema', () => {
   it('get', () => {
-    const schema = {
+    const schema: Schema = {
       $schema: 'http://json-schema.org/draft-07/schema',
       $id: 'http://example.com/example.json',
       type: 'object',

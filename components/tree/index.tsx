@@ -13,7 +13,7 @@ import { cloneDeep, isFunction, passiveSupported } from '@moneko/common';
 import { cx } from '@moneko/css';
 import { customElement } from 'solid-element';
 import { style } from './style';
-import schema from '../from-schema';
+import schema, { type Schema } from '../from-schema';
 import { baseStyle } from '../theme';
 import type { BasicConfig, CustomElement } from '../index';
 
@@ -40,9 +40,11 @@ export interface TreeBaseProp {
   onRowDoubleClick?: (e: MouseEvent, key: string, item: TreeData) => void;
   /** 自定义渲染行 */
   renderRow?: (item: TreeData, title: JSXElement, subTitle?: JSXElement) => JSXElement[];
+  /** 开启此选项支持 `JSONSchema`
+   * @default false
+   */
+  fromSchema?: false;
 }
-
-type JSONSchema = { [key: string]: string | true | number | object };
 
 interface TreeBaseProps extends TreeBaseProp {
   /** 选中的值, 多选模式时为数组 */
@@ -66,50 +68,30 @@ interface TreeMultipleBaseProps extends TreeBaseProp {
   onChange?(key?: string[]): void;
 }
 export interface TreeProps extends TreeBaseProps {
-  /** 开启此选项支持 `JSONSchema`
-   * @default false
-   */
-  fromSchema?: false;
   /** 数据源 */
   data: TreeData[];
 }
-export interface TreeSchemaProps extends TreeBaseProps {
-  /** 开启此选项支持 `JSONSchema`
-   * @default true
-   */
+export interface TreeSchemaProps extends Omit<TreeBaseProps, 'fromSchema'> {
+  /** 开启此选项支持 `JSONSchema` */
   fromSchema: true;
   /** 数据源 */
-  data: JSONSchema;
+  data: Schema;
 }
 export interface TreeStringProps extends TreeBaseProps {
-  /** 开启此选项支持 `JSONSchema`
-   * @default false
-   */
-  fromSchema?: false;
   /** 数据源 */
   data: string;
 }
 export interface TreeMultipleProps extends TreeMultipleBaseProps {
-  /** 开启此选项支持 `JSONSchema`
-   * @default false
-   */
-  fromSchema?: false;
   /** 数据源 */
   data: TreeData[];
 }
-export interface TreeMultipleSchemaProps extends TreeMultipleBaseProps {
-  /** 开启此选项支持 `JSONSchema`
-   * @default true
-   */
+export interface TreeMultipleSchemaProps extends Omit<TreeMultipleBaseProps, 'fromSchema'> {
+  /** 开启此选项支持 `JSONSchema` */
   fromSchema: true;
   /** 数据源 */
-  data: JSONSchema;
+  data: Schema;
 }
 export interface TreeMultipleStringProps extends TreeMultipleBaseProps {
-  /** 开启此选项支持 `JSONSchema`
-   * @default false
-   */
-  fromSchema?: false;
   /** 数据源 */
   data: string;
 }
@@ -295,7 +277,7 @@ function Tree(
     const data = props.data;
 
     const _data = cloneDeep(
-      typeof data === 'string' ? parseTree(data) : props.fromSchema ? schema(data) : data,
+      typeof data === 'string' ? parseTree(data) : props.fromSchema ? schema(data as Schema) : data,
     ) as TreeData[];
 
     setLines([...new Set(countLineLen(_data))]);

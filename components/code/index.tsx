@@ -32,7 +32,6 @@ export interface CodeProps extends Omit<JSX.HTMLAttributes<HTMLDivElement>, 'onC
   /** 开启代码块工具条 */
   toolbar?: boolean;
   /** 编辑修改时的回调 */
-  // eslint-disable-next-line no-unused-vars
   onChange?: (code: string) => void;
 }
 

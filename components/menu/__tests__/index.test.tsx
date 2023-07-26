@@ -27,7 +27,7 @@ describe('Menu', () => {
     fireEvent.click(screen.getByShadowText('B'));
   });
   it('field-names', () => {
-    const { container } = render(() => (
+    render(() => (
       <n-menu
         items={[
           {
@@ -76,7 +76,6 @@ describe('Menu', () => {
       />
     ));
 
-    expect(container).toBeInTheDocument();
     fireEvent.click(screen.getByShadowText('一级菜单'));
     fireEvent.click(screen.getByShadowText('大青蛙2'));
     fireEvent.click(screen.getByShadowText('狮子2'));

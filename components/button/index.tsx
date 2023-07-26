@@ -48,7 +48,7 @@ export interface ButtonProps
   size?: BasicConfig['size'];
   /** 按钮前面添加一个图标 */
   icon?: (() => JSX.Element) | JSX.Element;
-  // eslint-disable-next-line no-unused-vars
+  /** 按键抬起 */
   onKeyUp?(e: KeyboardEvent): void;
 }
 export type ButtonElement = CustomElement<ButtonProps>;

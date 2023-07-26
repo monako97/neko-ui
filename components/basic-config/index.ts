@@ -75,13 +75,10 @@ export enum FieldName {
   /** 后缀图标 */
   suffix = 'suffix',
 }
-// eslint-disable-next-line no-unused-vars
 type IEvent<T> = (e: CustomEvent<T>) => void;
-// eslint-disable-next-line no-unused-vars
 type ICustomEvent<T, K extends keyof T> = T extends { [key in K]?: (v: infer V) => void }
   ? IEvent<V>
-  : // eslint-disable-next-line no-unused-vars
-  T extends { [key in K]?: (...args: infer Args) => void }
+  : T extends { [key in K]?: (...args: infer Args) => void }
   ? IEvent<Args>
   : never;
 

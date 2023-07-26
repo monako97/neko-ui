@@ -32,7 +32,6 @@ export interface CheckboxBoolProps extends CheckboxBaseProps {
   /** 默认值 */
   defaultValue?: boolean;
   /** 值修改时的回调方法 */
-  // eslint-disable-next-line no-unused-vars
   onChange?: (val: boolean) => void;
   checkAll?: never;
   options?: never;
@@ -53,7 +52,6 @@ export interface CheckboxGroupProps extends CheckboxBaseProps {
    * */
   options?: (CheckboxOption | string)[];
   /** 值修改时的回调方法 */
-  // eslint-disable-next-line no-unused-vars
   onChange?: (val: (string | number)[]) => void;
 }
 /** 复选框选项
