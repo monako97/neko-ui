@@ -31,7 +31,6 @@ function btnColor(type: ButtonProps['type']): CSSInterpolation {
 export const style = css`
   .btn,
   .label {
-    /* transition-timing-function: var(--transition-timing-function); */
     transition-duration: var(--transition-duration);
   }
 
@@ -43,14 +42,6 @@ export const style = css`
     text-overflow: ellipsis;
     white-space: nowrap;
     transition-property: color;
-  }
-
-  .link {
-    --btn-color: var(--primary-color);
-
-    &::after {
-      content: none;
-    }
   }
 
   .btn {
@@ -75,65 +66,69 @@ export const style = css`
     touch-action: manipulation;
     box-sizing: border-box;
     user-select: none;
+    outline: none;
 
     &:has(.icon) {
       padding: 4px 10px;
     }
 
-    &:focus:not(.disabled) {
-      border-color: var(--btn-hover-color);
-      background-color: var(--btn-bg);
-      outline: none;
+    &:not(.disabled) {
+      &:active {
+        transform: scale(0.98);
 
-      .label {
+        .label {
+          color: var(--btn-active-color);
+        }
+
+        &:not(.link, .flat) {
+          border-color: var(--btn-active-color);
+        }
+
+        &:not(.link) {
+          background-color: var(--btn-bg);
+        }
+      }
+
+      &:hover:not(.link) {
+        background-color: var(--btn-bg);
+      }
+
+      &:hover:not(.link, .flat),
+      &:focus:not(.link, .flat) {
+        border-color: var(--btn-hover-color);
+      }
+
+      &:hover .label,
+      &:focus .label {
         color: var(--btn-hover-color);
       }
     }
+  }
 
-    &:hover:not(.disabled) {
-      border-color: var(--btn-hover-color);
-      background-color: var(--btn-bg);
+  .normal {
+    --btn-size: 32px;
+  }
 
-      .label {
-        color: var(--btn-hover-color);
-      }
+  .small {
+    --btn-size: 24px;
+
+    gap: 2px;
+    padding: 0 7px;
+    font-size: var(--font-size-xs);
+
+    &:has(.icon) {
+      padding: 4px 5px;
     }
+  }
 
-    &:active:not(.disabled) {
-      border-color: var(--btn-active-color);
-      background-color: var(--btn-bg);
-      transform: scale(0.98);
+  .large {
+    --btn-size: 40px;
 
-      .label {
-        color: var(--btn-active-color);
-      }
-    }
+    font-size: var(--font-size-lg);
+    gap: 4px;
 
-    &.normal {
-      --btn-size: 32px;
-    }
-
-    &.small {
-      --btn-size: 24px;
-
-      gap: 2px;
-      padding: 0 7px;
-      font-size: var(--font-size-xs);
-
-      &:has(.icon) {
-        padding: 4px 5px;
-      }
-    }
-
-    &.large {
-      --btn-size: 40px;
-
-      font-size: var(--font-size-lg);
-      gap: 4px;
-
-      &:has(.icon) {
-        padding: 4px 12px;
-      }
+    &:has(.icon) {
+      padding: 4px 12px;
     }
   }
 
@@ -175,14 +170,26 @@ export const style = css`
     border-style: dashed;
   }
 
-  .flat,
   .link {
+    --btn-bg: transparent !important;
+    --btn-border: transparent !important;
+    --btn-color: var(--primary-color);
+
     border-color: transparent !important;
+    background-color: transparent !important;
+
+    &::after {
+      content: none;
+    }
+  }
+
+  .flat {
+    --btn-border: transparent !important;
+
     background-color: transparent;
   }
 
-  .ghost,
-  .link {
+  .ghost {
     background-color: transparent !important;
   }
 

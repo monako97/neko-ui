@@ -117,7 +117,6 @@ function Button(_: ButtonProps) {
           local.link && 'link',
           local.disabled && 'disabled',
           animating() && 'without',
-          local.class,
         )}
         part="button"
         onClick={handleClick}

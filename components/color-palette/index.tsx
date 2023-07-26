@@ -75,7 +75,10 @@ function ColorPalette(_: ColorPaletteProps) {
     size: 'small',
     css: '.input{text-align:center;font-size:12px;}',
   };
-  const [hsva, setHsva] = createSignal<ColorParse<HSVA>>(colorParse(props.defaultValue));
+  const [hsva, setHsva] = createSignal<ColorParse<HSVA>>(
+    // eslint-disable-next-line solid/reactivity
+    colorParse(props.value || props.defaultValue),
+  );
   const [drag, setDrag] = createSignal(false);
 
   type HsvaToColorVoid = 'toHexa' | 'toRgba' | 'toHsla' | 'toCmyk' | 'toHsva';

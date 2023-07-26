@@ -1,4 +1,4 @@
-# [2.0.0-beta.22](https://github.com/monako97/neko-ui/compare/1.7.3...2.0.0-beta.22) (2023-07-26)
+# [2.0.0-beta.23](https://github.com/monako97/neko-ui/compare/1.7.3...2.0.0-beta.23) (2023-07-26)
 
 
 ### Bug Fixes
