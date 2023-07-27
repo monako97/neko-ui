@@ -55,10 +55,10 @@ function Empty(props: EmptyProps) {
 customElement(
   'n-empty',
   {
-    class: undefined,
-    css: undefined,
-    style: undefined,
-    label: undefined,
+    class: void 0,
+    css: void 0,
+    style: void 0,
+    label: void 0,
   },
   Empty,
 );

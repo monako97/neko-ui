@@ -68,10 +68,10 @@ export type AvatarGroupElement = CustomElement<AvatarGroupProps>;
 
 const defaultProps: AvatarGroupProps = {
   data: [],
-  size: undefined,
-  class: undefined,
-  maxCount: undefined,
-  css: undefined,
+  size: void 0,
+  class: void 0,
+  maxCount: void 0,
+  css: void 0,
 };
 
 function AvatarGroup(_props: AvatarGroupProps) {

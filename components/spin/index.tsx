@@ -86,7 +86,7 @@ function Spin(props: SpinProps) {
 
 export type SpinElement = CustomElement<SpinProps>;
 
-customElement('n-spin', { class: undefined, css: undefined, spin: undefined }, (_, opt) => {
+customElement('n-spin', { class: void 0, css: void 0, spin: void 0 }, (_, opt) => {
   const el = opt.element;
   const props = mergeProps(
     {

@@ -94,7 +94,7 @@ function Carousel(_props: CarouselProps) {
   const dotLen = createMemo(() => Array(list().length > 20 ? 20 : list().length).fill(null));
 
   createEffect(() => {
-    if (props.offset !== undefined) {
+    if (props.offset !== void 0) {
       setOffset(Number(props.offset));
     }
   });
@@ -168,14 +168,14 @@ function Carousel(_props: CarouselProps) {
 customElement(
   'n-carousel',
   {
-    children: undefined,
-    autoplay: undefined,
-    class: undefined,
-    css: undefined,
-    offset: undefined,
-    dots: undefined,
-    header: undefined,
-    onChange: undefined,
+    children: void 0,
+    autoplay: void 0,
+    class: void 0,
+    css: void 0,
+    offset: void 0,
+    dots: void 0,
+    header: void 0,
+    onChange: void 0,
   },
   (_, opt) => {
     const el = opt.element;

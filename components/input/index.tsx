@@ -49,13 +49,9 @@ export interface InputProps {
   defaultValue?: string | number;
   /** 值变更时触发的函数 */
   onChange?: (value: InputProps['value'], e: Event) => void;
-  // eslint-disable-next-line no-unused-vars
   onKeyDown?(e: KeyboardEvent): void;
-  // eslint-disable-next-line no-unused-vars
   onMouseDown?(e: MouseEvent): void;
-  // eslint-disable-next-line no-unused-vars
   onBlur?(e: FocusEvent): void;
-  // eslint-disable-next-line no-unused-vars
   onKeyUp?(e: KeyboardEvent): void;
   /** 指定输入框展示值的格式 */
   formatter?: (value?: InputProps['value']) => InputProps['value'];
@@ -73,7 +69,7 @@ function Input(props: InputProps) {
     } else if (props.type === 'number' && typeof val === 'string') {
       const num = val.replace(/[^\d]/g, '');
 
-      return num.length ? parseFloat(num) : undefined;
+      return num.length ? parseFloat(num) : void 0;
     }
     return val;
   }
@@ -150,24 +146,24 @@ function Input(props: InputProps) {
 export type InputElement = CustomElement<InputProps>;
 
 export const defaultInportProps = {
-  class: undefined,
-  css: undefined,
-  suffixIcon: undefined,
-  prefixIcon: undefined,
-  size: undefined,
-  disabled: undefined,
-  status: undefined,
-  type: undefined,
-  label: undefined,
-  value: undefined,
-  defaultValue: undefined,
-  formatter: undefined,
-  parser: undefined,
-  onChange: undefined,
-  onMouseDown: undefined,
-  onKeyDown: undefined,
-  accept: undefined,
-  autoComplete: undefined,
+  class: void 0,
+  css: void 0,
+  suffixIcon: void 0,
+  prefixIcon: void 0,
+  size: void 0,
+  disabled: void 0,
+  status: void 0,
+  type: void 0,
+  label: void 0,
+  value: void 0,
+  defaultValue: void 0,
+  formatter: void 0,
+  parser: void 0,
+  onChange: void 0,
+  onMouseDown: void 0,
+  onKeyDown: void 0,
+  accept: void 0,
+  autoComplete: void 0,
   placeholder: '请输入',
 };
 

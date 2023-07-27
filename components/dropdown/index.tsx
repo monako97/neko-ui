@@ -55,7 +55,7 @@ function Dropdown(props: DropdownProps | DropdownMultipleProps) {
     if (isFunction(local.onOpenChange)) {
       local.onOpenChange(next);
     }
-    if (local.open === undefined) {
+    if (local.open === void 0) {
       setOpen(next);
     }
   }
@@ -68,7 +68,7 @@ function Dropdown(props: DropdownProps | DropdownMultipleProps) {
     if (isFunction(local.onChange)) {
       local.onChange(key, item);
     }
-    if (local.value === undefined) {
+    if (local.value === void 0) {
       setValue(Array.isArray(key) ? key : [key]);
     }
     if (!local.multiple) {
@@ -80,12 +80,14 @@ function Dropdown(props: DropdownProps | DropdownMultipleProps) {
   }
 
   createEffect(() => {
-    if (typeof local.value !== 'undefined') {
-      setValue(local.value ? (Array.isArray(local.value) ? local.value : [local.value]) : []);
+    if (local.value !== void 0 && local.value !== null) {
+      setValue(Array.isArray(local.value) ? local.value : [local.value]);
+    } else {
+      setValue([]);
     }
   });
   createEffect(() => {
-    if (local.open !== undefined && untrack(open) !== local.open) {
+    if (local.open !== void 0 && untrack(open) !== local.open) {
       setOpen(local.open);
     }
   });
@@ -121,16 +123,16 @@ function Dropdown(props: DropdownProps | DropdownMultipleProps) {
 
 export const defaultProps = {
   ...popoverProps,
-  fieldNames: undefined,
-  toggle: undefined,
-  value: undefined,
-  defaultValue: undefined,
-  onChange: undefined,
-  multiple: undefined,
-  disabled: undefined,
-  type: undefined,
-  onOpenChange: undefined,
-  openKeys: undefined,
+  fieldNames: void 0,
+  toggle: void 0,
+  value: void 0,
+  defaultValue: void 0,
+  onChange: void 0,
+  multiple: void 0,
+  disabled: void 0,
+  type: void 0,
+  onOpenChange: void 0,
+  openKeys: void 0,
 };
 
 customElement(

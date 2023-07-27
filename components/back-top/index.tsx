@@ -118,11 +118,11 @@ export type BackTopElement = CustomElement<BackTopProps>;
 customElement(
   'n-back-top',
   {
-    class: undefined,
-    css: undefined,
-    visibilityHeight: undefined,
-    mount: undefined,
-    target: undefined,
+    class: void 0,
+    css: void 0,
+    visibilityHeight: void 0,
+    mount: void 0,
+    target: void 0,
   },
   (_, opt) => {
     const el = opt.element;

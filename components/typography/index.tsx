@@ -90,13 +90,13 @@ export type TypographyElement = CustomElement<TypographyProps>;
 customElement(
   'n-typography',
   {
-    class: undefined,
-    css: undefined,
-    type: undefined,
-    truncated: undefined,
-    tag: undefined,
-    disabled: undefined,
-    style: undefined,
+    class: void 0,
+    css: void 0,
+    type: void 0,
+    truncated: void 0,
+    tag: void 0,
+    disabled: void 0,
+    style: void 0,
   },
   (_, opt) => {
     const el = opt.element;

@@ -7,12 +7,12 @@ type Props = {
   [key: string]: unknown;
 };
 function tag(type: string, p: Props) {
-  const level = type.replace(/[^0-9]/gi, '') || undefined;
+  const level = type.replace(/[^0-9]/gi, '');
 
   return createComponent(Dynamic, {
     component: type,
-    'data-prefix': level ? '# ' : undefined,
-    role: level ? 'heading' : undefined,
+    'data-prefix': level ? '# ' : void 0,
+    role: level ? 'heading' : void 0,
     'aria-level': level,
     ...p,
   });

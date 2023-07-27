@@ -355,9 +355,9 @@ customElement(
   'site-sandbox',
   {
     legend: '',
-    description: undefined,
+    description: void 0,
     codes: {},
-    order: undefined,
+    order: void 0,
   },
   Sandbox,
 );

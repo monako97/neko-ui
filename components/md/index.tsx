@@ -220,15 +220,15 @@ export type MdElement = CustomElement<MdProps>;
 customElement(
   'n-md',
   {
-    class: undefined,
-    pictureViewer: undefined,
-    lineNumber: undefined,
-    text: undefined,
-    tools: undefined,
-    getAnchorContainer: undefined,
-    css: undefined,
-    children: undefined,
-    notRender: undefined,
+    class: void 0,
+    pictureViewer: void 0,
+    lineNumber: void 0,
+    text: void 0,
+    tools: void 0,
+    getAnchorContainer: void 0,
+    css: void 0,
+    children: void 0,
+    notRender: void 0,
   },
   (_, opt) => {
     const el = opt.element;

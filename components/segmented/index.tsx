@@ -67,7 +67,7 @@ function Segmented(props: SegmentedProps) {
       if (isFunction(props.onChange)) {
         props.onChange(next);
       }
-      if (props.value === undefined) {
+      if (props.value === void 0) {
         setValue(next);
       }
     }
@@ -82,7 +82,7 @@ function Segmented(props: SegmentedProps) {
   });
 
   createEffect(() => {
-    setValue((props.value !== undefined && props.value) || props.defaultValue);
+    setValue((props.value !== void 0 && props.value) || props.defaultValue);
   });
 
   createEffect(() => {
@@ -158,15 +158,15 @@ export type SegmentedElement = CustomElement<SegmentedProps>;
 customElement(
   'n-segmented',
   {
-    class: undefined,
-    css: undefined,
-    name: undefined,
-    disabled: undefined,
-    value: undefined,
-    defaultValue: undefined,
-    options: undefined,
-    onChange: undefined,
-    fieldNames: undefined,
+    class: void 0,
+    css: void 0,
+    name: void 0,
+    disabled: void 0,
+    value: void 0,
+    defaultValue: void 0,
+    options: void 0,
+    onChange: void 0,
+    fieldNames: void 0,
   },
   (_, opt) => {
     const el = opt.element;

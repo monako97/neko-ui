@@ -137,7 +137,7 @@ function Popover(props: PopoverProps) {
   const [width, setWidth] = createSignal('');
 
   createEffect(() => {
-    if (local.open !== undefined) {
+    if (local.open !== void 0) {
       setOpen(local.open);
     }
   });
@@ -146,7 +146,7 @@ function Popover(props: PopoverProps) {
       if (local.onOpenChange) {
         local.onOpenChange(next);
       }
-      if (local.open === undefined) {
+      if (local.open === void 0) {
         setOpen(next);
       }
     }
@@ -365,20 +365,20 @@ function Popover(props: PopoverProps) {
 export type PopoverElement = CustomElement<PopoverProps>;
 
 export const defaultProps = {
-  class: undefined,
-  content: undefined,
-  getPopupContainer: undefined,
-  trigger: undefined,
-  open: undefined,
-  onOpenChange: undefined,
-  popupClass: undefined,
-  popupCss: undefined,
+  class: void 0,
+  content: void 0,
+  getPopupContainer: void 0,
+  trigger: void 0,
+  open: void 0,
+  onOpenChange: void 0,
+  popupClass: void 0,
+  popupCss: void 0,
   destroyInactive: true,
-  disabled: undefined,
-  arrow: undefined,
-  placement: undefined,
-  css: undefined,
-  dropdownMatchSelectWidth: undefined,
+  disabled: void 0,
+  arrow: void 0,
+  placement: void 0,
+  css: void 0,
+  dropdownMatchSelectWidth: void 0,
 };
 customElement('n-popover', defaultProps, (_, opt) => {
   const el = opt.element;

@@ -212,17 +212,17 @@ export type CheckboxBoolElement = CustomElement<CheckboxBoolProps>;
 customElement(
   'n-checkbox',
   {
-    class: undefined,
-    css: undefined,
-    name: undefined,
-    disabled: undefined,
-    value: undefined,
-    defaultValue: undefined,
-    options: undefined,
-    onChange: undefined,
-    fieldNames: undefined,
-    checkAll: undefined,
-    layout: undefined,
+    class: void 0,
+    css: void 0,
+    name: void 0,
+    disabled: void 0,
+    value: void 0,
+    defaultValue: void 0,
+    options: void 0,
+    onChange: void 0,
+    fieldNames: void 0,
+    checkAll: void 0,
+    layout: void 0,
   },
   (_, opt) => {
     const el = opt.element;

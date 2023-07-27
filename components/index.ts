@@ -32,7 +32,7 @@ export {
   type TreeMultipleSchemaElement,
   type TreeMultipleStringElement,
 } from './tree';
-export { default as Radio, type RadioProps, type RadioElement } from './radio';
+export { default as Radio, type RadioProps, type RadioElement, type RadioOption } from './radio';
 export {
   default as Checkbox,
   type CheckboxGroupProps,

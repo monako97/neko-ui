@@ -106,10 +106,6 @@ export const style = css`
 
       cursor: not-allowed;
     }
-
-    &:last-child {
-      margin-inline-end: 16px;
-    }
   }
 
   ${['success', 'error', 'warning']

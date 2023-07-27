@@ -145,12 +145,12 @@ customElement(
   'n-input-number',
   {
     ...defaultInportProps,
-    defaultValue: undefined,
-    max: undefined,
-    min: undefined,
-    onChange: undefined,
-    step: undefined,
-    precision: undefined,
+    defaultValue: void 0,
+    max: void 0,
+    min: void 0,
+    onChange: void 0,
+    step: void 0,
+    precision: void 0,
   },
   (_, opt) => {
     const el = opt.element;

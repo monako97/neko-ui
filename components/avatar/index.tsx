@@ -119,13 +119,13 @@ function Avatar(_: AvatarProps) {
 customElement(
   'n-avatar',
   {
-    css: undefined,
-    size: undefined,
-    src: undefined,
-    alt: undefined,
-    username: undefined,
-    color: undefined,
-    class: undefined,
+    css: void 0,
+    size: void 0,
+    src: void 0,
+    alt: void 0,
+    username: void 0,
+    color: void 0,
+    class: void 0,
   },
   Avatar,
 );

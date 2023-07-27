@@ -48,7 +48,7 @@ function ColorPicker(props: ColorPickerProps) {
   const [color, setColor] = createSignal<string | undefined>(local.defaultValue);
 
   function handleChange(e: string) {
-    if (local.value === undefined) {
+    if (local.value === void 0) {
       setColor(e);
     }
     local.onChange?.(e);
@@ -58,7 +58,7 @@ function ColorPicker(props: ColorPickerProps) {
     setColor(local.value);
   });
   onMount(() => {
-    if (local.value === undefined && local.defaultValue) {
+    if (local.value === void 0 && local.defaultValue) {
       setColor(local.defaultValue);
     }
   });
@@ -86,10 +86,10 @@ customElement(
   'n-color-picker',
   {
     ...defaultProps,
-    value: undefined,
-    defaultValue: undefined,
-    onChange: undefined,
-    size: undefined,
+    value: void 0,
+    defaultValue: void 0,
+    onChange: void 0,
+    size: void 0,
   },
   (_, opts) => {
     const el = opts.element;

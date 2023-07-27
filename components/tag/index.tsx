@@ -112,15 +112,15 @@ export type TagElement = CustomElement<TagProps>;
 customElement(
   'n-tag',
   {
-    class: undefined,
-    css: undefined,
-    color: undefined,
-    icon: undefined,
-    closeIcon: undefined,
-    onClose: undefined,
+    class: void 0,
+    css: void 0,
+    color: void 0,
+    icon: void 0,
+    closeIcon: void 0,
+    onClose: void 0,
     bordered: true,
-    disabled: undefined,
-    type: undefined,
+    disabled: void 0,
+    type: void 0,
   },
   (_, opt) => {
     const el = opt.element;

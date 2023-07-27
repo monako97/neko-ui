@@ -322,12 +322,12 @@ function ColorPalette(_: ColorPaletteProps) {
 }
 
 export const defaultColorPaletteProps = {
-  class: undefined,
-  style: undefined,
-  css: undefined,
-  value: undefined,
-  defaultValue: undefined,
-  onChange: undefined,
+  class: void 0,
+  style: void 0,
+  css: void 0,
+  value: void 0,
+  defaultValue: void 0,
+  onChange: void 0,
 };
 
 customElement('n-color-palette', defaultColorPaletteProps, (_, opts) => {

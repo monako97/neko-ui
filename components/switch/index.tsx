@@ -69,14 +69,14 @@ function Switch(props: SwitchProps) {
 customElement(
   'n-switch',
   {
-    class: undefined,
-    css: undefined,
-    checked: undefined,
-    disabled: undefined,
-    checkedText: undefined,
-    unCheckedText: undefined,
+    class: void 0,
+    css: void 0,
+    checked: void 0,
+    disabled: void 0,
+    checkedText: void 0,
+    unCheckedText: void 0,
     loading: false,
-    onChange: undefined,
+    onChange: void 0,
   },
   (_, opt) => {
     const el = opt.element;

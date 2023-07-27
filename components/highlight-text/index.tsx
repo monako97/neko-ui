@@ -155,12 +155,12 @@ export type HighlightTextElement = CustomElement<HighlightTextProps>;
 customElement(
   'n-highlight-text',
   {
-    class: undefined,
-    css: undefined,
-    text: undefined,
-    highlight: undefined,
-    flag: undefined,
-    extra: undefined,
+    class: void 0,
+    css: void 0,
+    text: void 0,
+    highlight: void 0,
+    flag: void 0,
+    extra: void 0,
   },
   HighlightText,
 );

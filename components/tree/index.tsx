@@ -115,9 +115,12 @@ function Tree(
   const [lines, setLines] = createSignal<string[]>([]);
   const [treeData, setTreeData] = createSignal<TreeData[]>([]);
   const rtl = createMemo(() => props.direction === 'rtl');
-  const current = createMemo(() =>
-    props.value ? (Array.isArray(props.value) ? props.value : [props.value]) : [],
-  );
+  const current = createMemo(() => {
+    if (props.value !== void 0 && props.value !== null) {
+      return Array.isArray(props.value) ? props.value : [props.value];
+    }
+    return [];
+  });
 
   const path = Symbol('path');
   const pathEnd = Symbol('path-end');
@@ -228,7 +231,7 @@ function Tree(
                 )}
                 onClick={(e) => handleClick(e, item)}
                 onDblClick={(e) => props.onRowDoubleClick?.(e, key, item)}
-                style={depth ? { '--depth': `${depth * 2}em` } : undefined}
+                style={depth ? { '--depth': `${depth * 2}em` } : void 0}
                 data-path-end={item[pathEnd]}
                 data-path={item[path]}
               >
@@ -350,20 +353,20 @@ export interface TreeData<T = string> {
 customElement(
   'n-tree',
   {
-    fromSchema: undefined,
-    size: undefined,
-    data: undefined,
-    multiple: undefined,
-    value: undefined,
-    onChange: undefined,
-    class: undefined,
-    css: undefined,
-    readonly: undefined,
-    toggle: undefined,
-    direction: undefined,
-    onRowClick: undefined,
-    onRowDoubleClick: undefined,
-    renderRow: undefined,
+    fromSchema: void 0,
+    size: void 0,
+    data: void 0,
+    multiple: void 0,
+    value: void 0,
+    onChange: void 0,
+    class: void 0,
+    css: void 0,
+    readonly: void 0,
+    toggle: void 0,
+    direction: void 0,
+    onRowClick: void 0,
+    onRowDoubleClick: void 0,
+    renderRow: void 0,
   },
   (_, opt) => {
     const el = opt.element;

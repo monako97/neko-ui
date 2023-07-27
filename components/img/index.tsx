@@ -85,7 +85,7 @@ function Img(props: ImgProps) {
   }
 
   createEffect(() => {
-    if (props.open !== undefined && props.open !== untrack(open)) {
+    if (props.open !== void 0 && props.open !== untrack(open)) {
       setOpen(props.open);
     }
   });
@@ -143,12 +143,12 @@ function Img(props: ImgProps) {
 customElement(
   'n-img',
   {
-    src: undefined,
-    alt: undefined,
+    src: void 0,
+    alt: void 0,
     open: null as boolean | null,
     maskClosable: false,
     escClosable: true,
-    onOpenChange: undefined,
+    onOpenChange: void 0,
   },
   (_, opt) => {
     const props = mergeProps(

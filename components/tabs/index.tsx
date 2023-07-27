@@ -99,7 +99,7 @@ function Tabs(props: TabsProps) {
     if (!props.disabled && !item.disabled) {
       const next = item[fieldNames().value];
 
-      if (props.value === undefined) {
+      if (props.value === void 0) {
         setValue(next);
       }
       if (isFunction(props.onChange)) {
@@ -164,9 +164,9 @@ function Tabs(props: TabsProps) {
   createEffect(() => {
     let _val = untrack(value);
 
-    if (props.value !== undefined) {
+    if (props.value !== void 0) {
       _val = props.value;
-    } else if (props.defaultValue !== undefined) {
+    } else if (props.defaultValue !== void 0) {
       _val = props.defaultValue;
     } else if (items()[0]) {
       _val = items()[0][fieldNames().value];
@@ -254,7 +254,7 @@ function Tabs(props: TabsProps) {
             {(item, i) => {
               const readOnly = props.disabled || item.disabled;
               const { icon, value: val, label } = fieldNames();
-              const isActive = createMemo(() => value() !== undefined && item[val] === value());
+              const isActive = createMemo(() => value() !== void 0 && item[val] === value());
 
               return (
                 <n-button
@@ -291,7 +291,7 @@ function Tabs(props: TabsProps) {
                 font-size: var(--font-size-lg);
               }
             `}
-            onClick={handleEdit.bind(null, 'add', undefined)}
+            onClick={handleEdit.bind(null, 'add', void 0)}
           >
             ＋
           </n-button>
@@ -317,18 +317,18 @@ export type TabsElement = CustomElement<TabsProps>;
 customElement(
   'n-tabs',
   {
-    class: undefined,
-    css: undefined,
-    disabled: undefined,
-    value: undefined,
-    defaultValue: undefined,
-    centered: undefined,
+    class: void 0,
+    css: void 0,
+    disabled: void 0,
+    value: void 0,
+    defaultValue: void 0,
+    centered: void 0,
     items: [],
     type: 'line' as TabsProps['type'],
-    onChange: undefined,
-    fieldNames: undefined,
-    add: undefined,
-    extra: undefined,
+    onChange: void 0,
+    fieldNames: void 0,
+    add: void 0,
+    extra: void 0,
   },
   (_, opt) => {
     const el = opt.element;

@@ -7,7 +7,6 @@ ignorePatterns:
   - prism.js
   - '*.md'
 rules:
-  no-undefined: 0
   '@typescript-eslint/no-namespace': 0
   import/no-unresolved:
     - 2

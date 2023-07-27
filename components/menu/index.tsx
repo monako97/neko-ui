@@ -90,10 +90,16 @@ function Menu(props: MenuProps | MenuMultipleProps) {
             return (
               <>
                 <Show when={item[_.fieldNames.icon]}>
-                  <span class="icon">{item[_.fieldNames.icon]}</span>
+                  <span class="icon" part="icon">
+                    {item[_.fieldNames.icon]}
+                  </span>
                 </Show>
                 {item[_.fieldNames.label]}
-                <span class="suffix">{item[_.fieldNames.suffix]}</span>
+                <Show when={item[_.fieldNames.suffix]}>
+                  <span class="suffix" part="suffix">
+                    {item[_.fieldNames.suffix]}
+                  </span>
+                </Show>
               </>
             );
           }
@@ -120,7 +126,7 @@ function Menu(props: MenuProps | MenuMultipleProps) {
               if (isFunction(local.onOpenChange)) {
                 local.onOpenChange(_openKeys);
               }
-              if (local.openKeys === undefined) {
+              if (local.openKeys === void 0) {
                 setOpenKeys(_openKeys);
               }
             }
@@ -139,6 +145,7 @@ function Menu(props: MenuProps | MenuMultipleProps) {
               return (
                 <div
                   class="sub-menu-children"
+                  part="sub-menu-children"
                   style={{
                     '--h': `${hei()}px`,
                   }}
@@ -154,6 +161,7 @@ function Menu(props: MenuProps | MenuMultipleProps) {
             return (
               <div
                 class={cx('sub-menu', item.class, `sub-menu-${isOpen() ? 'open' : 'close'}`)}
+                part="sub-menu"
                 onMouseDown={preventDefault}
               >
                 <span class="sub-menu-title" onClick={handleOpen}>
@@ -171,6 +179,7 @@ function Menu(props: MenuProps | MenuMultipleProps) {
               fallback={
                 <div
                   class={cx('item', item.class, item.type)}
+                  part="item"
                   handle-closed={item.handleClosed}
                   aria-disabled={local.disabled || item.disabled}
                   aria-selected={value().includes(item[_.fieldNames.value]!)}
@@ -200,8 +209,10 @@ function Menu(props: MenuProps | MenuMultipleProps) {
   }
 
   createEffect(() => {
-    if (typeof local.value !== 'undefined') {
-      setValue(local.value ? (Array.isArray(local.value) ? local.value : [local.value]) : []);
+    if (local.value !== void 0 && local.value !== null) {
+      setValue(Array.isArray(local.value) ? local.value : [local.value]);
+    } else {
+      setValue([]);
     }
   });
   createEffect(() => {
@@ -217,7 +228,7 @@ function Menu(props: MenuProps | MenuMultipleProps) {
         {cssVar()}
         {css(local.css)}
       </style>
-      <span {...other} class="menu">
+      <span {...other} class="menu" part="menu">
         <RenderMenu fieldNames={fieldNames()} list={options()} />
       </span>
     </>
@@ -255,16 +266,15 @@ export interface MenuProps extends BaseMenuProps {
   /** 可多选
    * @default false
    */
-  multiple?: false;
+  multiple?: false | never;
 }
 
 export interface MenuMultipleProps extends BaseMenuProps {
   /** 可多选
    * @default true
    */
-  multiple?: true;
+  multiple: true;
   /** 值修改时的回调方法 */
-  // eslint-disable-next-line no-unused-vars
   onChange?(val: (string | number)[], item: MenuOption): void;
   /** 值 */
   value?: (string | number)[];
@@ -292,18 +302,18 @@ export type MenuMultipleElement = CustomElement<MenuMultipleProps>;
 customElement(
   'n-menu',
   {
-    class: undefined,
-    css: undefined,
-    disabled: undefined,
-    type: undefined,
-    value: undefined,
-    defaultValue: undefined,
-    onOpenChange: undefined,
-    openKeys: undefined,
-    fieldNames: undefined,
-    multiple: undefined,
-    toggle: undefined,
-    onChange: undefined,
+    class: void 0,
+    css: void 0,
+    disabled: void 0,
+    type: void 0,
+    value: void 0,
+    defaultValue: void 0,
+    onOpenChange: void 0,
+    openKeys: void 0,
+    fieldNames: void 0,
+    multiple: void 0,
+    toggle: void 0,
+    onChange: void 0,
     items: [],
   },
   (_, opt) => {

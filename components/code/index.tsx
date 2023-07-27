@@ -129,15 +129,15 @@ function Code(props: CodeProps) {
 customElement(
   'n-code',
   {
-    class: undefined,
-    code: undefined,
-    lang: undefined,
-    children: undefined,
-    edit: undefined,
-    toolbar: undefined,
-    css: undefined,
-    lineNumber: undefined,
-    onChange: undefined,
+    class: void 0,
+    code: void 0,
+    lang: void 0,
+    children: void 0,
+    edit: void 0,
+    toolbar: void 0,
+    css: void 0,
+    lineNumber: void 0,
+    onChange: void 0,
   },
   (_, opt) => {
     const el = opt.element;

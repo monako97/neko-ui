@@ -1,8 +1,9 @@
-# [2.0.0-beta.23](https://github.com/monako97/neko-ui/compare/1.7.3...2.0.0-beta.23) (2023-07-26)
+# [2.0.0-beta.24](https://github.com/monako97/neko-ui/compare/1.7.3...2.0.0-beta.24) (2023-07-27)
 
 
 ### Bug Fixes
 
+* button style ([469846a](https://github.com/monako97/neko-ui/commit/469846a53a471c910db86c8c5bfff0ac8bdb22ce))
 * coverage ([ed798b5](https://github.com/monako97/neko-ui/commit/ed798b59c7c5aa30624ec4c44876eb01f61ce588))
 * coverage ([ba9a022](https://github.com/monako97/neko-ui/commit/ba9a022afb106d9d8559456fe7eeba62912c4969))
 * docs the feature watch recursively is unavailable on the current platform ([a13e06e](https://github.com/monako97/neko-ui/commit/a13e06e5afe5e9631f20b49b512358a8aec8916e))

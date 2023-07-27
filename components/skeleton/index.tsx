@@ -162,11 +162,11 @@ customElement(
   'n-skeleton',
   {
     rows: 3,
-    active: undefined,
-    avatar: undefined,
-    title: undefined,
-    css: undefined,
-    class: undefined,
+    active: void 0,
+    avatar: void 0,
+    title: void 0,
+    css: void 0,
+    class: void 0,
   },
   (_, opt) => {
     const el = opt.element;
