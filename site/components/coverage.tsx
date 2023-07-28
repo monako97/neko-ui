@@ -1,7 +1,7 @@
 import { For, createMemo } from 'solid-js';
 import { css, cx } from '@moneko/css';
-import { getPathName, projectBasicInfo, useLocation } from '@moneko/solid-js';
-import { type CustomElement, baseStyle } from 'neko-ui';
+import { getPathName, project, useLocation } from '@moneko/solid-js';
+import { baseStyle } from 'neko-ui';
 import { customElement } from 'solid-element';
 
 const style = css`
@@ -82,10 +82,7 @@ function Coverage() {
   const coverage = createMemo(() => {
     const name = getPathName(location);
 
-    return (
-      projectBasicInfo.coverage[name ? `components.${name}` : projectBasicInfo.programInfo.name] ||
-      {}
-    );
+    return projectCoverage[name ? `components.${name}` : project.info.name] || {};
   });
 
   function getNum(num: number) {
@@ -131,6 +128,5 @@ function Coverage() {
     </>
   );
 }
-export type CoverageElement = CustomElement;
 
 customElement('site-coverage', Coverage);

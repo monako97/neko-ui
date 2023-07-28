@@ -1,14 +1,5 @@
-# Neko UI
-
-[![version][version-tag]][npm-url]
-[![install size][size-tag]][size-url]
-[![download][download-tag]][npm-url]
-
-> 这是一个适用于任何技术栈的 WebComponents UI组件库
-
-[![neko-ui][install-tag]][npm-url]
-[![docs-ui][docs-tag]][docs-url]
-
+[home-url]: https://monako97.github.io/neko-ui
+[home-tag]: https://cdn.staticaly.com/gh/monako97/cdn/main/image/202307281703208.svg
 [jetbrains-tag]: https://cdn.staticaly.com/gh/monako97/cdn/main/image/202307281758090.svg
 [jetbrains-url]: https://www.jetbrains.com/?from=monako
 [docs-url]: https://monako97.github.io/neko-ui
@@ -19,6 +10,19 @@
 [size-tag]: https://packagephobia.com/badge?p=neko-ui@latest
 [size-url]: https://packagephobia.com/result?p=neko-ui@latest
 [download-tag]: https://img.shields.io/npm/dm/neko-ui.svg?logo=docusign
+
+# Neko UI
+
+> 这是一个适用于任何技术栈的 WebComponents UI组件库
+
+[![neko-ui][home-tag]][home-url]
+[![docs-ui][docs-tag]][docs-url]
+
+[![version][version-tag]][npm-url]
+[![install size][size-tag]][size-url]
+[![download][download-tag]][npm-url]
+
+[![neko-ui][install-tag]][npm-url]
 
 ## 安装
 

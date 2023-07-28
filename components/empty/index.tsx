@@ -1,7 +1,6 @@
 import { type JSX, Show } from 'solid-js';
 import { css, cx } from '@moneko/css';
 import { customElement } from 'solid-element';
-import type { CustomElement } from '..';
 
 const style = css`
   .empty-container {

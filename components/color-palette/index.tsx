@@ -29,7 +29,7 @@ import '../dropdown';
 import '../input';
 import '../input-number';
 import { baseStyle } from '../theme';
-import type { CustomElement, InputNumberProps } from '../index';
+import type { InputNumberProps } from '../index';
 
 export interface ColorPaletteProps extends Omit<JSX.HTMLAttributes<HTMLDivElement>, 'onChange'> {
   /** 自定义类名 */

@@ -14,7 +14,6 @@ import { customElement } from 'solid-element';
 import { style } from './style';
 import Prism, { prismCss } from '../prism';
 import { baseStyle } from '../theme';
-import type { CustomElement } from '..';
 
 export interface CodeProps extends Omit<JSX.HTMLAttributes<HTMLDivElement>, 'onChange'> {
   /** 自定义类名 */

@@ -13,7 +13,6 @@ import { isFunction } from '@moneko/common';
 import { css, cx } from '@moneko/css';
 import { customElement } from 'solid-element';
 import { style } from './style';
-import { type CustomElement } from '..';
 import { baseStyle, generateTheme, theme } from '../theme';
 
 export interface TagProps extends Omit<JSX.HTMLAttributes<HTMLSpanElement>, 'onChange'> {

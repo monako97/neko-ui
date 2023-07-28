@@ -155,6 +155,11 @@ const baseCss = css`
     --transition-timing-function: cubic-bezier(0.645, 0.045, 0.355, 1);
 
     font-size: var(--font-size);
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial,
+      'Noto Sans', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol',
+      'Noto Color Emoji', Helvetica, Oxygen, Ubuntu, Cantarell, 'Fira Sans', 'Droid Sans';
+    color: var(--text-color, rgb(0 0 0 / 65%));
+    line-height: 1.8;
   }
 
   [disabled]:not([disabled='false']) {

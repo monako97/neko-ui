@@ -3,7 +3,6 @@ import { css, cx } from '@moneko/css';
 import { customElement } from 'solid-element';
 import { style } from './style';
 import { baseStyle } from '../theme';
-import type { CustomElement } from '..';
 
 export interface SwitchProps {
   /** 自定义类名 */

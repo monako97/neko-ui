@@ -2,7 +2,6 @@ import { type JSX, createEffect, createMemo, createSignal } from 'solid-js';
 import { css, cx } from '@moneko/css';
 import { customElement } from 'solid-element';
 import { baseStyle } from '../theme';
-import type { CustomElement } from '..';
 
 const style = css`
   .text {

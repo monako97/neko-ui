@@ -16,7 +16,6 @@ import { customElement } from 'solid-element';
 import { Portal } from 'solid-js/web';
 import { style } from './style';
 import { baseStyle, theme } from '../theme';
-import type { CustomElement } from '..';
 
 const themeStyle = createMemo(() => {
   const bg = theme.scheme === 'dark' ? 'rgb(255 255 255 / 45%)' : 'var(--primary-border)';

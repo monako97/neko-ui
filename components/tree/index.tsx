@@ -15,7 +15,7 @@ import { customElement } from 'solid-element';
 import { style } from './style';
 import schema, { type Schema } from '../from-schema';
 import { baseStyle } from '../theme';
-import type { BasicConfig, CustomElement } from '../index';
+import type { BasicConfig } from '../index';
 
 export interface TreeBaseProp {
   /** 自定义类名 */

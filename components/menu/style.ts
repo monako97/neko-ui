@@ -9,15 +9,8 @@ export const style = css`
 
     ${['primary', 'success', 'error', 'warning']
       .map(
-        (s) => `
-        .${s} {
-          --text-color: var(--${s}-color);
-          --text-heading: var(--${s}-color);
-          --text-secondary: var(--${s}-secondary);
-          --component-bg: var(--${s}-details-bg);
-          --menu-selection: var(--${s}-selection);
-        }
-      `,
+        (s) =>
+          `.${s} {--text-color: var(--${s}-color);--text-heading: var(--${s}-color);--text-secondary: var(--${s}-secondary);--component-bg: var(--${s}-details-bg);--menu-selection: var(--${s}-selection);}`,
       )
       .join('')}
   }

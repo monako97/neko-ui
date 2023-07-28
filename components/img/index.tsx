@@ -11,7 +11,6 @@ import { cx } from '@moneko/css';
 import { customElement } from 'solid-element';
 import { Portal } from 'solid-js/web';
 import { imgCss, style } from './style';
-import type { CustomElement } from '..';
 
 export interface ImgProps {
   /** 图片地址 */

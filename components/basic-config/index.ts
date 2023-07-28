@@ -1,5 +1,4 @@
 import type { JSXElement } from 'solid-js';
-import type { ICustomElement } from 'component-register';
 
 export interface BasicConfig {
   /** 组件状态
@@ -75,31 +74,3 @@ export enum FieldName {
   /** 后缀图标 */
   suffix = 'suffix',
 }
-type IEvent<T> = (e: CustomEvent<T>) => void;
-type ICustomEvent<T, K extends keyof T> = T extends { [key in K]?: (v: infer V) => void }
-  ? IEvent<V>
-  : T extends { [key in K]?: (...args: infer Args) => void }
-  ? IEvent<Args>
-  : never;
-
-type IOmit<T, Keys extends keyof T> = Omit<T, Keys> & {
-  [K in Keys]?: ICustomEvent<T, K>;
-};
-
-export type CustomElement<T extends Partial<ICustomElement> = ICustomElement> = IOmit<
-  T,
-  | 'onChange'
-  | 'onOpenChange'
-  | 'onErrorRecorder'
-  | 'onStopRecorder'
-  | 'onStartRecorder'
-  | 'onRecorderDataAvailable'
-  | 'onErrorCapture'
-  | 'onStopCapture'
-  | 'onStartCapture'
-  | 'onSaveRecorder'
-> & {
-  ref?: CustomElement<T> | { current: CustomElement<T> | null };
-  shadowRoot?: ShadowRoot | Element | null;
-  offsetWidth?: number;
-};

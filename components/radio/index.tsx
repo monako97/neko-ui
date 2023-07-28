@@ -2,7 +2,7 @@ import { For, createComponent, createEffect, createMemo, createSignal, mergeProp
 import { css, cx } from '@moneko/css';
 import { customElement } from 'solid-element';
 import { style } from './style';
-import { type BaseOption, type BasicConfig, type CustomElement, FieldName } from '../basic-config';
+import { type BaseOption, type BasicConfig, FieldName } from '../basic-config';
 import getOptions from '../get-options';
 import { baseStyle } from '../theme';
 

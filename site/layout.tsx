@@ -2,10 +2,7 @@ import { Show, createEffect } from 'solid-js';
 import { css } from '@moneko/css';
 import { ApiView, Outlet, getPathName, useLocation } from '@moneko/solid-js';
 import { baseStyle } from 'neko-ui';
-import About from './about';
 import './components';
-import log from '../CHANGELOG.md?raw';
-import Readme from '../README.md?raw';
 
 const noBg = css`
   .n-md-body:has(n-md):not(.site-empty) {
@@ -164,14 +161,7 @@ function App() {
             </div>
           </n-md>
           <site-sandbox-group name={getPathName(location)} />
-          <Show when={!getPathName(location)}>
-            <n-md text={Readme} />
-            <About />
-          </Show>
           <ApiView />
-          <Show when={!getPathName(location)}>
-            <n-md text={`# Change log\n${log}`} />
-          </Show>
           <site-pagination />
         </div>
         <site-footer />

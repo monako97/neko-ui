@@ -1,7 +1,7 @@
 import Item, { type CronItemProps } from './item';
 import Period from './period';
 import Some from './some';
-import { selectCss, selectPortalCss } from './style';
+import { numCss, selectCss, selectPortalCss } from './style';
 
 function Year(props: Required<Omit<CronItemProps<'year'>, 'options'>>) {
   const fullYear = new Date().getFullYear();
@@ -53,12 +53,7 @@ function Year(props: Required<Omit<CronItemProps<'year'>, 'options'>>) {
           年开始触发，每隔
           <n-input-number
             value={props.state.beginEvery}
-            css={`
-              .fieldset {
-                width: 70px;
-                min-width: unset;
-              }
-            `}
+            css={numCss}
             onChange={(e) => {
               const v = Number(e.detail);
 

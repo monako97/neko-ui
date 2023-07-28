@@ -33,3 +33,9 @@ export const selectCss = css`
     text-align: center;
   }
 `;
+export const numCss = css`
+  .fieldset {
+    inline-size: 70px;
+    min-inline-size: unset;
+  }
+`;

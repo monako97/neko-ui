@@ -18,7 +18,6 @@ import { style } from './style';
 import '../code';
 import '../img';
 import { baseStyle } from '../theme';
-import type { CustomElement } from '..';
 
 const renderer = new marked.Renderer();
 
@@ -37,9 +36,7 @@ renderer.katexInline = function (code: string) {
   return `<n-katex>${code}</n-katex>`;
 };
 renderer.image = function (src: string | null, title: string | null, alt: string) {
-  return `<n-img role="dialog" src="${src}" alt="${alt}" ${
-    title ? `title="${title}"` : ''
-  } style="display:flex;border-radius:var(--border-radius);overflow:hidden;"></n-img>`;
+  return `<n-img role="img" src="${src}" alt="${alt}" ${title ? `title="${title}"` : ''}></n-img>`;
 };
 
 marked.setOptions({

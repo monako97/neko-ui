@@ -3,11 +3,7 @@ extends:
   - plugin:solid/recommended
 plugins:
   - solid
-ignorePatterns:
-  - prism.js
-  - '*.md'
 rules:
-  '@typescript-eslint/no-namespace': 0
   import/no-unresolved:
     - 2
     - ignore:

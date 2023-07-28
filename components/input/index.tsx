@@ -12,7 +12,7 @@ import { css, cx } from '@moneko/css';
 import { customElement } from 'solid-element';
 import { style } from './style';
 import { baseStyle } from '../theme';
-import type { BasicConfig, CustomElement } from '../index';
+import type { BasicConfig } from '../index';
 
 export interface InputProps {
   /** 自定义类名 */

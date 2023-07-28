@@ -3,7 +3,6 @@ import { css, cx } from '@moneko/css';
 import { customElement } from 'solid-element';
 import { Dynamic } from 'solid-js/web';
 import { baseStyle } from '../theme';
-import type { CustomElement } from '..';
 
 export interface TypographyProps extends Omit<JSX.HTMLAttributes<HTMLDivElement>, 'onChange'> {
   /** 自定义类名 */
@@ -45,7 +44,7 @@ function Typography(props: TypographyProps) {
     let truncated = '';
 
     if (props.truncated) {
-      truncated = `
+      truncated = css`
         overflow: hidden;
         /* stylelint-disable-next-line */
         display: -webkit-box;
@@ -54,7 +53,7 @@ function Typography(props: TypographyProps) {
       `;
     }
 
-    return `
+    return css`
       :host {
         display: inline-block;
         max-inline-size: 100%;

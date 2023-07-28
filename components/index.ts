@@ -96,16 +96,8 @@ export {
   type ThemeOption,
   ColorScheme,
 } from './theme';
-export {
-  FieldName,
-  Size,
-  Status,
-  type BasicConfig,
-  type BaseOption,
-  type CustomElement,
-} from './basic-config';
+export { FieldName, Size, Status, type BasicConfig, type BaseOption } from './basic-config';
 export { default as fromSchema } from './from-schema';
-import type { ICustomElement } from 'component-register';
 import type {
   AvatarElement,
   AvatarGroupElement,
@@ -148,10 +140,6 @@ import type {
   TypographyElement,
 } from 'neko-ui';
 
-export interface ComponentOptions<T> {
-  element: T & ICustomElement;
-}
-
 interface CustomElementTags {
   'n-avatar': AvatarElement;
   'n-avatar-group': AvatarGroupElement;
@@ -191,14 +179,16 @@ interface CustomElementTags {
   'n-cron': CronElement;
 }
 declare module 'solid-js' {
+  // eslint-disable-next-line @typescript-eslint/no-namespace
   export namespace JSX {
     export interface IntrinsicElements extends HTMLElementTags, CustomElementTags {}
   }
   interface HTMLElementTagNameMap extends CustomElementTags {}
 }
 declare global {
+  // eslint-disable-next-line @typescript-eslint/no-namespace
   export namespace JSX {
-    export interface IntrinsicElements extends CustomElementTags, CustomElementTags {}
+    export interface IntrinsicElements extends CustomElementTags {}
   }
   interface HTMLElementTagNameMap extends CustomElementTags {}
 }

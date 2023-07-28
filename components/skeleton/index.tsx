@@ -2,7 +2,6 @@ import { For, type JSX, Show, createComponent, createMemo, mergeProps } from 'so
 import { css, cx } from '@moneko/css';
 import { customElement } from 'solid-element';
 import { baseStyle, theme } from '../theme';
-import type { CustomElement } from '..';
 
 const style = css`
   :host {

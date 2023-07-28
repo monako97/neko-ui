@@ -12,7 +12,7 @@ import { customElement } from 'solid-element';
 import { style } from './style';
 import ColorPalette, { type ColorPaletteProps } from '../color-palette';
 import Popover, { defaultProps } from '../popover';
-import type { BasicConfig, CustomElement, PopoverProps } from '../index';
+import type { BasicConfig, PopoverProps } from '../index';
 
 /** 颜色选择器
  * @since 2.0.0

@@ -23,7 +23,7 @@ import Dropdown, {
   defaultProps,
 } from '../dropdown';
 import getOptions from '../get-options';
-import type { CustomElement, MenuOption } from '..';
+import type { MenuOption } from '..';
 
 function Select(props: SelectProps) {
   const [local, other] = splitProps(props, [

@@ -266,12 +266,15 @@ export const style = css`
     background-color: var(--border-color);
   }
 
-  p img {
+  p img,
+  p n-img {
     position: relative;
-    display: block;
+    display: flex;
+    overflow: hidden;
     margin: auto;
     border-radius: var(--border-radius);
     max-inline-size: 100%;
+    inline-size: fit-content;
     cursor: pointer;
   }
 

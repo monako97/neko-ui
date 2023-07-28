@@ -1,7 +1,6 @@
 import { css } from '@moneko/css';
+import { project } from '@moneko/solid-js';
 import { customElement } from 'solid-element';
-import type { CustomElement } from 'neko-ui';
-import { projectInfo } from '@/utils';
 
 function Footer() {
   const year = new Date().getFullYear();
@@ -30,27 +29,25 @@ function Footer() {
         <p>
           <a
             class="n-site-footer-link"
-            href={projectInfo.repository?.url}
+            href={project.info.repository?.url}
             target="_blank"
             rel="noopener noreferrer"
           >
-            {projectInfo.title}&nbsp;
+            {project.name}&nbsp;
           </a>
           Ⓒ {year} Made with ❤️‍🔥 by&nbsp;
           <a
             class="n-site-footer-link"
-            href={projectInfo.author?.url}
+            href={project.info.author?.url}
             target="_blank"
             rel="noopener noreferrer"
           >
-            {projectInfo.author?.name}
+            {project.info.author?.name}
           </a>
         </p>
       </footer>
     </>
   );
 }
-
-export type FooterElement = CustomElement;
 
 customElement('site-footer', Footer);

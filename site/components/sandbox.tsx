@@ -1,7 +1,7 @@
 import * as Solid from 'solid-js';
 import { css, cx } from '@moneko/css';
 import { type ExampleModule, examples } from '@moneko/solid-js';
-import { CustomElement, baseStyle } from 'neko-ui';
+import { baseStyle } from 'neko-ui';
 import { customElement } from 'solid-element';
 import h from 'solid-js/h';
 import { render } from 'solid-js/web';

@@ -17,7 +17,7 @@ import { customElement } from 'solid-element';
 import { Portal } from 'solid-js/web';
 import { popoverCss, portalCss } from './style';
 import { baseStyle, theme } from '../theme';
-import type { BasicConfig, CustomElement } from '..';
+import type { BasicConfig } from '..';
 
 export interface PopoverProps extends Omit<JSX.HTMLAttributes<HTMLDivElement>, 'onChange'> {
   /** 自定义类名 */

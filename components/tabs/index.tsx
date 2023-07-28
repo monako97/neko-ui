@@ -18,7 +18,7 @@ import { addCss, btnCss, style } from './style';
 import { FieldName } from '../basic-config';
 import getOptions from '../get-options';
 import { baseStyle, theme } from '../theme';
-import type { BaseOption, BasicConfig, ButtonElement, CustomElement } from '..';
+import type { BaseOption, BasicConfig, ButtonElement } from '..';
 
 export interface TabsProps {
   /** 自定义类名 */

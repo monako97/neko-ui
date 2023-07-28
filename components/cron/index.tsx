@@ -18,7 +18,7 @@ import Month from './month';
 import Second from './second';
 import Week from './week';
 import Year from './year';
-import type { BaseOption, CustomElement } from '../index';
+import type { BaseOption } from '../index';
 
 export interface CronProps extends Omit<JSX.HTMLAttributes<HTMLDivElement>, 'onChange'> {
   /** 隐藏域 */

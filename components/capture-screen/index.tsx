@@ -15,7 +15,6 @@ import { cx } from '@moneko/css';
 import { customElement } from 'solid-element';
 import { style } from './style';
 import { baseStyle } from '../theme';
-import type { CustomElement } from '../index';
 
 declare interface MediaRecorderDataAvailableEvent extends Event {
   /** MediaRecorderDataAvailableEvent */

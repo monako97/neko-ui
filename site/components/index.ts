@@ -1,25 +1,20 @@
-import { CoverageElement } from './coverage';
-import { FooterElement } from './footer';
-import { PaginationElement } from './pagination';
-import { SandboxElement, SandboxGroupElement } from './sandbox';
-import { SiderElement } from './sider';
+import './coverage';
+import './footer';
+import './pagination';
+import type { SandboxElement, SandboxGroupElement } from './sandbox';
 
-interface CustomElementTags {
-  'site-footer': FooterElement;
-  'site-coverage': CoverageElement;
-  'site-sandbox': SandboxElement;
-  'site-sandbox-group': SandboxGroupElement;
-  'site-sider': SiderElement;
-  'site-pagination': PaginationElement;
-}
 declare module 'solid-js' {
+  // eslint-disable-next-line @typescript-eslint/no-namespace
   export namespace JSX {
-    export interface IntrinsicElements extends HTMLElementTags, CustomElementTags {}
+    export interface IntrinsicElements extends HTMLElementTags {
+      'site-footer': CustomElement;
+      'site-coverage': CustomElement;
+      'site-sandbox': SandboxElement;
+      'site-sandbox-group': SandboxGroupElement;
+      'site-sider': CustomElement;
+      'site-pagination': CustomElement;
+    }
   }
 }
 
-export * from './coverage';
-export * from './footer';
-export * from './pagination';
 export * from './sandbox';
-export * from './sider';
