@@ -1,4 +1,4 @@
-# [2.0.0-beta.26](https://github.com/monako97/neko-ui/compare/1.7.3...2.0.0-beta.26) (2023-07-28)
+# [2.0.0](https://github.com/monako97/neko-ui/compare/1.7.3...2.0.0) (2023-07-28)
 
 
 ### Bug Fixes
@@ -6,6 +6,7 @@
 * button style ([469846a](https://github.com/monako97/neko-ui/commit/469846a53a471c910db86c8c5bfff0ac8bdb22ce))
 * coverage ([ed798b5](https://github.com/monako97/neko-ui/commit/ed798b59c7c5aa30624ec4c44876eb01f61ce588))
 * coverage ([ba9a022](https://github.com/monako97/neko-ui/commit/ba9a022afb106d9d8559456fe7eeba62912c4969))
+* cron style ([8a88171](https://github.com/monako97/neko-ui/commit/8a881714ddf5bee5bf7e348954a7d264a63334a3))
 * docs the feature watch recursively is unavailable on the current platform ([a13e06e](https://github.com/monako97/neko-ui/commit/a13e06e5afe5e9631f20b49b512358a8aec8916e))
 * docs the feature watch recursively is unavailable on the current platform ([369a8d3](https://github.com/monako97/neko-ui/commit/369a8d31da542f36599fd7e888a5ca036cba0565))
 * has no exported member 'ButtonType' ([3c2c4b2](https://github.com/monako97/neko-ui/commit/3c2c4b22dbddae291bf4e5b9b7c9fbdc95058e02))
