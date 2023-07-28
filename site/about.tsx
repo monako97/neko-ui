@@ -95,6 +95,7 @@ function Empty() {
     ],
     colors = ['primary', 'warning', 'error', 'success'],
     types = ['bg', 'outline', 'border', 'color', 'hover', 'active'];
+  const logo = 'https://cdn.staticaly.com/gh/monako97/cdn/main/image/202307281703208.svg';
 
   return (
     <>
@@ -115,6 +116,12 @@ function Empty() {
                 </Show>
               )}
             </For>
+            <img
+              src={logo}
+              onClick={(e) => {
+                (e.target as HTMLImageElement).src = `${logo}?${Math.random()}`;
+              }}
+            />
           </div>
           <div class="site-empty-thank">
             <h2>感谢</h2>
