@@ -16,7 +16,12 @@ export const selectPortalCss = css`
     justify-content: center;
     align-items: center;
     column-gap: 0;
-    inline-size: 33.3%;
+    inline-size: calc(100% / 3);
+    border-radius: 0;
+  }
+
+  .portal n-menu::part(suffix) {
+    display: none;
   }
 `;
 
@@ -24,5 +29,6 @@ export const selectCss = css`
   .select {
     min-inline-size: unset;
     inline-size: 70px;
+    text-align: center;
   }
 `;

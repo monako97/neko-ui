@@ -13,7 +13,7 @@ import {
 import { isFunction } from '@moneko/common';
 import { css, cx } from '@moneko/css';
 import { customElement } from 'solid-element';
-import { btnCss, style } from './style';
+import { addCss, btnCss, style } from './style';
 import { FieldName } from '../basic-config';
 import getOptions from '../get-options';
 import { baseStyle, theme } from '../theme';
@@ -41,12 +41,10 @@ export interface TabsProps {
    */
   type?: 'line' | 'card';
   /** 值修改时的回调方法 */
-  // eslint-disable-next-line no-unused-vars
   onChange?: (val: string) => void;
   /** 显示添加按钮 */
   add?: boolean;
   /** 删除和添加时的回调方法 */
-  // eslint-disable-next-line no-unused-vars
   onEdit?: (type: 'add' | 'remove', item: TabOption, e: Event) => void;
   /** 给标签页左右添加的附加内容 */
   extra?: {
@@ -230,6 +228,10 @@ function Tabs(props: TabsProps) {
     return isFunction(_content) ? (_content() as JSXElement) : _content;
   });
 
+  function onAnimationEnd() {
+    setAni('');
+  }
+
   return (
     <>
       <style>
@@ -285,12 +287,7 @@ function Tabs(props: TabsProps) {
             ref={add}
             link={true}
             class="tab add"
-            css={`
-              .btn {
-                padding: 4px;
-                font-size: var(--font-size-lg);
-              }
-            `}
+            css={addCss}
             onClick={handleEdit.bind(null, 'add', void 0)}
           >
             ＋
@@ -299,12 +296,7 @@ function Tabs(props: TabsProps) {
         <Show when={right()}>{right()}</Show>
       </div>
       <Show when={current()?.content}>
-        <div
-          class={cx('content', ani())}
-          onAnimationEnd={() => {
-            setAni('');
-          }}
-        >
+        <div class={cx('content', ani())} onAnimationEnd={onAnimationEnd}>
           {content()}
         </div>
       </Show>

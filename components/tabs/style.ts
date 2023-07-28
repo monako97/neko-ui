@@ -163,3 +163,10 @@ export const btnCss = css`
     padding-inline-end: 10px;
   }
 `;
+
+export const addCss = css`
+  .btn {
+    padding: 4px;
+    font-size: var(--font-size-lg);
+  }
+`;

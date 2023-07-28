@@ -33,7 +33,6 @@ export interface SegmentedProps {
   /** 自定义节点 'label'、'value'、'options' 的字段 */
   fieldNames?: BasicConfig['fieldName'];
   /** 值修改时的回调方法 */
-  // eslint-disable-next-line no-unused-vars
   onChange?(val: string | number): void;
 }
 

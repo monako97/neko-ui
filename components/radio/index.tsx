@@ -29,7 +29,6 @@ export interface RadioProps {
   /** 自定义节点 'label'、'value'、'options' 的字段 */
   fieldNames?: BasicConfig['fieldName'];
   /** 值修改时的回调方法 */
-  // eslint-disable-next-line no-unused-vars
   onChange?(val: string): void;
   /** 选项排列方式
    * @default 'horizontal'
@@ -49,8 +48,8 @@ function Radio(props: RadioProps) {
       props.onChange?.(next);
     }
   }
-  function onKeyUp(key: string, item: RadioOption) {
-    if (key === 'Enter') {
+  function onKeyUp(item: RadioOption, e: KeyboardEvent) {
+    if (e.key === 'Enter') {
       onChange(item);
     }
   }
@@ -69,20 +68,23 @@ function Radio(props: RadioProps) {
         {style}
         {css(props.css)}
       </style>
-      <section class={cx('box', props.layout, props.class)}>
+      <section class={cx('box', props.layout, props.class)} part="box">
         <For each={options()}>
           {(item) => {
             const readOnly = props.disabled || item.disabled;
-            const handleChange = () => onChange(item);
+            const handleChange = () => {
+              onChange(item);
+            };
             const fieldName = fieldNames();
 
             return (
-              <label
-                class={cx('label', item.class, item.status)}
+              <div
+                class={cx('item', item.class, item.status)}
+                part="item"
                 tabIndex={readOnly ? -1 : 0}
-                onKeyUp={({ key }) => onKeyUp(key, item)}
-                onClick={handleChange}
                 aria-disabled={readOnly}
+                onKeyUp={onKeyUp.bind(null, item)}
+                onClick={handleChange}
               >
                 <input
                   class="radio"
@@ -90,11 +92,14 @@ function Radio(props: RadioProps) {
                   name={props.name}
                   value={item[fieldName.value]}
                   disabled={readOnly}
+                  tabIndex={-1}
                   checked={item[fieldName.value] === value()}
                   onChange={handleChange}
                 />
-                {item[fieldName.label]}
-              </label>
+                <label class="label" part="label">
+                  {item[fieldName.label]}
+                </label>
+              </div>
             );
           }}
         </For>

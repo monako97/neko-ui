@@ -43,7 +43,6 @@ export interface InputNumberProps extends Omit<InputProps, 'value' | 'defaultVal
    */
   max?: number;
   /** 值变更时触发的函数 */
-  // eslint-disable-next-line no-unused-vars
   onChange?: (value?: number) => void;
   /** 每次改变步数，可以为小数
    * @default 1

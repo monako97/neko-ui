@@ -16,6 +16,10 @@ export const portalCss = css`
     overflow-y: auto;
     /* stylelint-disable-next-line */
     max-block-size: -webkit-fill-available;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
   }
 
   .portal {

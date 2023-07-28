@@ -90,16 +90,14 @@ function Menu(props: MenuProps | MenuMultipleProps) {
             return (
               <>
                 <Show when={item[_.fieldNames.icon]}>
-                  <span class="icon" part="icon">
+                  <span class="menu-icon" part="icon">
                     {item[_.fieldNames.icon]}
                   </span>
                 </Show>
                 {item[_.fieldNames.label]}
-                <Show when={item[_.fieldNames.suffix]}>
-                  <span class="suffix" part="suffix">
-                    {item[_.fieldNames.suffix]}
-                  </span>
-                </Show>
+                <span class="menu-suffix" part="suffix">
+                  {item[_.fieldNames.suffix]}
+                </span>
               </>
             );
           }
@@ -166,7 +164,7 @@ function Menu(props: MenuProps | MenuMultipleProps) {
               >
                 <span class="sub-menu-title" onClick={handleOpen}>
                   <RowTitle />
-                  <span class="arrow" />
+                  <span class="menu-arrow" />
                 </span>
                 <Show when={show()}>
                   <Child />
@@ -178,7 +176,7 @@ function Menu(props: MenuProps | MenuMultipleProps) {
             <Switch
               fallback={
                 <div
-                  class={cx('item', item.class, item.type)}
+                  class={cx('menu-item', item.class, item.type)}
                   part="item"
                   handle-closed={item.handleClosed}
                   aria-disabled={local.disabled || item.disabled}
@@ -194,8 +192,8 @@ function Menu(props: MenuProps | MenuMultipleProps) {
                 <SubMenu />
               </Match>
               <Match when={Array.isArray(item[_.fieldNames.options])}>
-                <div class={cx('group', item.class)} onMouseDown={preventDefault}>
-                  <span class="group-title">
+                <div class={cx('menu-group', item.class)} onMouseDown={preventDefault}>
+                  <span class="menu-group-title">
                     <RowTitle />
                   </span>
                   <RenderMenu fieldNames={_.fieldNames} list={item[_.fieldNames.options]!} />
@@ -243,7 +241,6 @@ export interface BaseMenuProps {
   /** 菜单展开的keys */
   openKeys?: (string | number)[];
   /** 菜单展开时触发的方法 */
-  // eslint-disable-next-line no-unused-vars
   onOpenChange?: (keys: (string | number)[]) => void;
   /** 选项数据 */
   items: (string | MenuOption)[];
@@ -257,7 +254,6 @@ export interface BaseMenuProps {
 
 export interface MenuProps extends BaseMenuProps {
   /** 值修改时的回调方法 */
-  // eslint-disable-next-line no-unused-vars
   onChange?(val: string | number, item: MenuOption): void;
   /** 值 */
   value?: string | number;

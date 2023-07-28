@@ -32,8 +32,8 @@ describe('Radio', () => {
     expect(getByTestId('normal')).toBeInTheDocument();
     fireEvent.focus(getByTestId('normal'));
     fireEvent.blur(getByTestId('normal'));
-    fireEvent.click(screen.getByShadowLabelText('option-3'));
-    fireEvent.click(screen.getByShadowLabelText('option-1'));
+    fireEvent.click(screen.getByShadowText('option-3'));
+    fireEvent.click(screen.getByShadowText('option-1'));
   });
   it('onChange', () => {
     const change = jest.fn();
@@ -50,9 +50,9 @@ describe('Radio', () => {
 
     expect(getByTestId('onChange')).toBeInTheDocument();
     fireEvent.focus(getByTestId('onChange'));
-    fireEvent.click(screen.getByShadowLabelText('option-3'));
-    fireEvent.click(screen.getByShadowLabelText('option-2'));
-    fireEvent.keyUp(screen.getByShadowLabelText('option-3'), { key: 'Enter' });
+    fireEvent.click(screen.getByShadowText('option-3'));
+    fireEvent.click(screen.getByShadowText('option-2'));
+    fireEvent.keyUp(screen.getByShadowText('option-3'), { key: 'Enter' });
   });
   it('disabled', () => {
     const { getByTestId } = render(() => (
@@ -69,6 +69,6 @@ describe('Radio', () => {
 
     expect(getByTestId('disabled')).toBeInTheDocument();
     fireEvent.focus(getByTestId('disabled'));
-    fireEvent.click(screen.getByShadowLabelText('option-1'));
+    fireEvent.click(screen.getByShadowText('option-1'));
   });
 });

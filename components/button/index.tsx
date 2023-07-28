@@ -122,6 +122,7 @@ function Button(_: ButtonProps) {
         onClick={handleClick}
         onAnimationEnd={handleAnimationEnd}
         disabled={local.disabled}
+        role="button"
         {...other}
       >
         <Show when={local.icon}>

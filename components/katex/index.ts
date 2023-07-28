@@ -8,7 +8,6 @@ export interface KaTexProps {
    */
   output?: 'html' | 'htmlAndMathml' | 'mathml';
   /** command */
-  // eslint-disable-next-line no-unused-vars
   trust?: boolean | ((context: TrustContext) => boolean);
   /** `\color` 行为 */
   colorIsTextColor?: boolean;

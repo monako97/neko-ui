@@ -27,7 +27,6 @@ export interface PopoverProps extends Omit<JSX.HTMLAttributes<HTMLDivElement>, '
   /** 内容 */
   content: (() => JSXElement) | JSXElement;
   /** 挂载到指定的元素，值为一个返回对应 DOM 元素 默认 document.body */
-  // eslint-disable-next-line no-unused-vars
   getPopupContainer?: (node?: HTMLElement | null) => HTMLElement;
   /** 触发行为
    * @default 'hover'
@@ -36,7 +35,6 @@ export interface PopoverProps extends Omit<JSX.HTMLAttributes<HTMLDivElement>, '
   /** 打开内容气泡 */
   open?: boolean | null;
   /** 内容打开关闭时的回调方法 */
-  // eslint-disable-next-line no-unused-vars
   onOpenChange?: (open: boolean | null) => void;
   /** 气泡的自定义类名 */
   popupClass?: string;

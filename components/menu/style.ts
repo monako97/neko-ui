@@ -6,14 +6,24 @@ export const style = css`
 
     display: block;
     color: var(--text-color);
+
+    ${['primary', 'success', 'error', 'warning']
+      .map(
+        (s) => `
+        .${s} {
+          --text-color: var(--${s}-color);
+          --text-heading: var(--${s}-color);
+          --text-secondary: var(--${s}-secondary);
+          --component-bg: var(--${s}-details-bg);
+          --menu-selection: var(--${s}-selection);
+        }
+      `,
+      )
+      .join('')}
   }
 
-  .icon {
-    font-size: var(--font-size);
-  }
-
-  .item,
-  .group,
+  .menu-item,
+  .menu-group,
   .sub-menu {
     border-radius: calc(var(--border-radius) / 1.5);
     transition:
@@ -21,6 +31,33 @@ export const style = css`
       0.3s color var(--transition-timing-function);
     box-sizing: border-box;
     line-height: 1.57;
+  }
+
+  .menu-icon {
+    font-size: var(--font-size);
+  }
+
+  .menu-group {
+    position: relative;
+  }
+
+  .menu-group-title {
+    position: sticky;
+    z-index: 1;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 5px;
+    font-size: 12px;
+    color: var(--text-secondary);
+    inset-block-start: -2px;
+    column-gap: 5px;
+  }
+
+  .menu-suffix {
+    text-align: end;
+    color: var(--text-secondary);
+    flex: 1;
   }
 
   .sub-menu-title {
@@ -37,7 +74,7 @@ export const style = css`
       }
     }
 
-    > .arrow {
+    > .menu-arrow {
       position: relative;
       display: block;
       inline-size: 12px;
@@ -88,7 +125,7 @@ export const style = css`
     > span.sub-menu-title {
       box-shadow: 0 10px 5px 0 rgb(0 0 0 / 1%);
 
-      > .arrow {
+      > .menu-arrow {
         &::after {
           transform: rotate(-45deg) translate3d(-1.5px, -1px, 1px);
         }
@@ -108,7 +145,7 @@ export const style = css`
     > span.sub-menu-title {
       box-shadow: 0 0 0 0 rgb(0 0 0 / 0%);
 
-      > .arrow {
+      > .menu-arrow {
         &::after {
           transform: rotate(45deg) translate3d(-1px, 2px, 1px);
         }
@@ -120,52 +157,7 @@ export const style = css`
     }
   }
 
-  @keyframes menu-open {
-    from {
-      transform: scaleY(0);
-      block-size: 0;
-      opacity: 0;
-    }
-
-    to {
-      transform: scaleY(1);
-      block-size: var(--h);
-      opacity: 1;
-    }
-  }
-
-  @keyframes menu-close {
-    from {
-      transform: scaleY(1);
-      block-size: var(--h);
-      opacity: 1;
-    }
-
-    to {
-      transform: scaleY(0);
-      block-size: 0;
-      opacity: 0;
-    }
-  }
-
-  .group {
-    position: relative;
-  }
-
-  .group-title {
-    position: sticky;
-    z-index: 1;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 5px;
-    font-size: 12px;
-    color: var(--text-secondary);
-    inset-block-start: -2px;
-    column-gap: 5px;
-  }
-
-  .item {
+  .menu-item {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -202,23 +194,31 @@ export const style = css`
     }
   }
 
-  .suffix {
-    text-align: end;
-    color: var(--text-secondary);
-    flex: 1;
+  @keyframes menu-open {
+    from {
+      transform: scaleY(0);
+      block-size: 0;
+      opacity: 0;
+    }
+
+    to {
+      transform: scaleY(1);
+      block-size: var(--h);
+      opacity: 1;
+    }
   }
 
-  ${['primary', 'success', 'error', 'warning']
-    .map(
-      (s) => `
-        .${s} {
-          --text-color: var(--${s}-color);
-          --text-heading: var(--${s}-color);
-          --text-secondary: var(--${s}-secondary);
-          --component-bg: var(--${s}-details-bg);
-          --menu-selection: var(--${s}-selection);
-        }
-      `,
-    )
-    .join('')}
+  @keyframes menu-close {
+    from {
+      transform: scaleY(1);
+      block-size: var(--h);
+      opacity: 1;
+    }
+
+    to {
+      transform: scaleY(0);
+      block-size: 0;
+      opacity: 0;
+    }
+  }
 `;

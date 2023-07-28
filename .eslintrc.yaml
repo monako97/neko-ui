@@ -12,7 +12,6 @@ rules:
     - 2
     - ignore:
         - \\?raw$
-        - ^@pkg
         - ^@/
         - components
         - ^neko-ui

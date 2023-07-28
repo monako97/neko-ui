@@ -36,7 +36,6 @@ export interface TagProps extends Omit<JSX.HTMLAttributes<HTMLSpanElement>, 'onC
   /** 禁用 */
   disabled?: boolean;
   /** 关闭时的回调方法 */
-  // eslint-disable-next-line no-unused-vars
   onClose?: (e: MouseEvent) => void;
 }
 

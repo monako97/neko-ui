@@ -11,7 +11,6 @@ interface ColorSelectionResult {
 }
 
 interface EyeDropper extends EyeDropperConstructor {
-  // eslint-disable-next-line no-unused-vars
   open: (options?: ColorSelectionOptions = {}) => Promise<ColorSelectionResult>;
 }
 

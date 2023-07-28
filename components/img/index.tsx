@@ -21,7 +21,6 @@ export interface ImgProps {
   /** 大图查看 */
   open?: boolean | null;
   /** 开启关闭大图的回调函数 */
-  // eslint-disable-next-line no-unused-vars
   onOpenChange?: (open: boolean | null) => void;
   /** 点击遮罩关闭
    * @default false

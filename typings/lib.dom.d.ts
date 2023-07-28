@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-/* eslint-disable no-unused-vars */
 declare interface MediaRecorderErrorEvent extends Event {
   name: string;
 }
@@ -51,25 +50,25 @@ declare class MediaRecorder extends EventTarget {
   addEventListener<K extends keyof MediaRecorderEventMap>(
     type: K,
     listener: (this: MediaStream, ev: MediaRecorderEventMap[K]) => any,
-    options?: boolean | AddEventListenerOptions
+    options?: boolean | AddEventListenerOptions,
   ): void;
 
   addEventListener(
     type: string,
     listener: EventListenerOrEventListenerObject,
-    options?: boolean | AddEventListenerOptions
+    options?: boolean | AddEventListenerOptions,
   ): void;
 
   removeEventListener<K extends keyof MediaRecorderEventMap>(
     type: K,
     listener: (this: MediaStream, ev: MediaRecorderEventMap[K]) => any,
-    options?: boolean | EventListenerOptions
+    options?: boolean | EventListenerOptions,
   ): void;
 
   removeEventListener(
     type: string,
     listener: EventListenerOrEventListenerObject,
-    options?: boolean | EventListenerOptions
+    options?: boolean | EventListenerOptions,
   ): void;
 }
 

@@ -1,13 +1,13 @@
 import * as Solid from 'solid-js';
 import { css, cx } from '@moneko/css';
 import { type ExampleModule, examples } from '@moneko/solid-js';
-import * as All from '@pkg';
 import { CustomElement, baseStyle } from 'neko-ui';
 import { customElement } from 'solid-element';
 import h from 'solid-js/h';
 import { render } from 'solid-js/web';
 import htmlHelp from './html.md?raw';
 import jsxHelp from './jsx.md?raw';
+import * as All from '../../components';
 import type { CodeLiveProps } from 'n-code-live';
 
 const { For, Show, createEffect, createMemo, createSignal, mergeProps, onMount } = Solid;

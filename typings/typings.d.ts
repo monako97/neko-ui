@@ -6,16 +6,14 @@ declare module '*.ts';
 declare module '*.png';
 declare module '*.svg';
 declare module '*.woff2';
-declare module '@pkg';
 declare module 'components/*/examples/*';
 declare module './index.less' {
   const styles: { readonly [key: string]: string };
 
   export default styles;
 }
-// types/mdx.d.ts
 declare module '*.mdx' {
-  // eslint-disable-next-line no-unused-vars, @typescript-eslint/no-explicit-any
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   let MDXComponent: (props: any) => JSX.Element;
 
   export default MDXComponent;

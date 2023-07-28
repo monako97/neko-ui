@@ -54,7 +54,6 @@ interface TreeBaseProps extends TreeBaseProp {
    */
   multiple?: false;
   /** 选中的值发生修改时的回调函数, 多选模式时入参为数组 */
-  // eslint-disable-next-line no-unused-vars
   onChange?(key?: string): void;
 }
 interface TreeMultipleBaseProps extends TreeBaseProp {
@@ -64,7 +63,6 @@ interface TreeMultipleBaseProps extends TreeBaseProp {
    * @default true
    */
   multiple: true;
-  // eslint-disable-next-line no-unused-vars
   onChange?(key?: string[]): void;
 }
 export interface TreeProps extends TreeBaseProps {

@@ -100,5 +100,6 @@ export type CustomElement<T extends Partial<ICustomElement> = ICustomElement> = 
   | 'onSaveRecorder'
 > & {
   ref?: CustomElement<T> | { current: CustomElement<T> | null };
+  shadowRoot?: ShadowRoot | Element | null;
   offsetWidth?: number;
 };

@@ -124,7 +124,7 @@ describe('ColorPalette', () => {
         getByTestId(testId).shadowRoot!.querySelector('n-dropdown')! as unknown as HTMLElement
       ).shadowRoot!.querySelector('.switch')!,
     );
-    fireEvent.click(portal(container, '.item'));
+    fireEvent.click(portal(container, '.menu-item'));
     fireEvent.input(a, {
       target: {
         value: 'NAN',
