@@ -1,4 +1,4 @@
-# [2.0.0-beta.24](https://github.com/monako97/neko-ui/compare/1.7.3...2.0.0-beta.24) (2023-07-28)
+# [2.0.0-beta.25](https://github.com/monako97/neko-ui/compare/1.7.3...2.0.0-beta.25) (2023-07-28)
 
 
 ### Bug Fixes
@@ -18,6 +18,7 @@
 * button组件 ([5758241](https://github.com/monako97/neko-ui/commit/5758241a32f01d705481053d175beb9d0b3ad35a))
 * capture-screen ([5289dce](https://github.com/monako97/neko-ui/commit/5289dce2e5a9d840860be2d49ffc01e47ee92235))
 * cron ([1d6f98c](https://github.com/monako97/neko-ui/commit/1d6f98ca653c295e51b1475d7465cc1e2a87530c))
+* cron 样式调整 ([90dd810](https://github.com/monako97/neko-ui/commit/90dd81091220fb3fa95293e34360ff4d75c52d27))
 * jest ([399b255](https://github.com/monako97/neko-ui/commit/399b255e16e8782da514854f42179eceaa7d872b))
 * jest ([30d4dab](https://github.com/monako97/neko-ui/commit/30d4dab10f207ee1c408aae294e53731e4fac1be))
 * menu 导航菜单 ([a83ac70](https://github.com/monako97/neko-ui/commit/a83ac703bf0190cea55b217a8a847fedcfc6abc6))
