@@ -36,7 +36,7 @@ yarn add neko-ui -S
 ## 安装 (umd)
 
 ```html
-<script src="https://cdn.staticaly.com/gh/monako97/cdn/main/npm/neko-ui/2.0.0/lib/index.js"></script>
+<script src="https://cdn.staticaly.com/gh/monako97/cdn/main/npm/neko-ui/2.0.1/lib/index.js"></script>
 ```
 
 ### 使用 (umd)
