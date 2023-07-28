@@ -30,6 +30,8 @@ extend({
 ```typescript
 import { request } from '@/services';
 
-export const getApi = () => request('/metrics');
-export const postApi = (params = {}) => request('/metrics', { data: params, method: 'POST' });
+// 实际访问 /api/list
+export const getApi = () => request('/list');
+// 实际访问 /api/list
+export const postApi = (params = {}) => request('/list', { data: params, method: 'POST' });
 ```

@@ -8,7 +8,6 @@ const router: RouteDefinition[] = [
     children: [
       {
         path: '/',
-        component: lazy(() => import(/* webpackChunkName: "about" */ '@/about')),
       },
       ...routes,
     ],

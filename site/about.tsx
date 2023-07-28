@@ -1,40 +1,14 @@
-import { For, Show } from 'solid-js';
+import { For } from 'solid-js';
 import { css } from '@moneko/css';
 import { baseStyle } from 'neko-ui';
-import jb_beam from '@/assets/images/jb_beam.svg';
-import { projectInfo } from '@/utils';
 
 const style = css`
   .site-empty {
-    .site-empty-top {
-      display: flex;
-      gap: 24px;
-    }
-
-    .site-empty-info {
-      flex: 1;
-    }
-
-    strong {
-      margin-inline-end: 8px;
-    }
-
-    &-thank {
-      img {
-        inline-size: 120px;
-        block-size: 120px;
-      }
-
-      h2::before,
-      a::after {
-        content: none;
-      }
-
-      h2 {
-        margin: 0;
-        border: none;
-      }
-    }
+    border-radius: var(--border-radius);
+    padding: 24px;
+    background-color: var(--component-bg);
+    box-shadow: 0 2px 8px 0 var(--primary-shadow);
+    margin-block-end: 24px;
 
     &-colors {
       display: flex;
@@ -88,14 +62,8 @@ const style = css`
 `;
 
 function Empty() {
-  const infos = [
-      ['描述', projectInfo.description],
-      ['版本', projectInfo.version],
-      ['作者', projectInfo.author?.name],
-    ],
-    colors = ['primary', 'warning', 'error', 'success'],
+  const colors = ['primary', 'warning', 'error', 'success'],
     types = ['bg', 'outline', 'border', 'color', 'hover', 'active'];
-  const logo = 'https://cdn.staticaly.com/gh/monako97/cdn/main/image/202307281703208.svg';
 
   return (
     <>
@@ -104,37 +72,6 @@ function Empty() {
         {baseStyle()}
       </style>
       <div class="site-empty">
-        <div class="site-empty-top">
-          <div class="site-empty-info">
-            <For each={infos}>
-              {(e) => (
-                <Show when={typeof e[1] === 'string'}>
-                  <p>
-                    <strong>{e[0]}: </strong>
-                    <span>{e[1]}</span>
-                  </p>
-                </Show>
-              )}
-            </For>
-            <img
-              src={logo}
-              onClick={(e) => {
-                (e.target as HTMLImageElement).src = `${logo}?${Math.random()}`;
-              }}
-            />
-          </div>
-          <div class="site-empty-thank">
-            <h2>感谢</h2>
-            <a
-              href="https://www.jetbrains.com/?from=monako"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <img src={jb_beam} />
-            </a>
-          </div>
-        </div>
-        <h4>主题色</h4>
         <div class="site-empty-colors">
           <For each={colors} fallback={<div>No items</div>}>
             {(c: string) => {
