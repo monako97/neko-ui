@@ -9,6 +9,7 @@ export const selectPortalCss = css`
     display: flex;
     flex-wrap: wrap;
     max-block-size: 250px;
+    gap: 4px;
   }
 
   .portal n-menu::part(item) {
@@ -16,8 +17,8 @@ export const selectPortalCss = css`
     justify-content: center;
     align-items: center;
     column-gap: 0;
-    inline-size: calc(100% / 3);
-    border-radius: 0;
+    inline-size: calc((100% - 8px) / 3);
+    border-radius: 4px;
   }
 
   .portal n-menu::part(suffix) {

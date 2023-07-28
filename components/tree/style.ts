@@ -97,7 +97,7 @@ export const style = css`
   }
 
   .row.active {
-    color: var(--on-primary-selection);
+    color: var(--primary-color);
     background-color: var(--primary-selection);
     box-shadow: 0 0 0 1px var(--primary-border);
     text-shadow: 2px 2px 2px var(--primary-outline);

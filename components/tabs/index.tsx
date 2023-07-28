@@ -8,9 +8,10 @@ import {
   createSignal,
   mergeProps,
   onCleanup,
+  onMount,
   untrack,
 } from 'solid-js';
-import { isFunction } from '@moneko/common';
+import { isFunction, passiveSupported } from '@moneko/common';
 import { css, cx } from '@moneko/css';
 import { customElement } from 'solid-element';
 import { addCss, btnCss, style } from './style';
@@ -231,6 +232,12 @@ function Tabs(props: TabsProps) {
   function onAnimationEnd() {
     setAni('');
   }
+  onMount(() => {
+    box?.addEventListener('wheel', handleWheel, passiveSupported);
+  });
+  onCleanup(() => {
+    box?.removeEventListener('wheel', handleWheel, passiveSupported);
+  });
 
   return (
     <>
@@ -244,7 +251,6 @@ function Tabs(props: TabsProps) {
       <div
         ref={box}
         class={cx('tabs', props.type, props.class, props.centered && 'centered')}
-        onWheel={handleWheel}
         aria-disabled={props.disabled}
       >
         <Show when={left()}>{left()}</Show>

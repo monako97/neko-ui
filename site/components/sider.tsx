@@ -257,9 +257,10 @@ const style = css`
 `;
 
 const switchThemeCss = css`
-  .site-theme-btn {
+  .theme-btn {
     font-size: 28px;
     text-align: center;
+    color: #fc0;
     transition: transform var(--transition-duration) var(--transition-timing-function);
     min-inline-size: 28px;
     line-height: 32px;
@@ -267,18 +268,9 @@ const switchThemeCss = css`
     user-select: none;
   }
 
-  .site-theme-btn::before {
-    color: #fc0;
-    content: '☀';
-  }
-
-  [data-theme='dark'] .site-theme-btn::before {
+  [data-theme='dark'] .theme-btn {
     content: '☪';
     color: #fff;
-  }
-
-  .site-theme-btn:active {
-    transform: scale(0.95);
   }
 `;
 
@@ -336,8 +328,8 @@ export { all, kv };
 function Sider(_: object, opt: ComponentOptions<object>) {
   const location = useLocation();
   const themes = [
-    { label: '暗黑', value: 'dark', icon: <span>☪</span> },
-    { label: '明亮', value: 'light', icon: <span>☀</span> },
+    { label: '暗黑', value: 'dark', icon: '☪' },
+    { label: '明亮', value: 'light', icon: '☀' },
   ];
   let menuEl: HTMLUListElement | undefined;
   const active = createMemo(() => getPathName(location));
@@ -387,7 +379,7 @@ function Sider(_: object, opt: ComponentOptions<object>) {
               setTheme('scheme', e.detail[0]);
             }}
           >
-            <div class="site-theme-btn" />
+            <span class="theme-btn">{theme.scheme === 'dark' ? '☪' : '☀'}</span>
           </n-dropdown>
         </header>
         <section class="site-sider">
