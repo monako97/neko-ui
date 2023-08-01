@@ -1,7 +1,7 @@
 import { For, type JSX, Show, createComponent, createMemo, mergeProps } from 'solid-js';
 import { css, cx } from '@moneko/css';
 import { customElement } from 'solid-element';
-import { baseStyle, theme } from '../theme';
+import theme from '../theme';
 
 const style = css`
   :host {
@@ -99,10 +99,11 @@ export interface SkeletonProps extends Omit<JSX.HTMLAttributes<HTMLDivElement>, 
 }
 
 function Skeleton(props: SkeletonProps) {
+  const { baseStyle, isDark } = theme;
   const activeCls = createMemo(() => props.active && 'active');
   const rows = createMemo(() => Array(props.rows).fill(0));
   const cssVar = createMemo(() => {
-    if (theme.scheme === 'dark') {
+    if (isDark()) {
       return css`
         :host {
           --skeleton-bg: rgb(255 255 255 / 6%);

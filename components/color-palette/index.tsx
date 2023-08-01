@@ -28,7 +28,7 @@ import { style, switchCss } from './style';
 import '../dropdown';
 import '../input';
 import '../input-number';
-import { baseStyle } from '../theme';
+import theme from '../theme';
 import type { InputNumberProps } from '../index';
 
 export interface ColorPaletteProps extends Omit<JSX.HTMLAttributes<HTMLDivElement>, 'onChange'> {
@@ -48,6 +48,7 @@ export interface ColorPaletteProps extends Omit<JSX.HTMLAttributes<HTMLDivElemen
 export type ColorPaletteElement = CustomElement<ColorPaletteProps>;
 
 function ColorPalette(_: ColorPaletteProps) {
+  const { baseStyle } = theme;
   const props = mergeProps({ defaultValue: '#5794ff' }, _);
   let picker: HTMLDivElement | undefined;
   const types = [
@@ -161,11 +162,9 @@ function ColorPalette(_: ColorPaletteProps) {
     setDrag(true);
     changeColor(e);
   }
-  function mouseMove(e: MouseEvent) {
-    if (untrack(drag)) {
-      changeColor(e);
-    }
-  }
+  // function mouseMove(e: MouseEvent) {
+  //   changeColor(e);
+  // }
   function mouseUp() {
     setDrag(false);
   }
@@ -202,13 +201,23 @@ function ColorPalette(_: ColorPaletteProps) {
     throttle(setColor, 8)(props.value);
   });
 
+  createEffect(() => {
+    if (drag()) {
+      document.body.addEventListener('mousemove', changeColor, {
+        passive: passiveSupported,
+      });
+    }
+    onCleanup(() => {
+      document.body.removeEventListener('mousemove', changeColor, false);
+    });
+  });
   onMount(() => {
-    document.body.addEventListener('mousemove', mouseMove, passiveSupported);
-    document.body.addEventListener('mouseup', mouseUp, passiveSupported);
+    document.body.addEventListener('mouseup', mouseUp, {
+      passive: passiveSupported,
+    });
   });
   onCleanup(() => {
-    document.body.removeEventListener('mousemove', mouseMove, passiveSupported);
-    document.body.removeEventListener('mouseup', mouseUp, passiveSupported);
+    document.body.removeEventListener('mouseup', mouseUp, false);
   });
 
   return (

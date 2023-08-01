@@ -1,11 +1,4 @@
-import {
-  createComponent,
-  createEffect,
-  createSignal,
-  mergeProps,
-  onCleanup,
-  onMount,
-} from 'solid-js';
+import { createComponent, createEffect, createSignal, mergeProps, onCleanup } from 'solid-js';
 import { passiveSupported } from '@moneko/common';
 import { css, cx } from '@moneko/css';
 import { customElement } from 'solid-element';
@@ -92,14 +85,13 @@ function InputNumber(props: InputNumberProps) {
       min: Number.MIN_SAFE_INTEGER,
     },
     props,
-    {
-      // eslint-disable-next-line solid/reactivity
-      class: cx('number', props.class),
-      // eslint-disable-next-line solid/reactivity
-      css: style + (props.css || ''),
-      // eslint-disable-next-line @typescript-eslint/no-use-before-define
-      onChange: change,
-    },
+    // {
+    //   // eslint-disable-next-line solid/reactivity
+    //   class: cx('number', props.class),
+    //   // eslint-disable-next-line solid/reactivity
+    //   css: style + (props.css || ''),
+    //   onChange: change,
+    // },
   );
 
   function change(val?: string | number) {
@@ -124,19 +116,27 @@ function InputNumber(props: InputNumberProps) {
 
   createEffect(() => {
     if (move()) {
-      document.body.addEventListener('mousemove', mouseMove, passiveSupported);
-    } else {
-      document.body.removeEventListener('mousemove', mouseMove, passiveSupported);
+      document.body.addEventListener('mousemove', mouseMove, {
+        passive: passiveSupported,
+      });
+      document.body.addEventListener('mouseup', mouseUp, {
+        passive: passiveSupported,
+      });
     }
-  });
-  onMount(() => {
-    document.body.addEventListener('mouseup', mouseUp, passiveSupported);
-  });
-  onCleanup(() => {
-    document.body.removeEventListener('mouseup', mouseUp, passiveSupported);
+    onCleanup(() => {
+      document.body.removeEventListener('mousemove', mouseMove, false);
+      document.body.removeEventListener('mouseup', mouseUp, passiveSupported);
+    });
   });
 
-  return createComponent(Input, _ as InputProps);
+  return (
+    <Input
+      {...(_ as InputProps)}
+      class={cx('number', props.class)}
+      onChange={change}
+      css={style + (props.css || '')}
+    />
+  );
 }
 
 customElement(

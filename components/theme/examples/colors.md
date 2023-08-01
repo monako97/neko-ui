@@ -6,6 +6,8 @@ col: 100%
 ---
 
 ```jsx
+const { dark, setDark, light, setLight } = theme;
+
 function getTextColor(colors) {
   return {
     0: colors['100'],
@@ -26,10 +28,9 @@ function getTextColor(colors) {
   };
 }
 
-function Item({ name, dark }) {
-  const colors = createMemo(() => {
-    return toneColor(theme[dark ? 'dark' : 'light'][name], dark);
-  });
+function Item({ name, isDark }) {
+  const color = createMemo(() => (isDark ? dark() : light())[name]);
+  const colors = createMemo(() => toneColor(color(), isDark));
 
   return (
     <div
@@ -55,15 +56,21 @@ function Item({ name, dark }) {
       </strong>
       <n-color-picker
         style={{ 'margin-right': '8px' }}
-        value={theme[dark ? 'dark' : 'light'][name]}
+        value={color()}
         onChange={(e) => {
-          setTheme(dark ? 'dark' : 'light', (prev) => {
-            return { ...prev, [name]: e.detail };
-          });
+          if (isDark) {
+            setDark((prev) => {
+              return { ...prev, [name]: e.detail };
+            });
+          } else {
+            setLight((prev) => {
+              return { ...prev, [name]: e.detail };
+            });
+          }
           e.target.value = e.detail;
         }}
       />
-      {Object.keys(colors()).map((c, i) => {
+      {Object.keys(colors()).slice(1,-1).map((c, i) => {
         let item;
         createEffect(() => {
           item.style.backgroundColor = colors()[c];
@@ -104,10 +111,10 @@ render(
             'overflow-x': 'auto',
           }}
         >
-          <Item name="primary" dark={dark} />
-          <Item name="warning" dark={dark} />
-          <Item name="error" dark={dark} />
-          <Item name="success" dark={dark} />
+          <Item name="primary" isDark={dark} />
+          <Item name="warning" isDark={dark} />
+          <Item name="error" isDark={dark} />
+          <Item name="success" isDark={dark} />
         </div>
       );
     })}

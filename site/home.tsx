@@ -1,10 +1,11 @@
 import { For } from 'solid-js';
 import { css } from '@moneko/css';
-import { baseStyle } from 'neko-ui';
+import { theme } from 'neko-ui';
 import log from '../CHANGELOG.md?raw';
 import Readme from '../README.md?raw';
 
 function Home() {
+  const { baseStyle } = theme;
   const colors = ['primary', 'warning', 'error', 'success'],
     types = ['bg', 'outline', 'border', 'color', 'hover', 'active'];
 

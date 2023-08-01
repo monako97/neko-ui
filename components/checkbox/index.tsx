@@ -4,7 +4,7 @@ import { customElement } from 'solid-element';
 import { style } from './style';
 import { type BaseOption, type BasicConfig, FieldName } from '../basic-config';
 import getOptions from '../get-options';
-import { baseStyle } from '../theme';
+import theme from '../theme';
 
 /** 通用API
  * @since 1.0.0
@@ -63,6 +63,7 @@ export interface CheckboxOption extends BaseOption {
 }
 
 function Checkbox(props: CheckboxBoolProps | CheckboxGroupProps) {
+  const { baseStyle } = theme;
   const [value, setValue] = createSignal<(string | number)[]>([]);
   const fieldNames = createMemo(() => Object.assign({}, FieldName, props.fieldNames));
 

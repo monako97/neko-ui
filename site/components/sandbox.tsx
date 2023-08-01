@@ -1,16 +1,18 @@
 import * as Solid from 'solid-js';
 import { css, cx } from '@moneko/css';
 import { type ExampleModule, examples } from '@moneko/solid-js';
-import { baseStyle } from 'neko-ui';
+import { theme } from 'neko-ui';
 import { customElement } from 'solid-element';
 import h from 'solid-js/h';
+import * as SolidWeb from 'solid-js/web';
 import { render } from 'solid-js/web';
 import htmlHelp from './html.md?raw';
 import jsxHelp from './jsx.md?raw';
 import * as All from '../../components';
 import type { CodeLiveProps } from 'n-code-live';
 
-const { For, Show, createEffect, createMemo, createSignal, mergeProps, onMount } = Solid;
+const { createRoot, untrack, createEffect, createMemo, createSignal, mergeProps, onMount } = Solid;
+const { For, Show } = SolidWeb;
 
 const sandboxCss = css`
   :host {
@@ -196,11 +198,33 @@ const codeNoShadowCss = css`
   }
 `;
 
+const noMargin = '.n-md-body {margin: 0;}';
+const portalCss = '.portal {font-size:13px;max-width: 50vw;}';
+const suffixCss = css`
+  .label {
+    border-radius: 50%;
+    padding: 0 5.5px;
+    background: var(--disable-bg);
+    margin-inline-start: 4px;
+    cursor: pointer;
+  }
+`;
+
+function $$jsx(type: Solid.Component, p: Solid.VoidProps, ...children: Solid.JSXElement[]) {
+  return h(type, {
+    ...p,
+    children,
+  });
+}
+function Fragment(p: Solid.VoidProps) {
+  return p.children;
+}
 interface SandboxProps extends Omit<ExampleModule, 'title'> {
   legend: string;
   codes: Record<string, string>;
   description?: string;
 }
+
 function Sandbox(_props: SandboxProps) {
   const props = mergeProps({ codes: {} }, _props);
   const [sources, setSources] = createSignal<Record<string, string>>({});
@@ -211,21 +235,11 @@ function Sandbox(_props: SandboxProps) {
   });
   const [open, setOpen] = createSignal(false);
 
-  function $$jsx(type: Solid.Component, p: Solid.VoidProps, ...children: Solid.JSXElement[]) {
-    return h(type, {
-      ...p,
-      children,
-    });
-  }
-  function Fragment(p: Solid.VoidProps) {
-    return p.children;
-  }
   const scope: CodeLiveProps['scope'] = {
     jsx: $$jsx,
     Fragment: Fragment,
     ...Solid,
     ...All,
-    css,
   };
 
   const hasDesc = createMemo(() => {
@@ -251,7 +265,6 @@ function Sandbox(_props: SandboxProps) {
     setCurrent({ ...old, code: e.detail });
     setSources((prev) => ({ ...prev, [old.lang]: e.detail }));
   }
-  const noMargin = '.n-md-body {margin: 0;}';
   const langs = createMemo(() =>
     Object.keys(props.codes).map((k) => ({
       value: k,
@@ -260,17 +273,9 @@ function Sandbox(_props: SandboxProps) {
         <n-popover
           arrow={true}
           trigger="click"
-          css={css`
-            .label {
-              border-radius: 50%;
-              padding: 0 5.5px;
-              background: var(--disable-bg);
-              margin-inline-start: 4px;
-              cursor: pointer;
-            }
-          `}
-          popup-css=".portal {font-size:13px;max-width: 50vw;}"
-          content={() => (
+          css={suffixCss}
+          popup-css={portalCss}
+          content={
             <n-md
               style={{
                 display: 'block',
@@ -280,7 +285,7 @@ function Sandbox(_props: SandboxProps) {
               css={noMargin}
               text={k === 'html' ? htmlHelp : jsxHelp}
             />
-          )}
+          }
         >
           <span class="label">?</span>
         </n-popover>
@@ -298,6 +303,14 @@ function Sandbox(_props: SandboxProps) {
     });
   });
 
+  function renderJSX(jsx: () => Solid.JSXElement, ele: Element) {
+    const clean = createRoot(() => render(jsx, ele));
+
+    if (!untrack(current).jsx) {
+      clean();
+    }
+  }
+
   return (
     <>
       <style>{sandboxCss}</style>
@@ -309,7 +322,7 @@ function Sandbox(_props: SandboxProps) {
               source={sources()[current().lang]}
               jsx={current().jsx}
               scope={scope}
-              render-jsx={render}
+              render-jsx={renderJSX}
             />
             <Show when={langs().length > 1}>
               <n-segmented
@@ -390,6 +403,7 @@ interface SandboxGroupProps {
 }
 
 function SandboxGroup(props: SandboxGroupProps) {
+  const { baseStyle } = theme;
   const data = createMemo(() => examples[props.name] || []);
 
   return (

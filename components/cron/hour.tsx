@@ -61,7 +61,7 @@ function Hour(props: Required<Omit<CronItemProps<'hour'>, 'options'>>) {
     },
   ];
 
-  return <Item options={options} onType={props.onType} state={props.state} />;
+  return <Item options={options} onChange={props.onChange} state={props.state} />;
 }
 
 export default Hour;

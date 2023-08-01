@@ -2,7 +2,7 @@ import { createComponent, createEffect, createSignal, mergeProps } from 'solid-j
 import { css, cx } from '@moneko/css';
 import { customElement } from 'solid-element';
 import { style } from './style';
-import { baseStyle } from '../theme';
+import theme from '../theme';
 
 export interface SwitchProps {
   /** 自定义类名 */
@@ -26,6 +26,7 @@ export interface SwitchProps {
 export type SwitchElement = CustomElement<SwitchProps>;
 
 function Switch(props: SwitchProps) {
+  const { baseStyle } = theme;
   const [value, setValue] = createSignal(false);
 
   function change() {

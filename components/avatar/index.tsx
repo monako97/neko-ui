@@ -11,7 +11,7 @@ import {
 import { css, cx } from '@moneko/css';
 import { customElement } from 'solid-element';
 import { style } from './style';
-import { baseStyle } from '../theme';
+import theme from '../theme';
 import type { BasicConfig } from '../index';
 
 export interface AvatarProps
@@ -35,13 +35,14 @@ export interface AvatarProps
 }
 export type AvatarElement = CustomElement<AvatarProps>;
 
-const avatarSize: Record<string, string> = {
-  small: '24px',
-  normal: '32px',
-  large: '40px',
-};
-
 function Avatar(_: AvatarProps) {
+  const { baseStyle } = theme;
+  const avatarSize: Record<string, string> = {
+    small: '24px',
+    normal: '32px',
+    large: '40px',
+  };
+
   const props = mergeProps({ size: 32 }, _);
   const [local, other] = splitProps(props, [
     'class',

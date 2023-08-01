@@ -13,7 +13,7 @@ import { css, cx } from '@moneko/css';
 import { customElement } from 'solid-element';
 import { style } from './style';
 import Prism, { prismCss } from '../prism';
-import { baseStyle } from '../theme';
+import theme from '../theme';
 
 export interface CodeProps extends Omit<JSX.HTMLAttributes<HTMLDivElement>, 'onChange'> {
   /** 自定义类名 */
@@ -37,6 +37,7 @@ export interface CodeProps extends Omit<JSX.HTMLAttributes<HTMLDivElement>, 'onC
 export type CodeElement = CustomElement<CodeProps>;
 
 function Code(props: CodeProps) {
+  const { baseStyle } = theme;
   let codeEl: HTMLPreElement;
   const [code, setCode] = createSignal<string>('');
   const [hei, setHei] = createSignal(20);

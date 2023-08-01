@@ -90,7 +90,7 @@ function Day(props: Required<Omit<CronItemProps<'day'>, 'options'>>) {
     },
   ];
 
-  return <Item state={props.state} options={options} onType={props.onType} />;
+  return <Item state={props.state} options={options} onChange={props.onChange} />;
 }
 
 export default Day;

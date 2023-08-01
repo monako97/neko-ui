@@ -11,7 +11,7 @@ import { isFunction } from '@moneko/common';
 import { css, cx } from '@moneko/css';
 import { customElement } from 'solid-element';
 import { style } from './style';
-import { baseStyle } from '../theme';
+import theme from '../theme';
 import type { BasicConfig } from '../index';
 
 export interface InputProps {
@@ -60,6 +60,7 @@ export interface InputProps {
 }
 
 function Input(props: InputProps) {
+  const { baseStyle } = theme;
   let inputRef: HTMLInputElement | undefined;
   const [x, setX] = createSignal<string>();
 

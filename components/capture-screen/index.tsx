@@ -14,7 +14,7 @@ import { downloadBlob, isFunction } from '@moneko/common';
 import { cx } from '@moneko/css';
 import { customElement } from 'solid-element';
 import { style } from './style';
-import { baseStyle } from '../theme';
+import theme from '../theme';
 
 declare interface MediaRecorderDataAvailableEvent extends Event {
   /** MediaRecorderDataAvailableEvent */
@@ -84,6 +84,7 @@ const btnStatusDic: Record<MediaRecorder['state'], 'primary' | 'warning' | 'succ
 };
 
 function CaptureScreen(_: CaptureScreenProps) {
+  const { baseStyle } = theme;
   const _props = mergeProps(
     {
       options: displayMediaOptions,

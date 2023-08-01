@@ -1,7 +1,7 @@
 import { type JSX, createEffect, createMemo, createSignal } from 'solid-js';
 import { css, cx } from '@moneko/css';
 import { customElement } from 'solid-element';
-import { baseStyle } from '../theme';
+import theme from '../theme';
 
 const style = css`
   .text {
@@ -49,6 +49,7 @@ export interface Highlight {
 }
 
 function HighlightText(props: HighlightTextProps) {
+  const { baseStyle } = theme;
   const [texts, setTexts] = createSignal<Highlight[] | null>();
   const hitNode = createMemo(() => {
     return (

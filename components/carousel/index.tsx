@@ -13,7 +13,7 @@ import { isFunction } from '@moneko/common';
 import { css, cx } from '@moneko/css';
 import { customElement } from 'solid-element';
 import { style } from './style';
-import { baseStyle } from '../theme';
+import theme from '../theme';
 
 export interface CarouselProps {
   /** 自定义类名 */
@@ -38,6 +38,7 @@ export interface CarouselProps {
 export type CarouselElement = CustomElement<CarouselProps>;
 
 function Carousel(_props: CarouselProps) {
+  const { baseStyle } = theme;
   const props = mergeProps({ autoplay: -1, children: [] }, _props);
   const [left, setLeft] = createSignal(0);
   const [right, setRight] = createSignal(1);

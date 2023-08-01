@@ -13,7 +13,7 @@ import { customElement } from 'solid-element';
 import { style } from './style';
 import { type BaseOption, type BasicConfig, FieldName } from '../basic-config';
 import getOptions from '../get-options';
-import { baseStyle, theme } from '../theme';
+import theme from '../theme';
 
 export interface SegmentedProps {
   /** 自定义类名 */
@@ -37,11 +37,12 @@ export interface SegmentedProps {
 }
 
 function Segmented(props: SegmentedProps) {
+  const { baseStyle, isDark } = theme;
   const [value, setValue] = createSignal(props.defaultValue);
   const [offsetStyle, setOffsetStyle] = createSignal('');
   let box: HTMLDivElement | undefined;
   const cssVar = createMemo(() => {
-    if (theme.scheme === 'dark') {
+    if (isDark()) {
       return css`
         :host {
           --segmented-bg: #000;

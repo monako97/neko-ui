@@ -2,7 +2,7 @@ import { type JSX, createComponent, createEffect, createMemo, mergeProps } from 
 import { css, cx } from '@moneko/css';
 import { customElement } from 'solid-element';
 import { Dynamic } from 'solid-js/web';
-import { baseStyle } from '../theme';
+import theme from '../theme';
 
 export interface TypographyProps extends Omit<JSX.HTMLAttributes<HTMLDivElement>, 'onChange'> {
   /** 自定义类名 */
@@ -26,6 +26,7 @@ export interface TypographyProps extends Omit<JSX.HTMLAttributes<HTMLDivElement>
 }
 
 function Typography(props: TypographyProps) {
+  const { baseStyle } = theme;
   const _ = mergeProps(
     {
       type: 'text',

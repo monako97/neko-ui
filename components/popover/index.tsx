@@ -11,12 +11,12 @@ import {
   onMount,
   splitProps,
 } from 'solid-js';
-import { isElementInside, isFunction, passiveSupported } from '@moneko/common';
+import { isElementInside, isEqual, isFunction, passiveSupported } from '@moneko/common';
 import { css, cx } from '@moneko/css';
 import { customElement } from 'solid-element';
 import { Portal } from 'solid-js/web';
 import { popoverCss, portalCss } from './style';
-import { baseStyle, theme } from '../theme';
+import theme from '../theme';
 import type { BasicConfig } from '..';
 
 export interface PopoverProps extends Omit<JSX.HTMLAttributes<HTMLDivElement>, 'onChange'> {
@@ -102,6 +102,7 @@ type EventMap = {
   [key: string]: string | null;
 };
 function Popover(props: PopoverProps) {
+  const { isDark, baseStyle } = theme;
   const mp = mergeProps(
     {
       trigger: 'hover',
@@ -128,7 +129,7 @@ function Popover(props: PopoverProps) {
   ]);
   let ref: HTMLDivElement | undefined;
   let childRef: HTMLSpanElement | undefined;
-  let closeTimer: NodeJS.Timeout | undefined | null;
+  let closeTimer: NodeJS.Timeout | undefined;
   const [open, setOpen] = createSignal<boolean | null>(null);
   const [posi, setPosi] = createSignal<Posi>({});
   const [up, setUp] = createSignal<boolean>(false);
@@ -162,16 +163,10 @@ function Popover(props: PopoverProps) {
   });
 
   function close(e: MouseEvent | Event) {
-    if (closeTimer) {
-      clearTimeout(closeTimer);
-      closeTimer = null;
-    }
+    clearTimeout(closeTimer);
     closeTimer = setTimeout(
       () => {
-        if (closeTimer) {
-          clearTimeout(closeTimer);
-          closeTimer = null;
-        }
+        clearTimeout(closeTimer);
         if ((e.target as HTMLElement)?.getAttribute('handle-closed') === 'false') {
           return;
         }
@@ -184,60 +179,69 @@ function Popover(props: PopoverProps) {
       local.trigger === 'hover' ? 300 : 0,
     );
   }
-  function showPortal(e?: Event) {
-    if (!open() || !ref || !childRef || (!e && local.trigger === 'contextMenu')) {
-      return;
-    }
-    if (e?.type === 'scroll' && local.trigger === 'contextMenu') {
-      openChange(false);
-      return;
-    }
-    const elRect = (childRef as HTMLSpanElement).getBoundingClientRect();
-    const portalRect = (ref as HTMLDivElement).getBoundingClientRect();
-    const offsetX = portalRect.width / 2 - elRect.width / 2;
-    const margin = window.innerHeight - elRect.bottom;
-    const _placement = local.placement;
+  let portalTimer: NodeJS.Timeout | undefined;
+  const showPortal = function (e?: Event): void {
+    clearTimeout(portalTimer);
+    portalTimer = setTimeout(() => {
+      clearTimeout(portalTimer);
+      if (!ref || !childRef || (!e && local.trigger === 'contextMenu')) {
+        return;
+      }
+      if (e?.type === 'scroll' && local.trigger === 'contextMenu') {
+        openChange(false);
+        return;
+      }
+      const elRect = childRef!.getBoundingClientRect();
+      const portalRect = ref!.getBoundingClientRect();
+      const offsetX = portalRect.width / 2 - elRect.width / 2;
+      const margin = window.innerHeight - elRect.bottom;
+      const _placement = local.placement;
 
-    const _isBottom =
-      (!_placement?.startsWith('top') && margin > ref.offsetHeight * 0.8 && margin > elRect.top) ||
-      _placement?.startsWith('bottom');
-    const arrowHeight = local.arrow ? 8 : 4;
-    const _posi: Posi = {};
+      const _isBottom =
+        (!_placement?.startsWith('top') &&
+          margin > ref!.offsetHeight * 0.8 &&
+          margin > elRect.top) ||
+        _placement?.startsWith('bottom');
+      const arrowHeight = local.arrow ? 8 : 4;
+      const _posi: Posi = {};
 
-    switch (local.placement) {
-      case 'bottomLeft':
-      case 'left':
-      case 'topLeft':
-        _posi.left = elRect.left;
-        _posi['--x'] = -portalRect.width / 2 + 16;
-        break;
-      case 'bottomRight':
-      case 'right':
-      case 'topRight':
-        _posi.left = elRect.right - portalRect.width;
-        _posi['--x'] = portalRect.width / 2 - 16;
-        break;
-      case 'bottom':
-      case 'top':
-      default:
-        _posi.left = Math.abs(offsetX > elRect.left ? elRect.left : elRect.left - offsetX);
-        _posi['--x'] = -(_posi.left - elRect.left + offsetX);
-        break;
-    }
-    if (_isBottom) {
-      _posi.top = elRect.bottom + arrowHeight;
-    } else {
-      _posi.bottom = window.innerHeight - elRect.top + arrowHeight;
-    }
-    setPosi(_posi);
-    setUp(!_isBottom);
-  }
+      switch (local.placement) {
+        case 'bottomLeft':
+        case 'left':
+        case 'topLeft':
+          _posi.left = elRect.left;
+          _posi['--x'] = -portalRect.width / 2 + 16;
+          break;
+        case 'bottomRight':
+        case 'right':
+        case 'topRight':
+          _posi.left = elRect.right - portalRect.width;
+          _posi['--x'] = portalRect.width / 2 - 16;
+          break;
+        case 'bottom':
+        case 'top':
+        default:
+          _posi.left = Math.abs(offsetX > elRect.left ? elRect.left : elRect.left - offsetX);
+          _posi['--x'] = -(_posi.left - elRect.left + offsetX);
+          break;
+      }
+      if (_isBottom) {
+        _posi.top = elRect.bottom + arrowHeight;
+      } else {
+        _posi.bottom = window.innerHeight - elRect.top + arrowHeight;
+      }
+      setPosi((prev) => {
+        return isEqual(prev, _posi) ? prev : _posi;
+      });
+      setUp((prev) => {
+        return prev === !_isBottom ? prev : !_isBottom;
+      });
+    }, 32);
+  };
+
   function handleOpen(e: MouseEvent) {
+    clearTimeout(closeTimer);
     e.stopPropagation();
-    if (closeTimer) {
-      clearTimeout(closeTimer);
-      closeTimer = null;
-    }
     if (local.trigger === 'contextMenu' && e.type === 'contextmenu') {
       e.preventDefault();
       setPosi((prev) => ({
@@ -307,28 +311,30 @@ function Popover(props: PopoverProps) {
   });
   const hostStyle = createMemo(() => {
     return `:host {--popover-bg: ${
-      theme.scheme === 'dark' ? '#1f1f1f' : 'var(--component-bg)'
+      isDark() ? '#1f1f1f' : 'var(--component-bg)'
     };--popover-shadow-color: rgb(0 0 0 / 5%);}`;
   });
 
   createEffect(() => {
-    showPortal();
+    if (open()) {
+      showPortal();
+
+      window.addEventListener('scroll', showPortal, {
+        passive: passiveSupported,
+      });
+    }
+    onCleanup(() => {
+      window.removeEventListener('scroll', showPortal, false);
+    });
   });
   onMount(() => {
     if (local.trigger !== 'none') {
       document.documentElement.addEventListener('mousedown', close, false);
     }
-    window.addEventListener('scroll', showPortal, passiveSupported);
   });
-
   onCleanup(() => {
-    if (closeTimer) {
-      clearTimeout(closeTimer);
-    }
-    if (local.trigger !== 'none') {
-      document.documentElement.removeEventListener('mousedown', close, false);
-    }
-    window.removeEventListener('scroll', showPortal, passiveSupported);
+    clearTimeout(closeTimer);
+    document.documentElement.removeEventListener('mousedown', close, false);
   });
 
   return (
@@ -349,7 +355,7 @@ function Popover(props: PopoverProps) {
             {hostStyle()}
             {portalStyle()}
             {width()}
-            {css(local.popupCss || '')}
+            {css(local.popupCss)}
           </style>
           <div ref={ref} onAnimationEnd={exit} class={portalCls()} {...childrenProps()}>
             {local.content as JSXElement}

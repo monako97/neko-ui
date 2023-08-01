@@ -1,7 +1,7 @@
 import { For, createMemo } from 'solid-js';
 import { css, cx } from '@moneko/css';
 import { getPathName, project, useLocation } from '@moneko/solid-js';
-import { baseStyle } from 'neko-ui';
+import { theme } from 'neko-ui';
 import { customElement } from 'solid-element';
 
 const style = css`
@@ -78,6 +78,7 @@ const style = css`
 type CoverageType = 'statements' | 'conditionals' | 'methods';
 
 function Coverage() {
+  const { baseStyle } = theme;
   const location = useLocation();
   const coverage = createMemo(() => {
     const name = getPathName(location);

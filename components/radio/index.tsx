@@ -4,7 +4,7 @@ import { customElement } from 'solid-element';
 import { style } from './style';
 import { type BaseOption, type BasicConfig, FieldName } from '../basic-config';
 import getOptions from '../get-options';
-import { baseStyle } from '../theme';
+import theme from '../theme';
 
 export interface RadioOption extends Omit<BaseOption, 'icon'> {
   /** 值 */
@@ -37,6 +37,7 @@ export interface RadioProps {
 }
 
 function Radio(props: RadioProps) {
+  const { baseStyle } = theme;
   const [value, setValue] = createSignal(props.defaultValue);
   const fieldNames = createMemo(() => Object.assign({}, FieldName, props.fieldNames));
 

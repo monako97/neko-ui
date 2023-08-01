@@ -1,5 +1,4 @@
 export * from '@moneko/css';
-export { default as Prism } from './prism';
 export { default as getOptions } from './get-options';
 export { default as Button, type ButtonProps, type ButtonElement } from './button';
 export { default as Avatar, type AvatarElement, type AvatarProps } from './avatar';
@@ -88,13 +87,11 @@ export {
 } from './menu';
 export { default as Cron, type CronProps, type CronElement } from './cron';
 export {
-  theme,
-  setTheme,
+  default as theme,
   generateTheme,
-  baseStyle,
   toneColor,
   type ThemeOption,
-  ColorScheme,
+  type ColorScheme,
 } from './theme';
 export { FieldName, Size, Status, type BasicConfig, type BaseOption } from './basic-config';
 export { default as fromSchema } from './from-schema';

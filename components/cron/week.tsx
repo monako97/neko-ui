@@ -108,7 +108,7 @@ function Week(props: Required<Omit<CronItemProps<'week'>, 'options'>>) {
     },
   ];
 
-  return <Item options={options} onType={props.onType} state={props.state} />;
+  return <Item options={options} onChange={props.onChange} state={props.state} />;
 }
 
 export default Week;

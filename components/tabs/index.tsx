@@ -17,7 +17,7 @@ import { customElement } from 'solid-element';
 import { addCss, btnCss, style } from './style';
 import { FieldName } from '../basic-config';
 import getOptions from '../get-options';
-import { baseStyle, theme } from '../theme';
+import theme from '../theme';
 import type { BaseOption, BasicConfig, ButtonElement } from '..';
 
 export interface TabsProps {
@@ -62,6 +62,7 @@ export interface TabOption extends Omit<BaseOption, 'options'> {
 }
 
 function Tabs(props: TabsProps) {
+  const { baseStyle, isDark } = theme;
   let box: HTMLDivElement | undefined;
   let add: ButtonElement | undefined;
   const [value, setValue] = createSignal<string | number>();
@@ -70,7 +71,7 @@ function Tabs(props: TabsProps) {
   let wrapRef: HTMLDivElement | undefined;
 
   const cssVar = createMemo(() => {
-    if (theme.scheme === 'dark') {
+    if (isDark()) {
       return css`
         :host {
           --tab-current-bg: var(--component-bg);
@@ -128,13 +129,11 @@ function Tabs(props: TabsProps) {
         let deltaY = 0;
 
         if (e) {
-          e.stopPropagation();
-          e.preventDefault();
-          if (e.deltaX !== 0) {
-            deltaY = e.deltaX;
-          } else {
-            deltaY = e.deltaY;
+          if (!passiveSupported) {
+            e.stopPropagation();
+            e.preventDefault();
           }
+          deltaY = e.deltaX !== 0 ? e.deltaX : e.deltaY;
         }
         const nl = wrapRef.scrollLeft + deltaY;
 
@@ -233,10 +232,12 @@ function Tabs(props: TabsProps) {
     setAni('');
   }
   onMount(() => {
-    box?.addEventListener('wheel', handleWheel, passiveSupported);
+    box?.addEventListener('wheel', handleWheel, {
+      passive: passiveSupported,
+    });
   });
   onCleanup(() => {
-    box?.removeEventListener('wheel', handleWheel, passiveSupported);
+    box?.removeEventListener('wheel', handleWheel, false);
   });
 
   return (

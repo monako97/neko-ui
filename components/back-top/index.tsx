@@ -15,13 +15,7 @@ import { css, cx } from '@moneko/css';
 import { customElement } from 'solid-element';
 import { Portal } from 'solid-js/web';
 import { style } from './style';
-import { baseStyle, theme } from '../theme';
-
-const themeStyle = createMemo(() => {
-  const bg = theme.scheme === 'dark' ? 'rgb(255 255 255 / 45%)' : 'var(--primary-border)';
-
-  return `:host {--back-top-bg: ${bg};}`;
-});
+import theme from '../theme';
 
 export interface BackTopProps extends Omit<JSX.ButtonHTMLAttributes<HTMLDivElement>, 'onChange'> {
   /** 设置需要监听其滚动事件的元素
@@ -41,6 +35,7 @@ export interface BackTopProps extends Omit<JSX.ButtonHTMLAttributes<HTMLDivEleme
 }
 
 function BackTop(_: BackTopProps) {
+  const { baseStyle, isDark } = theme;
   const props = mergeProps({ target: window as unknown as HTMLElement, visibilityHeight: 400 }, _);
   const [local, other] = splitProps(props, [
     'class',
@@ -55,6 +50,12 @@ function BackTop(_: BackTopProps) {
   ]);
   const [show, setShow] = createSignal<boolean | null>(null);
   const target = createMemo(() => (isFunction(local.target) ? local.target() : local.target));
+
+  const themeStyle = createMemo(() => {
+    const bg = isDark() ? 'rgb(255 255 255 / 45%)' : 'var(--primary-border)';
+
+    return `:host {--back-top-bg: ${bg};}`;
+  });
 
   function handleBackTop() {
     target()?.scrollTo({

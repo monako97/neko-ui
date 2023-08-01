@@ -13,7 +13,7 @@ import { isFunction } from '@moneko/common';
 import { css, cx } from '@moneko/css';
 import { customElement } from 'solid-element';
 import { style } from './style';
-import { baseStyle, generateTheme, theme } from '../theme';
+import theme, { generateTheme } from '../theme';
 
 export interface TagProps extends Omit<JSX.HTMLAttributes<HTMLSpanElement>, 'onChange'> {
   /** 自定义样式表 */
@@ -39,6 +39,7 @@ export interface TagProps extends Omit<JSX.HTMLAttributes<HTMLSpanElement>, 'onC
 }
 
 function Tag(props: TagProps) {
+  const { baseStyle, isDark } = theme;
   const [local, other] = splitProps(props, [
     'class',
     'css',
@@ -57,7 +58,7 @@ function Tag(props: TagProps) {
       return css`
         :host {
           ${generateTheme(local.color, {
-            dark: theme.scheme === 'dark',
+            dark: isDark(),
             name: 'tag-custom',
           })}
         }

@@ -9,12 +9,12 @@ import {
   onCleanup,
   onMount,
 } from 'solid-js';
-import { cloneDeep, isFunction, passiveSupported } from '@moneko/common';
-import { cx } from '@moneko/css';
+import { isFunction, isString, passiveSupported } from '@moneko/common';
+import { css, cx } from '@moneko/css';
 import { customElement } from 'solid-element';
 import { style } from './style';
 import schema, { type Schema } from '../from-schema';
-import { baseStyle } from '../theme';
+import theme from '../theme';
 import type { BasicConfig } from '../index';
 
 export interface TreeBaseProp {
@@ -95,7 +95,7 @@ export interface TreeMultipleStringProps extends TreeMultipleBaseProps {
 }
 
 function Tree(
-  props:
+  _:
     | TreeProps
     | TreeMultipleProps
     | TreeMultipleSchemaProps
@@ -108,14 +108,15 @@ function Tree(
     normal: 8,
     large: 10,
   };
+  const { baseStyle } = theme;
 
   let el: HTMLUListElement | undefined;
   const [lines, setLines] = createSignal<string[]>([]);
   const [treeData, setTreeData] = createSignal<TreeData[]>([]);
-  const rtl = createMemo(() => props.direction === 'rtl');
+  const rtl = createMemo(() => _.direction === 'rtl');
   const current = createMemo(() => {
-    if (props.value !== void 0 && props.value !== null) {
-      return Array.isArray(props.value) ? props.value : [props.value];
+    if (_.value !== void 0 && _.value !== null) {
+      return Array.isArray(_.value) ? _.value : [_.value];
     }
     return [];
   });
@@ -183,10 +184,10 @@ function Tree(
   }
 
   function handleChange(key: string) {
-    if (!props.readonly && isFunction(props.onChange)) {
+    if (!_.readonly && isFunction(_.onChange)) {
       let _current = [...current()];
 
-      if (props.multiple) {
+      if (_.multiple) {
         const idx = _current.indexOf(key);
 
         if (idx === -1) {
@@ -194,20 +195,20 @@ function Tree(
         } else {
           _current.splice(idx, 1);
         }
-      } else if (props.toggle && _current[0] === key) {
+      } else if (_.toggle && _current[0] === key) {
         _current = [];
       } else {
         _current = [key];
       }
-      props.onChange(props.multiple ? _current : _current[0]);
+      _.onChange(_.multiple ? _current : _current[0]);
     }
   }
   function handleClick(e: MouseEvent, item: TreeData) {
     handleChange(item.key);
-    props.onRowClick?.(e, item.key as never, item as TreeData<never>);
+    _.onRowClick?.(e, item.key as never, item as TreeData<never>);
   }
   function renderItem(item: TreeData, title: JSXElement, subTitle?: JSXElement): JSXElement[] {
-    const row = props.renderRow?.(item, title, subTitle) || [title, subTitle];
+    const row = _.renderRow?.(item, title, subTitle) || [title, subTitle];
 
     return rtl() ? row.reverse() : row;
   }
@@ -225,10 +226,10 @@ function Tree(
                 class={cx(
                   'row',
                   current().includes(key) && 'active',
-                  (props.readonly || !isFunction(props.onChange)) && 'non',
+                  (_.readonly || !isFunction(_.onChange)) && 'non',
                 )}
                 onClick={(e) => handleClick(e, item)}
-                onDblClick={(e) => props.onRowDoubleClick?.(e, key, item)}
+                onDblClick={(e) => _.onRowDoubleClick?.(e, key, item)}
                 style={depth ? { '--depth': `${depth * 2}em` } : void 0}
                 data-path-end={item[pathEnd]}
                 data-path={item[path]}
@@ -250,7 +251,7 @@ function Tree(
     const len = list.length;
 
     if (el && len) {
-      const prefixSize = sizeCnt[props.size || 'normal'];
+      const prefixSize = sizeCnt[_.size || 'normal'];
 
       for (let i = 0; i < len; i++) {
         const al: NodeListOf<HTMLLIElement> = el.querySelectorAll(`li[data-path="${list[i]}"]`);
@@ -275,29 +276,35 @@ function Tree(
     }
   }
   createEffect(() => {
-    const data = props.data;
+    const data = _.fromSchema ? schema(_.data) : isString(_.data) ? parseTree(_.data) : _.data;
 
-    const _data = cloneDeep(
-      typeof data === 'string' ? parseTree(data) : props.fromSchema ? schema(data as Schema) : data,
-    ) as TreeData[];
-
-    setLines([...new Set(countLineLen(_data))]);
-    setTreeData(_data);
+    setLines([...new Set(countLineLen(data))]);
+    setTreeData(data);
   });
 
   createEffect(() => {
-    updateLine(lines());
+    const line = lines();
+
+    const timer = setTimeout(() => {
+      clearTimeout(timer);
+      updateLine(line);
+    }, 0);
+
+    if (line.length) {
+      window.addEventListener('resize', updateLine.bind(null, line), {
+        passive: passiveSupported,
+      });
+    }
+    onCleanup(() => {
+      clearTimeout(timer);
+      window.removeEventListener('resize', updateLine.bind(null, lines()), false);
+    });
   });
   onMount(() => {
     const timer = setTimeout(() => {
       clearTimeout(timer);
       updateLine(lines());
-    }, 0);
-
-    window.addEventListener('resize', updateLine.bind(null, lines()), passiveSupported);
-  });
-  onCleanup(() => {
-    window.removeEventListener('resize', updateLine.bind(null, lines()), passiveSupported);
+    }, 32);
   });
 
   return (
@@ -305,8 +312,9 @@ function Tree(
       <style>
         {baseStyle()}
         {style}
+        {css(_.css)}
       </style>
-      <ul ref={el} class={cx('tree', props.size, props.class, rtl() && 'rtl')}>
+      <ul ref={el} class={cx('tree', _.size, _.class, rtl() && 'rtl')}>
         {renderTreeRow(treeData())}
       </ul>
     </>

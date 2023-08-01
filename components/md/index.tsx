@@ -10,14 +10,14 @@ import {
   onCleanup,
   onMount,
 } from 'solid-js';
-import { getScrollTop, isUndefined, throttle } from '@moneko/common';
+import { getScrollTop, isUndefined, passiveSupported, throttle } from '@moneko/common';
 import { css, cx } from '@moneko/css';
 import marked from 'marked-completed';
 import { customElement } from 'solid-element';
 import { style } from './style';
 import '../code';
 import '../img';
-import { baseStyle } from '../theme';
+import theme from '../theme';
 
 const renderer = new marked.Renderer();
 
@@ -76,6 +76,7 @@ const toggleAnchor = (anchor: HTMLAnchorElement) => {
 };
 
 function MD(_props: MdProps) {
+  const { baseStyle } = theme;
   const props = mergeProps(
     {
       pictureViewer: true,
@@ -129,9 +130,11 @@ function MD(_props: MdProps) {
   }, 200);
 
   onMount(async () => {
-    props.getAnchorContainer?.().addEventListener('scroll', handleScroll);
+    props.getAnchorContainer?.().addEventListener('scroll', handleScroll, {
+      passive: passiveSupported,
+    });
     if (ref) {
-      ref.querySelectorAll('.n-md-toc li a')?.forEach((e) => {
+      ref.querySelectorAll('.n-md-toc li a').forEach((e) => {
         const a = e as HTMLAnchorElement;
         const _el = ref?.querySelector(
           decodeURIComponent((a as HTMLAnchorElement)?.hash),
@@ -146,7 +149,7 @@ function MD(_props: MdProps) {
     }
   });
   onCleanup(() => {
-    props.getAnchorContainer?.().removeEventListener('scroll', handleScroll);
+    props.getAnchorContainer?.().removeEventListener('scroll', handleScroll, false);
   });
 
   return (

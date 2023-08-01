@@ -1,7 +1,7 @@
 import { For, Show, createEffect, createMemo } from 'solid-js';
 import { css } from '@moneko/css';
 import { A, type RouterProps, getPathName, project, routes, useLocation } from '@moneko/solid-js';
-import { baseStyle, setTheme, theme } from 'neko-ui';
+import { theme } from 'neko-ui';
 import { customElement } from 'solid-element';
 
 const style = css`
@@ -319,11 +319,14 @@ for (const key in obj) {
 
 export { all, kv };
 function Sider(_: object, opt: ComponentOptions<object>) {
+  const { baseStyle, scheme, setScheme, isDark } = theme;
   const location = useLocation();
   const themes = [
-    { label: '暗黑', value: 'dark', icon: '☪' },
-    { label: '明亮', value: 'light', icon: '☀' },
+    { label: '暗黑', value: 'dark', icon: '🌛' },
+    { label: '明亮', value: 'light', icon: '🌞' },
+    { label: '跟随系统', value: 'auto', icon: '⚙️' },
   ];
+
   let menuEl: HTMLUListElement | undefined;
   const active = createMemo(() => getPathName(location));
 
@@ -339,7 +342,7 @@ function Sider(_: object, opt: ComponentOptions<object>) {
   });
 
   createEffect(() => {
-    document.documentElement.setAttribute('data-theme', theme.scheme);
+    document.documentElement.setAttribute('data-theme', isDark() ? 'dark' : 'light');
   });
   const avatarCss = css`
     .avatar {
@@ -347,6 +350,9 @@ function Sider(_: object, opt: ComponentOptions<object>) {
       animation: none;
     }
   `;
+  // function handleChange(e) {
+  //   setScheme(e.detail ? 'dark' : 'light');
+  // };
 
   return (
     <>
@@ -364,16 +370,22 @@ function Sider(_: object, opt: ComponentOptions<object>) {
             <h1 data-truncated>{project.name.replace(/-/g, ' ')}</h1>
             <i>{kv[active()]?.subtitle || project.info.description}</i>
           </hgroup>
+          {/* <n-switch
+            value={isDark()}
+            onChange={hand}
+            un-checked-text="🌞"
+            checked-text="🌛"
+          /> */}
           <n-dropdown
-            value={theme.scheme}
+            value={scheme()}
             items={themes}
             trigger="click"
             css={switchThemeCss}
             onChange={(e: CustomEvent) => {
-              setTheme('scheme', e.detail[0]);
+              setScheme(e.detail[0]);
             }}
           >
-            <span class="theme-btn">{theme.scheme === 'dark' ? '☪' : '☀'}</span>
+            <span class="theme-btn">{isDark() ? '☪' : '☀'}</span>
           </n-dropdown>
         </header>
         <section class="site-sider">

@@ -18,9 +18,10 @@ import { customElement } from 'solid-element';
 import { style } from './style';
 import { type BaseOption, type BasicConfig, FieldName } from '../basic-config';
 import getOptions from '../get-options';
-import { baseStyle, theme } from '../theme';
+import theme from '../theme';
 
 function Menu(props: MenuProps | MenuMultipleProps) {
+  const { isDark, baseStyle } = theme;
   const [local, other] = splitProps(props, [
     'class',
     'css',
@@ -36,12 +37,9 @@ function Menu(props: MenuProps | MenuMultipleProps) {
   ]);
   const [value, setValue] = createSignal<(string | number)[]>([]);
   const [openKeys, setOpenKeys] = createSignal<(string | number)[]>([]);
-  const cssVar = createMemo(() => {
-    if (theme.scheme === 'dark') {
-      return ':host {--sub-menu-bg: rgb(255 255 255 / 1%);}';
-    }
-    return ':host {--sub-menu-bg: rgb(0 0 0 / 1%);}';
-  });
+  const cssVar = createMemo(
+    () => `:host {--sub-menu-bg: ${isDark() ? 'rgb(255 255 255 / 1%)' : 'rgb(0 0 0 / 1%)'} ;}`,
+  );
   const fieldNames = createMemo(() => Object.assign({}, FieldName, local.fieldNames));
   const options = createMemo(() => getOptions(local.items, fieldNames()));
 

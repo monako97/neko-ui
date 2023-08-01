@@ -10,7 +10,6 @@ import {
   untrack,
 } from 'solid-js';
 import { customElement } from 'solid-element';
-import { createStore } from 'solid-js/store';
 import Day from './day';
 import Hour from './hour';
 import Minute from './minute';
@@ -42,7 +41,6 @@ export interface CronProps extends Omit<JSX.HTMLAttributes<HTMLDivElement>, 'onC
 }
 
 export type CronElement = CustomElement<CronProps>;
-
 export type SecondType = '*' | 'period' | 'beginInterval' | 'some';
 export type MinuteType = SecondType;
 export type HourType = SecondType;
@@ -60,8 +58,8 @@ export type CronData<T extends string = string> = {
   value: string;
 };
 
+export type ActiveTab = keyof CronType;
 export type CronType = {
-  activeKey: 'second' | 'minute' | 'hour' | 'day' | 'week' | 'month' | 'year';
   second: CronData<SecondType>;
   minute: CronData<MinuteType>;
   hour: CronData<HourType>;
@@ -119,11 +117,16 @@ function Cron(props: CronProps) {
     });
     daysBeginEvery.push(x);
   }
-  const [store, setStore] = createStore<CronType>({
-    activeKey: 'second',
-    year: {
-      type: '',
-      ...defaultState.year,
+  const [active, setActive] = createSignal<ActiveTab>('second');
+  const [state, setState] = createSignal<CronType>({
+    second: { type: '*', ...defaultState.hms },
+    minute: { type: '*', ...defaultState.hms },
+    hour: { type: '*', ...defaultState.hms },
+    day: {
+      type: '*',
+      last: 1,
+      closeWorkDay: 1,
+      ...defaultState.mwd,
     },
     month: {
       type: '*',
@@ -134,73 +137,64 @@ function Cron(props: CronProps) {
       type: '?',
       ...defaultState.mwd,
     },
-    day: {
-      type: '*',
-      last: 1,
-      closeWorkDay: 1,
-      ...defaultState.mwd,
+    year: {
+      type: '',
+      ...defaultState.year,
     },
-    hour: { type: '*', ...defaultState.hms },
-    minute: { type: '*', ...defaultState.hms },
-    second: { type: '*', ...defaultState.hms },
   });
 
   function prefixWeekDay() {
-    const isDay = store.activeKey === 'day';
+    const store = untrack(state);
+    const isDay = active() === 'day';
 
-    if (isDay || store.activeKey === 'week') {
+    if (isDay || active() === 'week') {
       const key = isDay ? 'week' : 'day';
-      const next = store[key].type === '?' && store[store.activeKey].type === '?' ? '*' : '?';
+      const next = store[key].type === '?' && store[active()].type === '?' ? '*' : '?';
 
       if (next !== store[key].type) {
-        setStore(key, (p) => ({
-          ...p,
-          type: next,
-        }));
+        setState((prev) => {
+          return {
+            ...prev,
+            [key]: {
+              ...prev[key],
+              type: next,
+            },
+          };
+        });
       }
     }
   }
-  function onType<T extends CronType['activeKey']>(type: CronType[T]['type']) {
-    batch(() => {
-      prefixWeekDay();
-      setStore(store.activeKey as T, (prev) => {
-        return {
-          ...prev,
-          type: type,
-        };
-      });
-    });
-  }
 
-  function onChange<T extends CronType[CronType['activeKey']]>(type: keyof T, val: T[keyof T]) {
+  function onChange<T extends CronType[ActiveTab]>(type: keyof T, val: T[keyof T]) {
     batch(() => {
       prefixWeekDay();
-      setStore(store.activeKey, (prev) => {
-        const state = {
-          ...prev,
+      setState((prev) => {
+        const next = {
+          ...prev[active()],
           [type]: val,
         };
 
         if (type === 'start' || type === 'end') {
-          if (state.end - state.start <= 1) {
+          if (next.end - next.start <= 1) {
             if (type === 'end') {
-              state.start = (val as number) - 1;
+              next.start = (val as number) - 1;
             } else {
-              state.end = (val as number) + 1;
+              next.end = (val as number) + 1;
             }
           }
         }
 
-        return state;
+        return {
+          ...prev,
+          [active()]: next,
+        };
       });
     });
   }
   function changeActiveKey(e: CustomEvent<string>) {
-    setStore('activeKey', e.detail as CronType['activeKey']);
+    setActive(e.detail as ActiveTab);
   }
-  function parseVal<T extends CronType['activeKey']>(_: CronType[T], isWeek?: boolean) {
-    const item = { ..._ };
-
+  function parseVal<T extends ActiveTab>(item: CronType[T], isWeek?: boolean) {
     if (item.value.indexOf('-') > -1) {
       item.type = 'period';
       const period = item.value.split('-');
@@ -240,43 +234,17 @@ function Cron(props: CronProps) {
     return num;
   }
 
-  function culcValue<T extends CronType['activeKey']>(item: CronType[T]) {
+  function fmt<T extends ActiveTab>(item: CronType[T], isWeek?: boolean) {
     switch (item.type) {
       case 'period':
         return `${nts(item.start)}-${nts(item.end)}`;
       case 'beginInterval':
+        if (isWeek) return `${nts(item.beginEvery)}#${nts(item.begin)}`;
         return `${nts(item.begin)}/${nts(item.beginEvery)}`;
-      case 'some':
-        return item.some.join(',');
-      default:
-        return item.type;
-    }
-  }
-  function culcDayValue<T extends CronType['activeKey']>(item: CronType[T]) {
-    switch (item.type) {
-      case 'period':
-        return `${nts(item.start)}-${nts(item.end)}`;
-      case 'beginInterval':
-        return `${nts(item.begin)}/${nts(item.beginEvery)}`;
-      case 'some':
-        return item.some.join(',');
-      case 'last':
-        // day.value = n2s(day.last || 1) + "L";
-        return 'L';
       case 'closeWorkDay':
         return `${nts(item.closeWorkDay || 1)}W`;
-      default:
-        return item.type;
-    }
-  }
-  function culcWeekValue<T extends CronType['activeKey']>(item: CronType[T]) {
-    switch (item.type) {
-      case 'period':
-        return `${nts(item.start)}-${nts(item.end)}`;
-      case 'beginInterval':
-        return `${nts(item.beginEvery)}#${nts(item.begin)}`;
       case 'last':
-        return `${nts(item.last)}L`;
+        return isWeek ? `${nts(item.last)}L` : 'L';
       case 'some':
         return item.some.join(',');
       default:
@@ -297,76 +265,75 @@ function Cron(props: CronProps) {
       const valuesArray = val.toUpperCase().split(' ');
 
       batch(() => {
-        setStore('second', (prev) => parseVal<'second'>({ ...prev, value: valuesArray[0] || '?' }));
-        setStore('minute', (prev) => parseVal<'minute'>({ ...prev, value: valuesArray[1] || '?' }));
-        setStore('hour', (prev) => parseVal<'hour'>({ ...prev, value: valuesArray[2] || '?' }));
-        setStore('day', (prev) => parseVal<'day'>({ ...prev, value: valuesArray[3] || '' }));
-        setStore('month', (prev) => parseVal<'month'>({ ...prev, value: valuesArray[4] || '' }));
-        setStore('week', (prev) =>
-          parseVal<'week'>({ ...prev, value: valuesArray[5] || '' }, true),
-        );
-        setStore('year', (prev) => parseVal<'year'>({ ...prev, value: valuesArray[6] || '' }));
+        setState((prev) => {
+          return {
+            second: parseVal<'second'>({ ...prev.second, value: valuesArray[0] || '?' }),
+            minute: parseVal<'minute'>({ ...prev.minute, value: valuesArray[1] || '?' }),
+            hour: parseVal<'hour'>({ ...prev.hour, value: valuesArray[2] || '?' }),
+            day: parseVal<'day'>({ ...prev.day, value: valuesArray[3] || '' }),
+            month: parseVal<'month'>({ ...prev.month, value: valuesArray[4] || '' }),
+            week: parseVal<'week'>({ ...prev.week, value: valuesArray[5] || '' }, true),
+            year: parseVal<'year'>({ ...prev.year, value: valuesArray[6] || '' }),
+          };
+        });
       });
     }
   });
   createEffect(() => {
-    const next = `${culcValue(store.second)} ${culcValue(store.minute)} ${culcValue(
-      store.hour,
-    )} ${culcDayValue(store.day)} ${culcValue(store.month)} ${culcWeekValue(
-      store.week,
-    )} ${culcValue(store.year)}`;
+    const { second, minute, hour, day, month, week, year } = state();
+    const next = `${fmt(second)} ${fmt(minute)} ${fmt(hour)} ${fmt(day)} ${fmt(month)} ${fmt(
+      week,
+      true,
+    )} ${fmt(year)}`;
 
-    if (untrack(value) !== next) {
-      setValue(next);
-    }
-  });
-  createEffect(() => {
-    if (local.value !== value()) {
-      props.onChange?.(value());
-    }
+    setValue((prev) => {
+      if (prev === next) return prev;
+      props.onChange?.(next);
+      return next;
+    });
   });
 
   const items = [
     {
       value: 'second',
       label: '秒',
-      content: <Second state={store.second} onChange={onChange} onType={onType} />,
+      content: <Second state={state().second} onChange={onChange} />,
     },
     {
       value: 'minute',
       label: '分钟',
-      content: <Minute state={store.minute} onChange={onChange} onType={onType} />,
+      content: <Minute state={state().minute} onChange={onChange} />,
     },
     {
       value: 'hour',
       label: '小时',
-      content: <Hour state={store.hour} onChange={onChange} onType={onType} />,
+      content: <Hour state={state().hour} onChange={onChange} />,
     },
     {
       value: 'day',
       label: '日',
-      content: <Day state={store.day} onChange={onChange} onType={onType} />,
+      content: <Day state={state().day} onChange={onChange} />,
     },
     {
       value: 'week',
       label: '周',
-      content: <Week state={store.week} onChange={onChange} onType={onType} />,
+      content: <Week state={state().week} onChange={onChange} />,
     },
     {
       value: 'month',
       label: '月',
-      content: <Month state={store.month} onChange={onChange} onType={onType} />,
+      content: <Month state={state().month} onChange={onChange} />,
     },
     {
       value: 'year',
       label: '年',
-      content: <Year state={store.year} onChange={onChange} onType={onType} />,
+      content: <Year state={state().year} onChange={onChange} />,
     },
   ];
 
   return (
     <>
-      <n-tabs type={local.type} items={items} value={store.activeKey} onChange={changeActiveKey} />
+      <n-tabs type={local.type} items={items} value={active()} onChange={changeActiveKey} />
       <Show when={local.showCron}>
         <code
           style={{

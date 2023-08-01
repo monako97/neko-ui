@@ -1,10 +1,10 @@
 import {
   Show,
-  batch,
   createComponent,
   createEffect,
   createSignal,
   mergeProps,
+  onCleanup,
   untrack,
 } from 'solid-js';
 import { cx } from '@moneko/css';
@@ -88,22 +88,19 @@ function Img(props: ImgProps) {
     }
   });
   createEffect(() => {
-    batch(() => {
-      const op = open();
+    if (open() === true) {
+      document.documentElement.addEventListener('mousewheel', preventDefault, {
+        passive: false,
+      });
 
-      if (op === true) {
-        document.documentElement.addEventListener('mousewheel', preventDefault, {
-          passive: false,
-        });
-      } else {
-        document.documentElement.removeEventListener('mousewheel', preventDefault);
-      }
-
-      if (op === true && props.escClosable) {
+      if (props.escClosable) {
         document.documentElement.addEventListener('keydown', close, false);
-      } else {
-        document.documentElement.removeEventListener('keydown', close, false);
       }
+    }
+
+    onCleanup(() => {
+      document.documentElement.removeEventListener('mousewheel', preventDefault, false);
+      document.documentElement.removeEventListener('keydown', close, false);
     });
   });
 

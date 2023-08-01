@@ -7,15 +7,13 @@ col: 100%
 
 ```jsx
 function Demo() {
-  const handleTheme = () => {
-    setTheme('scheme', (prev) => (prev === 'dark' ? 'light' : 'dark'));
-  };
+  const { isDark, scheme, setScheme } = theme;
+  function handleChange(e) {
+    setScheme(e.detail ? 'dark' : 'light');
+  }
 
-  const label = createMemo(() => (theme.scheme === 'dark' ? '🌛 ' : '🌞 ') + theme.scheme);
   return (
-    <n-button type="primary" flat={true} onClick={handleTheme}>
-      <span>{label()}</span>
-    </n-button>
+    <n-switch checked={isDark()} onChange={handleChange} un-checked-text="🌞" checked-text="🌛" />
   );
 }
 ```

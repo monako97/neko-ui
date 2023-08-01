@@ -1,7 +1,7 @@
 import { type JSX, createComponent, mergeProps } from 'solid-js';
 import { css, cx } from '@moneko/css';
 import { customElement } from 'solid-element';
-import { baseStyle } from '../theme';
+import theme from '../theme';
 
 const style = css`
   .box {
@@ -69,6 +69,8 @@ export interface SpinProps extends Omit<JSX.HTMLAttributes<HTMLDivElement>, 'onC
 }
 
 function Spin(props: SpinProps) {
+  const { baseStyle } = theme;
+
   return (
     <>
       <style>

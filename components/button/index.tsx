@@ -13,7 +13,7 @@ import { css, cx } from '@moneko/css';
 import { customElement } from 'solid-element';
 import { Dynamic } from 'solid-js/web';
 import { style } from './style';
-import { baseStyle } from '../theme';
+import theme from '../theme';
 import type { BasicConfig } from '../index';
 
 export interface ButtonProps
@@ -54,6 +54,7 @@ export interface ButtonProps
 export type ButtonElement = CustomElement<ButtonProps>;
 
 function Button(_: ButtonProps) {
+  const { baseStyle } = theme;
   const _props = mergeProps({ size: 'normal', type: 'default' }, _);
   const [local, other] = splitProps(_props, [
     'ghost',

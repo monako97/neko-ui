@@ -1,50 +1,14 @@
-import { createMemo } from 'solid-js';
+import {
+  type Accessor,
+  type Setter,
+  createEffect,
+  createMemo,
+  createRoot,
+  createSignal,
+} from 'solid-js';
 import { colorParse, mixColor, toneColor } from '@moneko/common';
 import { css } from '@moneko/css';
-import { createStore } from 'solid-js/store';
 export { toneColor } from '@moneko/common';
-/** 颜色方案枚举 */
-export enum ColorScheme {
-  /** 明亮 */
-  light = 'light',
-  /** 暗黑 */
-  dark = 'dark',
-}
-
-/** 检测 prefers-color-scheme 媒体查询是否为 light 模式 */
-const themeMedia = window.matchMedia('(prefers-color-scheme: light)');
-
-/** 共享的颜色方案 */
-export const [theme, setTheme] = createStore({
-  scheme: themeMedia?.matches ? ColorScheme.light : ColorScheme.dark,
-  light: {
-    primary: '#5794ff',
-    warning: '#faad14',
-    error: '#ff4d4f',
-    success: '#52c41a',
-  },
-  dark: {
-    primary: '#4d81dc',
-    warning: '#bb8314',
-    error: '#901c22',
-    success: '#419418',
-  },
-  tokens: {},
-});
-
-// 监听 prefers-color-scheme 媒体查询变化，自动更新颜色方案
-themeMedia.addEventListener('change', ({ matches }: { matches: boolean }) => {
-  setTheme('scheme', () => (matches ? ColorScheme.light : ColorScheme.dark));
-});
-
-export interface ThemeOption {
-  /** 是否采用暗色算法
-   * @default false
-   */
-  dark?: boolean;
-  /** 颜色名称 */
-  name: string;
-}
 
 /** 生成主题色调
  * @param {string} base 基础颜色
@@ -83,100 +47,207 @@ export function generateTheme(base: string, option: ThemeOption): Record<string,
   };
 }
 
-const primary = createMemo(() => generateTheme(theme.light.primary, { name: 'primary' }));
-const warning = createMemo(() => generateTheme(theme.light.warning, { name: 'warning' }));
-const success = createMemo(() => generateTheme(theme.light.success, { name: 'success' }));
-const error = createMemo(() => generateTheme(theme.light.error, { name: 'error' }));
+/** 颜色模式 */
+export enum ColorScheme {
+  /** 明亮 */
+  light = 'light',
+  /** 暗黑 */
+  dark = 'dark',
+  /** 跟随系统 */
+  auto = 'auto',
+}
 
-const lightCss = createMemo(() => {
-  return css`
+function createTheme() {
+  const preset =
+    ColorScheme[localStorage.getItem('color-scheme') as keyof typeof ColorScheme] || 'auto';
+  /** 检测 prefers-color-scheme 媒体查询是否为 light 模式 */
+  const media = window.matchMedia('(prefers-color-scheme: dark)');
+  const [scheme, setScheme] = createSignal<keyof typeof ColorScheme>(preset);
+  const [isDark, setIsDark] = createSignal(media.matches);
+  const [light, setLight] = createSignal({
+    primary: '#5794ff',
+    warning: '#faad14',
+    error: '#ff4d4f',
+    success: '#52c41a',
+  });
+  const [dark, setDark] = createSignal({
+    primary: '#4d81dc',
+    warning: '#bb8314',
+    error: '#901c22',
+    success: '#419418',
+  });
+  const primary = createMemo(() => generateTheme(light().primary, { name: 'primary' }));
+  const warning = createMemo(() => generateTheme(light().warning, { name: 'warning' }));
+  const success = createMemo(() => generateTheme(light().success, { name: 'success' }));
+  const error = createMemo(() => generateTheme(light().error, { name: 'error' }));
+  const lightCss = createMemo(() => {
+    return css`
+      :root,
+      :host {
+        ${primary()}
+        ${warning()}
+        ${success()}
+        ${error()}
+        --disable-color: rgb(0 0 0 / 25%);
+        --disable-bg: rgb(0 0 0 / 4%);
+        --disable-border: #d9d9d9;
+        --border-color: var(--primary-border);
+        --component-bg: var(--primary-bg);
+      }
+    `;
+  });
+  const darkPrimary = createMemo(() =>
+    generateTheme(dark().primary, { name: 'primary', dark: true }),
+  );
+  const darkWarning = createMemo(() =>
+    generateTheme(dark().warning, { name: 'warning', dark: true }),
+  );
+  const darkSuccess = createMemo(() =>
+    generateTheme(dark().success, { name: 'success', dark: true }),
+  );
+  const darkError = createMemo(() => generateTheme(dark().error, { name: 'error', dark: true }));
+  const darkCss = createMemo(() => {
+    return css`
+      :root,
+      :host {
+        ${darkPrimary()}
+        ${darkWarning()}
+        ${darkError()}
+        ${darkSuccess()}
+        --disable-color: rgb(255 255 255 / 25%);
+        --disable-bg: rgb(255 255 255 / 8%);
+        --disable-border: #424242;
+        --border-color: #303030;
+        --component-bg: #141414;
+        --primary-shadow: rgb(0 0 0 / 12%);
+        --primary-selection: rgb(255 255 255 / 5%);
+        --primary-details-bg: rgb(255 255 255 / 5%);
+        --primary-component-bg: #000;
+      }
+    `;
+  });
+  const baseCss = css`
     :root,
     :host {
-      ${primary()}
-      ${warning()}
-      ${success()}
-      ${error()}
-      --disable-color: rgb(0 0 0 / 25%);
-      --disable-bg: rgb(0 0 0 / 4%);
-      --disable-border: #d9d9d9;
-      --border-color: var(--primary-border);
-      --component-bg: var(--primary-bg);
+      --font-size: 14px;
+      --font-size-sm: 12px;
+      --font-size-xs: 10px;
+      --font-size-lg: 16px;
+      --border-base: 1px solid var(--border-color);
+      --border-radius: 8px;
+      --text-color: var(--primary-text);
+      --text-secondary: var(--primary-secondary);
+      --text-heading: var(--primary-heading);
+      --text-selection: var(--primary-selection);
+      --box-shadow-base: var(--primary-base-shadow);
+      --transition-duration: 0.3s;
+
+      /* --transition-timing-function: cubic-bezier(0.94, -0.1, 0.1, 1.2); */
+      --transition-timing-function: cubic-bezier(0.645, 0.045, 0.355, 1);
+
+      font-size: var(--font-size);
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial,
+        'Noto Sans', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol',
+        'Noto Color Emoji', Helvetica, Oxygen, Ubuntu, Cantarell, 'Fira Sans', 'Droid Sans';
+      color: var(--text-color, rgb(0 0 0 / 65%));
+      line-height: 1.8;
+    }
+
+    [disabled]:not([disabled='false']) {
+      cursor: not-allowed;
+      color: var(--disable-color);
+    }
+
+    ::selection {
+      background-color: var(--text-selection);
+    }
+
+    ::-webkit-scrollbar {
+      inline-size: 4px;
+      block-size: 4px;
     }
   `;
-});
-const darkPrimary = createMemo(() =>
-  generateTheme(theme.dark.primary, { name: 'primary', dark: true }),
-);
-const darkWarning = createMemo(() =>
-  generateTheme(theme.dark.warning, { name: 'warning', dark: true }),
-);
-const darkSuccess = createMemo(() =>
-  generateTheme(theme.dark.success, { name: 'success', dark: true }),
-);
-const darkError = createMemo(() => generateTheme(theme.dark.error, { name: 'error', dark: true }));
 
-const darkCss = createMemo(() => {
-  return css`
-    :root,
-    :host {
-      ${darkPrimary()}
-      ${darkWarning()}
-      ${darkError()}
-      ${darkSuccess()}
-      --disable-color: rgb(255 255 255 / 25%);
-      --disable-bg: rgb(255 255 255 / 8%);
-      --disable-border: #424242;
-      --border-color: #303030;
-      --component-bg: #141414;
-      --primary-shadow: rgb(0 0 0 / 12%);
-      --primary-selection: rgb(255 255 255 / 5%);
-      --primary-details-bg: rgb(255 255 255 / 5%);
-      --primary-component-bg: #000;
+  function update(e: MediaQueryListEvent) {
+    setIsDark(e.matches);
+  }
+  createEffect(() => {
+    const _ = scheme();
+
+    setIsDark(_ === 'dark' || (_ === 'auto' && media.matches));
+  });
+  const baseStyle = createMemo(() => baseCss + (isDark() ? darkCss() : lightCss()));
+
+  createEffect(() => {
+    if (scheme() === 'auto') {
+      // 监听 prefers-color-scheme 媒体查询变化，自动更新颜色方案
+      media.addEventListener('change', update);
+    } else {
+      media.removeEventListener('change', update);
     }
-  `;
-});
-const baseCss = css`
-  :root,
-  :host {
-    --font-size: 14px;
-    --font-size-sm: 12px;
-    --font-size-xs: 10px;
-    --font-size-lg: 16px;
-    --border-base: 1px solid var(--border-color);
-    --border-radius: 8px;
-    --text-color: var(--primary-text);
-    --text-secondary: var(--primary-secondary);
-    --text-heading: var(--primary-heading);
-    --text-selection: var(--primary-selection);
-    --box-shadow-base: var(--primary-base-shadow);
-    --transition-duration: 0.3s;
+  });
 
-    /* --transition-timing-function: cubic-bezier(0.94, -0.1, 0.1, 1.2); */
-    --transition-timing-function: cubic-bezier(0.645, 0.045, 0.355, 1);
+  return {
+    baseStyle,
+    dark,
+    setDark,
+    light,
+    setLight,
+    scheme,
+    setScheme,
+    isDark,
+  };
+}
 
-    font-size: var(--font-size);
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial,
-      'Noto Sans', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol',
-      'Noto Color Emoji', Helvetica, Oxygen, Ubuntu, Cantarell, 'Fira Sans', 'Droid Sans';
-    color: var(--text-color, rgb(0 0 0 / 65%));
-    line-height: 1.8;
-  }
+/** API */
+export interface Theme {
+  /** 亮色样式的主要色 */
+  light: Accessor<Color>;
+  /** 设置亮色样式的主要色 */
+  setLight: Setter<Color>;
+  /** 黑色样式的主要色 */
+  dark: Accessor<Color>;
+  /** 设置黑色样式的主要色 */
+  setDark: Setter<Color>;
+  /** 颜色模式
+   * @default 'auto'
+   */
+  scheme: Accessor<keyof typeof ColorScheme>;
+  /** 设置颜色模式 */
+  setScheme: Setter<keyof typeof ColorScheme>;
+  /** 是否为色模式 */
+  isDark: Accessor<boolean>;
+  /** 基本都样式表, 响应 scheme 变化 */
+  baseStyle: Accessor<string>;
+}
 
-  [disabled]:not([disabled='false']) {
-    cursor: not-allowed;
-    color: var(--disable-color);
-  }
+/** 主要色 */
+interface Color {
+  /** 主要
+   * @default '#5794ff'
+   */
+  primary: string;
+  /** 警告
+   * @default '#faad14'
+   */
+  warning: string;
+  /** 错误
+   * @default '#ff4d4f'
+   */
+  error: string;
+  /** 成功
+   * @default '#52c41a'
+   */
+  success: string;
+}
 
-  ::selection {
-    background-color: var(--text-selection);
-  }
+export interface ThemeOption {
+  /** 是否采用暗色算法
+   * @default false
+   */
+  dark?: boolean;
+  /** 颜色名称 */
+  name: string;
+}
 
-  ::-webkit-scrollbar {
-    inline-size: 4px;
-    block-size: 4px;
-  }
-`;
-
-export const baseStyle = createMemo(() => {
-  return baseCss + (theme.scheme === 'dark' ? darkCss() : lightCss());
-});
+export default createRoot<Theme>(createTheme);
