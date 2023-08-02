@@ -1,6 +1,6 @@
 {
   "name": "neko-ui",
-  "version": "2.0.4",
+  "version": "2.0.5",
   "description": "Web Components UI Libraries",
   "main": "lib/index.js",
   "scripts": {

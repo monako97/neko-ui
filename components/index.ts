@@ -156,7 +156,7 @@ import type {
   TypographyElement,
 } from '.';
 
-export default {
+const normal = {
   FieldName,
   Size,
   Status,
@@ -169,6 +169,8 @@ export default {
   cx,
   injectGlobal,
 };
+
+export default normal;
 
 interface CustomElementTags {
   /** 头像 */
@@ -251,4 +253,10 @@ declare global {
     export interface IntrinsicElements extends CustomElementTags, CustomElementTags {}
   }
   interface HTMLElementTagNameMap extends CustomElementTags {}
+
+  interface window {
+    NekoUI: typeof normal;
+  }
+
+  const NekoUI: window['NekoUI'];
 }
