@@ -1,9 +1,10 @@
-## [2.0.5](https://github.com/monako97/neko-ui/compare/2.0.3...2.0.5) (2023-08-02)
+## [2.0.6](https://github.com/monako97/neko-ui/compare/2.0.3...2.0.6) (2023-08-02)
 
 
 ### Bug Fixes
 
 * umd ([3e27ef9](https://github.com/monako97/neko-ui/commit/3e27ef93e74e1b459689e5abe7824a40c2308292))
+* umd types ([d2442d6](https://github.com/monako97/neko-ui/commit/d2442d68e0a5635823c9bc16d8b917d2d2649085))
 
 
 

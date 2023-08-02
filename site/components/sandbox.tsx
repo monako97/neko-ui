@@ -5,14 +5,12 @@ import { theme } from 'neko-ui';
 import { customElement } from 'solid-element';
 import h from 'solid-js/h';
 import * as SolidWeb from 'solid-js/web';
-import { render } from 'solid-js/web';
 import htmlHelp from './html.md?raw';
 import jsxHelp from './jsx.md?raw';
-import * as All from '../../components';
 import type { CodeLiveProps } from 'n-code-live';
 
-const { createRoot, untrack, createEffect, createMemo, createSignal, mergeProps, onMount } = Solid;
-const { For, Show } = SolidWeb;
+const { createEffect, createMemo, createSignal, mergeProps, onMount } = Solid;
+const { For, Show, render, Portal, Dynamic } = SolidWeb;
 
 const sandboxCss = css`
   :host {
@@ -236,10 +234,11 @@ function Sandbox(_props: SandboxProps) {
   const [open, setOpen] = createSignal(false);
 
   const scope: CodeLiveProps['scope'] = {
+    ...Solid,
+    Portal,
+    Dynamic,
     jsx: $$jsx,
     Fragment: Fragment,
-    ...Solid,
-    ...All,
   };
 
   const hasDesc = createMemo(() => {
@@ -303,14 +302,6 @@ function Sandbox(_props: SandboxProps) {
     });
   });
 
-  function renderJSX(jsx: () => Solid.JSXElement, ele: Element) {
-    const clean = createRoot(() => render(jsx, ele));
-
-    if (!untrack(current).jsx) {
-      clean();
-    }
-  }
-
   return (
     <>
       <style>{sandboxCss}</style>
@@ -322,7 +313,7 @@ function Sandbox(_props: SandboxProps) {
               source={sources()[current().lang]}
               jsx={current().jsx}
               scope={scope}
-              render-jsx={renderJSX}
+              render-jsx={render}
             />
             <Show when={langs().length > 1}>
               <n-segmented

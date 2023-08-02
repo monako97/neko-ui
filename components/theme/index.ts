@@ -185,6 +185,7 @@ function createTheme() {
     } else {
       media.removeEventListener('change', update);
     }
+    localStorage.setItem('color-scheme', scheme());
   });
 
   return {
