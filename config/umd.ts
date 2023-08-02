@@ -8,9 +8,13 @@ const conf: Partial<ConfigType<'swc'>> = {
   output: {
     path: path.resolve(process.cwd(), './lib'),
     filename: 'index.js',
-    library: 'NekoUI',
-    libraryTarget: 'umd',
-    libraryExport: 'default',
+    library: {
+      name: 'NekoUI',
+      type: 'umd',
+      export: 'default',
+      umdNamedDefine: true,
+    },
+    globalObject: 'this',
   },
   fixBrowserRouter: false,
   bundleAnalyzer: false,

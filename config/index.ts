@@ -32,6 +32,7 @@ if (process.env.NODE_ENV === 'production') {
     {
       loader: 'babel-loader',
       options: {
+        cacheDirectory: true,
         plugins: ['@moneko/css/babel'],
       },
     },

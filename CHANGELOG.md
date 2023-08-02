@@ -1,8 +1,9 @@
-## [2.0.3](https://github.com/monako97/neko-ui/compare/2.0.0...2.0.3) (2023-08-01)
+## [2.0.4](https://github.com/monako97/neko-ui/compare/2.0.0...2.0.4) (2023-08-02)
 
 
 ### Features
 
+* theme api ([445c406](https://github.com/monako97/neko-ui/commit/445c40697b026a72cc19db92c45f379781bb62d9))
 * type style ([68693b7](https://github.com/monako97/neko-ui/commit/68693b7ce1f6ac09a9c683f23cd4b7cea4890e1d))
 
 
