@@ -1,15 +1,15 @@
 import { Show, createEffect } from 'solid-js';
 import { css } from '@moneko/css';
 import { ApiView, Outlet, getPathName, useLocation } from '@moneko/solid-js';
-import { theme } from 'neko-ui';
+import NekoUI from 'neko-ui';
 import './components';
 
 function App() {
-  const { baseStyle } = theme;
+  const { baseStyle } = NekoUI.theme;
   const location = useLocation();
 
   const noBg = css`
-    .n-md-body:has(n-md):not(.site-empty) {
+    .n-md-body:has(n-md) {
       overflow: initial;
       padding: 0;
       background-color: transparent;

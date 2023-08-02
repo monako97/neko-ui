@@ -7,7 +7,7 @@ col: 100%
 
 ```jsx
 function Demo() {
-  const { isDark, scheme, setScheme } = theme;
+  const { isDark, scheme, setScheme } = NekoUI.theme;
   function handleChange(e) {
     setScheme(e.detail ? 'dark' : 'light');
   }

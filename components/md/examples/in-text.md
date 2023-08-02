@@ -9,7 +9,7 @@ order: 2
 <script>
   const el = container.querySelector('n-md');
   el.text = `
-#### 第二种方式
+#### 第二种方式 (开启了图片查看器)
 
 !> 写在 text 属性上
 
@@ -20,8 +20,9 @@ order: 2
 
 ```jsx
 <n-md
+  picture-viewer={false}
   text={`
-#### 第二种方式
+#### 第二种方式 (关闭了图片查看器)
 
 !> 写在 text 属性上
 

@@ -8,9 +8,7 @@ import {
   createMemo,
   mergeProps,
   onCleanup,
-  onMount,
 } from 'solid-js';
-import { getScrollTop, isUndefined, passiveSupported, throttle } from '@moneko/common';
 import { css, cx } from '@moneko/css';
 import marked from 'marked-completed';
 import { customElement } from 'solid-element';
@@ -18,62 +16,6 @@ import { style } from './style';
 import '../code';
 import '../img';
 import theme from '../theme';
-
-const renderer = new marked.Renderer();
-
-renderer.code = function (code, lang) {
-  const langLineNumber = this.options.langLineNumber;
-  const toolbar = !!this.options.langToolbar?.length;
-
-  return `<n-code class="n-code" toolbar="${toolbar}" lang="${lang}" line-number="${langLineNumber}">${encodeURIComponent(
-    code,
-  )}</n-code>`;
-};
-renderer.katexBlock = function (code: string) {
-  return `<n-katex display-mode="true">${code}</n-katex>`;
-};
-renderer.katexInline = function (code: string) {
-  return `<n-katex>${code}</n-katex>`;
-};
-renderer.image = function (src: string | null, title: string | null, alt: string) {
-  return `<n-img role="img" src="${src}" alt="${alt}" ${title ? `title="${title}"` : ''}></n-img>`;
-};
-
-marked.setOptions({
-  renderer,
-  headerPrefix: '# ',
-  langLineNumber: true,
-  langToolbar: ['copy'],
-  breaks: true,
-  pedantic: false,
-  smartLists: true,
-  smartypants: true,
-  xhtml: true,
-});
-
-const toggleAnchor = (anchor: HTMLAnchorElement) => {
-  anchor.offsetParent?.querySelectorAll('li')?.forEach((a) => {
-    a.classList.remove('active');
-  });
-  anchor.parentElement?.classList.add('active');
-  const box = anchor.offsetParent as HTMLElement;
-
-  if (box) {
-    let scrollLogicalPosition: ScrollLogicalPosition | null = null;
-
-    if (box.offsetTop > anchor.offsetTop) {
-      scrollLogicalPosition = 'nearest';
-    } else if (box.offsetHeight + box.offsetTop < anchor.offsetTop + anchor.offsetHeight) {
-      scrollLogicalPosition = 'nearest';
-    }
-    if (scrollLogicalPosition !== null) {
-      anchor.parentElement?.scrollIntoView({
-        behavior: 'smooth',
-        block: scrollLogicalPosition,
-      });
-    }
-  }
-};
 
 function MD(_props: MdProps) {
   const { baseStyle } = theme;
@@ -87,69 +29,131 @@ function MD(_props: MdProps) {
     },
     _props,
   );
+  const renderer = new marked.Renderer();
+
+  renderer.code = function (code: string, lang: string) {
+    const langLineNumber = this.options.langLineNumber;
+    const toolbar = !!this.options.langToolbar?.length;
+
+    return `<n-code class="n-code" toolbar="${toolbar}" lang="${lang}" line-number="${langLineNumber}">${encodeURIComponent(
+      code,
+    )}</n-code>`;
+  };
+  renderer.katexBlock = function (code: string) {
+    return `<n-katex display-mode="true">${code}</n-katex>`;
+  };
+  renderer.katexInline = function (code: string) {
+    return `<n-katex>${code}</n-katex>`;
+  };
 
   let ref: HTMLDivElement | undefined;
-  const anchors: AnchorType[] = [];
 
-  function handleAnchor(e: Event) {
-    e.preventDefault();
-    e.stopPropagation();
-    toggleAnchor(e.target as HTMLAnchorElement);
-    ref
-      ?.querySelector(decodeURIComponent((e.target as HTMLAnchorElement)?.hash))
-      ?.scrollIntoView?.({
-        behavior: 'smooth',
-        block: 'nearest',
-      });
-  }
   const htmlString = createMemo(() => {
     if (!props.text) {
       return '';
     }
+    if (props.pictureViewer) {
+      renderer.image = function (src: string | null, title: string | null, alt: string) {
+        return `<n-img role="img" src="${src}" alt="${alt}" ${
+          title ? `title="${title}"` : ''
+        }></n-img>`;
+      };
+    }
     return marked(props.text, {
+      renderer: renderer,
       langLineNumber: props.lineNumber,
       langToolbar: props.tools,
+      headerPrefix: '# ',
+      breaks: true,
+      pedantic: false,
+      smartLists: true,
+      smartypants: true,
+      xhtml: true,
     });
   });
-  const handleScroll = throttle((e: Event) => {
-    if (anchors.length) {
-      const el = e.target as HTMLElement;
-      const top = getScrollTop(el);
+  let list: HTMLAnchorElement[] = [];
+  let heading: HTMLHeadingElement[] = [];
+  const active: HTMLAnchorElement[] = [];
 
-      let anchor: HTMLAnchorElement | null = null;
-      const elTop = (isUndefined(el.tagName) ? -window.scrollY : -el.offsetHeight) / 2;
+  function handleAnchor(e: Event) {
+    e.preventDefault();
+    e.stopPropagation();
+    const a = e.target as HTMLAnchorElement;
 
-      anchors.forEach((a) => {
-        if (top - a.top > elTop) anchor = a.anchor;
+    if (a.hash) {
+      ref?.querySelector(decodeURIComponent(a.hash))?.scrollIntoView({
+        behavior: 'smooth',
+        block: 'nearest',
       });
-
-      if (anchor) {
-        toggleAnchor(anchor);
-      }
+      list.forEach((item) => item.classList.remove('active'));
+      a.classList.add('active');
+    } else {
+      window.open(a.href);
     }
-  }, 200);
+  }
+  function observerEntry(entries: IntersectionObserverEntry[]) {
+    entries.forEach((entry) => {
+      const id = entry.target.getAttribute('id');
+      const all = entry.target.querySelectorAll('a');
+      let a: HTMLAnchorElement | undefined;
 
-  onMount(async () => {
-    props.getAnchorContainer?.().addEventListener('scroll', handleScroll, {
-      passive: passiveSupported,
-    });
-    if (ref) {
-      ref.querySelectorAll('.n-md-toc li a').forEach((e) => {
-        const a = e as HTMLAnchorElement;
-        const _el = ref?.querySelector(
-          decodeURIComponent((a as HTMLAnchorElement)?.hash),
-        ) as HTMLElement;
+      list.forEach((l) => {
+        if (l.hash === `#${id}`) {
+          a = l;
+        } else if (!l.hash) {
+          all.forEach((e) => {
+            if (e.href === l.href) {
+              a = l;
+            }
+          });
+        }
+      });
+      if (a) {
+        const idx = active.indexOf(a);
 
-        anchors.push({
-          anchor: a,
-          top: _el.offsetTop,
+        active.forEach((e) => {
+          e.classList.remove('active');
         });
-        (e as HTMLAnchorElement).onclick = handleAnchor;
+        if (entry.isIntersecting) {
+          active.push(a);
+        } else if (idx !== -1) {
+          active.splice(idx, 1);
+        }
+        if (active[0]) {
+          active[0].classList.add('active');
+          active[0].offsetParent?.scrollTo({
+            top: active[0].offsetTop,
+          });
+        }
+      }
+    });
+  }
+  createEffect(() => {
+    let observer: IntersectionObserver;
+
+    if (ref && props.text?.startsWith('[TOC]')) {
+      list = [...ref.querySelectorAll<HTMLAnchorElement>('.n-md-toc a[href]')];
+      heading = [...ref.querySelectorAll<HTMLHeadingElement>('h1, h2, h3, h4, h5, h6')];
+
+      observer = new IntersectionObserver(observerEntry, {
+        rootMargin: '-50px 0px',
+        threshold: 0.5,
+      });
+
+      heading.forEach((e) => observer.observe(e));
+      list.forEach((e) => {
+        e.addEventListener('click', handleAnchor);
       });
     }
-  });
-  onCleanup(() => {
-    props.getAnchorContainer?.().removeEventListener('scroll', handleScroll, false);
+    onCleanup(() => {
+      if (observer) {
+        heading.forEach((e) => observer.unobserve(e));
+        observer.disconnect();
+      }
+      list.forEach((e) => {
+        e.removeEventListener('click', handleAnchor);
+      });
+    });
   });
 
   return (
@@ -199,7 +203,7 @@ export interface MdProps extends JSX.HTMLAttributes<HTMLDivElement> {
   /** 开启代码块工具条
    * @default ['copy']
    */
-  tools?: ['copy'];
+  tools?: 'copy'[];
   /** 指定滚动的容器
    * @default () => window
    */
@@ -208,11 +212,6 @@ export interface MdProps extends JSX.HTMLAttributes<HTMLDivElement> {
    * @default false
    */
   notRender?: boolean;
-}
-
-interface AnchorType {
-  anchor: HTMLAnchorElement;
-  top: number;
 }
 
 export type MdElement = CustomElement<MdProps>;
@@ -237,8 +236,6 @@ customElement(
         text: (!_.notRender && el.textContent) || el.text,
         css: el.css,
         tools: el.tools,
-        lineNumber: el.lineNumber,
-        pictureViewer: el.pictureViewer,
         getAnchorContainer: el.getAnchorContainer,
       },
       _,

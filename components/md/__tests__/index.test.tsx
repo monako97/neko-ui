@@ -4,10 +4,14 @@ describe('Md', () => {
   it('basic', () => {
     const { container, getByTestId } = render(() => (
       <>
-        <n-md>
+        <n-md line-number={false} tools={[]}>
           {`#### 第一种方式
 
 !> 直接在写在标签内`}
+        </n-md>
+        <n-md not-render={true} picture-viewer={false} getAnchorContainer={() => document.body}>
+          <h1>h1</h1>
+          <h2>h2</h2>
         </n-md>
         <n-md>
           <h1>h1</h1>

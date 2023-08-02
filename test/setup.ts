@@ -25,3 +25,17 @@ window.matchMedia =
       removeEventListener: jest.fn(),
     };
   };
+
+window.HTMLElement.prototype.scrollIntoView =
+  window.HTMLElement.prototype.scrollIntoView || jest.fn();
+
+const mockObserveFn = () => {
+  return {
+    observe: jest.fn(),
+    unobserve: jest.fn(),
+    disconnect: jest.fn(),
+  };
+};
+
+window.IntersectionObserver =
+  window.IntersectionObserver || jest.fn().mockImplementation(mockObserveFn);

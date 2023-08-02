@@ -6,7 +6,7 @@ col: 100%
 ---
 
 ```jsx
-const { dark, setDark, light, setLight } = theme;
+const { dark, setDark, light, setLight } = NekoUI.theme;
 
 function getTextColor(colors) {
   return {
@@ -30,7 +30,7 @@ function getTextColor(colors) {
 
 function Item({ name, isDark }) {
   const color = createMemo(() => (isDark ? dark() : light())[name]);
-  const colors = createMemo(() => toneColor(color(), isDark));
+  const colors = createMemo(() => NekoUI.toneColor(color(), isDark));
 
   return (
     <div

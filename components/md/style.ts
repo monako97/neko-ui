@@ -30,7 +30,7 @@ export const style = css`
     border-radius: var(--border-radius);
     padding: 24px;
     color: var(--text-color);
-    max-inline-size: 1280px;
+    max-inline-size: 100%;
     box-sizing: border-box;
     overflow-wrap: break-word;
     transition-duration: var(--transition-duration);
@@ -90,17 +90,17 @@ export const style = css`
 
   .n-md-toc {
     position: sticky;
-    inset-block-start: 0;
+    inset-block-start: 24px;
     inset-inline-end: 0;
     z-index: 10;
     display: block;
     overflow-y: auto;
-    margin: 0;
+    margin: 0 0 24px;
     border-radius: var(--border-radius);
     padding: 16px;
     max-inline-size: 200px;
     block-size: fit-content;
-    max-block-size: calc(100vb - 98px);
+    max-block-size: calc(100vb - 132px);
     box-sizing: border-box;
     transition-duration: var(--transition-duration);
     transition-timing-function: var(--transition-timing-function);
@@ -112,6 +112,7 @@ export const style = css`
     display: grid;
     inline-size: fit-content;
     max-inline-size: 100%;
+    font-size: var(--font-size-sm);
     list-style: none;
   }
 
@@ -134,7 +135,13 @@ export const style = css`
     text-shadow: 0 1px var(--primary-shadow);
   }
 
-  a[href]::after {
+  .n-md-toc li a[href^='http']::after,
+  .n-md-toc li a[href^='\/\/']::after {
+    content: ' ⎋';
+    opacity: 0.5;
+  }
+
+  a[href]::before {
     position: absolute;
     inset-block-end: 0;
     inset-inline-start: 0;
@@ -146,10 +153,11 @@ export const style = css`
     transition-duration: var(--transition-duration);
     transition-timing-function: var(--transition-timing-function);
     transition-property: transform, background-color;
+    opacity: 0.5;
     content: '';
   }
 
-  a:hover::after {
+  a:hover::before {
     transform: scaleX(1);
   }
 

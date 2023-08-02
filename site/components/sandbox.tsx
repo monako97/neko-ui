@@ -1,7 +1,7 @@
 import * as Solid from 'solid-js';
 import { css, cx } from '@moneko/css';
 import { type ExampleModule, examples } from '@moneko/solid-js';
-import { theme } from 'neko-ui';
+import NekoUI from 'neko-ui';
 import { customElement } from 'solid-element';
 import h from 'solid-js/h';
 import * as SolidWeb from 'solid-js/web';
@@ -197,7 +197,12 @@ const codeNoShadowCss = css`
 `;
 
 const noMargin = '.n-md-body {margin: 0;}';
-const portalCss = '.portal {font-size:13px;max-width: 50vw;}';
+const portalCss = css`
+  .portal {
+    font-size: 13px;
+    max-inline-size: 50vi;
+  }
+`;
 const suffixCss = css`
   .label {
     border-radius: 50%;
@@ -235,6 +240,7 @@ function Sandbox(_props: SandboxProps) {
 
   const scope: CodeLiveProps['scope'] = {
     ...Solid,
+    NekoUI,
     Portal,
     Dynamic,
     jsx: $$jsx,
@@ -394,7 +400,7 @@ interface SandboxGroupProps {
 }
 
 function SandboxGroup(props: SandboxGroupProps) {
-  const { baseStyle } = theme;
+  const { baseStyle } = NekoUI.theme;
   const data = createMemo(() => examples[props.name] || []);
 
   return (

@@ -15,9 +15,8 @@
    </template>
    ```
 
-3. 在 `Vue` 中使用时, 你可能需要先这样做
+3. 在 `Vue` 中使用时, 你需要先添加这段代码
 
    ```js
-   // 将使用到的 web component 添加到忽略名单中
-   Vue.config.ignoredElements = ['n-code', 'n-md'];
+   Vue.config.ignoredElements = [/^n-[a-z]/];
    ```

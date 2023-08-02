@@ -13,6 +13,8 @@
 
 # Neko UI
 
+🐾 🐾 🐾 🐾
+
 > 这是一个适用于任何技术栈的 WebComponents UI组件库
 
 [![neko-ui][home-tag]][home-url]

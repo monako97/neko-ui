@@ -1,7 +1,7 @@
 import { For, Show, createEffect, createMemo } from 'solid-js';
 import { css } from '@moneko/css';
 import { A, type RouterProps, getPathName, project, routes, useLocation } from '@moneko/solid-js';
-import { theme } from 'neko-ui';
+import NekoUI from 'neko-ui';
 import { customElement } from 'solid-element';
 
 const style = css`
@@ -319,7 +319,7 @@ for (const key in obj) {
 
 export { all, kv };
 function Sider(_: object, opt: ComponentOptions<object>) {
-  const { baseStyle, scheme, setScheme, isDark } = theme;
+  const { baseStyle, scheme, setScheme, isDark } = NekoUI.theme;
   const location = useLocation();
   const themes = [
     { label: '暗黑', value: 'dark', icon: '🌛' },
