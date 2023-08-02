@@ -3,6 +3,7 @@
 
 ### Bug Fixes
 
+* docs、toc ([1bbd2d2](https://github.com/monako97/neko-ui/commit/1bbd2d22122a6a45d61397bf65d0cdcbb2e190b5))
 * umd ([3e27ef9](https://github.com/monako97/neko-ui/commit/3e27ef93e74e1b459689e5abe7824a40c2308292))
 * umd types ([d2442d6](https://github.com/monako97/neko-ui/commit/d2442d68e0a5635823c9bc16d8b917d2d2649085))
 
