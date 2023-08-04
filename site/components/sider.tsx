@@ -376,7 +376,7 @@ function Sider(_: object, opt: ComponentOptions<object>) {
               setScheme(e.detail[0]);
             }}
           >
-            <span class="theme-btn">{isDark() ? '☪' : '☀'}</span>
+            <span class="theme-btn">{isDark() ? '🌛' : '🌞'}</span>
           </n-dropdown>
         </header>
         <section class="site-sider">
