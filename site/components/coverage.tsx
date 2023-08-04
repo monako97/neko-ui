@@ -1,6 +1,8 @@
 import { For, createMemo } from 'solid-js';
+import app from '@app';
+import coverages from '@app/coverage';
 import { css, cx } from '@moneko/css';
-import { getPathName, project, useLocation } from '@moneko/solid-js';
+import { getPathName, useLocation } from '@moneko/solid-js';
 import NekoUI from 'neko-ui';
 import { customElement } from 'solid-element';
 
@@ -83,7 +85,7 @@ function Coverage() {
   const coverage = createMemo(() => {
     const name = getPathName(location);
 
-    return projectCoverage[name ? `components.${name}` : project.info.name] || {};
+    return coverages[name ? `components.${name}` : app.name] || {};
   });
 
   function getNum(num: number) {

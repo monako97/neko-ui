@@ -13,8 +13,7 @@ interface BaseSchema {
   name?: string;
   title?: string;
   items?: never;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  [key: string]: any;
+  [key: string]: Any;
 }
 interface ArraySchema extends Omit<BaseSchema, 'type' | 'items'> {
   type: 'array';

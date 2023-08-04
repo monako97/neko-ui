@@ -8,7 +8,7 @@ order: 2
 <n-img
   src="https://react-photo-view.vercel.app/_next/static/media/3.70695fb9.jpg"
   alt="img"
-  mask-closable="true"
+  mask-closable="false"
 ></n-img>
 ```
 
@@ -16,6 +16,6 @@ order: 2
 <n-img
   src="https://react-photo-view.vercel.app/_next/static/media/3.70695fb9.jpg"
   alt="img"
-  mask-closable={true}
+  mask-closable={false}
 />
 ```

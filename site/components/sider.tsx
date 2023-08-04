@@ -1,6 +1,8 @@
 import { For, Show, createEffect, createMemo } from 'solid-js';
+import app from '@app';
+import routes, { type RouterProps } from '@app/routes';
 import { css } from '@moneko/css';
-import { A, type RouterProps, getPathName, project, routes, useLocation } from '@moneko/solid-js';
+import { A, getPathName, useLocation } from '@moneko/solid-js';
 import NekoUI from 'neko-ui';
 import { customElement } from 'solid-element';
 
@@ -350,9 +352,6 @@ function Sider(_: object, opt: ComponentOptions<object>) {
       animation: none;
     }
   `;
-  // function handleChange(e) {
-  //   setScheme(e.detail ? 'dark' : 'light');
-  // };
 
   return (
     <>
@@ -366,16 +365,9 @@ function Sider(_: object, opt: ComponentOptions<object>) {
             <n-avatar css={avatarCss} />
           </A>
           <hgroup class="site-title">
-            {APPENTRY}
-            <h1 data-truncated>{project.name.replace(/-/g, ' ')}</h1>
-            <i>{kv[active()]?.subtitle || project.info.description}</i>
+            <h1 data-truncated>{app.name.replace(/-/g, ' ')}</h1>
+            <i>{kv[active()]?.subtitle || app.description}</i>
           </hgroup>
-          {/* <n-switch
-            value={isDark()}
-            onChange={hand}
-            un-checked-text="🌞"
-            checked-text="🌛"
-          /> */}
           <n-dropdown
             value={scheme()}
             items={themes}

@@ -1,6 +1,7 @@
 import * as Solid from 'solid-js';
+import { type ExampleModule } from '@app/example';
+import Fallback from '@app/fallback';
 import { css, cx } from '@moneko/css';
-import { type ExampleModule, examples } from '@moneko/solid-js';
 import NekoUI from 'neko-ui';
 import { customElement } from 'solid-element';
 import h from 'solid-js/h';
@@ -401,23 +402,52 @@ interface SandboxGroupProps {
 
 function SandboxGroup(props: SandboxGroupProps) {
   const { baseStyle } = NekoUI.theme;
-  const data = createMemo(() => examples[props.name] || []);
 
-  return (
-    <>
-      <Show when={data().length}>
-        <style>
-          {baseStyle()}
-          {groupCss}
-        </style>
+  async function load(name: string) {
+    let box: () => Solid.JSX.Element;
+
+    try {
+      const resp = (await import(`@app/example/${name}`)).default || [];
+
+      box = () => (
         <div class="sandbox-group">
-          <For each={data()}>
+          <For each={resp}>
             {({ title, ...m }) => (
               <site-sandbox style={{ flex: m.col || 'calc(50% - 24px)' }} legend={title} {...m} />
             )}
           </For>
         </div>
-      </Show>
+      );
+    } catch (error) {
+      box = () => null;
+    }
+    return {
+      default: box,
+    };
+  }
+  const data = createMemo(() => {
+    const app = load.bind(null, props.name);
+
+    const View = Solid.lazy(app);
+
+    return <View />;
+  });
+
+  return (
+    <>
+      <style>
+        {baseStyle()}
+        {groupCss}
+      </style>
+      <Solid.Suspense
+        fallback={
+          <div class="sandbox-group">
+            <Fallback />
+          </div>
+        }
+      >
+        {data()}
+      </Solid.Suspense>
     </>
   );
 }

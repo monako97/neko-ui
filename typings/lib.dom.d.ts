@@ -1,10 +1,12 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+type Any = any;
+
 declare interface MediaRecorderErrorEvent extends Event {
   name: string;
 }
 
 declare interface MediaRecorderDataAvailableEvent extends Event {
-  data: any;
+  data: Any;
 }
 
 interface MediaRecorderEventMap {
@@ -49,7 +51,7 @@ declare class MediaRecorder extends EventTarget {
 
   addEventListener<K extends keyof MediaRecorderEventMap>(
     type: K,
-    listener: (this: MediaStream, ev: MediaRecorderEventMap[K]) => any,
+    listener: (this: MediaStream, ev: MediaRecorderEventMap[K]) => Any,
     options?: boolean | AddEventListenerOptions,
   ): void;
 
@@ -61,7 +63,7 @@ declare class MediaRecorder extends EventTarget {
 
   removeEventListener<K extends keyof MediaRecorderEventMap>(
     type: K,
-    listener: (this: MediaStream, ev: MediaRecorderEventMap[K]) => any,
+    listener: (this: MediaStream, ev: MediaRecorderEventMap[K]) => Any,
     options?: boolean | EventListenerOptions,
   ): void;
 
@@ -113,9 +115,9 @@ interface Element
     NonDocumentTypeChildNode,
     ParentNode,
     Slottable {
-  mozRequestFullScreen: any;
-  msRequestFullscreen: any;
-  webkitRequestFullScreen: any;
+  mozRequestFullScreen: Any;
+  msRequestFullscreen: Any;
+  webkitRequestFullScreen: Any;
 }
 interface Document
   extends Node,
@@ -125,12 +127,12 @@ interface Document
     NonElementParentNode,
     ParentNode,
     XPathEvaluatorBase {
-  mozCancelFullScreen: any;
-  msExitFullscreen: any;
+  mozCancelFullScreen();
+  msExitFullscreen();
   msExiFullscreen();
-  webkitCancelFullScreen: any;
-  webkitFullscreenElement: Element | null;
-  mozFullScreenElement: any;
+  webkitCancelFullScreen();
+  webkitFullscreenElement();
+  mozFullScreenElement();
 }
 interface EyeDropperConstructor {
   new (): EyeDropper;
@@ -149,5 +151,5 @@ interface EyeDropper extends EyeDropperConstructor {
 }
 
 interface Window {
-  EyeDropper: EyeDropper | undefined;
+  EyeDropper?: EyeDropper;
 }

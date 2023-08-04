@@ -1,13 +1,13 @@
-import { Show, createEffect } from 'solid-js';
+import { For, Show, createEffect, createMemo } from 'solid-js';
+import docs from '@app/docs';
 import { css } from '@moneko/css';
-import { ApiView, Outlet, getPathName, useLocation } from '@moneko/solid-js';
+import { Outlet, getPathName, useLocation } from '@moneko/solid-js';
 import NekoUI from 'neko-ui';
 import './components';
 
 function App() {
   const { baseStyle } = NekoUI.theme;
   const location = useLocation();
-
   const noBg = css`
     .n-md-body:has(n-md) {
       overflow: initial;
@@ -142,6 +142,7 @@ function App() {
       position: fixed;
     }
   `;
+  const doc = createMemo(() => docs[getPathName(location)]);
 
   return (
     <>
@@ -162,7 +163,7 @@ function App() {
             </div>
           </n-md>
           <site-sandbox-group name={getPathName(location)} />
-          <ApiView />
+          <For each={doc()}>{(e) => e()}</For>
           <site-pagination />
         </div>
         <site-footer />

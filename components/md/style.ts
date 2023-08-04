@@ -1,6 +1,11 @@
 import { css } from '@moneko/css';
 
 export const style = css`
+  :host,
+  :root {
+    --table-heading-bg: var(--border-color);
+  }
+
   .n-photo-header > span,
   .n-md-body,
   .n-md-toc {
@@ -39,7 +44,8 @@ export const style = css`
     flex: 1;
   }
 
-  .n-md-body .n-md-body {
+  .n-md-body .n-md-body,
+  .n-md-body n-md {
     overflow: visible;
     margin: 0;
     padding: 0;
@@ -307,8 +313,7 @@ export const style = css`
   table {
     overflow: hidden;
     margin-block-end: 16px;
-    border-block-end: 1px solid var(--border-color);
-    border-radius: var(--border-radius);
+    border-block-end: 1px solid var(--table-heading-bg);
     inline-size: 100%;
     max-inline-size: 100%;
     border-spacing: 0;
@@ -320,39 +325,25 @@ export const style = css`
     margin-block-end: 0;
   }
 
-  table tbody tr:hover {
+  table tbody tr:nth-child(2n) {
     background-color: var(--primary-details-bg);
   }
 
-  table tr th {
-    min-inline-size: 54px;
-    color: var(--text-heading);
-    background-color: var(--border-color);
-    transition-property: background-color, color;
+  table tbody tr:hover {
+    background-color: var(--primary-selection);
   }
 
-  table td {
-    border-style: dotted;
-    border-width: 0 0 1px 1px;
-    border-color: var(--border-color);
-    transition-property: border-color;
+  table tr th {
+    font-weight: 500;
+    min-inline-size: 54px;
+    color: var(--text-heading);
+    background-color: var(--table-heading-bg);
+    transition-property: background-color, color;
   }
 
   table tr th,
   table td {
     padding: 5px 10px;
-  }
-
-  table td:first-of-type {
-    border-inline-start: 1px solid var(--border-color);
-  }
-
-  table td:last-of-type {
-    border-inline-end: 1px solid var(--border-color);
-  }
-
-  table tr:last-of-type td {
-    border-block-end: none;
   }
 
   blockquote {

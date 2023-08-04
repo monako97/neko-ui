@@ -1,5 +1,5 @@
+import app from '@app';
 import { css } from '@moneko/css';
-import { project } from '@moneko/solid-js';
 import { customElement } from 'solid-element';
 
 function Footer() {
@@ -29,20 +29,20 @@ function Footer() {
         <p>
           <a
             class="n-site-footer-link"
-            href={project.info.repository?.url}
+            href={app.repository?.url}
             target="_blank"
             rel="noopener noreferrer"
           >
-            {project.name}&nbsp;
+            {app.name}&nbsp;
           </a>
           Ⓒ {year} Made with ❤️‍🔥 by&nbsp;
           <a
             class="n-site-footer-link"
-            href={project.info.author?.url}
+            href={app.author?.url}
             target="_blank"
             rel="noopener noreferrer"
           >
-            {project.info.author?.name}
+            {app.author?.name}
           </a>
         </p>
       </footer>

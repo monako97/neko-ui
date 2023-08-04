@@ -22,7 +22,8 @@ export interface ImgProps {
   /** 开启关闭大图的回调函数 */
   onOpenChange?: (open: boolean | null) => void;
   /** 点击遮罩关闭
-   * @default false
+   * @since 2.0.8
+   * @default true
    */
   maskClosable?: boolean;
   /** 通过 `esc` 按键关闭
@@ -141,7 +142,7 @@ customElement(
     src: void 0,
     alt: void 0,
     open: null as boolean | null,
-    maskClosable: false,
+    maskClosable: true,
     escClosable: true,
     onOpenChange: void 0,
   },

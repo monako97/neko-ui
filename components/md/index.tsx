@@ -193,6 +193,7 @@ export interface MdProps extends JSX.HTMLAttributes<HTMLDivElement> {
   /** md内容 */
   text?: string;
   /** 开启图片查看器
+   * @since 2.0.8
    * @default true
    */
   pictureViewer?: boolean;

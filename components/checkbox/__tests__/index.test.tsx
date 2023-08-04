@@ -82,8 +82,7 @@ describe('Checkbox', () => {
           { value: 3, label: '选项-3' },
           { value: 4, label: '选项-4' },
         ]}
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        onChange={(e: { target: any; detail: unknown[] }) => {
+        onChange={(e: { target: Any; detail: (string | number)[] }) => {
           if (e.target) {
             e.target.value = e.detail;
           }

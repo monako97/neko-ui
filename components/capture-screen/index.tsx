@@ -18,8 +18,7 @@ import theme from '../theme';
 
 declare interface MediaRecorderDataAvailableEvent extends Event {
   /** MediaRecorderDataAvailableEvent */
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  data: any;
+  data: Any;
 }
 
 export interface CaptureScreenProps extends JSX.ButtonHTMLAttributes<HTMLDivElement> {
