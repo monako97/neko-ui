@@ -329,7 +329,6 @@ function Sider(_: object, opt: ComponentOptions<object>) {
     { label: '跟随系统', value: 'auto', icon: '⚙️' },
   ];
 
-  let menuEl: HTMLUListElement | undefined;
   const active = createMemo(() => getPathName(location));
 
   createEffect(() => {
@@ -365,7 +364,7 @@ function Sider(_: object, opt: ComponentOptions<object>) {
             <n-avatar css={avatarCss} />
           </A>
           <hgroup class="site-title">
-            <h1 data-truncated>{app.name.replace(/-/g, ' ')}</h1>
+            <h1 data-truncated>{app.name.replace(/-/g, ' ').toLocaleUpperCase()}</h1>
             <i>{kv[active()]?.subtitle || app.description}</i>
           </hgroup>
           <n-dropdown
@@ -381,7 +380,7 @@ function Sider(_: object, opt: ComponentOptions<object>) {
           </n-dropdown>
         </header>
         <section class="site-sider">
-          <ul ref={menuEl}>
+          <ul>
             <For each={menuKeys}>
               {(key) => {
                 return (

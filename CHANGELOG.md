@@ -8,6 +8,11 @@
 * umd types ([d2442d6](https://github.com/monako97/neko-ui/commit/d2442d68e0a5635823c9bc16d8b917d2d2649085))
 
 
+### Features
+
+* virtualModule ([069096b](https://github.com/monako97/neko-ui/commit/069096b5fa9b59e2eee87274d170ce9d955561ec))
+
+
 
 ## [2.0.3](https://github.com/monako97/neko-ui/compare/2.0.0...2.0.3) (2023-08-01)
 

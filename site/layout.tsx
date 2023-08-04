@@ -4,6 +4,7 @@ import { css } from '@moneko/css';
 import { Outlet, getPathName, useLocation } from '@moneko/solid-js';
 import NekoUI from 'neko-ui';
 import './components';
+import log from '../CHANGELOG.md?raw';
 
 function App() {
   const { baseStyle } = NekoUI.theme;
@@ -164,6 +165,9 @@ function App() {
           </n-md>
           <site-sandbox-group name={getPathName(location)} />
           <For each={doc()}>{(e) => e()}</For>
+          <Show when={!getPathName(location)}>
+            <n-md text={`[TOC]\n# Change log\n${log}`} />
+          </Show>
           <site-pagination />
         </div>
         <site-footer />

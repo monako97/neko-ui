@@ -1,6 +1,5 @@
 import { For } from 'solid-js';
 import { css } from '@moneko/css';
-import log from '../CHANGELOG.md?raw';
 import Readme from '../README.md?raw';
 
 function Home() {
@@ -97,7 +96,6 @@ function Home() {
           }}
         </For>
       </div>
-      <n-md text={`[TOC]\n# Change log\n${log}`} />
     </>
   );
 }
