@@ -41,7 +41,7 @@ jobs:
         run: yarn lint
       - name: 'Build UMD'
         run: yarn build config=umd
-      - name: 'Build Artifact'
+      - name: 'Build Docs'
         run: yarn build config=deploy
       - name: 'Publish to npm'
         run: |
