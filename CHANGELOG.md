@@ -1,5 +1,9 @@
 # [2.1.0](https://github.com/monako97/neko-ui/compare/2.0.8...2.1.0) (2023-08-08)
 
+### Features
+
+- data-picker ([3a6e907](https://github.com/monako97/neko-ui/commit/3a6e9079716dac30163ed0d19cc90707f05b98b2))
+
 ## [2.0.8](https://github.com/monako97/neko-ui/compare/2.0.3...2.0.8) (2023-08-04)
 
 ### Bug Fixes

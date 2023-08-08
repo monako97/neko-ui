@@ -77,6 +77,7 @@ export {
 export { default as Skeleton, type SkeletonElement, type SkeletonProps } from './skeleton';
 export { default as Spin, type SpinElement, type SpinProps } from './spin';
 export { default as Switch, type SwitchElement, type SwitchProps } from './switch';
+export { default as Table, type TableElement, type TableProps } from './table';
 export { default as Tabs, type TabOption, type TabsElement, type TabsProps } from './tabs';
 export { default as Tag, type TagElement, type TagProps } from './tag';
 export {
@@ -146,6 +147,7 @@ import type {
   SkeletonElement,
   SpinElement,
   SwitchElement,
+  TableElement,
   TabsElement,
   TagElement,
   TreeElement,
@@ -247,6 +249,10 @@ interface CustomElementTags {
    * @since 2.1.0
    */
   'n-data-picker': DatePickerElement;
+  /** 数据表格
+   * @since 2.2.0
+   */
+  'n-table': TableElement;
 }
 
 declare module 'solid-js' {
