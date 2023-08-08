@@ -85,13 +85,6 @@ function InputNumber(props: InputNumberProps) {
       min: Number.MIN_SAFE_INTEGER,
     },
     props,
-    // {
-    //   // eslint-disable-next-line solid/reactivity
-    //   class: cx('number', props.class),
-    //   // eslint-disable-next-line solid/reactivity
-    //   css: style + (props.css || ''),
-    //   onChange: change,
-    // },
   );
 
   function change(val?: string | number) {
@@ -107,7 +100,8 @@ function InputNumber(props: InputNumberProps) {
     props.onChange?.(_val);
   }
 
-  function mouseMove({ movementX, movementY }: { movementX: number; movementY: number }) {
+  function mouseMove(e: { movementX: number; movementY: number }) {
+    const { movementX, movementY } = e;
     const _val = _.value;
     const val = typeof _val === 'number' && !isNaN(_val) ? _val : Number(_val) || 0;
 

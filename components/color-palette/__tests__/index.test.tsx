@@ -73,12 +73,12 @@ describe('ColorPalette', () => {
     getByTestId(testId)
       .shadowRoot!.querySelectorAll('n-input-number')
       .forEach((e, i) => {
-        fireEvent.input((e as HTMLElement).shadowRoot!.querySelector('input')!, {
+        fireEvent.input((e as unknown as HTMLElement).shadowRoot!.querySelector('input')!, {
           target: {
             value: i === 3 ? -0.1 : 101,
           },
         });
-        fireEvent.change((e as HTMLElement).shadowRoot!.querySelector('input')!, {
+        fireEvent.change((e as unknown as HTMLElement).shadowRoot!.querySelector('input')!, {
           target: {
             value: i === 3 ? -0.1 : 101,
           },
@@ -86,7 +86,9 @@ describe('ColorPalette', () => {
       }) as unknown as HTMLInputElement[];
 
     const a = (
-      getByTestId(testId).shadowRoot!.querySelectorAll('n-input-number')[3]! as HTMLElement
+      getByTestId(testId).shadowRoot!.querySelectorAll(
+        'n-input-number',
+      )[3]! as unknown as HTMLElement
     ).shadowRoot!.querySelector('input')!;
 
     fireEvent.input(a, {

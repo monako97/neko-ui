@@ -2,17 +2,12 @@ import BeginInterval from './begin-interval';
 import Item, { type CronItemProps } from './item';
 import Period from './period';
 import Some from './some';
-import type { BaseOption } from 'neko-ui';
+import { hours } from '../date-picker/time';
 
 function Hour(props: Required<Omit<CronItemProps<'hour'>, 'options'>>) {
-  const hours: BaseOption[] = [];
   const beginEvery: string[] = [];
 
   for (let x = 0; x < 24; x++) {
-    hours.push({
-      label: x < 10 ? `0${x}` : `${x}`,
-      value: x,
-    });
     beginEvery.push(`${x + 1}`);
   }
 

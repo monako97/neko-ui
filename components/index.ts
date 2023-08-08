@@ -32,6 +32,7 @@ export {
   type ColorPickerProps,
 } from './color-picker';
 export { default as Cron, type CronElement, type CronProps } from './cron';
+export { default as DatePicker, type DatePickerProps, type DatePickerElement } from './date-picker';
 export {
   default as Dropdown,
   type DropdownElement,
@@ -42,7 +43,6 @@ export {
 export { default as Empty, type EmptyElement, type EmptyProps } from './empty';
 export { default as fromSchema } from './from-schema';
 export { default as getOptions } from './get-options';
-
 export {
   default as HighlightText,
   type HighlightTextElement,
@@ -127,6 +127,7 @@ import type {
   ColorPaletteElement,
   ColorPickerElement,
   CronElement,
+  DatePickerElement,
   DropdownElement,
   DropdownMultipleElement,
   EmptyElement,
@@ -172,6 +173,9 @@ const normal = {
 
 export default normal;
 
+/** 组件列表
+ * @ignore optional
+ */
 interface CustomElementTags {
   /** 头像 */
   'n-avatar': AvatarElement;
@@ -239,7 +243,12 @@ interface CustomElementTags {
   'n-menu': MenuElement | MenuMultipleElement;
   /** Cron表达式编辑器 */
   'n-cron': CronElement;
+  /** 数据表格
+   * @since 2.1.0
+   */
+  'n-data-picker': DatePickerElement;
 }
+
 declare module 'solid-js' {
   // eslint-disable-next-line @typescript-eslint/no-namespace
   export namespace JSX {

@@ -1,4 +1,4 @@
-# Unreleased (2023-08-05)
+# [2.1.0](https://github.com/monako97/neko-ui/compare/2.0.8...2.1.0) (2023-08-08)
 
 ## [2.0.8](https://github.com/monako97/neko-ui/compare/2.0.3...2.0.8) (2023-08-04)
 

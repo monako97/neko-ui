@@ -2,17 +2,12 @@ import BeginInterval from './begin-interval';
 import Item, { type CronItemProps } from './item';
 import Period from './period';
 import Some from './some';
-import type { BaseOption } from 'neko-ui';
+import { minutes as seconds } from '../date-picker/time';
 
 function Second(props: Required<Omit<CronItemProps<'month'>, 'options'>>) {
-  const seconds: BaseOption[] = [];
   const beginEvery: string[] = [];
 
   for (let x = 0; x < 60; x++) {
-    seconds.push({
-      label: x < 10 ? `0${x}` : x,
-      value: x,
-    });
     beginEvery.push(`${x + 1}`);
   }
 

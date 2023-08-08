@@ -4,7 +4,9 @@ export const style = css`
   .menu {
     --menu-selection: var(--primary-selection);
 
+    max-block-size: 100%;
     display: block;
+    overflow-y: auto;
     color: var(--text-color);
 
     ${['primary', 'success', 'error', 'warning']

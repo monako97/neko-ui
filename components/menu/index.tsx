@@ -9,6 +9,7 @@ import {
   createMemo,
   createSignal,
   mergeProps,
+  onCleanup,
   splitProps,
   untrack,
 } from 'solid-js';
@@ -21,6 +22,7 @@ import getOptions from '../get-options';
 import theme from '../theme';
 
 function Menu(props: MenuProps | MenuMultipleProps) {
+  let ref: HTMLDivElement | undefined;
   const { isDark, baseStyle } = theme;
   const [local, other] = splitProps(props, [
     'class',
@@ -51,8 +53,8 @@ function Menu(props: MenuProps | MenuMultipleProps) {
   function change(item: MenuOption, e: MouseEvent) {
     e.preventDefault();
     if (!item.disabled && !local.disabled) {
-      let _value = [...untrack(value)];
-      const key = item[untrack(fieldNames).value]!;
+      let _value = [...value()];
+      const key = item[fieldNames().value]!;
 
       if (local.multiple) {
         const idx = _value.indexOf(key);
@@ -111,7 +113,7 @@ function Menu(props: MenuProps | MenuMultipleProps) {
             });
             function handleOpen(e: MouseEvent) {
               preventDefault(e);
-              let _openKeys = untrack(openKeys);
+              let _openKeys = openKeys();
 
               if (_openKeys.includes(item[_.fieldNames.value]!)) {
                 _openKeys = _openKeys.filter((v) => v !== item[_.fieldNames.value]);
@@ -134,7 +136,7 @@ function Menu(props: MenuProps | MenuMultipleProps) {
                 setHei(el?.offsetHeight || 0);
               });
               function onAnimationEnd() {
-                if (!untrack(isOpen)) {
+                if (!isOpen()) {
                   setShow(false);
                 }
               }
@@ -216,6 +218,40 @@ function Menu(props: MenuProps | MenuMultipleProps) {
       setOpenKeys(local.openKeys);
     }
   });
+
+  createEffect(() => {
+    let timer: NodeJS.Timeout | undefined;
+
+    if (value()?.length) {
+      timer = setTimeout(() => {
+        clearTimeout(timer);
+        const el = ref?.querySelector<HTMLElement>('[aria-selected=true]');
+
+        if (el && ref) {
+          const next = el.offsetTop - ref.offsetTop;
+
+          if (next < ref.scrollTop) {
+            ref.scrollTo({
+              top: next,
+              behavior: 'smooth',
+            });
+          } else if (
+            el.offsetTop + el.offsetHeight >
+            ref.scrollTop + ref.offsetHeight + ref.offsetTop
+          ) {
+            ref.scrollTo({
+              top: next - ref.offsetHeight + el.offsetHeight,
+              behavior: 'smooth',
+            });
+          }
+        }
+      }, 32);
+    }
+
+    onCleanup(() => {
+      clearTimeout(timer);
+    });
+  });
   return (
     <>
       <style>
@@ -224,9 +260,9 @@ function Menu(props: MenuProps | MenuMultipleProps) {
         {cssVar()}
         {css(local.css)}
       </style>
-      <span {...other} class="menu" part="menu">
+      <section ref={ref} class="menu" part="menu" {...other}>
         <RenderMenu fieldNames={fieldNames()} list={options()} />
-      </span>
+      </section>
     </>
   );
 }

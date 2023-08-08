@@ -370,6 +370,7 @@ export type PopoverElement = CustomElement<PopoverProps>;
 
 export const defaultProps = {
   class: void 0,
+  css: void 0,
   content: void 0,
   getPopupContainer: void 0,
   trigger: void 0,
@@ -381,7 +382,6 @@ export const defaultProps = {
   disabled: void 0,
   arrow: void 0,
   placement: void 0,
-  css: void 0,
   dropdownMatchSelectWidth: void 0,
 };
 customElement('n-popover', defaultProps, (_, opt) => {
@@ -400,6 +400,9 @@ customElement('n-popover', defaultProps, (_, opt) => {
     _,
   );
 
+  createEffect(() => {
+    el.removeAttribute('css');
+  });
   return createComponent(Popover, props);
 });
 export default Popover;

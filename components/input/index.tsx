@@ -27,7 +27,7 @@ export interface InputProps {
   disabled?: boolean;
   /** 自动完成 */
   autoComplete?: string;
-  /** 填充文本 */
+  /** 占位文本 */
   placeholder?: string;
   /** 组件尺寸
    * @default 'normal'
@@ -48,9 +48,10 @@ export interface InputProps {
   /** 默认值 */
   defaultValue?: string | number;
   /** 值变更时触发的函数 */
-  onChange?: (value: InputProps['value'], e: Event) => void;
+  onChange?: (value: InputProps['value']) => void;
   onKeyDown?(e: KeyboardEvent): void;
   onMouseDown?(e: MouseEvent): void;
+  onFocus?(e: FocusEvent): void;
   onBlur?(e: FocusEvent): void;
   onKeyUp?(e: KeyboardEvent): void;
   /** 指定输入框展示值的格式 */
@@ -76,7 +77,7 @@ function Input(props: InputProps) {
   }
 
   function handleInput(e: Event & { target: HTMLInputElement }) {
-    props.onChange?.(parserValue(e.target?.value), e);
+    props.onChange?.(parserValue(e.target?.value));
   }
   function handleMouseDown(e: MouseEvent) {
     props.onMouseDown?.(e);
@@ -122,6 +123,7 @@ function Input(props: InputProps) {
         <input
           ref={inputRef}
           class="input"
+          part="input"
           onChange={handleInput}
           type={props.type}
           value={value()}
@@ -176,7 +178,7 @@ customElement('n-input', defaultInportProps, (_, opt) => {
       size: el.size || 'normal',
       value: el.value || el.defaultValue || '',
       type: el.type || 'text',
-      onChange(val?: number | string | undefined) {
+      onChange(val?: number | string) {
         el.dispatchEvent(
           new CustomEvent('change', {
             detail: val,

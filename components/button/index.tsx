@@ -42,6 +42,10 @@ export interface ButtonProps
   link?: boolean;
   /** 危险按钮 */
   danger?: boolean;
+  /** 自定义 tag
+   * @since 2.1.0
+   */
+  tag?: string;
   /** 按钮尺寸
    * @default 'normal'
    */
@@ -76,6 +80,7 @@ function Button(_: ButtonProps) {
     'part',
     'tabIndex',
     'disabled',
+    'tag',
   ]);
   let ref: HTMLButtonElement | undefined;
   const [animating, setAnimating] = createSignal(false);
@@ -102,7 +107,7 @@ function Button(_: ButtonProps) {
       </style>
       <Dynamic
         ref={ref}
-        component={local.link ? 'a' : 'button'}
+        component={local.link ? 'a' : local.tag || 'button'}
         tabIndex={local.disabled ? -1 : 0}
         class={cx(
           'btn',
@@ -157,6 +162,7 @@ customElement(
     size: void 0,
     onClick: void 0,
     icon: void 0,
+    tag: void 0,
   },
   (_, opt) => {
     const el = opt.element;

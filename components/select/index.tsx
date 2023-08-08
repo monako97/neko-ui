@@ -134,19 +134,20 @@ function Select(props: SelectProps) {
         break;
     }
   }
-  function deleteValue(v: string | number, e: MouseEvent) {
+  function preventDefault(e: Event) {
     e.stopPropagation();
     e.preventDefault();
+  }
+  function deleteValue(v: string | number, e: MouseEvent) {
+    preventDefault(e);
     onChange(untrack(value).filter((old) => old !== v) as never, untrack(kv)[v]);
   }
   function focus(e: FocusEvent | MouseEvent) {
-    e.preventDefault();
-    e.stopPropagation();
+    preventDefault(e);
     openChange(true);
   }
   function blur(e: FocusEvent) {
-    e.preventDefault();
-    e.stopPropagation();
+    preventDefault(e);
     if (untrack(open)) {
       openChange(false);
     }
