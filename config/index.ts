@@ -6,6 +6,10 @@ const conf: Partial<ConfigType<'swc'>> = {
     tags: [
       {
         tag: 'script',
+        src: 'https://cdn.statically.io/gh/monako97/cdn/main/npm/%40webcomponents/webcomponentsjs/2.8.0/webcomponents-loader.js',
+      },
+      {
+        tag: 'script',
         src: 'https://cdn.staticaly.com/gh/monako97/cdn/main/npm/n-katex/1.0.7/umd/index.js',
       },
       {
