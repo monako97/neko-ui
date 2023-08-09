@@ -2,6 +2,7 @@
 
 ### Bug Fixes
 
+- docs deploy ([a150224](https://github.com/monako97/neko-ui/commit/a1502241037a84bbaba0ae78091ca0cd81f20e5e))
 - docs deploy ([6457a7b](https://github.com/monako97/neko-ui/commit/6457a7b275782ad36c6a310b5360f3bda91c00e4))
 
 ### Features
