@@ -15,6 +15,10 @@ import { imgCss, style } from './style';
 export interface ImgProps {
   /** 图片地址 */
   src?: string;
+  /** 查看大图的地址, 默认使用 `src`
+   * @since 2.1.2
+   */
+  srcFull?: string;
   /** 图片 alt */
   alt?: string;
   /** 大图查看 */
@@ -128,7 +132,7 @@ function Img(props: ImgProps) {
             onClick={portalClick}
           >
             <span class="close" onClick={close} />
-            <img class="img" src={props.src} alt={props.alt} />
+            <img class="img" src={props.srcFull || props.src} alt={props.alt} />
           </div>
         </Portal>
       </Show>
@@ -140,6 +144,7 @@ customElement(
   'n-img',
   {
     src: void 0,
+    srcFull: void 0,
     alt: void 0,
     open: null as boolean | null,
     maskClosable: true,

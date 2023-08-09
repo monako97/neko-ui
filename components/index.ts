@@ -176,6 +176,7 @@ const normal = {
 export default normal;
 
 /** 组件列表
+ * @author monako97
  * @ignore optional
  */
 interface CustomElementTags {
@@ -245,12 +246,13 @@ interface CustomElementTags {
   'n-menu': MenuElement | MenuMultipleElement;
   /** Cron表达式编辑器 */
   'n-cron': CronElement;
-  /** 数据表格
+  /** 日期选择器
    * @since 2.1.0
    */
   'n-data-picker': DatePickerElement;
   /** 数据表格
    * @since 2.2.0
+   * @author monako97 <poi.nyaa@qq.com>
    */
   'n-table': TableElement;
 }

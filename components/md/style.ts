@@ -141,10 +141,16 @@ export const style = css`
     text-shadow: 0 1px var(--primary-shadow);
   }
 
-  .n-md-toc li a[href^='http']::after,
-  .n-md-toc li a[href^='\/\/']::after {
+  .n-md-toc a[href^='http']::after,
+  .n-md-toc a[href^='\/\/']::after,
+  .n-md-body table a[href^='http']::after {
     content: ' ⎋';
-    opacity: 0.5;
+    opacity: 0.3;
+  }
+
+  a[href^='mailto:']::after {
+    content: ' 📧';
+    opacity: 0.4;
   }
 
   a[href]::before {
@@ -161,6 +167,10 @@ export const style = css`
     transition-property: transform, background-color;
     opacity: 0.5;
     content: '';
+  }
+
+  a[href]:has(img, n-img)::before {
+    content: none !important;
   }
 
   a:hover::before {
