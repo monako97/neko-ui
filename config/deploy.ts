@@ -10,7 +10,6 @@ const conf: Partial<ConfigType<'swc'>> = {
   routeBaseName: '/neko-ui',
   publicPath: '/neko-ui/',
   bundleAnalyzer: false,
-  cacheDirectory: false,
   fixBrowserRouter: {
     pathSegmentsToKeep: 1,
     path: '404.html',
