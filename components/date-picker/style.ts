@@ -53,7 +53,9 @@ export const styles = css`
     &-weeks {
       display: flex;
       padding-block-start: 8px;
-      opacity: 0.65;
+
+      /* opacity: 0.65; */
+      color: var(--text-secondary);
 
       span {
         flex: 1;
@@ -85,6 +87,7 @@ export const styles = css`
       display: flex;
       justify-content: center;
       align-items: center;
+      color: var(--text-secondary);
     }
 
     .date-prev,
@@ -94,6 +97,16 @@ export const styles = css`
     .date-day {
       text-align: center;
       inline-size: calc(100% / 7);
+    }
+
+    .date-day:nth-child(7n)::part(button),
+    .date-day:nth-child(7n - 6)::part(button),
+    .date-opacity::part(button) {
+      color: var(--text-secondary);
+    }
+
+    .date-opacity {
+      opacity: 0.3;
     }
 
     .not-date {
@@ -154,10 +167,6 @@ export const styles = css`
           transform: translateX(7px);
         }
       }
-    }
-
-    .date-opacity {
-      opacity: 0.3;
     }
 
     .date-active::part(button) {
