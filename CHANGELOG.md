@@ -14,6 +14,7 @@
 - 1. n-img支持设置srcFull大图地址 ([f8b014f](https://github.com/monako97/neko-ui/commit/f8b014f514ed68a5aed50cade9115e94b0983ac1))
 - data-picker ([5584f13](https://github.com/monako97/neko-ui/commit/5584f137e400c338943e96c42001139e140c5b5e))
 - data-picker ([3a6e907](https://github.com/monako97/neko-ui/commit/3a6e9079716dac30163ed0d19cc90707f05b98b2))
+- 暴露当前的 dayjs 实例 ([73d5044](https://github.com/monako97/neko-ui/commit/73d5044618bf88788521f17eaa1b75a78e097e9c))
 - 自定义路由配置 ([0817c52](https://github.com/monako97/neko-ui/commit/0817c522eef6adba88e7510ae2b7f46bd0e47723))
 
 ## [2.0.8](https://github.com/monako97/neko-ui/compare/2.0.3...2.0.8) (2023-08-04)
