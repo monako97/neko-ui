@@ -1,8 +1,9 @@
-## [2.1.2](https://github.com/monako97/neko-ui/compare/2.0.8...2.1.2) (2023-08-11)
+## [2.1.2](https://github.com/monako97/neko-ui/compare/2.0.8...2.1.2) (2023-08-13)
 
 ### Bug Fixes
 
 - @app/route ([18124f1](https://github.com/monako97/neko-ui/commit/18124f142713f5977d61dc90a05ad0cbda78c3eb))
+- code block ([f765fbc](https://github.com/monako97/neko-ui/commit/f765fbc57320d1d599de66c480f6f5f953784086))
 - docs deploy ([2d69f68](https://github.com/monako97/neko-ui/commit/2d69f681eef2aadbb609e5c0344c6a4b1634d0e9))
 - docs deploy ([6a02213](https://github.com/monako97/neko-ui/commit/6a02213685d6d6eca235c5e4b0a8838bdc5911b4))
 - docs deploy ([a150224](https://github.com/monako97/neko-ui/commit/a1502241037a84bbaba0ae78091ca0cd81f20e5e))

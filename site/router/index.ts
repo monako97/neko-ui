@@ -1,8 +1,7 @@
 import { lazy } from 'solid-js';
-import routes from '@app/routes';
-import { type RouteDefinition } from '@moneko/solid-js';
+import type { RouteConfig } from '@app/routes';
 
-const router: RouteDefinition[] = [
+const router: RouteConfig[] = [
   {
     path: '/',
     component: lazy(() => import(/* webpackChunkName: "layout" */ '@/layout')),
@@ -11,7 +10,6 @@ const router: RouteDefinition[] = [
         path: '/',
         component: lazy(() => import(/* webpackChunkName: "home" */ '@/home')),
       },
-      ...routes,
     ],
   },
 ];

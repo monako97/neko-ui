@@ -1,6 +1,6 @@
 import { For, Show, createEffect, createMemo } from 'solid-js';
 import app from '@app';
-import routes, { type RouterProps } from '@app/routes';
+import routes, { type RouteConfig } from '@app/routes';
 import { css } from '@moneko/css';
 import { A, getPathName, useLocation } from '@moneko/solid-js';
 import NekoUI from 'neko-ui';
@@ -269,7 +269,7 @@ const switchThemeCss = css`
   }
 `;
 
-export type MyPkg = Partial<RouterProps> & {
+export type MyPkg = Partial<RouteConfig> & {
   type?: string;
   title?: string;
   path?: string;
@@ -284,7 +284,7 @@ const obj: Record<string, MyPkg[]> = {},
 
 let all: MyPkg[] = [];
 
-function extractMenu(list: RouterProps[]) {
+function extractMenu(list: RouteConfig[]) {
   return list.forEach(({ key, meta, children }) => {
     if (meta) {
       const type = meta.type || '默认',
@@ -298,11 +298,13 @@ function extractMenu(list: RouterProps[]) {
       if (!menuKeys.includes(type as string)) {
         menuKeys.push(type as string);
       }
-      kv[key] = {
-        ...meta,
-        type: type as string,
-        key,
-      };
+      if (key) {
+        kv[key] = {
+          ...meta,
+          type: type as string,
+          key,
+        };
+      }
     }
     if (Array.isArray(children) && children.length) {
       extractMenu(children);
