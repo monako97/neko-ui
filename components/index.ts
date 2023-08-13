@@ -103,12 +103,14 @@ export {
   type TreeStringProps,
 } from './tree';
 export { default as Typography, type TypographyElement, type TypographyProps } from './typography';
+export { default as dayjs } from './date-picker/dayjs';
 
 import { css, cx, injectGlobal } from '@moneko/css';
 import {
   FieldName,
   Size,
   Status,
+  dayjs,
   fromSchema,
   generateTheme,
   getOptions,
@@ -163,6 +165,7 @@ const normal = {
   FieldName,
   Size,
   Status,
+  dayjs,
   fromSchema,
   generateTheme,
   getOptions,
