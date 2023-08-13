@@ -1,4 +1,4 @@
-## [2.1.3](https://github.com/monako97/neko-ui/compare/2.0.8...2.1.3) (2023-08-13)
+## [2.1.4](https://github.com/monako97/neko-ui/compare/2.0.8...2.1.4) (2023-08-13)
 
 ### Bug Fixes
 
