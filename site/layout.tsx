@@ -166,7 +166,7 @@ function App() {
           <site-sandbox-group name={getPathName(location)} />
           <For each={doc()}>{(e) => e()}</For>
           <Show when={!getPathName(location)}>
-            <n-md text={`[TOC]\n# Change log\n${log}`} />
+            <n-md text={`[TOC]\n${log}`} />
           </Show>
           <site-pagination />
         </div>

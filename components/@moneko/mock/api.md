@@ -1,18 +1,12 @@
----
-type: '@moneko'
-title: mock
-subtitle: Mock数据
-icon: 📚
-order: 4
----
+[TOC]
 
 # @moneko/mock
 
-> 在项目启动目录 mock 文件夹下创建 mock 脚本，达到模拟响应数据的效果
+!> 在项目启动目录 mock 文件夹下创建 mock 脚本，达到模拟响应数据的效果
 
 ## 函数方式
 
-> (req: RequestFormData, res: Response) => void
+!> (req: RequestFormData, res: Response) => void
 
 ```typescript
 import type { MockConfiguration } from '@moneko/mock';
@@ -166,7 +160,7 @@ const conf: MockConfiguration = {
 export default conf;
 ```
 
-## KV 方式 `Record<string, any>`
+## KV 方式
 
 ```typescript
 import type { MockConfiguration } from '@moneko/mock';

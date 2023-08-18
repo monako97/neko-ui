@@ -44,7 +44,7 @@ function Carousel(_props: CarouselProps) {
   const [right, setRight] = createSignal(1);
   const [offset, setOffset] = createSignal(0);
   const [direction, setDirection] = createSignal<1 | -1 | 0>(0);
-  let playTimer: NodeJS.Timer | undefined;
+  let playTimer: NodeJS.Timeout | undefined;
 
   function onOffsetChange() {
     const _dir = direction();

@@ -15,7 +15,7 @@
 
 🐾 🐾 🐾 🐾
 
-> 这是一个适用于任何技术栈的 WebComponents UI组件库
+> 这是一个基于 SolidJS、Typescript 开发的适用于任何技术栈的 WebComponents 组件库, 你可以在其他任意 web 框架中像 `div` 一样使用它
 
 [![neko-ui][home-tag]][home-url]
 [![docs-ui][docs-tag]][docs-url]

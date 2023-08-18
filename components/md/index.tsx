@@ -32,6 +32,9 @@ function MD(_props: MdProps) {
   const renderer = new marked.Renderer();
 
   renderer.code = function (code: string, lang: string) {
+    if (lang === 'treeview') {
+      return `<n-tree data="${code}" />`;
+    }
     const langLineNumber = this.options.langLineNumber;
     const toolbar = !!this.options.langToolbar?.length;
 

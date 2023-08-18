@@ -441,9 +441,11 @@ function SandboxGroup(props: SandboxGroupProps) {
       </style>
       <Solid.Suspense
         fallback={
-          <div class="sandbox-group">
-            <Fallback />
-          </div>
+          Fallback && (
+            <div class="sandbox-group">
+              <Fallback />
+            </div>
+          )
         }
       >
         {data()}

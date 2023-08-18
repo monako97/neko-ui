@@ -413,6 +413,10 @@ customElement(
       _,
     );
 
+    createEffect(() => {
+      el.removeAttribute('css');
+      el.removeAttribute('data');
+    });
     return createComponent(Tree, props);
   },
 );
