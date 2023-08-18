@@ -4,6 +4,7 @@
 
 ### 📚 Documentation 📚
 
+- 实现 changelog ([5f2edbc](https://github.com/monako97/neko-ui/commit/5f2edbce831dd6b3c908b1f6297ba95eb77faabf))
 - 当没有自定义路由时不需要合并 ([f5c8cef](https://github.com/monako97/neko-ui/commit/f5c8cef31c4a9bd2dc0f9e5d65dae11e26b06c26))
 - 当没有自定义路由时不需要合并 ([c643156](https://github.com/monako97/neko-ui/commit/c643156fb789651897c21c2ea56dd91cfe01b8f1))
 - update ([c70faf8](https://github.com/monako97/neko-ui/commit/c70faf878dc91546aef27154b790c840f56ccd34))
