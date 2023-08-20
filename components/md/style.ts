@@ -353,7 +353,15 @@ export const style = css`
 
   table tr th,
   table td {
-    padding: 5px 10px;
+    padding: 8px 16px;
+  }
+
+  tr:first-child th:first-child {
+    border-start-start-radius: var(--border-radius);
+  }
+
+  tr:first-child th:last-child {
+    border-start-end-radius: var(--border-radius);
   }
 
   blockquote {

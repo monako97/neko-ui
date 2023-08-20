@@ -88,6 +88,7 @@ export const style = css`
       .label {
         color: var(--text-color);
         outline: 0;
+        cursor: inherit;
       }
 
       &:has(:checked) {

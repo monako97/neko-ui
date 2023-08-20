@@ -64,6 +64,7 @@ export {
   type MenuOption,
   type MenuProps,
 } from './menu';
+export { default as Pagination, type PaginationProps, type PaginationElement } from './pagination';
 export { default as Popover, type PopoverElement, type PopoverProps } from './popover';
 export { default as Radio, type RadioElement, type RadioOption, type RadioProps } from './radio';
 export { default as Segmented, type SegmentedElement, type SegmentedProps } from './segmented';
@@ -141,6 +142,7 @@ import type {
   MdElement,
   MenuElement,
   MenuMultipleElement,
+  PaginationElement,
   PopoverElement,
   RadioElement,
   SegmentedElement,
@@ -255,9 +257,12 @@ interface CustomElementTags {
   'n-data-picker': DatePickerElement;
   /** 数据表格
    * @since 2.2.0
-   * @author monako97 <poi.nyaa@qq.com>
    */
   'n-table': TableElement;
+  /** 分页器
+   * @since 2.2.0
+   */
+  'n-pagination': PaginationElement;
 }
 
 declare module 'solid-js' {

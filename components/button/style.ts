@@ -14,6 +14,7 @@ function btnColor(type: ButtonProps['type']): CSSInterpolation {
     ${_cls}:not(.disabled) {
       --btn-border: var(--${type}-border);
       --btn-bg: var(--${type}-selection);
+      --btn-hover-bg: var(--btn-bg);
       --btn-hover-color: var(--${type}-hover);
       --btn-active-color: var(--${type}-active);
       --btn-outline-color: var(--${type}-outline);
@@ -50,7 +51,7 @@ export const style = css`
     align-items: center;
     border: 1px solid var(--btn-border);
     border-radius: var(--border-radius);
-    padding: 4px 16px;
+    padding: 0 16px;
     inline-size: fit-content;
     min-inline-size: var(--btn-size);
     block-size: fit-content;
@@ -85,12 +86,12 @@ export const style = css`
         }
 
         &:not(.link) {
-          background-color: var(--btn-bg);
+          background-color: var(--btn-hover-bg);
         }
       }
 
       &:hover:not(.link) {
-        background-color: var(--btn-bg);
+        background-color: var(--btn-hover-bg);
       }
 
       &:hover:not(.link, .flat),
@@ -102,6 +103,14 @@ export const style = css`
       &:focus .label {
         color: var(--btn-hover-color);
       }
+    }
+
+    &.disabled {
+      --btn-color: var(--disable-color);
+      --btn-bg: var(--disable-bg);
+      --btn-border: var(--disable-border);
+
+      cursor: not-allowed;
     }
   }
 
@@ -173,7 +182,6 @@ export const style = css`
   .link {
     --btn-bg: transparent !important;
     --btn-border: transparent !important;
-    --btn-color: var(--primary-color);
 
     border-color: transparent !important;
     background-color: transparent !important;
@@ -187,6 +195,10 @@ export const style = css`
     --btn-border: transparent !important;
 
     background-color: transparent;
+
+    &:not(.disabled, .link).default {
+      --btn-hover-bg: rgb(0 0 0 / 6%);
+    }
   }
 
   .ghost {
@@ -202,14 +214,6 @@ export const style = css`
     max-block-size: var(--btn-size);
     text-align: center;
     line-height: var(--btn-size);
-  }
-
-  .disabled {
-    --btn-color: var(--disable-color);
-    --btn-bg: var(--disable-bg);
-    --btn-border: var(--disable-border);
-
-    cursor: not-allowed;
   }
 
   .block {

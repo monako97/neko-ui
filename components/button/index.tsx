@@ -108,7 +108,6 @@ function Button(_: ButtonProps) {
       <Dynamic
         ref={ref}
         component={local.link ? 'a' : local.tag || 'button'}
-        tabIndex={local.disabled ? -1 : 0}
         class={cx(
           'btn',
           local.type,

@@ -6,6 +6,7 @@ order: 7
 
 ```html
 <n-button link="true">链接</n-button>
+<n-button type="primary" link="true">链接</n-button>
 <n-button type="success" link="true">链接</n-button>
 <n-button type="warning" link="true">链接</n-button>
 <n-button type="error" link="true">链接</n-button>
@@ -13,7 +14,8 @@ order: 7
 
 ```jsx
 <n-button link>链接</n-button>
-<n-button type="success" link> 链接 </n-button>
-<n-button type="warning" link> 链接 </n-button>
-<n-button type="error" link> 链接 </n-button>
+<n-button type="primary" link>链接</n-button>
+<n-button type="success" link>链接</n-button>
+<n-button type="warning" link>链接</n-button>
+<n-button type="error" link>链接</n-button>
 ```

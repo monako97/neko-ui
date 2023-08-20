@@ -1,9 +1,16 @@
 # Change log
 
-## Last
+## [2.2.0](https://github.com/monako97/neko-ui/compare/2.1.4...2.2.0) (8-20-2023)
+
+### ✨ Features
+
+- table、pagination ([9d7f994](https://github.com/monako97/neko-ui/commit/9d7f994d9452e4f2003bbd670dde3e875ae9931d))
+
+## [2.1.4](https://github.com/monako97/neko-ui/compare/2.0.8...2.1.4) (8-19-2023)
 
 ### 📚 Documentation
 
+- 修改类型的emoji ([7448222](https://github.com/monako97/neko-ui/commit/74482229de37b80029a7f0c1b4c2557de93c2f99))
 - 修改类型的emoji ([62fd3dd](https://github.com/monako97/neko-ui/commit/62fd3ddc8967d999210c0b3ef1540a56c01fc138))
 - 实现 changelog ([5f2edbc](https://github.com/monako97/neko-ui/commit/5f2edbce831dd6b3c908b1f6297ba95eb77faabf))
 - 当没有自定义路由时不需要合并 ([f5c8cef](https://github.com/monako97/neko-ui/commit/f5c8cef31c4a9bd2dc0f9e5d65dae11e26b06c26))
