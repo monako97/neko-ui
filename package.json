@@ -5,7 +5,7 @@
   "main": "lib/index.js",
   "scripts": {
     "build": "mo build library solid-js",
-    "changelog": "mo changelog CHANGELOG.md && eslint --fix CHANGELOG.md && git add CHANGELOG.md",
+    "changelog": "mo changelog CHANGELOG.md && git add CHANGELOG.md",
     "lint": "mo eslint components && mo eslint site && mo stylelint components && mo stylelint site && jest --coverage",
     "precommit": "yarn lint && yarn changelog",
     "prepare": "mo githooks pre-commit=\"yarn precommit\" commit-msg=\"npx --no -- commitlint --edit \\${1}\"",
