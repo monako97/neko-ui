@@ -238,7 +238,6 @@ function Sandbox(_props: SandboxProps) {
     lang: '',
   });
   const [open, setOpen] = createSignal(false);
-
   const scope: CodeLiveProps['scope'] = {
     ...Solid,
     NekoUI,
@@ -247,7 +246,6 @@ function Sandbox(_props: SandboxProps) {
     jsx: $$jsx,
     Fragment: Fragment,
   };
-
   const hasDesc = createMemo(() => {
     if (typeof props.description === 'string') {
       return !!props.description?.trim().length;

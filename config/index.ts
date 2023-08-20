@@ -14,7 +14,7 @@ const conf: Partial<ConfigType<'swc'>> = {
       },
       {
         tag: 'script',
-        src: 'https://cdn.staticaly.com/gh/monako97/cdn/main/npm/n-code-live/1.0.4/umd/index.js',
+        src: 'https://cdn.staticaly.com/gh/monako97/cdn/main/npm/n-code-live/1.0.6/umd/index.js',
       },
     ],
   },

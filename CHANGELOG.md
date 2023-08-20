@@ -4,7 +4,7 @@
 
 ### ✨ Features
 
-- table、pagination ([9d7f994](https://github.com/monako97/neko-ui/commit/9d7f994d9452e4f2003bbd670dde3e875ae9931d))
+- table 数据表格、pagination 分页器 ([da24adf](https://github.com/monako97/neko-ui/commit/da24adfdaa2168b6b58739fb72a17cb6ce15ce58))
 
 ## [2.1.4](https://github.com/monako97/neko-ui/compare/2.0.8...2.1.4) (8-19-2023)
 
