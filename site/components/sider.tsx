@@ -3,7 +3,7 @@ import app from '@app';
 import routes, { type RouteConfig } from '@app/routes';
 import { css } from '@moneko/css';
 import { A, getPathName, useLocation } from '@moneko/solid';
-import NekoUI from 'neko-ui';
+import { type ColorScheme, theme } from 'neko-ui';
 import { customElement } from 'solid-element';
 
 const style = css`
@@ -50,6 +50,10 @@ const style = css`
     transition-property: background-color, color;
     flex-direction: column;
     box-shadow: 0 2px 14px 0 var(--primary-shadow);
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
   }
 
   .site-sider > ul {
@@ -322,13 +326,18 @@ for (const key in obj) {
 }
 
 export { all, kv };
-function Sider(_: object, opt: ComponentOptions<object>) {
-  const { baseStyle, scheme, setScheme, isDark } = NekoUI.theme;
+function Sider(_: { scheme?: keyof typeof ColorScheme }, opt: ComponentOptions<object>) {
+  const { setScheme } = theme;
   const location = useLocation();
+  const icons: Record<string, string> = {
+    dark: '🌛',
+    light: '🌞',
+    auto: '⚙️',
+  };
   const themes = [
-    { label: '暗黑', value: 'dark', icon: '🌛' },
-    { label: '明亮', value: 'light', icon: '🌞' },
-    { label: '跟随系统', value: 'auto', icon: '⚙️' },
+    { label: '暗黑', value: 'dark', icon: icons.dark },
+    { label: '明亮', value: 'light', icon: icons.light },
+    { label: '跟随系统', value: 'auto', icon: icons.auto },
   ];
 
   const active = createMemo(() => getPathName(location));
@@ -344,9 +353,6 @@ function Sider(_: object, opt: ComponentOptions<object>) {
     }
   });
 
-  createEffect(() => {
-    document.documentElement.setAttribute('data-theme', isDark() ? 'dark' : 'light');
-  });
   const avatarCss = css`
     .avatar {
       background-image: none;
@@ -356,10 +362,7 @@ function Sider(_: object, opt: ComponentOptions<object>) {
 
   return (
     <>
-      <style>
-        {baseStyle()}
-        {style}
-      </style>
+      <style>{style}</style>
       <section class="site-left">
         <header class="site-header">
           <A href="/">
@@ -370,7 +373,7 @@ function Sider(_: object, opt: ComponentOptions<object>) {
             <i>{kv[active()]?.subtitle || app.description}</i>
           </hgroup>
           <n-dropdown
-            value={scheme()}
+            value={_.scheme}
             items={themes}
             trigger="click"
             css={switchThemeCss}
@@ -378,7 +381,7 @@ function Sider(_: object, opt: ComponentOptions<object>) {
               setScheme(e.detail[0]);
             }}
           >
-            <span class="theme-btn">{isDark() ? '🌛' : '🌞'}</span>
+            <span class="theme-btn">{icons[_.scheme!]}</span>
           </n-dropdown>
         </header>
         <section class="site-sider">
@@ -437,8 +440,9 @@ function Sider(_: object, opt: ComponentOptions<object>) {
   );
 }
 
-customElement('site-sider', Sider);
+customElement('site-sider', { scheme: void 0 }, Sider);
 
 export interface SiderElement {
   ref?: SiderElement | { current: SiderElement | null };
+  scheme?: keyof typeof ColorScheme;
 }

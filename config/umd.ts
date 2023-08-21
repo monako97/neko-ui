@@ -11,10 +11,8 @@ const conf: Partial<ConfigType<'swc'>> = {
     library: {
       name: 'NekoUI',
       type: 'umd',
-      export: 'default',
       umdNamedDefine: true,
     },
-    globalObject: 'this',
   },
   fixBrowserRouter: false,
   bundleAnalyzer: false,

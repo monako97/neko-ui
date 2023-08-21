@@ -2,7 +2,7 @@ import * as Solid from 'solid-js';
 import { type ExampleModule } from '@app/example';
 import Fallback from '@app/fallback';
 import { css, cx } from '@moneko/css';
-import NekoUI from 'neko-ui';
+import * as NekoUI from 'neko-ui';
 import { customElement } from 'solid-element';
 import h from 'solid-js/h';
 import * as SolidWeb from 'solid-js/web';
@@ -399,8 +399,6 @@ interface SandboxGroupProps {
 }
 
 function SandboxGroup(props: SandboxGroupProps) {
-  const { baseStyle } = NekoUI.theme;
-
   async function load(name: string) {
     let box: () => Solid.JSX.Element;
 
@@ -425,7 +423,6 @@ function SandboxGroup(props: SandboxGroupProps) {
   }
   const data = createMemo(() => {
     const app = load.bind(null, props.name);
-
     const View = Solid.lazy(app);
 
     return <View />;
@@ -433,10 +430,7 @@ function SandboxGroup(props: SandboxGroupProps) {
 
   return (
     <>
-      <style>
-        {baseStyle()}
-        {groupCss}
-      </style>
+      <style>{groupCss}</style>
       <Solid.Suspense
         fallback={
           Fallback && (

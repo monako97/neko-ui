@@ -2,6 +2,10 @@
 
 ## Last
 
+### 📦 Code Refactoring
+
+- update core ([310920e](https://github.com/monako97/neko-ui/commit/310920e4a9dcc5fd7e985a2533241e6a2e97ee5f))
+
 ### 📚 Documentation
 
 - update ([28bc31c](https://github.com/monako97/neko-ui/commit/28bc31c36149881263df199a6634d5b8336d1180))

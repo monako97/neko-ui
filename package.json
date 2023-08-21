@@ -1,6 +1,6 @@
 {
   "name": "neko-ui",
-  "version": "2.2.0",
+  "version": "2.3.0",
   "description": "Web Components UI Libraries",
   "main": "lib/index.js",
   "scripts": {
@@ -40,7 +40,7 @@
     "@commitlint/config-conventional": "17.6.6",
     "@moneko/cli": "2.0.0-beta.10",
     "@moneko/common": "1.2.0",
-    "@moneko/core": "3.0.0-beta.110",
+    "@moneko/core": "3.0.0-beta.112",
     "@moneko/css": "1.0.5",
     "@moneko/postcss": "1.0.30",
     "@moneko/solid": "1.0.0",

@@ -3,7 +3,6 @@ import app from '@app';
 import coverages from '@app/coverage';
 import { css, cx } from '@moneko/css';
 import { getPathName, useLocation } from '@moneko/solid';
-import NekoUI from 'neko-ui';
 import { customElement } from 'solid-element';
 
 const style = css`
@@ -80,7 +79,6 @@ const style = css`
 type CoverageType = 'statements' | 'conditionals' | 'methods';
 
 function Coverage() {
-  const { baseStyle } = NekoUI.theme;
   const location = useLocation();
   const coverage = createMemo(() => {
     const name = getPathName(location);
@@ -100,10 +98,7 @@ function Coverage() {
 
   return (
     <>
-      <style>
-        {baseStyle()}
-        {style}
-      </style>
+      <style>{style}</style>
       <div class="site-coverage">
         <For each={keys}>
           {(k) => {

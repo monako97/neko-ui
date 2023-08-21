@@ -1,4 +1,4 @@
-import { createMemo, createRoot } from 'solid-js';
+import { createMemo, createRoot, getOwner } from 'solid-js';
 import { css } from '@moneko/css';
 import Prism from './prism.js';
 import theme from '../theme';
@@ -499,6 +499,6 @@ export const prismCss = createRoot(() => {
   const style = createMemo(() => `${isDark() ? darkCss : ''}${baseCss}`);
 
   return style;
-});
+}, getOwner());
 
 export default Prism;

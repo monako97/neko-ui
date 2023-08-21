@@ -105,20 +105,9 @@ export {
 } from './tree';
 export { default as Typography, type TypographyElement, type TypographyProps } from './typography';
 export { default as dayjs } from './date-picker/dayjs';
+export { default as Provider, type ProviderElement, type ProviderProps } from './provider';
 
-import { css, cx, injectGlobal } from '@moneko/css';
 import {
-  FieldName,
-  Size,
-  Status,
-  dayjs,
-  fromSchema,
-  generateTheme,
-  getOptions,
-  theme,
-  toneColor,
-} from 'neko-ui';
-import type {
   AvatarElement,
   AvatarGroupElement,
   BackTopElement,
@@ -144,6 +133,7 @@ import type {
   MenuMultipleElement,
   PaginationElement,
   PopoverElement,
+  ProviderElement,
   RadioElement,
   SegmentedElement,
   SelectElement,
@@ -162,23 +152,6 @@ import type {
   TreeStringElement,
   TypographyElement,
 } from '.';
-
-const normal = {
-  FieldName,
-  Size,
-  Status,
-  dayjs,
-  fromSchema,
-  generateTheme,
-  getOptions,
-  theme,
-  toneColor,
-  css,
-  cx,
-  injectGlobal,
-};
-
-export default normal;
 
 /** 组件列表
  * @author monako97
@@ -263,6 +236,10 @@ interface CustomElementTags {
    * @since 2.2.0
    */
   'n-pagination': PaginationElement;
+  /** 响应内部变化
+   * @since 2.3.0
+   */
+  'n-provider': ProviderElement;
 }
 
 declare module 'solid-js' {
@@ -279,9 +256,9 @@ declare global {
   }
   interface HTMLElementTagNameMap extends CustomElementTags {}
 
-  interface window {
-    NekoUI: typeof normal;
-  }
+  // interface window {
+  //   NekoUI: typeof umd;
+  // }
 
-  const NekoUI: window['NekoUI'];
+  // const NekoUI: window['NekoUI'];
 }

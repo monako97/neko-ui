@@ -10,5 +10,4 @@ rules:
         - \\?raw$
         - ^@/
         - ^@app
-        - components
         - ^neko-ui

@@ -5,6 +5,7 @@ import {
   createMemo,
   createRoot,
   createSignal,
+  getOwner,
 } from 'solid-js';
 import { colorParse, mixColor, toneColor } from '@moneko/common';
 import { css } from '@moneko/css';
@@ -114,6 +115,7 @@ function createTheme() {
         ${darkWarning()}
         ${darkError()}
         ${darkSuccess()}
+        --bg: #1c1c1c;
         --disable-color: rgb(255 255 255 / 25%);
         --disable-bg: rgb(255 255 255 / 8%);
         --disable-border: #424242;
@@ -251,4 +253,4 @@ export interface ThemeOption {
   name: string;
 }
 
-export default createRoot<Theme>(createTheme);
+export default createRoot<Theme>(createTheme, getOwner());
