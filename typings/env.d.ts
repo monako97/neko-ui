@@ -1,1 +1,1 @@
-import '@moneko/solid-js/env.d';
+import '@moneko/solid/env.d';

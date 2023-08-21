@@ -4,6 +4,7 @@
 
 ### 📚 Documentation
 
+- update ([28bc31c](https://github.com/monako97/neko-ui/commit/28bc31c36149881263df199a6634d5b8336d1180))
 - update ([f91ebfb](https://github.com/monako97/neko-ui/commit/f91ebfb1239b7c14c4e15a7cbd2d4cdccf461d2d))
 
 ## [2.2.0](https://github.com/monako97/neko-ui/compare/2.1.4...2.2.0) (8-20-2023)

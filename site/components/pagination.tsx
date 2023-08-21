@@ -1,6 +1,6 @@
 import { For, Show, batch, createEffect, createSignal } from 'solid-js';
 import { css } from '@moneko/css';
-import { A, getPathName, useLocation } from '@moneko/solid-js';
+import { A, getPathName, useLocation } from '@moneko/solid';
 import { customElement } from 'solid-element';
 import { type MyPkg, all, kv } from './sider';
 

@@ -1,5 +1,5 @@
 {
-  "extends": "@moneko/solid-js/base",
+  "extends": "@moneko/solid/base",
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {

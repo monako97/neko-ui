@@ -2,7 +2,7 @@ import { For, createMemo } from 'solid-js';
 import app from '@app';
 import coverages from '@app/coverage';
 import { css, cx } from '@moneko/css';
-import { getPathName, useLocation } from '@moneko/solid-js';
+import { getPathName, useLocation } from '@moneko/solid';
 import NekoUI from 'neko-ui';
 import { customElement } from 'solid-element';
 

@@ -1,7 +1,7 @@
 import { For, Show, createEffect, createMemo } from 'solid-js';
 import docs from '@app/docs';
 import { css } from '@moneko/css';
-import { Outlet, getPathName, useLocation } from '@moneko/solid-js';
+import { Outlet, getPathName, useLocation } from '@moneko/solid';
 import NekoUI from 'neko-ui';
 import './components';
 import log from '../CHANGELOG.md?raw';

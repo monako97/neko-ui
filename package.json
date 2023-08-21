@@ -4,14 +4,14 @@
   "description": "Web Components UI Libraries",
   "main": "lib/index.js",
   "scripts": {
-    "build": "mo build library solid-js",
+    "build": "mo build library solid",
     "changelog": "mo changelog CHANGELOG.md && git add CHANGELOG.md",
     "lint": "mo eslint components && mo eslint site && mo stylelint components && mo stylelint site && jest --coverage",
     "precommit": "yarn lint && yarn changelog",
     "prepare": "mo githooks pre-commit=\"yarn precommit\" commit-msg=\"npx --no -- commitlint --edit \\${1}\"",
-    "start": "rm -rf lib && mo start library solid-js",
+    "start": "rm -rf lib && mo start library solid",
     "test": "jest --coverage --watchAll",
-    "postbuild": "tsc --project node_modules/@moneko/solid-js/lib.json"
+    "postbuild": "tsc --project node_modules/@moneko/solid/lib.json"
   },
   "author": {
     "name": "moneko",
@@ -38,12 +38,12 @@
   "devDependencies": {
     "@commitlint/cli": "17.6.6",
     "@commitlint/config-conventional": "17.6.6",
-    "@moneko/cli": "2.0.0-beta.9",
+    "@moneko/cli": "2.0.0-beta.10",
     "@moneko/common": "1.2.0",
-    "@moneko/core": "3.0.0-beta.106",
+    "@moneko/core": "3.0.0-beta.110",
     "@moneko/css": "1.0.5",
     "@moneko/postcss": "1.0.30",
-    "@moneko/solid-js": "1.2.0",
+    "@moneko/solid": "1.0.0",
     "@solidjs/testing-library": "0.8.4",
     "@swc/jest": "0.2.27",
     "@testing-library/jest-dom": "5.17.0",

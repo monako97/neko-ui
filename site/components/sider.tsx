@@ -2,7 +2,7 @@ import { For, Show, createEffect, createMemo } from 'solid-js';
 import app from '@app';
 import routes, { type RouteConfig } from '@app/routes';
 import { css } from '@moneko/css';
-import { A, getPathName, useLocation } from '@moneko/solid-js';
+import { A, getPathName, useLocation } from '@moneko/solid';
 import NekoUI from 'neko-ui';
 import { customElement } from 'solid-element';
 
