@@ -2,6 +2,10 @@
 
 ## Last
 
+### ✨ Features
+
+- provider 响应内部变化 ([53dce7a](https://github.com/monako97/neko-ui/commit/53dce7a55c36dc0b22a126752e84b47372be11bb))
+
 ### 📦 Code Refactoring
 
 - update core ([310920e](https://github.com/monako97/neko-ui/commit/310920e4a9dcc5fd7e985a2533241e6a2e97ee5f))

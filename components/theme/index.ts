@@ -89,6 +89,7 @@ function createTheme() {
         ${warning()}
         ${success()}
         ${error()}
+        --bg: transparent;
         --disable-color: rgb(0 0 0 / 25%);
         --disable-bg: rgb(0 0 0 / 4%);
         --disable-border: #d9d9d9;

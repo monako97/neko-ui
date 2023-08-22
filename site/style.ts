@@ -12,8 +12,29 @@ export const noBg = css`
 `;
 
 export const styles = css`
+  :root {
+    background-color: var(--bg);
+  }
+
+  html,
+  body {
+    font-size: var(--font-size);
+    font-family: var(--font-family);
+    color: var(--text-color, rgb(0 0 0 / 65%));
+    inline-size: 100vi;
+    transition-duration: 0.3s;
+    transition-property: background-color, color;
+    transition-timing-function: cubic-bezier(0.94, -0.1, 0.1, 1.2);
+  }
+
   #root {
+    display: flex;
     flex-wrap: wrap;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  #root > main {
+    animation: route-in var(--transition-duration, 0.3s);
   }
 
   n-provider {
@@ -108,11 +129,15 @@ export const styles = css`
     opacity: 0.05;
   }
 
-  :root[data-theme='dark'] {
-    background-color: var(--bg);
-
-    .n-site-bg {
+  @keyframes route-in {
+    from {
+      transform: translate3d(0, 16px, 0);
       opacity: 0;
+    }
+
+    to {
+      transform: translate3d(0, 0, 0);
+      opacity: 1;
     }
   }
 

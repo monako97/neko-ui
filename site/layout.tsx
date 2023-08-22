@@ -21,7 +21,6 @@ function App() {
   return (
     <n-provider onScheme={onScheme}>
       <style>{styles}</style>
-      <div class="n-site-bg" />
       <site-sider scheme={scheme()} />
       <main ref={box} class="site-doc-main">
         <Show when={!getPathName(location).startsWith('@moneko')}>
@@ -43,6 +42,9 @@ function App() {
         <site-footer />
       </main>
       <n-back-top css=".back-top {position: fixed;}" />
+      <Show when={scheme() === 'light' || !isDark()}>
+        <div class="n-site-bg" />
+      </Show>
     </n-provider>
   );
 }
