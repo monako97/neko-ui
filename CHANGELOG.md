@@ -1,5 +1,11 @@
 # Change log
 
+## Last
+
+### 🐛 Bug Fixes
+
+- 修复自定义函数的最终类型 ([95f4f5e](https://github.com/monako97/neko-ui/commit/95f4f5e0a015b6b023b3af9a2210b349ae6cec3e))
+
 ## [2.3.0](https://github.com/monako97/neko-ui/compare/2.2.0...2.3.0) (8-22-2023)
 
 ### 📚 Documentation

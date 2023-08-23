@@ -216,24 +216,6 @@ function Table(_: TableProps) {
     </>
   );
 }
-interface Column<T extends Record<string, Any>> extends Cell {
-  /** 自定义取值的 key */
-  key?: keyof T;
-  /** 原始 key */
-  originKey?: keyof T;
-  /** 单元格表头标题 */
-  label?: JSXElement;
-  /** 自定义渲染单元格 */
-  render?(item: T[keyof T], row: T, index: number): JSXElement;
-  /** 单元格横跨的列数 */
-  colspan?: number;
-  /** 单元格横跨的行数 */
-  rowspan?: number;
-  /** 设置为 'order' 时则当作序号行 */
-  type?: 'order';
-  /** 单元格宽 */
-  width?: number;
-}
 
 /** API
  * @since 2.1.0
@@ -249,7 +231,7 @@ export interface TableProps<T extends Record<string, Any> = Record<string, Any>>
    * @default '-'
    */
   emptyVal?: string;
-  /** 单元格配置 */
+  /** 栏配置 */
   columns: Record<string, Column<T> | string>;
   /** 数据源 */
   data: T[];
@@ -270,6 +252,25 @@ export interface TableProps<T extends Record<string, Any> = Record<string, Any>>
    */
   size?: BasicConfig['size'];
   children?: JSXElement;
+}
+/** 栏 */
+interface Column<T extends Record<string, Any>> extends Cell {
+  /** 自定义取值的 key */
+  key?: keyof T;
+  /** 原始 key */
+  originKey?: keyof T;
+  /** 单元格表头标题 */
+  label?: JSXElement;
+  /** 自定义渲染单元格 */
+  render?(item: T[keyof T], row: T, index: number): JSXElement;
+  /** 单元格横跨的列数 */
+  colspan?: number;
+  /** 单元格横跨的行数 */
+  rowspan?: number;
+  /** 设置为 'order' 时则当作序号行 */
+  type?: 'order';
+  /** 单元格宽 */
+  width?: number;
 }
 
 /** 单元格布局排列 */

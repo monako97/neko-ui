@@ -38,9 +38,9 @@
   "devDependencies": {
     "@commitlint/cli": "17.6.6",
     "@commitlint/config-conventional": "17.6.6",
-    "@moneko/cli": "2.0.0-beta.17",
+    "@moneko/cli": "2.0.0-beta.18",
     "@moneko/common": "1.2.0",
-    "@moneko/core": "3.0.0-beta.115",
+    "@moneko/core": "3.0.0-beta.116",
     "@moneko/css": "1.0.5",
     "@moneko/postcss": "1.0.30",
     "@moneko/solid": "1.0.2",
