@@ -22,7 +22,7 @@ order: 7
     };
   });
   el.addEventListener('change', function (e) {
-    el.value = e.detail;
+    el.value = e.detail[0];
   });
   el.addEventListener('edit', function (e) {
     const [type, item, ev] = e.detail;
@@ -103,7 +103,7 @@ const Demo = () => {
         add={true}
         items={items}
         onChange={(e) => {
-          e.target.value = e.detail;
+          e.target.value = e.detail[0];
         }}
         onEdit={handleEdit}
       />

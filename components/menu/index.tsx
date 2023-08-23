@@ -326,8 +326,8 @@ export interface MenuOption extends Omit<BaseOption, 'children' | 'options'> {
   options?: (string | MenuOption)[];
 }
 
-export type MenuElement = CustomElement<MenuProps>;
-export type MenuMultipleElement = CustomElement<MenuMultipleProps>;
+export type MenuElement = CustomElement<MenuProps, 'onChange' | 'onOpenChange'>;
+export type MenuMultipleElement = CustomElement<MenuMultipleProps, 'onChange' | 'onOpenChange'>;
 
 customElement(
   'n-menu',

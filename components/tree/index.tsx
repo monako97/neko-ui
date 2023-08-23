@@ -320,13 +320,14 @@ function Tree(
     </>
   );
 }
+type CustomEvents = 'onChange' | 'onRowDoubleClick' | 'onRowClick';
 
-export type TreeElement = CustomElement<TreeProps>;
-export type TreeSchemaElement = CustomElement<TreeSchemaProps>;
-export type TreeStringElement = CustomElement<TreeStringProps>;
-export type TreeMultipleElement = CustomElement<TreeMultipleProps>;
-export type TreeMultipleSchemaElement = CustomElement<TreeMultipleSchemaProps>;
-export type TreeMultipleStringElement = CustomElement<TreeMultipleStringProps>;
+export type TreeElement = CustomElement<TreeProps, CustomEvents>;
+export type TreeSchemaElement = CustomElement<TreeSchemaProps, CustomEvents>;
+export type TreeStringElement = CustomElement<TreeStringProps, CustomEvents>;
+export type TreeMultipleElement = CustomElement<TreeMultipleProps, CustomEvents>;
+export type TreeMultipleSchemaElement = CustomElement<TreeMultipleSchemaProps, CustomEvents>;
+export type TreeMultipleStringElement = CustomElement<TreeMultipleStringProps, CustomEvents>;
 
 interface TreeStack extends TreeData {
   /** 深度 */

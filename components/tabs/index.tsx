@@ -42,7 +42,7 @@ export interface TabsProps {
    */
   type?: 'line' | 'card';
   /** 值修改时的回调方法 */
-  onChange?: (val: string) => void;
+  onChange?(val: string, item: TabOption, e: Event): void;
   /** 显示添加按钮 */
   add?: boolean;
   /** 删除和添加时的回调方法 */
@@ -95,7 +95,7 @@ function Tabs(props: TabsProps) {
     return items().find((o) => o[fieldNames().value] === value());
   });
 
-  function onChange(item: TabOption) {
+  function onChange(item: TabOption, e: Event) {
     if (!props.disabled && !item.disabled) {
       const next = item[fieldNames().value];
 
@@ -103,13 +103,13 @@ function Tabs(props: TabsProps) {
         setValue(next);
       }
       if (isFunction(props.onChange)) {
-        props.onChange(next);
+        props.onChange(next, item, e);
       }
     }
   }
   function onKeyUp(item: TabOption, e: KeyboardEvent) {
     if (e.key === 'Enter') {
-      onChange(item);
+      onChange(item, e);
     }
   }
   function handleEdit(type: 'remove' | 'add', item: TabOption | undefined, e: Event) {
@@ -261,7 +261,7 @@ function Tabs(props: TabsProps) {
         >
           <For each={items()}>
             {(item, i) => {
-              const readOnly = props.disabled || item.disabled;
+              const readOnly = createMemo(() => props.disabled || item.disabled);
               const { icon, value: val, label } = fieldNames();
               const isActive = createMemo(() => value() !== void 0 && item[val] === value());
 
@@ -270,10 +270,10 @@ function Tabs(props: TabsProps) {
                   link={true}
                   type={isActive() ? 'primary' : 'default'}
                   class={cx('tab', isActive() && 'active', item.class)}
-                  tabIndex={readOnly ? -1 : 0}
+                  tabIndex={readOnly() ? -1 : 0}
                   onKeyUp={onKeyUp.bind(null, item)}
                   onClick={onChange.bind(null, item)}
-                  disabled={readOnly}
+                  disabled={readOnly()}
                   icon={item[icon]}
                   ref={items()[i()].ref}
                   css={btnCss}
@@ -311,7 +311,7 @@ function Tabs(props: TabsProps) {
   );
 }
 
-export type TabsElement = CustomElement<TabsProps>;
+export type TabsElement = CustomElement<TabsProps, 'onChange' | 'onEdit'>;
 
 customElement(
   'n-tabs',
@@ -324,7 +324,6 @@ customElement(
     centered: void 0,
     items: [],
     type: 'line' as TabsProps['type'],
-    onChange: void 0,
     fieldNames: void 0,
     add: void 0,
     extra: void 0,
@@ -333,10 +332,10 @@ customElement(
     const el = opt.element;
     const props = mergeProps(
       {
-        onChange(next: string) {
+        onChange(next: string, item: TabOption, e: Event) {
           el.dispatchEvent(
             new CustomEvent('change', {
-              detail: next,
+              detail: [next, item, e],
             }),
           );
         },

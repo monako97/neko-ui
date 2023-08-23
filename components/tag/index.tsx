@@ -106,7 +106,7 @@ function Tag(props: TagProps) {
   );
 }
 
-export type TagElement = CustomElement<TagProps>;
+export type TagElement = CustomElement<TagProps, 'onClose'>;
 
 customElement(
   'n-tag',

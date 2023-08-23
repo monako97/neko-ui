@@ -229,7 +229,7 @@ enum PickerType {
   year = 'year',
 }
 
-export type DatePickerElement = CustomElement<DatePickerProps>;
+export type DatePickerElement = CustomElement<DatePickerProps, 'onChange' | 'onOpenChange'>;
 
 customElement(
   'n-data-picker',

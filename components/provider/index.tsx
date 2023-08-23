@@ -22,9 +22,7 @@ export interface ProviderProps {
   /** 响应 scheme 变化 */
   onScheme?(scheme: keyof typeof ColorScheme): void;
 }
-export type ProviderElement = CustomElement<
-  Omit<ProviderProps, 'onScheme'> & { onScheme?(e: CustomEvent<keyof typeof ColorScheme>): void }
->;
+export type ProviderElement = CustomElement<ProviderProps, 'onScheme'>;
 
 customElement('n-provider', (_, opt) => {
   const el = opt.element;

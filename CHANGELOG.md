@@ -1,6 +1,12 @@
 # Change log
 
-## Last
+## [2.3.0](https://github.com/monako97/neko-ui/compare/2.2.0...2.3.0) (8-22-2023)
+
+### 📚 Documentation
+
+- update cli ([fc1ece2](https://github.com/monako97/neko-ui/commit/fc1ece27427a580ad86e9cfd80c446772053de89))
+- update ([28bc31c](https://github.com/monako97/neko-ui/commit/28bc31c36149881263df199a6634d5b8336d1180))
+- update ([f91ebfb](https://github.com/monako97/neko-ui/commit/f91ebfb1239b7c14c4e15a7cbd2d4cdccf461d2d))
 
 ### ✨ Features
 
@@ -9,11 +15,6 @@
 ### 📦 Code Refactoring
 
 - update core ([310920e](https://github.com/monako97/neko-ui/commit/310920e4a9dcc5fd7e985a2533241e6a2e97ee5f))
-
-### 📚 Documentation
-
-- update ([28bc31c](https://github.com/monako97/neko-ui/commit/28bc31c36149881263df199a6634d5b8336d1180))
-- update ([f91ebfb](https://github.com/monako97/neko-ui/commit/f91ebfb1239b7c14c4e15a7cbd2d4cdccf461d2d))
 
 ## [2.2.0](https://github.com/monako97/neko-ui/compare/2.1.4...2.2.0) (8-20-2023)
 

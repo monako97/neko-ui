@@ -366,7 +366,7 @@ function Popover(props: PopoverProps) {
   );
 }
 
-export type PopoverElement = CustomElement<PopoverProps>;
+export type PopoverElement = CustomElement<PopoverProps, 'onOpenChange'>;
 
 export const defaultProps = {
   class: void 0,

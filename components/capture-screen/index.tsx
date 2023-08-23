@@ -65,7 +65,17 @@ export interface CaptureScreenProps extends JSX.ButtonHTMLAttributes<HTMLDivElem
   /** 自定义保存录制文件方法 */
   onSaveRecorder?: (blob: Blob, fileName: string) => void;
 }
-export type CaptureScreenElement = CustomElement<CaptureScreenProps>;
+export type CaptureScreenElement = CustomElement<
+  CaptureScreenProps,
+  | 'onErrorRecorder'
+  | 'onStopRecorder'
+  | 'onStartRecorder'
+  | 'onRecorderDataAvailable'
+  | 'onErrorCapture'
+  | 'onStopCapture'
+  | 'onStartCapture'
+  | 'onSaveRecorder'
+>;
 
 const displayMediaOptions: MediaStreamConstraints = {
   video: true,

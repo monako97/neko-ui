@@ -35,7 +35,7 @@ export interface ImgProps {
    */
   escClosable?: boolean;
 }
-export type ImgElement = CustomElement<ImgProps>;
+export type ImgElement = CustomElement<ImgProps, 'onOpenChange'>;
 
 function Img(props: ImgProps) {
   const [open, setOpen] = createSignal<boolean | null>(null);

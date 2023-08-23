@@ -138,7 +138,7 @@ function Select(props: SelectProps) {
     e.stopPropagation();
     e.preventDefault();
   }
-  function deleteValue(v: string | number, e: MouseEvent) {
+  function deleteValue(v: string | number, e: CustomEvent) {
     preventDefault(e);
     onChange(untrack(value).filter((old) => old !== v) as never, untrack(kv)[v]);
   }
@@ -293,8 +293,8 @@ export interface SelectMultipleProps
    */
   value?: (string | number)[];
 }
-export type SelectElement = CustomElement<SelectProps>;
-export type SelectMultipleElement = CustomElement<SelectMultipleProps>;
+export type SelectElement = CustomElement<SelectProps, 'onChange' | 'onOpenChange'>;
+export type SelectMultipleElement = CustomElement<SelectMultipleProps, 'onChange' | 'onOpenChange'>;
 
 customElement(
   'n-select',

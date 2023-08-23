@@ -17,7 +17,7 @@ import Month from './month';
 import Second from './second';
 import Week from './week';
 import Year from './year';
-import type { BaseOption } from '../index';
+import type { BaseOption, TabOption } from '../index';
 
 export interface CronProps extends Omit<JSX.HTMLAttributes<HTMLDivElement>, 'onChange'> {
   /** 隐藏域 */
@@ -191,8 +191,8 @@ function Cron(props: CronProps) {
       });
     });
   }
-  function changeActiveKey(e: CustomEvent<string>) {
-    setActive(e.detail as ActiveTab);
+  function changeActiveKey(e: CustomEvent<[string, TabOption, Event]>) {
+    setActive(e.detail[0] as ActiveTab);
   }
   function parseVal<T extends ActiveTab>(item: CronType[T], isWeek?: boolean) {
     if (item.value.indexOf('-') > -1) {
