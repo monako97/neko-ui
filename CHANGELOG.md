@@ -2,6 +2,10 @@
 
 ## Last
 
+### 📚 Documentation
+
+- table 表格栏配置更新 ([b4bbe57](https://github.com/monako97/neko-ui/commit/b4bbe57bcafa0f64b1a0215e7f3e1df6f36cab67))
+
 ### 🐛 Bug Fixes
 
 - 修复自定义函数的最终类型 ([95f4f5e](https://github.com/monako97/neko-ui/commit/95f4f5e0a015b6b023b3af9a2210b349ae6cec3e))
