@@ -43,7 +43,7 @@
     "@moneko/core": "3.0.0-beta.129",
     "@moneko/css": "1.0.5",
     "@moneko/postcss": "1.0.30",
-    "@moneko/solid": "1.0.5",
+    "@moneko/solid": "1.0.6",
     "@solidjs/testing-library": "0.8.4",
     "@swc/jest": "0.2.27",
     "@testing-library/jest-dom": "5.17.0",
