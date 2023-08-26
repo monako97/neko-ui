@@ -145,6 +145,7 @@ customElement(
     const el = opt.element;
     const props = mergeProps(
       {
+        items: el.items,
         onChange(key, item) {
           el.dispatchEvent(
             new CustomEvent('change', {
@@ -164,6 +165,11 @@ customElement(
       _,
     );
 
+    createEffect(() => {
+      el.removeAttribute('items');
+      el.removeAttribute('field-names');
+      el.removeAttribute('css');
+    });
     return createComponent(Dropdown, props);
   },
 );

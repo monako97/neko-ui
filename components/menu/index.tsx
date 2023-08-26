@@ -368,9 +368,10 @@ customElement(
     const props = mergeProps(defaultProps, _);
 
     createEffect(() => {
+      el.removeAttribute('items');
+      el.removeAttribute('field-names');
       el.removeAttribute('css');
     });
-
     return createComponent(Menu, props);
   },
 );

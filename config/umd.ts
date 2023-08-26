@@ -14,9 +14,6 @@ const conf: Partial<ConfigType<'swc'>> = {
       umdNamedDefine: true,
     },
   },
-  fixBrowserRouter: false,
-  bundleAnalyzer: false,
-  externals: [/(.+)\/__tests__\/(.+)/i, /(.+)\/examples\/(.+)/i],
   splitChunk: false,
   runtimeChunk: false,
 };

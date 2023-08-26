@@ -350,6 +350,11 @@ customElement(
       _,
     );
 
+    createEffect(() => {
+      el.removeAttribute('items');
+      el.removeAttribute('field-names');
+      el.removeAttribute('css');
+    });
     return createComponent(Tabs, props);
   },
 );

@@ -22,6 +22,11 @@ const conf: Partial<ConfigType<'swc'>> = {
   rem: {
     designSize: 1920,
   },
+  bundleAnalyzer: {
+    analyzerMode: 'static',
+    reportFilename: 'report.html',
+    openAnalyzer: false,
+  },
   externals: [/(.+)\/__tests__\/(.+)/i],
   importOnDemand: {
     '@moneko/common': {

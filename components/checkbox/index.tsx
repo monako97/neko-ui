@@ -241,6 +241,11 @@ customElement(
       _,
     );
 
+    createEffect(() => {
+      el.removeAttribute('options');
+      el.removeAttribute('field-names');
+      el.removeAttribute('css');
+    });
     return createComponent(Checkbox, props);
   },
 );
