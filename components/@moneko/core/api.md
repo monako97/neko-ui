@@ -19,7 +19,7 @@
 | sourceMap        | sourceMap 配置                                    | `SourceMapDevToolPluginOptions` \| `false`                                                                  | -         |
 | devtool          | devtool 配置                                      | `Configuration['devtool']`                                                                                  | -         |
 | alias            | 路径别名映射                                      | `Record<string, string>`                                                                                    | -         |
-| routeBaseName    | 根路由                                            | string                                                                                                      | `/`       |
+| basename         | 根路由                                            | string                                                                                                      | `/`       |
 | publicPath       | 资源根路径                                        | string                                                                                                      | `auto`    |
 | designSize       | 设计图尺寸                                        | number                                                                                                      | 1680      |
 | fallbackCompPath | 自定义容错组件                                    | string                                                                                                      | -         |

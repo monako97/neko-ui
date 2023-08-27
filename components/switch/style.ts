@@ -43,10 +43,10 @@ export const style = css`
       outline: 2.05px solid #fff;
       box-shadow: 0 2px 4px 1px var(--primary-shadow);
       transition:
-        var(--transition-duration) padding,
+        0.6s transform ease,
+        var(--transition-duration) padding ease,
+        var(--transition-duration) inset-inline-start ease,
         var(--transition-duration) background-color 0.1s,
-        var(--transition-duration) left,
-        0.6s transform,
         var(--transition-duration) border-color;
       outline-offset: -0.05px;
       inset-block-start: 3px;
