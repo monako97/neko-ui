@@ -2,6 +2,14 @@
 
 ## Last
 
+### 🐛 Bug Fixes
+
+- 文档重定向出现/?/ ([95fea77](https://github.com/monako97/neko-ui/commit/95fea77138de2181271ad303b8f25e1a7b6e2ed2))
+- attrs ([e4b652e](https://github.com/monako97/neko-ui/commit/e4b652eaccc4a8a1372b15561a23bc5da803ae28))
+- docs ([2154a10](https://github.com/monako97/neko-ui/commit/2154a10b279bee482d0ac6dc568acf454e96f243))
+- ci ([738da61](https://github.com/monako97/neko-ui/commit/738da61a147c5998ff5b806c92075ba0035203dc))
+- 修复自定义函数的最终类型 ([95f4f5e](https://github.com/monako97/neko-ui/commit/95f4f5e0a015b6b023b3af9a2210b349ae6cec3e))
+
 ### ✨ Features
 
 - 自动推断html属性类型、js api属性类型 ([8599591](https://github.com/monako97/neko-ui/commit/85995910e6d8ddf2647ee3cbb38e9e34c626f5c3))
@@ -9,13 +17,6 @@
 ### 📦 Code Refactoring
 
 - 更换正式版框架 ([91e8d94](https://github.com/monako97/neko-ui/commit/91e8d94d37f428e31a1e51abef82f99694655aeb))
-
-### 🐛 Bug Fixes
-
-- attrs ([e4b652e](https://github.com/monako97/neko-ui/commit/e4b652eaccc4a8a1372b15561a23bc5da803ae28))
-- docs ([2154a10](https://github.com/monako97/neko-ui/commit/2154a10b279bee482d0ac6dc568acf454e96f243))
-- ci ([738da61](https://github.com/monako97/neko-ui/commit/738da61a147c5998ff5b806c92075ba0035203dc))
-- 修复自定义函数的最终类型 ([95f4f5e](https://github.com/monako97/neko-ui/commit/95f4f5e0a015b6b023b3af9a2210b349ae6cec3e))
 
 ### 📚 Documentation
 
