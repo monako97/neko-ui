@@ -23,7 +23,9 @@ function Provider(props: ProviderProps) {
   );
 }
 export interface ProviderProps {
-  /** 主题 */
+  /** 主题, 等同于使用 setScheme
+   * @default 'auto'
+   */
   scheme?: keyof typeof ColorScheme;
   /** 包裹的子项 */
   children?: JSXElement;

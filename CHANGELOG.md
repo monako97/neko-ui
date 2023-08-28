@@ -2,6 +2,11 @@
 
 ## Last
 
+### 📚 Documentation
+
+- update ([63cc689](https://github.com/monako97/neko-ui/commit/63cc68921d32e95a103f1330edeb53a56c31d37b))
+- table 表格栏配置更新 ([b4bbe57](https://github.com/monako97/neko-ui/commit/b4bbe57bcafa0f64b1a0215e7f3e1df6f36cab67))
+
 ### 💎 Styles
 
 - custom css ([7023f5a](https://github.com/monako97/neko-ui/commit/7023f5ab88d19849e2cabcc82df538982a225b97))
@@ -23,10 +28,6 @@
 ### ✨ Features
 
 - 自动推断html属性类型、js api属性类型 ([8599591](https://github.com/monako97/neko-ui/commit/85995910e6d8ddf2647ee3cbb38e9e34c626f5c3))
-
-### 📚 Documentation
-
-- table 表格栏配置更新 ([b4bbe57](https://github.com/monako97/neko-ui/commit/b4bbe57bcafa0f64b1a0215e7f3e1df6f36cab67))
 
 ## [2.3.0](https://github.com/monako97/neko-ui/compare/2.2.0...2.3.0) (8-22-2023)
 
