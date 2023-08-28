@@ -2,6 +2,10 @@
 
 ## Last
 
+### ✨ Features
+
+- 自动推断html属性类型、js api属性类型 ([8599591](https://github.com/monako97/neko-ui/commit/85995910e6d8ddf2647ee3cbb38e9e34c626f5c3))
+
 ### 📦 Code Refactoring
 
 - 更换正式版框架 ([91e8d94](https://github.com/monako97/neko-ui/commit/91e8d94d37f428e31a1e51abef82f99694655aeb))
