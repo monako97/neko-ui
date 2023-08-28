@@ -4,11 +4,16 @@ import theme, { ColorScheme } from '../theme';
 import type { CustomElement } from '..';
 
 function Provider(props: ProviderProps) {
-  const { baseStyle, scheme } = theme;
+  const { baseStyle, scheme, setScheme } = theme;
 
   noShadowDOM();
   createEffect(() => {
     props.onScheme?.(scheme());
+  });
+  createEffect(() => {
+    if (props.scheme) {
+      setScheme(props.scheme);
+    }
   });
   return (
     <>
@@ -18,6 +23,8 @@ function Provider(props: ProviderProps) {
   );
 }
 export interface ProviderProps {
+  /** 主题 */
+  scheme?: keyof typeof ColorScheme;
   /** 包裹的子项 */
   children?: JSXElement;
   /** 响应 scheme 变化 */

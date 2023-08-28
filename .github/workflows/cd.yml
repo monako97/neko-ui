@@ -41,8 +41,8 @@ jobs:
         run: yarn lint
       - name: 'Build UMD'
         run: yarn build config=umd
-      - name: 'Build Docs'
-        run: yarn build config=deploy
+      - name: 'Build Github Pages'
+        run: yarn build config=github
       - name: 'Publish to npm'
         run: |
           NPM_PACKAGE_NAME=$(node -p "require('./package.json').name")

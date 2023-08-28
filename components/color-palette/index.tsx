@@ -22,7 +22,7 @@ import {
   setClipboard,
   throttle,
 } from '@moneko/common';
-import { cx } from '@moneko/css';
+import { css, cx } from '@moneko/css';
 import { customElement } from 'solid-element';
 import { style, switchCss } from './style';
 import '../dropdown';
@@ -226,6 +226,7 @@ function ColorPalette(_: ColorPaletteProps) {
         {baseStyle()}
         {style}
         {colorVar()}
+        {css(props.css)}
       </style>
       <div class={cx('palette', props.class)}>
         <div ref={picker} class="picker" onMouseDown={mouseDown} />

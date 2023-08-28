@@ -11,7 +11,7 @@ import {
   untrack,
 } from 'solid-js';
 import { downloadBlob, isFunction } from '@moneko/common';
-import { cx } from '@moneko/css';
+import { css, cx } from '@moneko/css';
 import { customElement } from 'solid-element';
 import { style } from './style';
 import theme from '../theme';
@@ -129,6 +129,7 @@ function CaptureScreen(_: CaptureScreenProps) {
     'onErrorCapture',
     'onSaveRecorder',
     'class',
+    'css',
     'ref',
     'children',
   ]);
@@ -282,6 +283,7 @@ function CaptureScreen(_: CaptureScreenProps) {
       <style>
         {baseStyle()}
         {style}
+        {css(local.css)}
       </style>
       <div class={cx('capture-screen', local.class)} {...props}>
         <div class="controller">

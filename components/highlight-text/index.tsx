@@ -143,6 +143,7 @@ function HighlightText(props: HighlightTextProps) {
       <style>
         {baseStyle()}
         {style}
+        {css(props.css)}
       </style>
       <div class={cx('text', props.class)}>
         {hitNode()}

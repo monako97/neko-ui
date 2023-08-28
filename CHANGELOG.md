@@ -2,6 +2,11 @@
 
 ## Last
 
+### 📦 Code Refactoring
+
+- intrinsic elements ([0e66110](https://github.com/monako97/neko-ui/commit/0e66110e040ad61ffc3e33f972beb7ccec1d2358))
+- 更换正式版框架 ([91e8d94](https://github.com/monako97/neko-ui/commit/91e8d94d37f428e31a1e51abef82f99694655aeb))
+
 ### 🐛 Bug Fixes
 
 - 文档重定向出现/?/ ([1de7417](https://github.com/monako97/neko-ui/commit/1de7417f16705bcbe6d4ed2e7b49f5eb152db0dd))
@@ -14,10 +19,6 @@
 ### ✨ Features
 
 - 自动推断html属性类型、js api属性类型 ([8599591](https://github.com/monako97/neko-ui/commit/85995910e6d8ddf2647ee3cbb38e9e34c626f5c3))
-
-### 📦 Code Refactoring
-
-- 更换正式版框架 ([91e8d94](https://github.com/monako97/neko-ui/commit/91e8d94d37f428e31a1e51abef82f99694655aeb))
 
 ### 📚 Documentation
 

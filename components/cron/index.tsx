@@ -9,6 +9,7 @@ import {
   splitProps,
   untrack,
 } from 'solid-js';
+import { css } from '@moneko/css';
 import { customElement } from 'solid-element';
 import Day from './day';
 import Hour from './hour';
@@ -20,6 +21,10 @@ import Year from './year';
 import type { BaseOption, CustomElement, TabOption } from '..';
 
 export interface CronProps extends Omit<JSX.HTMLAttributes<HTMLDivElement>, 'onChange'> {
+  /** 自定义类名 */
+  class?: string;
+  /** 自定义样式表 */
+  css?: string;
   /** 隐藏域 */
   exclude?: string[];
   /** 显示表达式
@@ -77,6 +82,8 @@ function Cron(props: CronProps) {
     'onChange',
     'type',
     'showCron',
+    'css',
+    'class',
   ]);
   const [value, setValue] = createSignal(local.defaultValue);
   const date = new Date();
@@ -333,6 +340,7 @@ function Cron(props: CronProps) {
 
   return (
     <>
+      <style>{css(local.css)}</style>
       <n-tabs type={local.type} items={items} value={active()} onChange={changeActiveKey} />
       <Show when={local.showCron}>
         <code

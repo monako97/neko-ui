@@ -15,9 +15,11 @@ import { isFunction } from '@moneko/common';
 import { css, cx } from '@moneko/css';
 import { customElement } from 'solid-element';
 import { styles } from './styles';
+import theme from '../theme';
 import type { BasicConfig, CustomElement } from '..';
 
 function Pagination(_: PaginationProps) {
+  const { baseStyle } = theme;
   const maxCount = 5;
   const [local, other] = splitProps(_, ['page', 'pageSize', 'total', 'css', 'totalText']);
   const [page, setPage] = createSignal(1);
@@ -120,6 +122,7 @@ function Pagination(_: PaginationProps) {
   return (
     <Show when={pages().length}>
       <style>
+        {baseStyle()}
         {styles}
         {css(local.css)}
       </style>

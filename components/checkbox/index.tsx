@@ -1,5 +1,5 @@
 import { For, createComponent, createEffect, createMemo, createSignal, mergeProps } from 'solid-js';
-import { cx } from '@moneko/css';
+import { css, cx } from '@moneko/css';
 import { customElement } from 'solid-element';
 import { style } from './style';
 import { type BaseOption, type BasicConfig, FieldName } from '../basic-config';
@@ -167,6 +167,7 @@ function Checkbox(props: CheckboxBoolProps | CheckboxGroupProps) {
       <style>
         {baseStyle()}
         {style}
+        {css(props.css)}
       </style>
       <section class={cx('box', props.layout, props.class)}>
         <For each={options()}>

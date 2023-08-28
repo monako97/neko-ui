@@ -15,12 +15,14 @@ import { isObject, isString, isUndefined } from '@moneko/common';
 import { css, cx } from '@moneko/css';
 import { customElement } from 'solid-element';
 import { styles } from './styles';
+import theme from '../theme';
 import type { BasicConfig, CustomElement, PaginationProps } from '..';
 
 type Col = Column<Record<string, Any>>;
 const defaultPagination = { page: 1, pageSize: 20, total: 0, totalText: void 0, size: void 0 };
 
 function Table(_: TableProps) {
+  const { baseStyle } = theme;
   const [local, other] = splitProps(_, [
     'class',
     'css',
@@ -117,6 +119,7 @@ function Table(_: TableProps) {
   return (
     <>
       <style>
+        {baseStyle()}
         {styles}
         {css(local.css)}
       </style>

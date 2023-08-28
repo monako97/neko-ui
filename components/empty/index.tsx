@@ -1,5 +1,5 @@
 import { type JSX, Show } from 'solid-js';
-import { css, cx } from '@moneko/css';
+import { css } from '@moneko/css';
 import { customElement } from 'solid-element';
 import type { CustomElement } from '..';
 
@@ -36,7 +36,7 @@ function Empty(props: EmptyProps) {
         {style}
         {css(props.css)}
       </style>
-      <div class={cx('empty-container', props.class)}>
+      <div class="empty-container">
         <Show
           when={props.label}
           fallback={
