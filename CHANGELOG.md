@@ -2,6 +2,10 @@
 
 ## Last
 
+### 💎 Styles
+
+- custom css ([7023f5a](https://github.com/monako97/neko-ui/commit/7023f5ab88d19849e2cabcc82df538982a225b97))
+
 ### 📦 Code Refactoring
 
 - intrinsic elements ([0e66110](https://github.com/monako97/neko-ui/commit/0e66110e040ad61ffc3e33f972beb7ccec1d2358))

@@ -243,7 +243,7 @@ interface CustomElementTags {
 }
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type Any = any;
-interface ICustomElement {
+type ICustomElement = {
   [prop: string]: Any;
   __initialized?: boolean;
   __released: boolean;
@@ -256,7 +256,7 @@ interface ICustomElement {
   addReleaseCallback(fn: () => void): void;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   addPropertyChangedCallback(fn: (name: string, value: any) => void): void;
-}
+};
 type IEvent<T> = (e: CustomEvent<T>) => void;
 type ICustomEvent<T, K extends keyof T> = T extends { [key in K]?: (v: infer V) => void }
   ? IEvent<V>
