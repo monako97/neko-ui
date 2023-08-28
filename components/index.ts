@@ -289,21 +289,21 @@ export type CustomElement<
   offsetWidth?: number;
   part?: string;
 };
+type IntrinsicNekoElement = Transform<CustomElementTags>;
+
 declare module 'solid-js' {
   // eslint-disable-next-line @typescript-eslint/no-namespace
   export namespace JSX {
-    export interface IntrinsicElements extends HTMLElementTags, Transform<CustomElementTags> {}
+    export interface IntrinsicElements extends HTMLElementTags, IntrinsicNekoElement {}
   }
-  interface HTMLElementTagNameMap extends Transform<CustomElementTags> {}
+  interface HTMLElementTagNameMap extends IntrinsicNekoElement {}
 }
 declare global {
   // eslint-disable-next-line @typescript-eslint/no-namespace
   export namespace JSX {
-    export interface IntrinsicElements
-      extends Transform<CustomElementTags>,
-        Transform<CustomElementTags> {}
+    export interface IntrinsicElements extends IntrinsicNekoElement {}
   }
-  interface HTMLElementTagNameMap extends Transform<CustomElementTags> {}
+  interface HTMLElementTagNameMap extends IntrinsicNekoElement {}
 }
 
 export interface ComponentOptions<T> {

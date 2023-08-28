@@ -4,6 +4,7 @@
 
 ### 🐛 Bug Fixes
 
+- 文档重定向出现/?/ ([1de7417](https://github.com/monako97/neko-ui/commit/1de7417f16705bcbe6d4ed2e7b49f5eb152db0dd))
 - 文档重定向出现/?/ ([95fea77](https://github.com/monako97/neko-ui/commit/95fea77138de2181271ad303b8f25e1a7b6e2ed2))
 - attrs ([e4b652e](https://github.com/monako97/neko-ui/commit/e4b652eaccc4a8a1372b15561a23bc5da803ae28))
 - docs ([2154a10](https://github.com/monako97/neko-ui/commit/2154a10b279bee482d0ac6dc568acf454e96f243))

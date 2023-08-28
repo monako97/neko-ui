@@ -44,7 +44,7 @@ yarn add neko-ui -S
 
 ```html
 <!-- 引入 CDN 资源 -->
-<script src="https://cdn.jsdelivr.net/npm/neko-ui@2.0.1/lib/index.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/neko-ui/lib/index.js"></script>
 <!-- 使用 -->
 <body>
   <n-button>按钮</n-button>
