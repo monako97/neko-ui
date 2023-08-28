@@ -15,7 +15,7 @@ import { isObject, isString, isUndefined } from '@moneko/common';
 import { css, cx } from '@moneko/css';
 import { customElement } from 'solid-element';
 import { styles } from './styles';
-import type { BasicConfig, PaginationProps } from '..';
+import type { BasicConfig, CustomElement, PaginationProps } from '..';
 
 type Col = Column<Record<string, Any>>;
 const defaultPagination = { page: 1, pageSize: 20, total: 0, totalText: void 0, size: void 0 };
@@ -40,7 +40,6 @@ function Table(_: TableProps) {
   ]);
   const [layout] = splitProps(local, ['align', 'char', 'charoff', 'valign']);
   const [hasOrder, setHasOrder] = createSignal(false);
-  // const [pagination, setPagination] = createSignal(defaultPagination);
   const [page, setPage] = createSignal(1);
   const [pageSize, setPageSize] = createSignal(20);
   const [total, setTotal] = createSignal(0);
@@ -86,11 +85,17 @@ function Table(_: TableProps) {
         const col = local.columns[key];
         const _col: Col = Object.assign(
           { key, originKey: key, label: col.toString() },
-          isObject(col) && { label: (col.type === 'order' && '序号') || key, ...col },
+          isObject(col) && {
+            label: (col.type === 'order' && '序号') || key,
+            ...col,
+          },
         );
 
         if (_col.type === 'order') {
           _hasOrder = true;
+          _col.render = function (_val: unknown, _row: unknown, i: number) {
+            return <span>{(page() - 1) * pageSize() + i + 1}</span>;
+          };
         }
         cols.push(_col as Required<Col>);
       }
@@ -314,7 +319,7 @@ enum Valign {
 }
 export type TableElement = CustomElement<TableProps>;
 
-customElement(
+customElement<TableProps>(
   'n-table',
   {
     class: void 0,
@@ -328,7 +333,6 @@ customElement(
     charoff: void 0,
     align: Align.left,
     valign: Valign.middle,
-    cellpadding: 5,
     summary: void 0,
     summaryText: '合计',
     pagination: void 0,
@@ -341,6 +345,9 @@ customElement(
         css: el.css,
         columns: el.columns,
         data: el.data,
+        pagination: el.pagination,
+        summary: el.summary,
+        summaryText: el.summaryText,
       },
       _,
       {
@@ -351,6 +358,7 @@ customElement(
     createEffect(() => {
       el.removeAttribute('css');
       el.removeAttribute('title');
+      el.removeAttribute('data');
     });
     return createComponent(Table, props);
   },

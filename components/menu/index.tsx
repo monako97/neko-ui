@@ -20,6 +20,7 @@ import { style } from './style';
 import { type BaseOption, type BasicConfig, FieldName } from '../basic-config';
 import getOptions from '../get-options';
 import theme from '../theme';
+import type { CustomElement } from '..';
 
 function Menu(props: MenuProps | MenuMultipleProps) {
   let ref: HTMLDivElement | undefined;
@@ -329,13 +330,12 @@ export interface MenuOption extends Omit<BaseOption, 'children' | 'options'> {
 export type MenuElement = CustomElement<MenuProps, 'onChange' | 'onOpenChange'>;
 export type MenuMultipleElement = CustomElement<MenuMultipleProps, 'onChange' | 'onOpenChange'>;
 
-customElement(
+customElement<MenuProps>(
   'n-menu',
   {
     class: void 0,
     css: void 0,
     disabled: void 0,
-    type: void 0,
     value: void 0,
     defaultValue: void 0,
     onOpenChange: void 0,

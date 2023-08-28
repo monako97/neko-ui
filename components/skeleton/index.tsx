@@ -2,6 +2,7 @@ import { For, type JSX, Show, createComponent, createMemo, mergeProps } from 'so
 import { css, cx } from '@moneko/css';
 import { customElement } from 'solid-element';
 import theme from '../theme';
+import type { CustomElement } from '..';
 
 const style = css`
   :host {
@@ -158,7 +159,7 @@ function Skeleton(props: SkeletonProps) {
 }
 
 export type SkeletonElement = CustomElement<SkeletonProps>;
-customElement(
+customElement<SkeletonProps>(
   'n-skeleton',
   {
     rows: 3,
@@ -177,7 +178,6 @@ customElement(
         avatar: el.avatar,
         title: el.title,
         css: el.css,
-        class: el.class,
       },
       _,
     );

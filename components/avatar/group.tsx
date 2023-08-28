@@ -2,7 +2,7 @@ import { For, type JSX, Show, createMemo, mergeProps, splitProps } from 'solid-j
 import { css, cx } from '@moneko/css';
 import { customElement } from 'solid-element';
 import '../popover';
-import type { BasicConfig } from '..';
+import type { BasicConfig, CustomElement } from '..';
 import type { AvatarProps } from '../avatar';
 
 const style = css`
@@ -114,6 +114,6 @@ function AvatarGroup(_props: AvatarGroupProps) {
   );
 }
 
-customElement('n-avatar-group', defaultProps, AvatarGroup);
+customElement<AvatarGroupProps>('n-avatar-group', defaultProps, AvatarGroup);
 
 export default AvatarGroup;

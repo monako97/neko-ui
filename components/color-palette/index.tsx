@@ -29,7 +29,7 @@ import '../dropdown';
 import '../input';
 import '../input-number';
 import theme from '../theme';
-import type { InputNumberProps } from '../index';
+import type { CustomElement, InputNumberProps } from '..';
 
 export interface ColorPaletteProps extends Omit<JSX.HTMLAttributes<HTMLDivElement>, 'onChange'> {
   /** 自定义类名 */
@@ -339,7 +339,7 @@ export const defaultColorPaletteProps = {
   onChange: void 0,
 };
 
-customElement('n-color-palette', defaultColorPaletteProps, (_, opts) => {
+customElement<ColorPaletteProps>('n-color-palette', defaultColorPaletteProps, (_, opts) => {
   const el = opts.element;
   const props = mergeProps(
     {

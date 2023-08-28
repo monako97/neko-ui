@@ -15,6 +15,7 @@ import { cx } from '@moneko/css';
 import { customElement } from 'solid-element';
 import { style } from './style';
 import theme from '../theme';
+import type { CustomElement } from '..';
 
 declare interface MediaRecorderDataAvailableEvent extends Event {
   /** MediaRecorderDataAvailableEvent */
@@ -327,7 +328,7 @@ function CaptureScreen(_: CaptureScreenProps) {
   );
 }
 
-customElement(
+customElement<CaptureScreenProps>(
   'n-capture-screen',
   {
     class: void 0,

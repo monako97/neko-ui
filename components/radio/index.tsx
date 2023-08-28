@@ -5,6 +5,7 @@ import { style } from './style';
 import { type BaseOption, type BasicConfig, FieldName } from '../basic-config';
 import getOptions from '../get-options';
 import theme from '../theme';
+import type { CustomElement } from '..';
 
 export interface RadioOption extends Omit<BaseOption, 'icon'> {
   /** 值 */
@@ -82,7 +83,7 @@ function Radio(props: RadioProps) {
               <div
                 class={cx('item', item.class, item.status)}
                 part="item"
-                tabIndex={readOnly ? -1 : 0}
+                tabindex={readOnly ? -1 : 0}
                 aria-disabled={readOnly}
                 onKeyUp={onKeyUp.bind(null, item)}
                 onClick={handleChange}
@@ -93,7 +94,7 @@ function Radio(props: RadioProps) {
                   name={props.name}
                   value={item[fieldName.value]}
                   disabled={readOnly}
-                  tabIndex={-1}
+                  tabindex={-1}
                   checked={item[fieldName.value] === value()}
                   onChange={handleChange}
                 />
@@ -111,7 +112,7 @@ function Radio(props: RadioProps) {
 
 export type RadioElement = CustomElement<RadioProps>;
 
-customElement(
+customElement<RadioProps>(
   'n-radio',
   {
     class: void 0,

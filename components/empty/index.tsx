@@ -1,6 +1,7 @@
 import { type JSX, Show } from 'solid-js';
 import { css, cx } from '@moneko/css';
 import { customElement } from 'solid-element';
+import type { CustomElement } from '..';
 
 const style = css`
   .empty-container {
@@ -51,12 +52,11 @@ function Empty(props: EmptyProps) {
   );
 }
 
-customElement(
+customElement<EmptyProps>(
   'n-empty',
   {
     class: void 0,
     css: void 0,
-    style: void 0,
     label: void 0,
   },
   Empty,

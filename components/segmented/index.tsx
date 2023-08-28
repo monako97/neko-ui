@@ -14,6 +14,7 @@ import { style } from './style';
 import { type BaseOption, type BasicConfig, FieldName } from '../basic-config';
 import getOptions from '../get-options';
 import theme from '../theme';
+import type { CustomElement } from '..';
 
 export interface SegmentedProps {
   /** 自定义类名 */
@@ -130,7 +131,7 @@ function Segmented(props: SegmentedProps) {
                 />
                 <label
                   class={cx('label', item.class)}
-                  tabIndex={readOnly ? -1 : 0}
+                  tabindex={readOnly ? -1 : 0}
                   onKeyUp={({ key }) => onKeyUp(key, item)}
                   onClick={handleChange}
                   aria-disabled={readOnly}
@@ -155,7 +156,7 @@ function Segmented(props: SegmentedProps) {
 
 export type SegmentedElement = CustomElement<SegmentedProps>;
 
-customElement(
+customElement<SegmentedProps>(
   'n-segmented',
   {
     class: void 0,
@@ -164,7 +165,7 @@ customElement(
     disabled: void 0,
     value: void 0,
     defaultValue: void 0,
-    options: void 0,
+    options: [],
     onChange: void 0,
     fieldNames: void 0,
   },
@@ -172,13 +173,12 @@ customElement(
     const el = opt.element;
     const props = mergeProps(
       {
-        class: el.class,
         css: el.css,
         name: el.name,
         disabled: el.disabled,
         value: el.value,
         defaultValue: el.defaultValue,
-        options: el.options || [],
+        options: el.options,
         fieldNames: el.fieldNames,
         onChange(next: string) {
           el.dispatchEvent(

@@ -14,6 +14,7 @@ import { css, cx } from '@moneko/css';
 import { customElement } from 'solid-element';
 import { style } from './style';
 import theme from '../theme';
+import type { CustomElement } from '..';
 
 export interface CarouselProps {
   /** 自定义类名 */
@@ -165,7 +166,7 @@ function Carousel(_props: CarouselProps) {
   );
 }
 
-customElement(
+customElement<CarouselProps>(
   'n-carousel',
   {
     children: void 0,

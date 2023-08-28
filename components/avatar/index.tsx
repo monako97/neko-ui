@@ -12,7 +12,7 @@ import { css, cx } from '@moneko/css';
 import { customElement } from 'solid-element';
 import { style } from './style';
 import theme from '../theme';
-import type { BasicConfig } from '../index';
+import type { BasicConfig, CustomElement } from '../index';
 
 export interface AvatarProps
   extends Omit<JSX.ButtonHTMLAttributes<HTMLDivElement>, 'onChange' | 'ref' | 'children'> {
@@ -117,7 +117,7 @@ function Avatar(_: AvatarProps) {
   );
 }
 
-customElement(
+customElement<AvatarProps>(
   'n-avatar',
   {
     css: void 0,

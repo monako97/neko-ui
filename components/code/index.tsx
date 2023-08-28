@@ -14,6 +14,7 @@ import { customElement } from 'solid-element';
 import { style } from './style';
 import Prism, { prismCss } from '../prism';
 import theme from '../theme';
+import type { CustomElement } from '..';
 
 export interface CodeProps extends Omit<JSX.HTMLAttributes<HTMLDivElement>, 'onChange'> {
   /** 自定义类名 */
@@ -126,7 +127,7 @@ function Code(props: CodeProps) {
   );
 }
 
-customElement(
+customElement<CodeProps>(
   'n-code',
   {
     class: void 0,

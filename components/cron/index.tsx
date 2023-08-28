@@ -17,7 +17,7 @@ import Month from './month';
 import Second from './second';
 import Week from './week';
 import Year from './year';
-import type { BaseOption, TabOption } from '../index';
+import type { BaseOption, CustomElement, TabOption } from '..';
 
 export interface CronProps extends Omit<JSX.HTMLAttributes<HTMLDivElement>, 'onChange'> {
   /** 隐藏域 */
@@ -351,7 +351,7 @@ function Cron(props: CronProps) {
   );
 }
 
-customElement(
+customElement<CronProps>(
   'n-cron',
   {
     value: void 0,

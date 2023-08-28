@@ -14,6 +14,7 @@ import { css, cx } from '@moneko/css';
 import { customElement } from 'solid-element';
 import { style } from './style';
 import theme, { generateTheme } from '../theme';
+import type { CustomElement } from '..';
 
 export interface TagProps extends Omit<JSX.HTMLAttributes<HTMLSpanElement>, 'onChange'> {
   /** 自定义样式表 */
@@ -108,7 +109,7 @@ function Tag(props: TagProps) {
 
 export type TagElement = CustomElement<TagProps, 'onClose'>;
 
-customElement(
+customElement<TagProps>(
   'n-tag',
   {
     class: void 0,

@@ -2,6 +2,7 @@ import { type JSX, createEffect, createMemo, createSignal } from 'solid-js';
 import { css, cx } from '@moneko/css';
 import { customElement } from 'solid-element';
 import theme from '../theme';
+import type { CustomElement } from '..';
 
 const style = css`
   .text {
@@ -152,7 +153,7 @@ function HighlightText(props: HighlightTextProps) {
 }
 
 export type HighlightTextElement = CustomElement<HighlightTextProps>;
-customElement(
+customElement<HighlightTextProps>(
   'n-highlight-text',
   {
     class: void 0,

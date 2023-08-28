@@ -15,7 +15,7 @@ import { customElement } from 'solid-element';
 import { style } from './style';
 import schema, { type Schema } from '../from-schema';
 import theme from '../theme';
-import type { BasicConfig } from '../index';
+import type { BasicConfig, CustomElement } from '..';
 
 export interface TreeBaseProp {
   /** 自定义类名 */
@@ -357,12 +357,12 @@ export interface TreeData<T = string> {
     | undefined;
 }
 
-customElement(
+customElement<TreeProps>(
   'n-tree',
   {
     fromSchema: void 0,
     size: void 0,
-    data: void 0,
+    data: [],
     multiple: void 0,
     value: void 0,
     onChange: void 0,
@@ -379,12 +379,11 @@ customElement(
     const el = opt.element;
     const props = mergeProps(
       {
-        data: el.data || [],
+        data: el.data,
         value: el.value,
         multiple: el.multiple,
         fromSchema: el.fromSchema,
         size: el.size,
-        class: el.class,
         css: el.css,
         readonly: el.readonly,
         toggle: el.toggle,

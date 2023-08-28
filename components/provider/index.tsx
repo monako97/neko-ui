@@ -1,6 +1,7 @@
 import { type JSXElement, createComponent, createEffect, mergeProps } from 'solid-js';
 import { customElement, noShadowDOM } from 'solid-element';
 import theme, { ColorScheme } from '../theme';
+import type { CustomElement } from '..';
 
 function Provider(props: ProviderProps) {
   const { baseStyle, scheme } = theme;
@@ -24,7 +25,7 @@ export interface ProviderProps {
 }
 export type ProviderElement = CustomElement<ProviderProps, 'onScheme'>;
 
-customElement('n-provider', (_, opt) => {
+customElement<ProviderProps>('n-provider', (_, opt) => {
   const el = opt.element;
   const props = mergeProps(
     {

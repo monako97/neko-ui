@@ -106,8 +106,8 @@ export {
 export { default as Typography, type TypographyElement, type TypographyProps } from './typography';
 export { default as dayjs } from './date-picker/dayjs';
 export { default as Provider, type ProviderElement, type ProviderProps } from './provider';
-
-import {
+export { hot, customElement, noShadowDOM, withSolid, getCurrentElement } from 'solid-element';
+import type {
   AvatarElement,
   AvatarGroupElement,
   BackTopElement,
@@ -241,24 +241,71 @@ interface CustomElementTags {
    */
   'n-provider': ProviderElement;
 }
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+type Any = any;
+interface ICustomElement {
+  [prop: string]: Any;
+  __initialized?: boolean;
+  __released: boolean;
+  __releaseCallbacks: Any[];
+  __propertyChangedCallbacks: Any[];
+  __updating: Record<string, Any>;
+  props: Record<string, Any>;
+  lookupProp(attrName: string): string | undefined;
+  renderRoot: Element | Document | ShadowRoot | DocumentFragment;
+  addReleaseCallback(fn: () => void): void;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  addPropertyChangedCallback(fn: (name: string, value: any) => void): void;
+}
+type IEvent<T> = (e: CustomEvent<T>) => void;
+type ICustomEvent<T, K extends keyof T> = T extends { [key in K]?: (v: infer V) => void }
+  ? IEvent<V>
+  : T extends { [key in K]?: (...args: infer Args) => void }
+  ? IEvent<Args>
+  : never;
+type Hyphenate<T> = T extends `${infer First}${infer Rest}`
+  ? Rest extends Uncapitalize<Rest>
+    ? `${Lowercase<First>}${Hyphenate<Rest>}`
+    : `${Lowercase<First>}-${Hyphenate<Rest>}`
+  : T;
+type TransformKeys<T> = {
+  [K in keyof T as T[K] extends symbol | string | number | boolean | undefined | null
+    ? Hyphenate<K>
+    : K]: T[K];
+};
+type Transform<T> = {
+  [K in keyof T]: TransformKeys<T[K]>;
+};
+type IOmit<T, Keys extends keyof T> = Omit<T, Keys> & {
+  [K in Keys]?: ICustomEvent<T, K>;
+};
 
+export type CustomElement<
+  T extends Partial<ICustomElement> = ICustomElement,
+  E extends string = 'onChange',
+> = IOmit<T, E> & {
+  ref?: CustomElement<T, E> | { current: CustomElement<T, E> | null };
+  shadowRoot?: ShadowRoot | Element | null;
+  offsetWidth?: number;
+  part?: string;
+};
 declare module 'solid-js' {
   // eslint-disable-next-line @typescript-eslint/no-namespace
   export namespace JSX {
-    export interface IntrinsicElements extends HTMLElementTags, CustomElementTags {}
+    export interface IntrinsicElements extends HTMLElementTags, Transform<CustomElementTags> {}
   }
-  interface HTMLElementTagNameMap extends CustomElementTags {}
+  interface HTMLElementTagNameMap extends Transform<CustomElementTags> {}
 }
 declare global {
   // eslint-disable-next-line @typescript-eslint/no-namespace
   export namespace JSX {
-    export interface IntrinsicElements extends CustomElementTags, CustomElementTags {}
+    export interface IntrinsicElements
+      extends Transform<CustomElementTags>,
+        Transform<CustomElementTags> {}
   }
-  interface HTMLElementTagNameMap extends CustomElementTags {}
+  interface HTMLElementTagNameMap extends Transform<CustomElementTags> {}
+}
 
-  // interface window {
-  //   NekoUI: typeof umd;
-  // }
-
-  // const NekoUI: window['NekoUI'];
+export interface ComponentOptions<T> {
+  element: T & ICustomElement;
 }

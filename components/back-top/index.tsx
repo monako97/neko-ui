@@ -16,6 +16,7 @@ import { customElement } from 'solid-element';
 import { Portal } from 'solid-js/web';
 import { style } from './style';
 import theme from '../theme';
+import type { CustomElement } from '..';
 
 export interface BackTopProps extends Omit<JSX.ButtonHTMLAttributes<HTMLDivElement>, 'onChange'> {
   /** 设置需要监听其滚动事件的元素
@@ -115,7 +116,7 @@ function BackTop(_: BackTopProps) {
 
 export type BackTopElement = CustomElement<BackTopProps>;
 
-customElement(
+customElement<BackTopProps>(
   'n-back-top',
   {
     class: void 0,
@@ -136,7 +137,6 @@ customElement(
     }
     const props = mergeProps(
       {
-        class: el.class,
         css: el.css,
         visibilityHeight: el.visibilityHeight,
         mount: el.renderRoot as HTMLElement,

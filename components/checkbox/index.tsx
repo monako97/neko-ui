@@ -5,6 +5,7 @@ import { style } from './style';
 import { type BaseOption, type BasicConfig, FieldName } from '../basic-config';
 import getOptions from '../get-options';
 import theme from '../theme';
+import type { CustomElement } from '..';
 
 /** 通用API
  * @since 1.0.0
@@ -183,7 +184,7 @@ function Checkbox(props: CheckboxBoolProps | CheckboxGroupProps) {
               <span
                 class={cx('item', item.class, item.status)}
                 aria-disabled={readOnly}
-                tabIndex={readOnly ? -1 : 0}
+                tabindex={readOnly ? -1 : 0}
                 onKeyUp={onKeyUp.bind(null, item)}
                 onClick={onChange.bind(null, item)}
               >
@@ -210,7 +211,7 @@ function Checkbox(props: CheckboxBoolProps | CheckboxGroupProps) {
 export type CheckboxGroupElement = CustomElement<CheckboxGroupProps>;
 export type CheckboxBoolElement = CustomElement<CheckboxBoolProps>;
 
-customElement(
+customElement<CheckboxBoolProps | CheckboxGroupProps>(
   'n-checkbox',
   {
     class: void 0,

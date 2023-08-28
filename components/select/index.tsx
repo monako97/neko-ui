@@ -23,7 +23,7 @@ import Dropdown, {
   defaultProps,
 } from '../dropdown';
 import getOptions from '../get-options';
-import type { MenuOption } from '..';
+import type { CustomElement, MenuOption } from '..';
 
 function Select(props: SelectProps) {
   const [local, other] = splitProps(props, [
@@ -202,7 +202,7 @@ function Select(props: SelectProps) {
       <div
         ref={ref}
         class="select"
-        tabIndex={other.disabled ? -1 : 0}
+        tabindex={other.disabled ? -1 : 0}
         onKeyDown={keyDown}
         onFocus={focus}
         onBlur={blur}
@@ -296,7 +296,7 @@ export interface SelectMultipleProps
 export type SelectElement = CustomElement<SelectProps, 'onChange' | 'onOpenChange'>;
 export type SelectMultipleElement = CustomElement<SelectMultipleProps, 'onChange' | 'onOpenChange'>;
 
-customElement(
+customElement<SelectProps>(
   'n-select',
   {
     ...defaultProps,

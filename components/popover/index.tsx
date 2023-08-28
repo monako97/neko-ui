@@ -17,7 +17,7 @@ import { customElement } from 'solid-element';
 import { Portal } from 'solid-js/web';
 import { popoverCss, portalCss } from './style';
 import theme from '../theme';
-import type { BasicConfig } from '..';
+import type { BasicConfig, CustomElement } from '..';
 
 export interface PopoverProps extends Omit<JSX.HTMLAttributes<HTMLDivElement>, 'onChange'> {
   /** 自定义类名 */
@@ -384,7 +384,7 @@ export const defaultProps = {
   placement: void 0,
   dropdownMatchSelectWidth: void 0,
 };
-customElement('n-popover', defaultProps, (_, opt) => {
+customElement<PopoverProps>('n-popover', defaultProps, (_, opt) => {
   const el = opt.element;
   const props = mergeProps(
     {

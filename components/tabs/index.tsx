@@ -18,7 +18,7 @@ import { addCss, btnCss, style } from './style';
 import { FieldName } from '../basic-config';
 import getOptions from '../get-options';
 import theme from '../theme';
-import type { BaseOption, BasicConfig, ButtonElement } from '..';
+import type { BaseOption, BasicConfig, ButtonElement, CustomElement } from '..';
 
 export interface TabsProps {
   /** 自定义类名 */
@@ -270,7 +270,7 @@ function Tabs(props: TabsProps) {
                   link={true}
                   type={isActive() ? 'primary' : 'default'}
                   class={cx('tab', isActive() && 'active', item.class)}
-                  tabIndex={readOnly() ? -1 : 0}
+                  tabindex={readOnly() ? -1 : 0}
                   onKeyUp={onKeyUp.bind(null, item)}
                   onClick={onChange.bind(null, item)}
                   disabled={readOnly()}
@@ -313,7 +313,7 @@ function Tabs(props: TabsProps) {
 
 export type TabsElement = CustomElement<TabsProps, 'onChange' | 'onEdit'>;
 
-customElement(
+customElement<TabsProps>(
   'n-tabs',
   {
     class: void 0,

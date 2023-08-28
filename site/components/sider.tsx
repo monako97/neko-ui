@@ -3,7 +3,7 @@ import app from '@app';
 import routes, { type RouteConfig } from '@app/routes';
 import { css } from '@moneko/css';
 import { A, getPathName, useLocation } from '@moneko/solid';
-import { type ColorScheme, theme } from 'neko-ui';
+import { type ColorScheme, type ComponentOptions, theme } from 'neko-ui';
 import { customElement } from 'solid-element';
 
 const style = css`

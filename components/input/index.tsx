@@ -12,7 +12,7 @@ import { css, cx } from '@moneko/css';
 import { customElement } from 'solid-element';
 import { style } from './style';
 import theme from '../theme';
-import type { BasicConfig } from '../index';
+import type { BasicConfig, CustomElement } from '..';
 
 export interface InputProps {
   /** 自定义类名 */
@@ -170,7 +170,7 @@ export const defaultInportProps = {
   placeholder: '请输入',
 };
 
-customElement('n-input', defaultInportProps, (_, opt) => {
+customElement<InputProps>('n-input', defaultInportProps, (_, opt) => {
   const el = opt.element;
   const props = mergeProps(
     {

@@ -3,6 +3,7 @@ import { css, cx } from '@moneko/css';
 import { customElement } from 'solid-element';
 import { Dynamic } from 'solid-js/web';
 import theme from '../theme';
+import type { CustomElement } from '..';
 
 export interface TypographyProps extends Omit<JSX.HTMLAttributes<HTMLDivElement>, 'onChange'> {
   /** 自定义类名 */
@@ -87,7 +88,7 @@ function Typography(props: TypographyProps) {
 
 export type TypographyElement = CustomElement<TypographyProps>;
 
-customElement(
+customElement<TypographyProps>(
   'n-typography',
   {
     class: void 0,

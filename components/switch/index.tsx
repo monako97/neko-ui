@@ -3,6 +3,7 @@ import { css, cx } from '@moneko/css';
 import { customElement } from 'solid-element';
 import { style } from './style';
 import theme from '../theme';
+import type { CustomElement } from '..';
 
 export interface SwitchProps {
   /** 自定义类名 */
@@ -60,13 +61,13 @@ function Switch(props: SwitchProps) {
         aria-disabled={props.disabled}
         onClick={change}
         onKeyUp={onKeyUp}
-        tabIndex={props.disabled || props.loading ? -1 : 0}
+        tabindex={props.disabled || props.loading ? -1 : 0}
       />
     </>
   );
 }
 
-customElement(
+customElement<SwitchProps>(
   'n-switch',
   {
     class: void 0,
@@ -82,7 +83,6 @@ customElement(
     const el = opt.element;
     const props = mergeProps(
       {
-        class: el.class,
         css: el.css,
         checked: el.checked,
         disabled: el.disabled,

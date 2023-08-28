@@ -16,6 +16,7 @@ import { style } from './style';
 import '../code';
 import '../img';
 import theme from '../theme';
+import type { CustomElement } from '..';
 
 function MD(_props: MdProps) {
   const { baseStyle } = theme;
@@ -220,7 +221,7 @@ export interface MdProps extends JSX.HTMLAttributes<HTMLDivElement> {
 
 export type MdElement = CustomElement<MdProps>;
 
-customElement(
+customElement<MdProps>(
   'n-md',
   {
     class: void 0,

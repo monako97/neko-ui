@@ -13,7 +13,7 @@ import dayjs from './dayjs';
 import Panel from './panel';
 import { styles } from './style';
 import Popover, { type PopoverProps, defaultProps } from '../popover';
-import type { InputElement } from '..';
+import type { CustomElement, InputElement } from '..';
 
 function DatePicker(_props: DatePickerProps) {
   let ref: InputElement | undefined;
@@ -231,7 +231,7 @@ enum PickerType {
 
 export type DatePickerElement = CustomElement<DatePickerProps, 'onChange' | 'onOpenChange'>;
 
-customElement(
+customElement<DatePickerProps>(
   'n-data-picker',
   {
     ...defaultProps,
@@ -258,7 +258,6 @@ customElement(
     const el = opt.element;
     const props = mergeProps(
       {
-        class: el.class,
         css: el.css,
         onChange(val: string, time: dayjs.Dayjs) {
           el.dispatchEvent(

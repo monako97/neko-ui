@@ -11,7 +11,7 @@ import { isFunction } from '@moneko/common';
 import { customElement } from 'solid-element';
 import Empty from '../empty';
 import Popover, { defaultProps as popoverProps } from '../popover';
-import type { MenuMultipleProps, MenuOption, MenuProps, PopoverProps } from '..';
+import type { CustomElement, MenuMultipleProps, MenuOption, MenuProps, PopoverProps } from '..';
 
 export interface BaseDropdownProps extends Omit<PopoverProps, 'content'> {
   /** 打开内容气泡 */
@@ -135,7 +135,7 @@ export const defaultProps = {
   openKeys: void 0,
 };
 
-customElement(
+customElement<DropdownProps>(
   'n-dropdown',
   {
     ...defaultProps,

@@ -2,6 +2,7 @@ import { type JSX, createComponent, mergeProps } from 'solid-js';
 import { css, cx } from '@moneko/css';
 import { customElement } from 'solid-element';
 import theme from '../theme';
+import type { CustomElement } from '..';
 
 const style = css`
   .box {
@@ -87,7 +88,7 @@ function Spin(props: SpinProps) {
 
 export type SpinElement = CustomElement<SpinProps>;
 
-customElement('n-spin', { class: void 0, css: void 0, spin: void 0 }, (_, opt) => {
+customElement<SpinProps>('n-spin', { class: void 0, css: void 0, spin: void 0 }, (_, opt) => {
   const el = opt.element;
   const props = mergeProps(
     {

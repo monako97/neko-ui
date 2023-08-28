@@ -15,7 +15,7 @@ import { isFunction } from '@moneko/common';
 import { css, cx } from '@moneko/css';
 import { customElement } from 'solid-element';
 import { styles } from './styles';
-import type { BasicConfig } from '..';
+import type { BasicConfig, CustomElement } from '..';
 
 function Pagination(_: PaginationProps) {
   const maxCount = 5;
@@ -212,7 +212,7 @@ export interface PaginationProps {
 }
 export type PaginationElement = CustomElement<PaginationProps>;
 
-customElement(
+customElement<PaginationProps>(
   'n-pagination',
   {
     class: void 0,

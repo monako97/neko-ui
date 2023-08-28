@@ -12,7 +12,7 @@ import { customElement } from 'solid-element';
 import { style } from './style';
 import ColorPalette, { type ColorPaletteProps } from '../color-palette';
 import Popover, { defaultProps } from '../popover';
-import type { BasicConfig, PopoverProps } from '../index';
+import type { BasicConfig, CustomElement, PopoverProps } from '..';
 
 /** 颜色选择器
  * @since 2.0.0
@@ -82,7 +82,7 @@ function ColorPicker(props: ColorPickerProps) {
   );
 }
 
-customElement(
+customElement<ColorPickerProps>(
   'n-color-picker',
   {
     ...defaultProps,

@@ -3,6 +3,7 @@ import { passiveSupported } from '@moneko/common';
 import { css, cx } from '@moneko/css';
 import { customElement } from 'solid-element';
 import Input, { type InputProps, defaultInportProps } from '../input';
+import type { CustomElement } from '..';
 
 const style = css`
   /** 隐藏原生加减控件 */
@@ -133,7 +134,7 @@ function InputNumber(props: InputNumberProps) {
   );
 }
 
-customElement(
+customElement<InputNumberProps>(
   'n-input-number',
   {
     ...defaultInportProps,

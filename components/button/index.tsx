@@ -14,7 +14,7 @@ import { customElement } from 'solid-element';
 import { Dynamic } from 'solid-js/web';
 import { style } from './style';
 import theme from '../theme';
-import type { BasicConfig } from '../index';
+import type { BasicConfig, CustomElement } from '..';
 
 export interface ButtonProps
   extends Omit<JSX.ButtonHTMLAttributes<HTMLButtonElement>, 'type' | 'ref'> {
@@ -75,22 +75,16 @@ function Button(_: ButtonProps) {
     'class',
     'icon',
     'css',
-    'onClick',
-    'onAnimationEnd',
     'part',
-    'tabIndex',
     'disabled',
     'tag',
   ]);
   let ref: HTMLButtonElement | undefined;
   const [animating, setAnimating] = createSignal(false);
 
-  function handleClick(e: Event) {
+  function handleClick() {
     if (!local.disabled) {
       setAnimating(true);
-      if (isFunction(local.onClick)) {
-        local.onClick(e);
-      }
     }
   }
   function handleAnimationEnd() {
@@ -143,7 +137,7 @@ function Button(_: ButtonProps) {
   );
 }
 
-customElement(
+customElement<ButtonProps>(
   'n-button',
   {
     class: void 0,
@@ -159,7 +153,6 @@ customElement(
     link: void 0,
     danger: void 0,
     size: void 0,
-    onClick: void 0,
     icon: void 0,
     tag: void 0,
   },
