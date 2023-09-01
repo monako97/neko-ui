@@ -5,6 +5,8 @@
 [docs-url]: https://monako97.github.io/neko-ui
 [docs-tag]: https://cdn.staticaly.com/gh/monako97/cdn/main/image/202307281701250.svg
 [npm-url]: https://npmjs.org/package/neko-ui
+[cli-url]: https://www.npmjs.com/package/@moneko/cli
+[cli-tag]: https://nodei.co/npm/@moneko/cli.png
 [install-tag]: https://nodei.co/npm/neko-ui.png
 [version-tag]: https://img.shields.io/npm/v/neko-ui/latest.svg?logo=npm
 [size-tag]: https://packagephobia.com/badge?p=neko-ui@latest
@@ -50,6 +52,10 @@ yarn add neko-ui -S
   <n-button>按钮</n-button>
 </body>
 ```
+
+> 文档通过 @moneko/cli 生成
+
+[![@moneko/cli][cli-tag]][cli-url]
 
 ## 兼容性
 
