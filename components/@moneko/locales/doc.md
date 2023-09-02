@@ -1,0 +1,130 @@
+[TOC]
+
+# 文本国际化
+
+> 通过内置的虚拟模块 @app/locales 进行文本国际化;
+> 国际化内容依赖项目目录下的 `src/locales` 文件夹内容自动生成
+> 一个文件对应一种语言, 默认语言名称为文件名
+
+<div style="display:flex;gap: 16px;">
+
+<div>
+
+```treeview
+项目根目录
+`-- src
+    `-- locales
+        |-- zh-CN.ts
+        `-- en.ts
+```
+
+</div>
+
+```ts
+// zh-CN.ts
+import type { LocaleConfig } from '@app/locales';
+
+const en: LocaleConfig = {
+  title: '中文',
+  translation: {
+    home: '首页',
+  },
+};
+
+export default en;
+```
+
+```ts
+// en.ts
+import type { LocaleConfig } from '@app/locales';
+
+const en: LocaleConfig = {
+  language: 'en_US', // 自定义语言名称
+  title: '英文',
+  translation: {
+    home: 'Home',
+  },
+};
+
+export default en;
+```
+
+</div>
+
+## 使用
+
+> 或参考 [demo](https://github.com/monako97/demo-micro-app-solid)
+
+```ts
+import { setLang, t } from '@app/locales';
+
+console.log(t.home); // 首页
+setLang('en_US');
+console.log(t.home); // Home
+```
+
+## 语言列表
+
+!> 通过 `locales` 获取当前项目的语言列表
+
+```ts
+import { locales } from '@app/locales';
+
+console.log(locales);
+```
+
+## 插值字符串
+
+!> 通过 `interpolateString` 方法进行插值字符串转换; 替换字符串中的占位符 `${}` 为对应的值
+
+```ts
+import { interpolateString } from '@app/locales';
+
+interpolateString('`The length is ${val} characters!`', { val: 62 });
+```
+
+## 修改语言
+
+!> 使用 `setLang` 方法修改语言
+
+```ts
+import { setLang } from '@app/locales';
+
+setLang('zh_CN');
+```
+
+## 使用的语言
+
+!> 使用 `lang` 获取当前使用的语言
+
+```ts
+import { lang } from '@app/locales';
+
+console.log(lang);
+```
+
+## 映射
+
+!> 使用 `t` 获取对应字典的当前语言文本
+
+```ts
+import { t } from '@app/locales';
+
+console.log(t['password-fap']);
+```
+
+## 设置语种
+
+!> 通过 `setLocalizable` 设置或修改一个新的语种(滞后/更新), 可用于线上紧急更新文案
+
+```ts
+import { setLocalizable } from '@app/locales';
+
+setLocalizable('lang', {
+  language: 'zh-HK',
+  title: '繁体中文',
+});
+setLocalizable('t', {
+  'password-fap': '这是更新后的文本',
+});
+```

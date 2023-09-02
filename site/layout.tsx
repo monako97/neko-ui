@@ -23,7 +23,7 @@ function App() {
       <style>{styles}</style>
       <site-sider scheme={scheme()} />
       <main ref={box} class="site-doc-main">
-        <Show when={!getPathName(location).startsWith('@moneko')}>
+        <Show when={!getPathName(location).startsWith('@')}>
           <site-coverage />
         </Show>
         <div class="site-page-view">

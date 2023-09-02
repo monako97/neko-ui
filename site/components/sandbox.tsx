@@ -6,8 +6,6 @@ import * as NekoUI from 'neko-ui';
 import { customElement } from 'solid-element';
 import h from 'solid-js/h';
 import * as SolidWeb from 'solid-js/web';
-import htmlHelp from './html.md?raw';
-import jsxHelp from './jsx.md?raw';
 import type { CodeLiveProps } from 'n-code-live';
 
 const { createEffect, createMemo, createSignal, mergeProps, onMount } = Solid;
@@ -197,23 +195,6 @@ const codeNoShadowCss = css`
   }
 `;
 
-const noMargin = '.n-md-body {margin: 0;}';
-const portalCss = css`
-  .portal {
-    font-size: 13px;
-    max-inline-size: 50vi;
-  }
-`;
-const suffixCss = css`
-  .label {
-    border-radius: 50%;
-    padding: 0 5.5px;
-    background: var(--disable-bg);
-    margin-inline-start: 4px;
-    cursor: pointer;
-  }
-`;
-
 function $$jsx(type: Solid.Component, p: Solid.VoidProps, ...children: Solid.JSXElement[]) {
   return h(type, {
     ...p,
@@ -273,27 +254,6 @@ function Sandbox(_props: SandboxProps) {
     Object.keys(props.codes).map((k) => ({
       value: k,
       label: k.toLocaleUpperCase(),
-      suffix: () => (
-        <n-popover
-          arrow={true}
-          trigger="click"
-          css={suffixCss}
-          popup-css={portalCss}
-          content={
-            <n-md
-              style={{
-                display: 'block',
-                overflow: 'auto',
-                'max-block-size': '-webkit-fill-available',
-              }}
-              css={noMargin}
-              text={k === 'html' ? htmlHelp : jsxHelp}
-            />
-          }
-        >
-          <span class="label">?</span>
-        </n-popover>
-      ),
     })),
   );
 

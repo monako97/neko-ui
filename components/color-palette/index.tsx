@@ -162,9 +162,6 @@ function ColorPalette(_: ColorPaletteProps) {
     setDrag(true);
     changeColor(e);
   }
-  // function mouseMove(e: MouseEvent) {
-  //   changeColor(e);
-  // }
   function mouseUp() {
     setDrag(false);
   }

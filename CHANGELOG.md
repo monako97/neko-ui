@@ -2,8 +2,11 @@
 
 ## Last
 
+## [2.3.5](https://github.com/monako97/neko-ui/compare/2.3.0...2.3.5) (8-29-2023)
+
 ### 📚 Documentation
 
+- update ([a579ea8](https://github.com/monako97/neko-ui/commit/a579ea8a1db7cfd216bd35375ae1aa7bbc374246))
 - update ([63cc689](https://github.com/monako97/neko-ui/commit/63cc68921d32e95a103f1330edeb53a56c31d37b))
 - table 表格栏配置更新 ([b4bbe57](https://github.com/monako97/neko-ui/commit/b4bbe57bcafa0f64b1a0215e7f3e1df6f36cab67))
 

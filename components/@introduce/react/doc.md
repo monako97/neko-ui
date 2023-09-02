@@ -1,0 +1,49 @@
+[TOC]
+
+# 在 React 中使用, 通过 `addEventListener` 进行事件绑定
+
+当案例中的代码为
+
+```jsx
+<n-select
+  label="无后缀,无前缀"
+  options={[
+    { label: 'A', value: 'A' },
+    { label: 'B', value: 'B' },
+  ]}
+  onChange={(e) => {
+    console.log(e.detail);
+  }}
+/>
+```
+
+## React中对应的写法为
+
+```jsx
+import { useEffect, useRef } from 'react';
+import type { SelectElement } from 'neko-ui';
+
+function Demo() {
+  const el = useRef<SelectElement>(null);
+
+  useEffect(() => {
+    if (el.current) {
+      // 设置对象、数组类型的属性
+      el.current.options = [
+        { label: 'A', value: 'A' },
+        { label: 'B', value: 'B' },
+      ];
+      // 绑定事件
+      el.current?.addEventListener('change', (e) => {
+        const [val, item] = e.detail;
+
+        console.log(val, item);
+      });
+    }
+  }, []);
+  // 非函数、对象、数组类型的属性可以直接在jsx标签中设置
+  return <n-select ref={el} label="无后缀,无前缀" />;
+}
+
+export default Demo;
+```

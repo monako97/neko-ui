@@ -1,0 +1,39 @@
+[TOC]
+
+# 在 Solid.js 中可直接使用
+
+当案例中的代码为
+
+```jsx
+<n-select
+  label="无后缀,无前缀"
+  options={[
+    { label: 'A', value: 'A' },
+    { label: 'B', value: 'B' },
+  ]}
+  onChange={(e) => {
+    console.log(e.detail);
+  }}
+/>
+```
+
+## Solid.js 中对应的写法为
+
+```tsx
+function Demo() {
+  return (
+    <n-select
+      label="无后缀,无前缀"
+      options={[
+        { label: 'A', value: 'A' },
+        { label: 'B', value: 'B' },
+      ]}
+      onChange={(e) => {
+        console.log(e.detail);
+      }}
+    />
+  );
+}
+
+export default Demo;
+```
