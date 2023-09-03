@@ -4,7 +4,6 @@ about: 为这个项目提出一个想法
 title: ''
 labels: ''
 assignees: ''
-
 ---
 
 **Is your feature request related to a problem? Please describe.**
