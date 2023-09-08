@@ -278,7 +278,7 @@ export interface BaseMenuProps {
   /** 菜单展开时触发的方法 */
   onOpenChange?: (keys: (string | number)[]) => void;
   /** 选项数据 */
-  items: (string | MenuOption)[];
+  items?: (string | MenuOption)[];
   /** 自定义节点 'label'、'value'、'options' 的字段 */
   fieldNames?: BasicConfig['fieldName'];
   /** 不可用状态 */

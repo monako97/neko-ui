@@ -67,7 +67,7 @@ function Table(_: TableProps) {
       rowspan: col.rowspan,
     };
   }
-  function sum(arr: TableProps['data'], key: string) {
+  function sum(arr: Required<TableProps>['data'], key: string) {
     return arr.reduce(function (prev, curr) {
       const next = curr[key];
 
@@ -193,7 +193,7 @@ function Table(_: TableProps) {
                 {(col) => {
                   const _layout = getLayout(col);
                   const val = createMemo(() => {
-                    if (local.data.length && local.summary?.includes(col.originKey)) {
+                    if (local.data?.length && local.summary?.includes(col.originKey)) {
                       return sum(local.data, col.key);
                     }
                     return null;
@@ -240,9 +240,9 @@ export interface TableProps<T extends Record<string, Any> = Record<string, Any>>
    */
   emptyVal?: string;
   /** 栏配置 */
-  columns: Record<string, Column<T> | string>;
+  columns?: Record<string, Column<T> | string>;
   /** 数据源 */
-  data: T[];
+  data?: T[];
   /** 表格标题, 支持直接赋值给 'title' 属性, 或者通过[slot="title"]插槽 */
   title?: JSXElement | 'slot';
   /** 汇总行 */

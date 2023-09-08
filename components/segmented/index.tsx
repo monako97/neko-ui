@@ -30,7 +30,7 @@ export interface SegmentedProps {
   /** 默认值 */
   defaultValue?: string | number;
   /** 选项数据 */
-  options: (BaseOption | string | number)[];
+  options?: (BaseOption | string | number)[];
   /** 自定义节点 'label'、'value'、'options' 的字段 */
   fieldNames?: BasicConfig['fieldName'];
   /** 值修改时的回调方法 */

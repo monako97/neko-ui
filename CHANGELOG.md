@@ -4,6 +4,7 @@
 
 ### 📚 Documentation
 
+- 更新安全策略、问题模版 ([4f59fa2](https://github.com/monako97/neko-ui/commit/4f59fa22b360db2b7c64640d55e5479e89df9994))
 - 添加工程模块说明 ([fa69606](https://github.com/monako97/neko-ui/commit/fa696067efc9e0b30f322a19bb0cd306539790aa))
 
 ## [2.3.5](https://github.com/monako97/neko-ui/compare/2.3.0...2.3.5) (8-29-2023)

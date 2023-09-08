@@ -26,7 +26,7 @@ export interface RadioProps {
   /** 默认值 */
   defaultValue?: string;
   /** 选项数据 */
-  options: (RadioOption | string)[];
+  options?: (RadioOption | string)[];
   /** 自定义节点 'label'、'value'、'options' 的字段 */
   fieldNames?: BasicConfig['fieldName'];
   /** 值修改时的回调方法 */

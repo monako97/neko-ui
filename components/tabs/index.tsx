@@ -32,7 +32,7 @@ export interface TabsProps {
   /** 默认值 */
   defaultValue?: string | number;
   /** 选项数据 */
-  items: (TabOption | string)[];
+  items?: (TabOption | string)[];
   /** 标签页居中 */
   centered?: boolean;
   /** 自定义节点 'label'、'value'、'options' 的字段 */

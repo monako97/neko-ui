@@ -52,7 +52,7 @@ const moreCss = css`
 export interface AvatarGroupProps
   extends Omit<JSX.ButtonHTMLAttributes<HTMLDivElement>, 'onChange' | 'ref'> {
   /** 头像数据 */
-  data: Omit<AvatarProps, 'size'>[];
+  data?: Omit<AvatarProps, 'size'>[];
   /** 头像尺寸
    * @default 'normal'
    */
@@ -77,12 +77,14 @@ const defaultProps: AvatarGroupProps = {
 function AvatarGroup(_props: AvatarGroupProps) {
   const props = mergeProps(defaultProps, _props);
   const [local, other] = splitProps(props, ['data', 'maxCount', 'class', 'size', 'css']);
-  const showAvatar = createMemo(() => local.data.slice(0, local.maxCount));
+  const data = createMemo(() => local.data || []);
+  const showAvatar = createMemo(() => data().slice(0, local.maxCount));
   const more = createMemo(() => {
-    const len = local.data.length - (local.maxCount || local.data.length);
+    const _data = data();
+    const len = _data.length - (local.maxCount || _data.length);
 
     if (len > 0) {
-      return local.data.slice(-len);
+      return _data.slice(-len);
     }
     return [];
   });
