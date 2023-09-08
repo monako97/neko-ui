@@ -2,6 +2,10 @@
 
 ## Last
 
+### 🐛 Bug Fixes
+
+- 在html中使用时, 不应该有必选属性 ([b25a90b](https://github.com/monako97/neko-ui/commit/b25a90b1adedf8281bd0e003fc92044eaa6a3bed))
+
 ### 📚 Documentation
 
 - 更新安全策略、问题模版 ([4f59fa2](https://github.com/monako97/neko-ui/commit/4f59fa22b360db2b7c64640d55e5479e89df9994))

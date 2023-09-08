@@ -217,6 +217,7 @@ export interface MdProps extends JSX.HTMLAttributes<HTMLDivElement> {
    * @default false
    */
   notRender?: boolean;
+  children?: JSX.Element;
 }
 
 export type MdElement = CustomElement<MdProps>;
