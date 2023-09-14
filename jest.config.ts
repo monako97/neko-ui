@@ -2,8 +2,8 @@ import type { Config } from 'jest';
 
 const config: Config = {
   preset: '@moneko/solid',
-  coveragePathIgnorePatterns: ['prism.js'],
-  testPathIgnorePatterns: ['prism.js'],
+  coveragePathIgnorePatterns: ['prism.js', 'code', 'md'],
+  testPathIgnorePatterns: ['prism.js', 'code', 'md'],
   setupFilesAfterEnv: [
     '<rootDir>/test/setup.ts',
     '<rootDir>/test/canvas.ts',

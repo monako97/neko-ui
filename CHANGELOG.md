@@ -4,6 +4,7 @@
 
 ### 🐛 Bug Fixes
 
+- md children ([ab00335](https://github.com/monako97/neko-ui/commit/ab00335339da5458fc92a1fe52cc78594fa93a32))
 - 在html中使用时, 不应该有必选属性 ([b25a90b](https://github.com/monako97/neko-ui/commit/b25a90b1adedf8281bd0e003fc92044eaa6a3bed))
 
 ### 📚 Documentation

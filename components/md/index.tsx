@@ -5,12 +5,10 @@ import {
   Switch,
   createComponent,
   createEffect,
-  createMemo,
   mergeProps,
   onCleanup,
 } from 'solid-js';
 import { css, cx } from '@moneko/css';
-import marked from 'marked-completed';
 import { customElement } from 'solid-element';
 import { style } from './style';
 import '../code';
@@ -19,60 +17,30 @@ import theme from '../theme';
 import type { CustomElement } from '..';
 
 function MD(_props: MdProps) {
+  let ref: HTMLDivElement | undefined;
   const { baseStyle } = theme;
   const props = mergeProps(
     {
       pictureViewer: true,
-      lineNumber: true,
       text: '',
       tools: ['copy'],
       getAnchorContainer: () => window as unknown as HTMLElement,
     },
     _props,
   );
-  const renderer = new marked.Renderer();
+  const work = new Worker(new URL('./worker.ts', import.meta.url));
 
-  renderer.code = function (code: string, lang: string) {
-    if (lang === 'treeview') {
-      return `<n-tree data="${code}" />`;
+  work.addEventListener('message', function (e) {
+    if (ref) {
+      ref.innerHTML = e.data;
     }
-    const langLineNumber = this.options.langLineNumber;
-    const toolbar = !!this.options.langToolbar?.length;
-
-    return `<n-code class="n-code" toolbar="${toolbar}" lang="${lang}" line-number="${langLineNumber}">${encodeURIComponent(
-      code,
-    )}</n-code>`;
-  };
-  renderer.katexBlock = function (code: string) {
-    return `<n-katex display-mode="true">${code}</n-katex>`;
-  };
-  renderer.katexInline = function (code: string) {
-    return `<n-katex>${code}</n-katex>`;
-  };
-
-  let ref: HTMLDivElement | undefined;
-
-  const htmlString = createMemo(() => {
-    if (!props.text) {
-      return '';
-    }
-    if (props.pictureViewer) {
-      renderer.image = function (src: string | null, title: string | null, alt: string) {
-        return `<n-img role="img" src="${src}" alt="${alt}" ${
-          title ? `title="${title}"` : ''
-        }></n-img>`;
-      };
-    }
-    return marked(props.text, {
-      renderer: renderer,
+  });
+  createEffect(() => {
+    work.postMessage({
+      text: props.text,
       langLineNumber: props.lineNumber,
       langToolbar: props.tools,
-      headerPrefix: '# ',
-      breaks: true,
-      pedantic: false,
-      smartLists: true,
-      smartypants: true,
-      xhtml: true,
+      pictureViewer: props.pictureViewer,
     });
   });
   let list: HTMLAnchorElement[] = [];
@@ -159,6 +127,9 @@ function MD(_props: MdProps) {
       });
     });
   });
+  onCleanup(() => {
+    work.terminate();
+  });
 
   return (
     <>
@@ -176,13 +147,7 @@ function MD(_props: MdProps) {
           </article>
         </Match>
         <Match when={props.text}>
-          <article
-            ref={ref}
-            class={cx('n-md-box', props.class)}
-            part="box"
-            // eslint-disable-next-line solid/no-innerhtml
-            innerHTML={htmlString()}
-          />
+          <article ref={ref} class={cx('n-md-box', props.class)} part="box" />
         </Match>
       </Switch>
     </>
@@ -227,7 +192,7 @@ customElement<MdProps>(
   {
     class: void 0,
     pictureViewer: void 0,
-    lineNumber: void 0,
+    lineNumber: true,
     text: void 0,
     tools: void 0,
     getAnchorContainer: void 0,

@@ -5,14 +5,14 @@ import {
   createEffect,
   createSignal,
   mergeProps,
-  onMount,
+  onCleanup,
   untrack,
 } from 'solid-js';
-import { isFunction, setClipboard, throttle } from '@moneko/common';
+import { isFunction, setClipboard } from '@moneko/common';
 import { css, cx } from '@moneko/css';
 import { customElement } from 'solid-element';
 import { style } from './style';
-import Prism, { prismCss } from '../prism';
+import prismCss from '../prism/css';
 import theme from '../theme';
 import type { CustomElement } from '..';
 
@@ -42,7 +42,12 @@ function Code(props: CodeProps) {
   let codeEl: HTMLPreElement;
   const [code, setCode] = createSignal<string>('');
   const [hei, setHei] = createSignal(20);
-  const highlight = throttle(Prism.highlightElement, 16);
+  const work = new Worker(new URL('./worker.ts', import.meta.url));
+
+  work.addEventListener('message', function (e) {
+    codeEl.innerHTML = e.data;
+    setHei(codeEl.getBoundingClientRect().height - (props.toolbar ? 40 : 16));
+  });
 
   function copy() {
     setClipboard(untrack(code), codeEl);
@@ -62,9 +67,7 @@ function Code(props: CodeProps) {
             <button class="toolbar-copy" onClick={copy} />
           </div>
         </Show>
-        <code ref={codeEl} class={`language-${props.lang}`}>
-          {code()}
-        </code>
+        <code ref={codeEl} class={`language-${props.lang}`} />
       </pre>
     );
   }
@@ -91,17 +94,13 @@ function Code(props: CodeProps) {
     }
   });
   createEffect(() => {
-    if (codeEl) {
-      codeEl.textContent = code();
-      setHei(codeEl.getBoundingClientRect().height - (props.toolbar ? 40 : 16));
-      highlight(codeEl);
-    }
+    work.postMessage({
+      lang: props.lang,
+      code: code(),
+    });
   });
-  onMount(() => {
-    const timer = setTimeout(() => {
-      clearTimeout(timer);
-      highlight(codeEl);
-    }, 0);
+  onCleanup(() => {
+    work.terminate();
   });
 
   return (
