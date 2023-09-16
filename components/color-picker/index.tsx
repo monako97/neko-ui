@@ -6,13 +6,14 @@ import {
   mergeProps,
   onMount,
   splitProps,
+  untrack,
 } from 'solid-js';
 import { cx } from '@moneko/css';
 import { customElement } from 'solid-element';
 import { style } from './style';
-import ColorPalette, { type ColorPaletteProps } from '../color-palette';
+import '../color-palette';
 import Popover, { defaultProps } from '../popover';
-import type { BasicConfig, CustomElement, PopoverProps } from '..';
+import type { BasicConfig, ColorPaletteProps, CustomElement, PopoverProps } from '..';
 
 /** 颜色选择器
  * @since 2.0.0
@@ -47,19 +48,21 @@ function ColorPicker(props: ColorPickerProps) {
   ]);
   const [color, setColor] = createSignal<string | undefined>(local.defaultValue);
 
-  function handleChange(e: string) {
+  function handleChange(e: CustomEvent<string>) {
     if (local.value === void 0) {
-      setColor(e);
+      setColor(e.detail);
     }
-    local.onChange?.(e);
+    local.onChange?.(e.detail);
   }
 
-  createEffect(() => {
-    setColor(local.value);
-  });
   onMount(() => {
     if (local.value === void 0 && local.defaultValue) {
       setColor(local.defaultValue);
+    }
+  });
+  createEffect(() => {
+    if (local.value !== void 0 && local.value !== untrack(color)) {
+      setColor(local.value);
     }
   });
   const popupCss = createMemo(
@@ -72,7 +75,7 @@ function ColorPicker(props: ColorPickerProps) {
       {...others}
       arrow={true}
       trigger="click"
-      content={<ColorPalette value={color()} onChange={handleChange} />}
+      content={<n-color-palette value={color()} onChange={handleChange} />}
       popupClass={cx('color-picker', local.popupClass)}
       popupCss={popupCss()}
       css={css()}

@@ -4,6 +4,7 @@
 
 ### 📚 Documentation
 
+- fix katex ([95dd94e](https://github.com/monako97/neko-ui/commit/95dd94e09ea12b1c1b9596a01ec4b3743dd4bda9))
 - fix katex ([5c82c83](https://github.com/monako97/neko-ui/commit/5c82c83ae12bcff7d92c0f8b42dd50d46a9ddf3b))
 - fix ([9f5b866](https://github.com/monako97/neko-ui/commit/9f5b866fab056c22008e97f0e1b02490f3f0ce13))
 
