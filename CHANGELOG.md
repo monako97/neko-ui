@@ -1,6 +1,10 @@
 # Change log
 
-## Last
+## [2.4.0](https://github.com/monako97/neko-ui/compare/2.3.5...2.4.0) (9-14-2023)
+
+### ✨ Features
+
+- 使用 webworker 处理markdown及代码高亮 ([a530037](https://github.com/monako97/neko-ui/commit/a530037e7928525cd022c0c13c91da96cb689864))
 
 ### 🐛 Bug Fixes
 

@@ -10,11 +10,11 @@ const conf: Partial<ConfigType> = {
       },
       {
         tag: 'script',
-        src: 'https://cdn.staticaly.com/gh/monako97/cdn/main/npm/n-katex/1.0.7/umd/index.js',
+        src: 'https://cdn.statically.com/gh/monako97/cdn/main/npm/n-katex/1.0.7/umd/index.js',
       },
       {
         tag: 'script',
-        src: 'https://cdn.staticaly.com/gh/monako97/cdn/main/npm/n-code-live/1.0.6/umd/index.js',
+        src: 'https://cdn.statically.io/gh/monako97/cdn/main/npm/n-code-live/1.0.6/umd/index.js',
       },
     ],
   },
