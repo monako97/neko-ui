@@ -58,7 +58,7 @@
     "jest-environment-jsdom": "29.7.0",
     "marked-completed": "1.2.10",
     "n-code-live": "1.0.6",
-    "n-katex": "1.0.7",
+    "n-katex": "1.0.8",
     "shadow-dom-testing-library": "1.11.0",
     "solid-element": "1.7.1",
     "solid-js": "1.7.11",
