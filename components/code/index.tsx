@@ -5,7 +5,6 @@ import {
   createEffect,
   createSignal,
   mergeProps,
-  onCleanup,
   untrack,
 } from 'solid-js';
 import { isFunction, setClipboard } from '@moneko/common';
@@ -13,6 +12,7 @@ import { css, cx } from '@moneko/css';
 import { customElement } from 'solid-element';
 import { style } from './style';
 import prismCss from '../prism/css';
+import Prism from '../prism/prism.js';
 import theme from '../theme';
 import type { CustomElement } from '..';
 
@@ -42,12 +42,6 @@ function Code(props: CodeProps) {
   let codeEl: HTMLPreElement;
   const [code, setCode] = createSignal<string>('');
   const [hei, setHei] = createSignal(20);
-  const work = new Worker(new URL('./worker.ts', import.meta.url));
-
-  work.addEventListener('message', function (e) {
-    codeEl.innerHTML = e.data;
-    setHei(codeEl.getBoundingClientRect().height - (props.toolbar ? 40 : 16));
-  });
 
   function copy() {
     setClipboard(untrack(code), codeEl);
@@ -79,7 +73,27 @@ function Code(props: CodeProps) {
       props.onChange(c);
     }
   }
+  function update(e: { data: string }) {
+    codeEl.innerHTML = e.data;
+    setHei(codeEl.getBoundingClientRect().height - (props.toolbar ? 40 : 16));
+  }
+  function postMessage(opt: { lang?: string; code?: string }) {
+    update({
+      data: Prism.highlight(opt.code, Prism.languages[opt.lang || 'javascript'], opt.lang),
+    });
+  }
 
+  // const work = new Worker(new URL('./worker.ts', import.meta.url));
+
+  // work.addEventListener('message', update);
+
+  // work.postMessage({
+  //   lang: props.lang,
+  //   code: code(),
+  // });
+  // onCleanup(() => {
+  //   work.terminate();
+  // });
   createEffect(() => {
     if (props.code) {
       const _code = props.code.replace(/^\n/, '');
@@ -94,13 +108,10 @@ function Code(props: CodeProps) {
     }
   });
   createEffect(() => {
-    work.postMessage({
+    postMessage({
       lang: props.lang,
       code: code(),
     });
-  });
-  onCleanup(() => {
-    work.terminate();
   });
 
   return (

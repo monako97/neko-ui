@@ -10,10 +10,10 @@ renderer.katexBlock = function (code: string) {
 renderer.katexInline = function (code: string) {
   return `<n-katex>${code}</n-katex>`;
 };
-function img(src: string | null, title: string | null, alt: string) {
+function img(src: string, title: string, alt: string) {
   return `<img role="img" src="${src}" alt="${alt}" ${title ? `title="${title}"` : ''}></img>`;
 }
-function nImg(src: string | null, title: string | null, alt: string) {
+function nImg(src: string, title: string, alt: string) {
   return `<n-img role="img" src="${src}" alt="${alt}" ${title ? `title="${title}"` : ''}></n-img>`;
 }
 self.addEventListener(

@@ -2,6 +2,10 @@
 
 ## Last
 
+### 📦 Code Refactoring
+
+- 颜色选择器弹出面板使用web component ([18792cb](https://github.com/monako97/neko-ui/commit/18792cbd38590b41c3cd42d99d54d779cd230f9d))
+
 ### 📚 Documentation
 
 - fix katex ([95dd94e](https://github.com/monako97/neko-ui/commit/95dd94e09ea12b1c1b9596a01ec4b3743dd4bda9))

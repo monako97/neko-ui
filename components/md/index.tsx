@@ -9,6 +9,7 @@ import {
   onCleanup,
 } from 'solid-js';
 import { css, cx } from '@moneko/css';
+import marked from 'marked-completed';
 import { customElement } from 'solid-element';
 import { style } from './style';
 import '../code';
@@ -16,8 +17,24 @@ import '../img';
 import theme from '../theme';
 import type { CustomElement } from '..';
 
+function katexBlock(code: string) {
+  return `<n-katex display-mode="true">${code}</n-katex>`;
+}
+function katexInline(code: string) {
+  return `<n-katex>${code}</n-katex>`;
+}
+function img(src: string, title: string, alt: string) {
+  return `<img role="img" src="${src}" alt="${alt}" ${title ? `title="${title}"` : ''}></img>`;
+}
+function nImg(src: string, title: string, alt: string) {
+  return `<n-img role="img" src="${src}" alt="${alt}" ${title ? `title="${title}"` : ''}></n-img>`;
+}
 function MD(_props: MdProps) {
   let ref: HTMLDivElement | undefined;
+  const renderer = new marked.Renderer();
+
+  renderer.katexBlock = katexBlock;
+  renderer.katexInline = katexInline;
   const { baseStyle } = theme;
   const props = mergeProps(
     {
@@ -28,15 +45,61 @@ function MD(_props: MdProps) {
     },
     _props,
   );
-  const work = new Worker(new URL('./worker.ts', import.meta.url));
 
-  work.addEventListener('message', function (e) {
+  function update(e: { data: string }) {
     if (ref) {
       ref.innerHTML = e.data;
     }
-  });
+  }
+  function postMessage(opt: {
+    text: string;
+    pictureViewer?: boolean;
+    langToolbar?: string[];
+    langLineNumber?: boolean;
+  }) {
+    const { text, pictureViewer, langToolbar, ...options } = opt;
+
+    renderer.image = pictureViewer ? nImg : img;
+    const toolbar = !!langToolbar?.length;
+
+    renderer.code = function (code: string, lang: string) {
+      if (lang === 'treeview') {
+        return `<n-tree data="${code}" />`;
+      }
+
+      return `<n-code class="n-code" toolbar="${toolbar}" lang="${lang}" ${
+        options.langLineNumber ? 'line-number="true"' : ''
+      }>${encodeURIComponent(code)}</n-code>`;
+    };
+
+    update({
+      data: marked(text, {
+        renderer: renderer,
+        langToolbar: langToolbar,
+        headerPrefix: '# ',
+        breaks: true,
+        pedantic: false,
+        smartLists: true,
+        smartypants: true,
+        xhtml: true,
+        ...options,
+      }),
+    });
+  }
+  // const work = new Worker(new URL('./worker.ts', import.meta.url));
+
+  // work.addEventListener('message', update);
+  // work.postMessage({
+  //   text: props.text,
+  //   langLineNumber: props.lineNumber,
+  //   langToolbar: props.tools,
+  //   pictureViewer: props.pictureViewer,
+  // });
+  // onCleanup(() => {
+  //   work.terminate();
+  // });
   createEffect(() => {
-    work.postMessage({
+    postMessage({
       text: props.text,
       langLineNumber: props.lineNumber,
       langToolbar: props.tools,
@@ -126,9 +189,6 @@ function MD(_props: MdProps) {
         e.removeEventListener('click', handleAnchor);
       });
     });
-  });
-  onCleanup(() => {
-    work.terminate();
   });
 
   return (
