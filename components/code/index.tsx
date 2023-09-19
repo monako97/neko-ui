@@ -78,8 +78,13 @@ function Code(props: CodeProps) {
     setHei(codeEl.getBoundingClientRect().height - (props.toolbar ? 40 : 16));
   }
   function postMessage(opt: { lang?: string; code?: string }) {
+    const _lang = opt.lang || 'markup';
+
+    if (/^diff-([\w-]+)/i.test(_lang)) {
+      Prism.languages[_lang] = Prism.languages.diff;
+    }
     update({
-      data: Prism.highlight(opt.code, Prism.languages[opt.lang || 'javascript'], opt.lang),
+      data: Prism.highlight(opt.code, Prism.languages[_lang], _lang),
     });
   }
 
