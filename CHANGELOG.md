@@ -1,5 +1,11 @@
 # Change log
 
+## Last
+
+### 🐛 Bug Fixes
+
+- github actions ([af86d9d](https://github.com/monako97/neko-ui/commit/af86d9d9bd3926c913d540720ab23fb5f89a31af))
+
 ## [2.4.3](https://github.com/monako97/neko-ui/compare/2.4.0...2.4.3) (9-19-2023)
 
 ### ✨ Features
