@@ -4,6 +4,7 @@
 
 ### 🐛 Bug Fixes
 
+- github actions ([29a5a6d](https://github.com/monako97/neko-ui/commit/29a5a6d91dcae3d9fc10fb0a60ec40167a789e32))
 - github actions ([af86d9d](https://github.com/monako97/neko-ui/commit/af86d9d9bd3926c913d540720ab23fb5f89a31af))
 
 ## [2.4.3](https://github.com/monako97/neko-ui/compare/2.4.0...2.4.3) (9-19-2023)
