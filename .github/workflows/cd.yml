@@ -4,7 +4,8 @@ on:
   push:
     branches:
       - main
-      - web-component
+    tags:
+      - v2.*
 
 permissions:
   contents: read
