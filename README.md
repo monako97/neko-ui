@@ -1,9 +1,9 @@
 [home-url]: https://monako97.github.io/neko-ui
-[home-tag]: https://cdn.staticaly.com/gh/monako97/cdn/main/image/202307281703208.svg
-[jetbrains-tag]: https://cdn.staticaly.com/gh/monako97/cdn/main/image/202307281758090.svg
+[home-tag]: https://cdn.statically.io/gh/monako97/cdn/main/image/202307281703208.svg
+[jetbrains-tag]: https://cdn.statically.io/gh/monako97/cdn/main/image/202307281758090.svg
 [jetbrains-url]: https://www.jetbrains.com/?from=monako
 [docs-url]: https://monako97.github.io/neko-ui
-[docs-tag]: https://cdn.staticaly.com/gh/monako97/cdn/main/image/202307281701250.svg
+[docs-tag]: https://cdn.statically.io/gh/monako97/cdn/main/image/202307281701250.svg
 [npm-url]: https://npmjs.org/package/neko-ui
 [cli-url]: https://www.npmjs.com/package/@moneko/cli
 [cli-tag]: https://nodei.co/npm/@moneko/cli.png
@@ -57,11 +57,18 @@ yarn add neko-ui -S
 
 [![@moneko/cli][cli-tag]][cli-url]
 
-## 兼容性
+## 支持浏览器
 
-| [![ie-image](https://raw.githubusercontent.com/alrra/browser-logos/master/src/edge/edge_24x24.png)](http://godban.github.io/browsers-support-badges/)<br>IE / Edge | [![firefox-image](https://raw.githubusercontent.com/alrra/browser-logos/master/src/firefox/firefox_24x24.png)](http://godban.github.io/browsers-support-badges/)<br>Firefox | [![chrome-image](https://raw.githubusercontent.com/alrra/browser-logos/master/src/chrome/chrome_24x24.png)](http://godban.github.io/browsers-support-badges/)<br>Chrome | [![safari-image](https://raw.githubusercontent.com/alrra/browser-logos/master/src/safari/safari_24x24.png)](http://godban.github.io/browsers-support-badges/)<br>Safari | [![electron-image](https://raw.githubusercontent.com/alrra/browser-logos/master/src/electron/electron_24x24.png)](http://godban.github.io/browsers-support-badges/)<br>Electron |
-| ------------------------------------------------------------------------------------------------------------------------------------------------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| IE11, Edge                                                                                                                                                         | last 2 versions                                                                                                                                                             | last 2 versions                                                                                                                                                         | last 2 versions                                                                                                                                                         | last 2 versions                                                                                                                                                                 |
+[edge]: https://cdn.statically.io/gh/alrra/browser-logos/main/src/edge/edge.svg
+[chrome]: https://cdn.statically.io/gh/alrra/browser-logos/main/src/chrome/chrome.svg
+[firefox]: https://cdn.statically.io/gh/alrra/browser-logos/main/src/firefox/firefox.svg
+[safari]: https://cdn.statically.io/gh/alrra/browser-logos/main/src/safari/safari.svg
+[opera]: https://cdn.statically.io/gh/alrra/browser-logos/main/src/opera/opera.svg
+[samsung]: https://cdn.statically.io/gh/alrra/browser-logos/main/src/samsung-internet/samsung-internet.svg
+
+| ![Edge][edge] | ![Firefox][firefox] | ![Chrome][chrome] | ![Safari][safari] | ![Samsung][samsung] | ![Opera][opera] |
+| :-----------: | :-----------------: | :---------------: | :---------------: | :-----------------: | :-------------: |
+|   Edge 16+    |         70+         |        78+        |       10.1+       |        8.2+         |       48+       |
 
 ![backer][opencollective-backer]
 ![sponsor][opencollective-sponsor]

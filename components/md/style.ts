@@ -141,11 +141,13 @@ export const style = css`
     text-shadow: 0 1px var(--primary-shadow);
   }
 
-  .n-md-toc a[href^='http']::after,
-  .n-md-toc a[href^='\/\/']::after,
-  .n-md-body table a[href^='http']::after {
-    content: ' ⎋';
-    opacity: 0.3;
+  .n-md-toc a[href^='http'],
+  .n-md-toc a[href^='\/\/'],
+  .n-md-body table a[href^='http'] {
+    &:not(:has(img, n-img))::after {
+      content: ' ⎋';
+      opacity: 0.3;
+    }
   }
 
   a[href^='mailto:']::after {
@@ -175,6 +177,12 @@ export const style = css`
 
   a:hover::before {
     transform: scaleX(1);
+  }
+
+  th img[src*='browser-logos'] {
+    display: block;
+    inline-size: 32px;
+    block-size: 32px;
   }
 
   h1::before,

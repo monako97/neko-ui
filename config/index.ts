@@ -6,7 +6,24 @@ const conf: Partial<ConfigType> = {
     tags: [
       {
         tag: 'script',
-        src: 'https://cdn.statically.io/gh/monako97/cdn/main/npm/%40webcomponents/webcomponentsjs/2.8.0/webcomponents-loader.js',
+        textContent: `if (!Element.prototype.replaceChildren) {
+          Element.prototype.replaceChildren = function() {
+              for(var _len = arguments.length, newChildren = new Array(_len), _key = 0; _key < _len; _key++){
+                  newChildren[_key] = arguments[_key];
+              }
+              var _this = this;
+              while(this.firstChild){
+                  this.removeChild(this.firstChild);
+              }
+              newChildren.forEach(function(child) {
+                  if (typeof child === "string") {
+                      _this.appendChild(document.createTextNode(child));
+                  } else {
+                      _this.appendChild(child);
+                  }
+              });
+          };
+      }`,
       },
       {
         tag: 'script',
@@ -14,7 +31,7 @@ const conf: Partial<ConfigType> = {
       },
       {
         tag: 'script',
-        src: 'https://cdn.statically.io/gh/monako97/cdn/main/npm/n-code-live/1.0.6/umd/index.js',
+        src: 'https://cdn.statically.io/gh/monako97/cdn/main/npm/n-code-live/1.0.7/umd/index.js',
       },
     ],
   },
@@ -43,7 +60,6 @@ if (process.env.NODE_ENV === 'production') {
     {
       loader: 'babel-loader',
       options: {
-        cacheDirectory: true,
         plugins: ['@moneko/css/babel'],
       },
     },

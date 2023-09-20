@@ -78,6 +78,7 @@ function Code(props: CodeProps) {
     setHei(codeEl.getBoundingClientRect().height - (props.toolbar ? 40 : 16));
   }
   function postMessage(opt: { lang?: string; code?: string }) {
+    if (!opt.code) return;
     const _lang = opt.lang || 'markup';
 
     if (/^diff-([\w-]+)/i.test(_lang)) {
