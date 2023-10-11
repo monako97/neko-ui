@@ -1,5 +1,11 @@
 # Change log
 
+## [2.5.0](https://github.com/monako97/neko-ui/compare/2.4.4...2.5.0) (10-11-2023)
+
+### ✨ Features
+
+- 支持按需引入 ([3e37948](https://github.com/monako97/neko-ui/commit/3e37948010ab65893151ba83bd9b7e6f000584a6))
+
 ## [2.4.4](https://github.com/monako97/neko-ui/compare/2.4.3...2.4.4) (9-21-2023)
 
 ### 💎 Styles

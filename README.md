@@ -55,6 +55,8 @@ yarn add neko-ui -S
 
 ## 按需引入
 
+### 手动方式
+
 ```jsx
 // 按需引入
 import 'neko-ui/es/button';
