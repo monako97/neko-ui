@@ -1,4 +1,4 @@
-import { For, type JSX, Show, createComponent, createMemo, mergeProps } from 'solid-js';
+import { For, Show, createComponent, createMemo, mergeProps } from 'solid-js';
 import { css, cx } from '@moneko/css';
 import { customElement } from 'solid-element';
 import theme from '../theme';
@@ -76,7 +76,7 @@ const style = css`
   }
 `;
 
-export interface SkeletonProps extends Omit<JSX.HTMLAttributes<HTMLDivElement>, 'title'> {
+export interface SkeletonProps {
   /** 自定义样式表 */
   css?: string;
   /** 自定义类名 */

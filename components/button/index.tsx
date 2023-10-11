@@ -1,5 +1,4 @@
 import {
-  type JSX,
   Show,
   createComponent,
   createEffect,
@@ -16,8 +15,7 @@ import { style } from './style';
 import theme from '../theme';
 import type { BasicConfig, CustomElement } from '..';
 
-export interface ButtonProps
-  extends Omit<JSX.ButtonHTMLAttributes<HTMLButtonElement>, 'type' | 'ref'> {
+export interface ButtonProps {
   /** 自定义类名 */
   class?: string;
   /** 自定义样式表 */
@@ -52,8 +50,7 @@ export interface ButtonProps
   size?: BasicConfig['size'];
   /** 按钮前面添加一个图标 */
   icon?: (() => JSX.Element) | JSX.Element;
-  /** 按键抬起 */
-  onKeyUp?(e: KeyboardEvent): void;
+  children?: JSX.Element;
 }
 export type ButtonElement = CustomElement<ButtonProps>;
 
@@ -75,7 +72,6 @@ function Button(_: ButtonProps) {
     'class',
     'icon',
     'css',
-    'part',
     'disabled',
     'tag',
   ]);

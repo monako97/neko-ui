@@ -1,11 +1,11 @@
-import { type JSX, createComponent, createEffect, createMemo, mergeProps } from 'solid-js';
+import { createComponent, createEffect, createMemo, mergeProps } from 'solid-js';
 import { css, cx } from '@moneko/css';
 import { customElement } from 'solid-element';
 import { Dynamic } from 'solid-js/web';
 import theme from '../theme';
 import type { CustomElement } from '..';
 
-export interface TypographyProps extends Omit<JSX.HTMLAttributes<HTMLDivElement>, 'onChange'> {
+export interface TypographyProps {
   /** 自定义类名 */
   class?: string;
   /** 自定义样式表 */
@@ -24,6 +24,8 @@ export interface TypographyProps extends Omit<JSX.HTMLAttributes<HTMLDivElement>
   tag?: string;
   /** 禁用 */
   disabled?: boolean;
+  children?: JSX.Element;
+  style?: Record<string, string | number>;
 }
 
 function Typography(props: TypographyProps) {

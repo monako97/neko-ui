@@ -4,3 +4,9 @@ declare module 'neko-ui' {
 }
 
 declare const SolidJS: unknown;
+
+namespace JSX {
+  export type Element = Any;
+}
+
+declare type JSXElement = JSX.Element;

@@ -1,6 +1,5 @@
 import {
   For,
-  type JSXElement,
   Show,
   createComponent,
   createEffect,
@@ -16,6 +15,7 @@ import { css, cx } from '@moneko/css';
 import { customElement } from 'solid-element';
 import { addCss, btnCss, style } from './style';
 import { FieldName } from '../basic-config';
+import '../button';
 import getOptions from '../get-options';
 import theme from '../theme';
 import type { BaseOption, BasicConfig, ButtonElement, CustomElement } from '..';
@@ -49,14 +49,14 @@ export interface TabsProps {
   onEdit?: (type: 'add' | 'remove', item: TabOption, e: Event) => void;
   /** 给标签页左右添加的附加内容 */
   extra?: {
-    left?: JSXElement | (() => JSXElement | (() => JSXElement));
-    right?: JSXElement | (() => JSXElement | (() => JSXElement));
+    left?: JSX.Element | (() => JSX.Element | (() => JSX.Element));
+    right?: JSX.Element | (() => JSX.Element | (() => JSX.Element));
   };
 }
 
 export interface TabOption extends Omit<BaseOption, 'options'> {
   /** 内容 */
-  content?: JSXElement | (() => JSXElement | (() => JSXElement));
+  content?: JSX.Element | (() => JSX.Element | (() => JSX.Element));
   /** 标签可关闭 */
   closable?: boolean;
 }
@@ -217,15 +217,15 @@ function Tabs(props: TabsProps) {
     return current()?.content;
   });
   const left = createMemo(() =>
-    isFunction(props.extra?.left) ? (props.extra!.left() as JSXElement) : props.extra?.left,
+    isFunction(props.extra?.left) ? (props.extra!.left() as JSX.Element) : props.extra?.left,
   );
   const right = createMemo(() =>
-    isFunction(props.extra?.right) ? (props.extra!.right() as JSXElement) : props.extra?.right,
+    isFunction(props.extra?.right) ? (props.extra!.right() as JSX.Element) : props.extra?.right,
   );
   const content = createMemo(() => {
     const _content = current()?.content;
 
-    return isFunction(_content) ? (_content() as JSXElement) : _content;
+    return isFunction(_content) ? (_content() as JSX.Element) : _content;
   });
 
   function onAnimationEnd() {

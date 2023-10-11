@@ -1,4 +1,4 @@
-import { type BaseOption, type BasicConfig, FieldName } from '..';
+import { type BaseOption, type BasicConfig, FieldName } from '../basic-config';
 
 function getOptions<T extends BaseOption = BaseOption>(
   list?: (T | string | number)[],

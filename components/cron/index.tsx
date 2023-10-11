@@ -1,5 +1,4 @@
 import {
-  type JSX,
   Show,
   batch,
   createComponent,
@@ -18,9 +17,14 @@ import Month from './month';
 import Second from './second';
 import Week from './week';
 import Year from './year';
+import '../button';
+import '../input-number';
+import '../radio';
+import '../select';
+import '../tabs';
 import type { BaseOption, CustomElement, TabOption } from '..';
 
-export interface CronProps extends Omit<JSX.HTMLAttributes<HTMLDivElement>, 'onChange'> {
+export interface CronProps {
   /** 自定义类名 */
   class?: string;
   /** 自定义样式表 */

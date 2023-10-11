@@ -1,5 +1,4 @@
 import {
-  type JSX,
   Match,
   Switch,
   createEffect,
@@ -14,8 +13,7 @@ import { style } from './style';
 import theme from '../theme';
 import type { BasicConfig, CustomElement } from '../index';
 
-export interface AvatarProps
-  extends Omit<JSX.ButtonHTMLAttributes<HTMLDivElement>, 'onChange' | 'ref' | 'children'> {
+export interface AvatarProps {
   /** 头像 */
   src?: string;
   /** 替代文本 */

@@ -1,4 +1,4 @@
-import { type JSXElement, createComponent, createEffect, mergeProps } from 'solid-js';
+import { createComponent, createEffect, mergeProps } from 'solid-js';
 import { customElement, noShadowDOM } from 'solid-element';
 import theme, { ColorScheme } from '../theme';
 import type { CustomElement } from '..';
@@ -28,7 +28,7 @@ export interface ProviderProps {
    */
   scheme?: keyof typeof ColorScheme;
   /** 包裹的子项 */
-  children?: JSXElement;
+  children?: JSX.Element;
   /** 响应 scheme 变化 */
   onScheme?(scheme: keyof typeof ColorScheme): void;
 }

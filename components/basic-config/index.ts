@@ -1,5 +1,3 @@
-import type { JSXElement } from 'solid-js';
-
 export interface BasicConfig {
   /** 组件状态
    * @default 'normal'
@@ -39,11 +37,11 @@ export enum Status {
 
 export interface BaseOption {
   /** 图标 */
-  icon?: JSXElement;
+  icon?: JSX.Element;
   /** 值 */
   value?: string | number;
   /** 标题 */
-  label?: JSXElement;
+  label?: JSX.Element;
   /** 不可用状态 */
   disabled?: boolean;
   /** 自定义类名 */

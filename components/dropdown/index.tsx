@@ -10,6 +10,7 @@ import {
 import { isFunction } from '@moneko/common';
 import { customElement } from 'solid-element';
 import Empty from '../empty';
+import '../menu';
 import Popover, { defaultProps as popoverProps } from '../popover';
 import type { CustomElement, MenuMultipleProps, MenuOption, MenuProps, PopoverProps } from '..';
 

@@ -1,9 +1,9 @@
-import { For, type JSX, Show, createMemo, mergeProps, splitProps } from 'solid-js';
+import { For, Show, createMemo, mergeProps, splitProps } from 'solid-js';
 import { css, cx } from '@moneko/css';
 import { customElement } from 'solid-element';
+import '../avatar';
 import '../popover';
-import type { BasicConfig, CustomElement } from '..';
-import type { AvatarProps } from '../avatar';
+import type { AvatarProps, BasicConfig, CustomElement } from '..';
 
 const style = css`
   .group {
@@ -49,8 +49,7 @@ const moreCss = css`
   }
 `;
 
-export interface AvatarGroupProps
-  extends Omit<JSX.ButtonHTMLAttributes<HTMLDivElement>, 'onChange' | 'ref'> {
+export interface AvatarGroupProps {
   /** 头像数据 */
   data?: Omit<AvatarProps, 'size'>[];
   /** 头像尺寸

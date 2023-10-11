@@ -46,11 +46,50 @@ yarn add neko-ui -S
 
 ```html
 <!-- 引入 CDN 资源 -->
-<script src="https://cdn.jsdelivr.net/npm/neko-ui/lib/index.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/neko-ui/umd/index.js"></script>
 <!-- 使用 -->
 <body>
   <n-button>按钮</n-button>
 </body>
+```
+
+## 按需引入
+
+```jsx
+// 按需引入
+import 'neko-ui/es/button';
+import 'neko-ui/es/date-picker';
+// 全量引入
+// import 'neko-ui';
+
+// 使用
+function Demo() {
+  return (
+    <div>
+      <n-button>按钮</n-button>
+      <n-date-picker></n-date-picker>
+    </div>
+  );
+}
+```
+
+### 使用 @moneko
+
+```typescript
+// config/index.ts
+import type { ConfigType } from '@moneko/core';
+
+const conf: Partial<ConfigType> = {
+  // 按需引入
+  importOnDemand: {
+    'neko-ui': {
+      transform: 'es/${member}',
+      memberTransformers: ['dashed_case'],
+    },
+  },
+};
+
+export default conf;
 ```
 
 > 文档通过 @moneko/cli 生成

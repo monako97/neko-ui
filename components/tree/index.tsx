@@ -1,6 +1,5 @@
 import {
   For,
-  type JSXElement,
   createComponent,
   createEffect,
   createMemo,
@@ -39,7 +38,7 @@ export interface TreeBaseProp {
   /** 双击行时的回调函数 */
   onRowDoubleClick?: (e: MouseEvent, key: string, item: TreeData) => void;
   /** 自定义渲染行 */
-  renderRow?: (item: TreeData, title: JSXElement, subTitle?: JSXElement) => JSXElement[];
+  renderRow?: (item: TreeData, title: JSX.Element, subTitle?: JSX.Element) => JSX.Element[];
   /** 开启此选项支持 `JSONSchema`
    * @default false
    */
@@ -207,13 +206,13 @@ function Tree(
     handleChange(item.key);
     _.onRowClick?.(e, item.key as never, item as TreeData<never>);
   }
-  function renderItem(item: TreeData, title: JSXElement, subTitle?: JSXElement): JSXElement[] {
+  function renderItem(item: TreeData, title: JSX.Element, subTitle?: JSX.Element): JSX.Element[] {
     const row = _.renderRow?.(item, title, subTitle) || [title, subTitle];
 
     return rtl() ? row.reverse() : row;
   }
 
-  function renderTreeRow(list: TreeData[], depth = 0): JSXElement {
+  function renderTreeRow(list: TreeData[], depth = 0): JSX.Element {
     return (
       <For each={list}>
         {(item) => {

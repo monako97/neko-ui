@@ -1,4 +1,3 @@
-import type { JSXElement } from 'solid-js';
 import { selectCss, selectPortalCss } from './style';
 import type { CronData } from '.';
 import type { BaseOption } from 'neko-ui';
@@ -6,7 +5,7 @@ import type { BaseOption } from 'neko-ui';
 type PeriodProps = {
   start: CronData['start'];
   end: CronData['end'];
-  label: [JSXElement, JSXElement, JSXElement];
+  label: [JSX.Element, JSX.Element, JSX.Element];
   options: (string | number | BaseOption)[];
   onChange(type: 'start' | 'end', value: number): void;
   validate(type: 'start' | 'end', v: number): boolean;

@@ -1,6 +1,5 @@
 import {
   For,
-  type JSXElement,
   Match,
   Show,
   Switch,
@@ -17,10 +16,10 @@ import { isFunction } from '@moneko/common';
 import { css, cx } from '@moneko/css';
 import { customElement } from 'solid-element';
 import { style } from './style';
-import { type BaseOption, type BasicConfig, FieldName } from '../basic-config';
+import { FieldName } from '../basic-config';
 import getOptions from '../get-options';
 import theme from '../theme';
-import type { CustomElement } from '..';
+import type { BaseOption, BasicConfig, CustomElement } from '..';
 
 function Menu(props: MenuProps | MenuMultipleProps) {
   let ref: HTMLDivElement | undefined;
@@ -316,7 +315,7 @@ export interface MenuMultipleProps extends BaseMenuProps {
 /** 菜单选项 */
 export interface MenuOption extends Omit<BaseOption, 'children' | 'options'> {
   /** 图标 */
-  icon?: JSXElement;
+  icon?: JSX.Element;
   /** 内置类型(状态) */
   type?: 'primary' | 'success' | 'error' | 'warning';
   /** 自定义颜色 */

@@ -1,12 +1,4 @@
-import {
-  type JSX,
-  Show,
-  createComponent,
-  createEffect,
-  createSignal,
-  mergeProps,
-  untrack,
-} from 'solid-js';
+import { Show, createComponent, createEffect, createSignal, mergeProps, untrack } from 'solid-js';
 import { isFunction, setClipboard } from '@moneko/common';
 import { css, cx } from '@moneko/css';
 import { customElement } from 'solid-element';
@@ -16,7 +8,7 @@ import Prism from '../prism/prism.js';
 import theme from '../theme';
 import type { CustomElement } from '..';
 
-export interface CodeProps extends Omit<JSX.HTMLAttributes<HTMLDivElement>, 'onChange'> {
+export interface CodeProps {
   /** 自定义类名 */
   class?: string;
   /** 自定义样式表 */
@@ -33,6 +25,7 @@ export interface CodeProps extends Omit<JSX.HTMLAttributes<HTMLDivElement>, 'onC
   toolbar?: boolean;
   /** 编辑修改时的回调 */
   onChange?: (code: string) => void;
+  children?: JSX.Element;
 }
 
 export type CodeElement = CustomElement<CodeProps>;

@@ -1,6 +1,7 @@
-import { type JSX, Show } from 'solid-js';
+import { Show } from 'solid-js';
 import { css } from '@moneko/css';
 import { customElement } from 'solid-element';
+import '../typography';
 import type { CustomElement } from '..';
 
 const style = css`
@@ -19,13 +20,14 @@ const style = css`
   }
 `;
 
-export interface EmptyProps extends JSX.HTMLAttributes<HTMLDivElement> {
+export interface EmptyProps {
   /** 自定义样式表 */
   css?: string;
   /** 自定义类名 */
   class?: string;
   /** 描述 */
   label?: JSX.Element;
+  style?: Record<string, string | number>;
 }
 export type EmptyElement = CustomElement<EmptyProps>;
 

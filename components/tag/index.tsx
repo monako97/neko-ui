@@ -1,6 +1,4 @@
 import {
-  type JSX,
-  type JSXElement,
   Show,
   createComponent,
   createEffect,
@@ -16,7 +14,7 @@ import { style } from './style';
 import theme, { generateTheme } from '../theme';
 import type { CustomElement } from '..';
 
-export interface TagProps extends Omit<JSX.HTMLAttributes<HTMLSpanElement>, 'onChange'> {
+export interface TagProps {
   /** 自定义样式表 */
   css?: string;
   /** 自定义类名 */
@@ -24,11 +22,11 @@ export interface TagProps extends Omit<JSX.HTMLAttributes<HTMLSpanElement>, 'onC
   /** 自定义颜色 */
   color?: string;
   /** 图标 */
-  icon?: JSXElement;
+  icon?: JSX.Element;
   /** 内置类型(状态) */
   type?: 'primary' | 'success' | 'error' | 'warning';
   /** 自定义关闭图标 */
-  closeIcon?: JSXElement | boolean;
+  closeIcon?: JSX.Element | boolean;
   /** 显示边框
    * @default true
    */
@@ -37,6 +35,7 @@ export interface TagProps extends Omit<JSX.HTMLAttributes<HTMLSpanElement>, 'onC
   disabled?: boolean;
   /** 关闭时的回调方法 */
   onClose?: (e: MouseEvent) => void;
+  children?: JSX.Element;
 }
 
 function Tag(props: TagProps) {

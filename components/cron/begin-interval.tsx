@@ -1,4 +1,3 @@
-import type { JSXElement } from 'solid-js';
 import { selectCss, selectPortalCss } from './style';
 import type { CronData } from '.';
 import type { BaseOption } from 'neko-ui';
@@ -6,7 +5,7 @@ import type { BaseOption } from 'neko-ui';
 type BeginIntervalProps = {
   begin: CronData['begin'];
   beginEvery: CronData['beginEvery'];
-  label: [JSXElement, JSXElement, JSXElement];
+  label: [JSX.Element, JSX.Element, JSX.Element];
   beginOption: (string | number | BaseOption)[];
   beginEveryOption: (string | number | BaseOption)[];
   onChange(type: 'begin' | 'beginEvery', value: number): void;

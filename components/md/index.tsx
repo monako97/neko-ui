@@ -1,13 +1,4 @@
-import {
-  For,
-  type JSX,
-  Match,
-  Switch,
-  createComponent,
-  createEffect,
-  mergeProps,
-  onCleanup,
-} from 'solid-js';
+import { For, Match, Switch, createComponent, createEffect, mergeProps, onCleanup } from 'solid-js';
 import { css, cx } from '@moneko/css';
 import marked from 'marked-completed';
 import { customElement } from 'solid-element';
@@ -214,7 +205,7 @@ function MD(_props: MdProps) {
   );
 }
 
-export interface MdProps extends JSX.HTMLAttributes<HTMLDivElement> {
+export interface MdProps {
   /** 自定义类名 */
   class?: string;
   /** 自定义样式表 */

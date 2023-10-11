@@ -1,4 +1,4 @@
-import { type JSX, createEffect, createMemo, createSignal } from 'solid-js';
+import { createEffect, createMemo, createSignal } from 'solid-js';
 import { css, cx } from '@moneko/css';
 import { customElement } from 'solid-element';
 import theme from '../theme';
@@ -20,7 +20,7 @@ export type HighlightTextJson =
       text: string;
     }[]
   | null;
-export interface HighlightTextProps extends JSX.HTMLAttributes<HTMLDivElement> {
+export interface HighlightTextProps {
   /** 自定义样式表 */
   css?: string;
   /** 自定义类名 */

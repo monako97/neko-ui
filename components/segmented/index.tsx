@@ -11,10 +11,11 @@ import { isFunction } from '@moneko/common';
 import { css, cx } from '@moneko/css';
 import { customElement } from 'solid-element';
 import { style } from './style';
-import { type BaseOption, type BasicConfig, FieldName } from '../basic-config';
+import { FieldName } from '../basic-config';
 import getOptions from '../get-options';
 import theme from '../theme';
-import type { CustomElement } from '..';
+import '../typography';
+import type { BaseOption, BasicConfig, CustomElement } from '..';
 
 export interface SegmentedProps {
   /** 自定义类名 */

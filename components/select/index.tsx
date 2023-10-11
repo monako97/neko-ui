@@ -1,6 +1,5 @@
 import {
   For,
-  type JSXElement,
   Show,
   batch,
   createComponent,
@@ -17,13 +16,10 @@ import { cx } from '@moneko/css';
 import { customElement } from 'solid-element';
 import { style } from './style';
 import { FieldName } from '../basic-config';
-import Dropdown, {
-  type DropdownMultipleProps,
-  type DropdownProps,
-  defaultProps,
-} from '../dropdown';
+import Dropdown, { defaultProps } from '../dropdown';
 import getOptions from '../get-options';
-import type { CustomElement, MenuOption } from '..';
+import '../tag';
+import type { CustomElement, DropdownMultipleProps, DropdownProps, MenuOption } from '..';
 
 function Select(props: SelectProps) {
   const [local, other] = splitProps(props, [
@@ -178,13 +174,13 @@ function Select(props: SelectProps) {
     }
   });
   const prefix = createMemo(() =>
-    isFunction(local.prefixIcon) ? (local.prefixIcon() as JSXElement) : local.prefixIcon,
+    isFunction(local.prefixIcon) ? (local.prefixIcon() as JSX.Element) : local.prefixIcon,
   );
   const label = createMemo(() =>
-    isFunction(local.label) ? (local.label() as JSXElement) : local.label,
+    isFunction(local.label) ? (local.label() as JSX.Element) : local.label,
   );
   const suffix = createMemo(() =>
-    isFunction(local.suffixIcon) ? (local.suffixIcon() as JSXElement) : local.suffixIcon,
+    isFunction(local.suffixIcon) ? (local.suffixIcon() as JSX.Element) : local.suffixIcon,
   );
 
   return (
@@ -271,11 +267,12 @@ interface SelectBaseProps {
   /** 选项 */
   options?: (MenuOption | string | number)[];
   /** 标题 */
-  label?: JSXElement | (() => JSXElement | (() => JSXElement));
+  label?: JSX.Element | (() => JSX.Element | (() => JSX.Element));
   /** 前缀图标 */
-  prefixIcon?: JSXElement | (() => JSXElement | (() => JSXElement));
+  prefixIcon?: JSX.Element | (() => JSX.Element | (() => JSX.Element));
   /** 后缀图标 */
-  suffixIcon?: JSXElement | (() => JSXElement | (() => JSXElement));
+  suffixIcon?: JSX.Element | (() => JSX.Element | (() => JSX.Element));
+  style?: Record<string, string | number>;
 }
 
 /** 单选 */

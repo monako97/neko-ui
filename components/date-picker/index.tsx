@@ -1,5 +1,4 @@
 import {
-  type JSXElement,
   createComponent,
   createEffect,
   createMemo,
@@ -12,8 +11,10 @@ import { customElement } from 'solid-element';
 import dayjs from './dayjs';
 import Panel from './panel';
 import { styles } from './style';
-import Popover, { type PopoverProps, defaultProps } from '../popover';
-import type { CustomElement, InputElement } from '..';
+import '../button';
+import '../menu';
+import Popover, { defaultProps } from '../popover';
+import type { CustomElement, InputElement, PopoverProps } from '..';
 
 function DatePicker(_props: DatePickerProps) {
   let ref: InputElement | undefined;
@@ -185,11 +186,11 @@ export interface DatePickerProps extends Partial<PopoverProps> {
    */
   parser?: string;
   /** 前缀 */
-  prefixIcon?: JSXElement;
+  prefixIcon?: JSX.Element;
   /** 后缀
    * @default '📅'
    */
-  suffixIcon?: JSXElement;
+  suffixIcon?: JSX.Element;
   /** 变更时的回调 */
   onChange?(val: string, time: dayjs.Dayjs): void;
   /** 显示时间选择

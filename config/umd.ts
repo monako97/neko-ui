@@ -1,12 +1,12 @@
-import path from 'path';
+import { join } from 'path';
 import { type ConfigType } from '@moneko/core';
 
 const conf: Partial<ConfigType> = {
   devtool: false,
   htmlPluginOption: false,
-  entry: path.join(process.cwd(), './components/index.ts'),
+  entry: join(process.cwd(), './components/index.ts'),
   output: {
-    path: path.resolve(process.cwd(), './lib'),
+    path: join(process.cwd(), './umd'),
     filename: 'index.js',
     library: {
       name: 'NekoUI',
@@ -14,6 +14,7 @@ const conf: Partial<ConfigType> = {
       umdNamedDefine: true,
     },
   },
+  bundleAnalyzer: false,
   splitChunk: false,
   runtimeChunk: false,
 };

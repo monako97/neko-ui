@@ -1,7 +1,6 @@
 import {
   For,
   Index,
-  type JSX,
   Show,
   createComponent,
   createEffect,
@@ -31,7 +30,7 @@ import '../input-number';
 import theme from '../theme';
 import type { CustomElement, InputNumberProps } from '..';
 
-export interface ColorPaletteProps extends Omit<JSX.HTMLAttributes<HTMLDivElement>, 'onChange'> {
+export interface ColorPaletteProps {
   /** 自定义类名 */
   class?: string;
   /** 自定义样式表 */

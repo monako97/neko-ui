@@ -1,5 +1,4 @@
 import {
-  type JSX,
   Show,
   createComponent,
   createEffect,
@@ -14,6 +13,7 @@ import { downloadBlob, isFunction } from '@moneko/common';
 import { css, cx } from '@moneko/css';
 import { customElement } from 'solid-element';
 import { style } from './style';
+import '../button';
 import theme from '../theme';
 import type { CustomElement } from '..';
 
@@ -22,7 +22,7 @@ declare interface MediaRecorderDataAvailableEvent extends Event {
   data: Any;
 }
 
-export interface CaptureScreenProps extends JSX.ButtonHTMLAttributes<HTMLDivElement> {
+export interface CaptureScreenProps {
   /** 自定义类名 */
   class?: string;
   /** 自定义样式表 */
@@ -130,8 +130,6 @@ function CaptureScreen(_: CaptureScreenProps) {
     'onSaveRecorder',
     'class',
     'css',
-    'ref',
-    'children',
   ]);
   let videoElem: HTMLVideoElement | undefined;
   const chunks: Blob[] = [];

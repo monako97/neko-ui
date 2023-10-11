@@ -1,4 +1,4 @@
-import { type JSX, createComponent, mergeProps } from 'solid-js';
+import { createComponent, mergeProps } from 'solid-js';
 import { css, cx } from '@moneko/css';
 import { customElement } from 'solid-element';
 import theme from '../theme';
@@ -58,7 +58,7 @@ const style = css`
   }
 `;
 
-export interface SpinProps extends Omit<JSX.HTMLAttributes<HTMLDivElement>, 'onChange'> {
+export interface SpinProps {
   /** 自定义样式表 */
   css?: string;
   /** 自定义类名 */

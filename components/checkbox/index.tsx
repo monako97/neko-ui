@@ -2,10 +2,10 @@ import { For, createComponent, createEffect, createMemo, createSignal, mergeProp
 import { css, cx } from '@moneko/css';
 import { customElement } from 'solid-element';
 import { style } from './style';
-import { type BaseOption, type BasicConfig, FieldName } from '../basic-config';
+import { FieldName } from '../basic-config';
 import getOptions from '../get-options';
 import theme from '../theme';
-import type { CustomElement } from '..';
+import type { BaseOption, BasicConfig, CustomElement } from '..';
 
 /** 通用API
  * @since 1.0.0

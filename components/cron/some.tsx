@@ -1,11 +1,10 @@
-import type { JSXElement } from 'solid-js';
 import { selectPortalCss } from './style';
 import type { CronData } from '.';
 import type { BaseOption } from 'neko-ui';
 
 type SomeProps = {
   value: CronData['some'];
-  label: JSXElement;
+  label: JSX.Element;
   options: (string | number | BaseOption)[];
   type: CronData['type'];
   onChange(type: 'some', value: number[]): void;

@@ -1,6 +1,5 @@
 import {
   For,
-  type JSXElement,
   Show,
   batch,
   createComponent,
@@ -15,7 +14,9 @@ import { isFunction } from '@moneko/common';
 import { css, cx } from '@moneko/css';
 import { customElement } from 'solid-element';
 import { styles } from './styles';
+import '../button';
 import theme from '../theme';
+import '../typography';
 import type { BasicConfig, CustomElement } from '..';
 
 function Pagination(_: PaginationProps) {
@@ -208,10 +209,10 @@ export interface PaginationProps {
    * 或者通过[slot="total-text"]插槽
    * @default true
    */
-  totalText?: ((total: number, range: [start: number, end: number]) => JSXElement) | false;
+  totalText?: ((total: number, range: [start: number, end: number]) => JSX.Element) | false;
   /** 值修改时的回调方法 */
   onChange?(page: number, pageSize: number): void;
-  children?: JSXElement;
+  children?: JSX.Element;
 }
 export type PaginationElement = CustomElement<PaginationProps>;
 

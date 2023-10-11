@@ -1,5 +1,4 @@
 import {
-  type JSX,
   Show,
   createComponent,
   createEffect,
@@ -18,7 +17,7 @@ import { style } from './style';
 import theme from '../theme';
 import type { CustomElement } from '..';
 
-export interface BackTopProps extends Omit<JSX.ButtonHTMLAttributes<HTMLDivElement>, 'onChange'> {
+export interface BackTopProps {
   /** 设置需要监听其滚动事件的元素
    * @default window
    */
@@ -38,17 +37,7 @@ export interface BackTopProps extends Omit<JSX.ButtonHTMLAttributes<HTMLDivEleme
 function BackTop(_: BackTopProps) {
   const { baseStyle, isDark } = theme;
   const props = mergeProps({ target: window as unknown as HTMLElement, visibilityHeight: 400 }, _);
-  const [local, other] = splitProps(props, [
-    'class',
-    'target',
-    'mount',
-    'css',
-    'visibilityHeight',
-    'onAnimationEnd',
-    'ref',
-    'style',
-    'onClick',
-  ]);
+  const [local, other] = splitProps(props, ['class', 'target', 'mount', 'css', 'visibilityHeight']);
   const [show, setShow] = createSignal<boolean | null>(null);
   const target = createMemo(() => (isFunction(local.target) ? local.target() : local.target));
 

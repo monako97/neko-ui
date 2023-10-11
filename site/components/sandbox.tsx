@@ -195,7 +195,7 @@ const codeNoShadowCss = css`
   }
 `;
 
-function $$jsx(type: Solid.Component, p: Solid.VoidProps, ...children: Solid.JSXElement[]) {
+function $$jsx(type: Solid.Component, p: Solid.VoidProps, ...children: JSX.Element[]) {
   return h(type, {
     ...p,
     children,

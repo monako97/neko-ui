@@ -1,6 +1,4 @@
 import {
-  type JSX,
-  type JSXElement,
   Show,
   createComponent,
   createEffect,
@@ -16,16 +14,17 @@ import { css, cx } from '@moneko/css';
 import { customElement } from 'solid-element';
 import { Portal } from 'solid-js/web';
 import { popoverCss, portalCss } from './style';
+import '../empty';
 import theme from '../theme';
 import type { BasicConfig, CustomElement } from '..';
 
-export interface PopoverProps extends Omit<JSX.HTMLAttributes<HTMLDivElement>, 'onChange'> {
+export interface PopoverProps {
   /** 自定义类名 */
   class?: string;
   /** 自定义样式表 */
   css?: string;
   /** 内容 */
-  content?: (() => JSXElement) | JSXElement;
+  content?: (() => JSX.Element) | JSX.Element;
   /** 挂载到指定的元素，值为一个返回对应 DOM 元素 默认 document.body */
   getPopupContainer?: (node?: HTMLElement | null) => HTMLElement;
   /** 触发行为
@@ -54,6 +53,7 @@ export interface PopoverProps extends Omit<JSX.HTMLAttributes<HTMLDivElement>, '
    * @default 'normal'
    */
   size?: BasicConfig['size'];
+  children?: JSX.Element;
 }
 
 export enum TriggerOption {
@@ -359,7 +359,7 @@ function Popover(props: PopoverProps) {
           </style>
           <div ref={ref} onAnimationEnd={exit} class={portalCls()} {...childrenProps()}>
             <Show when={local.content} fallback={<n-empty />}>
-              {local.content as JSXElement}
+              {local.content as JSX.Element}
             </Show>
           </div>
         </Portal>

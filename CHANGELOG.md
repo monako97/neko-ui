@@ -1,6 +1,10 @@
 # Change log
 
-## Last
+## [2.4.4](https://github.com/monako97/neko-ui/compare/2.4.3...2.4.4) (9-21-2023)
+
+### 💎 Styles
+
+- 1. md中表格的browser logo样式; 2. 基于 swc_core 0.83.16 的全新构建 ([f3ba66d](https://github.com/monako97/neko-ui/commit/f3ba66dd867a5e1a760e69231b891b76c64006c0))
 
 ### 🐛 Bug Fixes
 

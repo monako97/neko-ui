@@ -1,5 +1,4 @@
 import {
-  type JSXElement,
   Show,
   createComponent,
   createEffect,
@@ -20,9 +19,9 @@ export interface InputProps {
   /** 自定义样式表 */
   css?: string;
   /** 前缀 */
-  prefixIcon?: JSXElement;
+  prefixIcon?: JSX.Element;
   /** 后缀 */
-  suffixIcon?: JSXElement;
+  suffixIcon?: JSX.Element;
   /** 禁用 */
   disabled?: boolean;
   /** 自动完成 */
@@ -34,7 +33,7 @@ export interface InputProps {
    */
   size?: BasicConfig['size'];
   /** 描述 */
-  label?: JSXElement;
+  label?: JSX.Element;
   /** 状态 */
   status?: 'error' | 'warning' | 'success';
   /** 类型
