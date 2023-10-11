@@ -1,5 +1,11 @@
 # Change log
 
+## Last
+
+### 📚 Documentation
+
+- update readme ([428dcc5](https://github.com/monako97/neko-ui/commit/428dcc5c67aa319629569409d32adfca34436c18))
+
 ## [2.5.0](https://github.com/monako97/neko-ui/compare/2.4.4...2.5.0) (10-11-2023)
 
 ### ✨ Features
