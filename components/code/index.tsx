@@ -4,7 +4,7 @@ import { css, cx } from '@moneko/css';
 import { customElement } from 'solid-element';
 import { style } from './style';
 import prismCss from '../prism/css';
-import Prism from '../prism/prism.js';
+import '../prism/prism.js';
 import theme from '../theme';
 import type { CustomElement } from '..';
 
@@ -75,10 +75,10 @@ function Code(props: CodeProps) {
     const _lang = opt.lang || 'markup';
 
     if (/^diff-([\w-]+)/i.test(_lang)) {
-      Prism.languages[_lang] = Prism.languages.diff;
+      window.Prism.languages[_lang] = window.Prism.languages.diff;
     }
     update({
-      data: Prism.highlight(opt.code, Prism.languages[_lang], _lang),
+      data: window.Prism.highlight(opt.code, window.Prism.languages[_lang], _lang),
     });
   }
 

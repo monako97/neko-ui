@@ -333,7 +333,7 @@
 - 1、Carousel. 2、Photo ([ef41800](https://github.com/monako97/neko-ui/commit/ef418003258ee09da52ab71096b54cefa72ce2c5))
 - 样式表按需引入、优化取色板性能 ([65c2008](https://github.com/monako97/neko-ui/commit/65c200831569e93f804c76a6b3d7e0007b616508))
 - passiveSupported ([397ef3b](https://github.com/monako97/neko-ui/commit/397ef3bc1951a65472216b0fd5e46f4e5d833a07))
-- 取色板支持 cmyk  ([c2719e7](https://github.com/monako97/neko-ui/commit/c2719e7af1822cee8ec0a2a3be99960371bc4a04))
+- 取色板支持 cmyk ([c2719e7](https://github.com/monako97/neko-ui/commit/c2719e7af1822cee8ec0a2a3be99960371bc4a04))
 - common按需 ([b21343d](https://github.com/monako97/neko-ui/commit/b21343de3ab6df865f000f4412f246b718bcea2e))
 - color-schema ([921edfd](https://github.com/monako97/neko-ui/commit/921edfd1bcf5a94b5110ac55efe004c1e09be0fa))
 
@@ -383,12 +383,12 @@
 
 ### 🚨 Tests
 
--  ([c0bcf3a](https://github.com/monako97/neko-ui/commit/c0bcf3ad4bc61a0db6e864a4b17237d5cb48bfd9))
--  ([27939ed](https://github.com/monako97/neko-ui/commit/27939ed817997c930963dec72085eab7ee9edae2))
--  ([cbbff61](https://github.com/monako97/neko-ui/commit/cbbff614ccf04255c9bb66379ba93be514565674))
--  ([0c3d1af](https://github.com/monako97/neko-ui/commit/0c3d1af21c3f14c22e2394845a03a76a6ff4d18c))
--  ([f35688f](https://github.com/monako97/neko-ui/commit/f35688fed7a937de197f22d988b2f05d740318af))
--  ([57f6a5f](https://github.com/monako97/neko-ui/commit/57f6a5ff0e9bf2c2541f24192e83e81d583cea17))
+- ([c0bcf3a](https://github.com/monako97/neko-ui/commit/c0bcf3ad4bc61a0db6e864a4b17237d5cb48bfd9))
+- ([27939ed](https://github.com/monako97/neko-ui/commit/27939ed817997c930963dec72085eab7ee9edae2))
+- ([cbbff61](https://github.com/monako97/neko-ui/commit/cbbff614ccf04255c9bb66379ba93be514565674))
+- ([0c3d1af](https://github.com/monako97/neko-ui/commit/0c3d1af21c3f14c22e2394845a03a76a6ff4d18c))
+- ([f35688f](https://github.com/monako97/neko-ui/commit/f35688fed7a937de197f22d988b2f05d740318af))
+- ([57f6a5f](https://github.com/monako97/neko-ui/commit/57f6a5ff0e9bf2c2541f24192e83e81d583cea17))
 
 ## [1.0.27](https://github.com/monako97/neko-ui/compare/1.0.22...1.0.27) (11-10-2022)
 
@@ -408,8 +408,8 @@
 
 ### 🚨 Tests
 
--  ([4b505ff](https://github.com/monako97/neko-ui/commit/4b505ffd569361c6ea2b70c6328f1f6bf90fa0f6))
--  ([ff828cf](https://github.com/monako97/neko-ui/commit/ff828cf378d54a9f8244b892cbbbbc7c86d23d61))
+- ([4b505ff](https://github.com/monako97/neko-ui/commit/4b505ffd569361c6ea2b70c6328f1f6bf90fa0f6))
+- ([ff828cf](https://github.com/monako97/neko-ui/commit/ff828cf378d54a9f8244b892cbbbbc7c86d23d61))
 
 ### 🐛 Bug Fixes
 

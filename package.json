@@ -74,5 +74,8 @@
     "umd",
     "README.md",
     "LICENSE"
+  ],
+  "browserslist": [
+    "Chrome >=70"
   ]
 }

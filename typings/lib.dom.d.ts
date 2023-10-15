@@ -154,8 +154,8 @@ interface Window {
   EyeDropper?: EyeDropper;
   Prism: {
     disableWorkerMessageHandler: boolean;
-    languages?: Record<string, unknown>;
-    highlight?(code: string, langs: unknown, lang: string): string;
+    languages: Record<string, unknown>;
+    highlight(code: string, langs: unknown, lang: string): string;
   };
   marked: typeof import('marked-completed');
 }

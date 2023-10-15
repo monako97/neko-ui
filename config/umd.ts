@@ -5,6 +5,7 @@ const conf: Partial<ConfigType> = {
   devtool: false,
   htmlPluginOption: false,
   entry: join(process.cwd(), './components/index.ts'),
+  polyfill: false,
   output: {
     path: join(process.cwd(), './umd'),
     filename: 'index.js',

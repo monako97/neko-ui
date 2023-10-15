@@ -35,6 +35,7 @@ const conf: Partial<ConfigType> = {
       },
     ],
   },
+  polyfill: true,
   fallbackCompPath: '@/components/fallback',
   rem: {
     designSize: 1920,
