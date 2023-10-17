@@ -6,24 +6,28 @@ const conf: Partial<ConfigType> = {
     tags: [
       {
         tag: 'script',
-        textContent: `if (!Element.prototype.replaceChildren) {
-          Element.prototype.replaceChildren = function() {
-              for(var _len = arguments.length, newChildren = new Array(_len), _key = 0; _key < _len; _key++){
-                  newChildren[_key] = arguments[_key];
-              }
-              var _this = this;
-              while(this.firstChild){
-                  this.removeChild(this.firstChild);
-              }
-              newChildren.forEach(function(child) {
-                  if (typeof child === "string") {
-                      _this.appendChild(document.createTextNode(child));
-                  } else {
-                      _this.appendChild(child);
-                  }
-              });
-          };
-      }`,
+        textContent: `function replaceChildrenPolyfill() {
+          for (var _len = arguments.length, newChildren = new Array(_len), _key = 0; _key < _len; _key++) {
+            newChildren[_key] = arguments[_key];
+          }
+          var _this = this;
+          while (this.firstChild) {
+            this.removeChild(this.firstChild);
+          }
+          newChildren.forEach(function (child) {
+            if (typeof child === 'string') {
+              _this.appendChild(document.createTextNode(child));
+            } else {
+              _this.appendChild(child);
+            }
+          });
+        }
+        if (!Element.prototype.replaceChildren) {
+          Element.prototype.replaceChildren = replaceChildrenPolyfill;
+        }
+        if (!ShadowRoot.prototype.replaceChildren) {
+          ShadowRoot.prototype.replaceChildren = replaceChildrenPolyfill;
+        }`,
       },
       {
         tag: 'script',
