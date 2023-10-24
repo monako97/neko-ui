@@ -8,7 +8,7 @@ import type { CustomElement } from '..';
 export interface SwitchProps {
   /** 自定义类名 */
   class?: string;
-  /** 自定义类名 */
+  /** 自定义样式表 */
   css?: string;
   /** 值 */
   checked?: boolean;

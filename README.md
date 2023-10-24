@@ -12,6 +12,7 @@
 [size-tag]: https://packagephobia.com/badge?p=neko-ui@latest
 [size-url]: https://packagephobia.com/result?p=neko-ui@latest
 [download-tag]: https://img.shields.io/npm/dm/neko-ui.svg?logo=docusign
+[x-tag]: https://img.shields.io/twitter/follow/moneko97.svg?style=social
 
 # Neko UI
 
@@ -25,6 +26,7 @@
 [![version][version-tag]][npm-url]
 [![install size][size-tag]][size-url]
 [![download][download-tag]][npm-url]
+![x][x-tag]
 
 [![neko-ui][install-tag]][npm-url]
 
