@@ -2,13 +2,14 @@
 
 ## Last
 
+### 📦 Code Refactoring
+
+- 打包速度提升 ([52ce6e2](https://github.com/monako97/neko-ui/commit/52ce6e27fef79cf6c8d2ad17acbcb5b152063693))
+- 打包速度提升 58% ([e7858e8](https://github.com/monako97/neko-ui/commit/e7858e88759193e3308357e253ee4b1fcb06d78f))
+
 ### ✨ Features
 
 - input 支持提示大写锁定图标 ([5314ea1](https://github.com/monako97/neko-ui/commit/5314ea163b570e41fdd30d181b3492979f61ccae))
-
-### 📦 Code Refactoring
-
-- 打包速度提升 58% ([e7858e8](https://github.com/monako97/neko-ui/commit/e7858e88759193e3308357e253ee4b1fcb06d78f))
 
 ### 🐛 Bug Fixes
 
