@@ -22,6 +22,10 @@ export interface InputProps {
   prefixIcon?: JSX.Element;
   /** 后缀 */
   suffixIcon?: JSX.Element;
+  /** 大写锁定图标, 可以结合密码输入框使用
+   * @since 2.5.2
+   */
+  capsLockIcon?: JSX.Element;
   /** 禁用 */
   disabled?: boolean;
   /** 自动完成 */
@@ -40,7 +44,7 @@ export interface InputProps {
    * @default 'text'
    */
   type?: 'email' | 'hidden' | 'number' | 'password' | 'search' | 'tel' | 'text' | 'url';
-  /** HTML input accep */
+  /** HTML attribute: accept */
   accept?: string;
   /** 值 */
   value?: string | number;
@@ -63,6 +67,7 @@ function Input(props: InputProps) {
   const { baseStyle } = theme;
   let inputRef: HTMLInputElement | undefined;
   const [x, setX] = createSignal<string>();
+  const [capsLock, setCapsLock] = createSignal(false);
 
   function parserValue(val: InputProps['value']) {
     if (props.parser) {
@@ -82,6 +87,9 @@ function Input(props: InputProps) {
     props.onMouseDown?.(e);
   }
   function handleKeyDown(e: KeyboardEvent) {
+    if (props.capsLockIcon) {
+      setCapsLock(e.getModifierState('CapsLock'));
+    }
     props.onKeyDown?.(e);
   }
   function handleBlur(e: FocusEvent) {
@@ -137,6 +145,9 @@ function Input(props: InputProps) {
         <Show when={props.label}>
           <label class="label">{props.label}</label>
         </Show>
+        <Show when={props.capsLockIcon && capsLock()}>
+          <span class="caps-lock">{props.capsLockIcon}</span>
+        </Show>
         <Show when={props.suffixIcon}>
           <span class="suffix">{props.suffixIcon}</span>
         </Show>
@@ -152,6 +163,7 @@ export const defaultInportProps = {
   css: void 0,
   suffixIcon: void 0,
   prefixIcon: void 0,
+  capsLockIcon: void 0,
   size: void 0,
   disabled: void 0,
   status: void 0,

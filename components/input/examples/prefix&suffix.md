@@ -7,7 +7,7 @@ order: 3
 ```html
 <div style="width:180px;display: flex; flex-direction: column; gap: 12px;">
   <n-input label="用户" placeholder="请输入名称" prefix-icon="👨" default-value="admin"></n-input>
-  <n-input label="密码" type="password" placeholder="请输入密码" prefix-icon="㊙️"></n-input>
+  <n-input label="密码" type="password" placeholder="请输入密码" prefix-icon="㊙️" caps-lock-icon="⇪"></n-input>
   <n-input
     label="验证码"
     auto-complete="one-time-code"

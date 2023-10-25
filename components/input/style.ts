@@ -174,7 +174,8 @@ export const style = css`
     margin-inline-end: 4px;
   }
 
-  .suffix {
+  .suffix,
+  .caps-lock {
     margin-inline-start: 4px;
   }
 `;

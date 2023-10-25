@@ -2,6 +2,10 @@
 
 ## Last
 
+### 📦 Code Refactoring
+
+- 打包速度提升 58% ([e7858e8](https://github.com/monako97/neko-ui/commit/e7858e88759193e3308357e253ee4b1fcb06d78f))
+
 ### 🐛 Bug Fixes
 
 - replaceChildren polyfill ([75732d4](https://github.com/monako97/neko-ui/commit/75732d4770e2c5a00037338f43dd931b14f970da))
