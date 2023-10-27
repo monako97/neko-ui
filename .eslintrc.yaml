@@ -17,8 +17,10 @@ rules:
     - 2
     - ignore:
         - \\?raw$
+        - \\?url$
         - ^@/
         - ^@app
         - ^neko-ui
+        - ^http
 ignorePatterns: 
   - components/**/examples/*.mdx

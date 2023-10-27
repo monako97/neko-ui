@@ -8,8 +8,7 @@ const prismCss = createRoot(() => {
     [data-copy]::before {
       position: absolute;
       inset-block-start: 32px;
-      inset-inline-end: 0;
-      inset-inline-start: 0;
+      inset-inline: 0;
       z-index: 1;
       display: inline-block;
       margin: auto;

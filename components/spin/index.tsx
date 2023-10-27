@@ -37,10 +37,8 @@ const style = css`
       text-align: center;
       inline-size: 32px;
       block-size: 32px;
-      inset-block-start: 0;
-      inset-block-end: 0;
-      inset-inline-start: 0;
-      inset-inline-end: 0;
+      inset-block: 0 0;
+      inset-inline: 0 0;
       box-sizing: border-box;
       content: '✲';
       animation: spin-rotate-effect 1s infinite;

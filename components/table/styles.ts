@@ -66,8 +66,7 @@ export const styles = css`
             display: block;
             margin: auto;
             background-color: var(--text-secondary);
-            inset-block-start: 0;
-            inset-block-end: 0;
+            inset-block: 0 0;
             inset-inline-end: 0;
             content: '';
             block-size: 16px;

@@ -41,10 +41,8 @@ export const style = css`
           margin: auto;
           border-radius: 50%;
           box-shadow: inset 0 0 0 8px var(--primary-color);
-          inset-block-start: 0;
-          inset-block-end: 0;
-          inset-inline-start: 0;
-          inset-inline-end: 0;
+          inset-block: 0 0;
+          inset-inline: 0 0;
           content: '';
           inline-size: 10px;
           block-size: 10px;

@@ -227,8 +227,7 @@ export const style = css`
   h3,
   h4,
   h5 {
-    margin-block-start: 1em;
-    margin-block-end: 1em;
+    margin-block: 1em;
     font-weight: 500;
     color: var(--text-heading);
     transition-duration: var(--transition-duration);

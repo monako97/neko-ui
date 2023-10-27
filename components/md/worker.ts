@@ -1,6 +1,4 @@
-self.importScripts(
-  new URL('../../node_modules/marked-completed/marked.min.js', import.meta.url).toString(),
-);
+self.importScripts(new URL('marked-completed/marked.min.js', import.meta.url).toString());
 
 const renderer = new self.marked.Renderer();
 

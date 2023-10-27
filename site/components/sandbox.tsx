@@ -74,8 +74,7 @@ const sandboxCss = css`
     display: inline-block;
     margin: auto;
     inline-size: fit-content;
-    inset-inline-start: 0;
-    inset-inline-end: 0;
+    inset-inline: 0 0;
     inset-block-end: 0;
     transform: translateY(calc(50%)) scale(0.8);
   }

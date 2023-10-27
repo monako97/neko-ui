@@ -82,8 +82,10 @@ function Code(props: CodeProps) {
     });
   }
 
-  // const work = new Worker(new URL('./worker.ts', import.meta.url));
-
+  // const work = new Worker(new URL("./worker.ts", import.meta.url), {
+  //   name: "wastedTime",
+  //   /* webpackEntryOptions: { filename: "workers/[name].js" } */
+  // });
   // work.addEventListener('message', update);
 
   // work.postMessage({

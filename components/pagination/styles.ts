@@ -43,10 +43,8 @@ export const styles = css`
         inline-size: fit-content;
         block-size: fit-content;
         line-height: inherit;
-        inset-block-start: 0;
-        inset-block-end: 0;
-        inset-inline-start: 0;
-        inset-inline-end: 0;
+        inset-block: 0 0;
+        inset-inline: 0 0;
         content: '⋯';
         pointer-events: none;
       }

@@ -28,18 +28,15 @@ export const style = css`
       outline: none;
       resize: none;
       box-sizing: border-box;
-      inset-block-start: 32px;
-      inset-inline-start: 16px;
-      inset-inline-end: 16px;
-      inset-block-end: 8px;
+      inset-block: 32px 8px;
+      inset-inline: 16px 16px;
       min-block-size: 64px;
       caret-color: var(--text-color);
       block-size: fit-content;
       line-height: inherit !important;
 
       &.line-numbers {
-        inset-inline-start: 54px;
-        inset-inline-end: 10px;
+        inset-inline: 54px 10px;
       }
 
       &.not-toolbar {

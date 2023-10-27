@@ -49,8 +49,7 @@ export const style = css`
         var(--transition-duration) background-color 0.1s,
         var(--transition-duration) border-color;
       outline-offset: -0.05px;
-      inset-block-start: 3px;
-      inset-block-end: 3px;
+      inset-block: 3px 3px;
       block-size: 14px;
       min-inline-size: 14px;
       content: '';

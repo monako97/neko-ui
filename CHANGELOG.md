@@ -2,6 +2,11 @@
 
 ## Last
 
+### 🐛 Bug Fixes
+
+- @app/locals ([5b66a9e](https://github.com/monako97/neko-ui/commit/5b66a9ef86afef3f992fef247b179d95df11ee63))
+- replaceChildren polyfill ([75732d4](https://github.com/monako97/neko-ui/commit/75732d4770e2c5a00037338f43dd931b14f970da))
+
 ### 📦 Code Refactoring
 
 - 打包速度提升 ([52ce6e2](https://github.com/monako97/neko-ui/commit/52ce6e27fef79cf6c8d2ad17acbcb5b152063693))
@@ -10,10 +15,6 @@
 ### ✨ Features
 
 - input 支持提示大写锁定图标 ([5314ea1](https://github.com/monako97/neko-ui/commit/5314ea163b570e41fdd30d181b3492979f61ccae))
-
-### 🐛 Bug Fixes
-
-- replaceChildren polyfill ([75732d4](https://github.com/monako97/neko-ui/commit/75732d4770e2c5a00037338f43dd931b14f970da))
 
 ### 📚 Documentation
 

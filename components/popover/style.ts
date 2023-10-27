@@ -45,9 +45,8 @@ export const portalCss = css`
   .arrow {
     &::before {
       position: absolute;
-      inset-inline-end: 0;
+      inset-inline: 0;
       inset-block-end: 0;
-      inset-inline-start: 0;
       margin: auto;
       inline-size: 12px;
       block-size: 8px;

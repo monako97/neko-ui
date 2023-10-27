@@ -67,6 +67,7 @@ export {
 export { default as Pagination, type PaginationProps, type PaginationElement } from './pagination';
 export { default as Popover, type PopoverElement, type PopoverProps } from './popover';
 export { default as Radio, type RadioElement, type RadioOption, type RadioProps } from './radio';
+export { default as Rive, type RiveElement, type RiveProps } from './rive';
 export { default as Segmented, type SegmentedElement, type SegmentedProps } from './segmented';
 export {
   default as Select,
@@ -137,6 +138,7 @@ import type {
   PopoverElement,
   ProviderElement,
   RadioElement,
+  RiveElement,
   SegmentedElement,
   SelectElement,
   SelectMultipleElement,
@@ -198,6 +200,8 @@ interface CustomElementTags {
   'n-popover': PopoverElement;
   /** 单选项 */
   'n-radio': RadioElement;
+  /** rive 动画插件 */
+  'n-rive': RiveElement;
   /** 分段控制器 */
   'n-segmented': SegmentedElement;
   /** 下拉选择框 */

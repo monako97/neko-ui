@@ -16,6 +16,7 @@ const config: Config = {
       '<rootDir>/test/file.mock.ts',
     '\\.(css|less)$': '<rootDir>/test/obj-proxy.ts',
     '\\?raw$': '<rootDir>/test/file.mock.ts',
+    '\\?url$': '<rootDir>/test/file.mock.ts',
   },
 };
 
