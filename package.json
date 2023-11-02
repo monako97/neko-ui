@@ -1,6 +1,6 @@
 {
   "name": "neko-ui",
-  "version": "2.6.0-beta.0",
+  "version": "2.6.0-beta.1",
   "description": "Web Components UI Libraries",
   "main": "es/index.js",
   "scripts": {
@@ -37,9 +37,9 @@
   "devDependencies": {
     "@commitlint/cli": "17.7.1",
     "@commitlint/config-conventional": "17.7.0",
-    "@moneko/cli": "2.2.2",
-    "@moneko/core": "3.2.0",
-    "@moneko/postcss": "1.1.0",
+    "@moneko/cli": "2.3.0",
+    "@moneko/core": "3.4.0",
+    "@moneko/postcss": "1.2.0",
     "@moneko/solid": "1.2.2",
     "@solidjs/testing-library": "0.8.4",
     "@swc/jest": "0.2.29",
@@ -55,13 +55,12 @@
     "n-code-live": "1.0.8",
     "n-katex": "1.0.8",
     "shadow-dom-testing-library": "1.11.0",
-    "stylelint-config-moneko": "1.1.0",
+    "stylelint-config-moneko": "1.2.0",
     "ts-node": "10.9.1"
   },
   "dependencies": {
     "@moneko/common": "1.2.0",
     "@moneko/css": "1.0.5",
-    "@rive-app/canvas": "2.7.0",
     "@swc/helpers": "0.5.3",
     "custom-element-type": "1.0.3",
     "dayjs": "1.11.10",
