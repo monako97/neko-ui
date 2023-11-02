@@ -26,22 +26,20 @@ jobs:
         with:
           node-version: 16
           registry-url: 'https://registry.npmjs.org'
-      - name: Cache Node Modules
-        id: cache-node-modules
-        uses: actions/cache@v3.0.11
+      - name: Build cache
+        uses: actions/cache@v3
         with:
           path:  |
-            node_modules
-            yarn.lock
-          key: node-modules-${{ hashFiles('package.json') }}
-          restore-keys: node-modules-yarn-
+            node_modules/.cache/
+          key: ${{ GITHUB_REF_NAME }}-build-cache
+          restore-keys: main-build-cache
       - name: 'install'
         run: yarn
       - name: 'lint'
         run: yarn lint
       - name: 'Build UMD'
         run: yarn build config=umd
-      - name: 'Build Github Pages'
+      - name: 'Build Docs'
         run: yarn build config=github
       - name: 'Publish to npm'
         run: |

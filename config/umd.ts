@@ -1,13 +1,14 @@
-import { join } from 'path';
-import { type ConfigType } from '@moneko/core';
+import { type ConfigType, paths } from '@moneko/core';
 
 const conf: Partial<ConfigType> = {
   devtool: false,
   htmlPluginOption: false,
-  entry: join(process.cwd(), './components/index.ts'),
-  polyfill: false,
+  entry: `${paths.programPath}/components/index.ts`,
+  bar: {
+    fancy: false,
+  },
   output: {
-    path: join(process.cwd(), './umd'),
+    path: `${paths.programPath}/umd`,
     filename: 'index.js',
     library: {
       name: 'NekoUI',

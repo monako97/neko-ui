@@ -4,6 +4,7 @@
 
 ### ✨ Features
 
+- 启动框架更新 ([e6be64b](https://github.com/monako97/neko-ui/commit/e6be64bd257654358dc9fb394b8253c3538d14b5))
 - rive ([311d299](https://github.com/monako97/neko-ui/commit/311d299a13e6c9e0de7fa74dc9dd0ee493adee07))
 - input 支持提示大写锁定图标 ([5314ea1](https://github.com/monako97/neko-ui/commit/5314ea163b570e41fdd30d181b3492979f61ccae))
 
