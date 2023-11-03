@@ -38,7 +38,7 @@
     "@commitlint/cli": "17.7.1",
     "@commitlint/config-conventional": "17.7.0",
     "@moneko/cli": "2.3.1",
-    "@moneko/core": "3.6.4",
+    "@moneko/core": "3.7.0",
     "@moneko/postcss": "1.2.0",
     "@moneko/solid": "1.2.2",
     "@solidjs/testing-library": "0.8.4",

@@ -1,16 +1,16 @@
-import { type ConfigType } from '@moneko/core';
+import { type ConfigType, PACKAGENAME, isDev } from '@moneko/core';
 
 const conf: Partial<ConfigType> = {
-  devtool: false,
+  devtool: isDev ? 'eval-cheap-module-source-map' : false,
   bar: {
-    fancy: false,
+    fancy: isDev,
   },
   seo: {
     domain: 'monako97.github.io',
     nojekyll: true,
   },
-  basename: '/neko-ui',
-  publicPath: '/neko-ui/',
+  basename: `/${PACKAGENAME}`,
+  publicPath: `/${PACKAGENAME}/`,
   fixBrowserRouter: {
     pathSegmentsToKeep: 1,
     path: '404.html',

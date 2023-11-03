@@ -9,8 +9,9 @@ const conf: Partial<ConfigType> = {
     designSize: 1920,
   },
   bundleAnalyzer: {
-    analyzerMode: 'disabled',
-    generateStatsFile: true,
+    analyzerMode: 'static',
+    reportFilename: 'report.html',
+    openAnalyzer: false,
   },
   externals: [/(.+)\/__tests__\/(.+)/i],
   importOnDemand: {
