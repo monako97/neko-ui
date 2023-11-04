@@ -2,18 +2,19 @@
 
 ## Last
 
+### ✨ Features
+
+- 启动框架更新 ([d92969a](https://github.com/monako97/neko-ui/commit/d92969a8be3c838076945ddf44b72eb1914425c5))
+- 启动框架更新 ([9ade37a](https://github.com/monako97/neko-ui/commit/9ade37a5fbd2260894b54e05c3902491c2699048))
+- 启动框架更新 ([e6be64b](https://github.com/monako97/neko-ui/commit/e6be64bd257654358dc9fb394b8253c3538d14b5))
+- rive ([311d299](https://github.com/monako97/neko-ui/commit/311d299a13e6c9e0de7fa74dc9dd0ee493adee07))
+- input 支持提示大写锁定图标 ([5314ea1](https://github.com/monako97/neko-ui/commit/5314ea163b570e41fdd30d181b3492979f61ccae))
+
 ### 🐛 Bug Fixes
 
 - action ([0d7677a](https://github.com/monako97/neko-ui/commit/0d7677a3de84682329570eae90f0fbd1eba00233))
 - @app/locals ([5b66a9e](https://github.com/monako97/neko-ui/commit/5b66a9ef86afef3f992fef247b179d95df11ee63))
 - replaceChildren polyfill ([75732d4](https://github.com/monako97/neko-ui/commit/75732d4770e2c5a00037338f43dd931b14f970da))
-
-### ✨ Features
-
-- 启动框架更新 ([9ade37a](https://github.com/monako97/neko-ui/commit/9ade37a5fbd2260894b54e05c3902491c2699048))
-- 启动框架更新 ([e6be64b](https://github.com/monako97/neko-ui/commit/e6be64bd257654358dc9fb394b8253c3538d14b5))
-- rive ([311d299](https://github.com/monako97/neko-ui/commit/311d299a13e6c9e0de7fa74dc9dd0ee493adee07))
-- input 支持提示大写锁定图标 ([5314ea1](https://github.com/monako97/neko-ui/commit/5314ea163b570e41fdd30d181b3492979f61ccae))
 
 ### 📦 Code Refactoring
 

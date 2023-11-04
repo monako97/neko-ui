@@ -2,13 +2,12 @@ import { type ConfigType, PACKAGENAME, isDev } from '@moneko/core';
 
 const conf: Partial<ConfigType> = {
   devtool: isDev ? 'eval-cheap-module-source-map' : false,
-  bar: {
-    fancy: isDev,
-  },
+  bar: false,
   seo: {
     domain: 'monako97.github.io',
     nojekyll: true,
   },
+  polyfill: true,
   basename: `/${PACKAGENAME}`,
   publicPath: `/${PACKAGENAME}/`,
   fixBrowserRouter: {
