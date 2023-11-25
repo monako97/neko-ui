@@ -2,6 +2,11 @@
 
 ## Last
 
+### 📚 Documentation
+
+- polyfill ([20f4685](https://github.com/monako97/neko-ui/commit/20f4685292c688f0b68acec8f4d97ae6137f9f20))
+- polyfill ([0405059](https://github.com/monako97/neko-ui/commit/04050596a224305deb841ed1c673bce1a5e4705c))
+
 ### ✨ Features
 
 - 启动框架更新 ([d92969a](https://github.com/monako97/neko-ui/commit/d92969a8be3c838076945ddf44b72eb1914425c5))
@@ -20,10 +25,6 @@
 
 - 打包速度提升 ([52ce6e2](https://github.com/monako97/neko-ui/commit/52ce6e27fef79cf6c8d2ad17acbcb5b152063693))
 - 打包速度提升 58% ([e7858e8](https://github.com/monako97/neko-ui/commit/e7858e88759193e3308357e253ee4b1fcb06d78f))
-
-### 📚 Documentation
-
-- polyfill ([0405059](https://github.com/monako97/neko-ui/commit/04050596a224305deb841ed1c673bce1a5e4705c))
 
 ## [2.5.1](https://github.com/monako97/neko-ui/compare/2.5.0...2.5.1) (10-12-2023)
 

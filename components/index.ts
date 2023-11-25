@@ -64,6 +64,13 @@ export {
   type MenuOption,
   type MenuProps,
 } from './menu';
+export {
+  default as Modal,
+  type ModalElement,
+  type ModalProps,
+  type OpenStateKey,
+  OpenState,
+} from './modal';
 export { default as Pagination, type PaginationProps, type PaginationElement } from './pagination';
 export { default as Popover, type PopoverElement, type PopoverProps } from './popover';
 export { default as Radio, type RadioElement, type RadioOption, type RadioProps } from './radio';
@@ -133,6 +140,7 @@ import type {
   MdElement,
   MenuElement,
   MenuMultipleElement,
+  ModalElement,
   PaginationElement,
   PopoverElement,
   ProviderElement,
@@ -242,6 +250,10 @@ interface CustomElementTags {
    * @since 2.3.0
    */
   'n-provider': ProviderElement;
+  /** 模态框
+   * @since 2.6.0
+   */
+  'n-modal': ModalElement;
 }
 type IntrinsicNekoElement = Transform<CustomElementTags>;
 

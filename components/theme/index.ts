@@ -144,6 +144,7 @@ function createTheme() {
       --text-selection: var(--primary-selection);
       --box-shadow-base: var(--primary-base-shadow);
       --transition-duration: 0.3s;
+      --mask-bg: rgb(0 0 0 / 30%);
 
       /* --transition-timing-function: cubic-bezier(0.94, -0.1, 0.1, 1.2); */
       --transition-timing-function: cubic-bezier(0.645, 0.045, 0.355, 1);
