@@ -7,7 +7,7 @@ const conf: Partial<ConfigType> = {
     domain: 'monako97.github.io',
     nojekyll: true,
   },
-  polyfill: true,
+  polyfill: false,
   basename: `/${PACKAGENAME}`,
   publicPath: `/${PACKAGENAME}/`,
   fixBrowserRouter: {

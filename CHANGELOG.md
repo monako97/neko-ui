@@ -1,19 +1,20 @@
 # Change log
 
-## Last
-
-### 📚 Documentation
-
-- polyfill ([20f4685](https://github.com/monako97/neko-ui/commit/20f4685292c688f0b68acec8f4d97ae6137f9f20))
-- polyfill ([0405059](https://github.com/monako97/neko-ui/commit/04050596a224305deb841ed1c673bce1a5e4705c))
+## [2.6.0](https://github.com/monako97/neko-ui/compare/2.5.1...2.6.0) (11-26-2023)
 
 ### ✨ Features
 
+- n-modal 模态框 ([b0e5009](https://github.com/monako97/neko-ui/commit/b0e50096dc15113661e4c72b0801112776e59dc5))
 - 启动框架更新 ([d92969a](https://github.com/monako97/neko-ui/commit/d92969a8be3c838076945ddf44b72eb1914425c5))
 - 启动框架更新 ([9ade37a](https://github.com/monako97/neko-ui/commit/9ade37a5fbd2260894b54e05c3902491c2699048))
 - 启动框架更新 ([e6be64b](https://github.com/monako97/neko-ui/commit/e6be64bd257654358dc9fb394b8253c3538d14b5))
 - rive ([311d299](https://github.com/monako97/neko-ui/commit/311d299a13e6c9e0de7fa74dc9dd0ee493adee07))
 - input 支持提示大写锁定图标 ([5314ea1](https://github.com/monako97/neko-ui/commit/5314ea163b570e41fdd30d181b3492979f61ccae))
+
+### 📚 Documentation
+
+- polyfill ([20f4685](https://github.com/monako97/neko-ui/commit/20f4685292c688f0b68acec8f4d97ae6137f9f20))
+- polyfill ([0405059](https://github.com/monako97/neko-ui/commit/04050596a224305deb841ed1c673bce1a5e4705c))
 
 ### 🐛 Bug Fixes
 
