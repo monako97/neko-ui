@@ -34,7 +34,7 @@ jobs:
             node_modules
             yarn.lock
           key: node-modules-${{ hashFiles('package.json') }}
-          restore-keys: node-modules-yarn-
+          restore-keys: node-modules-${{ hashFiles('package.json') }}
       - name: 'install'
         run: yarn
       - name: 'lint'
