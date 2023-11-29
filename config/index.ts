@@ -3,6 +3,9 @@ import { type ConfigType, isDev } from '@moneko/core';
 const conf: Partial<ConfigType> = {
   htmlPluginOption: {
     favicon: './site/assets/images/favicon.ico',
+    meta: {
+      keywords: 'neko-ui, neko ui, Neko UI, Web Components, UI libraries, solid-js Components',
+    },
   },
   fallbackCompPath: '@/components/fallback',
   rem: {

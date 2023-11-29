@@ -2,6 +2,10 @@
 
 ## Last
 
+### 📚 Documentation
+
+- fix ([11d692f](https://github.com/monako97/neko-ui/commit/11d692f38fe29c921e12f70e261ce6160911fb47))
+
 ### 🐛 Bug Fixes
 
 - docs ([3ca52b8](https://github.com/monako97/neko-ui/commit/3ca52b8954343038ea95505c37d026ad016e2abb))
