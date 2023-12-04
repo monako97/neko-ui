@@ -27,26 +27,31 @@
     "registry": "https://registry.npmjs.org"
   },
   "keywords": [
-    "web components",
-    "webcomponents",
     "neko-ui",
+    "neko ui",
+    "Neko UI",
+    "web components",
+    "Web Components",
+    "webcomponents",
     "solid-js",
     "solid",
+    "solid-js Components",
+    "UI libraries",
     "ui libraries"
   ],
   "devDependencies": {
     "@commitlint/cli": "17.8.1",
     "@commitlint/config-conventional": "17.8.1",
-    "@moneko/cli": "2.3.1",
-    "@moneko/core": "3.8.5",
+    "@moneko/cli": "2.4.0",
+    "@moneko/core": "3.8.8",
     "@moneko/postcss": "1.2.0",
-    "@moneko/solid": "1.3.0",
+    "@moneko/solid": "1.4.1",
     "@solidjs/testing-library": "0.8.4",
     "@swc/jest": "0.2.29",
     "@testing-library/jest-dom": "6.1.4",
-    "@types/jest": "29.5.6",
+    "@types/jest": "29.5.10",
     "babel-loader": "9.1.3",
-    "eslint-config-neko": "2.1.0",
+    "eslint-config-neko": "2.2.0",
     "eslint-plugin-mdx": "2.2.0",
     "eslint-plugin-solid": "0.13.0",
     "husky": "8.0.3",
@@ -55,8 +60,7 @@
     "n-code-live": "1.0.8",
     "n-katex": "1.0.8",
     "shadow-dom-testing-library": "1.11.0",
-    "stylelint-config-moneko": "1.2.0",
-    "ts-node": "10.9.1"
+    "stylelint-config-moneko": "1.2.1"
   },
   "dependencies": {
     "@moneko/common": "1.2.0",
@@ -64,7 +68,7 @@
     "@swc/helpers": "0.5.3",
     "custom-element-type": "1.0.3",
     "dayjs": "1.11.10",
-    "marked-completed": "1.2.10",
+    "marked-completed": "1.2.12",
     "solid-element": "1.8.0",
     "solid-js": "1.8.6"
   },

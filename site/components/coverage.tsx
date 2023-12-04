@@ -1,6 +1,6 @@
 import { For, createMemo } from 'solid-js';
-import app from '@app';
 import coverages from '@app/coverage';
+import app from '@app/info';
 import { css, cx } from '@moneko/css';
 import { getPathName, useLocation } from '@moneko/solid';
 import { customElement } from 'solid-element';

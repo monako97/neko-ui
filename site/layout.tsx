@@ -1,7 +1,7 @@
 import { For, Show, createEffect, createMemo } from 'solid-js';
 import docs from '@app/docs';
 import { Outlet, getPathName, useLocation } from '@moneko/solid';
-import { theme } from 'neko-ui';
+import { mdStyle, theme } from 'neko-ui';
 import './components';
 import { noBg, styles } from './style';
 import log from '../CHANGELOG.md?raw';
@@ -20,20 +20,28 @@ function App() {
   }
   return (
     <n-provider onScheme={onScheme}>
-      <style>{styles}</style>
+      <style>
+        {styles}
+        {mdStyle}
+        {noBg}
+      </style>
       <site-sider scheme={scheme()} />
       <main ref={box} class="site-doc-main">
         <Show when={!getPathName(location).startsWith('@')}>
           <site-coverage />
         </Show>
         <div class="site-page-view">
-          <n-md css={noBg} not-render={true}>
-            <div>
+          <div class="n-md-box">
+            <div class="n-md-body">
               <Outlet />
             </div>
-          </n-md>
+          </div>
           <site-sandbox-group name={getPathName(location)} />
-          <For each={doc()}>{(e) => e()}</For>
+          <div class="n-md-box">
+            <div class="n-md-body">
+              <For each={doc()}>{(e) => e()}</For>
+            </div>
+          </div>
           <Show when={!getPathName(location)}>
             <n-md text={`[TOC]\n${log}`} />
           </Show>

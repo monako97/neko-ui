@@ -57,6 +57,7 @@ describe('fromSchema', () => {
             type: 'object',
             title: 'items',
             description: '',
+            isItems: true,
             additionalProperties: true,
             name: 'items',
             subTitle: 'object',

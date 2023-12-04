@@ -1,4 +1,4 @@
-import app from '@app';
+import app from '@app/info';
 import { css } from '@moneko/css';
 import { customElement } from 'solid-element';
 

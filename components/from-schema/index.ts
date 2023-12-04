@@ -36,7 +36,6 @@ function fromSchema(schema: Schema, pid?: string): TreeData<string>[] {
     if (Object.prototype.hasOwnProperty.call(properties, k)) {
       const name = k as keyof typeof properties;
       const { properties: _properties, items, type = 'string', ...item } = properties[name];
-
       const node: TreeData<string> = {
         ...item,
         name: name,
@@ -54,6 +53,7 @@ function fromSchema(schema: Schema, pid?: string): TreeData<string>[] {
               items: {
                 ...(items as Schema),
                 title: 'items',
+                isItems: true,
               },
             },
           },

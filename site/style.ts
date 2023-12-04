@@ -1,13 +1,15 @@
 import { css } from '@moneko/css';
 
 export const noBg = css`
-  .n-md-body:has(n-md) {
+  .n-md-body:has(n-md),
+  .n-md-body:empty {
     overflow: initial;
     padding: 0;
     background-color: transparent;
     box-shadow: unset;
     backdrop-filter: unset;
     margin-block-end: 0;
+    empty-cells: hide;
   }
 `;
 

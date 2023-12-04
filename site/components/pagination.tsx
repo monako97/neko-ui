@@ -3,16 +3,13 @@ import { css } from '@moneko/css';
 import { A, getPathName, useLocation } from '@moneko/solid';
 import { customElement } from 'solid-element';
 import { type MyPkg, all, kv } from './sider';
-import type { ComponentOptions } from 'neko-ui';
 
 const style = css`
   .site-pagination {
-    --max-w: unset;
-
     display: flex;
     justify-content: space-between;
     gap: 24px;
-    max-inline-size: var(--max-w);
+    max-inline-size: 1280px;
     margin: auto;
 
     .link {
@@ -71,12 +68,10 @@ const style = css`
   }
 `;
 
-function Pagination(_: object, opt: ComponentOptions<object>) {
+function Pagination() {
   const location = useLocation();
-  let timer: NodeJS.Timeout | undefined;
   const [prev, setPrev] = createSignal<MyPkg>();
   const [next, setNext] = createSignal<MyPkg>();
-  const [w, setW] = createSignal<string>('');
 
   createEffect(() => {
     batch(() => {
@@ -88,35 +83,11 @@ function Pagination(_: object, opt: ComponentOptions<object>) {
       setPrev(kv[_prev as string]);
       setNext(kv[_next as string]);
     });
-    clearTimeout(timer);
-    timer = setTimeout(() => {
-      clearTimeout(timer);
-
-      let el = opt.element.parentElement
-          .querySelector('n-md')
-          ?.shadowRoot?.querySelector('.n-md-body'),
-        rect = el?.getBoundingClientRect();
-
-      el = el?.querySelector('n-md')?.shadowRoot?.querySelector('.n-md-body');
-
-      if (el) {
-        rect = el?.getBoundingClientRect();
-        el = el.querySelector('n-md')?.shadowRoot?.querySelector('.n-md-body');
-      }
-      if (el) {
-        rect = el?.getBoundingClientRect();
-      }
-
-      setW(`.site-pagination {--max-w: ${rect ? `${rect.width}px` : 'unset'};}`);
-    }, 100);
   });
 
   return (
     <>
-      <style>
-        {style}
-        {w()}
-      </style>
+      <style>{style}</style>
       <section class="site-pagination">
         <For each={[prev, next]}>
           {(item) => {

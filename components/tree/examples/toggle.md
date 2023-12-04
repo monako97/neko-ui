@@ -10,7 +10,10 @@ order: 6
   const el = container.querySelector('n-tree');
 
   el.onchange = function (e) {
-    el.value = e.detail;
+    const [key, item] = e.detail;
+  
+    el.value = key;
+    console.log(item);
   };
   el.data = [
     {
@@ -39,7 +42,12 @@ function Demo() {
     <n-tree
       ref={(e) => (el = e)}
       toggle
-      onChange={(e) => (el.value = e.detail)}
+      onChange={(e) => {
+        const [key, item] = e.detail;
+
+        el.value = key;
+        console.log(item);
+      }}
       data={[
         {
           title: '文件地址',

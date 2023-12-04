@@ -1,6 +1,4 @@
-import type { Config } from 'jest';
-
-const config: Config = {
+const config = {
   preset: '@moneko/solid',
   coveragePathIgnorePatterns: ['prism.js', 'code', 'md'],
   testPathIgnorePatterns: ['prism.js', 'code', 'md'],

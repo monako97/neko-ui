@@ -53,7 +53,7 @@ interface TreeBaseProps extends TreeBaseProp {
    */
   multiple?: false;
   /** 选中的值发生修改时的回调函数, 多选模式时入参为数组 */
-  onChange?(key?: string): void;
+  onChange?(key?: string, item?: TreeData): void;
 }
 interface TreeMultipleBaseProps extends TreeBaseProp {
   /** 选中的值 */
@@ -62,7 +62,7 @@ interface TreeMultipleBaseProps extends TreeBaseProp {
    * @default true
    */
   multiple: true;
-  onChange?(key?: string[]): void;
+  onChange?(key?: string[], item?: TreeData): void;
 }
 export interface TreeProps extends TreeBaseProps {
   /** 数据源 */
@@ -119,7 +119,6 @@ function Tree(
     }
     return [];
   });
-
   const path = Symbol('path');
   const pathEnd = Symbol('path-end');
 
@@ -182,7 +181,7 @@ function Tree(
     return [stack[0]];
   }
 
-  function handleChange(key: string) {
+  function handleChange(key: string, item: TreeData) {
     if (!_.readonly && isFunction(_.onChange)) {
       let _current = [...current()];
 
@@ -199,11 +198,11 @@ function Tree(
       } else {
         _current = [key];
       }
-      _.onChange(_.multiple ? _current : _current[0]);
+      _.onChange(_.multiple ? _current : _current[0], item);
     }
   }
   function handleClick(e: MouseEvent, item: TreeData) {
-    handleChange(item.key);
+    handleChange(item.key, item);
     _.onRowClick?.(e, item.key as never, item as TreeData<never>);
   }
   function renderItem(item: TreeData, title: JSX.Element, subTitle?: JSX.Element): JSX.Element[] {
@@ -387,10 +386,10 @@ customElement<TreeProps>(
         readonly: el.readonly,
         toggle: el.toggle,
         direction: el.direction,
-        onChange(key: string) {
+        onChange(key: string, item: TreeData) {
           el.dispatchEvent(
             new CustomEvent('change', {
-              detail: key,
+              detail: [key, item],
             }),
           );
         },

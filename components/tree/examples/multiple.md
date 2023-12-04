@@ -10,8 +10,9 @@ order: 3
   const el = container.querySelector('n-tree');
 
   el.onchange = function (e) {
-    el.value = e.detail;
-    console.log('html', e.detail);
+    const [key, item] = e.detail;
+    el.value = key;
+    console.log('html', item);
   };
   el.data = [
     {
@@ -105,8 +106,9 @@ function Demo() {
       value={[]}
       onChange={(e) => {
         if (el) {
-          el.value = e.detail;
-          console.log('jsx', e.detail);
+          const [key, item] = e.detail;
+          el.value = key;
+          console.log('jsx', item);
         }
       }}
     />

@@ -4,6 +4,7 @@
 
 ### 📚 Documentation
 
+- npm files ([73b5d58](https://github.com/monako97/neko-ui/commit/73b5d58485f43f0416178beb6f170e3b5872ab5d))
 - polyfill false ([5009662](https://github.com/monako97/neko-ui/commit/50096621efc6fadc7a4d57f0be347bca93000f57))
 
 ## [2.6.1](https://github.com/monako97/neko-ui/compare/2.6.0...2.6.1) (11-29-2023)

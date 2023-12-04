@@ -46,7 +46,7 @@
 | bundleAnalyzer    | js打包体积分析                                    | { analyzerMode: string; reportFilename: string; openAnalyzer: false }                           | -                  |
 | prefixJsLoader    | 解析js/ts的前置loader                             | -                                                                                               | -                  |
 | bar               | 是否打包显示进度条                                | -                                                                                               | true               |
-| theme             | 设置主题, 可以在 `@app` 中获取值                  | -                                                                                               | -                  |
+| theme             | 设置主题, 可以在 `@app/info` 中获取值             | -                                                                                               | -                  |
 | seo               | 配置seo优化                                       | {domain: string; nojekyll?: boolean; path?: string;}                                            | true               |
 | done              | 打包完成执行的回调                                | () => void                                                                                      | -                  |
 | mdx               | mdx loader的配置项                                | MDXOptions                                                                                      | -                  |

@@ -25,6 +25,7 @@ export const style = css`
 
   .n-md-toc,
   .n-md-body {
+    border-radius: var(--border-radius);
     background-color: var(--component-bg);
     box-shadow: 0 2px 8px 0 var(--primary-shadow);
   }
@@ -32,7 +33,6 @@ export const style = css`
   .n-md-body {
     overflow: hidden;
     margin: 0 auto 24px;
-    border-radius: var(--border-radius);
     padding: 24px;
     color: var(--text-color);
     max-inline-size: 100%;
@@ -102,7 +102,6 @@ export const style = css`
     display: block;
     overflow-y: auto;
     margin: 0 0 24px;
-    border-radius: var(--border-radius);
     padding: 16px;
     max-inline-size: 200px;
     block-size: fit-content;

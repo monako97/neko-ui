@@ -1,4 +1,5 @@
-/** 虚拟模块 @app
+/** 虚拟模块 @app/info
+ * @description 应用信息
  * @ignore optional
  */
 export interface Api {
