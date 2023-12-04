@@ -4,9 +4,7 @@ const conf: Partial<ConfigType> = {
   devtool: false,
   htmlPluginOption: false,
   entry: resolveProgramPath('components/index.ts'),
-  bar: {
-    fancy: false,
-  },
+  bar: false,
   output: {
     path: resolveProgramPath('umd'),
     filename: 'index.js',
