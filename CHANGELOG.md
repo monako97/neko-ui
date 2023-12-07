@@ -4,6 +4,7 @@
 
 ### 🐛 Bug Fixes
 
+- 修复marked bin缺失; 升级core依赖提升编译性能 ([ce01794](https://github.com/monako97/neko-ui/commit/ce017948827b881a64aff9d62c06bab4c8cfa7e9))
 - umd build ([7f77062](https://github.com/monako97/neko-ui/commit/7f77062d330dfc4e68df844ed27eb16959477bfb))
 
 ### 📚 Documentation

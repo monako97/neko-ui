@@ -9,7 +9,8 @@ description: 当手动传入 `page` 时, 为受控模式
   const el = container.querySelector('n-pagination');
 
   el.onchange = function (e) {
-    e.target.page = e.detail;
+    const [page, size] = e.detail;
+    e.target.page = page;
   };
 </script>
 ```
@@ -20,7 +21,8 @@ description: 当手动传入 `page` 时, 为受控模式
   page-size={10}
   total={85}
   onChange={function (e) {
-    e.target.page = e.detail;
+    const [page, size] = e.detail;
+    e.target.page = page;
   }}
 />
 ```
