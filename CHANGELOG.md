@@ -2,16 +2,17 @@
 
 ## Last
 
+### 📚 Documentation
+
+- 分页器受控案例更新 ([7ad8b3c](https://github.com/monako97/neko-ui/commit/7ad8b3c7de78eee2e62e6b9f07ddf00c37ba0b73))
+- update ([f6a8674](https://github.com/monako97/neko-ui/commit/f6a86741ffaf887a5aacb8d820d3f3b3bf1496ba))
+- npm files ([73b5d58](https://github.com/monako97/neko-ui/commit/73b5d58485f43f0416178beb6f170e3b5872ab5d))
+- polyfill false ([5009662](https://github.com/monako97/neko-ui/commit/50096621efc6fadc7a4d57f0be347bca93000f57))
+
 ### 🐛 Bug Fixes
 
 - 修复marked bin缺失; 升级core依赖提升编译性能 ([ce01794](https://github.com/monako97/neko-ui/commit/ce017948827b881a64aff9d62c06bab4c8cfa7e9))
 - umd build ([7f77062](https://github.com/monako97/neko-ui/commit/7f77062d330dfc4e68df844ed27eb16959477bfb))
-
-### 📚 Documentation
-
-- update ([f6a8674](https://github.com/monako97/neko-ui/commit/f6a86741ffaf887a5aacb8d820d3f3b3bf1496ba))
-- npm files ([73b5d58](https://github.com/monako97/neko-ui/commit/73b5d58485f43f0416178beb6f170e3b5872ab5d))
-- polyfill false ([5009662](https://github.com/monako97/neko-ui/commit/50096621efc6fadc7a4d57f0be347bca93000f57))
 
 ### ✨ Features
 

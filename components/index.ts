@@ -116,7 +116,6 @@ export { default as dayjs } from './date-picker/dayjs';
 export { default as Provider, type ProviderElement, type ProviderProps } from './provider';
 export { hot, customElement, noShadowDOM, withSolid, getCurrentElement } from 'solid-element';
 export type { CustomElement } from 'custom-element-type';
-import { Transform } from 'custom-element-type';
 import type {
   AvatarElement,
   AvatarGroupElement,
@@ -163,6 +162,7 @@ import type {
   TreeStringElement,
   TypographyElement,
 } from '.';
+import type { ICustomElement, Transform } from 'custom-element-type';
 
 /** 组件列表
  * @author monako97
