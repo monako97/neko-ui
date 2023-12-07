@@ -1,6 +1,10 @@
 # Change log
 
-## [2.6.3](https://github.com/monako97/neko-ui/compare/2.6.1...2.6.3) (12-5-2023)
+## Last
+
+### 🐛 Bug Fixes
+
+- umd build ([7f77062](https://github.com/monako97/neko-ui/commit/7f77062d330dfc4e68df844ed27eb16959477bfb))
 
 ### 📚 Documentation
 

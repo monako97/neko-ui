@@ -42,7 +42,7 @@ jobs:
       - name: 'Build UMD'
         run: yarn build config=umd
       - name: 'Build Github Pages'
-        run: yarn build config=github
+        run: yarn build no-es no-lib config=github
       - name: 'Publish to npm'
         run: |
           NPM_PACKAGE_NAME=$(node -p "require('./package.json').name")
