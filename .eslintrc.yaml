@@ -3,15 +3,6 @@ extends:
   - plugin:solid/recommended
 plugins:
   - solid
-overrides:
-  - files:
-      - "*.mdx"
-      - "*.md"
-    extends: plugin:mdx/recommended
-    parserOptions:
-      ecmaVersion: latest
-    rules:
-      solid/jsx-no-undef: 0
 rules:
   import/no-unresolved:
     - 2
@@ -22,5 +13,3 @@ rules:
         - ^@app
         - ^neko-ui
         - ^http
-ignorePatterns: 
-  - components/**/examples/*.mdx
