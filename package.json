@@ -42,9 +42,8 @@
   "devDependencies": {
     "@commitlint/cli": "17.8.1",
     "@commitlint/config-conventional": "17.8.1",
-    "@moneko/cli": "2.5.0",
-    "@moneko/core": "3.9.3",
-    "@moneko/postcss": "1.2.0",
+    "@moneko/cli": "2.6.0",
+    "@moneko/core": "3.9.9",
     "@moneko/solid": "1.4.1",
     "@solidjs/testing-library": "0.8.4",
     "@swc/jest": "0.2.29",
