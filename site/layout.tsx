@@ -1,14 +1,11 @@
 import { For, Show, createEffect, createMemo } from 'solid-js';
 import docs from '@app/docs';
-import { onLCP } from '@moneko/common';
 import { Outlet, getPathName, useLocation } from '@moneko/solid';
 import { mdStyle, theme } from 'neko-ui';
 import './components';
 import { noBg, styles } from './style';
 import log from '../CHANGELOG.md?raw';
 
-// eslint-disable-next-line no-console
-onLCP(console.log.bind(null, 'LCP:'));
 function App() {
   let box: HTMLDivElement | undefined;
   const { isDark, scheme } = theme;
