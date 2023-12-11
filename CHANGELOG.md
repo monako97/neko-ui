@@ -4,6 +4,7 @@
 
 ### 📚 Documentation
 
+- keyword ([fc2060a](https://github.com/monako97/neko-ui/commit/fc2060afd9a69f772d49dd4597111d2364a413e7))
 - csp ([d0ff775](https://github.com/monako97/neko-ui/commit/d0ff7755b072f1c05cf15e44247e4dde9347d433))
 - update ([e816807](https://github.com/monako97/neko-ui/commit/e816807ee760e3f67097d131c4aa7c199326c06d))
 - update ([92aabcf](https://github.com/monako97/neko-ui/commit/92aabcfae459f7dfc418775d2f417d74f035a166))
