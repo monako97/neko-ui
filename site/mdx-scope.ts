@@ -1,6 +1,6 @@
 import { createComponent } from 'solid-js';
 import { Dynamic } from 'solid-js/web';
-import type { MDXComponents } from 'mdx/types';
+import type { MDXComponents } from '@moneko/solid/mdx';
 
 type Props = {
   children: Element;

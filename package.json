@@ -1,6 +1,6 @@
 {
   "name": "neko-ui",
-  "version": "2.6.6",
+  "version": "2.6.7",
   "description": "WebComponents UI Libraries",
   "main": "es/index.js",
   "scripts": {
@@ -61,7 +61,7 @@
     "stylelint-config-moneko": "1.2.1"
   },
   "dependencies": {
-    "@moneko/common": "1.2.0",
+    "@moneko/common": "1.3.0",
     "@moneko/css": "1.0.5",
     "custom-element-type": "1.0.3",
     "dayjs": "1.11.10",

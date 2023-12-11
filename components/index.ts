@@ -56,7 +56,7 @@ export {
   type InputNumberProps,
 } from './input-number';
 export { default as Md, type MdElement, type MdProps } from './md';
-export { style as mdStyle } from './md/style';
+export { default as mdStyle } from './md-style';
 export {
   default as Menu,
   type MenuElement,

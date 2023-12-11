@@ -1,6 +1,6 @@
 import { css } from '@moneko/css';
 
-export const style = css`
+const mdStyle = css`
   :host,
   :root {
     --table-heading-bg: var(--border-color);
@@ -567,3 +567,5 @@ export const style = css`
     }
   }
 `;
+
+export default mdStyle;

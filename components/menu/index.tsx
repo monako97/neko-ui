@@ -8,11 +8,10 @@ import {
   createMemo,
   createSignal,
   mergeProps,
-  onCleanup,
   splitProps,
   untrack,
 } from 'solid-js';
-import { isFunction } from '@moneko/common';
+import { frameCallback, isFunction } from '@moneko/common';
 import { css, cx } from '@moneko/css';
 import { customElement } from 'solid-element';
 import { style } from './style';
@@ -220,11 +219,8 @@ function Menu(props: MenuProps | MenuMultipleProps) {
   });
 
   createEffect(() => {
-    let timer: NodeJS.Timeout | undefined;
-
     if (value()?.length) {
-      timer = setTimeout(() => {
-        clearTimeout(timer);
+      frameCallback(() => {
         const el = ref?.querySelector<HTMLElement>('[aria-selected=true]');
 
         if (el && ref) {
@@ -245,12 +241,8 @@ function Menu(props: MenuProps | MenuMultipleProps) {
             });
           }
         }
-      }, 32);
+      });
     }
-
-    onCleanup(() => {
-      clearTimeout(timer);
-    });
   });
   return (
     <>

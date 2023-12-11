@@ -64,10 +64,19 @@ order: 8
           ?
         </n-popover>
       ),
-      options: [
+      children: [
         { value: '1', label: '张三', suffix: 'zhangsan' },
         { value: '2', label: '李四', suffix: 'lishi' },
         { value: '3', label: '王五', suffix: 'wangwu' },
+      ],
+    },
+    {
+      label: '其他',
+      options: [
+        // 也可以是string
+        { value: '11', label: '张三', suffix: 'zhangsan' },
+        { value: '22', label: '李四', suffix: 'lishi' },
+        { value: '33', label: '王五', suffix: 'wangwu' },
       ],
     },
   ]}

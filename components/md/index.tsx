@@ -2,9 +2,9 @@ import { For, Match, Switch, createComponent, createEffect, mergeProps, onCleanu
 import { css, cx } from '@moneko/css';
 import marked from 'marked-completed';
 import { customElement } from 'solid-element';
-import { style } from './style';
 import '../code';
 import '../img';
+import mdStyle from '../md-style';
 import theme from '../theme';
 import type { CustomElement } from '..';
 
@@ -186,7 +186,7 @@ function MD(_props: MdProps) {
     <>
       <style>
         {baseStyle()}
-        {style}
+        {mdStyle}
         {css(props.css)}
       </style>
       <Switch>
