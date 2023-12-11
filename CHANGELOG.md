@@ -2,6 +2,16 @@
 
 ## Last
 
+### 📚 Documentation
+
+- csp ([d0ff775](https://github.com/monako97/neko-ui/commit/d0ff7755b072f1c05cf15e44247e4dde9347d433))
+- update ([e816807](https://github.com/monako97/neko-ui/commit/e816807ee760e3f67097d131c4aa7c199326c06d))
+- update ([92aabcf](https://github.com/monako97/neko-ui/commit/92aabcfae459f7dfc418775d2f417d74f035a166))
+- 分页器受控案例更新 ([7ad8b3c](https://github.com/monako97/neko-ui/commit/7ad8b3c7de78eee2e62e6b9f07ddf00c37ba0b73))
+- update ([f6a8674](https://github.com/monako97/neko-ui/commit/f6a86741ffaf887a5aacb8d820d3f3b3bf1496ba))
+- npm files ([73b5d58](https://github.com/monako97/neko-ui/commit/73b5d58485f43f0416178beb6f170e3b5872ab5d))
+- polyfill false ([5009662](https://github.com/monako97/neko-ui/commit/50096621efc6fadc7a4d57f0be347bca93000f57))
+
 ### 📦 Code Refactoring
 
 - 拆封 md style、添加 lcp 时间 ([e113f5b](https://github.com/monako97/neko-ui/commit/e113f5b12274e3f34ff87626526e059d329b46e5))
@@ -10,15 +20,6 @@
 
 - 移除helper ([039f27d](https://github.com/monako97/neko-ui/commit/039f27d36958c23d0be51e5b281cc098c77b2e57))
 - tree click提供item ([112406c](https://github.com/monako97/neko-ui/commit/112406c3e73fe8a520529ab81ee0f3b7124fffef))
-
-### 📚 Documentation
-
-- update ([e816807](https://github.com/monako97/neko-ui/commit/e816807ee760e3f67097d131c4aa7c199326c06d))
-- update ([92aabcf](https://github.com/monako97/neko-ui/commit/92aabcfae459f7dfc418775d2f417d74f035a166))
-- 分页器受控案例更新 ([7ad8b3c](https://github.com/monako97/neko-ui/commit/7ad8b3c7de78eee2e62e6b9f07ddf00c37ba0b73))
-- update ([f6a8674](https://github.com/monako97/neko-ui/commit/f6a86741ffaf887a5aacb8d820d3f3b3bf1496ba))
-- npm files ([73b5d58](https://github.com/monako97/neko-ui/commit/73b5d58485f43f0416178beb6f170e3b5872ab5d))
-- polyfill false ([5009662](https://github.com/monako97/neko-ui/commit/50096621efc6fadc7a4d57f0be347bca93000f57))
 
 ### 🐛 Bug Fixes
 
