@@ -4,6 +4,7 @@
 
 ### 📚 Documentation
 
+- app-entry锈化 ([b5c7cff](https://github.com/monako97/neko-ui/commit/b5c7cffa8cc5a6bfa997e453818338e6f00bd2eb))
 - scp ([e82512a](https://github.com/monako97/neko-ui/commit/e82512a968df82cf0aacbc5bb55d8969fadc6ec1))
 - keyword ([fc2060a](https://github.com/monako97/neko-ui/commit/fc2060afd9a69f772d49dd4597111d2364a413e7))
 - csp ([d0ff775](https://github.com/monako97/neko-ui/commit/d0ff7755b072f1c05cf15e44247e4dde9347d433))
