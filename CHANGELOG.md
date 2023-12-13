@@ -2,6 +2,13 @@
 
 ## Last
 
+### 🐛 Bug Fixes
+
+- docs types ([05cfac9](https://github.com/monako97/neko-ui/commit/05cfac9def92f661f08ebde90ae98dab1bf881c2))
+- types ([5d3c70f](https://github.com/monako97/neko-ui/commit/5d3c70f724ad04ee5b0bbd73ddaec234f645ac7e))
+- 修复marked bin缺失; 升级core依赖提升编译性能 ([ce01794](https://github.com/monako97/neko-ui/commit/ce017948827b881a64aff9d62c06bab4c8cfa7e9))
+- umd build ([7f77062](https://github.com/monako97/neko-ui/commit/7f77062d330dfc4e68df844ed27eb16959477bfb))
+
 ### 📚 Documentation
 
 - app-entry锈化 ([b5c7cff](https://github.com/monako97/neko-ui/commit/b5c7cffa8cc5a6bfa997e453818338e6f00bd2eb))
@@ -23,12 +30,6 @@
 
 - 移除helper ([039f27d](https://github.com/monako97/neko-ui/commit/039f27d36958c23d0be51e5b281cc098c77b2e57))
 - tree click提供item ([112406c](https://github.com/monako97/neko-ui/commit/112406c3e73fe8a520529ab81ee0f3b7124fffef))
-
-### 🐛 Bug Fixes
-
-- types ([5d3c70f](https://github.com/monako97/neko-ui/commit/5d3c70f724ad04ee5b0bbd73ddaec234f645ac7e))
-- 修复marked bin缺失; 升级core依赖提升编译性能 ([ce01794](https://github.com/monako97/neko-ui/commit/ce017948827b881a64aff9d62c06bab4c8cfa7e9))
-- umd build ([7f77062](https://github.com/monako97/neko-ui/commit/7f77062d330dfc4e68df844ed27eb16959477bfb))
 
 ## [2.6.1](https://github.com/monako97/neko-ui/compare/2.6.0...2.6.1) (11-29-2023)
 
