@@ -2,15 +2,9 @@
 
 ## Last
 
-### 🐛 Bug Fixes
-
-- docs types ([05cfac9](https://github.com/monako97/neko-ui/commit/05cfac9def92f661f08ebde90ae98dab1bf881c2))
-- types ([5d3c70f](https://github.com/monako97/neko-ui/commit/5d3c70f724ad04ee5b0bbd73ddaec234f645ac7e))
-- 修复marked bin缺失; 升级core依赖提升编译性能 ([ce01794](https://github.com/monako97/neko-ui/commit/ce017948827b881a64aff9d62c06bab4c8cfa7e9))
-- umd build ([7f77062](https://github.com/monako97/neko-ui/commit/7f77062d330dfc4e68df844ed27eb16959477bfb))
-
 ### 📚 Documentation
 
+- 工程配套 ([f03bc07](https://github.com/monako97/neko-ui/commit/f03bc07e970bd1798e6cfd0fb83e99214c06c435))
 - app-entry锈化 ([b5c7cff](https://github.com/monako97/neko-ui/commit/b5c7cffa8cc5a6bfa997e453818338e6f00bd2eb))
 - scp ([e82512a](https://github.com/monako97/neko-ui/commit/e82512a968df82cf0aacbc5bb55d8969fadc6ec1))
 - keyword ([fc2060a](https://github.com/monako97/neko-ui/commit/fc2060afd9a69f772d49dd4597111d2364a413e7))
@@ -21,6 +15,13 @@
 - update ([f6a8674](https://github.com/monako97/neko-ui/commit/f6a86741ffaf887a5aacb8d820d3f3b3bf1496ba))
 - npm files ([73b5d58](https://github.com/monako97/neko-ui/commit/73b5d58485f43f0416178beb6f170e3b5872ab5d))
 - polyfill false ([5009662](https://github.com/monako97/neko-ui/commit/50096621efc6fadc7a4d57f0be347bca93000f57))
+
+### 🐛 Bug Fixes
+
+- docs types ([05cfac9](https://github.com/monako97/neko-ui/commit/05cfac9def92f661f08ebde90ae98dab1bf881c2))
+- types ([5d3c70f](https://github.com/monako97/neko-ui/commit/5d3c70f724ad04ee5b0bbd73ddaec234f645ac7e))
+- 修复marked bin缺失; 升级core依赖提升编译性能 ([ce01794](https://github.com/monako97/neko-ui/commit/ce017948827b881a64aff9d62c06bab4c8cfa7e9))
+- umd build ([7f77062](https://github.com/monako97/neko-ui/commit/7f77062d330dfc4e68df844ed27eb16959477bfb))
 
 ### 📦 Code Refactoring
 
