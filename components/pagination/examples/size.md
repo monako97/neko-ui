@@ -1,7 +1,7 @@
 ---
 title: 不同的尺寸
 description: Pagination 内置有大、中、小三种尺寸。通过 `size` 进行设置; 默认为 'normal'。
-order: 7
+order: 4
 ---
 
 ```html

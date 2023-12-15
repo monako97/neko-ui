@@ -1,12 +1,16 @@
 import { For, Show, createEffect, createMemo } from 'solid-js';
 import docs from '@app/docs';
-import { Outlet, getPathName, useLocation } from '@moneko/solid';
+import { type RouteProps, getPathName, useLocation } from '@moneko/solid';
 import { mdStyle, theme } from 'neko-ui';
-import './components';
-import { noBg, styles } from './style';
-import log from '../CHANGELOG.md?raw';
+import './layout.global.less';
+import ChangeLog from '../CHANGELOG.md';
+import Coverage from '@/components/coverage';
+import Footer from '@/components/footer';
+import Pagination from '@/components/pagination';
+import { SandboxGroup } from '@/components/sandbox';
+import Sider from '@/components/sider';
 
-function App() {
+function App(p: RouteProps<string>) {
   let box: HTMLDivElement | undefined;
   const { isDark, scheme } = theme;
   const location = useLocation();
@@ -20,34 +24,32 @@ function App() {
   }
   return (
     <n-provider onScheme={onScheme}>
-      <style>
-        {styles}
-        {mdStyle}
-        {noBg}
-      </style>
-      <site-sider scheme={scheme()} />
+      <style>{mdStyle}</style>
+      <Sider />
       <main ref={box} class="site-doc-main">
         <Show when={!getPathName(location).startsWith('@')}>
-          <site-coverage />
+          <Coverage />
         </Show>
         <div class="site-page-view">
           <div class="n-md-box">
-            <div class="n-md-body">
-              <Outlet />
-            </div>
+            <div class="n-md-body">{p.children}</div>
           </div>
-          <site-sandbox-group name={getPathName(location)} />
+          <SandboxGroup name={getPathName(location)} />
           <div class="n-md-box">
             <div class="n-md-body">
               <For each={doc()}>{(e) => e()}</For>
             </div>
           </div>
           <Show when={!getPathName(location)}>
-            <n-md text={`[TOC]\n${log}`} />
+            <div class="n-md-box">
+              <div class="n-md-body">
+                <ChangeLog />
+              </div>
+            </div>
           </Show>
-          <site-pagination />
+          <Pagination />
         </div>
-        <site-footer />
+        <Footer />
       </main>
       <n-back-top css=".back-top {position: fixed;}" />
       <Show when={scheme() === 'light' || !isDark()}>

@@ -1,6 +1,7 @@
 ---
 title: 受控
 description: 当手动传入 `page` 时, 为受控模式
+order: 2
 ---
 
 ```html

@@ -22,5 +22,5 @@ export interface RouteConfig extends IRouteDefinition {
   /** 子菜单 */
   props?: Record<string, Any>;
   /** 元数据 */
-  meta?: Record<string, string | number | boolean>;
+  metadata?: Record<string, string | number | boolean>;
 }

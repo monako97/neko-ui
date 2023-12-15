@@ -154,7 +154,11 @@ const mdStyle = css`
     opacity: 0.4;
   }
 
-  a[href]::before {
+  a[href]:has(img, n-img)::before {
+    content: none !important;
+  }
+
+  a[href]:not(.site-pagination-link)::before {
     position: absolute;
     inset-block-end: 0;
     inset-inline-start: 0;
@@ -168,10 +172,6 @@ const mdStyle = css`
     transition-property: transform, background-color;
     opacity: 0.5;
     content: '';
-  }
-
-  a[href]:has(img, n-img)::before {
-    content: none !important;
   }
 
   a:hover::before {

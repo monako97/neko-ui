@@ -1,6 +1,7 @@
 ---
 title: 显示数据总量
 description: 通过设置 `totalText` 展示总共有多少数据。
+order: 3
 ---
 
 ```html
