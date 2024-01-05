@@ -130,3 +130,7 @@ body::before {
     margin-block-end: 0;
     empty-cells: hide;
 }
+
+.n-md-body n-skeleton + n-skeleton {
+    margin-block-start: 16px;
+}

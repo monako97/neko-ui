@@ -2,12 +2,12 @@ import { For, Show, createEffect, createMemo } from 'solid-js';
 import docs from '@app/docs';
 import { type RouteProps, getPathName, useLocation } from '@moneko/solid';
 import { mdStyle, theme } from 'neko-ui';
-import './layout.global.less';
+import './layout.global.css';
 import ChangeLog from '../CHANGELOG.md';
+import '@/components';
 import Coverage from '@/components/coverage';
 import Footer from '@/components/footer';
 import Pagination from '@/components/pagination';
-import { SandboxGroup } from '@/components/sandbox';
 import Sider from '@/components/sider';
 
 function App(p: RouteProps<string>) {
@@ -34,7 +34,7 @@ function App(p: RouteProps<string>) {
           <div class="n-md-box">
             <div class="n-md-body">{p.children}</div>
           </div>
-          <SandboxGroup name={getPathName(location)} />
+          <site-sandbox-group name={getPathName(location)} />
           <div class="n-md-box">
             <div class="n-md-body">
               <For each={doc()}>{(e) => e()}</For>

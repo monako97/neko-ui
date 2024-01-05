@@ -1,3 +1,5 @@
+'use client';
+
 export { default as Avatar, type AvatarElement, type AvatarProps } from './avatar';
 export {
   default as AvatarGroup,

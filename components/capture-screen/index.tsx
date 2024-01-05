@@ -152,7 +152,7 @@ function CaptureScreen(_: CaptureScreenProps) {
         case 'paused': // 暂停
           mr.resume();
           break;
-        case 'recording': // 录制中
+        // case 'recording': // 录制中
         default:
           mr.pause();
           break;
@@ -367,7 +367,7 @@ customElement<CaptureScreenProps>(
         onStopRecorder() {
           el.dispatchEvent(
             new CustomEvent('stoprecorder', {
-              detail: null,
+              detail: void 0,
             }),
           );
         },
@@ -395,7 +395,7 @@ customElement<CaptureScreenProps>(
         onStopCapture() {
           el.dispatchEvent(
             new CustomEvent('stopcapture', {
-              detail: null,
+              detail: void 0,
             }),
           );
         },

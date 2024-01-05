@@ -1,7 +1,6 @@
 import { For } from 'solid-js';
-import mdxScope from '@app/mdx-scope';
-import './home.global.less';
-import Readme from '../README.md';
+import { style } from './home.style';
+import Readme from '../README.md?raw';
 
 function Home() {
   const colors = ['primary', 'warning', 'error', 'success'],
@@ -9,7 +8,8 @@ function Home() {
 
   return (
     <>
-      <Readme components={mdxScope} />
+      <style>{style}</style>
+      <n-md text={Readme} not-render={true} picture-viewer={false} />
       <div class="site-colors">
         <For each={colors} fallback={<div>No items</div>}>
           {(c: string) => {

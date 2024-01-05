@@ -95,11 +95,11 @@ type Posi = {
 };
 
 type EventMap = {
-  click: string | null;
-  hover: string | null;
-  contextMenu: string | null;
-  none: null;
-  [key: string]: string | null;
+  click?: string;
+  hover?: string;
+  contextMenu?: string;
+  none?: never;
+  [key: string]: string | undefined;
 };
 function Popover(props: PopoverProps) {
   const { isDark, baseStyle } = theme;
@@ -267,13 +267,13 @@ function Popover(props: PopoverProps) {
       click: 'onMouseDown',
       hover: 'onMouseEnter',
       contextMenu: 'onContextMenu',
-      none: null,
+      none: void 0,
     };
     const closeEvent: EventMap = {
       hover: 'onMouseLeave',
-      click: null,
-      contextMenu: null,
-      none: null,
+      click: void 0,
+      contextMenu: void 0,
+      none: void 0,
     };
 
     const openFn = openEvent[local.trigger];

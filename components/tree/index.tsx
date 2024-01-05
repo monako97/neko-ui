@@ -1,97 +1,20 @@
-import {
-  For,
-  createComponent,
-  createEffect,
-  createMemo,
-  createSignal,
-  mergeProps,
-  onCleanup,
-  onMount,
-} from 'solid-js';
-import { isFunction, isString, passiveSupported } from '@moneko/common';
+import { For, createEffect, createMemo, createSignal } from 'solid-js';
+import { frameCallback, isFunction, isString } from '@moneko/common';
 import { css, cx } from '@moneko/css';
-import { customElement } from 'solid-element';
+import './register';
 import { style } from './style';
-import schema, { type Schema } from '../from-schema';
+import schema from '../from-schema';
 import theme from '../theme';
-import type { BasicConfig, CustomElement } from '..';
-
-export interface TreeBaseProp {
-  /** 自定义类名 */
-  class?: string;
-  /** 自定义样式表 */
-  css?: string;
-  /** 尺寸
-   * @default 'normal'
-   */
-  size?: BasicConfig['size'];
-  /** 只读 */
-  readonly?: boolean;
-  /** 开启取消选中, 仅多选模式生效 */
-  toggle?: boolean;
-  /** 方向
-   * @default 'ltr'
-   */
-  direction?: 'rtl' | 'ltr';
-  /** 点击行时的回调函数 */
-  onRowClick?: (e: MouseEvent, key: string, item: TreeData) => void;
-  /** 双击行时的回调函数 */
-  onRowDoubleClick?: (e: MouseEvent, key: string, item: TreeData) => void;
-  /** 自定义渲染行 */
-  renderRow?: (item: TreeData, title: JSX.Element, subTitle?: JSX.Element) => JSX.Element[];
-  /** 开启此选项支持 `JSONSchema`
-   * @default false
-   */
-  fromSchema?: false;
-}
-
-interface TreeBaseProps extends TreeBaseProp {
-  /** 选中的值, 多选模式时为数组 */
-  value?: string;
-  /** 多选模式
-   * @default false
-   */
-  multiple?: false;
-  /** 选中的值发生修改时的回调函数, 多选模式时入参为数组 */
-  onChange?(key?: string, item?: TreeData): void;
-}
-interface TreeMultipleBaseProps extends TreeBaseProp {
-  /** 选中的值 */
-  value?: string[];
-  /** 多选模式
-   * @default true
-   */
-  multiple: true;
-  onChange?(key?: string[], item?: TreeData): void;
-}
-export interface TreeProps extends TreeBaseProps {
-  /** 数据源 */
-  data: TreeData[];
-}
-export interface TreeSchemaProps extends Omit<TreeBaseProps, 'fromSchema'> {
-  /** 开启此选项支持 `JSONSchema` */
-  fromSchema: true;
-  /** 数据源 */
-  data: Schema;
-}
-export interface TreeStringProps extends TreeBaseProps {
-  /** 数据源 */
-  data: string;
-}
-export interface TreeMultipleProps extends TreeMultipleBaseProps {
-  /** 数据源 */
-  data: TreeData[];
-}
-export interface TreeMultipleSchemaProps extends Omit<TreeMultipleBaseProps, 'fromSchema'> {
-  /** 开启此选项支持 `JSONSchema` */
-  fromSchema: true;
-  /** 数据源 */
-  data: Schema;
-}
-export interface TreeMultipleStringProps extends TreeMultipleBaseProps {
-  /** 数据源 */
-  data: string;
-}
+import type {
+  TreeData,
+  TreeMultipleProps,
+  TreeMultipleSchemaProps,
+  TreeMultipleStringProps,
+  TreeProps,
+  TreeSchemaProps,
+  TreeStack,
+  TreeStringProps,
+} from './type';
 
 function Tree(
   _:
@@ -108,7 +31,6 @@ function Tree(
     large: 10,
   };
   const { baseStyle } = theme;
-
   let el: HTMLUListElement | undefined;
   const [lines, setLines] = createSignal<string[]>([]);
   const [treeData, setTreeData] = createSignal<TreeData[]>([]);
@@ -245,34 +167,6 @@ function Tree(
       </For>
     );
   }
-  function updateLine(list: string[]) {
-    const len = list.length;
-
-    if (el && len) {
-      const prefixSize = sizeCnt[_.size || 'normal'];
-
-      for (let i = 0; i < len; i++) {
-        const al: NodeListOf<HTMLLIElement> = el.querySelectorAll(`li[data-path="${list[i]}"]`);
-
-        if (al.length) {
-          const rect1 = al[0].getBoundingClientRect();
-          let sideLen = rect1.height / 2 + prefixSize;
-
-          if (al.length > 1) {
-            const { bottom, height, top } = al[1].getBoundingClientRect();
-
-            sideLen = i === 0 ? top - rect1.top : bottom - rect1.top - height / 2 + prefixSize;
-            al[1].style.setProperty('--c', 'none');
-          } else if (i === 0) {
-            al[0].style.setProperty('--c', 'none');
-          }
-          if (al.length !== 1 || i !== 0) {
-            al[0].style.setProperty('--line', `${Math.abs(sideLen)}px`);
-          }
-        }
-      }
-    }
-  }
   createEffect(() => {
     const data = _.fromSchema ? schema(_.data) : isString(_.data) ? parseTree(_.data) : _.data;
 
@@ -281,28 +175,37 @@ function Tree(
   });
 
   createEffect(() => {
-    const line = lines();
+    const list = lines();
+    const size = _.size || 'normal';
 
-    const timer = setTimeout(() => {
-      clearTimeout(timer);
-      updateLine(line);
-    }, 0);
+    frameCallback(() => {
+      const len = list.length;
 
-    if (line.length) {
-      window.addEventListener('resize', updateLine.bind(null, line), {
-        passive: passiveSupported,
-      });
-    }
-    onCleanup(() => {
-      clearTimeout(timer);
-      window.removeEventListener('resize', updateLine.bind(null, lines()), false);
+      if (el && len) {
+        const prefixSize = sizeCnt[size];
+
+        for (let i = 0; i < len; i++) {
+          const al: NodeListOf<HTMLLIElement> = el.querySelectorAll(`li[data-path="${list[i]}"]`);
+
+          if (al.length) {
+            const rect1 = al[0].getBoundingClientRect();
+            let sideLen = rect1.height / 2 + prefixSize;
+
+            if (al.length > 1) {
+              const { bottom, height, top } = al[1].getBoundingClientRect();
+
+              sideLen = i === 0 ? top - rect1.top : bottom - rect1.top - height / 2 + prefixSize;
+              al[1].style.setProperty('--c', 'none');
+            } else if (i === 0) {
+              al[0].style.setProperty('--c', 'none');
+            }
+            if (al.length !== 1 || i !== 0) {
+              al[0].style.setProperty('--line', `${Math.abs(sideLen)}px`);
+            }
+          }
+        }
+      }
     });
-  });
-  onMount(() => {
-    const timer = setTimeout(() => {
-      clearTimeout(timer);
-      updateLine(lines());
-    }, 32);
   });
 
   return (
@@ -318,104 +221,6 @@ function Tree(
     </>
   );
 }
-type CustomEvents = 'onChange' | 'onRowDoubleClick' | 'onRowClick';
 
-export type TreeElement = CustomElement<TreeProps, CustomEvents>;
-export type TreeSchemaElement = CustomElement<TreeSchemaProps, CustomEvents>;
-export type TreeStringElement = CustomElement<TreeStringProps, CustomEvents>;
-export type TreeMultipleElement = CustomElement<TreeMultipleProps, CustomEvents>;
-export type TreeMultipleSchemaElement = CustomElement<TreeMultipleSchemaProps, CustomEvents>;
-export type TreeMultipleStringElement = CustomElement<TreeMultipleStringProps, CustomEvents>;
-
-interface TreeStack extends TreeData {
-  /** 深度 */
-  depth?: number;
-}
-
-export interface TreeData<T = string> {
-  /** key(唯一值) */
-  key: T;
-  /** 属性 */
-  name?: string;
-  /** 标题 */
-  title?: string;
-  /** 副标题 */
-  subTitle?: string;
-  /** 详细描述 */
-  description?: string;
-  /** 子项 */
-  children?: TreeData<T>[];
-  [key: string | number | symbol]:
-    | T
-    | string
-    | number
-    | symbol
-    | boolean
-    | TreeData<T>[]
-    | undefined;
-}
-
-customElement<TreeProps>(
-  'n-tree',
-  {
-    fromSchema: void 0,
-    size: void 0,
-    data: [],
-    multiple: void 0,
-    value: void 0,
-    onChange: void 0,
-    class: void 0,
-    css: void 0,
-    readonly: void 0,
-    toggle: void 0,
-    direction: void 0,
-    onRowClick: void 0,
-    onRowDoubleClick: void 0,
-    renderRow: void 0,
-  },
-  (_, opt) => {
-    const el = opt.element;
-    const props = mergeProps(
-      {
-        data: el.data,
-        value: el.value,
-        multiple: el.multiple,
-        fromSchema: el.fromSchema,
-        size: el.size,
-        css: el.css,
-        readonly: el.readonly,
-        toggle: el.toggle,
-        direction: el.direction,
-        onChange(key: string, item: TreeData) {
-          el.dispatchEvent(
-            new CustomEvent('change', {
-              detail: [key, item],
-            }),
-          );
-        },
-        onRowClick(e: MouseEvent, key: string, item: TreeData) {
-          el.dispatchEvent(
-            new CustomEvent('rowclick', {
-              detail: [e, key, item],
-            }),
-          );
-        },
-        onRowDoubleClick(e: MouseEvent, key: string, item: TreeData) {
-          el.dispatchEvent(
-            new CustomEvent('rowdoubleclick', {
-              detail: [e, key, item],
-            }),
-          );
-        },
-      },
-      _,
-    );
-
-    createEffect(() => {
-      el.removeAttribute('css');
-      el.removeAttribute('data');
-    });
-    return createComponent(Tree, props);
-  },
-);
+export * from './type';
 export default Tree;

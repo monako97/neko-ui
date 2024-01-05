@@ -3,7 +3,7 @@ import app from '@app/info';
 import routes, { type RouteConfig } from '@app/routes';
 import { css } from '@moneko/css';
 import { A, getPathName, useLocation } from '@moneko/solid';
-import { type ColorScheme, theme } from 'neko-ui';
+import { theme } from 'neko-ui';
 import './sider.global.less';
 
 const switchThemeCss = css`
@@ -188,8 +188,3 @@ function Sider() {
 }
 
 export default Sider;
-
-export interface SiderElement {
-  ref?: SiderElement | { current: SiderElement | null };
-  scheme?: keyof typeof ColorScheme;
-}

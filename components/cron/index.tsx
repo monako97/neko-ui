@@ -206,19 +206,19 @@ function Cron(props: CronProps) {
     setActive(e.detail[0] as ActiveTab);
   }
   function parseVal<T extends ActiveTab>(item: CronType[T], isWeek?: boolean) {
-    if (item.value.indexOf('-') > -1) {
+    if (item.value.includes('-')) {
       item.type = 'period';
       const period = item.value.split('-');
 
       item.start = Number(period[0]);
       item.end = Number(period[1]);
-    } else if (item.value.indexOf('W') > -1) {
+    } else if (item.value.includes('W')) {
       item.type = 'closeWorkDay';
       (item as CronType['day']).closeWorkDay = Number(item.value.split('W')[0]) || 1;
-    } else if (item.value.indexOf('L') > -1) {
+    } else if (item.value.includes('L')) {
       item.type = 'last';
       (item as CronType['day']).last = Number(item.value.split('L')[0]) || 1;
-    } else if (item.value.indexOf(isWeek ? '#' : '/') > -1) {
+    } else if (item.value.includes(isWeek ? '#' : '/')) {
       item.type = 'beginInterval';
       const beginInterval = item.value.split(isWeek ? '#' : '/');
 
@@ -229,7 +229,7 @@ function Cron(props: CronProps) {
         item.begin = Number(beginInterval[0]);
         item.beginEvery = Number(beginInterval[1]);
       }
-    } else if (item.value.indexOf(',') > -1 || /^[0-9]+$/.test(item.value)) {
+    } else if (item.value.includes(',') || /^[0-9]+$/.test(item.value)) {
       item.type = 'some';
       item.some = item.value.split(',').map(Number);
     } else {
