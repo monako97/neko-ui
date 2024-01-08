@@ -2,6 +2,11 @@
 
 ## Last
 
+### 📦 Code Refactoring
+
+- core ([c6e4724](https://github.com/monako97/neko-ui/commit/c6e4724fe61b85423dd5513cb68953d8a011d38a))
+- 拆封 md style、添加 lcp 时间 ([e113f5b](https://github.com/monako97/neko-ui/commit/e113f5b12274e3f34ff87626526e059d329b46e5))
+
 ### 📚 Documentation
 
 - tree ([f7b1653](https://github.com/monako97/neko-ui/commit/f7b165337a8249627aa06f39603abad8e27aef5b))
@@ -25,10 +30,6 @@
 - types ([5d3c70f](https://github.com/monako97/neko-ui/commit/5d3c70f724ad04ee5b0bbd73ddaec234f645ac7e))
 - 修复marked bin缺失; 升级core依赖提升编译性能 ([ce01794](https://github.com/monako97/neko-ui/commit/ce017948827b881a64aff9d62c06bab4c8cfa7e9))
 - umd build ([7f77062](https://github.com/monako97/neko-ui/commit/7f77062d330dfc4e68df844ed27eb16959477bfb))
-
-### 📦 Code Refactoring
-
-- 拆封 md style、添加 lcp 时间 ([e113f5b](https://github.com/monako97/neko-ui/commit/e113f5b12274e3f34ff87626526e059d329b46e5))
 
 ### ✨ Features
 

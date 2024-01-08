@@ -35,14 +35,6 @@ const conf: Partial<ConfigType> = {
       transform: '${member}',
     },
   },
-  proxy: {
-    '/solar/': {
-      target: 'http://172.1.2.202:8007/',
-      changeOrigin: true,
-      pathRewrite: { '^/solar/': '/' },
-      secure: false,
-    },
-  },
 };
 
 if (!isDev) {
