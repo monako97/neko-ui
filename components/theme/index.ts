@@ -99,13 +99,13 @@ function createTheme() {
     `;
   });
   const darkPrimary = createMemo(() =>
-    generateTheme(dark().primary, { name: 'primary', dark: true }),
+    generateTheme(dark().primary, { name: 'primary', dark: true })
   );
   const darkWarning = createMemo(() =>
-    generateTheme(dark().warning, { name: 'warning', dark: true }),
+    generateTheme(dark().warning, { name: 'warning', dark: true })
   );
   const darkSuccess = createMemo(() =>
-    generateTheme(dark().success, { name: 'success', dark: true }),
+    generateTheme(dark().success, { name: 'success', dark: true })
   );
   const darkError = createMemo(() => generateTheme(dark().error, { name: 'error', dark: true }));
   const darkCss = createMemo(() => {
@@ -126,6 +126,7 @@ function createTheme() {
         --primary-selection: rgb(255 255 255 / 5%);
         --primary-details-bg: rgb(255 255 255 / 3%);
         --primary-component-bg: #000;
+        --modal-component-bg: rgb(30 30 30 / 80%);
       }
     `;
   });
@@ -144,7 +145,9 @@ function createTheme() {
       --text-selection: var(--primary-selection);
       --box-shadow-base: var(--primary-base-shadow);
       --transition-duration: 0.3s;
-      --mask-bg: rgb(0 0 0 / 30%);
+      --mask-bg: rgb(0 0 0 / 5%);
+      --modal-component-bg: rgb(255 255 255 / 80%);
+      --modal-box-shadow: 0 5px 35px rgb(0 0 0 / 10%);
 
       /* --transition-timing-function: cubic-bezier(0.94, -0.1, 0.1, 1.2); */
       --transition-timing-function: cubic-bezier(0.645, 0.045, 0.355, 1);

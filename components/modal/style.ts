@@ -40,15 +40,18 @@ export const style = css`
     margin: auto;
     border-radius: var(--border-radius);
     padding: 20px 24px;
-    background-color: var(--component-bg);
+    background-color: var(--modal-component-bg);
     opacity: var(--opacity);
-    box-shadow: var(--box-shadow-base);
+    box-shadow: var(--modal-box-shadow);
     inline-size: 520px;
     max-inline-size: calc(100% - 32px);
     transform: translate3d(var(--x), var(--y), 1px) scale3d(var(--scale), var(--scale), 1);
     transition-property: transform, opacity;
     transition-duration: 0.2s;
     transition-timing-function: var(--timing);
+    backdrop-filter: blur(16px);
+    /* stylelint-disable-next-line */
+    -webkit-backdrop-filter: blur(10px);
   }
 
   .open {

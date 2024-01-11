@@ -1,5 +1,6 @@
 .temp_cache
 .idea
+.nova
 .vscode
 .DS_Store
 .swc
