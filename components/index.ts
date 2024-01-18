@@ -74,6 +74,11 @@ export {
   type OpenStateKey,
   OpenState,
 } from './modal';
+export {
+  default as notification,
+  type NotificationType,
+  type NotificationProps,
+} from './notification';
 export { default as Pagination, type PaginationProps, type PaginationElement } from './pagination';
 export { default as Popover, type PopoverElement, type PopoverProps } from './popover';
 export { default as Radio, type RadioElement, type RadioOption, type RadioProps } from './radio';

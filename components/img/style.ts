@@ -58,8 +58,6 @@ export const style = css`
       block-size: 100%;
       pointer-events: none;
       backdrop-filter: blur(50px);
-      /* stylelint-disable-next-line */
-      -webkit-backdrop-filter: blur(50px);
     }
 
     &:hover {

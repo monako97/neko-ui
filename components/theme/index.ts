@@ -34,6 +34,7 @@ export function generateTheme(base: string, option: ThemeOption): Record<string,
     // [`--${option.name}-outline`]: obj[90],
     [`--${option.name}-outline`]: mixColor(obj[90], obj[40], 5),
     [`--${option.name}-selection`]: obj[90],
+    [`--${option.name}-notify-bg`]: colorParse(obj[90]).setAlpha(0.8).toRgbaString(),
     [`--on-${option.name}-selection`]: obj[10],
     [`--${option.name}-shadow`]: baseColor.setAlpha(0.12).toRgbaString(),
     [`--${option.name}-details-bg`]: obj[95],
@@ -99,13 +100,13 @@ function createTheme() {
     `;
   });
   const darkPrimary = createMemo(() =>
-    generateTheme(dark().primary, { name: 'primary', dark: true })
+    generateTheme(dark().primary, { name: 'primary', dark: true }),
   );
   const darkWarning = createMemo(() =>
-    generateTheme(dark().warning, { name: 'warning', dark: true })
+    generateTheme(dark().warning, { name: 'warning', dark: true }),
   );
   const darkSuccess = createMemo(() =>
-    generateTheme(dark().success, { name: 'success', dark: true })
+    generateTheme(dark().success, { name: 'success', dark: true }),
   );
   const darkError = createMemo(() => generateTheme(dark().error, { name: 'error', dark: true }));
   const darkCss = createMemo(() => {
@@ -148,8 +149,7 @@ function createTheme() {
       --mask-bg: rgb(0 0 0 / 5%);
       --modal-component-bg: rgb(255 255 255 / 80%);
       --modal-box-shadow: 0 5px 35px rgb(0 0 0 / 10%);
-
-      /* --transition-timing-function: cubic-bezier(0.94, -0.1, 0.1, 1.2); */
+      --notification-box-shadow: 0 4px 16px rgb(0 0 0 / 5%);
       --transition-timing-function: cubic-bezier(0.645, 0.045, 0.355, 1);
 
       font-size: var(--font-size);

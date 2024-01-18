@@ -27,9 +27,7 @@ export const style = css`
     min-block-size: 40px;
     cursor: pointer;
     animation: back-top-fade-in 1s forwards;
-    backdrop-filter: blur(16px);
-    /* stylelint-disable-next-line */
-    -webkit-backdrop-filter: blur(16px);
+    backdrop-filter: blur(10px);
     pointer-events: all;
 
     &::before {

@@ -343,9 +343,7 @@ const prismCss = createRoot(() => {
       box-shadow: 0 1px 5px rgb(0 0 0 / 10%);
       line-height: 24px;
       text-transform: uppercase;
-      backdrop-filter: blur(16px);
-      /* stylelint-disable-next-line */
-      -webkit-backdrop-filter: blur(16px);
+      backdrop-filter: blur(10px);
       content: attr(data-lang) '';
       transition-property: background-color, border-color, color;
     }

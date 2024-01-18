@@ -9,9 +9,7 @@ const mdStyle = css`
   .n-photo-header > span,
   .n-md-body,
   .n-md-toc {
-    backdrop-filter: blur(16px);
-    /* stylelint-disable-next-line */
-    -webkit-backdrop-filter: blur(16px);
+    backdrop-filter: blur(10px);
   }
 
   .n-md-box:not(.site-doc-main) {

@@ -32,8 +32,6 @@ export const style = css`
 
   .mask-blur::before {
     backdrop-filter: blur(10px);
-    /* stylelint-disable-next-line */
-    -webkit-backdrop-filter: blur(10px);
   }
 
   .modal-content {
@@ -49,9 +47,7 @@ export const style = css`
     transition-property: transform, opacity;
     transition-duration: 0.2s;
     transition-timing-function: var(--timing);
-    backdrop-filter: blur(16px);
-    /* stylelint-disable-next-line */
-    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
   }
 
   .open {

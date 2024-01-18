@@ -1,12 +1,14 @@
 {
   "name": "neko-ui",
-  "version": "2.6.8",
+  "version": "2.7.0",
   "description": "WebComponents UI Libraries",
   "main": "es/index.js",
   "scripts": {
     "build": "mo build library solid",
     "changelog": "mo changelog CHANGELOG.md && git add CHANGELOG.md",
-    "lint": "mo eslint components && mo eslint site && mo stylelint components && mo stylelint site && jest --coverage",
+    "prelint": "mo eslint components && mo eslint site",
+    "stylelint": "mo stylelint components && mo stylelint site",
+    "lint": "jest --coverage",
     "precommit": "yarn lint && yarn changelog",
     "ppprepare": "mo githooks pre-commit=\"yarn precommit\" commit-msg=\"npx --no -- commitlint --edit \\${1}\"",
     "start": "rm -rf lib && rm -rf es && mo start library solid",
@@ -43,10 +45,10 @@
     "@commitlint/cli": "18.4.4",
     "@commitlint/config-conventional": "18.4.4",
     "@moneko/cli": "2.7.0",
-    "@moneko/core": "3.9.21",
-    "@moneko/solid": "1.5.6",
+    "@moneko/core": "3.9.22",
+    "@moneko/solid": "1.6.1",
     "@solidjs/testing-library": "0.8.5",
-    "@swc/jest": "0.2.29",
+    "@swc/jest": "0.2.30",
     "@testing-library/jest-dom": "6.2.0",
     "@types/jest": "29.5.11",
     "babel-loader": "9.1.3",
@@ -57,17 +59,16 @@
     "jest-environment-jsdom": "29.7.0",
     "n-code-live": "1.1.0",
     "n-katex": "1.0.8",
-    "shadow-dom-testing-library": "1.11.2",
-    "stylelint-config-moneko": "2.0.1"
+    "shadow-dom-testing-library": "1.11.2"
   },
   "dependencies": {
     "@moneko/common": "1.3.1",
-    "@moneko/css": "1.0.8",
+    "@moneko/css": "1.1.1",
     "custom-element-type": "1.0.3",
     "dayjs": "1.11.10",
     "marked-completed": "1.2.14",
     "solid-element": "1.8.0",
-    "solid-js": "1.8.8"
+    "solid-js": "1.8.11"
   },
   "files": [
     "es",
@@ -79,6 +80,7 @@
     "LICENSE"
   ],
   "browserslist": [
-    "Chrome >= 86"
+    "Chrome >= 86",
+    "Safari >= 15"
   ]
 }
