@@ -44,16 +44,16 @@ const Demo = () => {
   const handleOpen = (type: string) => {
     switch (type) {
         case 'primary':
-          notification.primary(`${btn.type} message`, 5000);
+          notification.primary(`${type} message`, 5000);
           break;
         case 'warning':
-          notification.warning(`${btn.type} message`, 2000);
+          notification.warning(`${type} message`, 2000);
           break;
         case 'error':
-          notification.error(`${btn.type} message`, 0, true);
+          notification.error(`${type} message`, 0, true);
           break;
         case 'success':
-          notification.success(`${btn.type} message`, 4000);
+          notification.success(`${type} message`, 4000);
           break;
         default:
           notification.info('info message', 1000);
