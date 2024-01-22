@@ -40,6 +40,7 @@ order: 2
 
 ```jsx
 const Demo = () => {
+  const { notification } = NekoUI;
   const handleOpen = (type: string) => {
     switch (type) {
         case 'primary':

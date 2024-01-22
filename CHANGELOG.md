@@ -1,6 +1,12 @@
 # Change log
 
-## Last
+## [2.7.0](https://github.com/monako97/neko-ui/compare/2.6.1...2.7.0) (1-19-2024)
+
+### ✨ Features
+
+- notification ([f0aa47a](https://github.com/monako97/neko-ui/commit/f0aa47a6e048aca4d6cbddf9d652e085e397ae1e))
+- 移除helper ([039f27d](https://github.com/monako97/neko-ui/commit/039f27d36958c23d0be51e5b281cc098c77b2e57))
+- tree click提供item ([112406c](https://github.com/monako97/neko-ui/commit/112406c3e73fe8a520529ab81ee0f3b7124fffef))
 
 ### 📦 Code Refactoring
 
@@ -33,11 +39,6 @@
 - update ([f6a8674](https://github.com/monako97/neko-ui/commit/f6a86741ffaf887a5aacb8d820d3f3b3bf1496ba))
 - npm files ([73b5d58](https://github.com/monako97/neko-ui/commit/73b5d58485f43f0416178beb6f170e3b5872ab5d))
 - polyfill false ([5009662](https://github.com/monako97/neko-ui/commit/50096621efc6fadc7a4d57f0be347bca93000f57))
-
-### ✨ Features
-
-- 移除helper ([039f27d](https://github.com/monako97/neko-ui/commit/039f27d36958c23d0be51e5b281cc098c77b2e57))
-- tree click提供item ([112406c](https://github.com/monako97/neko-ui/commit/112406c3e73fe8a520529ab81ee0f3b7124fffef))
 
 ## [2.6.1](https://github.com/monako97/neko-ui/compare/2.6.0...2.6.1) (11-29-2023)
 
