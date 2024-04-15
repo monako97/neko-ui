@@ -1,6 +1,5 @@
 import { For, Show, createEffect, createMemo } from 'solid-js';
 import docs from '@app/docs';
-import env from '@app/env';
 import { type RouteProps, getPathName, useLocation } from '@moneko/solid';
 import { mdStyle, theme } from 'neko-ui';
 import './layout.global.css';
@@ -11,7 +10,6 @@ import Pagination from '@/components/pagination';
 import '@/components/sandbox';
 import Sider from '@/components/sider';
 
-console.log(env);
 function App(p: RouteProps<string>) {
   let box: HTMLDivElement | undefined;
   const { isDark, scheme } = theme;

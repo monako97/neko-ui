@@ -6,7 +6,8 @@
   "scripts": {
     "build": "mo build library solid",
     "changelog": "mo changelog CHANGELOG.md && git add CHANGELOG.md",
-    "lint": "mo eslint {components,site} && mo stylelint {components,site}",
+    "lint": "mo eslint components && mo eslint site",
+    "postlint": "mo stylelint components && mo stylelint site",
     "precommit": "npm run lint && jest --coverage && npm run changelog",
     "prepare": "mo githooks pre-commit=\"npm run precommit\" commit-msg=\"npx --no -- commitlint --edit \\${1}\"",
     "start": "rm -rf lib && rm -rf es && mo start library solid",

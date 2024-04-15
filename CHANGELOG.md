@@ -2,6 +2,10 @@
 
 ## Last
 
+### ✨ Features
+
+- code支持swift代码高亮 ([4b43fa0](https://github.com/monako97/neko-ui/commit/4b43fa09250050f32503f6596a2d292609245b6c))
+
 ### 📚 Documentation
 
 - fix notification 不同的通知类型 ([4931704](https://github.com/monako97/neko-ui/commit/4931704e10baaf3f2bf8b53d0189745b5bd2bc01))
