@@ -19,30 +19,25 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: 'Checkout Code'
-        uses: actions/checkout@v3
+      - name: 'Checkout'
+        uses: actions/checkout@v4
       - name: 'Setup nodejs'
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
-          node-version: 18
+          node-version: 20
           registry-url: 'https://registry.npmjs.org'
-      - name: Cache Node Modules
-        id: cache-node-modules
-        uses: actions/cache@v3.0.11
+      - name: 'Setup pnpm'
+        uses: pnpm/action-setup@v3
         with:
-          path:  |
-            node_modules
-            yarn.lock
-          key: node-modules-${{ hashFiles('package.json') }}
-          restore-keys: node-modules-${{ hashFiles('package.json') }}
+          version: 8
       - name: 'install'
-        run: yarn
+        run: npm install
       - name: 'lint'
-        run: yarn lint
+        run: npm run lint
       - name: 'Build UMD'
-        run: yarn build config=umd
+        run: npm run build --config=umd
       - name: 'Build Github Pages'
-        run: yarn build no-es no-lib config=github
+        run: npm run build no-es no-lib --config=github
       - name: 'Publish to npm'
         run: |
           NPM_PACKAGE_NAME=$(node -p "require('./package.json').name")

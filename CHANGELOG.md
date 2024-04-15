@@ -4,6 +4,7 @@
 
 ### 📚 Documentation
 
+- fix notification 不同的通知类型 ([4931704](https://github.com/monako97/neko-ui/commit/4931704e10baaf3f2bf8b53d0189745b5bd2bc01))
 - fix notification 不同的通知类型 ([5be2a0d](https://github.com/monako97/neko-ui/commit/5be2a0d3ebfb2cee0f7b2909d779f21c389a6c37))
 
 ## [2.7.0](https://github.com/monako97/neko-ui/compare/2.6.1...2.7.0) (1-19-2024)

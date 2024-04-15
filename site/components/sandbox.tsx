@@ -1,6 +1,7 @@
 import * as Solid from 'solid-js';
-import { type ExampleModule } from '@app/example';
+import examples, { type ExampleModule } from '@app/example';
 import Fallback from '@app/fallback';
+import { isFunction } from '@moneko/common';
 import { cx } from '@moneko/css';
 import * as NekoUI from 'neko-ui';
 import { customElement } from 'solid-element';
@@ -156,10 +157,11 @@ interface SandboxGroupProps {
 
 function SandboxGroup(props: SandboxGroupProps) {
   async function load(name: string) {
-    let box: () => Solid.JSX.Element;
+    let box: () => Solid.JSX.Element = () => null;
+    const exampleModule = examples[`@app/example/${name}`];
 
-    try {
-      const resp = (await import(`@app/example/${name}`)).default || [];
+    if (name.length > 0 && isFunction(exampleModule)) {
+      const resp = (await exampleModule()).default || [];
 
       box = () => (
         <div class="sandbox-group">
@@ -170,8 +172,6 @@ function SandboxGroup(props: SandboxGroupProps) {
           </For>
         </div>
       );
-    } catch (error) {
-      box = () => null;
     }
     return {
       default: box,

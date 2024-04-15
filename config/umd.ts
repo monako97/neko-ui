@@ -1,12 +1,12 @@
-import { type ConfigType, resolveProgramPath } from '@moneko/core';
+import { type ConfigType, resolveProgram } from '@moneko/core';
 
 const conf: Partial<ConfigType> = {
   devtool: false,
   htmlPluginOption: false,
-  entry: resolveProgramPath('components/index.ts'),
+  entry: resolveProgram('components/index.ts'),
   bar: false,
   output: {
-    path: resolveProgramPath('umd'),
+    path: resolveProgram('umd'),
     filename: 'index.js',
     library: {
       name: 'NekoUI',

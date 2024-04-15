@@ -1,4 +1,5 @@
 import { For, Match, Switch, createComponent, createEffect, mergeProps, onCleanup } from 'solid-js';
+import { frameCallback } from '@moneko/common';
 import { css, cx } from '@moneko/css';
 import marked from 'marked-completed';
 import { customElement } from 'solid-element';
@@ -90,12 +91,15 @@ function MD(_props: MdProps) {
   //   work.terminate();
   // });
   createEffect(() => {
-    postMessage({
-      text: props.text,
-      langLineNumber: props.lineNumber,
-      langToolbar: props.tools,
-      pictureViewer: props.pictureViewer,
-    });
+    const call = () =>
+      postMessage({
+        text: props.text,
+        langLineNumber: props.lineNumber,
+        langToolbar: props.tools,
+        pictureViewer: props.pictureViewer,
+      });
+
+    frameCallback(call);
   });
   let list: HTMLAnchorElement[] = [];
   let heading: HTMLHeadingElement[] = [];
@@ -193,7 +197,7 @@ function MD(_props: MdProps) {
         <Match when={(props.children as [])?.length}>
           <article class="n-md-box" part="box">
             <div class="n-md-body" part="body">
-              <For each={props.children as []}>{(e) => <>{e}</>}</For>
+              <For each={props.children as []}>{(e) => e}</For>
             </div>
           </article>
         </Match>

@@ -1,0 +1,52 @@
+---
+type: 工程配套
+title: 环境变量
+subtitle: 'Env'
+icon: 🔧
+order: 10
+---
+
+# 环境变量
+
+## 通过 `.env` 文件设定环境变量
+
+1. `.env/.env` 默认配置, 启用其它环境时将在此基础上继承
+
+```toml
+APPVERSION=1
+```
+
+2. `.env/.dev.env` 开发环境时的配置, 会继承默认环境; `npm run start`
+```toml
+ENV_MODE=开发环境的环境变量
+```
+
+3. `.env/.prod.env` 生产环境时的配置, 会继承默认环境; `npm run build`
+```toml
+ENV_MODE=生产环境的环境变量
+```
+
+## 通过 `config/*.ts` 配置文件设定环境变量
+
+```ts
+import type { ConfigType } from '@moneko/core';
+
+const conf: Partial<ConfigType> = {
+  env: {
+    ENV_MODE: '**环境的环境变量'
+  }
+};
+
+export default conf;
+```
+
+## 读取
+ 
+1. 从 `@app/env` 模块读取
+
+```js
+import env from '@app/env';
+console.log(env);
+```
+
+2. 从 `process.env` 读取

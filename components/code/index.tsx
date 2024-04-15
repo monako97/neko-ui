@@ -77,8 +77,10 @@ function Code(props: CodeProps) {
     if (/^diff-([\w-]+)/i.test(_lang)) {
       window.Prism.languages[_lang] = window.Prism.languages.diff;
     }
+    const language = window.Prism.languages[_lang] || window.Prism.languages.markup;
+
     update({
-      data: window.Prism.highlight(opt.code, window.Prism.languages[_lang], _lang),
+      data: window.Prism.highlight(opt.code, language, _lang),
     });
   }
 
