@@ -2,6 +2,12 @@
 
 ## Last
 
+### 📚 Documentation
+
+- nojekyll替换为jekyll ([3051a91](https://github.com/monako97/neko-ui/commit/3051a91d07afd01dde526dace9a2a159f2c7bba0))
+- fix notification 不同的通知类型 ([4931704](https://github.com/monako97/neko-ui/commit/4931704e10baaf3f2bf8b53d0189745b5bd2bc01))
+- fix notification 不同的通知类型 ([5be2a0d](https://github.com/monako97/neko-ui/commit/5be2a0d3ebfb2cee0f7b2909d779f21c389a6c37))
+
 ### 🐛 Bug Fixes
 
 - github action lint ([9f6ccd4](https://github.com/monako97/neko-ui/commit/9f6ccd48831d89df0b23580b9d5200b328300521))
@@ -9,11 +15,6 @@
 ### ✨ Features
 
 - code支持swift代码高亮 ([4b43fa0](https://github.com/monako97/neko-ui/commit/4b43fa09250050f32503f6596a2d292609245b6c))
-
-### 📚 Documentation
-
-- fix notification 不同的通知类型 ([4931704](https://github.com/monako97/neko-ui/commit/4931704e10baaf3f2bf8b53d0189745b5bd2bc01))
-- fix notification 不同的通知类型 ([5be2a0d](https://github.com/monako97/neko-ui/commit/5be2a0d3ebfb2cee0f7b2909d779f21c389a6c37))
 
 ## [2.7.0](https://github.com/monako97/neko-ui/compare/2.6.1...2.7.0) (1-19-2024)
 
