@@ -44,7 +44,7 @@
     "@commitlint/cli": "19.2.2",
     "@commitlint/config-conventional": "19.2.2",
     "@moneko/cli": "2.9.3",
-    "@moneko/core": "3.11.2",
+    "@moneko/core": "3.11.3",
     "@moneko/solid": "1.7.6",
     "@solidjs/testing-library": "0.8.7",
     "@swc/jest": "0.2.36",

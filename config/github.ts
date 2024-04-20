@@ -5,7 +5,7 @@ const conf: Partial<ConfigType> = {
   bar: false,
   seo: {
     domain: 'monako97.github.io',
-    nojekyll: true,
+    jekyll: true,
   },
   basename: `/${PACKAGENAME}`,
   publicPath: `/${PACKAGENAME}/`,

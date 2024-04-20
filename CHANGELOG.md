@@ -2,6 +2,10 @@
 
 ## Last
 
+### 🐛 Bug Fixes
+
+- github action lint ([9f6ccd4](https://github.com/monako97/neko-ui/commit/9f6ccd48831d89df0b23580b9d5200b328300521))
+
 ### ✨ Features
 
 - code支持swift代码高亮 ([4b43fa0](https://github.com/monako97/neko-ui/commit/4b43fa09250050f32503f6596a2d292609245b6c))
