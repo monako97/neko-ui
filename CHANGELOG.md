@@ -4,6 +4,7 @@
 
 ### 📚 Documentation
 
+- 更新actions ([87de451](https://github.com/monako97/neko-ui/commit/87de451365a869fca0c16ae5698f3870b77dd580))
 - nojekyll替换为jekyll ([3051a91](https://github.com/monako97/neko-ui/commit/3051a91d07afd01dde526dace9a2a159f2c7bba0))
 - fix notification 不同的通知类型 ([4931704](https://github.com/monako97/neko-ui/commit/4931704e10baaf3f2bf8b53d0189745b5bd2bc01))
 - fix notification 不同的通知类型 ([5be2a0d](https://github.com/monako97/neko-ui/commit/5be2a0d3ebfb2cee0f7b2909d779f21c389a6c37))
