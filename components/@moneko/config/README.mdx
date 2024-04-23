@@ -23,7 +23,7 @@ order: 10
 | swcrc             | swc 配置项                                        | SwcConfig \| ((isDev: boolean) => SwcConfig)                                                    | -                  |
 | entry             | 额外的 entry, 比如兼容 es10 的 object.fromentries | `Record<string, string>`                                                                          | -                  |
 | minifier          | js、css 压缩配置                                  | \{ type?: swc\|tsc; options?: [SwcOptions][1] \| [TerserOptions][2]; css?: cssnano \| parcelCss} | -                  |
-| env               | 环境变量, 可通过 process.env 获取                 | `Record<string, any>`                                                                             | -                  |
+| env               | 环境变量, 可通过 `process.env` 或 `@app/env` 获取                 | `Record<string, any>`                                                                             | -                  |
 | sourceMap         | sourceMap 配置                                    | SourceMapDevToolPluginOptions \| false                                                          | -                  |
 | devtool           | devtool 配置                                      | Configuration['devtool']                                                                        | -                  |
 | alias             | 路径别名映射                                      | Record\<string, string>                                                                          | -                  |

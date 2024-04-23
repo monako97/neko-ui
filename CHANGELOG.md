@@ -1,9 +1,10 @@
 # Change log
 
-## Last
+## [2.7.1](https://github.com/monako97/neko-ui/compare/2.7.0...2.7.1) (4-20-2024)
 
 ### 📚 Documentation
 
+- 更新actions ([0e9990e](https://github.com/monako97/neko-ui/commit/0e9990e1a850c47485175cb1e70ad9332aff26bf))
 - 更新actions ([0904b1a](https://github.com/monako97/neko-ui/commit/0904b1a4e03be89bf67982a68f9e9aaccb1a6b69))
 - 更新actions ([87de451](https://github.com/monako97/neko-ui/commit/87de451365a869fca0c16ae5698f3870b77dd580))
 - nojekyll替换为jekyll ([3051a91](https://github.com/monako97/neko-ui/commit/3051a91d07afd01dde526dace9a2a159f2c7bba0))
