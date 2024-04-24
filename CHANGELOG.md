@@ -2,6 +2,10 @@
 
 ## Last
 
+### 📚 Documentation
+
+- 更新 @moneko/core ([b77eb1c](https://github.com/monako97/neko-ui/commit/b77eb1c0fbaba716d12bfb44761af2701445dc15))
+
 ### ✨ Features
 
 - 更新 solid-js@1.8.17 ([5947d12](https://github.com/monako97/neko-ui/commit/5947d122353dc58406ba48266020d0814adddc74))
