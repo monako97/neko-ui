@@ -1,5 +1,11 @@
 # Change log
 
+## Last
+
+### ✨ Features
+
+- 更新 solid-js@1.8.17 ([5947d12](https://github.com/monako97/neko-ui/commit/5947d122353dc58406ba48266020d0814adddc74))
+
 ## [2.7.1](https://github.com/monako97/neko-ui/compare/2.7.0...2.7.1) (4-20-2024)
 
 ### 📚 Documentation
