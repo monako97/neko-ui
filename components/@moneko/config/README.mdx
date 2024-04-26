@@ -16,50 +16,49 @@ order: 10
 
 ## ConfigType
 
-| 属性              | 说明                                              | 类型                                                                                            | 默认值             |
-| ----------------- | ------------------------------------------------- | ----------------------------------------------------------------------------------------------- | ------------------ |
-| clean             | 清除过时的打包文件                                | boolean                                                                                         | true               |
-| compiler          | 编译方式                                          | swc\|tsc                                                                                        | swc                |
-| swcrc             | swc 配置项                                        | SwcConfig \| ((isDev: boolean) => SwcConfig)                                                    | -                  |
-| entry             | 额外的 entry, 比如兼容 es10 的 object.fromentries | `Record<string, string>`                                                                          | -                  |
-| minifier          | js、css 压缩配置                                  | \{ type?: swc\|tsc; options?: [SwcOptions][1] \| [TerserOptions][2]; css?: cssnano \| parcelCss} | -                  |
-| env               | 环境变量, 可通过 `process.env` 或 `@app/env` 获取                 | `Record<string, any>`                                                                             | -                  |
-| sourceMap         | sourceMap 配置                                    | SourceMapDevToolPluginOptions \| false                                                          | -                  |
-| devtool           | devtool 配置                                      | Configuration['devtool']                                                                        | -                  |
-| alias             | 路径别名映射                                      | Record\<string, string>                                                                          | -                  |
-| basename          | 根路由                                            | string                                                                                          | /                  |
-| publicPath        | 资源根路径                                        | string                                                                                          | auto               |
+| 属性              | 说明                                              | 类型                                                                                             | 默认值              |
+| ----------------- | ------------------------------------------------- | ------------------------------------------------------------------------------------------------ | ------------------- |
+| clean             | 清除过时的打包文件                                | boolean                                                                                          | true                |
+| compiler          | 编译方式                                          | swc\|tsc                                                                                         | swc                 |
+| swcrc             | swc 配置项                                        | SwcConfig \| ((isDev: boolean) => SwcConfig)                                                     | -                   |
+| entry             | 额外的 entry, 比如兼容 es10 的 object.fromentries | `Record<string, string>`                                                                         | -                   |
+| minifier          | js、css 压缩配置                                  | \{ type?: swc\|tsc; options?: [SwcOptions][1] \| [TerserOptions][2]; css?: cssnano \| parcelCss} | -                   |
+| env               | 环境变量, 可通过 `process.env` 或 `@app/env` 获取 | `Record<string, any>`                                                                            | -                   |
+| sourceMap         | sourceMap 配置                                    | SourceMapDevToolPluginOptions \| false                                                           | -                   |
+| devtool           | devtool 配置                                      | Configuration['devtool']                                                                         | -                   |
+| alias             | 路径别名映射                                      | Record\<string, string>                                                                          | -                   |
+| basename          | 根路由                                            | string                                                                                           | /                   |
+| publicPath        | 资源根路径                                        | string                                                                                           | auto                |
 | rem               | 设置与设计图相匹配的rem                           | \{designSize: number}                                                                            | \{designSize: 1680} |
-| fallbackCompPath  | 自定义容错组件路径                                | string                                                                                          | -                  |
-| modifyVars        | less 全局变量                                     | `Record<string, string>`                                                                          | -                  |
-| prefixCls         | 类名前缀                                          | string                                                                                          | n                  |
-| moduleRules       | 自定义 webpack module rules                       |                                                                                                 | -                  |
-| cssModules        | node_modules 中, 需要开启 cssModules 的模块       | string[]                                                                                        | -                  |
-| importOnDemand    | 按需引入                                          | SwcImportOnDemandTransform \| TsImportPlugin.Options                                            | -                  |
-| proxy             | 服务器代理                                        | `Record<string, string>`                                                                          | -                  |
-| cacheDirectory    | 自定义缓存目录，为 false 时，不使用缓存           | string \| false                                                                                 | -                  |
-| devServer         | 开发服务器设置                                    | `Record<string, string>`                                                                          | -                  |
-| assetHtml         | 自定义插入 html 的 js 和 css                      | AssetHtmlOptions[]                                                                              | -                  |
-| htmlPluginOption  | HtmlWebpackPlugin Option                          | HtmlWebpackPluginOptions                                                                        | -                  |
-| routerMode        | 路由模式                                          | hash \| browser \| memory                                                                       | browser            |
-| plugins           | webpack 插件                                      |                                                                                                 | -                  |
-| splitChunk        | 对生产 chunk 进行拆分                             | false \| OptimizationSplitChunksOptions                                                         | -                  |
-| output            | 编译输出路径                                      | string                                                                                          | -                  |
-| runtimeChunk      | 拆分 runtime                                      | boolean\|single \| multiple\| \{ name?: string \| Function };                                    | -                  |
-| moduleFederation  | 模块联邦                                          | ModuleFederationOption[]                                                                        | -                  |
-| externals         | 跳过编译的模块                                    | string[]                                                                                        | -                  |
-| rulesInclude      | 需要进入到规则的模块或者位置                      | \{ less?: string[]; css?: string[]; js?: string[]; media?: string[]; fonts?: string[]; }         | -                  |
-| bundleAnalyzer    | js打包体积分析                                    | \{ analyzerMode: string; reportFilename: string; openAnalyzer: false }                           | -                  |
-| prefixJsLoader    | 解析js/ts的前置loader                             | -                                                                                               | -                  |
-| bar               | 是否打包显示进度条                                | -                                                                                               | true               |
-| theme             | 设置主题, 可以在 `@app/info` 中获取值             | -                                                                                               | -                  |
-| seo               | 配置seo优化                                       | \{domain: string; jekyll?: boolean; path?: string;}                                            | true               |
-| done              | 打包完成执行的回调                                | () => void                                                                                      | -                  |
-| mdx               | mdx loader的配置项                                | MDXOptions                                                                                      | -                  |
-| jsxDomExpressions | 使用solidjs时jsx-dom-expressions的配置项          | JsxDomExpressions                                                                               | -                  |
-| virtualModule     | 自定义虚拟模块                                    | `Record<string, string \| object>`                                                                | -                  |
-| normalizeCss      | 是否使用 normalize css                            | boolean                                                                                         | true               |
-
+| fallbackCompPath  | 自定义容错组件路径                                | string                                                                                           | -                   |
+| modifyVars        | less 全局变量                                     | `Record<string, string>`                                                                         | -                   |
+| prefixCls         | 类名前缀                                          | string                                                                                           | n                   |
+| moduleRules       | 自定义 webpack module rules                       |                                                                                                  | -                   |
+| cssModules        | node_modules 中, 需要开启 cssModules 的模块       | string[]                                                                                         | -                   |
+| importOnDemand    | 按需引入                                          | SwcImportOnDemandTransform \| TsImportPlugin.Options                                             | -                   |
+| proxy             | 服务器代理                                        | `Record<string, string>`                                                                         | -                   |
+| cacheDirectory    | 自定义缓存目录，为 false 时，不使用缓存           | string \| false                                                                                  | -                   |
+| devServer         | 开发服务器设置                                    | `Record<string, string>`                                                                         | -                   |
+| copy              | 需要拷贝到输出目录的文件                          | CopyPluginOption                                                                                 | -                   |
+| htmlPluginOption  | HtmlWebpackPlugin Option                          | HtmlWebpackPluginOptions                                                                         | -                   |
+| routerMode        | 路由模式                                          | hash \| browser \| memory                                                                        | browser             |
+| plugins           | webpack 插件                                      |                                                                                                  | -                   |
+| splitChunk        | 对生产 chunk 进行拆分                             | false \| OptimizationSplitChunksOptions                                                          | -                   |
+| output            | 编译输出路径                                      | string                                                                                           | -                   |
+| runtimeChunk      | 拆分 runtime                                      | boolean\|single \| multiple\| \{ name?: string \| Function };                                    | -                   |
+| moduleFederation  | 模块联邦                                          | ModuleFederationOption[]                                                                         | -                   |
+| externals         | 跳过编译的模块                                    | string[]                                                                                         | -                   |
+| rulesInclude      | 需要进入到规则的模块或者位置                      | \{ less?: string[]; css?: string[]; js?: string[]; media?: string[]; fonts?: string[]; }         | -                   |
+| bundleAnalyzer    | js打包体积分析                                    | \{ analyzerMode: string; reportFilename: string; openAnalyzer: false }                           | -                   |
+| prefixJsLoader    | 解析js/ts的前置loader                             | -                                                                                                | -                   |
+| bar               | 是否打包显示进度条                                | -                                                                                                | true                |
+| theme             | 设置主题, 可以在 `@app/info` 中获取值             | -                                                                                                | -                   |
+| seo               | 配置seo优化                                       | \{domain: string; jekyll?: boolean; path?: string;}                                              | true                |
+| done              | 打包完成执行的回调                                | () => void                                                                                       | -                   |
+| mdx               | mdx loader的配置项                                | MDXOptions                                                                                       | -                   |
+| jsxDomExpressions | 使用solidjs时jsx-dom-expressions的配置项          | JsxDomExpressions                                                                                | -                   |
+| virtualModule     | 自定义虚拟模块                                    | `Record<string, string \| object>`                                                               | -                   |
+| normalizeCss      | 是否使用 normalize css                            | boolean                                                                                          | true                |
 
 ### SwcOptions
 
@@ -92,7 +91,6 @@ order: 10
 | kebab_case  | 连字符拼写法: 各个单词或缩写之间以`-`做间隔                                                                |
 | dashed_case | 破折号式: 每个单词全小写或全大写，多单词使用`-`隔开                                                        |
 | snake_case  | 蛇形命名: 每个单词全小写或全大写，多单词使用`_`隔开                                                        |
-
 
 ### 配置案例 MemberTransformer
 
@@ -132,11 +130,10 @@ import isFunction from 'lodash/isFunction';
 | filename | 打包的模块文件名                               | string                                               | `remote_entry.js` |
 | name     | 模块名称，唯一性，不能重名                     | string                                               | -                 |
 | remotes  | 表示作为 Host 时, 去消费哪些 Remote            | `ModuleFederationRemotes`[]                          | -                 |
-| exposes  | 当前模块具体导出去的内容                       | `string` \| \{ name: `string`; path: `string`; }      | -                 |
+| exposes  | 当前模块具体导出去的内容                       | `string` \| \{ name: `string`; path: `string`; }     | -                 |
 | shared   | 优先用 Host 的依赖, 如果 Host 没有, 再用自己的 | `Record<string, SharedConfig \| string>`\|`string`[] | -                 |
-| library  | library                                        | \{ type: `var` \| `string`; name: `string`; }         | -                 |
+| library  | library                                        | \{ type: `var` \| `string`; name: `string`; }        | -                 |
 | runtime  | runtime                                        | string                                               | -                 |
-
 
 ### ModuleFederationRemotes
 
