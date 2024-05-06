@@ -5,10 +5,24 @@ order: 1
 ---
 
 ```html
+<n-button size="small" type="primary">点击添加字段</n-button>
 <n-tree></n-tree>
 <script>
   const el = container.querySelector('n-tree');
+  const btn = container.querySelector('n-button');
 
+  btn.onclick = function () {
+    el.data = [
+      ...el.data,
+      {
+        key: Math.random().toString(32).slice(2),
+        name: 'new Field',
+        title: '新字段',
+        subTitle: '(new)',
+        s: 1,
+      },
+    ];
+  };
   el.data = [
     {
       title: '文件名称',

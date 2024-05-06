@@ -1,6 +1,12 @@
 # Change log
 
-## Last
+## [2.7.4](https://github.com/monako97/neko-ui/compare/2.7.1...2.7.4) (5-6-2024)
+
+### ✨ Features
+
+- update dayjs ([d862d12](https://github.com/monako97/neko-ui/commit/d862d12b43a653e711461b7369d5f540c3f9f007))
+- update @moneko/css ([b27e32e](https://github.com/monako97/neko-ui/commit/b27e32e328f3722c88a73d3369f1a024c70e7a3c))
+- 更新 solid-js@1.8.17 ([5947d12](https://github.com/monako97/neko-ui/commit/5947d122353dc58406ba48266020d0814adddc74))
 
 ### 📚 Documentation
 
@@ -8,11 +14,6 @@
 - feat copy ([8badba6](https://github.com/monako97/neko-ui/commit/8badba6b2e36643823285c81a993d413aaa7a1d2))
 - fix jekyll ([6bb89c7](https://github.com/monako97/neko-ui/commit/6bb89c7bef284a2e7b85de9d12baff74b795f8e3))
 - 更新 @moneko/core ([b77eb1c](https://github.com/monako97/neko-ui/commit/b77eb1c0fbaba716d12bfb44761af2701445dc15))
-
-### ✨ Features
-
-- update @moneko/css ([b27e32e](https://github.com/monako97/neko-ui/commit/b27e32e328f3722c88a73d3369f1a024c70e7a3c))
-- 更新 solid-js@1.8.17 ([5947d12](https://github.com/monako97/neko-ui/commit/5947d122353dc58406ba48266020d0814adddc74))
 
 ## [2.7.1](https://github.com/monako97/neko-ui/compare/2.7.0...2.7.1) (4-20-2024)
 

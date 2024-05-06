@@ -54,6 +54,8 @@ function Tree(
       const item = tree[i],
         isLast = i === lastIdx;
 
+      item[path] = void 0;
+      item[pathEnd] = void 0;
       if (i === 0 || isLast) {
         item[path] = frist.key + (tree.length === 1 ? '' : `>${last.key}`);
         if (isLast) {
