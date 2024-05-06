@@ -1,0 +1,17 @@
+components/*
+config/*
+coverage/*
+docs/*
+es/@moneko/*
+es/@introduce/*
+lib/@moneko/*
+lib/@introduce/*
+site/*
+test/*
+typings/*
+.*
+CHANGELOG.md
+jest.config.*
+LICENSE
+SECURITY.md
+tsconfig.json

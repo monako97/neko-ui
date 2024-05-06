@@ -1,6 +1,6 @@
 {
   "name": "neko-ui",
-  "version": "2.7.5",
+  "version": "2.7.6",
   "description": "WebComponents UI Libraries",
   "main": "es/index.js",
   "scripts": {
@@ -70,15 +70,6 @@
     "solid-element": "1.8.0",
     "solid-js": "1.8.17"
   },
-  "files": [
-    "es",
-    "lib",
-    "umd",
-    "README.md",
-    "CHANGELOG.md",
-    "SECURITY.md",
-    "LICENSE"
-  ],
   "browserslist": [
     "Chrome >= 86",
     "Safari >= 15"

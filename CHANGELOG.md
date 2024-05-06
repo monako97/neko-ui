@@ -1,5 +1,11 @@
 # Change log
 
+## [2.7.5](https://github.com/monako97/neko-ui/compare/2.7.4...2.7.5) (5-6-2024)
+
+### ✨ Features
+
+- tree 动态修改数据 ([89592b3](https://github.com/monako97/neko-ui/commit/89592b3b25187ba753b93531ba088d96366489c0))
+
 ## [2.7.4](https://github.com/monako97/neko-ui/compare/2.7.1...2.7.4) (5-6-2024)
 
 ### ✨ Features
