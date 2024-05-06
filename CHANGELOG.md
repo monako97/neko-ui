@@ -4,6 +4,7 @@
 
 ### 📚 Documentation
 
+- cssModuleDefinition 为 cssModule 生成准确的声明文件 ([53003f3](https://github.com/monako97/neko-ui/commit/53003f3f42bdc426c2c24200148fb295399e510a))
 - feat copy ([8badba6](https://github.com/monako97/neko-ui/commit/8badba6b2e36643823285c81a993d413aaa7a1d2))
 - fix jekyll ([6bb89c7](https://github.com/monako97/neko-ui/commit/6bb89c7bef284a2e7b85de9d12baff74b795f8e3))
 - 更新 @moneko/core ([b77eb1c](https://github.com/monako97/neko-ui/commit/b77eb1c0fbaba716d12bfb44761af2701445dc15))
