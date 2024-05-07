@@ -68,7 +68,7 @@ order: 11
 
 ```jsx
 <n-tree
-  fieldNames={{
+  field-names={{
     title: 'name',
     key: 'code',
   }}

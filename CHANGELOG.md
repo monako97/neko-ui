@@ -4,6 +4,7 @@
 
 ### ✨ Features
 
+- tree支持 fieldNames ([b9814d3](https://github.com/monako97/neko-ui/commit/b9814d3f20d027e0d4ac639d12eda996eff6a7f8))
 - 减少安装体积 ([d5d2feb](https://github.com/monako97/neko-ui/commit/d5d2feb02187691c6ab43772cc49a961e7b4957a))
 
 ## [2.7.5](https://github.com/monako97/neko-ui/compare/2.7.4...2.7.5) (5-6-2024)
