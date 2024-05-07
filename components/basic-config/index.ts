@@ -70,4 +70,12 @@ export enum FieldName {
   icon = 'icon',
   /** 后缀图标 */
   suffix = 'suffix',
+  /** 标题 */
+  title = 'title',
+  /** 副标题 */
+  subTitle = 'subTitle',
+  /** 键 */
+  key = 'key',
+  /** 名称 */
+  name = 'name',
 }

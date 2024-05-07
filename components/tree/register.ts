@@ -6,6 +6,7 @@ import type { TreeData, TreeProps } from './type';
 customElement<TreeProps>(
   'n-tree',
   {
+    fieldNames: {},
     fromSchema: void 0,
     size: void 0,
     data: [],
@@ -61,6 +62,7 @@ customElement<TreeProps>(
 
     createEffect(() => {
       el.removeAttribute('css');
+      el.removeAttribute('field-names');
       el.removeAttribute('data');
     });
     return createComponent(Tree, props);

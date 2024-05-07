@@ -1,8 +1,9 @@
-import { For, createEffect, createMemo, createSignal } from 'solid-js';
+import { For, Show, createEffect, createMemo, createSignal } from 'solid-js';
 import { frameCallback, isFunction, isString } from '@moneko/common';
 import { css, cx } from '@moneko/css';
 import './register';
 import { style } from './style';
+import { FieldName } from '../basic-config';
 import schema from '../from-schema';
 import theme from '../theme';
 import type {
@@ -34,6 +35,7 @@ function Tree(
   let el: HTMLUListElement | undefined;
   const [lines, setLines] = createSignal<string[]>([]);
   const [treeData, setTreeData] = createSignal<TreeData[]>([]);
+  const fieldNames = createMemo(() => Object.assign({}, FieldName, _.fieldNames));
   const rtl = createMemo(() => _.direction === 'rtl');
   const current = createMemo(() => {
     if (_.value !== void 0 && _.value !== null) {
@@ -49,6 +51,9 @@ function Tree(
     const last = tree[lastIdx];
     const frist = tree[0];
     let line: string[] = [];
+    const fields = fieldNames();
+    const key = fields.key;
+    const children = fields.children;
 
     for (let i = 0, len = tree.length; i < len; i++) {
       const item = tree[i],
@@ -57,23 +62,27 @@ function Tree(
       item[path] = void 0;
       item[pathEnd] = void 0;
       if (i === 0 || isLast) {
-        item[path] = frist.key + (tree.length === 1 ? '' : `>${last.key}`);
+        item[path] = frist[key] + (tree.length === 1 ? '' : `>${last[key]}`);
         if (isLast) {
           item[pathEnd] = '';
         }
         line.push(item[path]);
       }
-      if (item.children) {
-        line = line.concat(countLineLen(item.children, depth + 1));
+      if (item[children]) {
+        line = line.concat(countLineLen(item[children]!, depth + 1));
       }
     }
     return line;
   }
 
   function parseTree(str: string): TreeData[] {
+    const fields = fieldNames();
+    const key = fields.key as 'key';
+    const title = fields.title as 'title';
+    const children = fields.children as 'children';
     const depthRegex = /[^\s|`│├└]/;
     const rows = str.trim().split('\n');
-    const stack: TreeStack[] = [{ title: rows[0], key: rows[0] }];
+    const stack: TreeStack[] = [{ [title]: rows[0], [key]: rows[0] }];
 
     for (let i = 1; i < rows.length; i++) {
       const depth = rows[i].search(depthRegex);
@@ -82,7 +91,7 @@ function Tree(
         continue;
       }
       const node: Partial<TreeData> = {
-        title: rows[i].slice(depth + 3),
+        [title]: rows[i].slice(depth + 3),
         depth,
       };
 
@@ -94,11 +103,11 @@ function Tree(
       }
       const parent = stack[stack.length - 1];
 
-      if (!parent.children) {
-        parent.children = [];
+      if (!parent[children]) {
+        parent[children] = [];
       }
-      node.key = `${parent.key}-${node.title}-${depth}-${i}`;
-      parent.children.push(node as TreeData);
+      node[key] = `${parent[key]}-${node[title]}-${depth}-${i}`;
+      parent[children].push(node as TreeData);
       stack.push(node as TreeData);
     }
 
@@ -126,8 +135,10 @@ function Tree(
     }
   }
   function handleClick(e: MouseEvent, item: TreeData) {
-    handleChange(item.key, item);
-    _.onRowClick?.(e, item.key as never, item as TreeData<never>);
+    const fields = fieldNames();
+
+    handleChange(item[fields.key], item);
+    _.onRowClick?.(e, item[fields.key] as never, item as TreeData<never>);
   }
   function renderItem(item: TreeData, title: JSX.Element, subTitle?: JSX.Element): JSX.Element[] {
     const row = _.renderRow?.(item, title, subTitle) || [title, subTitle];
@@ -139,7 +150,12 @@ function Tree(
     return (
       <For each={list}>
         {(item) => {
-          const { name, title, subTitle, key, children } = item;
+          const fields = fieldNames();
+          const title = item[fields.title];
+          const key = item[fields.key];
+          const name = item[fields.name];
+          const subTitle = item[fields.subTitle];
+          const children = item[fields.children];
           const _title = name === title || !name ? [title] : [name, title];
 
           return (
@@ -162,7 +178,7 @@ function Tree(
                   subTitle && <span class="sub-title">{subTitle}</span>,
                 )}
               </li>
-              {children ? renderTreeRow(children, depth + 1) : null}
+              <Show when={children}>{renderTreeRow(children!, depth + 1)}</Show>
             </>
           );
         }}

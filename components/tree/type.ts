@@ -28,6 +28,8 @@ export interface TreeBaseProp {
    * @default false
    */
   fromSchema?: false;
+  /** 自定义节点字段 */
+  fieldNames?: BasicConfig['fieldName'];
 }
 
 interface TreeBaseProps extends TreeBaseProp {
