@@ -100,7 +100,7 @@ export {
   default as theme,
   type ColorScheme,
   type ThemeOption,
-  generateTheme,
+  generateColor,
   toneColor,
 } from './theme';
 export {
@@ -117,6 +117,7 @@ export {
   type TreeSchemaProps,
   type TreeStringElement,
   type TreeStringProps,
+  type TreeData,
 } from './tree';
 export { default as Typography, type TypographyElement, type TypographyProps } from './typography';
 export { default as dayjs } from './date-picker/dayjs';

@@ -3,7 +3,6 @@ import { frameCallback, isFunction, isString } from '@moneko/common';
 import { css, cx } from '@moneko/css';
 import './register';
 import { style } from './style';
-import { FieldName } from '../basic-config';
 import schema from '../from-schema';
 import theme from '../theme';
 import type {
@@ -35,7 +34,15 @@ function Tree(
   let el: HTMLUListElement | undefined;
   const [lines, setLines] = createSignal<string[]>([]);
   const [treeData, setTreeData] = createSignal<TreeData[]>([]);
-  const fieldNames = createMemo(() => Object.assign({}, FieldName, _.fieldNames));
+  const normalFieldNames = {
+    key: 'key' as const,
+    name: 'name' as const,
+    title: 'title' as const,
+    subTitle: 'subTitle' as const,
+    children: 'children' as const,
+    description: 'description' as const,
+  };
+  const fieldNames = createMemo(() => Object.assign(normalFieldNames, _.fieldNames));
   const rtl = createMemo(() => _.direction === 'rtl');
   const current = createMemo(() => {
     if (_.value !== void 0 && _.value !== null) {
@@ -59,8 +66,8 @@ function Tree(
       const item = tree[i],
         isLast = i === lastIdx;
 
-      item[path] = void 0;
-      item[pathEnd] = void 0;
+      delete item[path];
+      delete item[pathEnd];
       if (i === 0 || isLast) {
         item[path] = frist[key] + (tree.length === 1 ? '' : `>${last[key]}`);
         if (isLast) {
@@ -77,9 +84,9 @@ function Tree(
 
   function parseTree(str: string): TreeData[] {
     const fields = fieldNames();
-    const key = fields.key as 'key';
-    const title = fields.title as 'title';
-    const children = fields.children as 'children';
+    const key = fields.key;
+    const title = fields.title;
+    const children = fields.children;
     const depthRegex = /[^\s|`│├└]/;
     const rows = str.trim().split('\n');
     const stack: TreeStack[] = [{ [title]: rows[0], [key]: rows[0] }];
@@ -175,7 +182,9 @@ function Tree(
                 {renderItem(
                   item,
                   <span class="title">{(rtl() ? _title.reverse() : _title).join(': ')}</span>,
-                  subTitle && <span class="sub-title">{subTitle}</span>,
+                  <Show when={subTitle}>
+                    <span class="sub-title">{subTitle}</span>
+                  </Show>,
                 )}
               </li>
               <Show when={children}>{renderTreeRow(children!, depth + 1)}</Show>

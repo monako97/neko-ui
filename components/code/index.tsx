@@ -1,4 +1,13 @@
-import { Show, createComponent, createEffect, createSignal, mergeProps, untrack } from 'solid-js';
+import {
+  Show,
+  createComponent,
+  createEffect,
+  createSignal,
+  mergeProps,
+  onCleanup,
+  onMount,
+  untrack,
+} from 'solid-js';
 import { isFunction, setClipboard } from '@moneko/common';
 import { css, cx } from '@moneko/css';
 import { customElement } from 'solid-element';
@@ -7,6 +16,12 @@ import prismCss from '../prism/css';
 import '../prism/prism.js';
 import theme from '../theme';
 import type { CustomElement } from '..';
+
+declare const Prism: {
+  disableWorkerMessageHandler: boolean;
+  languages: Record<string, unknown>;
+  highlight(code: string, langs: unknown, lang: string): string;
+};
 
 export interface CodeProps {
   /** 自定义类名 */
@@ -30,11 +45,17 @@ export interface CodeProps {
 
 export type CodeElement = CustomElement<CodeProps>;
 
+const diffLang = /^diff-([\w-]+)/i;
+
 function Code(props: CodeProps) {
   const { baseStyle } = theme;
   let codeEl: HTMLPreElement;
   const [code, setCode] = createSignal<string>('');
   const [hei, setHei] = createSignal(20);
+  const [isIntersecting, setIsIntersecting] = createSignal(false);
+  const observer = new IntersectionObserver((entries) => {
+    setIsIntersecting(entries[0].isIntersecting);
+  });
 
   function copy() {
     setClipboard(untrack(code), codeEl);
@@ -66,22 +87,17 @@ function Code(props: CodeProps) {
       props.onChange(c);
     }
   }
-  function update(e: { data: string }) {
-    codeEl.innerHTML = e.data;
-    setHei(codeEl.getBoundingClientRect().height - (props.toolbar ? 40 : 16));
-  }
-  function postMessage(opt: { lang?: string; code?: string }) {
-    if (!opt.code) return;
-    const _lang = opt.lang || 'markup';
-
-    if (/^diff-([\w-]+)/i.test(_lang)) {
-      window.Prism.languages[_lang] = window.Prism.languages.diff;
+  function postMessage(opt: { lang: string; code?: string }) {
+    if (!opt.code || !isIntersecting()) return;
+    observer.unobserve(codeEl);
+    observer.disconnect();
+    if (diffLang.test(opt.lang) && !Prism.languages[opt.lang]) {
+      Prism.languages[opt.lang] = Prism.languages.diff;
     }
-    const language = window.Prism.languages[_lang] || window.Prism.languages.markup;
+    const language = Prism.languages[opt.lang] || Prism.languages.markup;
 
-    update({
-      data: window.Prism.highlight(opt.code, language, _lang),
-    });
+    codeEl.innerHTML = Prism.highlight(opt.code, language, opt.lang);
+    setHei(codeEl.getBoundingClientRect().height - (props.toolbar ? 40 : 16));
   }
 
   // const work = new Worker(new URL("./worker.ts", import.meta.url), {
@@ -112,9 +128,18 @@ function Code(props: CodeProps) {
   });
   createEffect(() => {
     postMessage({
-      lang: props.lang,
+      lang: props.lang || 'markup',
       code: code(),
     });
+  });
+  onMount(() => {
+    // 开始观察目标元素
+    observer.observe(codeEl);
+  });
+  onCleanup(() => {
+    // 停止观察目标元素
+    observer.unobserve(codeEl);
+    observer.disconnect();
   });
 
   return (

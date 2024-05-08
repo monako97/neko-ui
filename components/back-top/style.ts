@@ -15,7 +15,10 @@ export const style = css`
     border-radius: 50%;
     color: var(--back-top-color);
     background-color: var(--back-top-bg);
-    box-shadow: var(--box-shadow-base);
+    box-shadow:
+      0 3px 6px -4px var(--primary-shadow),
+      0 6px 16px 0 var(--primary-shadow-1),
+      0 9px 28px 8px var(--primary-shadow-2);
     transition:
       background-color var(--transition-duration),
       color var(--transition-duration);

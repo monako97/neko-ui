@@ -11,7 +11,7 @@ import { isFunction } from '@moneko/common';
 import { css, cx } from '@moneko/css';
 import { customElement } from 'solid-element';
 import { style } from './style';
-import theme, { generateTheme } from '../theme';
+import theme, { generateColor } from '../theme';
 import type { CustomElement } from '..';
 
 export interface TagProps {
@@ -57,7 +57,7 @@ function Tag(props: TagProps) {
     if (local.color) {
       return css`
         :host {
-          ${generateTheme(local.color, {
+          ${generateColor(local.color, {
             dark: isDark(),
             name: 'tag-custom',
           })}

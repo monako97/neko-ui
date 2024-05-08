@@ -1,11 +1,12 @@
-import { createComponent, mergeProps } from 'solid-js';
+import { For } from 'solid-js';
 import { css, cx } from '@moneko/css';
 import { customElement } from 'solid-element';
 import theme from '../theme';
 import type { CustomElement } from '..';
 
 const style = css`
-  .box {
+  .spin {
+    inline-size: fit-content;
     position: relative;
     box-sizing: border-box;
   }
@@ -15,7 +16,7 @@ const style = css`
     transition: opacity var(--transition-duration);
   }
 
-  .spin {
+  .spining {
     cursor: not-allowed;
 
     .content {
@@ -77,8 +78,12 @@ function Spin(props: SpinProps) {
         {style}
         {css(props.css)}
       </style>
-      <div class={cx('box', props.spin && 'spin', props.class)}>
-        <div class="content">{props.children}</div>
+      <div class={cx('spin', props.spin && 'spining', props.class)}>
+        <div class="content">
+          <For each={Array.isArray(props.children) ? props.children : [props.children]}>
+            {(child) => child}
+          </For>
+        </div>
       </div>
     </>
   );
@@ -86,15 +91,9 @@ function Spin(props: SpinProps) {
 
 export type SpinElement = CustomElement<SpinProps>;
 
-customElement<SpinProps>('n-spin', { class: void 0, css: void 0, spin: void 0 }, (_, opt) => {
-  const el = opt.element;
-  const props = mergeProps(
-    {
-      children: [...el.childNodes.values()],
-    },
-    _,
-  );
-
-  return createComponent(Spin, props);
-});
+customElement<SpinProps>(
+  'n-spin',
+  { class: void 0, css: void 0, spin: void 0, children: void 0 },
+  Spin,
+);
 export default Spin;

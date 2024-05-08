@@ -5,7 +5,7 @@ order: 3
 ---
 
 ```html
-<n-img src="https://react-photo-view.vercel.app/_next/static/media/3.70695fb9.jpg"></n-img>
+<n-img src="https://t7.baidu.com/it/u=2529476510,3041785782&fm=193&f=GIF"></n-img>
 <script>
   const el = container.querySelector('n-img');
 
@@ -17,7 +17,7 @@ order: 3
 
 ```jsx
 <n-img
-  src="https://react-photo-view.vercel.app/_next/static/media/3.70695fb9.jpg"
+  src="https://t7.baidu.com/it/u=2529476510,3041785782&fm=193&f=GIF"
   onopenchange={function (e) {
     console.log('jsx', e.detail);
   }}

@@ -5,12 +5,14 @@ import {
   createSignal,
   mergeProps,
   onCleanup,
+  onMount,
   untrack,
 } from 'solid-js';
 import { cx } from '@moneko/css';
 import { customElement } from 'solid-element';
 import { Portal } from 'solid-js/web';
 import { imgCss, style } from './style';
+import Spin from '../spin';
 import type { CustomElement } from '..';
 
 export interface ImgProps {
@@ -26,6 +28,8 @@ export interface ImgProps {
   open?: boolean | null;
   /** 开启关闭大图的回调函数 */
   onOpenChange?: (open: boolean | null) => void;
+  /** 图片加载完成 */
+  onLoad?(e: Event): void;
   /** 点击遮罩关闭
    * @since 2.0.8
    * @default true
@@ -35,10 +39,19 @@ export interface ImgProps {
    * @default true
    */
   escClosable?: boolean;
+  /**
+   * 懒加载
+   * @since 2.8.1
+   * @default true
+   */
+  lazy?: boolean;
 }
 export type ImgElement = CustomElement<ImgProps, 'onOpenChange'>;
 
-function Img(props: ImgProps) {
+function Img(_: ImgProps) {
+  let imgRef: HTMLImageElement | undefined;
+  let portal: HTMLDivElement | undefined;
+  const props = mergeProps({ lazy: true }, _);
   const [open, setOpen] = createSignal<boolean | null>(null);
   const [posi, setPosi] = createSignal({
     width: 0,
@@ -46,7 +59,18 @@ function Img(props: ImgProps) {
     left: 0,
     top: 0,
   });
-  let portal: HTMLDivElement | undefined;
+  const [isError, setIsError] = createSignal(false);
+  const [isIntersecting, setIsIntersecting] = createSignal(false);
+  const [loading, setLoading] = createSignal(true);
+  const observer = new IntersectionObserver((entries) => {
+    setIsIntersecting(entries[0].isIntersecting);
+    if (entries[0].isIntersecting) {
+      if (imgRef) {
+        observer.unobserve(imgRef);
+      }
+      observer.disconnect();
+    }
+  });
 
   function getCss() {
     const { width, height, top, left } = posi();
@@ -78,8 +102,18 @@ function Img(props: ImgProps) {
   function handleOpen(e: Event) {
     e.stopPropagation();
     preventDefault(e);
-    setPosi((e.target as HTMLImageElement)?.getBoundingClientRect());
-    openChange(true);
+    if (!isError()) {
+      setPosi((e.target as HTMLImageElement)?.getBoundingClientRect());
+      openChange(true);
+    }
+  }
+  function handleError() {
+    setIsError(true);
+    setLoading(false);
+  }
+  function handleLoad(e: Event) {
+    props.onLoad?.(e);
+    setLoading(false);
   }
   function portalClick(e: Event) {
     preventDefault(e);
@@ -110,15 +144,32 @@ function Img(props: ImgProps) {
     });
   });
 
+  onMount(() => {
+    if (imgRef) {
+      observer.observe(imgRef);
+    }
+  });
+  onCleanup(() => {
+    if (imgRef) {
+      observer.unobserve(imgRef);
+    }
+    observer.disconnect();
+  });
+
   return (
     <>
       <style>{imgCss}</style>
-      <img
-        class={cx('img', open() && 'none')}
-        src={props.src}
-        alt={props.alt}
-        onClick={handleOpen}
-      />
+      <Spin spin={loading()}>
+        <img
+          ref={imgRef}
+          class={cx('img', open() && 'none', isError() && 'error')}
+          src={isIntersecting() ? props.src : void 0}
+          alt={props.alt}
+          onClick={handleOpen}
+          onError={handleError}
+          onLoad={handleLoad}
+        />
+      </Spin>
       <Show when={open() !== null}>
         <Portal useShadow={true}>
           <style>
@@ -151,6 +202,8 @@ customElement<ImgProps>(
     maskClosable: true,
     escClosable: true,
     onOpenChange: void 0,
+    onLoad: void 0,
+    lazy: void 0,
   },
   (_, opt) => {
     const props = mergeProps(
@@ -161,6 +214,9 @@ customElement<ImgProps>(
               detail: open,
             }),
           );
+        },
+        onLoad() {
+          opt.element.dispatchEvent(new CustomEvent('load'));
         },
       },
       _,

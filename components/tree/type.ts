@@ -29,7 +29,7 @@ export interface TreeBaseProp {
    */
   fromSchema?: false;
   /** 自定义节点字段 */
-  fieldNames?: BasicConfig['fieldName'];
+  fieldNames?: Partial<{ [key in keyof TreeData]: string }>;
 }
 
 interface TreeBaseProps extends TreeBaseProp {

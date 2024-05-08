@@ -6,7 +6,7 @@ order: 2
 
 ```html
 <n-img
-  src="https://react-photo-view.vercel.app/_next/static/media/3.70695fb9.jpg"
+  src="https://t7.baidu.com/it/u=1819248061,230866778&fm=193&f=GIF"
   alt="img"
   mask-closable="false"
 ></n-img>
@@ -14,7 +14,7 @@ order: 2
 
 ```jsx
 <n-img
-  src="https://react-photo-view.vercel.app/_next/static/media/3.70695fb9.jpg"
+  src="https://t7.baidu.com/it/u=1819248061,230866778&fm=193&f=GIF"
   alt="img"
   mask-closable={false}
 />

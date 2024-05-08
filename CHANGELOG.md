@@ -2,6 +2,10 @@
 
 ## Last
 
+### 📚 Documentation
+
+- fix tree field-names案例 ([24a62b8](https://github.com/monako97/neko-ui/commit/24a62b8844a4c8d37e30b35c49944b8180c3388e))
+
 ### ✨ Features
 
 - tree支持 fieldNames ([b9814d3](https://github.com/monako97/neko-ui/commit/b9814d3f20d027e0d4ac639d12eda996eff6a7f8))

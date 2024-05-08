@@ -9,24 +9,16 @@ import mdStyle from '../md-style';
 import theme from '../theme';
 import type { CustomElement } from '..';
 
-function katexBlock(code: string) {
-  return `<n-katex display-mode="true">${code}</n-katex>`;
-}
-function katexInline(code: string) {
-  return `<n-katex>${code}</n-katex>`;
-}
-function img(src: string, title: string, alt: string) {
-  return `<img role="img" src="${src}" alt="${alt}" ${title ? `title="${title}"` : ''}></img>`;
-}
-function nImg(src: string, title: string, alt: string) {
-  return `<n-img role="img" src="${src}" alt="${alt}" ${title ? `title="${title}"` : ''}></n-img>`;
-}
 function MD(_props: MdProps) {
   let ref: HTMLDivElement | undefined;
   const renderer = new marked.Renderer();
 
-  renderer.katexBlock = katexBlock;
-  renderer.katexInline = katexInline;
+  renderer.katexBlock = (code: string) => {
+    return `<n-katex display-mode="true">${code}</n-katex>`;
+  };
+  renderer.katexInline = (code: string) => {
+    return `<n-katex>${code}</n-katex>`;
+  };
   const { baseStyle } = theme;
   const props = mergeProps(
     {
@@ -50,8 +42,11 @@ function MD(_props: MdProps) {
     langLineNumber?: boolean;
   }) {
     const { text, pictureViewer, langToolbar, ...options } = opt;
+    const tag = pictureViewer ? 'n-img' : 'img';
 
-    renderer.image = pictureViewer ? nImg : img;
+    renderer.image = (src: string, title: string, alt: string) => {
+      return `<${tag} role="img" src="${src}" alt="${alt}" ${title ? `title="${title}"` : ''}></${tag}>`;
+    };
     const toolbar = !!langToolbar?.length;
 
     renderer.code = function (code: string, lang: string) {
@@ -164,12 +159,10 @@ function MD(_props: MdProps) {
     if (ref && props.text?.startsWith('[TOC]')) {
       list = [...ref.querySelectorAll<HTMLAnchorElement>('.n-md-toc a[href]')];
       heading = [...ref.querySelectorAll<HTMLHeadingElement>('h1, h2, h3, h4, h5, h6')];
-
       observer = new IntersectionObserver(observerEntry, {
         rootMargin: '-50px 0px',
         threshold: 0.5,
       });
-
       heading.forEach((e) => observer.observe(e));
       list.forEach((e) => {
         e.addEventListener('click', handleAnchor);
