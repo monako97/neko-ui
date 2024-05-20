@@ -43,9 +43,9 @@
   "devDependencies": {
     "@commitlint/cli": "19.3.0",
     "@commitlint/config-conventional": "19.2.2",
-    "@moneko/cli": "2.10.5",
-    "@moneko/core": "3.15.8",
-    "@moneko/solid": "1.7.8",
+    "@moneko/cli": "2.10.6",
+    "@moneko/core": "3.15.11",
+    "@moneko/solid": "1.8.0",
     "@solidjs/router": "0.10.8",
     "@solidjs/testing-library": "0.8.8",
     "@swc/jest": "0.2.36",
