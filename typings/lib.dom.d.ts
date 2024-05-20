@@ -153,4 +153,9 @@ interface EyeDropper extends EyeDropperConstructor {
 interface Window {
   EyeDropper?: EyeDropper;
   marked: typeof import('marked-completed');
+  Prism: {
+    disableWorkerMessageHandler: boolean;
+    languages: Record<string, unknown>;
+    highlight(code: string, langs: unknown, lang: string): string;
+  };
 }

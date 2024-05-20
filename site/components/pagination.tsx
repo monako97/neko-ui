@@ -1,6 +1,6 @@
+import './pagination.global.less';
 import { For, Show, batch, createEffect, createSignal } from 'solid-js';
 import { A, getPathName, useLocation } from '@moneko/solid';
-import './pagination.global.less';
 import { type MyPkg, all, kv } from './sider';
 
 function Pagination() {

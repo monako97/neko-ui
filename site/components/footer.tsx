@@ -1,5 +1,5 @@
-import app from '@app/info';
 import './footer.css';
+import app from '@app/info';
 
 function Footer() {
   const year = new Date().getFullYear();

@@ -3,11 +3,11 @@ import examples, { type ExampleModule } from '@app/example';
 import Fallback from '@app/fallback';
 import { isFunction } from '@moneko/common';
 import { cx } from '@moneko/css';
-import * as NekoUI from 'neko-ui';
 import { customElement } from 'solid-element';
 import h from 'solid-js/h';
 import * as SolidWeb from 'solid-js/web';
 import { codeNoShadowCss, groupCss, mdNoShadowCss, sandboxCss } from './sandbox.style';
+import * as NekoUI from 'neko-ui';
 import type { CodeLiveProps } from 'n-code-live';
 
 const { createEffect, createMemo, createSignal, mergeProps, onMount } = Solid;

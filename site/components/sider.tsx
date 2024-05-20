@@ -1,10 +1,10 @@
+import './sider.global.less';
 import { For, Show, createEffect, createMemo } from 'solid-js';
 import app from '@app/info';
 import routes, { type RouteConfig } from '@app/routes';
 import { css } from '@moneko/css';
 import { A, getPathName, useLocation } from '@moneko/solid';
 import { theme } from 'neko-ui';
-import './sider.global.less';
 
 const switchThemeCss = css`
   .theme-btn {

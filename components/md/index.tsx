@@ -1,7 +1,7 @@
 import { For, Match, Switch, createComponent, createEffect, mergeProps, onCleanup } from 'solid-js';
 import { frameCallback } from '@moneko/common';
 import { css, cx } from '@moneko/css';
-import marked from 'marked-completed';
+import marked, { Renderer } from 'marked-completed';
 import { customElement } from 'solid-element';
 import '../code';
 import '../img';
@@ -11,7 +11,7 @@ import type { CustomElement } from '..';
 
 function MD(_props: MdProps) {
   let ref: HTMLDivElement | undefined;
-  const renderer = new marked.Renderer();
+  const renderer = new Renderer();
 
   renderer.katexBlock = (code: string) => {
     return `<n-katex display-mode="true">${code}</n-katex>`;

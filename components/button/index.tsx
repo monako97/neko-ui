@@ -51,6 +51,7 @@ export interface ButtonProps {
   /** 按钮前面添加一个图标 */
   icon?: (() => JSX.Element) | JSX.Element;
   children?: JSX.Element;
+  onClick?(e: Event): void;
 }
 export type ButtonElement = CustomElement<ButtonProps>;
 

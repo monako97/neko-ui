@@ -1,14 +1,14 @@
+import './layout.global.css';
 import { For, Show, createEffect, createMemo } from 'solid-js';
 import docs from '@app/docs';
 import { type RouteProps, getPathName, useLocation } from '@moneko/solid';
-import { mdStyle, theme } from 'neko-ui';
-import './layout.global.css';
 import ChangeLog from '../CHANGELOG.md';
 import Coverage from '@/components/coverage';
 import Footer from '@/components/footer';
 import Pagination from '@/components/pagination';
 import '@/components/sandbox';
 import Sider from '@/components/sider';
+import { mdStyle, theme } from 'neko-ui';
 
 function App(p: RouteProps<string>) {
   let box: HTMLDivElement | undefined;

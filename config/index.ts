@@ -1,4 +1,4 @@
-import { type ConfigType, isDev } from '@moneko/core';
+import { type ConfigType } from '@moneko/core';
 
 const CDNHOST = 'https://cdn.statically.io';
 const CDN = `${CDNHOST}/gh/monako97/cdn/main/npm`;
@@ -36,16 +36,5 @@ const conf: Partial<ConfigType> = {
     },
   },
 };
-
-if (!isDev) {
-  conf.prefixJsLoader = [
-    {
-      loader: 'babel-loader',
-      options: {
-        plugins: ['@moneko/css/babel'],
-      },
-    },
-  ];
-}
 
 export default conf;
