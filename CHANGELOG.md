@@ -2,16 +2,17 @@
 
 ## Last
 
+### 📚 Documentation
+
+- fix jest ([bc8ddfb](https://github.com/monako97/neko-ui/commit/bc8ddfb2bd937dfd8ef36ece53b1005805362354))
+- fix tree field-names案例 ([24a62b8](https://github.com/monako97/neko-ui/commit/24a62b8844a4c8d37e30b35c49944b8180c3388e))
+
 ### ✨ Features
 
 - 支持pnpm ([12092a3](https://github.com/monako97/neko-ui/commit/12092a33190ef14e21ce48fb2e2f5378d1b97386))
 - 优化 code 组件高亮、img 组件懒加载 ([77caa5f](https://github.com/monako97/neko-ui/commit/77caa5fe7dfb5617ee24a446be0cea0d4619277f))
 - tree支持 fieldNames ([b9814d3](https://github.com/monako97/neko-ui/commit/b9814d3f20d027e0d4ac639d12eda996eff6a7f8))
 - 减少安装体积 ([d5d2feb](https://github.com/monako97/neko-ui/commit/d5d2feb02187691c6ab43772cc49a961e7b4957a))
-
-### 📚 Documentation
-
-- fix tree field-names案例 ([24a62b8](https://github.com/monako97/neko-ui/commit/24a62b8844a4c8d37e30b35c49944b8180c3388e))
 
 ## [2.7.5](https://github.com/monako97/neko-ui/compare/2.7.4...2.7.5) (5-6-2024)
 
