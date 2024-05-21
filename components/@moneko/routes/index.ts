@@ -1,4 +1,4 @@
-import type { RouteDefinition } from '@solidjs/router';
+import type { RouteDefinition } from '@moneko/solid';
 interface IRouteDefinition extends Omit<RouteDefinition, 'children'> {
   children?: RouteConfig[];
 }

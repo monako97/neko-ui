@@ -1,4 +1,4 @@
-import { type ConfigType } from '@moneko/core';
+import type { ConfigType } from '@moneko/core';
 
 const CDNHOST = 'https://cdn.statically.io';
 const CDN = `${CDNHOST}/gh/monako97/cdn/main/npm`;
@@ -21,11 +21,7 @@ const conf: Partial<ConfigType> = {
   rem: {
     designSize: 1920,
   },
-  bundleAnalyzer: {
-    analyzerMode: 'static',
-    reportFilename: 'report.html',
-    openAnalyzer: false,
-  },
+  bundleAnalyzer: {},
   externals: [/(.+)\/__tests__\/(.+)/i],
   importOnDemand: {
     '@moneko/common': {
@@ -33,6 +29,11 @@ const conf: Partial<ConfigType> = {
     },
     lodash: {
       transform: '${member}',
+    },
+  },
+  devServer: {
+    headers: {
+      'X-Content-Type-Options': 'nosniff',
     },
   },
 };

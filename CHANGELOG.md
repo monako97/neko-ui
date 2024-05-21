@@ -4,6 +4,7 @@
 
 ### 📚 Documentation
 
+- fix jest ([abfe62f](https://github.com/monako97/neko-ui/commit/abfe62f5b4842f8a7e428de74175cf2508884324))
 - fix jest ([bc8ddfb](https://github.com/monako97/neko-ui/commit/bc8ddfb2bd937dfd8ef36ece53b1005805362354))
 - fix tree field-names案例 ([24a62b8](https://github.com/monako97/neko-ui/commit/24a62b8844a4c8d37e30b35c49944b8180c3388e))
 

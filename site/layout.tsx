@@ -41,6 +41,7 @@ function App(p: RouteProps<string>) {
             </div>
           </div>
           <Show when={!getPathName(location)}>
+            {/* <n-md text={ChangeLog} not-render={true} picture-viewer={false} /> */}
             <div class="n-md-box">
               <div class="n-md-body">
                 <ChangeLog />
