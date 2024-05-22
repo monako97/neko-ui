@@ -2,6 +2,10 @@
 
 ## Last
 
+### ✨ Features
+
+- prismjs ([812a6c9](https://github.com/monako97/neko-ui/commit/812a6c9f724fcf38f07a32a9fb741e6d10204800))
+
 ### 📚 Documentation
 
 - fix github action ([19dd125](https://github.com/monako97/neko-ui/commit/19dd1258861fef31ddfdc34899add81cb33c909a))
