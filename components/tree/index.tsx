@@ -1,6 +1,6 @@
 import { For, Show, createEffect, createMemo, createSignal } from 'solid-js';
 import { frameCallback, isFunction, isString } from '@moneko/common';
-import { css, cx } from '@moneko/css';
+import { css } from '@moneko/css';
 import './register';
 import { style } from './style';
 import schema from '../from-schema';
@@ -168,11 +168,11 @@ function Tree(
           return (
             <>
               <li
-                class={cx(
-                  'row',
-                  current().includes(key) && 'active',
-                  (_.readonly || !isFunction(_.onChange)) && 'non',
-                )}
+                class="row"
+                classList={{
+                  active: current().includes(key),
+                  non: _.readonly || !isFunction(_.onChange),
+                }}
                 onClick={(e) => handleClick(e, item)}
                 onDblClick={(e) => _.onRowDoubleClick?.(e, key, item)}
                 style={depth ? { '--depth': `${depth * 2}em` } : void 0}
@@ -242,7 +242,15 @@ function Tree(
         {style}
         {css(_.css)}
       </style>
-      <ul ref={el} class={cx('tree', _.size, _.class, rtl() && 'rtl')}>
+      <ul
+        ref={el}
+        class="tree"
+        classList={{
+          [_.size || 'normal']: true,
+          [_.class as string]: !!_.class,
+          rtl: rtl(),
+        }}
+      >
         {renderTreeRow(treeData())}
       </ul>
     </>

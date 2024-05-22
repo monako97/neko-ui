@@ -1,7 +1,6 @@
 import {
   For,
   Show,
-  createComponent,
   createEffect,
   createMemo,
   createSignal,
@@ -382,7 +381,7 @@ customElement<TabsProps>(
       el.removeAttribute('field-names');
       el.removeAttribute('css');
     });
-    return createComponent(Tabs, props);
+    return <Tabs {...props} />;
   },
 );
 export default Tabs;

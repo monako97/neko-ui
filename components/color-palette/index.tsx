@@ -2,7 +2,6 @@ import {
   For,
   Index,
   Show,
-  createComponent,
   createEffect,
   createMemo,
   createSignal,
@@ -351,7 +350,7 @@ customElement<ColorPaletteProps>('n-color-palette', defaultColorPaletteProps, (_
     _,
   );
 
-  return createComponent(ColorPalette, props);
+  return <ColorPalette {...props} />;
 });
 
 export default ColorPalette;

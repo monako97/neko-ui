@@ -1,5 +1,4 @@
 import { For, createMemo } from 'solid-js';
-import { cx } from '@moneko/css';
 import dayjs from './dayjs';
 
 type YearPanelProps = {
@@ -24,11 +23,11 @@ function YearPanel(props: YearPanelProps) {
           <n-button
             type="primary"
             flat={true}
-            class={cx(
-              'date-picker-month',
-              (i() === 0 || i() === years().length - 1) && 'date-opacity',
-              props.current.get('years') === y && 'date-active',
-            )}
+            class="date-picker-month"
+            classList={{
+              'date-opacity': i() === 0 || i() === years().length - 1,
+              'date-active': props.current.get('years') === y,
+            }}
             tag={props.current.get('years') === y ? 'strong' : 'button'}
             onClick={onChange}
           >

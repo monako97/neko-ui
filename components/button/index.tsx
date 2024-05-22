@@ -1,14 +1,6 @@
-import {
-  Show,
-  createComponent,
-  createEffect,
-  createMemo,
-  createSignal,
-  mergeProps,
-  splitProps,
-} from 'solid-js';
+import { Show, createEffect, createMemo, createSignal, mergeProps, splitProps } from 'solid-js';
 import { isFunction } from '@moneko/common';
-import { css, cx } from '@moneko/css';
+import { css } from '@moneko/css';
 import { customElement } from 'solid-element';
 import { Dynamic } from 'solid-js/web';
 import { style } from './style';
@@ -99,21 +91,21 @@ function Button(_: ButtonProps) {
       <Dynamic
         ref={ref}
         component={local.link ? 'a' : local.tag || 'button'}
-        class={cx(
-          'btn',
-          local.type,
-          local.size,
-          local.danger && 'danger',
-          local.block && 'block',
-          local.fill && 'fill',
-          local.circle && 'circle',
-          local.flat && 'flat',
-          local.dashed && 'dashed',
-          local.ghost && 'ghost',
-          local.link && 'link',
-          local.disabled && 'disabled',
-          animating() && 'without',
-        )}
+        class="btn"
+        classList={{
+          [local.type]: true,
+          [local.size]: true,
+          danger: local.danger,
+          block: local.block,
+          fill: local.fill,
+          circle: local.circle,
+          flat: local.flat,
+          dashed: local.dashed,
+          ghost: local.ghost,
+          link: local.link,
+          disabled: local.disabled,
+          without: animating(),
+        }}
         part="button"
         onClick={handleClick}
         onAnimationEnd={handleAnimationEnd}
@@ -168,7 +160,7 @@ customElement<ButtonProps>(
       el.removeAttribute('css');
     });
 
-    return createComponent(Button, props);
+    return <Button {...props} />;
   },
 );
 export default Button;

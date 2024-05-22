@@ -1,6 +1,5 @@
 import {
   Show,
-  createComponent,
   createEffect,
   createSignal,
   mergeProps,
@@ -63,12 +62,12 @@ function Code(props: CodeProps) {
   function pre() {
     return (
       <pre
-        class={cx(
-          `language-${props.lang}`,
-          props.lineNumber && 'line-numbers',
-          !props.toolbar && 'not-toolbar',
-          !props.edit && props.class,
-        )}
+        classList={{
+          [`language-${props.lang}`]: !!props.lang,
+          'line-numbers': props.lineNumber,
+          'not-toolbar': !props.toolbar,
+          [props.class as string]: !props.edit,
+        }}
       >
         <Show when={props.toolbar}>
           <div class="toolbar" data-lang={props.lang?.split(' ')[0]}>
@@ -154,7 +153,10 @@ function Code(props: CodeProps) {
         <div class={cx('n-editor', props.class)}>
           <textarea
             value={code()}
-            class={cx(props.lineNumber && 'line-numbers', !props.toolbar && 'not-toolbar')}
+            classList={{
+              'line-numbers': props.lineNumber,
+              'not-toolbar': !props.toolbar,
+            }}
             style={{ height: `${hei()}px` }}
             onInput={change}
           />
@@ -200,7 +202,7 @@ customElement<CodeProps>(
       el.removeAttribute('css');
     });
 
-    return createComponent(Code, props);
+    return <Code {...props} />;
   },
 );
 export default Code;

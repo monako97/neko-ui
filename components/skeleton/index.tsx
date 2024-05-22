@@ -1,4 +1,4 @@
-import { For, Show, createComponent, createMemo, mergeProps } from 'solid-js';
+import { For, Show, createMemo, mergeProps } from 'solid-js';
 import { css, cx } from '@moneko/css';
 import { customElement } from 'solid-element';
 import theme from '../theme';
@@ -101,7 +101,6 @@ export interface SkeletonProps {
 
 function Skeleton(props: SkeletonProps) {
   const { baseStyle, isDark } = theme;
-  const activeCls = createMemo(() => props.active && 'active');
   const rows = createMemo(() => Array(props.rows).fill(0));
   const cssVar = createMemo(() => {
     if (isDark()) {
@@ -143,14 +142,32 @@ function Skeleton(props: SkeletonProps) {
       </style>
       <div class={cx('skeleton', props.class)}>
         <Show when={props.avatar}>
-          <div class={cx('avatar', activeCls())} />
+          <div
+            class="avatar"
+            classList={{
+              active: props.active,
+            }}
+          />
         </Show>
         <div class="body">
           <Show when={props.title}>
-            <div class={cx('title', activeCls())} />
+            <div
+              class="title"
+              classList={{
+                active: props.active,
+              }}
+            />
           </Show>
           <div class="paragraph">
-            <For each={rows()}>{() => <div class={cx(activeCls())} />}</For>
+            <For each={rows()}>
+              {() => (
+                <div
+                  classList={{
+                    active: props.active,
+                  }}
+                />
+              )}
+            </For>
           </div>
         </div>
       </div>
@@ -182,7 +199,7 @@ customElement<SkeletonProps>(
       _,
     );
 
-    return createComponent(Skeleton, props);
+    return <Skeleton {...props} />;
   },
 );
 export default Skeleton;

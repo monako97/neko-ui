@@ -57,7 +57,12 @@ const notification = (
           <For each={list()}>
             {(item) => {
               return (
-                <div class={cx('notification', item.type, item.closeing && 'closeing')}>
+                <div
+                  class={cx('notification', item.type)}
+                  classList={{
+                    closeing: item.closeing,
+                  }}
+                >
                   <Show when={item.icon}>{item.icon}</Show>
                   <div class="content">{item.children}</div>
                   <Show when={item.close}>

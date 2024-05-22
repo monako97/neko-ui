@@ -1,12 +1,4 @@
-import {
-  createComponent,
-  createEffect,
-  createMemo,
-  createSignal,
-  mergeProps,
-  splitProps,
-  untrack,
-} from 'solid-js';
+import { createEffect, createMemo, createSignal, mergeProps, splitProps, untrack } from 'solid-js';
 import { customElement } from 'solid-element';
 import dayjs from './dayjs';
 import Panel from './panel';
@@ -281,7 +273,7 @@ customElement<DatePickerProps>(
     createEffect(() => {
       el.removeAttribute('css');
     });
-    return createComponent(DatePicker, props);
+    return <DatePicker {...props} />;
   },
 );
 export default DatePicker;

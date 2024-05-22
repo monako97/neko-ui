@@ -2,7 +2,6 @@ import {
   For,
   Show,
   batch,
-  createComponent,
   createEffect,
   createMemo,
   createSignal,
@@ -363,7 +362,7 @@ customElement<TableProps>(
       el.removeAttribute('title');
       el.removeAttribute('data');
     });
-    return createComponent(Table, props);
+    return <Table {...props} />;
   },
 );
 export default Table;

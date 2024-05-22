@@ -1,6 +1,5 @@
 import {
   Show,
-  createComponent,
   createEffect,
   createMemo,
   createSignal,
@@ -405,6 +404,6 @@ customElement<PopoverProps>('n-popover', defaultProps, (_, opt) => {
   createEffect(() => {
     el.removeAttribute('css');
   });
-  return createComponent(Popover, props);
+  return <Popover {...props} />;
 });
 export default Popover;

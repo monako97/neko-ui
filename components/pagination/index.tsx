@@ -2,7 +2,6 @@ import {
   For,
   Show,
   batch,
-  createComponent,
   createEffect,
   createMemo,
   createSignal,
@@ -11,7 +10,7 @@ import {
   untrack,
 } from 'solid-js';
 import { isFunction } from '@moneko/common';
-import { css, cx } from '@moneko/css';
+import { css } from '@moneko/css';
 import { customElement } from 'solid-element';
 import { styles } from './styles';
 import '../button';
@@ -149,7 +148,10 @@ function Pagination(_: PaginationProps) {
               return (
                 <li>
                   <n-button
-                    class={cx('pagination-item', typeof curr !== 'number' && `pagination-${curr}`)}
+                    class="pagination-item"
+                    classList={{
+                      [`pagination-${curr}`]: typeof curr !== 'number',
+                    }}
                     size={other.size}
                     flat={!isCurrent()}
                     circle={typeof curr !== 'number'}
@@ -250,7 +252,7 @@ customElement<PaginationProps>(
     createEffect(() => {
       el.removeAttribute('css');
     });
-    return createComponent(Pagination, props);
+    return <Pagination {...props} />;
   },
 );
 export default Pagination;

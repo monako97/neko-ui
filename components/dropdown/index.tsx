@@ -1,12 +1,4 @@
-import {
-  Show,
-  createComponent,
-  createEffect,
-  createSignal,
-  mergeProps,
-  splitProps,
-  untrack,
-} from 'solid-js';
+import { Show, createEffect, createSignal, mergeProps, splitProps, untrack } from 'solid-js';
 import { isFunction } from '@moneko/common';
 import { customElement } from 'solid-element';
 import Empty from '../empty';
@@ -171,7 +163,7 @@ customElement<DropdownProps>(
       el.removeAttribute('field-names');
       el.removeAttribute('css');
     });
-    return createComponent(Dropdown, props);
+    return <Dropdown {...props} />;
   },
 );
 export default Dropdown;

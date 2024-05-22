@@ -1,6 +1,5 @@
 import {
   Show,
-  createComponent,
   createEffect,
   createMemo,
   createSignal,
@@ -8,7 +7,6 @@ import {
   onCleanup,
   untrack,
 } from 'solid-js';
-import { cx } from '@moneko/css';
 import { customElement } from 'solid-element';
 import { Portal } from 'solid-js/web';
 import modalStore from './store';
@@ -166,11 +164,12 @@ function Modal(props: ModalProps) {
         </style>
         <div
           ref={portal}
-          class={cx(
-            'portal',
-            open() === OpenState.open ? 'open' : 'closeing',
-            props.maskBlur && 'mask-blur',
-          )}
+          class="portal"
+          classList={{
+            open: open() === OpenState.open,
+            closeing: open() !== OpenState.open,
+            'mask-blur': props.maskBlur,
+          }}
           onAnimationEnd={handleDestroy}
           onClick={portalClick}
         >
@@ -218,7 +217,7 @@ customElement<ModalProps>(
       _,
     );
 
-    return createComponent(Modal, props);
+    return <Modal {...props} />;
   },
 );
 export default Modal;

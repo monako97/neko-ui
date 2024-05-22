@@ -1,12 +1,4 @@
-import {
-  For,
-  Show,
-  createComponent,
-  createEffect,
-  createMemo,
-  createSignal,
-  mergeProps,
-} from 'solid-js';
+import { For, Show, createEffect, createMemo, createSignal, mergeProps } from 'solid-js';
 import { isFunction } from '@moneko/common';
 import { css, cx } from '@moneko/css';
 import { customElement } from 'solid-element';
@@ -197,7 +189,7 @@ customElement<SegmentedProps>(
       el.removeAttribute('field-names');
       el.removeAttribute('css');
     });
-    return createComponent(Segmented, props);
+    return <Segmented {...props} />;
   },
 );
 export default Segmented;

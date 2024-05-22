@@ -1,4 +1,4 @@
-import { For, Match, Switch, createComponent, createEffect, mergeProps, onCleanup } from 'solid-js';
+import { For, Match, Switch, createEffect, mergeProps, onCleanup } from 'solid-js';
 import { frameCallback } from '@moneko/common';
 import { css, cx } from '@moneko/css';
 import marked, { Renderer } from 'marked-completed';
@@ -264,7 +264,7 @@ customElement<MdProps>(
       el.removeAttribute('css');
       el.replaceChildren();
     });
-    return createComponent(MD, props);
+    return <MD {...props} />;
   },
 );
 export default MD;

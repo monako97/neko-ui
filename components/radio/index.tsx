@@ -1,4 +1,4 @@
-import { For, createComponent, createEffect, createMemo, createSignal, mergeProps } from 'solid-js';
+import { For, createEffect, createMemo, createSignal, mergeProps } from 'solid-js';
 import { css, cx } from '@moneko/css';
 import { customElement } from 'solid-element';
 import { style } from './style';
@@ -147,7 +147,7 @@ customElement<RadioProps>(
       el.removeAttribute('field-names');
       el.removeAttribute('css');
     });
-    return createComponent(Radio, props);
+    return <Radio {...props} />;
   },
 );
 export default Radio;

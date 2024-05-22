@@ -1,4 +1,4 @@
-import { createComponent, createEffect, createSignal, mergeProps } from 'solid-js';
+import { createEffect, createSignal, mergeProps } from 'solid-js';
 import { css, cx } from '@moneko/css';
 import { customElement } from 'solid-element';
 import { style } from './style';
@@ -55,7 +55,11 @@ function Switch(props: SwitchProps) {
         {css(props.css)}
       </style>
       <span
-        class={cx('switch', props.class, value() && 'checked', props.loading && 'loading')}
+        class={cx('switch', props.class)}
+        classList={{
+          checked: value(),
+          loading: props.loading,
+        }}
         text-on={props.checkedText}
         text-off={props.unCheckedText}
         aria-disabled={props.disabled}
@@ -103,7 +107,7 @@ customElement<SwitchProps>(
     createEffect(() => {
       el.removeAttribute('css');
     });
-    return createComponent(Switch, props);
+    return <Switch {...props} />;
   },
 );
 export default Switch;

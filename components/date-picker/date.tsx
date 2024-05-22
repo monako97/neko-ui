@@ -1,5 +1,4 @@
 import { For, createMemo } from 'solid-js';
-import { cx } from '@moneko/css';
 import dayjs from './dayjs';
 
 type DatePanelProps = {
@@ -71,7 +70,10 @@ function DatePanel(props: DatePanelProps) {
             type="primary"
             circle={true}
             flat={true}
-            class={cx(cls(), isActive() && 'date-active')}
+            class={cls()}
+            classList={{
+              'date-active': isActive(),
+            }}
             tag={isActive() ? 'strong' : 'button'}
             onClick={setDate.bind(null, d)}
           >

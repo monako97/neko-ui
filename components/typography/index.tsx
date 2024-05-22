@@ -1,4 +1,4 @@
-import { createComponent, createEffect, createMemo, mergeProps } from 'solid-js';
+import { createEffect, createMemo, mergeProps } from 'solid-js';
 import { css, cx } from '@moneko/css';
 import { customElement } from 'solid-element';
 import { Dynamic } from 'solid-js/web';
@@ -113,7 +113,7 @@ customElement<TypographyProps>(
     createEffect(() => {
       el.replaceChildren();
     });
-    return createComponent(Typography, props);
+    return <Typography {...props} />;
   },
 );
 export default Typography;

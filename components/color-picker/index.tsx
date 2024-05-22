@@ -1,5 +1,4 @@
 import {
-  createComponent,
   createEffect,
   createMemo,
   createSignal,
@@ -110,7 +109,7 @@ customElement<ColorPickerProps>(
       _,
     );
 
-    return createComponent(ColorPicker, props);
+    return <ColorPicker {...props} />;
   },
 );
 

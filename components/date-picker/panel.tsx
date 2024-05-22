@@ -1,5 +1,4 @@
 import { For, Match, Show, Switch, createEffect, createMemo, createSignal } from 'solid-js';
-import { cx } from '@moneko/css';
 import DatePanel from './date';
 import dayjs from './dayjs';
 import MonthPanel from './month';
@@ -89,7 +88,12 @@ function Panel(props: PanelProps) {
       <div ref={datePicker} class="date-picker" onMouseDown={handleMouseDown}>
         <Show when={props.showHeader}>
           <section class="date-picker-header">
-            <span class={cx('date-prev', !isDate() && 'not-date')}>
+            <span
+              class="date-prev"
+              classList={{
+                'not-date': !isDate(),
+              }}
+            >
               <n-button
                 class="prev-year"
                 type="primary"
@@ -125,7 +129,12 @@ function Panel(props: PanelProps) {
                 </n-button>
               </Show>
             </span>
-            <span class={cx('date-next', !isDate() && 'not-date')}>
+            <span
+              class="date-next"
+              classList={{
+                'not-date': !isDate(),
+              }}
+            >
               <Show when={isDate()}>
                 <n-button
                   class="next-month"

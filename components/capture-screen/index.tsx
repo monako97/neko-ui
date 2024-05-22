@@ -1,6 +1,5 @@
 import {
   Show,
-  createComponent,
   createEffect,
   createMemo,
   createSignal,
@@ -315,10 +314,10 @@ function CaptureScreen(_: CaptureScreenProps) {
         <Show when={local.preview && mediaStream()}>
           <div class="view">
             <span
-              class={cx(
-                recordState() === 'recording' && 'recording',
-                recordState() === 'paused' && 'paused',
-              )}
+              classList={{
+                recording: recordState() === 'recording',
+                paused: recordState() === 'paused',
+              }}
             />
             <video ref={videoElem} autoplay controls={local.controls && mediaStream() !== null} />
           </div>
@@ -417,7 +416,7 @@ customElement<CaptureScreenProps>(
       _,
     );
 
-    return createComponent(CaptureScreen, props);
+    return <CaptureScreen {...props} />;
   },
 );
 

@@ -1,4 +1,4 @@
-import { createComponent, createEffect, mergeProps } from 'solid-js';
+import { createEffect, mergeProps } from 'solid-js';
 import { customElement } from 'solid-element';
 import Tree from './index';
 import type { TreeData, TreeProps } from './type';
@@ -65,6 +65,6 @@ customElement<TreeProps>(
       el.removeAttribute('field-names');
       el.removeAttribute('data');
     });
-    return createComponent(Tree, props);
+    return <Tree {...props} />;
   },
 );

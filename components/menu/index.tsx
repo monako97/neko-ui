@@ -3,7 +3,6 @@ import {
   Match,
   Show,
   Switch,
-  createComponent,
   createEffect,
   createMemo,
   createSignal,
@@ -157,7 +156,11 @@ function Menu(props: MenuProps | MenuMultipleProps) {
 
             return (
               <div
-                class={cx('sub-menu', item.class, `sub-menu-${isOpen() ? 'open' : 'close'}`)}
+                class={cx('sub-menu', item.class)}
+                classList={{
+                  'sub-menu-open': isOpen(),
+                  'sub-menu-close': !isOpen(),
+                }}
                 part="sub-menu"
                 onMouseDown={preventDefault}
               >
@@ -363,7 +366,7 @@ customElement<MenuProps>(
       el.removeAttribute('field-names');
       el.removeAttribute('css');
     });
-    return createComponent(Menu, props);
+    return <Menu {...props} />;
   },
 );
 

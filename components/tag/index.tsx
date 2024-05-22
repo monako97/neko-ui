@@ -1,12 +1,4 @@
-import {
-  Show,
-  createComponent,
-  createEffect,
-  createMemo,
-  createSignal,
-  mergeProps,
-  splitProps,
-} from 'solid-js';
+import { Show, createEffect, createMemo, createSignal, mergeProps, splitProps } from 'solid-js';
 import { isFunction } from '@moneko/common';
 import { css, cx } from '@moneko/css';
 import { customElement } from 'solid-element';
@@ -84,13 +76,12 @@ function Tag(props: TagProps) {
       </style>
       <span
         {...other}
-        class={cx(
-          'tag',
-          local.type,
-          local.color && 'tag-custom',
-          local.bordered && 'bordered',
-          local.disabled && 'disabled',
-        )}
+        class={cx('tag', local.type)}
+        classList={{
+          'tag-custom': !!local.color,
+          bordered: local.bordered,
+          disabled: local.disabled,
+        }}
       >
         <Show when={local.icon}>
           <span class="icon">{local.icon}</span>
@@ -143,7 +134,7 @@ customElement<TagProps>(
       el.removeAttribute('css');
     });
 
-    return createComponent(Tag, props);
+    return <Tag {...props} />;
   },
 );
 

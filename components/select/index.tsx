@@ -2,7 +2,6 @@ import {
   For,
   Show,
   batch,
-  createComponent,
   createEffect,
   createMemo,
   createSignal,
@@ -12,7 +11,6 @@ import {
   untrack,
 } from 'solid-js';
 import { isFunction } from '@moneko/common';
-import { cx } from '@moneko/css';
 import { customElement } from 'solid-element';
 import { style } from './style';
 import { FieldName } from '../basic-config';
@@ -222,7 +220,12 @@ function Select(props: SelectProps) {
                   </Show>
                 }
               >
-                <span class={cx('value', open() && 'opacity')}>
+                <span
+                  class="value"
+                  classList={{
+                    opacity: !!open(),
+                  }}
+                >
                   {kv()[value()[0]]?.[fieldNames().label] || value()[0]}
                 </span>
               </Show>
@@ -238,7 +241,10 @@ function Select(props: SelectProps) {
             >
               {(v) => (
                 <n-tag
-                  class={cx('tag', open() && 'opacity')}
+                  class="tag"
+                  classList={{
+                    opacity: !!open(),
+                  }}
                   type={kv()[v]?.type || 'primary'}
                   color={kv()[v]?.color}
                   icon={kv()[v]?.icon}
@@ -331,7 +337,7 @@ customElement<SelectProps>(
       el.removeAttribute('field-names');
       el.removeAttribute('css');
     });
-    return createComponent(Select, props);
+    return <Select {...props} />;
   },
 );
 export default Select;

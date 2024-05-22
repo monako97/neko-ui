@@ -1,11 +1,4 @@
-import {
-  Show,
-  createComponent,
-  createEffect,
-  createMemo,
-  createSignal,
-  mergeProps,
-} from 'solid-js';
+import { Show, createEffect, createMemo, createSignal, mergeProps } from 'solid-js';
 import { isFunction } from '@moneko/common';
 import { css, cx } from '@moneko/css';
 import { customElement } from 'solid-element';
@@ -200,7 +193,7 @@ customElement<InputProps>('n-input', defaultInportProps, (_, opt) => {
     _,
   );
 
-  return createComponent(Input, props);
+  return <Input {...props} />;
 });
 
 export default Input;

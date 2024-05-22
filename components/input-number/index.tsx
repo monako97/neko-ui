@@ -1,4 +1,4 @@
-import { createComponent, createEffect, createSignal, mergeProps, onCleanup } from 'solid-js';
+import { createEffect, createSignal, mergeProps, onCleanup } from 'solid-js';
 import { passiveSupported } from '@moneko/common';
 import { css, cx } from '@moneko/css';
 import { customElement } from 'solid-element';
@@ -161,7 +161,7 @@ customElement<InputNumberProps>(
       _,
     );
 
-    return createComponent(InputNumber, props);
+    return <InputNumber {...props} />;
   },
 );
 

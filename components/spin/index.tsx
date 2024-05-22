@@ -1,4 +1,4 @@
-import { For } from 'solid-js';
+import { mergeProps } from 'solid-js';
 import { css, cx } from '@moneko/css';
 import { customElement } from 'solid-element';
 import theme from '../theme';
@@ -78,12 +78,13 @@ function Spin(props: SpinProps) {
         {style}
         {css(props.css)}
       </style>
-      <div class={cx('spin', props.spin && 'spining', props.class)}>
-        <div class="content">
-          <For each={Array.isArray(props.children) ? props.children : [props.children]}>
-            {(child) => child}
-          </For>
-        </div>
+      <div
+        class={cx('spin', props.class)}
+        classList={{
+          spining: props.spin,
+        }}
+      >
+        <div class="content">{props.children}</div>
       </div>
     </>
   );
@@ -91,9 +92,16 @@ function Spin(props: SpinProps) {
 
 export type SpinElement = CustomElement<SpinProps>;
 
-customElement<SpinProps>(
-  'n-spin',
-  { class: void 0, css: void 0, spin: void 0, children: void 0 },
-  Spin,
-);
+customElement<SpinProps>('n-spin', { class: void 0, css: void 0, spin: void 0 }, (_, opt) => {
+  const el = opt.element;
+  const props = mergeProps(
+    {
+      children: [...el.childNodes.values()],
+    },
+    _,
+  );
+
+  return <Spin {...props} />;
+});
+
 export default Spin;

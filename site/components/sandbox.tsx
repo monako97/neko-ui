@@ -2,7 +2,6 @@ import * as Solid from 'solid-js';
 import examples, { type ExampleModule } from '@app/example';
 import Fallback from '@app/fallback';
 import { isFunction } from '@moneko/common';
-import { cx } from '@moneko/css';
 import { customElement } from 'solid-element';
 import h from 'solid-js/h';
 import * as SolidWeb from 'solid-js/web';
@@ -108,7 +107,10 @@ function Sandbox(_props: SandboxProps) {
               />
             </Show>
             <span
-              class={cx('sandbox-btn', hasDesc() && 'sandbox-btn-desc')}
+              class="sandbox-btn"
+              classList={{
+                'sandbox-btn-desc': hasDesc(),
+              }}
               data-open={open()}
               onClick={() => setOpen((prev) => !prev)}
             >
@@ -125,7 +127,10 @@ function Sandbox(_props: SandboxProps) {
           </Show>
           <Show when={open()}>
             <n-code
-              class={cx('sandbox-live-editor', !open() && 'hide')}
+              class="sandbox-live-editor"
+              classList={{
+                hide: !open(),
+              }}
               code={sources()[current().lang]}
               lang={current().lang === 'SolidJS' ? 'tsx' : current().lang}
               edit={true}

@@ -1,6 +1,5 @@
 import {
   Show,
-  createComponent,
   createEffect,
   createSignal,
   mergeProps,
@@ -8,7 +7,6 @@ import {
   onMount,
   untrack,
 } from 'solid-js';
-import { cx } from '@moneko/css';
 import { customElement } from 'solid-element';
 import { Portal } from 'solid-js/web';
 import { imgCss, style } from './style';
@@ -162,7 +160,11 @@ function Img(_: ImgProps) {
       <Spin spin={loading()}>
         <img
           ref={imgRef}
-          class={cx('img', open() && 'none', isError() && 'error')}
+          class="img"
+          classList={{
+            none: !!open(),
+            error: isError(),
+          }}
           src={isIntersecting() ? props.src : void 0}
           alt={props.alt}
           onClick={handleOpen}
@@ -179,7 +181,11 @@ function Img(_: ImgProps) {
           </style>
           <div
             ref={portal}
-            class={cx('portal', open() ? 'open' : 'closeing')}
+            class="portal"
+            classList={{
+              open: !!open(),
+              closeing: !open(),
+            }}
             onAnimationEnd={handleDestroy}
             onClick={portalClick}
           >
@@ -222,7 +228,7 @@ customElement<ImgProps>(
       _,
     );
 
-    return createComponent(Img, props);
+    return <Img {...props} />;
   },
 );
 export default Img;

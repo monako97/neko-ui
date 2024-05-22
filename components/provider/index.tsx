@@ -1,4 +1,4 @@
-import { createComponent, createEffect, mergeProps } from 'solid-js';
+import { createEffect, mergeProps } from 'solid-js';
 import { customElement, noShadowDOM } from 'solid-element';
 import theme, { ColorScheme } from '../theme';
 import type { CustomElement } from '..';
@@ -49,6 +49,6 @@ customElement<ProviderProps>('n-provider', (_, opt) => {
     _,
   );
 
-  return createComponent(Provider, props);
+  return <Provider {...props} />;
 });
 export default Provider;

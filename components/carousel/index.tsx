@@ -1,7 +1,6 @@
 import {
   Index,
   Show,
-  createComponent,
   createEffect,
   createMemo,
   createSignal,
@@ -152,7 +151,10 @@ function Carousel(_props: CarouselProps) {
               {(_, idx) => {
                 return (
                   <i
-                    class={cx('dot', idx === (offset() % 20) + direction() && 'active')}
+                    class="dot"
+                    classList={{
+                      active: idx === (offset() % 20) + direction(),
+                    }}
                     onClick={handleDot.bind(null, idx)}
                   />
                 );
@@ -196,7 +198,7 @@ customElement<CarouselProps>(
     createEffect(() => {
       el.replaceChildren();
     });
-    return createComponent(Carousel, props);
+    return <Carousel {...props} />;
   },
 );
 export default Carousel;

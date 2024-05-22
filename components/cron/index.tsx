@@ -1,13 +1,4 @@
-import {
-  Show,
-  batch,
-  createComponent,
-  createEffect,
-  createSignal,
-  mergeProps,
-  splitProps,
-  untrack,
-} from 'solid-js';
+import { Show, batch, createEffect, createSignal, mergeProps, splitProps, untrack } from 'solid-js';
 import { css } from '@moneko/css';
 import { customElement } from 'solid-element';
 import Day from './day';
@@ -388,7 +379,7 @@ customElement<CronProps>(
       _,
     );
 
-    return createComponent(Cron, props);
+    return <Cron {...props} />;
   },
 );
 export default Cron;

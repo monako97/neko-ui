@@ -1,4 +1,4 @@
-import { For, createComponent, createEffect, createMemo, createSignal, mergeProps } from 'solid-js';
+import { For, createEffect, createMemo, createSignal, mergeProps } from 'solid-js';
 import { css, cx } from '@moneko/css';
 import { customElement } from 'solid-element';
 import { style } from './style';
@@ -248,7 +248,7 @@ customElement<CheckboxBoolProps | CheckboxGroupProps>(
       el.removeAttribute('field-names');
       el.removeAttribute('css');
     });
-    return createComponent(Checkbox, props);
+    return <Checkbox {...props} />;
   },
 );
 export default Checkbox;

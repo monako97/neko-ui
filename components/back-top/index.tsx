@@ -1,6 +1,5 @@
 import {
   Show,
-  createComponent,
   createEffect,
   createMemo,
   createSignal,
@@ -93,7 +92,10 @@ function BackTop(_: BackTopProps) {
         </style>
         <div
           onAnimationEnd={exit}
-          class={cx('back-top', show() === false && 'back-top-out', local.class)}
+          class={cx('back-top', local.class)}
+          classList={{
+            'back-top-out': show() === false,
+          }}
           onClick={handleBackTop}
           style={{ 'z-index': getMaxZindex().toString() }}
           {...other}
@@ -137,7 +139,7 @@ customElement<BackTopProps>(
     createEffect(() => {
       el.removeAttribute('css');
     });
-    return createComponent(BackTop, props);
+    return <BackTop {...props} />;
   },
 );
 export default BackTop;

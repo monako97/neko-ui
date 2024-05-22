@@ -1,5 +1,4 @@
 import { For, createMemo } from 'solid-js';
-import { cx } from '@moneko/css';
 import dayjs from './dayjs';
 
 type MonthPanelProps = { current: dayjs.Dayjs; onChange(next: dayjs.Dayjs): void };
@@ -22,7 +21,10 @@ function MonthPanel(props: MonthPanelProps) {
           <n-button
             type="primary"
             flat={true}
-            class={cx('date-picker-month', isActive() && 'date-active')}
+            class="date-picker-month"
+            classList={{
+              'date-active': isActive(),
+            }}
             tag={isActive() ? 'strong' : 'button'}
             onClick={onChange}
           >
