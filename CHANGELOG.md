@@ -4,6 +4,7 @@
 
 ### 📚 Documentation
 
+- fix github action ([a957fc5](https://github.com/monako97/neko-ui/commit/a957fc52fdd54cb4473d2517ace890836a23a383))
 - github action ci recursive install ([5bc4c5c](https://github.com/monako97/neko-ui/commit/5bc4c5c439bf90056b2e66a465d7b94d57854822))
 - @app/mdx-scpoe ([3108158](https://github.com/monako97/neko-ui/commit/3108158f44117afdc9edddefcee3d375ab950569))
 
