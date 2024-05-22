@@ -4,6 +4,7 @@
 
 ### ✨ Features
 
+- version 2.8.3 ([f067a6e](https://github.com/monako97/neko-ui/commit/f067a6e55efe72cef05e1900a9ab8d14bf7dfa2b))
 - prismjs ([812a6c9](https://github.com/monako97/neko-ui/commit/812a6c9f724fcf38f07a32a9fb741e6d10204800))
 
 ### 📚 Documentation

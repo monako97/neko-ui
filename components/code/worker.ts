@@ -1,11 +1,4 @@
-self.Prism = {
-  disableWorkerMessageHandler: true,
-  languages: {},
-  highlight(code) {
-    return code;
-  },
-};
-self.importScripts(new URL('../prism/prism.js', import.meta.url).toString());
+self.importScripts(new URL('../prism', import.meta.url).toString());
 self.addEventListener(
   'message',
   function (e) {
