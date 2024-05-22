@@ -2,14 +2,15 @@
 
 ## Last
 
+### ✨ Features
+
+- 增加构建输出 ([f2b8f93](https://github.com/monako97/neko-ui/commit/f2b8f938578f9ca3ff6d84e5fa6251c097824a21))
+- version 2.8.3 ([f067a6e](https://github.com/monako97/neko-ui/commit/f067a6e55efe72cef05e1900a9ab8d14bf7dfa2b))
+- prismjs ([812a6c9](https://github.com/monako97/neko-ui/commit/812a6c9f724fcf38f07a32a9fb741e6d10204800))
+
 ### 🐛 Bug Fixes
 
 - prism worker ([b673977](https://github.com/monako97/neko-ui/commit/b6739779b9a3f6369adb53bb3182e650c90a33e5))
-
-### ✨ Features
-
-- version 2.8.3 ([f067a6e](https://github.com/monako97/neko-ui/commit/f067a6e55efe72cef05e1900a9ab8d14bf7dfa2b))
-- prismjs ([812a6c9](https://github.com/monako97/neko-ui/commit/812a6c9f724fcf38f07a32a9fb741e6d10204800))
 
 ### 📚 Documentation
 
