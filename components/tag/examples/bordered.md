@@ -12,8 +12,8 @@ order: 5
 ```
 
 ```jsx
-<n-tag bordered="false" type="primary">primary</n-tag>
-<n-tag bordered="false" color="purple">purple</n-tag>
-<n-tag bordered="false" color="#f50">#f50</n-tag>
-<n-tag bordered="false" color="green">green</n-tag>
+<n-tag bordered={false} type="primary">primary</n-tag>
+<n-tag bordered={false} color="purple">purple</n-tag>
+<n-tag bordered={false} color="#f50">#f50</n-tag>
+<n-tag bordered={false} color="green">green</n-tag>
 ```
