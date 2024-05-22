@@ -25,7 +25,7 @@ const conf: Partial<ConfigType> = {
   externals: [/(.+)\/__tests__\/(.+)/i],
   importOnDemand: {
     '@moneko/common': {
-      transform: 'lib/${member}',
+      transform: 'esm/${member}',
     },
     lodash: {
       transform: '${member}',

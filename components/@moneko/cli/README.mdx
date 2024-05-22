@@ -29,78 +29,14 @@ mo create my-project
 ```shell
 cd my-project
 ```
+## 使用包管理工具
 
-## 使用 npm
+import { NpmTabs } from '@app/mdx-scope';
+import npm from './npm.md?raw';
+import yarn from './yarn.md?raw';
+import pnpm from './pnpm.md?raw';
 
-### 安装依赖
-
-```shell
-npm install
-```
-
-### 启动开发服务器
-
-```shell
-npm start
-```
-
-### 补充配置启动
-
-例如额外加载 `/config/prod.ts` 中的启动参数
-
-```shell
-npm start --config=prod
-```
-
-### 构建项目
-
-```shell
-npm run build
-```
-
-### 补充配置构建
-
-例如额外加载 `/config/prod.ts` 中的启动参数
-
-```shell
-npm run build --config=prod
-```
-
-## 使用 Yarn
-
-### 安装
-
-```shell
-yarn
-```
-
-### 启动
-
-```shell
-yarn start
-```
-
-### 使用补充配置启动
-
-例如额外加载 `/config/prod.ts` 中的启动参数
-
-```shell
-yarn start config=prod
-```
-
-### 构建
-
-```shell
-yarn build
-```
-
-### 使用补充配置构建
-
-例如额外加载 `/config/prod.ts` 中的启动参数
-
-```shell
-yarn build config=prod
-```
+<NpmTabs npm={npm} yarn={yarn} pnpm={pnpm} />
 
 ## 编译 app
 

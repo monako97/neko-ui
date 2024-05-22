@@ -22,17 +22,16 @@ jobs:
       - name: 'Checkout'
         uses: actions/checkout@v4
       - name: 'Setup pnpm'
-        uses: pnpm/action-setup@v3
+        uses: pnpm/action-setup@v4
         with:
           version: 9
-      - name: 'install'
-        run: pnpm install
+          run_install: true
       - name: 'lint'
-        run: npm run lint
+        run: pnpm run lint
       - name: 'Build UMD'
-        run: npm run build --config=umd
+        run: pnpm run build -- --config=umd
       - name: 'Build Github Pages'
-        run: npm run build no-es no-lib --config=github
+        run: pnpm run build no-es no-lib -- --config=github
       - name: 'Publish to npm'
         run: |
           NPM_PACKAGE_NAME=$(node -p "require('./package.json').name")

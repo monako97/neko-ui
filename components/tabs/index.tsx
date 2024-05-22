@@ -52,6 +52,11 @@ export interface TabsProps {
     left?: JSX.Element | (() => JSX.Element | (() => JSX.Element));
     right?: JSX.Element | (() => JSX.Element | (() => JSX.Element));
   };
+  /** 动画
+   * @since 2.8.2
+   * @default false
+   */
+  animated?: boolean;
 }
 
 export interface TabOption extends Omit<BaseOption, 'options'> {
@@ -213,7 +218,9 @@ function Tabs(props: TabsProps) {
   const [ani, setAni] = createSignal('slide-in');
 
   createEffect(() => {
-    setAni('slide-in');
+    if (props.animated) {
+      setAni('slide-in');
+    }
     return current()?.content;
   });
   const left = createMemo(() =>
@@ -229,7 +236,9 @@ function Tabs(props: TabsProps) {
   });
 
   function onAnimationEnd() {
-    setAni('');
+    if (props.animated) {
+      setAni('');
+    }
   }
   onMount(() => {
     box?.addEventListener('wheel', handleWheel, {
@@ -251,13 +260,20 @@ function Tabs(props: TabsProps) {
       </style>
       <div
         ref={box}
-        class={cx('tabs', props.type, props.class, props.centered && 'centered')}
+        class={cx('tabs', props.type, props.class)}
+        classList={{
+          centered: props.centered,
+        }}
         aria-disabled={props.disabled}
       >
         <Show when={left()}>{left()}</Show>
         <div
           ref={wrapRef}
-          class={cx('items', wrap().left && 'warp-left', wrap().right && 'warp-right')}
+          class="items"
+          classList={{
+            'warp-left': wrap().left,
+            'warp-right': wrap().right,
+          }}
         >
           <For each={items()}>
             {(item, i) => {
@@ -269,7 +285,11 @@ function Tabs(props: TabsProps) {
                 <n-button
                   link={true}
                   type={isActive() ? 'primary' : 'default'}
-                  class={cx('tab', isActive() && 'active', item.class)}
+                  class={cx('tab', item.class)}
+                  classList={{
+                    active: isActive(),
+                    'first-active': isActive() && i() === 0,
+                  }}
                   tabindex={readOnly() ? -1 : 0}
                   onKeyUp={onKeyUp.bind(null, item)}
                   onClick={onChange.bind(null, item)}
@@ -303,7 +323,13 @@ function Tabs(props: TabsProps) {
         <Show when={right()}>{right()}</Show>
       </div>
       <Show when={current()?.content}>
-        <div class={cx('content', ani())} onAnimationEnd={onAnimationEnd}>
+        <div
+          class="content"
+          classList={{
+            [ani()]: props.animated,
+          }}
+          onAnimationEnd={onAnimationEnd}
+        >
           {content()}
         </div>
       </Show>

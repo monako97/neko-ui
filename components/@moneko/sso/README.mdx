@@ -13,11 +13,12 @@ order: 5
 
 ## 安装依赖
 
-```shell
-npm install shared-store-object -S
-# or
-yarn add shared-store-object -S
-```
+import { npm, NpmTabs } from '@app/mdx-scope';
+export const npmStr = npm('npm', { package: 'shared-store-object' });
+export const yarnStr = npm('yarn', { package: 'shared-store-object' });
+export const pnpmStr = npm('pnpm', { package: 'shared-store-object' });
+
+<NpmTabs npm={npmStr} yarn={yarnStr} pnpm={pnpmStr} />
 
 ## 使用方式
 

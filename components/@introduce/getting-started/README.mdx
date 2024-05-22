@@ -11,11 +11,12 @@ icon: 🔜
 
 ## 安装
 
-```shell
-npm install neko-ui -S
-# or
-yarn add neko-ui -S
-```
+import { npm, NpmTabs } from '@app/mdx-scope';
+export const npmStr = npm('npm', { package: 'neko-ui' });
+export const yarnStr = npm('yarn', { package: 'neko-ui' });
+export const pnpmStr = npm('pnpm', { package: 'neko-ui' });
+
+<NpmTabs npm={npmStr} yarn={yarnStr} pnpm={pnpmStr} />
 
 ## 使用
 

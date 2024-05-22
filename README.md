@@ -36,6 +36,8 @@
 npm install neko-ui -S
 # or
 yarn add neko-ui -S
+# or
+pnpm add neko-ui -S
 ```
 
 ### 使用
