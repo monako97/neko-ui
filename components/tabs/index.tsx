@@ -353,6 +353,7 @@ customElement<TabsProps>(
     fieldNames: void 0,
     add: void 0,
     extra: void 0,
+    animated: void 0,
   },
   (_, opt) => {
     const el = opt.element;
