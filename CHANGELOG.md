@@ -2,6 +2,10 @@
 
 ## Last
 
+### 🐛 Bug Fixes
+
+- prism worker ([b673977](https://github.com/monako97/neko-ui/commit/b6739779b9a3f6369adb53bb3182e650c90a33e5))
+
 ### ✨ Features
 
 - version 2.8.3 ([f067a6e](https://github.com/monako97/neko-ui/commit/f067a6e55efe72cef05e1900a9ab8d14bf7dfa2b))
