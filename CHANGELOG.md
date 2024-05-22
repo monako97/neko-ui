@@ -1,9 +1,10 @@
 # Change log
 
-## Last
+## [2.8.4](https://github.com/monako97/neko-ui/compare/2.8.2...2.8.4) (5-23-2024)
 
 ### ✨ Features
 
+- 增加构建输出 ([071f2cd](https://github.com/monako97/neko-ui/commit/071f2cd5de2051ca855fb6257ec3161f0c806330))
 - 增加构建输出 ([3d545ce](https://github.com/monako97/neko-ui/commit/3d545ce65688e545bb45590fda8ba4fd4c11d80f))
 - 增加构建输出 ([5990367](https://github.com/monako97/neko-ui/commit/5990367ed1a6553514ad699f1e541d55dce5d896))
 - 增加构建输出 ([2fb880a](https://github.com/monako97/neko-ui/commit/2fb880a8b3a7876ef1d991ef0d7be78f92a3a168))

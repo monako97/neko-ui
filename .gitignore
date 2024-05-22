@@ -5,6 +5,7 @@
 .DS_Store
 .swc
 node_modules
+/types
 /dist
 /docs
 /umd
