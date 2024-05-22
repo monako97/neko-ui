@@ -43,13 +43,18 @@ export interface ImgProps {
    * @default true
    */
   lazy?: boolean;
+  /** 禁止点开大图
+   * @since 2.8.3
+   * @default false
+   */
+  disabled?: boolean;
 }
 export type ImgElement = CustomElement<ImgProps, 'onOpenChange'>;
 
 function Img(_: ImgProps) {
   let imgRef: HTMLImageElement | undefined;
   let portal: HTMLDivElement | undefined;
-  const props = mergeProps({ lazy: true }, _);
+  const props = mergeProps({ lazy: true, disabled: false }, _);
   const [open, setOpen] = createSignal<boolean | null>(null);
   const [posi, setPosi] = createSignal({
     width: 0,
@@ -73,11 +78,13 @@ function Img(_: ImgProps) {
   function getCss() {
     const { width, height, top, left } = posi();
 
-    return `.portal { --img: url(${props.src});inline-size: ${width}px; block-size: ${height}px;inset-block-start: ${top}px;inset-inline-start: ${left}px;}`;
+    return `.portal {--img: url(${props.src});inline-size: ${width}px;block-size: ${height}px;inset-block-start: ${top}px;inset-inline-start: ${left}px;}`;
   }
   function openChange(visi: boolean | null) {
-    setOpen(visi);
-    props.onOpenChange?.(visi);
+    if (!props.disabled) {
+      setOpen(visi);
+      props.onOpenChange?.(visi);
+    }
   }
   function preventDefault(e: Event) {
     e.preventDefault();
@@ -98,11 +105,13 @@ function Img(_: ImgProps) {
     }
   }
   function handleOpen(e: Event) {
-    e.stopPropagation();
-    preventDefault(e);
-    if (!isError()) {
-      setPosi((e.target as HTMLImageElement)?.getBoundingClientRect());
-      openChange(true);
+    if (!props.disabled) {
+      e.stopPropagation();
+      preventDefault(e);
+      if (!isError()) {
+        setPosi((e.target as HTMLImageElement)?.getBoundingClientRect());
+        openChange(true);
+      }
     }
   }
   function handleError() {
@@ -161,6 +170,7 @@ function Img(_: ImgProps) {
         <img
           ref={imgRef}
           class="img"
+          part="img"
           classList={{
             none: !!open(),
             error: isError(),
@@ -210,6 +220,7 @@ customElement<ImgProps>(
     onOpenChange: void 0,
     onLoad: void 0,
     lazy: void 0,
+    disabled: void 0,
   },
   (_, opt) => {
     const props = mergeProps(

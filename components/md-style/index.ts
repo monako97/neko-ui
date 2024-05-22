@@ -300,10 +300,13 @@ const mdStyle = css`
     display: flex;
     overflow: hidden;
     margin: auto;
-    border-radius: var(--border-radius);
     max-inline-size: 100%;
     inline-size: fit-content;
     cursor: pointer;
+  }
+
+  n-img::part(img) {
+    min-inline-size: 25px;
   }
 
   ul {

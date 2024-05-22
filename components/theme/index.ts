@@ -80,7 +80,7 @@ function createTheme() {
       color: 'var(--text-color, rgb(0 0 0 / 65%))',
       lineHeight: 1.8,
     },
-    '[disabled]:not([disabled="false"])': {
+    '[disabled]:not([disabled="false"]):not(n-img)': {
       cursor: 'not-allowed',
       color: 'var(--disable-color)',
     },

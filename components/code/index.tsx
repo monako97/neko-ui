@@ -11,16 +11,10 @@ import { isFunction, setClipboard } from '@moneko/common';
 import { css, cx } from '@moneko/css';
 import { customElement } from 'solid-element';
 import { style } from './style';
+import Prism from '../prism';
 import prismCss from '../prism/css';
-import '../prism/prism.js';
 import theme from '../theme';
 import type { CustomElement } from '..';
-
-declare const Prism: {
-  disableWorkerMessageHandler: boolean;
-  languages: Record<string, unknown>;
-  highlight(code: string, langs: unknown, lang: string): string;
-};
 
 export interface CodeProps {
   /** 自定义类名 */

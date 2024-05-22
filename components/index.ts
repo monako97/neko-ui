@@ -122,6 +122,7 @@ export {
 export { default as Typography, type TypographyElement, type TypographyProps } from './typography';
 export { default as dayjs } from './date-picker/dayjs';
 export { default as Provider, type ProviderElement, type ProviderProps } from './provider';
+export { default as Prism } from './prism';
 export { hot, customElement, noShadowDOM, withSolid, getCurrentElement } from 'solid-element';
 export type { CustomElement } from 'custom-element-type';
 import type {

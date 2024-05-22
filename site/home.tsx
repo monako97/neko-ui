@@ -9,7 +9,7 @@ function Home() {
   return (
     <>
       <style>{style}</style>
-      <n-md text={Readme} not-render={true} picture-viewer={false} />
+      <n-md text={Readme} not-render={true} line-number={false} picture-viewer={false} />
       <div class="site-colors">
         <For each={colors} fallback={<div>No items</div>}>
           {(c: string) => {

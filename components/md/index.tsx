@@ -23,6 +23,7 @@ function MD(_props: MdProps) {
   const props = mergeProps(
     {
       pictureViewer: true,
+      lazyPicture: true,
       text: '',
       tools: ['copy'],
       getAnchorContainer: () => window as unknown as HTMLElement,
@@ -38,14 +39,14 @@ function MD(_props: MdProps) {
   function postMessage(opt: {
     text: string;
     pictureViewer?: boolean;
+    lazyPicture?: boolean;
     langToolbar?: string[];
     langLineNumber?: boolean;
   }) {
-    const { text, pictureViewer, langToolbar, ...options } = opt;
-    const tag = pictureViewer ? 'n-img' : 'img';
+    const { text, pictureViewer, lazyPicture, langToolbar, ...options } = opt;
 
     renderer.image = (src: string, title: string, alt: string) => {
-      return `<${tag} role="img" src="${src}" alt="${alt}" ${title ? `title="${title}"` : ''}></${tag}>`;
+      return `<n-img lazy="${lazyPicture}" disabled="${!pictureViewer}" role="img" src="${src}" alt="${alt}" ${title ? `title="${title}"` : ''}></n-img>`;
     };
     const toolbar = !!langToolbar?.length;
 
@@ -92,6 +93,7 @@ function MD(_props: MdProps) {
         langLineNumber: props.lineNumber,
         langToolbar: props.tools,
         pictureViewer: props.pictureViewer,
+        lazyPicture: props.lazyPicture,
       });
 
     frameCallback(call);
@@ -214,6 +216,11 @@ export interface MdProps {
    * @default true
    */
   pictureViewer?: boolean;
+  /** 开启图片懒加载
+   * @since 2.8.3
+   * @default true
+   */
+  lazyPicture?: boolean;
   /** 显示代码块行号
    * @default true
    */
@@ -240,6 +247,7 @@ customElement<MdProps>(
   {
     class: void 0,
     pictureViewer: void 0,
+    lazyPicture: void 0,
     lineNumber: true,
     text: void 0,
     tools: void 0,

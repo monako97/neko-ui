@@ -44,12 +44,13 @@
     "@commitlint/cli": "19.3.0",
     "@commitlint/config-conventional": "19.2.2",
     "@moneko/cli": "2.11.1",
-    "@moneko/core": "3.16.5",
+    "@moneko/core": "3.16.6",
     "@moneko/solid": "1.8.0",
     "@solidjs/testing-library": "0.8.8",
     "@swc/jest": "0.2.36",
     "@testing-library/jest-dom": "6.4.5",
     "@types/jest": "29.5.12",
+    "@types/prismjs": "1.26.4",
     "eslint-config-neko": "2.7.6",
     "eslint-plugin-solid": "0.14.0",
     "husky": "9.0.11",
@@ -66,11 +67,13 @@
     "custom-element-type": "1.0.4",
     "dayjs": "1.11.11",
     "marked-completed": "1.2.14",
+    "prismjs": "1.29.0",
     "solid-element": "1.8.0",
     "solid-js": "1.8.17"
   },
   "browserslist": [
-    "Chrome >= 86",
-    "Safari >= 15"
+    ">0.3%, defaults",
+    "fully supports es6-module",
+    "maintained node versions"
   ]
 }

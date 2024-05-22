@@ -7,6 +7,7 @@ const conf: Partial<ConfigType> = {
     domain: 'monako97.github.io',
     jekyll: false,
   },
+  polyfill: false,
   basename: `/${PACKAGENAME}`,
   publicPath: `/${PACKAGENAME}/`,
   bundleAnalyzer: false,
