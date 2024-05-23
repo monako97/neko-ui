@@ -18,22 +18,10 @@ const conf: Partial<ConfigType> = {
     ],
   },
   fallbackCompPath: '@/components/fallback',
-  rem: {
-    designSize: 1920,
-  },
   bundleAnalyzer: {},
-  externals: [/(.+)\/__tests__\/(.+)/i],
   importOnDemand: {
     '@moneko/common': {
       transform: 'esm/${member}',
-    },
-    lodash: {
-      transform: '${member}',
-    },
-  },
-  devServer: {
-    headers: {
-      'X-Content-Type-Options': 'nosniff',
     },
   },
 };

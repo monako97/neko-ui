@@ -1,5 +1,11 @@
 # Change log
 
+## [2.8.5](https://github.com/monako97/neko-ui/compare/2.8.4...2.8.5) (5-23-2024)
+
+### ✨ Features
+
+- 支持 esm和 cjs ([c9c820d](https://github.com/monako97/neko-ui/commit/c9c820df8842d8160ba1e2389365c8e239a874a1))
+
 ## [2.8.4](https://github.com/monako97/neko-ui/compare/2.8.2...2.8.4) (5-23-2024)
 
 ### ✨ Features
