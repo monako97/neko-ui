@@ -132,7 +132,7 @@ function Sandbox(_props: SandboxProps) {
                 hide: !open(),
               }}
               code={sources()[current().lang]}
-              lang={current().lang === 'SolidJS' ? 'tsx' : current().lang}
+              language={current().lang === 'SolidJS' ? 'tsx' : current().lang}
               edit={true}
               css={codeNoShadowCss}
               onChange={codeChange}

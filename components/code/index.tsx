@@ -24,7 +24,7 @@ export interface CodeProps {
   /** 内容 */
   code?: string;
   /** 语言 */
-  lang?: string;
+  language?: string;
   /** 显示代码行号 */
   lineNumber?: boolean;
   /** 支持编辑 */
@@ -57,18 +57,18 @@ function Code(props: CodeProps) {
     return (
       <pre
         classList={{
-          [`language-${props.lang}`]: !!props.lang,
+          [`language-${props.language}`]: !!props.language,
           'line-numbers': props.lineNumber,
           'not-toolbar': !props.toolbar,
           [props.class as string]: !props.edit,
         }}
       >
         <Show when={props.toolbar}>
-          <div class="toolbar" data-lang={props.lang?.split(' ')[0]}>
-            <button class="toolbar-copy" onClick={copy} />
+          <div class="toolbar" data-language={props.language?.split(' ')[0]}>
+            <button class="toolbar-copy" aria-label="copy" onClick={copy} />
           </div>
         </Show>
-        <code ref={codeEl} class={`language-${props.lang}`} />
+        <code ref={codeEl} class={`language-${props.language}`} />
       </pre>
     );
   }
@@ -80,15 +80,15 @@ function Code(props: CodeProps) {
       props.onChange(c);
     }
   }
-  function postMessage(opt: { lang: string; code?: string }) {
-    if (!opt.code || !isIntersecting()) return;
+  function postMessage(language: string, value?: string) {
+    if (!value || !isIntersecting()) return;
     observer.unobserve(codeEl);
     observer.disconnect();
-    if (diffLang.test(opt.lang) && !Prism.languages[opt.lang]) {
-      Prism.languages[opt.lang] = Prism.languages.diff;
+    if (diffLang.test(language) && !Prism.languages[language]) {
+      Prism.languages[language] = Prism.languages.diff;
     }
-    const language = Prism.languages[opt.lang] || Prism.languages.markup;
-    const next = Prism.highlight(`${opt.code}\n`, language, opt.lang);
+    const PrismLanguage = Prism.languages[language] || Prism.languages.markup;
+    const next = Prism.highlight(`${value}\n`, PrismLanguage, language);
 
     if (codeEl.innerHTML !== next) {
       codeEl.innerHTML = next;
@@ -102,10 +102,7 @@ function Code(props: CodeProps) {
   // });
   // work.addEventListener('message', update);
 
-  // work.postMessage({
-  //   lang: props.lang,
-  //   code: code(),
-  // });
+  // work.postMessage(props.language || 'markup', code());
   // onCleanup(() => {
   //   work.terminate();
   // });
@@ -121,10 +118,7 @@ function Code(props: CodeProps) {
     }
   });
   createEffect(() => {
-    postMessage({
-      lang: props.lang || 'markup',
-      code: code(),
-    });
+    postMessage(props.language || 'markup', code());
   });
   onMount(() => {
     // 开始观察目标元素
@@ -167,7 +161,7 @@ customElement<CodeProps>(
   {
     class: void 0,
     code: void 0,
-    lang: void 0,
+    language: void 0,
     children: void 0,
     edit: void 0,
     toolbar: void 0,

@@ -143,7 +143,7 @@ const mdxScope: MDXComponents = {
       <n-code
         toolbar={true}
         line-number={false}
-        lang={p.children.className.replace('language-', '').replace(/ .*$/, '')}
+        language={p.children.className.replace('language-', '').replace(/ .*$/, '')}
         {...p}
       />
     );

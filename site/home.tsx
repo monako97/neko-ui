@@ -11,11 +11,11 @@ function Home() {
       <style textContent={style} />
       <n-md text={Readme} not-render={true} line-number={false} picture-viewer={false} />
       <div class="site-colors">
-        <For each={colors} fallback={<div>No items</div>}>
+        <For each={colors}>
           {(c: string) => {
             return (
               <div class="site-color">
-                <For each={types} fallback={<div>No items</div>}>
+                <For each={types}>
                   {(t: string) => {
                     const v = `--${c}-${t}`;
 

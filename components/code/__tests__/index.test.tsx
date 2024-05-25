@@ -5,14 +5,14 @@ describe('Code', () => {
   it('basic', () => {
     const { container } = render(() => (
       <>
-        <n-code line-number={true} lang="javascript">
+        <n-code line-number={true} language="javascript">
           {`const foo = bar.baz([1, 2, 3]) + 1;
 console.log(\`foo: $\{foo}\`);`}
         </n-code>
         <n-code
           code={`let foo = bar.baz([1, 2, 3]);
           foo = foo + 1;`}
-          lang="javascript"
+          language="javascript"
         />
       </>
     ));
@@ -21,7 +21,7 @@ console.log(\`foo: $\{foo}\`);`}
   });
   it('toolbar', () => {
     const { getByTestId } = render(() => (
-      <n-code data-testid="code" toolbar={true} lang="javascript">
+      <n-code data-testid="code" toolbar={true} language="javascript">
         {`const foo = bar.baz([1, 2, 3]) + 1;
 console.log(\`foo: $\{foo}\`);`}
       </n-code>
@@ -33,7 +33,13 @@ console.log(\`foo: $\{foo}\`);`}
   it('edit', () => {
     const change = jest.fn();
     const { getByTestId } = render(() => (
-      <n-code data-testid="code" line-number={true} edit={true} onChange={change} lang="javascript">
+      <n-code
+        data-testid="code"
+        line-number={true}
+        edit={true}
+        onChange={change}
+        language="javascript"
+      >
         {`const foo = bar.baz([1, 2, 3]) + 1;
 console.log(\`foo: $\{foo}\`);`}
       </n-code>

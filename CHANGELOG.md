@@ -1,6 +1,10 @@
 # Change log
 
-## Last
+## [2.8.6](https://github.com/monako97/neko-ui/compare/2.8.5...2.8.6) (5-25-2024)
+
+### 🐛 Bug Fixes
+
+- code组件 ([c7340f2](https://github.com/monako97/neko-ui/commit/c7340f29880dfa238d1a7224ca6829aec5ea446c))
 
 ### 📚 Documentation
 

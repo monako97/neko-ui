@@ -4,7 +4,7 @@ description: 支持编辑
 ---
 
 ```html
-<n-code edit="true" lang="javascript">
+<n-code edit="true" language="javascript">
 const foo = bar.baz([1, 2, 3]) + 1;
 console.log(`foo: foo`);
 </n-code>
@@ -13,7 +13,7 @@ console.log(`foo: foo`);
 ```jsx
 <n-code
   edit
-  lang="javascript"
+  language="javascript"
   code={`const foo = bar.baz([1, 2, 3]) + 1;
 console.log(\`foo: foo\`);`}
 />

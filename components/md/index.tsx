@@ -55,7 +55,7 @@ function MD(_props: MdProps) {
         return `<n-tree data="${code}" />`;
       }
 
-      return `<n-code class="n-code" toolbar="${toolbar}" lang="${lang}" ${
+      return `<n-code class="n-code" toolbar="${toolbar}" language="${lang}" ${
         options.langLineNumber ? 'line-number="true"' : ''
       }>${encodeURIComponent(code)}</n-code>`;
     };

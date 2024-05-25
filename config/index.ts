@@ -14,8 +14,11 @@ const conf: Partial<ConfigType> = {
     },
     tags: [
       { src: `${CDN}/n-code-live/1.1.0/umd/index.js`, async: true },
-      { inject: 'body', src: `${CDN}/n-katex/1.0.8/umd/index.js`, defer: true, async: true },
+      { inject: 'body', src: `${CDN}/n-katex/1.0.8/umd/index.js`, defer: true },
     ],
+  },
+  rem: {
+    designSize: 1920,
   },
   fallbackCompPath: '@/components/fallback',
   bundleAnalyzer: {},

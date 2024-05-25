@@ -344,7 +344,7 @@ const prismCss = createRoot(() => {
       line-height: 24px;
       text-transform: uppercase;
       backdrop-filter: blur(10px);
-      content: attr(data-lang) '';
+      content: attr(data-language) '';
       transition-property: background-color, border-color, color;
     }
 
