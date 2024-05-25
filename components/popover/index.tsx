@@ -338,24 +338,24 @@ function Popover(props: PopoverProps) {
 
   return (
     <>
-      <style>
-        {baseStyle()}
-        {popoverCss}
-        {css(local.css)}
-      </style>
+      <style textContent={baseStyle()} />
+      <style textContent={popoverCss} />
+      <Show when={local.css}>
+        <style textContent={css(local.css)} />
+      </Show>
       <span ref={childRef} class={cx('popover', local.size, local.class)} {...childrenProps()}>
         {local.children}
       </span>
       <Show when={open() !== null || !local.destroyInactive}>
         <Portal useShadow mount={container()}>
-          <style>
-            {baseStyle()}
-            {portalCss}
-            {hostStyle()}
-            {portalStyle()}
-            {width()}
-            {css(local.popupCss)}
-          </style>
+          <style textContent={baseStyle()} />
+          <style textContent={portalCss} />
+          <style textContent={hostStyle()} />
+          <style textContent={portalStyle()} />
+          <style textContent={width()} />
+          <Show when={local.popupCss}>
+            <style textContent={css(local.popupCss)} />
+          </Show>
           <div ref={ref} onAnimationEnd={exit} class={portalCls()} {...childrenProps()}>
             <Show when={local.content} fallback={<n-empty />}>
               {local.content as JSX.Element}

@@ -17,7 +17,7 @@ function Provider(props: ProviderProps) {
   });
   return (
     <>
-      <style>{baseStyle()}</style>
+      <style textContent={baseStyle()} />
       {props.children}
     </>
   );

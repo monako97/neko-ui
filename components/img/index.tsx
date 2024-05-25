@@ -1,19 +1,19 @@
 import {
+  type JSX,
   Show,
   createEffect,
   createSignal,
   mergeProps,
   onCleanup,
-  onMount,
   untrack,
 } from 'solid-js';
 import { customElement } from 'solid-element';
 import { Portal } from 'solid-js/web';
+import ImgLazy from './lazy';
 import { imgCss, style } from './style';
-import Spin from '../spin';
 import type { CustomElement } from '..';
 
-export interface ImgProps {
+export interface ImgProps extends JSX.HTMLAttributes<HTMLImageElement> {
   /** 图片地址 */
   src?: string;
   /** 查看大图的地址, 默认使用 `src`
@@ -52,27 +52,22 @@ export interface ImgProps {
 export type ImgElement = CustomElement<ImgProps, 'onOpenChange'>;
 
 function Img(_: ImgProps) {
-  let imgRef: HTMLImageElement | undefined;
   let portal: HTMLDivElement | undefined;
-  const props = mergeProps({ lazy: true, disabled: false }, _);
+  const props = mergeProps(
+    {
+      maskClosable: true,
+      escClosable: true,
+      lazy: true,
+      disabled: false,
+    },
+    _,
+  );
   const [open, setOpen] = createSignal<boolean | null>(null);
   const [posi, setPosi] = createSignal({
     width: 0,
     height: 0,
     left: 0,
     top: 0,
-  });
-  const [isError, setIsError] = createSignal(false);
-  const [isIntersecting, setIsIntersecting] = createSignal(false);
-  const [loading, setLoading] = createSignal(true);
-  const observer = new IntersectionObserver((entries) => {
-    setIsIntersecting(entries[0].isIntersecting);
-    if (entries[0].isIntersecting) {
-      if (imgRef) {
-        observer.unobserve(imgRef);
-      }
-      observer.disconnect();
-    }
   });
 
   function getCss() {
@@ -104,23 +99,13 @@ function Img(_: ImgProps) {
       openChange(null);
     }
   }
-  function handleOpen(e: Event) {
+  function handleOpen(e: MouseEvent) {
     if (!props.disabled) {
       e.stopPropagation();
       preventDefault(e);
-      if (!isError()) {
-        setPosi((e.target as HTMLImageElement)?.getBoundingClientRect());
-        openChange(true);
-      }
+      setPosi((e.target as HTMLImageElement)?.getBoundingClientRect());
+      openChange(true);
     }
-  }
-  function handleError() {
-    setIsError(true);
-    setLoading(false);
-  }
-  function handleLoad(e: Event) {
-    props.onLoad?.(e);
-    setLoading(false);
   }
   function portalClick(e: Event) {
     preventDefault(e);
@@ -151,44 +136,22 @@ function Img(_: ImgProps) {
     });
   });
 
-  onMount(() => {
-    if (imgRef) {
-      observer.observe(imgRef);
-    }
-  });
-  onCleanup(() => {
-    if (imgRef) {
-      observer.unobserve(imgRef);
-    }
-    observer.disconnect();
-  });
-
   return (
     <>
-      <style>{imgCss}</style>
-      <Spin spin={loading()}>
-        <img
-          ref={imgRef}
-          class="img"
-          part="img"
-          classList={{
-            none: !!open(),
-            error: isError(),
-          }}
-          src={isIntersecting() ? props.src : void 0}
-          alt={props.alt}
-          onClick={handleOpen}
-          onError={handleError}
-          onLoad={handleLoad}
-        />
-      </Spin>
+      <ImgLazy
+        src={props.src}
+        alt={props.alt}
+        lazy={props.lazy}
+        classList={{
+          none: !!open(),
+        }}
+        onClick={handleOpen}
+      />
       <Show when={open() !== null}>
         <Portal useShadow={true}>
-          <style>
-            {getCss()}
-            {imgCss}
-            {style}
-          </style>
+          <style textContent={getCss()} />
+          <style textContent={imgCss} />
+          <style textContent={style} />
           <div
             ref={portal}
             class="portal"
@@ -215,8 +178,8 @@ customElement<ImgProps>(
     srcFull: void 0,
     alt: void 0,
     open: null as boolean | null,
-    maskClosable: true,
-    escClosable: true,
+    maskClosable: void 0,
+    escClosable: void 0,
     onOpenChange: void 0,
     onLoad: void 0,
     lazy: void 0,

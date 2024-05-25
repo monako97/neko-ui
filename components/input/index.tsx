@@ -107,12 +107,12 @@ function Input(props: InputProps) {
 
   return (
     <>
-      <style>
-        {baseStyle()}
-        {style}
-        {x()}
-        {css(props.css)}
-      </style>
+      <style textContent={baseStyle()} />
+      <style textContent={style} />
+      <style textContent={x()} />
+      <Show when={props.css}>
+        <style textContent={css(props.css)} />
+      </Show>
       <fieldset
         class={cx('fieldset', props.size, props.status, props.class)}
         disabled={props.disabled}

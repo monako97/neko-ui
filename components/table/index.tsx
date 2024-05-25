@@ -117,11 +117,11 @@ function Table(_: TableProps) {
 
   return (
     <>
-      <style>
-        {baseStyle()}
-        {styles}
-        {css(local.css)}
-      </style>
+      <style textContent={baseStyle()} />
+      <style textContent={styles} />
+      <Show when={local.css}>
+        <style textContent={css(local.css)} />
+      </Show>
       <table {...other} class={cx('table', local.size)} part="table">
         <Show when={local.title}>
           <caption class="table-title">

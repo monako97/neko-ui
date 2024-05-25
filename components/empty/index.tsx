@@ -34,10 +34,10 @@ export type EmptyElement = CustomElement<EmptyProps>;
 function Empty(props: EmptyProps) {
   return (
     <>
-      <style>
-        {style}
-        {css(props.css)}
-      </style>
+      <style textContent={style} />
+      <Show when={props.css}>
+        <style textContent={css(props.css)} />
+      </Show>
       <div class="empty-container">
         <Show
           when={props.label}

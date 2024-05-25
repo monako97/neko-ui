@@ -237,11 +237,11 @@ function Tree(
 
   return (
     <>
-      <style>
-        {baseStyle()}
-        {style}
-        {css(_.css)}
-      </style>
+      <style textContent={baseStyle()} />
+      <style textContent={style} />
+      <Show when={_.css}>
+        <style textContent={css(_.css)} />
+      </Show>
       <ul
         ref={el}
         class="tree"

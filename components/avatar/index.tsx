@@ -1,5 +1,6 @@
 import {
   Match,
+  Show,
   Switch,
   createEffect,
   createMemo,
@@ -10,6 +11,7 @@ import {
 import { css, cx } from '@moneko/css';
 import { customElement } from 'solid-element';
 import { style } from './style';
+import Img from '../img';
 import theme from '../theme';
 import type { BasicConfig, CustomElement } from '../index';
 
@@ -78,16 +80,16 @@ function Avatar(_: AvatarProps) {
 
   return (
     <>
-      <style>
-        {baseStyle()}
-        {style}
-        {_style()}
-        {css(local.css)}
-      </style>
+      <style textContent={baseStyle()} />
+      <style textContent={style} />
+      <style textContent={_style()} />
+      <Show when={local.css}>
+        <style textContent={css(local.css)} />
+      </Show>
       <div ref={box} class={cx('avatar', local.class)} {...other}>
         <Switch>
           <Match when={typeof local.src === 'string'}>
-            <img src={local.src} alt={local.alt} />
+            <Img src={local.src} alt={local.alt} style={{ 'z-index': 9999 }} />
           </Match>
           <Match when={local.username}>
             <span ref={label} style={{ transform: `scale(${scale()})` }}>
@@ -99,7 +101,13 @@ function Avatar(_: AvatarProps) {
       <svg
         viewBox="0 0 1 1"
         aria-hidden="true"
-        style={{ position: 'absolute', width: '0', height: '0' }}
+        style={{
+          position: 'absolute',
+          width: '0',
+          height: '0',
+          opacity: 0,
+          'pointer-events': 'none',
+        }}
         overflow="hidden"
       >
         <defs>

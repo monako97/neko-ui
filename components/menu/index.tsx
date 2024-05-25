@@ -249,12 +249,12 @@ function Menu(props: MenuProps | MenuMultipleProps) {
   });
   return (
     <>
-      <style>
-        {baseStyle()}
-        {style}
-        {cssVar()}
-        {css(local.css)}
-      </style>
+      <style textContent={baseStyle()} />
+      <style textContent={style} />
+      <style textContent={cssVar()} />
+      <Show when={local.css}>
+        <style textContent={css(local.css)} />
+      </Show>
       <section ref={ref} class="menu" part="menu" {...other}>
         <RenderMenu fieldNames={fieldNames()} list={options()} />
       </section>

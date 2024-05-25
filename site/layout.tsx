@@ -24,7 +24,7 @@ function App(p: RouteProps<string>) {
   }
   return (
     <n-provider onScheme={onScheme}>
-      <style>{mdStyle}</style>
+      <style textContent={mdStyle} />
       <Sider />
       <main ref={box} class="site-doc-main">
         <Show when={!getPathName(location).startsWith('@')}>
@@ -41,7 +41,6 @@ function App(p: RouteProps<string>) {
             </div>
           </div>
           <Show when={!getPathName(location)}>
-            {/* <n-md text={ChangeLog} not-render={true} picture-viewer={false} /> */}
             <div class="n-md-box">
               <div class="n-md-body">
                 <ChangeLog />

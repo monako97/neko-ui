@@ -68,12 +68,12 @@ function Tag(props: TagProps) {
 
   return (
     <Show when={show()}>
-      <style>
-        {baseStyle()}
-        {customColor()}
-        {style}
-        {css(local.css)}
-      </style>
+      <style textContent={baseStyle()} />
+      <style textContent={customColor()} />
+      <style textContent={style} />
+      <Show when={local.css}>
+        <style textContent={css(local.css)} />
+      </Show>
       <span
         {...other}
         class={cx('tag', local.type)}

@@ -87,7 +87,7 @@ function Sandbox(_props: SandboxProps) {
 
   return (
     <>
-      <style>{sandboxCss}</style>
+      <style textContent={sandboxCss} />
       <section class="sandbox-box">
         <fieldset class="sandbox-container">
           <legend class="sandbox-title">{props.legend}</legend>
@@ -191,7 +191,7 @@ function SandboxGroup(props: SandboxGroupProps) {
 
   return (
     <>
-      <style>{groupCss}</style>
+      <style textContent={groupCss} />
       <Solid.Suspense
         fallback={
           Fallback && (

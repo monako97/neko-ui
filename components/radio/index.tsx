@@ -1,4 +1,4 @@
-import { For, createEffect, createMemo, createSignal, mergeProps } from 'solid-js';
+import { For, Show, createEffect, createMemo, createSignal, mergeProps } from 'solid-js';
 import { css, cx } from '@moneko/css';
 import { customElement } from 'solid-element';
 import { style } from './style';
@@ -65,11 +65,11 @@ function Radio(props: RadioProps) {
 
   return (
     <>
-      <style>
-        {baseStyle()}
-        {style}
-        {css(props.css)}
-      </style>
+      <style textContent={baseStyle()} />
+      <style textContent={style} />
+      <Show when={props.css}>
+        <style textContent={css(props.css)} />
+      </Show>
       <section class={cx('box', props.layout, props.class)} part="box">
         <For each={options()}>
           {(item) => {

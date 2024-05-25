@@ -306,7 +306,7 @@ const mdStyle = css`
   }
 
   n-img::part(img) {
-    min-inline-size: 25px;
+    min-inline-size: 32px;
   }
 
   ul {

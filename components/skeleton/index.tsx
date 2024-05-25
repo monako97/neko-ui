@@ -134,12 +134,12 @@ function Skeleton(props: SkeletonProps) {
 
   return (
     <>
-      <style>
-        {baseStyle()}
-        {cssVar()}
-        {style}
-        {css(props.css)}
-      </style>
+      <style textContent={baseStyle()} />
+      <style textContent={cssVar()} />
+      <style textContent={style} />
+      <Show when={props.css}>
+        <style textContent={css(props.css)} />
+      </Show>
       <div class={cx('skeleton', props.class)}>
         <Show when={props.avatar}>
           <div

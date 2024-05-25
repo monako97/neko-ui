@@ -1,4 +1,4 @@
-import { createEffect, createSignal, mergeProps } from 'solid-js';
+import { Show, createEffect, createSignal, mergeProps } from 'solid-js';
 import { css, cx } from '@moneko/css';
 import { customElement } from 'solid-element';
 import { style } from './style';
@@ -49,11 +49,11 @@ function Switch(props: SwitchProps) {
 
   return (
     <>
-      <style>
-        {baseStyle()}
-        {style}
-        {css(props.css)}
-      </style>
+      <style textContent={baseStyle()} />
+      <style textContent={style} />
+      <Show when={props.css}>
+        <style textContent={css(props.css)} />
+      </Show>
       <span
         class={cx('switch', props.class)}
         classList={{

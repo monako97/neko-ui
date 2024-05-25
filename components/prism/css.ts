@@ -79,7 +79,7 @@ const prismCss = createRoot(() => {
       padding: 32px 0 8px;
       max-inline-size: 100%;
       font-size: var(--font-size);
-      white-space: pre;
+      white-space: pre-wrap;
       line-height: 1.8;
       pointer-events: auto;
       transition-duration: var(--transition-duration);
@@ -270,7 +270,7 @@ const prismCss = createRoot(() => {
         'Microsoft Yahei', '微软雅黑', Courier, 'Helvetica Neue', 'Lantinghei SC', STXihei,
         WenQuanYi, sans-serif;
       text-align: start;
-      white-space: pre;
+      white-space: pre-wrap;
       word-wrap: normal;
       word-break: normal;
       word-spacing: normal;

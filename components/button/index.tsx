@@ -83,11 +83,11 @@ function Button(_: ButtonProps) {
 
   return (
     <>
-      <style>
-        {baseStyle()}
-        {style}
-        {css(local.css)}
-      </style>
+      <style textContent={baseStyle()} />
+      <style textContent={style} />
+      <Show when={local.css}>
+        <style textContent={css(local.css)} />
+      </Show>
       <Dynamic
         ref={ref}
         component={local.link ? 'a' : local.tag || 'button'}

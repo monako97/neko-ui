@@ -158,10 +158,8 @@ function Modal(props: ModalProps) {
   return (
     <Show when={open() !== OpenState.closed}>
       <Portal useShadow={true}>
-        <style>
-          {getCss()}
-          {style}
-        </style>
+        <style textContent={getCss()} />
+        <style textContent={style} />
         <div
           ref={portal}
           class="portal"

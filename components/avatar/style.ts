@@ -32,6 +32,7 @@ export const style = css`
       inline-size: 100%;
       block-size: 100%;
       content: '';
+      pointer-events: none;
     }
 
     &::before {

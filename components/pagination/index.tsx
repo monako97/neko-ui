@@ -121,11 +121,11 @@ function Pagination(_: PaginationProps) {
 
   return (
     <Show when={pages().length}>
-      <style>
-        {baseStyle()}
-        {styles}
-        {css(local.css)}
-      </style>
+      <style textContent={baseStyle()} />
+      <style textContent={styles} />
+      <Show when={local.css}>
+        <style textContent={css(local.css)} />
+      </Show>
       <nav aria-label="pagination" class="pagination">
         <ul>
           <TotalText />

@@ -217,12 +217,12 @@ function ColorPalette(_: ColorPaletteProps) {
 
   return (
     <>
-      <style>
-        {baseStyle()}
-        {style}
-        {colorVar()}
-        {css(props.css)}
-      </style>
+      <style textContent={baseStyle()} />
+      <style textContent={style} />
+      <style textContent={colorVar()} />
+      <Show when={props.css}>
+        <style textContent={css(props.css)} />
+      </Show>
       <div class={cx('palette', props.class)}>
         <div ref={picker} class="picker" onMouseDown={mouseDown} />
         <div class="chooser">

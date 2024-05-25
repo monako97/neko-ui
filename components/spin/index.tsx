@@ -1,17 +1,27 @@
-import { mergeProps } from 'solid-js';
+import { Show, createEffect, splitProps } from 'solid-js';
 import { css, cx } from '@moneko/css';
 import { customElement } from 'solid-element';
 import theme from '../theme';
 import type { CustomElement } from '..';
 
 const style = css`
+  :host {
+    display: inline-block;
+    box-sizing: border-box;
+  }
+
   .spin {
     inline-size: fit-content;
+    inline-size: 100%;
+    block-size: 100%;
+    min-inline-size: 16px;
+    min-block-size: 16px;
     position: relative;
     box-sizing: border-box;
   }
 
   .content {
+    display: flex;
     opacity: 1;
     transition: opacity var(--transition-duration);
   }
@@ -33,15 +43,16 @@ const style = css`
       margin: auto;
       border: 1px solid;
       border-color: var(--text-secondary) transparent;
-      border-radius: 16px;
+      border-radius: 50%;
       font-size: large;
       text-align: center;
-      inline-size: 32px;
-      block-size: 32px;
+      inline-size: 16px;
+      block-size: 16px;
       inset-block: 0 0;
       inset-inline: 0 0;
       box-sizing: border-box;
-      content: '✲';
+      line-height: 1;
+      content: '';
       animation: spin-rotate-effect 1s infinite;
     }
   }
@@ -73,11 +84,11 @@ function Spin(props: SpinProps) {
 
   return (
     <>
-      <style>
-        {baseStyle()}
-        {style}
-        {css(props.css)}
-      </style>
+      <style textContent={baseStyle()} />
+      <style textContent={style} />
+      <Show when={props.css}>
+        <style textContent={css(props.css)} />
+      </Show>
       <div
         class={cx('spin', props.class)}
         classList={{
@@ -92,16 +103,19 @@ function Spin(props: SpinProps) {
 
 export type SpinElement = CustomElement<SpinProps>;
 
-customElement<SpinProps>('n-spin', { class: void 0, css: void 0, spin: void 0 }, (_, opt) => {
-  const el = opt.element;
-  const props = mergeProps(
-    {
-      children: [...el.childNodes.values()],
-    },
-    _,
-  );
+customElement<SpinProps>(
+  'n-spin',
+  { class: void 0, css: void 0, spin: void 0, children: void 0 },
+  (_, opt) => {
+    const childNodes = (opt.element?.childNodes as NodeList) || [];
+    const nodes = [...childNodes.values()];
+    const [, props] = splitProps(_, ['children']);
 
-  return <Spin {...props} />;
-});
+    createEffect(() => {
+      opt.element?.replaceChildren();
+    });
+    return <Spin {...props}>{nodes}</Spin>;
+  },
+);
 
 export default Spin;

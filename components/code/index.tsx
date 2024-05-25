@@ -53,7 +53,7 @@ function Code(props: CodeProps) {
   function copy() {
     setClipboard(untrack(code), codeEl);
   }
-  function pre() {
+  function Pre() {
     return (
       <pre
         classList={{
@@ -88,8 +88,11 @@ function Code(props: CodeProps) {
       Prism.languages[opt.lang] = Prism.languages.diff;
     }
     const language = Prism.languages[opt.lang] || Prism.languages.markup;
+    const next = Prism.highlight(`${opt.code}\n`, language, opt.lang);
 
-    codeEl.innerHTML = Prism.highlight(opt.code, language, opt.lang);
+    if (codeEl.innerHTML !== next) {
+      codeEl.innerHTML = next;
+    }
     setHei(codeEl.getBoundingClientRect().height - (props.toolbar ? 40 : 16));
   }
 
@@ -108,12 +111,10 @@ function Code(props: CodeProps) {
   // });
   createEffect(() => {
     if (props.code) {
-      const _code = props.code.replace(/^\n/, '');
-
       try {
-        setCode(decodeURIComponent(_code));
+        setCode(decodeURIComponent(props.code));
       } catch (error) {
-        setCode(_code);
+        setCode(props.code);
       }
     } else {
       setCode('');
@@ -137,16 +138,16 @@ function Code(props: CodeProps) {
 
   return (
     <>
-      <style>
-        {baseStyle()}
-        {prismCss()}
-        {style}
-        {css(props.css)}
-      </style>
-      <Show when={props.edit} fallback={pre()}>
+      <style textContent={baseStyle()} />
+      <style textContent={prismCss()} />
+      <style textContent={style} />
+      <Show when={props.css}>
+        <style textContent={css(props.css)} />
+      </Show>
+      <Show when={props.edit} fallback={<Pre />}>
         <div class={cx('n-editor', props.class)}>
           <textarea
-            value={code()}
+            value={props.code}
             classList={{
               'line-numbers': props.lineNumber,
               'not-toolbar': !props.toolbar,
@@ -154,7 +155,7 @@ function Code(props: CodeProps) {
             style={{ height: `${hei()}px` }}
             onInput={change}
           />
-          {pre()}
+          <Pre />
         </div>
       </Show>
     </>

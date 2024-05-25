@@ -1,4 +1,4 @@
-import { For, Match, Switch, createEffect, mergeProps, onCleanup } from 'solid-js';
+import { For, Match, Show, Switch, createEffect, mergeProps, onCleanup } from 'solid-js';
 import { frameCallback } from '@moneko/common';
 import { css, cx } from '@moneko/css';
 import marked, { Renderer } from 'marked-completed';
@@ -183,11 +183,11 @@ function MD(_props: MdProps) {
 
   return (
     <>
-      <style>
-        {baseStyle()}
-        {mdStyle}
-        {css(props.css)}
-      </style>
+      <style textContent={baseStyle()} />
+      <style textContent={mdStyle} />
+      <Show when={props.css}>
+        <style textContent={css(props.css)} />
+      </Show>
       <Switch>
         <Match when={(props.children as [])?.length}>
           <article class="n-md-box" part="box">

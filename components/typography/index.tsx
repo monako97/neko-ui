@@ -1,4 +1,4 @@
-import { createEffect, createMemo, mergeProps } from 'solid-js';
+import { Show, createEffect, createMemo, mergeProps } from 'solid-js';
 import { css, cx } from '@moneko/css';
 import { customElement } from 'solid-element';
 import { Dynamic } from 'solid-js/web';
@@ -76,11 +76,11 @@ function Typography(props: TypographyProps) {
 
   return (
     <>
-      <style>
-        {baseStyle()}
-        {customCss()}
-        {css(props.css)}
-      </style>
+      <style textContent={baseStyle()} />
+      <style textContent={customCss()} />
+      <Show when={props.css}>
+        <style textContent={css(props.css)} />
+      </Show>
       <Dynamic component={_.tag} class={cx('typography', _.class)} style={_.style}>
         {_.children}
       </Dynamic>

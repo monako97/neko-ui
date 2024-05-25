@@ -4,6 +4,7 @@
 
 ### 📚 Documentation
 
+- 打包优化 ([1bf8547](https://github.com/monako97/neko-ui/commit/1bf8547e207bc70292f7ed9cd5df60d8dc2c085e))
 - 打包优化 ([0b572f9](https://github.com/monako97/neko-ui/commit/0b572f91e578637bfa18237e2b753b0a98afcd65))
 
 ## [2.8.5](https://github.com/monako97/neko-ui/compare/2.8.4...2.8.5) (5-23-2024)

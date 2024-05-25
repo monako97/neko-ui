@@ -1,6 +1,11 @@
 import { css } from '@moneko/css';
 
 export const style = css`
+  :host {
+    position: relative;
+    box-sizing: border-box;
+  }
+
   .not-toolbar code {
     padding-block-start: 8px !important;
 

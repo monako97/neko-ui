@@ -5,11 +5,7 @@ order: 2
 ---
 
 ```html
-<n-typography truncated="2">
-  Don’t <n-typography type="success">compare</n-typography> your life with others. There’s no
-  comparison between the <n-typography type="warning">sun</n-typography> and the
-  <n-typography type="warning">moon</n-typography>. They shine when it’s their time.
-</n-typography>
+<n-typography truncated="2">Don’t <n-typography type="success">compare</n-typography> your life with others. There’s no comparison between the <n-typography type="warning">sun</n-typography> and the <n-typography type="warning">moon</n-typography>. They shine when it’s their time.</n-typography>
 ```
 
 ```jsx

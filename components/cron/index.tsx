@@ -335,7 +335,9 @@ function Cron(props: CronProps) {
 
   return (
     <>
-      <style>{css(local.css)}</style>
+      <Show when={local.css}>
+        <style textContent={css(local.css)} />
+      </Show>
       <n-tabs type={local.type} items={items} value={active()} onChange={changeActiveKey} />
       <Show when={local.showCron}>
         <code

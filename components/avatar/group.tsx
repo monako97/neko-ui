@@ -90,10 +90,10 @@ function AvatarGroup(_props: AvatarGroupProps) {
 
   return (
     <>
-      <style>
-        {style}
-        {css(local.css)}
-      </style>
+      <style textContent={style} />
+      <Show when={local.css}>
+        <style textContent={css(local.css)} />
+      </Show>
       <div {...other} class={cx('group', local.class)}>
         <For each={showAvatar()}>{(a) => <n-avatar {...a} size={local.size} />}</For>
         <Show when={more().length}>

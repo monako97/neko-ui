@@ -277,11 +277,11 @@ function CaptureScreen(_: CaptureScreenProps) {
 
   return (
     <>
-      <style>
-        {baseStyle()}
-        {style}
-        {css(local.css)}
-      </style>
+      <style textContent={baseStyle()} />
+      <style textContent={style} />
+      <Show when={local.css}>
+        <style textContent={css(local.css)} />
+      </Show>
       <div class={cx('capture-screen', local.class)} {...props}>
         <div class="controller">
           <n-button onClick={startCapture} class="btn">

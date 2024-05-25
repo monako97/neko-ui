@@ -97,13 +97,13 @@ function Segmented(props: SegmentedProps) {
 
   return (
     <>
-      <style>
-        {baseStyle()}
-        {cssVar()}
-        {style}
-        {offsetStyle()}
-        {css(props.css)}
-      </style>
+      <style textContent={baseStyle()} />
+      <style textContent={cssVar()} />
+      <style textContent={style} />
+      <style textContent={offsetStyle()} />
+      <Show when={props.css}>
+        <style textContent={css(props.css)} />
+      </Show>
       <div ref={box} class={cx('box', props.class)}>
         <For each={options()}>
           {(item, i) => {

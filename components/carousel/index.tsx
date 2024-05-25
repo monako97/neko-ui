@@ -126,11 +126,11 @@ function Carousel(_props: CarouselProps) {
 
   return (
     <>
-      <style>
-        {baseStyle()}
-        {style}
-        {css(props.css)}
-      </style>
+      <style textContent={baseStyle()} />
+      <style textContent={style} />
+      <Show when={props.css}>
+        <style textContent={css(props.css)} />
+      </Show>
       <section class={cx('carousel', props.class)}>
         <section class="list" data-dir={direction()}>
           <div class="item">{list()[left()]}</div>

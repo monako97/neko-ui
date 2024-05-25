@@ -84,12 +84,12 @@ function BackTop(_: BackTopProps) {
   return (
     <Show when={show() !== null}>
       <Portal useShadow mount={local.mount}>
-        <style>
-          {baseStyle()}
-          {themeStyle()}
-          {style}
-          {css(local.css)}
-        </style>
+        <style textContent={baseStyle()} />
+        <style textContent={themeStyle()} />
+        <style textContent={style} />
+        <Show when={local.css}>
+          <style textContent={css(local.css)} />
+        </Show>
         <div
           onAnimationEnd={exit}
           class={cx('back-top', local.class)}

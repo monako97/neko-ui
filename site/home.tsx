@@ -8,7 +8,7 @@ function Home() {
 
   return (
     <>
-      <style>{style}</style>
+      <style textContent={style} />
       <n-md text={Readme} not-render={true} line-number={false} picture-viewer={false} />
       <div class="site-colors">
         <For each={colors} fallback={<div>No items</div>}>

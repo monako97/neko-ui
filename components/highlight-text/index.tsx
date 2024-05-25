@@ -1,4 +1,4 @@
-import { createEffect, createMemo, createSignal } from 'solid-js';
+import { Show, createEffect, createMemo, createSignal } from 'solid-js';
 import { css, cx } from '@moneko/css';
 import { customElement } from 'solid-element';
 import theme from '../theme';
@@ -6,6 +6,9 @@ import type { CustomElement } from '..';
 
 const style = css`
   .text {
+    word-break: break-word;
+    word-wrap: break-word;
+    white-space: break-spaces;
     cursor: auto;
   }
 
@@ -140,11 +143,9 @@ function HighlightText(props: HighlightTextProps) {
 
   return (
     <>
-      <style>
-        {baseStyle()}
-        {style}
-        {css(props.css)}
-      </style>
+      <style textContent={baseStyle()} />
+      <style textContent={style} />
+      <Show when={props.css}>{css(props.css)}</Show>
       <div class={cx('text', props.class)}>
         {hitNode()}
         {props.extra && <span class="hit">{props.extra}</span>}

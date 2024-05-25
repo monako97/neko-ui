@@ -50,10 +50,8 @@ const notification = (
       });
       return (
         <Show when={list().length}>
-          <style>
-            {baseStyle()}
-            {styles}
-          </style>
+          <style textContent={baseStyle()} />
+          <style textContent={styles} />
           <For each={list()}>
             {(item) => {
               return (

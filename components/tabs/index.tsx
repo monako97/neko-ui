@@ -250,13 +250,13 @@ function Tabs(props: TabsProps) {
 
   return (
     <>
-      <style>
-        {baseStyle()}
-        {cssVar()}
-        {style}
-        {offsetStyle()}
-        {css(props.css)}
-      </style>
+      <style textContent={baseStyle()} />
+      <style textContent={cssVar()} />
+      <style textContent={style} />
+      <style textContent={offsetStyle()} />
+      <Show when={props.css}>
+        <style textContent={css(props.css)} />
+      </Show>
       <div
         ref={box}
         class={cx('tabs', props.type, props.class)}
