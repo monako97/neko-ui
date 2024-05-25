@@ -1,6 +1,6 @@
 {
   "name": "neko-ui",
-  "version": "2.8.6",
+  "version": "2.8.7",
   "description": "WebComponents UI Libraries",
   "main": "lib/index.js",
   "module": "es/index.js",
@@ -10,7 +10,9 @@
       "require": "./lib/index.js",
       "import": "./es/index.js"
     },
-    "./*": ["./*"]
+    "./*": [
+      "./*"
+    ]
   },
   "scripts": {
     "build": "mo build library solid",
