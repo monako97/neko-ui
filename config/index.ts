@@ -11,6 +11,7 @@ const conf: Partial<ConfigType> = {
         'http-equiv': 'Content-Security-Policy',
         content: `script-src 'self' ${CDNHOST} 'unsafe-eval' 'unsafe-inline'`,
       },
+      'google-site-verification': 'gmDerloN7NoGvGSeX5M-tWX4SHXJ5XdXvA5bO2oZL5Y',
     },
     tags: [
       { src: `${CDN}/n-code-live/1.1.0/umd/index.js`, async: true },

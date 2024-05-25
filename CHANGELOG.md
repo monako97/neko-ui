@@ -4,6 +4,7 @@
 
 ### 📚 Documentation
 
+- sitemap ([9652aca](https://github.com/monako97/neko-ui/commit/9652aca1d5ecde6590a3217366af027e78d4d04e))
 - robots.txt ([f9e9776](https://github.com/monako97/neko-ui/commit/f9e9776b3a4639efbb046c67dbdc6782511e33b7))
 
 ## [v2.8.7](https://github.com/monako97/neko-ui/compare/2.8.6...v2.8.7) (5-25-2024)
