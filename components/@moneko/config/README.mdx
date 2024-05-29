@@ -38,7 +38,7 @@ order: 10
 | cssModuleDefinition | 为 cssModule 生成准确的声明文件                   | boolean                                                                                          | true                |
 | importOnDemand      | 按需引入                                          | SwcImportOnDemandTransform \| TsImportPlugin.Options                                             | -                   |
 | proxy               | 服务器代理                                        | `Record<string, string>`                                                                         | -                   |
-| cacheDirectory      | 自定义缓存目录，为 false 时，不使用缓存           | string \| false                                                                                  | -                   |
+| cache               | 缓存配置，为 false 时，不使用缓存                    | FileCacheOptions \| MemoryCacheOptions \| false                                                                                  | -                   |
 | devServer           | 开发服务器设置                                    | `Record<string, string>`                                                                         | -                   |
 | copy                | 需要拷贝到输出目录的文件                          | CopyPluginOption                                                                                 | -                   |
 | htmlPluginOption    | HtmlWebpackPlugin Option                          | HtmlWebpackPluginOptions                                                                         | -                   |

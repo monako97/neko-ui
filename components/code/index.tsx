@@ -1,6 +1,7 @@
 import {
   Show,
   createEffect,
+  createMemo,
   createSignal,
   mergeProps,
   onCleanup,
@@ -34,20 +35,29 @@ export interface CodeProps {
   /** 编辑修改时的回调 */
   onChange?: (code: string) => void;
   children?: JSX.Element;
+  /**
+   * 使用 web worker
+   * @default true
+   */
+  webWorker?: boolean;
 }
 
 export type CodeElement = CustomElement<CodeProps>;
 
-const diffLang = /^diff-([\w-]+)/i;
-
 function Code(props: CodeProps) {
   const { baseStyle } = theme;
   let codeEl: HTMLPreElement;
+  const diffLang = /^diff-([\w-]+)/i;
   const [code, setCode] = createSignal<string>('');
   const [hei, setHei] = createSignal(20);
   const [isIntersecting, setIsIntersecting] = createSignal(false);
-  const observer = new IntersectionObserver((entries) => {
-    setIsIntersecting(entries[0].isIntersecting);
+  const observer = createMemo(() => {
+    if (props.webWorker) {
+      return;
+    }
+    return new IntersectionObserver((entries) => {
+      setIsIntersecting(entries[0].isIntersecting);
+    });
   });
 
   function copy() {
@@ -80,32 +90,33 @@ function Code(props: CodeProps) {
       props.onChange(c);
     }
   }
+  function update(e: { data: string }) {
+    codeEl.innerHTML = e.data;
+    setHei(codeEl.getBoundingClientRect().height - (props.toolbar ? 40 : 16));
+  }
+  function cleanObserver() {
+    const _observer = observer();
+
+    if (_observer) {
+      // 停止观察目标元素
+      _observer.unobserve(codeEl);
+      _observer.disconnect();
+    }
+  }
   function postMessage(language: string, value?: string) {
     if (!value || !isIntersecting()) return;
-    observer.unobserve(codeEl);
-    observer.disconnect();
+    cleanObserver();
     if (diffLang.test(language) && !Prism.languages[language]) {
       Prism.languages[language] = Prism.languages.diff;
     }
-    const PrismLanguage = Prism.languages[language] || Prism.languages.markup;
-    const next = Prism.highlight(`${value}\n`, PrismLanguage, language);
-
-    if (codeEl.innerHTML !== next) {
-      codeEl.innerHTML = next;
-    }
-    setHei(codeEl.getBoundingClientRect().height - (props.toolbar ? 40 : 16));
+    update({
+      data: Prism.highlight(
+        `${value}\n`,
+        Prism.languages[language] || Prism.languages.markup,
+        language,
+      ),
+    });
   }
-
-  // const work = new Worker(new URL("./worker.ts", import.meta.url), {
-  //   name: "wastedTime",
-  //   /* webpackEntryOptions: { filename: "workers/[name].js" } */
-  // });
-  // work.addEventListener('message', update);
-
-  // work.postMessage(props.language || 'markup', code());
-  // onCleanup(() => {
-  //   work.terminate();
-  // });
   createEffect(() => {
     if (props.code) {
       try {
@@ -117,17 +128,43 @@ function Code(props: CodeProps) {
       setCode('');
     }
   });
+
+  const work = createMemo(() => {
+    if (props.webWorker) {
+      const _work = new Worker(new URL('./worker.ts', import.meta.url), {
+        name: 'workers/prismjs',
+      });
+
+      _work.addEventListener('message', update);
+      return _work;
+    }
+    return false;
+  });
+
   createEffect(() => {
-    postMessage(props.language || 'markup', code());
+    const _work = work();
+
+    if (_work) {
+      _work.postMessage({
+        language: props.language,
+        code: code(),
+      });
+    } else {
+      postMessage(props.language || 'markup', code());
+    }
   });
   onMount(() => {
     // 开始观察目标元素
-    observer.observe(codeEl);
+    observer()?.observe(codeEl);
   });
   onCleanup(() => {
-    // 停止观察目标元素
-    observer.unobserve(codeEl);
-    observer.disconnect();
+    const _work = work();
+
+    if (_work) {
+      _work.removeEventListener('message', update);
+      _work.terminate();
+    }
+    cleanObserver();
   });
 
   return (
@@ -168,6 +205,7 @@ customElement<CodeProps>(
     css: void 0,
     lineNumber: void 0,
     onChange: void 0,
+    webWorker: true,
   },
   (_, opt) => {
     const el = opt.element;

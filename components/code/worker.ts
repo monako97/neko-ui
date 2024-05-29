@@ -1,19 +1,53 @@
-self.importScripts(new URL('../prism', import.meta.url).toString());
+self.importScripts(new URL('prismjs', import.meta.url).href);
+self.importScripts(new URL('prismjs/components/prism-bash.js', import.meta.url).href);
+self.importScripts(new URL('prismjs/components/prism-clike.js', import.meta.url).href);
+self.importScripts(new URL('prismjs/components/prism-css.js', import.meta.url).href);
+self.importScripts(new URL('prismjs/components/prism-diff.js', import.meta.url).href);
+self.importScripts(new URL('prismjs/components/prism-docker.js', import.meta.url).href);
+self.importScripts(new URL('prismjs/components/prism-git.js', import.meta.url).href);
+self.importScripts(new URL('prismjs/components/prism-javascript.js', import.meta.url).href);
+self.importScripts(new URL('prismjs/components/prism-jsx.js', import.meta.url).href);
+self.importScripts(new URL('prismjs/components/prism-latex.js', import.meta.url).href);
+self.importScripts(new URL('prismjs/components/prism-less.js', import.meta.url).href);
+self.importScripts(new URL('prismjs/components/prism-markdown.js', import.meta.url).href);
+self.importScripts(new URL('prismjs/components/prism-markup-templating.js', import.meta.url).href);
+self.importScripts(new URL('prismjs/components/prism-markup.js', import.meta.url).href);
+self.importScripts(new URL('prismjs/components/prism-regex.js', import.meta.url).href);
+self.importScripts(new URL('prismjs/components/prism-rust.js', import.meta.url).href);
+self.importScripts(new URL('prismjs/components/prism-sql.js', import.meta.url).href);
+self.importScripts(new URL('prismjs/components/prism-swift.js', import.meta.url).href);
+self.importScripts(new URL('prismjs/components/prism-toml.js', import.meta.url).href);
+self.importScripts(new URL('prismjs/components/prism-tsx.js', import.meta.url).href);
+self.importScripts(new URL('prismjs/components/prism-typescript.js', import.meta.url).href);
+self.importScripts(new URL('prismjs/components/prism-wasm.js', import.meta.url).href);
+self.importScripts(new URL('prismjs/components/prism-yaml.js', import.meta.url).href);
+// plugins
+self.importScripts(
+  new URL('prismjs/plugins/diff-highlight/prism-diff-highlight.js', import.meta.url).href,
+);
+self.importScripts(
+  new URL('prismjs/plugins/highlight-keywords/prism-highlight-keywords.js', import.meta.url).href,
+);
+self.importScripts(
+  new URL('prismjs/plugins/line-numbers/prism-line-numbers.js', import.meta.url).href,
+);
+const diffLang = /^diff-([\w-]+)/i;
+
 self.addEventListener(
   'message',
   function (e) {
     let result;
 
     try {
-      const { code, lang } = e.data;
+      const { code, language = 'markup' } = e.data;
 
-      if (self.Prism.highlight && self.Prism.languages) {
-        result = self.Prism.highlight(code, self.Prism.languages[lang], lang);
-      } else {
-        result = code;
+      if (diffLang.test(language) && !self.Prism.languages[language]) {
+        self.Prism.languages[language] = self.Prism.languages.diff;
       }
+
+      result = self.Prism.highlight(code, self.Prism.languages[language], language);
     } catch (error) {
-      result = error;
+      result = e.data.code;
     }
     self.postMessage(result); // 向主线程发送消息
   },

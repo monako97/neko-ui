@@ -1,7 +1,15 @@
-import { For, Match, Show, Switch, createEffect, mergeProps, onCleanup } from 'solid-js';
+import {
+  For,
+  Match,
+  Show,
+  Switch,
+  createEffect,
+  createMemo,
+  mergeProps,
+  onCleanup,
+} from 'solid-js';
 import { frameCallback } from '@moneko/common';
 import { css, cx } from '@moneko/css';
-import marked, { Renderer } from 'marked-completed';
 import { customElement } from 'solid-element';
 import '../code';
 import '../img';
@@ -11,17 +19,10 @@ import type { CustomElement } from '..';
 
 function MD(_props: MdProps) {
   let ref: HTMLDivElement | undefined;
-  const renderer = new Renderer();
-
-  renderer.katexBlock = (code: string) => {
-    return `<n-katex display-mode="true">${code}</n-katex>`;
-  };
-  renderer.katexInline = (code: string) => {
-    return `<n-katex>${code}</n-katex>`;
-  };
   const { baseStyle } = theme;
   const props = mergeProps(
     {
+      webWorker: true,
       pictureViewer: true,
       lazyPicture: true,
       text: '',
@@ -36,7 +37,7 @@ function MD(_props: MdProps) {
       ref.innerHTML = e.data;
     }
   }
-  function postMessage(opt: {
+  async function postMessage(opt: {
     text: string;
     pictureViewer?: boolean;
     lazyPicture?: boolean;
@@ -44,7 +45,15 @@ function MD(_props: MdProps) {
     langLineNumber?: boolean;
   }) {
     const { text, pictureViewer, lazyPicture, langToolbar, ...options } = opt;
+    const marked = (await import('marked-completed')).default;
+    const renderer = new marked.Renderer();
 
+    renderer.katexBlock = (code: string) => {
+      return `<n-katex display-mode="true">${code}</n-katex>`;
+    };
+    renderer.katexInline = (code: string) => {
+      return `<n-katex>${code}</n-katex>`;
+    };
     renderer.image = (src: string, title: string, alt: string) => {
       return `<n-img lazy="${lazyPicture}" disabled="${!pictureViewer}" role="img" src="${src}" alt="${alt}" ${title ? `title="${title}"` : ''}></n-img>`;
     };
@@ -74,29 +83,49 @@ function MD(_props: MdProps) {
       }),
     });
   }
-  // const work = new Worker(new URL('./worker.ts', import.meta.url));
+  const work = createMemo(() => {
+    if (props.webWorker) {
+      const _work = new Worker(new URL('./worker.ts', import.meta.url), {
+        name: 'workers/marked-completed',
+      });
 
-  // work.addEventListener('message', update);
-  // work.postMessage({
-  //   text: props.text,
-  //   langLineNumber: props.lineNumber,
-  //   langToolbar: props.tools,
-  //   pictureViewer: props.pictureViewer,
-  // });
-  // onCleanup(() => {
-  //   work.terminate();
-  // });
+      _work.addEventListener('message', update);
+      return _work;
+    }
+    return false;
+  });
+
   createEffect(() => {
-    const call = () =>
-      postMessage({
+    const _work = work();
+
+    if (_work) {
+      _work.postMessage({
         text: props.text,
         langLineNumber: props.lineNumber,
         langToolbar: props.tools,
         pictureViewer: props.pictureViewer,
         lazyPicture: props.lazyPicture,
       });
+    } else {
+      const call = () =>
+        postMessage({
+          text: props.text,
+          langLineNumber: props.lineNumber,
+          langToolbar: props.tools,
+          pictureViewer: props.pictureViewer,
+          lazyPicture: props.lazyPicture,
+        });
 
-    frameCallback(call);
+      frameCallback(call);
+    }
+  });
+  onCleanup(() => {
+    const _work = work();
+
+    if (_work) {
+      _work.removeEventListener('message', update);
+      _work.terminate();
+    }
   });
   let list: HTMLAnchorElement[] = [];
   let heading: HTMLHeadingElement[] = [];
@@ -238,6 +267,10 @@ export interface MdProps {
    */
   notRender?: boolean;
   children?: JSX.Element;
+  /**
+   * 使用 web worker
+   */
+  webWorker?: boolean;
 }
 
 export type MdElement = CustomElement<MdProps>;
@@ -255,6 +288,7 @@ customElement<MdProps>(
     css: void 0,
     children: void 0,
     notRender: void 0,
+    webWorker: void 0,
   },
   (_, opt) => {
     const el = opt.element;

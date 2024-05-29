@@ -1,54 +1,60 @@
-self.importScripts(new URL('marked-completed/marked.min.js', import.meta.url).toString());
+import type { MarkedOptions } from 'marked-completed';
 
-const renderer = new self.marked.Renderer();
+self.importScripts(new URL('marked-completed', import.meta.url).href);
 
-renderer.katexBlock = function (code: string) {
-  return `<n-katex display-mode="true">${code}</n-katex>`;
-};
-renderer.katexInline = function (code: string) {
-  return `<n-katex>${code}</n-katex>`;
-};
-function img(src: string, title: string, alt: string) {
-  return `<img role="img" src="${src}" alt="${alt}" ${title ? `title="${title}"` : ''}></img>`;
+function onMessage(
+  e: MessageEvent<
+    {
+      text: string;
+      pictureViewer?: boolean;
+      lazyPicture?: boolean;
+      langToolbar?: string[];
+      langLineNumber?: boolean;
+    } & MarkedOptions
+  >,
+) {
+  let result;
+
+  try {
+    const { text, pictureViewer, lazyPicture, langToolbar, ...options } = e.data;
+    const renderer = new self.marked.Renderer();
+
+    renderer.katexBlock = function (code: string) {
+      return `<n-katex display-mode="true">${code}</n-katex>`;
+    };
+    renderer.katexInline = function (code: string) {
+      return `<n-katex>${code}</n-katex>`;
+    };
+    renderer.image = (src: string, title: string, alt: string) => {
+      return `<n-img lazy="${lazyPicture}" disabled="${!pictureViewer}" role="img" src="${src}" alt="${alt}" ${title ? `title="${title}"` : ''}></n-img>`;
+    };
+    const toolbar = !!langToolbar?.length;
+
+    renderer.code = function (code: string, lang: string) {
+      if (lang === 'treeview') {
+        return `<n-tree data="${code}" />`;
+      }
+
+      return `<n-code class="n-code" toolbar="${toolbar}" language="${lang}" ${
+        options.langLineNumber ? 'line-number="true"' : ''
+      }>${encodeURIComponent(code)}</n-code>`;
+    };
+
+    result = self.marked(text, {
+      renderer: renderer,
+      langToolbar: langToolbar,
+      headerPrefix: '# ',
+      breaks: true,
+      pedantic: false,
+      smartLists: true,
+      smartypants: true,
+      xhtml: true,
+      ...options,
+    });
+  } catch (error) {
+    result = error;
+  }
+  self.postMessage(result);
 }
-function nImg(src: string, title: string, alt: string) {
-  return `<n-img role="img" src="${src}" alt="${alt}" ${title ? `title="${title}"` : ''}></n-img>`;
-}
-self.addEventListener(
-  'message',
-  function (e) {
-    let result;
 
-    try {
-      const { text, pictureViewer, ...options } = e.data;
-      const langLineNumber = options.langLineNumber;
-
-      renderer.image = pictureViewer ? nImg : img;
-      renderer.code = function (code: string, lang: string) {
-        if (lang === 'treeview') {
-          return `<n-tree data="${code}" />`;
-        }
-        const toolbar = !!options.langToolbar?.length;
-
-        return `<n-code class="n-code" toolbar="${toolbar}" language="${lang}" ${
-          langLineNumber ? 'line-number="true"' : ''
-        }>${encodeURIComponent(code)}</n-code>`;
-      };
-      result = self.marked(text, {
-        renderer: renderer,
-        langToolbar: false,
-        headerPrefix: '# ',
-        breaks: true,
-        pedantic: false,
-        smartLists: true,
-        smartypants: true,
-        xhtml: true,
-        ...options,
-      });
-    } catch (error) {
-      result = error;
-    }
-    self.postMessage(result);
-  },
-  false,
-);
+self.addEventListener('message', onMessage, false);

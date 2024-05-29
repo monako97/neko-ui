@@ -2,6 +2,10 @@
 
 ## Last
 
+### 🐛 Bug Fixes
+
+- content-visibility ([53a5edf](https://github.com/monako97/neko-ui/commit/53a5edf2be1c71dd6e6384fd29add77e2ec86da9))
+
 ### 📚 Documentation
 
 - google-site-verification ([3f11a73](https://github.com/monako97/neko-ui/commit/3f11a733918e3a362744e856555fc06ba105213d))
