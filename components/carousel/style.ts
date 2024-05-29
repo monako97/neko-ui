@@ -30,7 +30,7 @@ export const style = css`
     min-inline-size: 100%;
     block-size: 100%;
     min-block-size: 100%;
-    content-visibility: auto;
+    /* content-visibility: auto; */
     transform: translate3d(-100%, 0, 0);
   }
 
