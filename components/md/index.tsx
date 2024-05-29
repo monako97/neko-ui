@@ -1,13 +1,4 @@
-import {
-  For,
-  Match,
-  Show,
-  Switch,
-  createEffect,
-  createMemo,
-  mergeProps,
-  onCleanup,
-} from 'solid-js';
+import { For, Match, Show, Switch, createEffect, mergeProps, onCleanup } from 'solid-js';
 import { frameCallback } from '@moneko/common';
 import { css, cx } from '@moneko/css';
 import { customElement } from 'solid-element';
@@ -18,6 +9,7 @@ import theme from '../theme';
 import type { CustomElement } from '..';
 
 function MD(_props: MdProps) {
+  let renderer: marked.Renderer | undefined;
   let ref: HTMLDivElement | undefined;
   const { baseStyle } = theme;
   const props = mergeProps(
@@ -31,6 +23,14 @@ function MD(_props: MdProps) {
     },
     _props,
   );
+
+  function initWorker() {
+    return new Worker(new URL('./worker.ts', import.meta.url), {
+      name: 'workers/marked-completed',
+    });
+  }
+  // eslint-disable-next-line solid/reactivity
+  let worker: Worker | undefined = props.webWorker ? initWorker() : void 0;
 
   function update(e: { data: string }) {
     if (ref) {
@@ -46,14 +46,18 @@ function MD(_props: MdProps) {
   }) {
     const { text, pictureViewer, lazyPicture, langToolbar, ...options } = opt;
     const marked = (await import('marked-completed')).default;
-    const renderer = new marked.Renderer();
 
-    renderer.katexBlock = (code: string) => {
-      return `<n-katex display-mode="true">${code}</n-katex>`;
-    };
-    renderer.katexInline = (code: string) => {
-      return `<n-katex>${code}</n-katex>`;
-    };
+    if (!renderer) {
+      renderer = new marked.Renderer();
+
+      renderer.katexBlock = (code: string) => {
+        return `<n-katex display-mode="true">${code}</n-katex>`;
+      };
+      renderer.katexInline = (code: string) => {
+        return `<n-katex>${code}</n-katex>`;
+      };
+    }
+
     renderer.image = (src: string, title: string, alt: string) => {
       return `<n-img lazy="${lazyPicture}" disabled="${!pictureViewer}" role="img" src="${src}" alt="${alt}" ${title ? `title="${title}"` : ''}></n-img>`;
     };
@@ -83,29 +87,26 @@ function MD(_props: MdProps) {
       }),
     });
   }
-  const work = createMemo(() => {
+  createEffect(() => {
     if (props.webWorker) {
-      const _work = new Worker(new URL('./worker.ts', import.meta.url), {
-        name: 'workers/marked-completed',
-      });
-
-      _work.addEventListener('message', update);
-      return _work;
+      if (!worker) {
+        worker = initWorker();
+      }
+      worker.addEventListener('message', update);
     }
-    return false;
   });
 
   createEffect(() => {
-    const _work = work();
-
-    if (_work) {
-      _work.postMessage({
-        text: props.text,
-        langLineNumber: props.lineNumber,
-        langToolbar: props.tools,
-        pictureViewer: props.pictureViewer,
-        lazyPicture: props.lazyPicture,
-      });
+    if (worker) {
+      worker.postMessage(
+        JSON.stringify({
+          text: props.text,
+          langLineNumber: props.lineNumber,
+          langToolbar: props.tools,
+          pictureViewer: props.pictureViewer,
+          lazyPicture: props.lazyPicture,
+        }),
+      );
     } else {
       const call = () =>
         postMessage({
@@ -120,11 +121,9 @@ function MD(_props: MdProps) {
     }
   });
   onCleanup(() => {
-    const _work = work();
-
-    if (_work) {
-      _work.removeEventListener('message', update);
-      _work.terminate();
+    if (worker) {
+      worker.removeEventListener('message', update);
+      worker.terminate();
     }
   });
   let list: HTMLAnchorElement[] = [];

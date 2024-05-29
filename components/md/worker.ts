@@ -2,21 +2,17 @@ import type { MarkedOptions } from 'marked-completed';
 
 self.importScripts(new URL('marked-completed', import.meta.url).href);
 
-function onMessage(
-  e: MessageEvent<
-    {
+function onMessage(e: MessageEvent<string>) {
+  let result;
+
+  try {
+    const { text, pictureViewer, lazyPicture, langToolbar, ...options } = JSON.parse(e.data) as {
       text: string;
       pictureViewer?: boolean;
       lazyPicture?: boolean;
       langToolbar?: string[];
       langLineNumber?: boolean;
-    } & MarkedOptions
-  >,
-) {
-  let result;
-
-  try {
-    const { text, pictureViewer, lazyPicture, langToolbar, ...options } = e.data;
+    } & MarkedOptions;
     const renderer = new self.marked.Renderer();
 
     renderer.katexBlock = function (code: string) {

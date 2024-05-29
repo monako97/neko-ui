@@ -33,23 +33,24 @@ self.importScripts(
 );
 const diffLang = /^diff-([\w-]+)/i;
 
-self.addEventListener(
-  'message',
-  function (e) {
-    let result;
+function onMessage(e: MessageEvent<string>) {
+  let result;
 
-    try {
-      const { code, language = 'markup' } = e.data;
+  try {
+    const { code, language = 'markup' } = JSON.parse(e.data) as {
+      code: string;
+      language: string;
+    };
 
-      if (diffLang.test(language) && !self.Prism.languages[language]) {
-        self.Prism.languages[language] = self.Prism.languages.diff;
-      }
-
-      result = self.Prism.highlight(code, self.Prism.languages[language], language);
-    } catch (error) {
-      result = e.data.code;
+    if (diffLang.test(language) && !self.Prism.languages[language]) {
+      self.Prism.languages[language] = self.Prism.languages.diff;
     }
-    self.postMessage(result); // 向主线程发送消息
-  },
-  false,
-);
+
+    result = self.Prism.highlight(code, self.Prism.languages[language], language);
+  } catch (error) {
+    result = '';
+  }
+  self.postMessage(result); // 向主线程发送消息
+}
+
+self.addEventListener('message', onMessage, false);

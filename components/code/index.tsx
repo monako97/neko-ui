@@ -1,7 +1,6 @@
 import {
   Show,
   createEffect,
-  createMemo,
   createSignal,
   mergeProps,
   onCleanup,
@@ -51,14 +50,21 @@ function Code(props: CodeProps) {
   const [code, setCode] = createSignal<string>('');
   const [hei, setHei] = createSignal(20);
   const [isIntersecting, setIsIntersecting] = createSignal(false);
-  const observer = createMemo(() => {
-    if (props.webWorker) {
-      return;
-    }
+
+  function initObserver() {
     return new IntersectionObserver((entries) => {
       setIsIntersecting(entries[0].isIntersecting);
     });
-  });
+  }
+  function initWorker() {
+    return new Worker(new URL('./worker.ts', import.meta.url), {
+      name: 'workers/prismjs',
+    });
+  }
+  // eslint-disable-next-line solid/reactivity
+  let observer = props.webWorker ? void 0 : initObserver();
+  // eslint-disable-next-line solid/reactivity
+  let worker: Worker | undefined = props.webWorker ? initWorker() : void 0;
 
   function copy() {
     setClipboard(untrack(code), codeEl);
@@ -78,7 +84,7 @@ function Code(props: CodeProps) {
             <button class="toolbar-copy" aria-label="copy" onClick={copy} />
           </div>
         </Show>
-        <code ref={codeEl} class={`language-${props.language}`} />
+        <code ref={codeEl} class={`language-${props.language}`} textContent={code()} />
       </pre>
     );
   }
@@ -95,12 +101,10 @@ function Code(props: CodeProps) {
     setHei(codeEl.getBoundingClientRect().height - (props.toolbar ? 40 : 16));
   }
   function cleanObserver() {
-    const _observer = observer();
-
-    if (_observer) {
+    if (observer) {
       // 停止观察目标元素
-      _observer.unobserve(codeEl);
-      _observer.disconnect();
+      observer.unobserve(codeEl);
+      observer.disconnect();
     }
   }
   function postMessage(language: string, value?: string) {
@@ -128,41 +132,37 @@ function Code(props: CodeProps) {
       setCode('');
     }
   });
-
-  const work = createMemo(() => {
+  createEffect(() => {
     if (props.webWorker) {
-      const _work = new Worker(new URL('./worker.ts', import.meta.url), {
-        name: 'workers/prismjs',
-      });
-
-      _work.addEventListener('message', update);
-      return _work;
+      if (!worker) {
+        worker = initWorker();
+      }
+      worker.addEventListener('message', update);
+    } else if (!observer) {
+      observer = initObserver();
     }
-    return false;
   });
 
   createEffect(() => {
-    const _work = work();
-
-    if (_work) {
-      _work.postMessage({
-        language: props.language,
-        code: code(),
-      });
+    if (worker) {
+      worker.postMessage(
+        JSON.stringify({
+          language: props.language,
+          code: code(),
+        }),
+      );
     } else {
       postMessage(props.language || 'markup', code());
     }
   });
   onMount(() => {
     // 开始观察目标元素
-    observer()?.observe(codeEl);
+    observer?.observe(codeEl);
   });
   onCleanup(() => {
-    const _work = work();
-
-    if (_work) {
-      _work.removeEventListener('message', update);
-      _work.terminate();
+    if (worker) {
+      worker.removeEventListener('message', update);
+      worker.terminate();
     }
     cleanObserver();
   });
