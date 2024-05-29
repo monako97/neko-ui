@@ -2,6 +2,13 @@
 
 ## Last
 
+### 📚 Documentation
+
+- test ([e232413](https://github.com/monako97/neko-ui/commit/e232413467686d546f9014ed59bdfb1f2c612e68))
+- google-site-verification ([3f11a73](https://github.com/monako97/neko-ui/commit/3f11a733918e3a362744e856555fc06ba105213d))
+- sitemap ([9652aca](https://github.com/monako97/neko-ui/commit/9652aca1d5ecde6590a3217366af027e78d4d04e))
+- robots.txt ([f9e9776](https://github.com/monako97/neko-ui/commit/f9e9776b3a4639efbb046c67dbdc6782511e33b7))
+
 ### 📦 Code Refactoring
 
 - code、md ([88fdfe5](https://github.com/monako97/neko-ui/commit/88fdfe59c5feb1147cfbf912caec8f1089593de0))
@@ -10,12 +17,6 @@
 ### 🐛 Bug Fixes
 
 - content-visibility ([53a5edf](https://github.com/monako97/neko-ui/commit/53a5edf2be1c71dd6e6384fd29add77e2ec86da9))
-
-### 📚 Documentation
-
-- google-site-verification ([3f11a73](https://github.com/monako97/neko-ui/commit/3f11a733918e3a362744e856555fc06ba105213d))
-- sitemap ([9652aca](https://github.com/monako97/neko-ui/commit/9652aca1d5ecde6590a3217366af027e78d4d04e))
-- robots.txt ([f9e9776](https://github.com/monako97/neko-ui/commit/f9e9776b3a4639efbb046c67dbdc6782511e33b7))
 
 ## [v2.8.7](https://github.com/monako97/neko-ui/compare/2.8.6...v2.8.7) (5-25-2024)
 

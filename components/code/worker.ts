@@ -46,7 +46,7 @@ function onMessage(e: MessageEvent<string>) {
       self.Prism.languages[language] = self.Prism.languages.diff;
     }
 
-    result = self.Prism.highlight(code, self.Prism.languages[language], language);
+    result = self.Prism.highlight(`${code}\n`, self.Prism.languages[language], language);
   } catch (error) {
     result = '';
   }
