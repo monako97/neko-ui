@@ -205,7 +205,7 @@ customElement<CodeProps>(
     css: void 0,
     lineNumber: void 0,
     onChange: void 0,
-    webWorker: true,
+    webWorker: void 0,
   },
   (_, opt) => {
     const el = opt.element;

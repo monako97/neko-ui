@@ -36,7 +36,7 @@ function onMessage(e: MessageEvent<string>) {
       }>${encodeURIComponent(code)}</n-code>`;
     };
 
-    result = self.marked(text, {
+    result = self.marked.parse(text, {
       renderer: renderer,
       langToolbar: langToolbar,
       headerPrefix: '# ',

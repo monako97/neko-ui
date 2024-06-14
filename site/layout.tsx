@@ -2,7 +2,7 @@ import './layout.global.css';
 import { For, Show, createEffect, createMemo } from 'solid-js';
 import docs from '@app/docs';
 import { type RouteProps, getPathName, useLocation } from '@moneko/solid';
-import ChangeLog from '../CHANGELOG.md?raw';
+import ChangeLog from '../CHANGELOG.md';
 import Coverage from '@/components/coverage';
 import Footer from '@/components/footer';
 import Pagination from '@/components/pagination';
@@ -35,13 +35,13 @@ function App(p: RouteProps<string>) {
             <div class="n-md-body">{p.children}</div>
           </div>
           <site-sandbox-group name={getPathName(location)} />
-          <div class="n-md-box">
-            <div class="n-md-body">
-              <For each={doc()}>{(e) => e()}</For>
-            </div>
-          </div>
+          <For each={doc()}>{(e) => e()}</For>
           <Show when={!getPathName(location)}>
-            <n-md text={`[TOC]\n${ChangeLog}`} />
+            <div class="n-md-box">
+              <div class="n-md-body">
+                <ChangeLog />
+              </div>
+            </div>
           </Show>
           <Pagination />
         </div>

@@ -14,7 +14,7 @@ function MD(_props: MdProps) {
   const { baseStyle } = theme;
   const props = mergeProps(
     {
-      webWorker: true,
+      webWorker: false,
       pictureViewer: true,
       lazyPicture: true,
       text: '',
@@ -74,7 +74,7 @@ function MD(_props: MdProps) {
     };
 
     update({
-      data: marked(text, {
+      data: marked.parse(text, {
         renderer: renderer,
         langToolbar: langToolbar,
         headerPrefix: '# ',
