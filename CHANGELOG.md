@@ -2,8 +2,14 @@
 
 ## Last
 
+### 🐛 Bug Fixes
+
+- web_worker ([7b6f6eb](https://github.com/monako97/neko-ui/commit/7b6f6eb0e14ae82682a418908f014e40676f49ac))
+- content-visibility ([53a5edf](https://github.com/monako97/neko-ui/commit/53a5edf2be1c71dd6e6384fd29add77e2ec86da9))
+
 ### 📚 Documentation
 
+- test ([95b6422](https://github.com/monako97/neko-ui/commit/95b6422fbd3658a5205f0c8f18c029ecace5e8fd))
 - test ([42e0a1c](https://github.com/monako97/neko-ui/commit/42e0a1c126a05de1cc9a4e4d06ccaee3ee83c839))
 - test ([e232413](https://github.com/monako97/neko-ui/commit/e232413467686d546f9014ed59bdfb1f2c612e68))
 - google-site-verification ([3f11a73](https://github.com/monako97/neko-ui/commit/3f11a733918e3a362744e856555fc06ba105213d))
@@ -14,10 +20,6 @@
 
 - code、md ([88fdfe5](https://github.com/monako97/neko-ui/commit/88fdfe59c5feb1147cfbf912caec8f1089593de0))
 - code、md ([685d9ea](https://github.com/monako97/neko-ui/commit/685d9eac3af9badb5d35d84479c5eda6949d2c01))
-
-### 🐛 Bug Fixes
-
-- content-visibility ([53a5edf](https://github.com/monako97/neko-ui/commit/53a5edf2be1c71dd6e6384fd29add77e2ec86da9))
 
 ## [v2.8.7](https://github.com/monako97/neko-ui/compare/2.8.6...v2.8.7) (5-25-2024)
 

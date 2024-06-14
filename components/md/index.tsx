@@ -25,7 +25,7 @@ function MD(_props: MdProps) {
   );
 
   function initWorker() {
-    return new Worker('https://cdn.jsdelivr.net/npm/neko-ui/lib/md/worker.js');
+    return new Worker('https://cdn.jsdelivr.net/npm/neko-ui@latest/es/md/worker.js');
   }
   // eslint-disable-next-line solid/reactivity
   let worker: Worker | undefined = props.webWorker ? initWorker() : void 0;

@@ -57,7 +57,7 @@ function Code(props: CodeProps) {
     });
   }
   function initWorker() {
-    return new Worker(new URL('https://cdn.jsdelivr.net/npm/neko-ui/lib/code/worker.js').href);
+    return new Worker('https://cdn.jsdelivr.net/npm/neko-ui@latest/es/code/worker.js');
   }
   // eslint-disable-next-line solid/reactivity
   let observer = props.webWorker ? void 0 : initObserver();
