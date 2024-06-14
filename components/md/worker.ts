@@ -1,6 +1,6 @@
 import type { MarkedOptions } from 'marked-completed';
 
-self.importScripts(new URL('marked-completed', import.meta.url).href);
+self.importScripts('https://cdn.jsdelivr.net/npm/marked-completed/marked.min.js');
 
 function onMessage(e: MessageEvent<string>) {
   let result;
@@ -36,7 +36,7 @@ function onMessage(e: MessageEvent<string>) {
       }>${encodeURIComponent(code)}</n-code>`;
     };
 
-    result = self.marked.parse(text, {
+    result = self.marked(text, {
       renderer: renderer,
       langToolbar: langToolbar,
       headerPrefix: '# ',

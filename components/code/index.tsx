@@ -36,7 +36,7 @@ export interface CodeProps {
   children?: JSX.Element;
   /**
    * 使用 web worker
-   * @default true
+   * @default false
    */
   webWorker?: boolean;
 }
@@ -57,9 +57,7 @@ function Code(props: CodeProps) {
     });
   }
   function initWorker() {
-    return new Worker(new URL('./worker.ts', import.meta.url), {
-      name: 'workers/prismjs',
-    });
+    return new Worker(new URL('https://cdn.jsdelivr.net/npm/neko-ui/lib/code/worker.js').href);
   }
   // eslint-disable-next-line solid/reactivity
   let observer = props.webWorker ? void 0 : initObserver();
@@ -156,8 +154,10 @@ function Code(props: CodeProps) {
     }
   });
   onMount(() => {
-    // 开始观察目标元素
-    observer?.observe(codeEl);
+    if (codeEl) {
+      // 开始观察目标元素
+      observer?.observe(codeEl);
+    }
   });
   onCleanup(() => {
     if (worker) {

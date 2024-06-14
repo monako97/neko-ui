@@ -1,37 +1,39 @@
-self.importScripts(new URL('prismjs', import.meta.url).href);
-self.importScripts(new URL('prismjs/components/prism-bash.js', import.meta.url).href);
-self.importScripts(new URL('prismjs/components/prism-clike.js', import.meta.url).href);
-self.importScripts(new URL('prismjs/components/prism-css.js', import.meta.url).href);
-self.importScripts(new URL('prismjs/components/prism-diff.js', import.meta.url).href);
-self.importScripts(new URL('prismjs/components/prism-docker.js', import.meta.url).href);
-self.importScripts(new URL('prismjs/components/prism-git.js', import.meta.url).href);
-self.importScripts(new URL('prismjs/components/prism-javascript.js', import.meta.url).href);
-self.importScripts(new URL('prismjs/components/prism-jsx.js', import.meta.url).href);
-self.importScripts(new URL('prismjs/components/prism-latex.js', import.meta.url).href);
-self.importScripts(new URL('prismjs/components/prism-less.js', import.meta.url).href);
-self.importScripts(new URL('prismjs/components/prism-markdown.js', import.meta.url).href);
-self.importScripts(new URL('prismjs/components/prism-markup-templating.js', import.meta.url).href);
-self.importScripts(new URL('prismjs/components/prism-markup.js', import.meta.url).href);
-self.importScripts(new URL('prismjs/components/prism-regex.js', import.meta.url).href);
-self.importScripts(new URL('prismjs/components/prism-rust.js', import.meta.url).href);
-self.importScripts(new URL('prismjs/components/prism-sql.js', import.meta.url).href);
-self.importScripts(new URL('prismjs/components/prism-swift.js', import.meta.url).href);
-self.importScripts(new URL('prismjs/components/prism-toml.js', import.meta.url).href);
-self.importScripts(new URL('prismjs/components/prism-tsx.js', import.meta.url).href);
-self.importScripts(new URL('prismjs/components/prism-typescript.js', import.meta.url).href);
-self.importScripts(new URL('prismjs/components/prism-wasm.js', import.meta.url).href);
-self.importScripts(new URL('prismjs/components/prism-yaml.js', import.meta.url).href);
+self.importScripts('https://cdn.jsdelivr.net/npm/prismjs@1.29.0/prism.js');
+self.importScripts('https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-bash.js');
+self.importScripts('https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-clike.js');
+self.importScripts('https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-css.js');
+self.importScripts('https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-diff.js');
+self.importScripts('https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-docker.js');
+self.importScripts('https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-git.js');
+self.importScripts('https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-javascript.js');
+self.importScripts('https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-jsx.js');
+self.importScripts('https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-latex.js');
+self.importScripts('https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-less.js');
+self.importScripts('https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-markdown.js');
+self.importScripts(
+  'https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-markup-templating.js',
+);
+self.importScripts('https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-markup.js');
+self.importScripts('https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-regex.js');
+self.importScripts('https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-rust.js');
+self.importScripts('https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-sql.js');
+self.importScripts('https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-swift.js');
+self.importScripts('https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-toml.js');
+self.importScripts('https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-tsx.js');
+self.importScripts('https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-typescript.js');
+self.importScripts('https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-wasm.js');
+self.importScripts('https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-yaml.js');
+self.importScripts('https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-bash.js');
 // plugins
 self.importScripts(
-  new URL('prismjs/plugins/diff-highlight/prism-diff-highlight.js', import.meta.url).href,
+  'https://cdn.jsdelivr.net/npm/prismjs@1.29.0/plugins/diff-highlight/prism-diff-highlight.js',
 );
 self.importScripts(
-  new URL('prismjs/plugins/highlight-keywords/prism-highlight-keywords.js', import.meta.url).href,
+  'https://cdn.jsdelivr.net/npm/prismjs@1.29.0/plugins/highlight-keywords/prism-highlight-keywords.js',
 );
 self.importScripts(
-  new URL('prismjs/plugins/line-numbers/prism-line-numbers.js', import.meta.url).href,
+  'https://cdn.jsdelivr.net/npm/prismjs@1.29.0/plugins/line-numbers/prism-line-numbers.js',
 );
-const diffLang = /^diff-([\w-]+)/i;
 
 function onMessage(e: MessageEvent<string>) {
   let result;
@@ -42,7 +44,7 @@ function onMessage(e: MessageEvent<string>) {
       language: string;
     };
 
-    if (diffLang.test(language) && !self.Prism.languages[language]) {
+    if (/^diff-([\w-]+)/i.test(language) && !self.Prism.languages[language]) {
       self.Prism.languages[language] = self.Prism.languages.diff;
     }
 

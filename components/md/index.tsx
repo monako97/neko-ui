@@ -25,9 +25,7 @@ function MD(_props: MdProps) {
   );
 
   function initWorker() {
-    return new Worker(new URL('./worker.ts', import.meta.url), {
-      name: 'workers/marked-completed',
-    });
+    return new Worker('https://cdn.jsdelivr.net/npm/neko-ui/lib/md/worker.js');
   }
   // eslint-disable-next-line solid/reactivity
   let worker: Worker | undefined = props.webWorker ? initWorker() : void 0;
@@ -74,7 +72,7 @@ function MD(_props: MdProps) {
     };
 
     update({
-      data: marked.parse(text, {
+      data: marked(text, {
         renderer: renderer,
         langToolbar: langToolbar,
         headerPrefix: '# ',
