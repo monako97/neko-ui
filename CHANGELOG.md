@@ -4,6 +4,7 @@
 
 ### 🐛 Bug Fixes
 
+- web_worker ([761962b](https://github.com/monako97/neko-ui/commit/761962b3529d513d131ef1a7e1228703c2d183c8))
 - web_worker ([7b6f6eb](https://github.com/monako97/neko-ui/commit/7b6f6eb0e14ae82682a418908f014e40676f49ac))
 - content-visibility ([53a5edf](https://github.com/monako97/neko-ui/commit/53a5edf2be1c71dd6e6384fd29add77e2ec86da9))
 
