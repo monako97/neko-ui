@@ -55,8 +55,8 @@
     "@commitlint/cli": "19.3.0",
     "@commitlint/config-conventional": "19.2.2",
     "@moneko/cli": "2.14.2",
-    "@moneko/core": "3.17.36",
-    "@moneko/solid": "1.8.0",
+    "@moneko/core": "3.17.42",
+    "@moneko/solid": "1.9.0",
     "@solidjs/testing-library": "0.8.8",
     "@swc/jest": "0.2.36",
     "@testing-library/jest-dom": "6.4.6",
@@ -70,7 +70,7 @@
     "n-code-live": "1.1.0",
     "n-katex": "1.0.8",
     "shadow-dom-testing-library": "1.11.2",
-    "stylelint-config-moneko": "2.4.0"
+    "stylelint-config-moneko": "2.4.1"
   },
   "dependencies": {
     "@moneko/common": "1.5.4",
