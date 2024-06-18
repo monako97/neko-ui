@@ -11,6 +11,7 @@ const conf: Partial<ConfigType> = {
   basename: `/${PACKAGENAME}`,
   publicPath: `/${PACKAGENAME}/`,
   bundleAnalyzer: false,
+  performance: false,
   fixBrowserRouter: {
     pathSegmentsToKeep: 1,
     path: '404.html',

@@ -1,3 +1,4 @@
+/* eslint-disable solid/no-innerhtml */
 import {
   Show,
   createEffect,
@@ -335,6 +336,7 @@ function Popover(props: PopoverProps) {
     clearTimeout(closeTimer);
     document.documentElement.removeEventListener('mousedown', close, false);
   });
+  const Content = createMemo(() => local.content);
 
   return (
     <>
@@ -358,7 +360,7 @@ function Popover(props: PopoverProps) {
           </Show>
           <div ref={ref} onAnimationEnd={exit} class={portalCls()} {...childrenProps()}>
             <Show when={local.content} fallback={<n-empty />}>
-              {local.content as JSX.Element}
+              {typeof local.content === 'string' ? <div innerHTML={local.content} /> : <Content />}
             </Show>
           </div>
         </Portal>

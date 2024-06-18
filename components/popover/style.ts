@@ -30,6 +30,7 @@ export const portalCss = css`
     border-radius: var(--border-radius);
     padding: 4px;
     font-size: var(--font-size);
+    white-space: break-spaces;
     color: var(--text-color);
     background-color: var(--popover-bg);
     filter: drop-shadow(0.5px calc(var(--direction) * 1px) 4px var(--popover-shadow-color))

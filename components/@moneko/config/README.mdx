@@ -29,14 +29,14 @@ order: 10
 | alias               | 路径别名映射                                      | Record\<string, string>                                                                          | -                   |
 | basename            | 根路由                                            | string                                                                                           | /                   |
 | publicPath          | 资源根路径                                        | string                                                                                           | auto                |
-| rem                 | 设置与设计图相匹配的rem                           | \{designSize: number}                                                                            | \{designSize: 1680} |
+| rem                 | 设置与设计图相匹配的rem                           | \{designSize: number}                                                                            | \{designSize: 1920} |
 | fallbackCompPath    | 自定义容错组件路径                                | string                                                                                           | -                   |
 | modifyVars          | less 全局变量                                     | `Record<string, string>`                                                                         | -                   |
 | prefixCls           | 类名前缀                                          | string                                                                                           | n                   |
 | moduleRules         | 自定义 webpack module rules                       |                                                                                                  | -                   |
 | cssModules          | node_modules 中, 需要开启 cssModules 的模块       | string[]                                                                                         | -                   |
 | cssModuleDefinition | 为 cssModule 生成准确的声明文件                   | boolean                                                                                          | true                |
-| importOnDemand      | 按需引入                                          | SwcImportOnDemandTransform \| TsImportPlugin.Options                                             | -                   |
+| importOnDemand      | 按需引入                                          | Record\<string, SwcImportOnDemand> \| TsImportPlugin.Options                                             | -                   |
 | proxy               | 服务器代理                                        | `Record<string, string>`                                                                         | -                   |
 | cache               | 缓存配置，为 false 时，不使用缓存                    | FileCacheOptions \| MemoryCacheOptions \| false                                                                                  | -                   |
 | devServer           | 开发服务器设置                                    | `Record<string, string>`                                                                         | -                   |
@@ -69,31 +69,7 @@ order: 10
 
 > [TerserOptions][2]
 
-## 按需导入 `swc`
-
-> 使用 swc 时的按需导入配置 importOnDemand: \{ '库名': \{...配置项} }
-
-### SwcImportOnDemandTransform
-
-| 属性                  | 说明                                                                            | 类型                  | 默认值  |
-| --------------------- | ------------------------------------------------------------------------------- | --------------------- | ------- |
-| transform             | 要使用的库名称，而不是导入语句中指定的库名称。`${member}` 是替换的成员          | string                | -       |
-| style                 | 设置转换时需要单独导入的样式，`${member}` 是替换的成员                          | `string` \|`boolean`  | `false` |
-| skipDefaultConversion | 当设置为 true 时，将保留 `import { Button }` 语法，而不是转换为 `import Button` | boolean               | `false` |
-| preventFullImport     | 当遇到会导致导入整个模块时，是否抛出                                            | boolean               | `true`  |
-| memberTransformers    | 成员转换规则                                                                    | `MemberTransformer`[] | []      |
-
-### MemberTransformer
-
-| 属性        | 说明                                                                                                       |
-| ----------- | ---------------------------------------------------------------------------------------------------------- |
-| pascal_case | 帕斯卡拼写法(大驼峰): 所有单词的首字母大写，然后直接连接起来，单词之间没有连接符                           |
-| camel_case  | 骆驼拼写法(小驼峰): 第一个单词的首字母小写, 后续所有单词的首字母大写，然后直接连接起来，单词之间没有连接符 |
-| kebab_case  | 连字符拼写法: 各个单词或缩写之间以`-`做间隔                                                                |
-| dashed_case | 破折号式: 每个单词全小写或全大写，多单词使用`-`隔开                                                        |
-| snake_case  | 蛇形命名: 每个单词全小写或全大写，多单词使用`_`隔开                                                        |
-
-### 配置案例 MemberTransformer
+### 按需导入 Swc 配置案例
 
 ```javascript
 const conf = {

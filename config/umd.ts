@@ -8,12 +8,8 @@ const conf: Partial<ConfigType> = {
   output: {
     path: resolveProgram('umd'),
     filename: 'index.js',
-    library: {
-      name: 'NekoUI',
-      type: 'umd',
-      umdNamedDefine: true,
-    },
   },
+  performance: false,
   bundleAnalyzer: false,
   splitChunk: false,
   runtimeChunk: false,

@@ -4,6 +4,7 @@
 
 ### 📚 Documentation
 
+- update build ([99fa42d](https://github.com/monako97/neko-ui/commit/99fa42df2cda163a6ebb2fbfae50b5852392b860))
 - update build ([b2fb060](https://github.com/monako97/neko-ui/commit/b2fb060fab2a8072da10dc98421c8af0a01d7415))
 - update build ([924440f](https://github.com/monako97/neko-ui/commit/924440fa8d9687efd5d8cad51887255463ccb46b))
 - test ([95b6422](https://github.com/monako97/neko-ui/commit/95b6422fbd3658a5205f0c8f18c029ecace5e8fd))
