@@ -2,6 +2,10 @@
 
 ## Last
 
+### ✨ Features
+
+- 文档生成支持 @example ([e9c799c](https://github.com/monako97/neko-ui/commit/e9c799c1072f234d0bc30b87565dd4726baebdf3))
+
 ### 📚 Documentation
 
 - update build ([99fa42d](https://github.com/monako97/neko-ui/commit/99fa42df2cda163a6ebb2fbfae50b5852392b860))
@@ -26,7 +30,18 @@
 - code、md ([88fdfe5](https://github.com/monako97/neko-ui/commit/88fdfe59c5feb1147cfbf912caec8f1089593de0))
 - code、md ([685d9ea](https://github.com/monako97/neko-ui/commit/685d9eac3af9badb5d35d84479c5eda6949d2c01))
 
-## [v2.8.7](https://github.com/monako97/neko-ui/compare/2.8.17...v2.8.7) (5-25-2024)
+## [v2.8.7](https://github.com/monako97/neko-ui/compare/2.8.18...v2.8.7) (5-25-2024)
+
+## [2.8.18](https://github.com/monako97/neko-ui/compare/2.8.17...2.8.18) (6-18-2024)
+
+### ✨ Features
+
+- 文档生成支持 @example ([e9c799c](https://github.com/monako97/neko-ui/commit/e9c799c1072f234d0bc30b87565dd4726baebdf3))
+
+### 📚 Documentation
+
+- update build ([99fa42d](https://github.com/monako97/neko-ui/commit/99fa42df2cda163a6ebb2fbfae50b5852392b860))
+- update build ([b2fb060](https://github.com/monako97/neko-ui/commit/b2fb060fab2a8072da10dc98421c8af0a01d7415))
 
 ## [2.8.17](https://github.com/monako97/neko-ui/compare/2.8.6...2.8.17) (6-16-2024)
 

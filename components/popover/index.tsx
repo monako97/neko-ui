@@ -1,4 +1,3 @@
-/* eslint-disable solid/no-innerhtml */
 import {
   Show,
   createEffect,
@@ -14,7 +13,7 @@ import { css, cx } from '@moneko/css';
 import { customElement } from 'solid-element';
 import { Portal } from 'solid-js/web';
 import { popoverCss, portalCss } from './style';
-import '../empty';
+import Empty from '../empty';
 import theme from '../theme';
 import type { BasicConfig, CustomElement } from '..';
 
@@ -295,7 +294,6 @@ function Popover(props: PopoverProps) {
   const portalStyle = createMemo(() => {
     const p = posi();
 
-    // max-block-size: calc(100vb - ${(up() ? p.bottom : p.top) || 0}px);
     return `.portal {${Object.keys(p)
       .map((k) => `${k}:${p[k as keyof Posi]}px;`)
       .join('')}z-index: 1;}`;
@@ -336,7 +334,6 @@ function Popover(props: PopoverProps) {
     clearTimeout(closeTimer);
     document.documentElement.removeEventListener('mousedown', close, false);
   });
-  const Content = createMemo(() => local.content);
 
   return (
     <>
@@ -359,8 +356,11 @@ function Popover(props: PopoverProps) {
             <style textContent={css(local.popupCss)} />
           </Show>
           <div ref={ref} onAnimationEnd={exit} class={portalCls()} {...childrenProps()}>
-            <Show when={local.content} fallback={<n-empty />}>
-              {typeof local.content === 'string' ? <div innerHTML={local.content} /> : <Content />}
+            <Show when={local.content} fallback={<Empty />}>
+              <Show when={typeof local.content === 'string'} fallback={local.content}>
+                {/* eslint-disable-next-line solid/no-innerhtml */}
+                <div innerHTML={local.content} />
+              </Show>
             </Show>
           </div>
         </Portal>

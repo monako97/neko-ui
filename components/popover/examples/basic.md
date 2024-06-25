@@ -13,8 +13,7 @@ order: 1
   el.content = function () {
     const c = document.createElement('div');
 
-    c.innerHTML = `<n-typography type="success">success</n-typography>
-      <n-typography type="error">danger</n-typography>`;
+    c.innerHTML = `<n-typography type="success">success</n-typography><n-typography type="error">danger</n-typography>`;
     return c;
   };
 </script>
