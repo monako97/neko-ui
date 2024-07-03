@@ -2,6 +2,10 @@
 
 ## Last
 
+### ✨ Features
+
+- 更新 solid-js 1.8.18 ([ecdb3ec](https://github.com/monako97/neko-ui/commit/ecdb3ece39d6b3585680d4cb84d56653c291a6f4))
+
 ### 📚 Documentation
 
 - 支持 solidjs refresh ([52c2dd5](https://github.com/monako97/neko-ui/commit/52c2dd525b7350ac3ace67e030094845d0b28f99))
@@ -37,7 +41,21 @@
 - code、md ([88fdfe5](https://github.com/monako97/neko-ui/commit/88fdfe59c5feb1147cfbf912caec8f1089593de0))
 - code、md ([685d9ea](https://github.com/monako97/neko-ui/commit/685d9eac3af9badb5d35d84479c5eda6949d2c01))
 
-## [v2.8.7](https://github.com/monako97/neko-ui/compare/2.8.18...v2.8.7) (5-25-2024)
+## [v2.8.7](https://github.com/monako97/neko-ui/compare/2.8.20...v2.8.7) (5-25-2024)
+
+## [2.8.20](https://github.com/monako97/neko-ui/compare/2.8.18...2.8.20) (7-2-2024)
+
+### ✨ Features
+
+- 更新 solid-js 1.8.18 ([ecdb3ec](https://github.com/monako97/neko-ui/commit/ecdb3ece39d6b3585680d4cb84d56653c291a6f4))
+
+### 📚 Documentation
+
+- 支持 solidjs refresh ([52c2dd5](https://github.com/monako97/neko-ui/commit/52c2dd525b7350ac3ace67e030094845d0b28f99))
+
+### 🐛 Bug Fixes
+
+- n-popover ([c571c4f](https://github.com/monako97/neko-ui/commit/c571c4f426cc458495cd232601df7fa6f61e083a))
 
 ## [2.8.18](https://github.com/monako97/neko-ui/compare/2.8.17...2.8.18) (6-18-2024)
 
