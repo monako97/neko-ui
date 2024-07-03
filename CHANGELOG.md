@@ -2,13 +2,14 @@
 
 ## Last
 
+### 📚 Documentation
+
+- 更新框架 ([e180cee](https://github.com/monako97/neko-ui/commit/e180cee0fc398a9a0a8e4eacecea8f1ef781235f))
+- 支持 solidjs refresh ([52c2dd5](https://github.com/monako97/neko-ui/commit/52c2dd525b7350ac3ace67e030094845d0b28f99))
+
 ### ✨ Features
 
 - 更新 solid-js 1.8.18 ([ecdb3ec](https://github.com/monako97/neko-ui/commit/ecdb3ece39d6b3585680d4cb84d56653c291a6f4))
-
-### 📚 Documentation
-
-- 支持 solidjs refresh ([52c2dd5](https://github.com/monako97/neko-ui/commit/52c2dd525b7350ac3ace67e030094845d0b28f99))
 
 ## [v2.8.19](https://github.com/monako97/neko-ui/compare/v2.8.7...v2.8.19) (6-25-2024)
 

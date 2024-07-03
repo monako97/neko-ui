@@ -1,0 +1,60 @@
+---
+type: 工程配套
+title: 虚拟模块
+subtitle: virtual-module
+order: 11
+---
+
+# 自定义虚拟模块
+
+> 自定义虚拟模块允许你在项目中定义一些不需要实际文件存在的模块。这些模块可以直接在配置文件中定义，并在项目中像普通模块一样导入和使用。
+
+这样做的主要好处包括：
+
+- **减少磁盘 I/O 操作**：由于虚拟模块并不存在于磁盘上，所以不需要进行磁盘读取操作，这可以提高性能。
+- **简化模块定义**：可以直接在配置文件中定义简单的模块，而不需要为每个模块创建单独的文件。
+- **灵活配置**：可以根据需要动态生成模块内容，提供更大的灵活性。
+
+## 示例
+
+以下是一个配置和使用自定义虚拟模块的示例：
+
+```ts
+// 配置文件 config/index.ts
+import type { ConfigType } from '@moneko/core';
+
+const conf: Partial<ConfigType> = {
+    // 在工程配置文件中配置虚拟模块
+    virtualModule: {
+        // 使用字符串定义虚拟模块
+        'custom-module-1': 'export default { name: "user1" };',
+        // 使用 Object 定义虚拟模块
+        'custom-module-2': { age: 12 }
+    }
+};
+```
+
+### 配置文件 `config/index.ts`
+
+在配置文件中，你可以定义虚拟模块。在上述示例中，配置对象的 `virtualModule` 属性包含了两个虚拟模块：
+
+- `custom-module-1`：通过字符串定义，导出一个包含 `name` 属性的对象。
+- `custom-module-2`：通过对象直接定义，导出一个包含 `age` 属性的对象。
+
+```ts
+// src/pages/a/index.ts
+import a from 'custom-module-1';
+import b from 'custom-module-2';
+
+console.log(a); // { name: "user1" }
+console.log(b); // { age: 12 }
+```
+
+### 项目文件 `src/pages/a/index.ts`
+
+在项目代码中，你可以像使用普通模块一样导入和使用虚拟模块：
+
+- `custom-module-1` 被导入为 `a`，其内容为 `{ name: "user1" }`。
+- `custom-module-2` 被导入为 `b`，其内容为 `{ age: 12 }`。
+
+通过使用自定义虚拟模块，可以减少磁盘 I/O 操作，提高性能，并且可以更灵活地配置和使用模块。这样可以显著简化项目的模块管理，特别是在需要定义许多小型模块时。
