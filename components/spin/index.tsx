@@ -33,6 +33,7 @@ const style = css`
       opacity: 0.3;
       pointer-events: none;
       user-select: none;
+      filter: blur(4px);
     }
 
     &::before {

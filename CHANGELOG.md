@@ -4,6 +4,7 @@
 
 ### 📚 Documentation
 
+- 添加虚拟模块描述 ([a7f4000](https://github.com/monako97/neko-ui/commit/a7f400094851c1dba6e4a8fa074750101de7a713))
 - 更新框架 ([e180cee](https://github.com/monako97/neko-ui/commit/e180cee0fc398a9a0a8e4eacecea8f1ef781235f))
 - 支持 solidjs refresh ([52c2dd5](https://github.com/monako97/neko-ui/commit/52c2dd525b7350ac3ace67e030094845d0b28f99))
 
