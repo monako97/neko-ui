@@ -7,5 +7,6 @@
       "@pkg/*": ["components/*"],
       "neko-ui/*": ["components/*"]
     }
-  }
+  },
+  "exclude": ["types/*"]
 }
