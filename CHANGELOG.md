@@ -2,16 +2,17 @@
 
 ## Last
 
+### 📚 Documentation
+
+- 更新构建工具 ([2d5ff6d](https://github.com/monako97/neko-ui/commit/2d5ff6d320dbf07f4a4ab43f6e0934495f0b8a56))
+- 添加虚拟模块描述 ([a7f4000](https://github.com/monako97/neko-ui/commit/a7f400094851c1dba6e4a8fa074750101de7a713))
+- 更新框架 ([e180cee](https://github.com/monako97/neko-ui/commit/e180cee0fc398a9a0a8e4eacecea8f1ef781235f))
+- 支持 solidjs refresh ([52c2dd5](https://github.com/monako97/neko-ui/commit/52c2dd525b7350ac3ace67e030094845d0b28f99))
+
 ### ✨ Features
 
 - spining时增加模糊 ([e6e27b0](https://github.com/monako97/neko-ui/commit/e6e27b0c4b5b50513aa52bac886930b39ae954e7))
 - 更新 solid-js 1.8.18 ([ecdb3ec](https://github.com/monako97/neko-ui/commit/ecdb3ece39d6b3585680d4cb84d56653c291a6f4))
-
-### 📚 Documentation
-
-- 添加虚拟模块描述 ([a7f4000](https://github.com/monako97/neko-ui/commit/a7f400094851c1dba6e4a8fa074750101de7a713))
-- 更新框架 ([e180cee](https://github.com/monako97/neko-ui/commit/e180cee0fc398a9a0a8e4eacecea8f1ef781235f))
-- 支持 solidjs refresh ([52c2dd5](https://github.com/monako97/neko-ui/commit/52c2dd525b7350ac3ace67e030094845d0b28f99))
 
 ## [v2.8.19](https://github.com/monako97/neko-ui/compare/v2.8.7...v2.8.19) (6-25-2024)
 
