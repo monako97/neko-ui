@@ -8,7 +8,7 @@ import {
   getOwner,
 } from 'solid-js';
 import { colorParse, mixColor, toneColor } from '@moneko/common';
-import { CSSObject, css } from '@moneko/css';
+import { type CSSObject, css } from '@moneko/css';
 export { toneColor } from '@moneko/common';
 
 /** 生成主题色调
