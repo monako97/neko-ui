@@ -1,12 +1,12 @@
 ---
 type: 工程配套
 title: Mock数据
-subtitle: '@moneko/mock'
+subtitle: '@moneko/core'
 icon: 📚
 order: 10
 ---
 
-# @moneko/mock
+# Mock数据
 
 > 在项目启动目录 mock 文件夹下创建 mock 脚本，达到模拟响应数据的效果
 
@@ -15,7 +15,7 @@ order: 10
 > (req: RequestFormData, res: Response) => void
 
 ```typescript
-import type { MockConfiguration } from '@moneko/mock';
+import type { MockConfiguration } from '@moneko/core';
 
 const conf: MockConfiguration = {
   'GET /api/account': (req, res) => {
@@ -38,7 +38,7 @@ export default conf;
 ### 获取 Restful Api 参数
 
 ```typescript
-import type { MockConfiguration } from '@moneko/mock';
+import type { MockConfiguration } from '@moneko/core';
 
 const conf: MockConfiguration = {
   'GET /api/account/:id': (req, res) => {
@@ -63,7 +63,7 @@ export default conf;
 ### 获取 POST 请求体数据
 
 ```typescript
-import type { MockConfiguration } from '@moneko/mock';
+import type { MockConfiguration } from '@moneko/core';
 
 const conf: MockConfiguration = {
   'POST /api/login_by_username': (req, res) => {
@@ -110,8 +110,7 @@ export default conf;
 ### 使用 YApi JSON Schema 生成数据
 
 ```typescript
-import { yApiSchemaMock } from '@moneko/mock';
-import type { MockConfiguration } from '@moneko/mock';
+import { type MockConfiguration, yApiSchemaMock } from '@moneko/core';
 
 const getYApiOption = (id: string) => {
   return {
@@ -144,8 +143,7 @@ export default conf;
 ### 使用 YApi 高级 Mock
 
 ```typescript
-import { yApiMock } from '@moneko/mock';
-import type { MockConfiguration, YApiOption } from '@moneko/mock';
+import { type MockConfiguration, type YApiOption, yApiMock } from '@moneko/core';
 
 const yApi: YApiOption = {
   // yapi host
@@ -169,7 +167,7 @@ export default conf;
 ## KV 方式
 
 ```typescript
-import type { MockConfiguration } from '@moneko/mock';
+import type { MockConfiguration } from '@moneko/core';
 
 const conf: MockConfiguration = {
   'POST /api/use/fun': {
