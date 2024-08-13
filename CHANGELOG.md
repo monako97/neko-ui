@@ -2,6 +2,10 @@
 
 ## Last
 
+### 📦 Code Refactoring
+
+- solid-js 1.8.20 ([bd7ca3e](https://github.com/monako97/neko-ui/commit/bd7ca3e66a7a8bc83532aaf3fca3ad337c7821b7))
+
 ### 🐛 Bug Fixes
 
 - solidjs types ([56902d6](https://github.com/monako97/neko-ui/commit/56902d692c00a7fd94f1fffc1e74aa4a5f8130c7))
