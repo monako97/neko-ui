@@ -4,6 +4,7 @@
 
 ### 🐛 Bug Fixes
 
+- solidjs types ([56902d6](https://github.com/monako97/neko-ui/commit/56902d692c00a7fd94f1fffc1e74aa4a5f8130c7))
 - docs ([212e17e](https://github.com/monako97/neko-ui/commit/212e17e2c58be9e021fbfbc7bf1243442f4cea3f))
 
 ### 📚 Documentation
