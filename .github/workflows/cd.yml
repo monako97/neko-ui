@@ -59,6 +59,10 @@ jobs:
             git tag -a "v$NPM_PACKAGE_VERSION" -m "Release version $NPM_PACKAGE_VERSION"
             git push origin "v$NPM_PACKAGE_VERSION"
           else
+            git config user.name "github-actions[bot]"
+            git config user.email "github-actions[bot]@users.noreply.github.com"
+            git tag -a "v$NPM_PACKAGE_VERSION" -m "Release version $NPM_PACKAGE_VERSION"
+            git push origin "v$NPM_PACKAGE_VERSION"
             echo "Version ${NPM_PACKAGE_VERSION} of ${NPM_PACKAGE_NAME} has already been published, so no new version has been published."
           fi
         env:
