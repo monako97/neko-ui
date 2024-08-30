@@ -64,7 +64,7 @@ jobs:
             git tag -a "v$NPM_PACKAGE_VERSION" -m "$TAG_MESSAGE"
             git push origin "v$NPM_PACKAGE_VERSION"
 
-            tar -czf docs.tgz -C ./docs . --transform 's,^,$NPM_PACKAGE_NAME/,'
+            tar -czf docs.tgz -C ./docs . --transform "s,^,$NPM_PACKAGE_NAME/,"
             npm pack
             sudo apt-get install -y gh
             PREV_TAG=$(git describe --tags --abbrev=0 HEAD^)
