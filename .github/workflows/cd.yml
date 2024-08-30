@@ -44,7 +44,6 @@ jobs:
           NPM_PACKAGE_BETA_TAG="beta"
           NPM_PACKAGE_ALPHA_TAG="alpha"
           NPM_PACKAGE_TAG="latest"
-          PREV_TAG=$(git describe --tags --abbrev=0 HEAD^)
           if [[ $NPM_PACKAGE_VERSION =~ $NPM_PACKAGE_BETA_TAG ]]; then
               NPM_PACKAGE_TAG=$NPM_PACKAGE_BETA_TAG
           elif [[ $NPM_PACKAGE_VERSION =~ $NPM_PACKAGE_ALPHA_TAG ]]; then
@@ -68,7 +67,8 @@ jobs:
             tar -czf docs.tgz -C ./docs . --transform "s,^,$NPM_PACKAGE_NAME/,"
             npm pack
             sudo apt-get install -y gh
-            RELEASE_TITLE="**Full Changelog**: https://github.com/${{ github.repository }}/compare/$PREV_TAG...$NPM_PACKAGE_VERSION"
+            TAG_RANGE=$(git tag --sort=-creatordate | head -n 2 | awk '{if(NR==1){prev=$0} else{current=$0}} END{print current "..." prev}')
+            RELEASE_TITLE="**Full Changelog**: https://github.com/${{ github.repository }}/compare/$TAG_RANGE"
             gh release create "$NPM_PACKAGE_VERSION" \
             --title "$RELEASE_TITLE" \
             --notes "$TAG_MESSAGE" \
