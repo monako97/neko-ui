@@ -65,12 +65,16 @@ jobs:
             fi
             git tag -a "v$NPM_PACKAGE_VERSION" -m "$TAG_MESSAGE"
             git push origin "v$NPM_PACKAGE_VERSION"
-            
+
+            tar -czf $NPM_PACKAGE_NAME.tar.gz ./es ./lib ./umd
+            tar -czf docs.tar.gz ./docs
             sudo apt-get install -y gh
 
             gh release create "$NPM_PACKAGE_VERSION" \
             --title "$RELEASE_TITLE" \
-            --notes "$TAG_MESSAGE"
+            --notes "$TAG_MESSAGE" \
+            ./docs.tar.gz \
+            ./$NPM_PACKAGE_NAME.tar.gz
             echo "Version ${NPM_PACKAGE_VERSION} of ${NPM_PACKAGE_NAME} has already been published, so no new version has been published."
           fi
         env:
