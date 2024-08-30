@@ -44,6 +44,7 @@ jobs:
           NPM_PACKAGE_BETA_TAG="beta"
           NPM_PACKAGE_ALPHA_TAG="alpha"
           NPM_PACKAGE_TAG="latest"
+          PRE_VERSION=$(npm view "${NPM_PACKAGE_NAME}" versions)
           if [[ $NPM_PACKAGE_VERSION =~ $NPM_PACKAGE_BETA_TAG ]]; then
               NPM_PACKAGE_TAG=$NPM_PACKAGE_BETA_TAG
           elif [[ $NPM_PACKAGE_VERSION =~ $NPM_PACKAGE_ALPHA_TAG ]]; then
@@ -51,7 +52,7 @@ jobs:
           else
               NPM_PACKAGE_TAG="latest"
           fi
-          if [[ $(npm view "${NPM_PACKAGE_NAME}" versions) != *"'${NPM_PACKAGE_VERSION}'"* ]]; then
+          if [[ $PRE_VERSION != *"'${NPM_PACKAGE_VERSION}'"* ]]; then
             npm publish --tag ${NPM_PACKAGE_TAG}
             echo "Successfully published version ${NPM_PACKAGE_VERSION} of ${NPM_PACKAGE_NAME} to GitLab's NPM registry: ${CI_PROJECT_URL}/-/packages"
           else
@@ -67,17 +68,10 @@ jobs:
             tar -czf docs.tgz -C ./docs . --transform "s,^,$NPM_PACKAGE_NAME/,"
             npm pack
             sudo apt-get install -y gh
-            LATEST_TAG=$(git tag --sort=-creatordate | while read tag; do
-              if git merge-base --is-ancestor "$tag" main; then
-                echo "$tag"
-                exit 0
-              fi
-            done || echo "main")
-            echo "Latest tag on main branch: $LATEST_TAG"
-            RELEASE_TITLE="**Full Changelog**: https://github.com/${{ github.repository }}/compare/$LATEST_TAG...v$NPM_PACKAGE_VERSION"
+            RELEASE_TITLE="**Full Changelog**: https://github.com/${{ github.repository }}/compare/v$PRE_VERSION...v$NPM_PACKAGE_VERSION"
             gh release create "v$NPM_PACKAGE_VERSION" \
-            --title "$TAG_MESSAGE" \
-            --notes "$RELEASE_TITLE" \
+            --title "v$NPM_PACKAGE_VERSION" \
+            --notes "$TAG_MESSAGE\n$RELEASE_TITLE" \
             ./docs.tgz \
             ./$NPM_PACKAGE_NAME-$NPM_PACKAGE_VERSION.tgz
             echo "Version ${NPM_PACKAGE_VERSION} of ${NPM_PACKAGE_NAME} has already been published, so no new version has been published."
