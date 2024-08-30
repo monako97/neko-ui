@@ -63,7 +63,7 @@ jobs:
             RELEASE_TITLE="**Full Changelog**: https://github.com/${{ github.repository }}/compare/v$PRE_VERSION...v$NPM_PACKAGE_VERSION"
             NOTES="$TAG_MESSAGE"$'\n\n'"$RELEASE_TITLE"
             sudo apt-get update && sudo apt-get install -y pax && sudo apt-get install -y gh
-            cd docs && pax -w -s ",^,$NPM_PACKAGE_NAME/," * .* | gzip > ../docs.tgz && cd ..
+            cd docs && pax -w -s ",^,$NPM_PACKAGE_NAME/," * | gzip > ../docs.tgz && cd ..
             npm pack
             gh release create "v$NPM_PACKAGE_VERSION" \
             --title "v$NPM_PACKAGE_VERSION" \
