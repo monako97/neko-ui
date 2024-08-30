@@ -54,39 +54,16 @@ jobs:
           if [[ $(npm view "${NPM_PACKAGE_NAME}" versions) != *"'${NPM_PACKAGE_VERSION}'"* ]]; then
             npm publish --tag ${NPM_PACKAGE_TAG}
             echo "Successfully published version ${NPM_PACKAGE_VERSION} of ${NPM_PACKAGE_NAME} to GitLab's NPM registry: ${CI_PROJECT_URL}/-/packages"
-          else
-            PREV_TAG=$(git describe --tags --abbrev=0 HEAD^)
-            
+          els
             git config user.name "github-actions[bot]"
             git config user.email "github-actions[bot]@users.noreply.github.com"
-            git tag -a "v$NPM_PACKAGE_VERSION" -m "Release version $NPM_PACKAGE_VERSION"
+            git tag -a "v$NPM_PACKAGE_VERSION" -m "$NPM_PACKAGE_TAG version $NPM_PACKAGE_VERSION"
             git push origin "v$NPM_PACKAGE_VERSION"
-            
-            if [ -z "$PREV_TAG" ]; then
-              echo "This is the first release."
-              echo "Release Notes" > release_notes.txt
-            else
-              echo "Generating release notes from $PREV_TAG to v$NPM_PACKAGE_VERSION"
-              git log --oneline "$PREV_TAG"..HEAD > release_notes.txt
-            fi
-          
             echo "Version ${NPM_PACKAGE_VERSION} of ${NPM_PACKAGE_NAME} has already been published, so no new version has been published."
           fi
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          
-      - name: Create GitHub Release
-        id: create_release
-        uses: actions/create-release@v1
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          tag_name: "v${{ steps.create_tag.outputs.VERSION }}"
-          release_name: "Release v${{ steps.create_tag.outputs.VERSION }}"
-          body_path: ./release_notes.txt
-          draft: false
-          prerelease: false
-          
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
