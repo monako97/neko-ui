@@ -1,4 +1,4 @@
-name: Publish and Deploy
+ename: Publish and Deploy
 
 on:
   workflow_dispatch:
@@ -54,7 +54,7 @@ jobs:
           if [[ $(npm view "${NPM_PACKAGE_NAME}" versions) != *"'${NPM_PACKAGE_VERSION}'"* ]]; then
             npm publish --tag ${NPM_PACKAGE_TAG}
             echo "Successfully published version ${NPM_PACKAGE_VERSION} of ${NPM_PACKAGE_NAME} to GitLab's NPM registry: ${CI_PROJECT_URL}/-/packages"
-          els
+          else
             git config user.name "github-actions[bot]"
             git config user.email "github-actions[bot]@users.noreply.github.com"
             git tag -a "v$NPM_PACKAGE_VERSION" -m "$NPM_PACKAGE_TAG version $NPM_PACKAGE_VERSION"
