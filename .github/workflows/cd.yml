@@ -7,7 +7,7 @@ on:
       - main
 
 permissions:
-  contents: write
+  contents: read
   pages: write
   id-token: write
 
@@ -56,22 +56,18 @@ jobs:
             npm publish --tag ${NPM_PACKAGE_TAG}
             echo "Successfully published version ${NPM_PACKAGE_VERSION} of ${NPM_PACKAGE_NAME} to GitLab's NPM registry: ${CI_PROJECT_URL}/-/packages"
           else
-            # git config user.name "github-actions[bot]"
-            # git config user.email "github-actions[bot]@users.noreply.github.com"
-            TAG_MESSAGE="$NPM_PACKAGE_TAG version $NPM_PACKAGE_VERSION"
+            TAG_MESSAGE="### $NPM_PACKAGE_TAG version $NPM_PACKAGE_VERSION"
             if [ "$NPM_PACKAGE_TAG" = "latest" ]; then
-              TAG_MESSAGE="Release version $NPM_PACKAGE_VERSION"
+              TAG_MESSAGE="### Release version $NPM_PACKAGE_VERSION"
             fi
-            # git tag -a "v$NPM_PACKAGE_VERSION" -m "$TAG_MESSAGE"
-            # git push origin "v$NPM_PACKAGE_VERSION"
-
             tar -czf docs.tgz -C ./docs . --transform "s,^,$NPM_PACKAGE_NAME/,"
             npm pack
             sudo apt-get install -y gh
             RELEASE_TITLE="**Full Changelog**: https://github.com/${{ github.repository }}/compare/v$PRE_VERSION...v$NPM_PACKAGE_VERSION"
+            NOTES=$(printf "%s\n\n%s" "$TAG_MESSAGE" "$RELEASE_TITLE")
             gh release create "v$NPM_PACKAGE_VERSION" \
             --title "v$NPM_PACKAGE_VERSION" \
-            --notes "$TAG_MESSAGE\n$RELEASE_TITLE" \
+            --notes "$NOTES" \
             ./docs.tgz \
             ./$NPM_PACKAGE_NAME-$NPM_PACKAGE_VERSION.tgz
             echo "Version ${NPM_PACKAGE_VERSION} of ${NPM_PACKAGE_NAME} has already been published, so no new version has been published."
