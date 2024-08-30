@@ -61,13 +61,12 @@ jobs:
               TAG_MESSAGE="### Release version $NPM_PACKAGE_VERSION"
             fi
             RELEASE_TITLE="**Full Changelog**: https://github.com/${{ github.repository }}/compare/v$PRE_VERSION...v$NPM_PACKAGE_VERSION"
-            NOTES="$TAG_MESSAGE"$'\n\n'"$RELEASE_TITLE"
             npm pack
             sudo apt-get update && sudo apt-get install -y pax && sudo apt-get install -y gh
             cd docs && pax -w -s ",^,$NPM_PACKAGE_NAME/," * | gzip > ../docs.tgz && cd ..
             gh release create "v$NPM_PACKAGE_VERSION" \
             --title "v$NPM_PACKAGE_VERSION" \
-            --notes "$NOTES" \
+            --notes "$TAG_MESSAGE"$'\n\n'"$RELEASE_TITLE" \
             ./docs.tgz \
             ./$NPM_PACKAGE_NAME-$NPM_PACKAGE_VERSION.tgz
             echo "Version ${NPM_PACKAGE_VERSION} of ${NPM_PACKAGE_NAME} has already been published, so no new version has been published."
