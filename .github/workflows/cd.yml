@@ -57,8 +57,20 @@ jobs:
           else
             git config user.name "github-actions[bot]"
             git config user.email "github-actions[bot]@users.noreply.github.com"
-            git tag -a "v$NPM_PACKAGE_VERSION" -m "$NPM_PACKAGE_TAG version $NPM_PACKAGE_VERSION"
+            TAG_MESSAGE="$NPM_PACKAGE_TAG version $NPM_PACKAGE_VERSION"
+            RELEASE_TITLE="$NPM_PACKAGE_TAG $NPM_PACKAGE_VERSION"
+            if [ "$NPM_PACKAGE_TAG" = "latest" ]; then
+              TAG_MESSAGE="Release version $NPM_PACKAGE_VERSION"
+              RELEASE_TITLE="Release $NPM_PACKAGE_VERSION"
+            fi
+            git tag -a "v$NPM_PACKAGE_VERSION" -m "$TAG_MESSAGE"
             git push origin "v$NPM_PACKAGE_VERSION"
+            
+            sudo apt-get install -y gh
+
+            gh release create "$NPM_PACKAGE_VERSION" \
+            --title "$RELEASE_TITLE" \
+            --notes "$TAG_MESSAGE"
             echo "Version ${NPM_PACKAGE_VERSION} of ${NPM_PACKAGE_NAME} has already been published, so no new version has been published."
           fi
         env:
