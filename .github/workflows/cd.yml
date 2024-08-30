@@ -55,7 +55,6 @@ jobs:
           if [[ $(npm view "${NPM_PACKAGE_NAME}" versions) != *"'${NPM_PACKAGE_VERSION}'"* ]]; then
             npm publish --tag ${NPM_PACKAGE_TAG}
             echo "Successfully published version ${NPM_PACKAGE_VERSION} of ${NPM_PACKAGE_NAME} to GitLab's NPM registry: ${CI_PROJECT_URL}/-/packages"
-          else
             if [ "$NPM_PACKAGE_TAG" = "latest" ]; then
               TAG_MESSAGE="### Release version $NPM_PACKAGE_VERSION"
               PRERELEASE_FLAG=""
@@ -73,6 +72,7 @@ jobs:
             $PRERELEASE_FLAG \
             ./docs.tgz \
             ./$NPM_PACKAGE_NAME-$NPM_PACKAGE_VERSION.tgz
+          else
             echo "Version ${NPM_PACKAGE_VERSION} of ${NPM_PACKAGE_NAME} has already been published, so no new version has been published."
           fi
         env:
