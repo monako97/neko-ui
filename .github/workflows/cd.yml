@@ -7,7 +7,7 @@ on:
       - main
 
 permissions:
-  contents: read
+  contents: write
   pages: write
   id-token: write
 
@@ -60,11 +60,11 @@ jobs:
             if [ "$NPM_PACKAGE_TAG" = "latest" ]; then
               TAG_MESSAGE="### Release version $NPM_PACKAGE_VERSION"
             fi
+            RELEASE_TITLE="**Full Changelog**: https://github.com/${{ github.repository }}/compare/v$PRE_VERSION...v$NPM_PACKAGE_VERSION"
+            NOTES="$TAG_MESSAGE"$'\n\n'"$RELEASE_TITLE"
             tar -czf docs.tgz -C ./docs . --transform "s,^,$NPM_PACKAGE_NAME/,"
             npm pack
             sudo apt-get install -y gh
-            RELEASE_TITLE="**Full Changelog**: https://github.com/${{ github.repository }}/compare/v$PRE_VERSION...v$NPM_PACKAGE_VERSION"
-            NOTES=$(printf "%s\n\n" "$TAG_MESSAGE" "$RELEASE_TITLE")
             gh release create "v$NPM_PACKAGE_VERSION" \
             --title "v$NPM_PACKAGE_VERSION" \
             --notes "$NOTES" \
