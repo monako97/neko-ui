@@ -67,8 +67,8 @@ jobs:
             tar -czf docs.tgz -C ./docs . --transform "s,^,$NPM_PACKAGE_NAME/,"
             npm pack
             sudo apt-get install -y gh
-            TAG_RANGE=$(git tag --sort=-creatordate | head -n 2 | awk '{if(NR==1){prev=$0} else{current=$0}} END{print current "..." prev}')
-            RELEASE_TITLE="**Full Changelog**: https://github.com/${{ github.repository }}/compare/${TAG_RANGE}"
+            LATEST_TAG=$(git tag --sort=-creatordate --contains main | head -n 1 || echo "main")
+            RELEASE_TITLE="**Full Changelog**: https://github.com/${{ github.repository }}/compare/$LATEST_TAG...v$NPM_PACKAGE_VERSION"
             gh release create "v$NPM_PACKAGE_VERSION" \
             --title "$TAG_MESSAGE" \
             --notes "$RELEASE_TITLE" \
