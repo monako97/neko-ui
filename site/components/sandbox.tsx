@@ -76,6 +76,7 @@ function Sandbox(_props: SandboxProps) {
   );
 
   onMount(() => {
+    import('n-code-live');
     const l = langs()[0].value;
 
     setCurrent({

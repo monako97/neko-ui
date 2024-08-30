@@ -1,10 +1,6 @@
 import { css } from '@moneko/css';
 import favicon from './favicon.svg';
 
-const faviconBg = `data:image/svg+xml;base64,${window.btoa(
-  decodeURIComponent(favicon.replace('data:image/svg+xml,', '')),
-)}`;
-
 export const style = css`
   .avatar {
     position: relative;
@@ -40,7 +36,7 @@ export const style = css`
     }
 
     &::after {
-      background: url(${faviconBg}) no-repeat center/contain;
+      background: url(${favicon}) no-repeat center/contain;
     }
 
     &:hover {

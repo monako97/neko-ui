@@ -4,6 +4,7 @@
 
 ### 📦 Code Refactoring
 
+- cli ([12b0a4b](https://github.com/monako97/neko-ui/commit/12b0a4b583870bb598dc96b818731ad4c60fe4e5))
 - solid-js 1.8.20 ([bd7ca3e](https://github.com/monako97/neko-ui/commit/bd7ca3e66a7a8bc83532aaf3fca3ad337c7821b7))
 
 ### 🐛 Bug Fixes

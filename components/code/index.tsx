@@ -1,6 +1,8 @@
 import {
+  type Accessor,
   Show,
   createEffect,
+  createResource,
   createSignal,
   mergeProps,
   onCleanup,
@@ -11,8 +13,6 @@ import { isFunction, setClipboard } from '@moneko/common';
 import { css, cx } from '@moneko/css';
 import { customElement } from 'solid-element';
 import { style } from './style';
-import Prism from '../prism';
-import prismCss from '../prism/css';
 import theme from '../theme';
 import type { CustomElement } from '..';
 
@@ -42,6 +42,10 @@ export interface CodeProps {
 }
 
 export type CodeElement = CustomElement<CodeProps>;
+const cache = {
+  Prism: null as typeof import('../prism/index').default | null,
+  prismCss: null as Accessor<string> | null,
+};
 
 function Code(props: CodeProps) {
   const { baseStyle } = theme;
@@ -50,6 +54,21 @@ function Code(props: CodeProps) {
   const [code, setCode] = createSignal<string>('');
   const [hei, setHei] = createSignal(20);
   const [isIntersecting, setIsIntersecting] = createSignal(false);
+
+  async function fetchPrism() {
+    if (!cache.Prism) {
+      cache.Prism = (await import('../prism')).default;
+    }
+    return cache.Prism;
+  }
+  async function fetchPrismCss() {
+    if (!cache.prismCss) {
+      cache.prismCss = (await import('../prism/css')).default;
+    }
+    return cache.prismCss;
+  }
+  const [prismJS] = createResource('prism', fetchPrism);
+  const [prismCss] = createResource('prism-css', fetchPrismCss);
 
   function initObserver() {
     return new IntersectionObserver((entries) => {
@@ -106,7 +125,9 @@ function Code(props: CodeProps) {
     }
   }
   function postMessage(language: string, value?: string) {
-    if (!value || !isIntersecting()) return;
+    const Prism = prismJS();
+
+    if (!value || !isIntersecting() || !Prism) return;
     cleanObserver();
     if (diffLang.test(language) && !Prism.languages[language]) {
       Prism.languages[language] = Prism.languages.diff;
@@ -170,7 +191,7 @@ function Code(props: CodeProps) {
   return (
     <>
       <style textContent={baseStyle()} />
-      <style textContent={prismCss()} />
+      <style textContent={prismCss()?.()} />
       <style textContent={style} />
       <Show when={props.css}>
         <style textContent={css(props.css)} />
