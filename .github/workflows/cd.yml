@@ -44,7 +44,7 @@ jobs:
           NPM_PACKAGE_BETA_TAG="beta"
           NPM_PACKAGE_ALPHA_TAG="alpha"
           NPM_PACKAGE_TAG="latest"
-          PRE_VERSION=$(npm view "${NPM_PACKAGE_NAME}" versions)
+          PRE_VERSION=$(npm view "${NPM_PACKAGE_NAME}" version)
           if [[ $NPM_PACKAGE_VERSION =~ $NPM_PACKAGE_BETA_TAG ]]; then
               NPM_PACKAGE_TAG=$NPM_PACKAGE_BETA_TAG
           elif [[ $NPM_PACKAGE_VERSION =~ $NPM_PACKAGE_ALPHA_TAG ]]; then
@@ -52,7 +52,7 @@ jobs:
           else
               NPM_PACKAGE_TAG="latest"
           fi
-          if [[ $PRE_VERSION != *"'${NPM_PACKAGE_VERSION}'"* ]]; then
+          if [[ $(npm view "${NPM_PACKAGE_NAME}" versions) != *"'${NPM_PACKAGE_VERSION}'"* ]]; then
             npm publish --tag ${NPM_PACKAGE_TAG}
             echo "Successfully published version ${NPM_PACKAGE_VERSION} of ${NPM_PACKAGE_NAME} to GitLab's NPM registry: ${CI_PROJECT_URL}/-/packages"
           else
