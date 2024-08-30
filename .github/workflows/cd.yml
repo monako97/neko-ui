@@ -64,7 +64,7 @@ jobs:
             npm pack
             sudo apt-get install -y gh
             RELEASE_TITLE="**Full Changelog**: https://github.com/${{ github.repository }}/compare/v$PRE_VERSION...v$NPM_PACKAGE_VERSION"
-            NOTES=$(printf "%s\n\n%s" "$TAG_MESSAGE" "$RELEASE_TITLE")
+            NOTES=$(printf "%s\n\n" "$TAG_MESSAGE" "$RELEASE_TITLE")
             gh release create "v$NPM_PACKAGE_VERSION" \
             --title "v$NPM_PACKAGE_VERSION" \
             --notes "$NOTES" \
