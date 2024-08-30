@@ -56,9 +56,12 @@ jobs:
             npm publish --tag ${NPM_PACKAGE_TAG}
             echo "Successfully published version ${NPM_PACKAGE_VERSION} of ${NPM_PACKAGE_NAME} to GitLab's NPM registry: ${CI_PROJECT_URL}/-/packages"
           else
-            TAG_MESSAGE="### $NPM_PACKAGE_TAG version $NPM_PACKAGE_VERSION"
             if [ "$NPM_PACKAGE_TAG" = "latest" ]; then
               TAG_MESSAGE="### Release version $NPM_PACKAGE_VERSION"
+              PRERELEASE_FLAG=""
+            else
+              TAG_MESSAGE="### Pre-release version $NPM_PACKAGE_VERSION"
+              PRERELEASE_FLAG="--prerelease"
             fi
             RELEASE_TITLE="**Full Changelog**: https://github.com/${{ github.repository }}/compare/v$PRE_VERSION...v$NPM_PACKAGE_VERSION"
             npm pack
@@ -67,6 +70,7 @@ jobs:
             gh release create "v$NPM_PACKAGE_VERSION" \
             --title "v$NPM_PACKAGE_VERSION" \
             --notes "$TAG_MESSAGE"$'\n\n'"$RELEASE_TITLE" \
+            $PRERELEASE_FLAG \
             ./docs.tgz \
             ./$NPM_PACKAGE_NAME-$NPM_PACKAGE_VERSION.tgz
             echo "Version ${NPM_PACKAGE_VERSION} of ${NPM_PACKAGE_NAME} has already been published, so no new version has been published."
