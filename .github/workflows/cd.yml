@@ -67,7 +67,13 @@ jobs:
             tar -czf docs.tgz -C ./docs . --transform "s,^,$NPM_PACKAGE_NAME/,"
             npm pack
             sudo apt-get install -y gh
-            LATEST_TAG=$(git tag --sort=-creatordate --contains main | head -n 1 || echo "main")
+            LATEST_TAG=$(git tag --sort=-creatordate | while read tag; do
+              if git merge-base --is-ancestor "$tag" main; then
+                echo "$tag"
+                exit 0
+              fi
+            done || echo "main")
+            echo "Latest tag on main branch: $LATEST_TAG"
             RELEASE_TITLE="**Full Changelog**: https://github.com/${{ github.repository }}/compare/$LATEST_TAG...v$NPM_PACKAGE_VERSION"
             gh release create "v$NPM_PACKAGE_VERSION" \
             --title "$TAG_MESSAGE" \
