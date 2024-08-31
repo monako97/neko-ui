@@ -2,6 +2,12 @@
 
 ## Last
 
+### 📚 Documentation
+
+- github ci 关闭进度条 ([cd5e65b](https://github.com/monako97/neko-ui/commit/cd5e65b4d71fd9d6cbd2de62c3298661e3c2c5a9))
+
+## [v2.8.22](https://github.com/monako97/neko-ui/compare/v2.8.19...v2.8.22) (8-31-2024)
+
 ### 📦 Code Refactoring
 
 - 按需加载 Prism、使用本地 n-code-live、更新 solid-js、dayjs ([bcfcb55](https://github.com/monako97/neko-ui/commit/bcfcb55b90045a0958eedc88626796b219204cf9))
