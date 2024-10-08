@@ -1,17 +1,19 @@
 import {
-  type JSX,
-  Show,
   createEffect,
   createSignal,
+  type JSX,
   mergeProps,
   onCleanup,
+  Show,
   untrack,
 } from 'solid-js';
-import { customElement } from 'solid-element';
 import { Portal } from 'solid-js/web';
+import { customElement } from 'solid-element';
+
+import type { CustomElement } from '..';
+
 import ImgLazy from './lazy';
 import { imgCss, style } from './style';
-import type { CustomElement } from '..';
 
 export interface ImgProps extends JSX.HTMLAttributes<HTMLImageElement> {
   /** 图片地址 */
@@ -103,7 +105,9 @@ function Img(_: ImgProps) {
     if (!props.disabled) {
       e.stopPropagation();
       preventDefault(e);
-      setPosi((e.target as HTMLImageElement)?.getBoundingClientRect());
+      if (e.target) {
+        setPosi((e.target as HTMLImageElement).getBoundingClientRect());
+      }
       openChange(true);
     }
   }

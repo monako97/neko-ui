@@ -1,8 +1,10 @@
 import { Show } from 'solid-js';
 import { css } from '@moneko/css';
 import { customElement } from 'solid-element';
-import '../typography';
+
 import type { CustomElement } from '..';
+
+import '../typography';
 
 const style = css`
   .empty-container {

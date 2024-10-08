@@ -1,5 +1,6 @@
-import Prism from 'prismjs';
 // language
+import Prism from 'prismjs';
+
 import 'prismjs/components/prism-bash.js';
 import 'prismjs/components/prism-clike.js';
 import 'prismjs/components/prism-css.js';

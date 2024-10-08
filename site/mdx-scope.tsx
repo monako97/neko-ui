@@ -1,12 +1,12 @@
-import { Show, createMemo } from 'solid-js';
+import { createMemo, Show } from 'solid-js';
 import { css } from '@moneko/css';
-import { type TabOption, theme } from 'neko-ui';
 import type { MDXComponents } from '@moneko/solid/mdx';
+import { type TabOption, theme } from 'neko-ui';
 
-type Props = {
+interface Props {
   children: Element;
   [key: string]: unknown;
-};
+}
 
 const icons = {
   npm: 'https://github.com/npm.png?size=32',

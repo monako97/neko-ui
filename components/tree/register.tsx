@@ -1,5 +1,6 @@
 import { createEffect, mergeProps } from 'solid-js';
 import { customElement } from 'solid-element';
+
 import Tree from './index';
 import type { TreeData, TreeProps } from './type';
 

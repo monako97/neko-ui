@@ -1,10 +1,12 @@
-import { Show, createEffect, createMemo, createSignal, mergeProps } from 'solid-js';
+import { createEffect, createMemo, createSignal, mergeProps, Show } from 'solid-js';
 import { isFunction } from '@moneko/common';
 import { css, cx } from '@moneko/css';
 import { customElement } from 'solid-element';
-import { style } from './style';
-import theme from '../theme';
+
 import type { BasicConfig, CustomElement } from '..';
+import theme from '../theme';
+
+import { style } from './style';
 
 export interface InputProps {
   /** 自定义类名 */
@@ -73,7 +75,7 @@ function Input(props: InputProps) {
     return val;
   }
 
-  function handleInput(e: Event & { target: HTMLInputElement }) {
+  function handleInput(e: Event & { target?: HTMLInputElement }) {
     props.onChange?.(parserValue(e.target?.value));
   }
   function handleMouseDown(e: MouseEvent) {

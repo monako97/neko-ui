@@ -1,21 +1,24 @@
 import {
-  For,
-  Show,
   batch,
   createEffect,
   createMemo,
   createSignal,
+  For,
   mergeProps,
+  Show,
   splitProps,
   untrack,
 } from 'solid-js';
-import { isObject, isString, isUndefined } from '@moneko/common';
+import { isFunction, isObject, isString, isUndefined } from '@moneko/common';
 import { css, cx } from '@moneko/css';
 import { customElement } from 'solid-element';
-import { styles } from './styles';
-import '../pagination';
-import theme from '../theme';
+
 import type { BasicConfig, CustomElement, PaginationProps } from '..';
+import theme from '../theme';
+
+import { styles } from './styles';
+
+import '../pagination';
 
 type Col = Column<Record<string, Any>>;
 const defaultPagination = { page: 1, pageSize: 20, total: 0, totalText: void 0, size: void 0 };
@@ -168,8 +171,8 @@ function Table(_: TableProps) {
 
                       return (
                         <td {..._layout} class="table-cell">
-                          <Show when={col.render} fallback={<Row />}>
-                            {col.render?.(row[col.key], row, i())}
+                          <Show when={isFunction(col.render)} fallback={<Row />}>
+                            {col.render(row[col.key], row, i())}
                           </Show>
                         </td>
                       );

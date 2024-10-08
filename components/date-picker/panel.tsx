@@ -1,12 +1,13 @@
-import { For, Match, Show, Switch, createEffect, createMemo, createSignal } from 'solid-js';
+import { createEffect, createMemo, createSignal, For, Match, Show, Switch } from 'solid-js';
+
+import type { DatePickerProps } from '.';
 import DatePanel from './date';
 import dayjs from './dayjs';
 import MonthPanel from './month';
 import TimePicker from './time';
 import YearPanel from './year';
-import type { DatePickerProps } from '.';
 
-type PanelProps = {
+interface PanelProps {
   current: dayjs.Dayjs;
   type?: DatePickerProps['type'];
   onChange(val: dayjs.Dayjs): void;
@@ -18,7 +19,7 @@ type PanelProps = {
   showTime?: boolean;
   showToday?: boolean;
   showHeader?: boolean;
-};
+}
 
 function preventDefault(e: Event) {
   e.stopPropagation();
@@ -182,7 +183,9 @@ function Panel(props: PanelProps) {
               type="primary"
               block={true}
               link={true}
-              onClick={() => props.onChange(dayjs())}
+              onClick={() => {
+                props.onChange(dayjs());
+              }}
             >
               今日
             </n-button>

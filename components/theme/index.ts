@@ -1,14 +1,14 @@
 import {
   type Accessor,
-  type Setter,
   createEffect,
   createMemo,
   createRoot,
   createSignal,
   getOwner,
+  type Setter,
 } from 'solid-js';
 import { colorParse, mixColor, toneColor } from '@moneko/common';
-import { type CSSObject, css } from '@moneko/css';
+import { css, type CSSObject } from '@moneko/css';
 export { toneColor } from '@moneko/common';
 
 /** 生成主题色调
@@ -17,7 +17,7 @@ export { toneColor } from '@moneko/common';
  * @returns {Record<string, string>} 主题色调
  */
 export function generateColor(base: string, option: ThemeOption): Record<string, string> {
-  const obj = toneColor(base, option?.dark);
+  const obj = toneColor(base, option.dark);
   const textColor = colorParse(obj[5]);
   const baseColor = colorParse(base);
 

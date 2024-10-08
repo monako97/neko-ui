@@ -1,12 +1,14 @@
-import { For, Match, Show, Switch, createEffect, mergeProps, onCleanup } from 'solid-js';
+import { createEffect, For, Match, mergeProps, onCleanup, Show, Switch } from 'solid-js';
 import { frameCallback } from '@moneko/common';
 import { css, cx } from '@moneko/css';
 import { customElement } from 'solid-element';
-import '../code';
-import '../img';
+
+import type { CustomElement } from '..';
 import mdStyle from '../md-style';
 import theme from '../theme';
-import type { CustomElement } from '..';
+
+import '../code';
+import '../img';
 
 function MD(_props: MdProps) {
   let renderer: marked.Renderer | undefined;
@@ -138,7 +140,9 @@ function MD(_props: MdProps) {
         behavior: 'smooth',
         block: 'nearest',
       });
-      list.forEach((item) => item.classList.remove('active'));
+      list.forEach((item) => {
+        item.classList.remove('active');
+      });
       a.classList.add('active');
     } else {
       window.open(a.href);
@@ -184,21 +188,25 @@ function MD(_props: MdProps) {
   createEffect(() => {
     let observer: IntersectionObserver;
 
-    if (ref && props.text?.startsWith('[TOC]')) {
+    if (ref && props.text.startsWith('[TOC]')) {
       list = [...ref.querySelectorAll<HTMLAnchorElement>('.n-md-toc a[href]')];
       heading = [...ref.querySelectorAll<HTMLHeadingElement>('h1, h2, h3, h4, h5, h6')];
       observer = new IntersectionObserver(observerEntry, {
         rootMargin: '-50px 0px',
         threshold: 0.5,
       });
-      heading.forEach((e) => observer.observe(e));
+      heading.forEach((e) => {
+        observer.observe(e);
+      });
       list.forEach((e) => {
         e.addEventListener('click', handleAnchor);
       });
     }
     onCleanup(() => {
       if (observer) {
-        heading.forEach((e) => observer.unobserve(e));
+        heading.forEach((e) => {
+          observer.unobserve(e);
+        });
         observer.disconnect();
       }
       list.forEach((e) => {
@@ -215,7 +223,7 @@ function MD(_props: MdProps) {
         <style textContent={css(props.css)} />
       </Show>
       <Switch>
-        <Match when={(props.children as [])?.length}>
+        <Match when={(props.children || []).length > 0}>
           <article class="n-md-box" part="box">
             <div class="n-md-body" part="body">
               <For each={props.children as []}>{(e) => e}</For>

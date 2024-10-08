@@ -1,14 +1,15 @@
-import { selectPortalCss } from './style';
-import type { CronData } from '.';
 import type { BaseOption } from 'neko-ui';
 
-type SomeProps = {
+import type { CronData } from '.';
+import { selectPortalCss } from './style';
+
+interface SomeProps {
   value: CronData['some'];
   label: JSX.Element;
   options: (string | number | BaseOption)[];
   type: CronData['type'];
   onChange(type: 'some', value: number[]): void;
-};
+}
 
 function Some(props: SomeProps) {
   function onChange(e: CustomEvent<[val: (number | string)[], item: BaseOption]>) {

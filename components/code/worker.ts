@@ -49,6 +49,7 @@ function onMessage(e: MessageEvent<string>) {
     }
 
     result = self.Prism.highlight(`${code}\n`, self.Prism.languages[language], language);
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
   } catch (error) {
     result = '';
   }

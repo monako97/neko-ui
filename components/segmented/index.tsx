@@ -1,13 +1,16 @@
-import { For, Show, createEffect, createMemo, createSignal, mergeProps } from 'solid-js';
+import { createEffect, createMemo, createSignal, For, mergeProps, Show } from 'solid-js';
 import { isFunction } from '@moneko/common';
 import { css, cx } from '@moneko/css';
 import { customElement } from 'solid-element';
-import { style } from './style';
+
+import type { BaseOption, BasicConfig, CustomElement } from '..';
 import { FieldName } from '../basic-config';
 import getOptions from '../get-options';
 import theme from '../theme';
+
+import { style } from './style';
+
 import '../typography';
-import type { BaseOption, BasicConfig, CustomElement } from '..';
 
 export interface SegmentedProps {
   /** 自定义类名 */
@@ -108,7 +111,9 @@ function Segmented(props: SegmentedProps) {
         <For each={options()}>
           {(item, i) => {
             const readOnly = props.disabled || item.disabled;
-            const handleChange = () => onChange(item);
+            const handleChange = () => {
+              onChange(item);
+            };
             const fieldName = fieldNames();
 
             return (
@@ -125,7 +130,9 @@ function Segmented(props: SegmentedProps) {
                 <label
                   class={cx('label', item.class)}
                   tabindex={readOnly ? -1 : 0}
-                  onKeyUp={({ key }) => onKeyUp(key, item)}
+                  onKeyUp={({ key }) => {
+                    onKeyUp(key, item);
+                  }}
                   onClick={handleChange}
                   aria-disabled={readOnly}
                   ref={options()[i()].ref}

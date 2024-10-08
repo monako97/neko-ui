@@ -1,8 +1,9 @@
+import { months as month } from '../date-picker/month';
+
 import BeginInterval from './begin-interval';
 import Item, { type CronItemProps } from './item';
 import Period from './period';
 import Some from './some';
-import { months as month } from '../date-picker/month';
 
 const months = month.map((m, i) => ({ label: m, value: i }));
 

@@ -1,20 +1,23 @@
 import {
-  Show,
   createEffect,
   createMemo,
   createSignal,
   mergeProps,
   onCleanup,
+  Show,
   splitProps,
   untrack,
 } from 'solid-js';
 import { downloadBlob, isFunction } from '@moneko/common';
 import { css, cx } from '@moneko/css';
 import { customElement } from 'solid-element';
-import { style } from './style';
-import '../button';
-import theme from '../theme';
+
 import type { CustomElement } from '..';
+import theme from '../theme';
+
+import { style } from './style';
+
+import '../button';
 
 declare interface MediaRecorderDataAvailableEvent extends Event {
   /** MediaRecorderDataAvailableEvent */
@@ -160,7 +163,7 @@ function CaptureScreen(_: CaptureScreenProps) {
     }
   }
   function handleRecorderDataAvailable(e: MediaRecorderDataAvailableEvent) {
-    chunks?.push(e.data as Blob);
+    chunks.push(e.data as Blob);
     local.onRecorderDataAvailable?.(e);
   }
   // 停止录制
@@ -177,7 +180,7 @@ function CaptureScreen(_: CaptureScreenProps) {
     local.onStopRecorder?.();
   }
   function handleSaveRecorder() {
-    if (!chunks?.length) return;
+    if (!chunks.length) return;
     // 将录制内容保存到本地
     const blob: Blob = new Blob(chunks, {
       type: 'video/webm',
@@ -185,7 +188,7 @@ function CaptureScreen(_: CaptureScreenProps) {
     const name = local.filename || new Date().toISOString();
     const fileName = `${name}.webm`;
 
-    chunks?.splice(0);
+    chunks.splice(0);
     if (local.onSaveRecorder) {
       local.onSaveRecorder(blob, fileName);
     }
@@ -202,7 +205,9 @@ function CaptureScreen(_: CaptureScreenProps) {
     if (ms) {
       const tracks = ms.getTracks();
 
-      tracks?.forEach((track: MediaStreamTrack) => track.stop());
+      tracks.forEach((track: MediaStreamTrack) => {
+        track.stop();
+      });
       setMediaStream(null);
     }
     local.onStopCapture?.();
@@ -256,7 +261,7 @@ function CaptureScreen(_: CaptureScreenProps) {
     const mr = untrack(mediaRecorder);
 
     // 未录制时不需要停止
-    if (mr && mr?.state !== 'inactive') {
+    if (mr && mr.state !== 'inactive') {
       mr.stop();
     }
     const ms = untrack(mediaStream);
@@ -264,7 +269,9 @@ function CaptureScreen(_: CaptureScreenProps) {
     if (ms) {
       const tracks = ms.getTracks();
 
-      tracks.forEach((track: MediaStreamTrack) => track.stop());
+      tracks.forEach((track: MediaStreamTrack) => {
+        track.stop();
+      });
     }
   });
   const recorderText = createMemo(() => {

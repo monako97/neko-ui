@@ -1,6 +1,8 @@
 import { For } from 'solid-js';
-import { style } from './home.style';
+
 import Readme from '../README.md?raw';
+
+import { style } from './home.style';
 
 function Home() {
   const colors = ['primary', 'warning', 'error', 'success'],

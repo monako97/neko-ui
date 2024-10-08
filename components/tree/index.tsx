@@ -1,10 +1,11 @@
-import { For, Show, createEffect, createMemo, createSignal } from 'solid-js';
+import { createEffect, createMemo, createSignal, For, Show } from 'solid-js';
 import { frameCallback, isFunction, isString } from '@moneko/common';
 import { css } from '@moneko/css';
-import './register';
-import { style } from './style';
+
 import schema from '../from-schema';
 import theme from '../theme';
+
+import { style } from './style';
 import type {
   TreeData,
   TreeMultipleProps,
@@ -15,6 +16,8 @@ import type {
   TreeStack,
   TreeStringProps,
 } from './type';
+
+import './register';
 
 function Tree(
   _:
@@ -76,7 +79,7 @@ function Tree(
         line.push(item[path]);
       }
       if (item[children]) {
-        line = line.concat(countLineLen(item[children]!, depth + 1));
+        line = line.concat(countLineLen(item[children], depth + 1));
       }
     }
     return line;
@@ -173,7 +176,9 @@ function Tree(
                   active: current().includes(key),
                   non: _.readonly || !isFunction(_.onChange),
                 }}
-                onClick={(e) => handleClick(e, item)}
+                onClick={(e) => {
+                  handleClick(e, item);
+                }}
                 onDblClick={(e) => _.onRowDoubleClick?.(e, key, item)}
                 style={depth ? { '--depth': `${depth * 2}em` } : void 0}
                 data-path-end={item[pathEnd]}
@@ -247,7 +252,7 @@ function Tree(
         class="tree"
         classList={{
           [_.size || 'normal']: true,
-          [_.class as string]: !!_.class,
+          [_.class!]: !!_.class,
           rtl: rtl(),
         }}
       >

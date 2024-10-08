@@ -1,11 +1,13 @@
-import { Show, createEffect, createMemo, createSignal, mergeProps, splitProps } from 'solid-js';
+import { createEffect, createMemo, createSignal, mergeProps, Show, splitProps } from 'solid-js';
+import { Dynamic } from 'solid-js/web';
 import { isFunction } from '@moneko/common';
 import { css } from '@moneko/css';
 import { customElement } from 'solid-element';
-import { Dynamic } from 'solid-js/web';
-import { style } from './style';
-import theme from '../theme';
+
 import type { BasicConfig, CustomElement } from '..';
+import theme from '../theme';
+
+import { style } from './style';
 
 export interface ButtonProps {
   /** 自定义类名 */

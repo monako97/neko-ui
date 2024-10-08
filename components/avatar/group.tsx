@@ -1,9 +1,11 @@
-import { For, Show, createMemo, mergeProps, splitProps } from 'solid-js';
+import { createMemo, For, mergeProps, Show, splitProps } from 'solid-js';
 import { css, cx } from '@moneko/css';
 import { customElement } from 'solid-element';
+
+import type { AvatarProps, BasicConfig, CustomElement } from '..';
+
 import '../avatar';
 import '../popover';
-import type { AvatarProps, BasicConfig, CustomElement } from '..';
 
 const style = css`
   .group {

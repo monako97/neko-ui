@@ -1,13 +1,14 @@
 import * as Solid from 'solid-js';
+import h from 'solid-js/h';
+import * as SolidWeb from 'solid-js/web';
 import examples, { type ExampleModule } from '@app/example';
 import Fallback from '@app/fallback';
 import { isFunction } from '@moneko/common';
-import { customElement } from 'solid-element';
-import h from 'solid-js/h';
-import * as SolidWeb from 'solid-js/web';
-import { codeNoShadowCss, groupCss, mdNoShadowCss, sandboxCss } from './sandbox.style';
-import * as NekoUI from 'neko-ui';
 import type { CodeLiveProps } from 'n-code-live';
+import * as NekoUI from 'neko-ui';
+import { customElement } from 'solid-element';
+
+import { codeNoShadowCss, groupCss, mdNoShadowCss, sandboxCss } from './sandbox.style';
 
 const { createEffect, createMemo, createSignal, mergeProps, onMount } = Solid;
 const { For, Show, render, Portal, Dynamic } = SolidWeb;
@@ -47,7 +48,7 @@ function Sandbox(_props: SandboxProps) {
   const [open, setOpen] = createSignal(false);
   const hasDesc = createMemo(() => {
     if (typeof props.description === 'string') {
-      return !!props.description?.trim().length;
+      return !!props.description.trim().length;
     }
     return false;
   });

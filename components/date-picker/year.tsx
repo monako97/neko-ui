@@ -1,11 +1,12 @@
-import { For, createMemo } from 'solid-js';
+import { createMemo, For } from 'solid-js';
+
 import dayjs from './dayjs';
 
-type YearPanelProps = {
+interface YearPanelProps {
   current: dayjs.Dayjs;
   start: number;
   onChange(next: dayjs.Dayjs): void;
-};
+}
 function YearPanel(props: YearPanelProps) {
   const years = createMemo(() => {
     const start = props.start;

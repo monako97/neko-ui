@@ -1,6 +1,9 @@
-import { Show, batch, createEffect, createSignal, mergeProps, splitProps, untrack } from 'solid-js';
+import { batch, createEffect, createSignal, mergeProps, Show, splitProps, untrack } from 'solid-js';
 import { css } from '@moneko/css';
 import { customElement } from 'solid-element';
+
+import type { BaseOption, CustomElement, TabOption } from '..';
+
 import Day from './day';
 import Hour from './hour';
 import Minute from './minute';
@@ -8,12 +11,12 @@ import Month from './month';
 import Second from './second';
 import Week from './week';
 import Year from './year';
+
 import '../button';
 import '../input-number';
 import '../radio';
 import '../select';
 import '../tabs';
-import type { BaseOption, CustomElement, TabOption } from '..';
 
 export interface CronProps {
   /** 自定义类名 */
@@ -48,7 +51,7 @@ export type DayType = SecondType | 'closeWorkDay' | '?' | 'last';
 export type WeekType = SecondType | 'last' | '?';
 export type MonthType = SecondType;
 export type YearType = SecondType | '';
-export type CronData<T extends string = string> = {
+export interface CronData<T extends string = string> {
   start: number;
   end: number;
   begin: number;
@@ -56,10 +59,10 @@ export type CronData<T extends string = string> = {
   type: T;
   some: number[];
   value: string;
-};
+}
 
 export type ActiveTab = keyof CronType;
-export type CronType = {
+export interface CronType {
   second: CronData<SecondType>;
   minute: CronData<MinuteType>;
   hour: CronData<HourType>;
@@ -67,7 +70,7 @@ export type CronType = {
   week: CronData<WeekType> & { last: number };
   month: CronData<MonthType>;
   year: CronData<YearType>;
-};
+}
 
 function Cron(props: CronProps) {
   const [local] = splitProps(props, [

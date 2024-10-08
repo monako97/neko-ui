@@ -2,8 +2,9 @@ import { createEffect, createSignal, mergeProps, onCleanup } from 'solid-js';
 import { passiveSupported } from '@moneko/common';
 import { css, cx } from '@moneko/css';
 import { customElement } from 'solid-element';
-import Input, { defaultInportProps } from '../input';
+
 import type { CustomElement, InputProps } from '..';
+import Input, { defaultInportProps } from '../input';
 
 const style = css`
   /** 隐藏原生加减控件 */
@@ -58,11 +59,9 @@ function InputNumber(props: InputNumberProps) {
   function onKeyDown(e: KeyboardEvent) {
     switch (e.key) {
       case 'ArrowUp':
-        // eslint-disable-next-line @typescript-eslint/no-use-before-define
         mouseMove({ movementX: 0, movementY: -1 });
         break;
       case 'ArrowDown':
-        // eslint-disable-next-line @typescript-eslint/no-use-before-define
         mouseMove({ movementX: 0, movementY: 1 });
         break;
       default:
@@ -91,12 +90,12 @@ function InputNumber(props: InputNumberProps) {
   function change(val?: string | number) {
     let _val = typeof val === 'string' ? parseFloat(val) : val;
 
-    if (isNaN(_val as number)) {
+    if (isNaN(_val!)) {
       _val = '' as unknown as number;
     }
     if (typeof _val !== 'undefined') {
-      if (_val < (_.min as number)) _val = _.min;
-      if ((_val as number) > (_.max as number)) _val = _.max;
+      if (_val < _.min) _val = _.min;
+      if (_val > _.max) _val = _.max;
     }
     props.onChange?.(_val);
   }
@@ -106,7 +105,7 @@ function InputNumber(props: InputNumberProps) {
     const _val = _.value;
     const val = typeof _val === 'number' && !isNaN(_val) ? _val : Number(_val) || 0;
 
-    change(Number(Number(val + (movementX - movementY) * (_.step as number)).toFixed(_.precision)));
+    change(Number(Number(val + (movementX - movementY) * _.step).toFixed(_.precision)));
   }
 
   createEffect(() => {

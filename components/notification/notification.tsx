@@ -1,9 +1,11 @@
-import { For, Show, createEffect, createUniqueId } from 'solid-js';
-import { cx } from '@moneko/css';
+import { createEffect, createUniqueId, For, Show } from 'solid-js';
 import { render } from 'solid-js/web';
+import { cx } from '@moneko/css';
+
+import theme from '../theme';
+
 import queque, { type NotificationType } from './queque';
 import { styles } from './styles';
-import theme from '../theme';
 
 const mountId = 'n-notification-box';
 
@@ -64,7 +66,12 @@ const notification = (
                   <Show when={item.icon}>{item.icon}</Show>
                   <div class="content">{item.children}</div>
                   <Show when={item.close}>
-                    <span class="close" onClick={() => remove(item.uniqueId)} />
+                    <span
+                      class="close"
+                      onClick={() => {
+                        remove(item.uniqueId);
+                      }}
+                    />
                   </Show>
                 </div>
               );
@@ -72,7 +79,7 @@ const notification = (
           </For>
         </Show>
       );
-    }, mount!.shadowRoot!);
+    }, mount.shadowRoot!);
 
     document.body.appendChild(mount);
   }

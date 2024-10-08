@@ -1,22 +1,25 @@
 import {
-  For,
-  Show,
   batch,
   createEffect,
   createMemo,
   createSignal,
+  For,
   mergeProps,
+  Show,
   splitProps,
   untrack,
 } from 'solid-js';
 import { isFunction } from '@moneko/common';
 import { css } from '@moneko/css';
 import { customElement } from 'solid-element';
-import { styles } from './styles';
-import '../button';
-import theme from '../theme';
-import '../typography';
+
 import type { BasicConfig, CustomElement } from '..';
+import theme from '../theme';
+
+import { styles } from './styles';
+
+import '../button';
+import '../typography';
 
 function Pagination(_: PaginationProps) {
   const { baseStyle } = theme;
@@ -136,7 +139,9 @@ function Pagination(_: PaginationProps) {
               flat={true}
               circle={true}
               disabled={page() === 1}
-              onClick={() => changePage(untrack(page) - 1)}
+              onClick={() => {
+                changePage(untrack(page) - 1);
+              }}
             >
               〈
             </n-button>
@@ -158,7 +163,9 @@ function Pagination(_: PaginationProps) {
                     type={isCurrent() ? 'primary' : 'default'}
                     fill={isCurrent()}
                     aria-current={isCurrent() && 'page'}
-                    onClick={() => changePage(curr)}
+                    onClick={() => {
+                      changePage(curr);
+                    }}
                   >
                     {curr}
                   </n-button>
@@ -173,7 +180,9 @@ function Pagination(_: PaginationProps) {
               flat={true}
               circle={true}
               disabled={page() === totalPages()}
-              onClick={() => changePage(untrack(page) + 1)}
+              onClick={() => {
+                changePage(untrack(page) + 1);
+              }}
             >
               〉
             </n-button>

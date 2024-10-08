@@ -1,9 +1,10 @@
-import { Show, createEffect, createMemo, mergeProps } from 'solid-js';
+import { createEffect, createMemo, mergeProps, Show } from 'solid-js';
+import { Dynamic } from 'solid-js/web';
 import { css, cx } from '@moneko/css';
 import { customElement } from 'solid-element';
-import { Dynamic } from 'solid-js/web';
-import theme from '../theme';
+
 import type { CustomElement } from '..';
+import theme from '../theme';
 
 export interface TypographyProps {
   /** 自定义类名 */

@@ -1,10 +1,11 @@
-import { For, createMemo } from 'solid-js';
+import { createMemo, For } from 'solid-js';
+
 import dayjs from './dayjs';
 
-type DatePanelProps = {
+interface DatePanelProps {
   current: dayjs.Dayjs;
   onChange(next: dayjs.Dayjs): void;
-};
+}
 function DatePanel(props: DatePanelProps) {
   function getDays(_dayjs: dayjs.Dayjs): number[] {
     return Array.from({ length: _dayjs.daysInMonth() }, (_, i) => i + 1);

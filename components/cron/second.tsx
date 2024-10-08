@@ -1,8 +1,9 @@
+import { minutes as seconds } from '../date-picker/time';
+
 import BeginInterval from './begin-interval';
 import Item, { type CronItemProps } from './item';
 import Period from './period';
 import Some from './some';
-import { minutes as seconds } from '../date-picker/time';
 
 function Second(props: Required<Omit<CronItemProps<'month'>, 'options'>>) {
   const beginEvery: string[] = [];

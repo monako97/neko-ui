@@ -1,6 +1,8 @@
-import { type JSX, createSignal, onCleanup, onMount, splitProps } from 'solid-js';
-import { imgCss } from './style';
+import { createSignal, type JSX, onCleanup, onMount, splitProps } from 'solid-js';
+
 import Spin from '../spin';
+
+import { imgCss } from './style';
 
 interface ImgLazyProps extends JSX.HTMLAttributes<HTMLImageElement> {
   src?: string;

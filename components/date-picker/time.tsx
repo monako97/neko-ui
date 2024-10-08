@@ -1,14 +1,15 @@
-import { Show, createEffect, createSignal } from 'solid-js';
+import { createEffect, createSignal, Show } from 'solid-js';
+
 import dayjs from './dayjs';
 
-type TimePickerProps = {
+interface TimePickerProps {
   current: dayjs.Dayjs;
   datePicker: HTMLDivElement | undefined;
   onChange(next: dayjs.Dayjs): void;
   showHour?: boolean;
   showMinute?: boolean;
   showSecond?: boolean;
-};
+}
 
 export const hours = Array.from({ length: 24 }, (_, i) => ({
   label: i < 10 ? `0${i}` : i,

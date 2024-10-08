@@ -56,7 +56,7 @@ const mockMedia = (ondataavailable?: boolean) => {
         Object.assign(this, {
           state: 'inactive',
         });
-        // eslint-disable-next-line no-invalid-this, @typescript-eslint/no-non-null-assertion
+        // eslint-disable-next-line no-invalid-this
         this.onstop?.(window.event!);
       }),
       onstop: jest.fn(),
@@ -102,12 +102,12 @@ describe('CaptureScreen', () => {
     render(() => (
       <n-capture-screen
         class="CaptureScreen"
-        captureScreenText="捕获屏幕"
-        stopCaptureText="停止捕获"
-        recorderingText="recorderingText"
-        stopRecorderText="stopRecorderText"
-        pausedRecorderText="pausedRecorderText"
-        startRecorderText="开始录制"
+        capture-screen-text="捕获屏幕"
+        stop-capture-text="停止捕获"
+        recordering-text="recorderingText"
+        stop-recorder-text="stopRecorderText"
+        paused-recorder-text="pausedRecorderText"
+        start-recorder-text="开始录制"
         options={{}}
         controls={true}
         recorder={true}

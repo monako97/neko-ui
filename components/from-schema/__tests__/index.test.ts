@@ -1,4 +1,5 @@
 import { fromSchema } from 'neko-ui';
+
 import type { Schema } from '..';
 
 describe('fromSchema', () => {

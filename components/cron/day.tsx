@@ -1,9 +1,10 @@
+import type { BaseOption } from 'neko-ui';
+
 import BeginInterval from './begin-interval';
 import Item, { type CronItemProps } from './item';
 import Period from './period';
 import Some from './some';
 import { selectCss, selectPortalCss } from './style';
-import type { BaseOption } from 'neko-ui';
 
 function Day(props: Required<Omit<CronItemProps<'day'>, 'options'>>) {
   const days: BaseOption[] = [];

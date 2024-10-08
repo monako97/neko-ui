@@ -1,5 +1,6 @@
-import './footer.css';
 import app from '@app/info';
+
+import './footer.css';
 
 function Footer() {
   const year = new Date().getFullYear();
@@ -9,7 +10,7 @@ function Footer() {
       <p>
         <a
           class="n-site-footer-link"
-          href={app.repository?.url}
+          href={app.repository.url}
           target="_blank"
           rel="noopener noreferrer"
         >
@@ -18,11 +19,11 @@ function Footer() {
         {` Ⓒ ${year} Made with ❤️‍🔥 by `}
         <a
           class="n-site-footer-link"
-          href={app.author?.url}
+          href={app.author.url}
           target="_blank"
           rel="noopener noreferrer"
         >
-          {app.author?.name}
+          {app.author.name}
         </a>
       </p>
     </footer>

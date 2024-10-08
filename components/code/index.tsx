@@ -1,20 +1,22 @@
 import {
   type Accessor,
-  Show,
   createEffect,
   createResource,
   createSignal,
   mergeProps,
   onCleanup,
   onMount,
+  Show,
   untrack,
 } from 'solid-js';
 import { isFunction, setClipboard } from '@moneko/common';
 import { css, cx } from '@moneko/css';
 import { customElement } from 'solid-element';
-import { style } from './style';
-import theme from '../theme';
+
 import type { CustomElement } from '..';
+import theme from '../theme';
+
+import { style } from './style';
 
 export interface CodeProps {
   /** 自定义类名 */
@@ -93,7 +95,7 @@ function Code(props: CodeProps) {
           [`language-${props.language}`]: !!props.language,
           'line-numbers': props.lineNumber,
           'not-toolbar': !props.toolbar,
-          [props.class as string]: !props.edit,
+          [props.class!]: !props.edit,
         }}
       >
         <Show when={props.toolbar}>
@@ -106,7 +108,7 @@ function Code(props: CodeProps) {
     );
   }
   function change({ target }: { target: HTMLTextAreaElement }) {
-    const c = `${target.value}${/\n$/.test(target.value) ? '\u200b' : ''}`;
+    const c = `${target.value}${target.value.endsWith('\n') ? '\u200b' : ''}`;
 
     setCode(c);
     if (isFunction(props.onChange)) {
@@ -144,7 +146,8 @@ function Code(props: CodeProps) {
     if (props.code) {
       try {
         setCode(decodeURIComponent(props.code));
-      } catch (error) {
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      } catch (_error) {
         setCode(props.code);
       }
     } else {

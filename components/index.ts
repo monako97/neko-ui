@@ -34,7 +34,8 @@ export {
   type ColorPickerProps,
 } from './color-picker';
 export { default as Cron, type CronElement, type CronProps } from './cron';
-export { default as DatePicker, type DatePickerProps, type DatePickerElement } from './date-picker';
+export { default as DatePicker, type DatePickerElement, type DatePickerProps } from './date-picker';
+export { default as dayjs } from './date-picker/dayjs';
 export {
   default as Dropdown,
   type DropdownElement,
@@ -71,16 +72,18 @@ export {
   default as Modal,
   type ModalElement,
   type ModalProps,
-  type OpenStateKey,
   OpenState,
+  type OpenStateKey,
 } from './modal';
 export {
   default as notification,
-  type NotificationType,
   type NotificationProps,
+  type NotificationType,
 } from './notification';
-export { default as Pagination, type PaginationProps, type PaginationElement } from './pagination';
+export { default as Pagination, type PaginationElement, type PaginationProps } from './pagination';
 export { default as Popover, type PopoverElement, type PopoverProps } from './popover';
+export { default as Prism } from './prism';
+export { default as Provider, type ProviderElement, type ProviderProps } from './provider';
 export { default as Radio, type RadioElement, type RadioOption, type RadioProps } from './radio';
 export { default as Segmented, type SegmentedElement, type SegmentedProps } from './segmented';
 export {
@@ -94,17 +97,18 @@ export { default as Skeleton, type SkeletonElement, type SkeletonProps } from '.
 export { default as Spin, type SpinElement, type SpinProps } from './spin';
 export { default as Switch, type SwitchElement, type SwitchProps } from './switch';
 export { default as Table, type TableElement, type TableProps } from './table';
-export { default as Tabs, type TabOption, type TabsElement, type TabsProps } from './tabs';
+export { type TabOption, default as Tabs, type TabsElement, type TabsProps } from './tabs';
 export { default as Tag, type TagElement, type TagProps } from './tag';
 export {
-  default as theme,
   type ColorScheme,
-  type ThemeOption,
   generateColor,
+  default as theme,
+  type ThemeOption,
   toneColor,
 } from './theme';
 export {
   default as Tree,
+  type TreeData,
   type TreeElement,
   type TreeMultipleElement,
   type TreeMultipleProps,
@@ -117,14 +121,12 @@ export {
   type TreeSchemaProps,
   type TreeStringElement,
   type TreeStringProps,
-  type TreeData,
 } from './tree';
 export { default as Typography, type TypographyElement, type TypographyProps } from './typography';
-export { default as dayjs } from './date-picker/dayjs';
-export { default as Provider, type ProviderElement, type ProviderProps } from './provider';
-export { default as Prism } from './prism';
-export { hot, customElement, noShadowDOM, withSolid, getCurrentElement } from 'solid-element';
 export type { CustomElement } from 'custom-element-type';
+export { customElement, getCurrentElement, hot, noShadowDOM, withSolid } from 'solid-element';
+import type { ICustomElement, Transform } from 'custom-element-type';
+
 import type {
   AvatarElement,
   AvatarGroupElement,
@@ -171,7 +173,6 @@ import type {
   TreeStringElement,
   TypographyElement,
 } from '.';
-import type { ICustomElement, Transform } from 'custom-element-type';
 
 /** 组件列表
  * @author monako97
@@ -272,13 +273,16 @@ declare module 'solid-js' {
   export namespace JSX {
     export interface IntrinsicElements extends HTMLElementTags, IntrinsicNekoElement {}
   }
+  // eslint-disable-next-line @typescript-eslint/no-empty-object-type
   interface HTMLElementTagNameMap extends IntrinsicNekoElement {}
 }
 declare global {
   // eslint-disable-next-line @typescript-eslint/no-namespace
   export namespace JSX {
+    // eslint-disable-next-line @typescript-eslint/no-empty-object-type
     export interface IntrinsicElements extends IntrinsicNekoElement {}
   }
+  // eslint-disable-next-line @typescript-eslint/no-empty-object-type
   interface HTMLElementTagNameMap extends IntrinsicNekoElement {}
 }
 

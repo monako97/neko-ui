@@ -1,23 +1,26 @@
 import {
-  For,
-  Show,
   batch,
   createEffect,
   createMemo,
   createSignal,
+  For,
   mergeProps,
   onMount,
+  Show,
   splitProps,
   untrack,
 } from 'solid-js';
 import { isFunction } from '@moneko/common';
 import { customElement } from 'solid-element';
-import { style } from './style';
+
+import type { CustomElement, DropdownMultipleProps, DropdownProps, MenuOption } from '..';
 import { FieldName } from '../basic-config';
 import Dropdown, { defaultProps } from '../dropdown';
 import getOptions from '../get-options';
+
+import { style } from './style';
+
 import '../tag';
-import type { CustomElement, DropdownMultipleProps, DropdownProps, MenuOption } from '..';
 
 function Select(props: SelectProps) {
   const [local, other] = splitProps(props, [
@@ -39,7 +42,7 @@ function Select(props: SelectProps) {
   const [value, setValue] = createSignal<(string | number)[]>([]);
   const [x, setX] = createSignal<string>('');
   const [options, setOptions] = createSignal<MenuOption[]>([]);
-  const [kv, setKv] = createSignal<Record<string, MenuOption>>({});
+  const [kv, setKv] = createSignal<Record<string, MenuOption | undefined>>({});
 
   const fieldNames = createMemo(() => Object.assign({}, FieldName, other.fieldNames));
 
@@ -86,13 +89,13 @@ function Select(props: SelectProps) {
   }
   function click(e: MouseEvent) {
     if (
-      (e.target as Element)?.parentElement ===
-      (ref?.parentNode?.parentNode as Document)?.activeElement
+      (e.target as Element | null)?.parentElement ===
+      (ref?.parentNode?.parentNode as Document | null)?.activeElement
     ) {
       openChange(!untrack(open));
     }
   }
-  function onChange(val: (string | number)[] | string | number | undefined, item: MenuOption) {
+  function onChange(val: (string | number)[] | string | number | undefined, item?: MenuOption) {
     if (local.value === void 0) {
       setValue(val ? (Array.isArray(val) ? val : [val]) : []);
     }

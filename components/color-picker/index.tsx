@@ -9,10 +9,13 @@ import {
 } from 'solid-js';
 import { cx } from '@moneko/css';
 import { customElement } from 'solid-element';
-import { style } from './style';
-import '../color-palette';
-import Popover, { defaultProps } from '../popover';
+
 import type { BasicConfig, ColorPaletteProps, CustomElement, PopoverProps } from '..';
+import Popover, { defaultProps } from '../popover';
+
+import { style } from './style';
+
+import '../color-palette';
 
 /** 颜色选择器
  * @since 2.0.0

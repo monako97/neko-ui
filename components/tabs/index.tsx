@@ -1,23 +1,26 @@
 import {
-  For,
-  Show,
   createEffect,
   createMemo,
   createSignal,
+  For,
   mergeProps,
   onCleanup,
   onMount,
+  Show,
   untrack,
 } from 'solid-js';
 import { isFunction, passiveSupported } from '@moneko/common';
 import { css, cx } from '@moneko/css';
 import { customElement } from 'solid-element';
-import { addCss, btnCss, style } from './style';
+
+import type { BaseOption, BasicConfig, ButtonElement, CustomElement } from '..';
 import { FieldName } from '../basic-config';
-import '../button';
 import getOptions from '../get-options';
 import theme from '../theme';
-import type { BaseOption, BasicConfig, ButtonElement, CustomElement } from '..';
+
+import { addCss, btnCss, style } from './style';
+
+import '../button';
 
 export interface TabsProps {
   /** 自定义类名 */
@@ -158,8 +161,8 @@ function Tabs(props: TabsProps) {
 
       setOffsetStyle(
         `.tabs {--w: ${el.offsetWidth}px;--left: ${
-          el.offsetLeft - wrapRef!.scrollLeft + wrapRef.offsetLeft
-        }px;--s:${wrapRef!.scrollLeft}px}`,
+          el.offsetLeft - wrapRef.scrollLeft + wrapRef.offsetLeft
+        }px;--s:${wrapRef.scrollLeft}px}`,
       );
     }
   }
@@ -223,10 +226,10 @@ function Tabs(props: TabsProps) {
     return current()?.content;
   });
   const left = createMemo(() =>
-    isFunction(props.extra?.left) ? (props.extra!.left() as JSX.Element) : props.extra?.left,
+    isFunction(props.extra?.left) ? (props.extra.left() as JSX.Element) : props.extra?.left,
   );
   const right = createMemo(() =>
-    isFunction(props.extra?.right) ? (props.extra!.right() as JSX.Element) : props.extra?.right,
+    isFunction(props.extra?.right) ? (props.extra.right() as JSX.Element) : props.extra?.right,
   );
   const content = createMemo(() => {
     const _content = current()?.content;

@@ -1,8 +1,9 @@
-import { selectCss, selectPortalCss } from './style';
-import type { CronData } from '.';
 import type { BaseOption } from 'neko-ui';
 
-type PeriodProps = {
+import type { CronData } from '.';
+import { selectCss, selectPortalCss } from './style';
+
+interface PeriodProps {
   start: CronData['start'];
   end: CronData['end'];
   label: [JSX.Element, JSX.Element, JSX.Element];
@@ -10,7 +11,7 @@ type PeriodProps = {
   onChange(type: 'start' | 'end', value: number): void;
   validate(type: 'start' | 'end', v: number): boolean;
   disabled: boolean;
-};
+}
 
 function Period(props: PeriodProps) {
   function onChange(

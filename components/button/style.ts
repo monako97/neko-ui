@@ -1,4 +1,5 @@
 import { css } from '@moneko/css';
+
 import type { ButtonProps } from '.';
 
 function btnColor(type: ButtonProps['type']): string {
@@ -149,6 +150,7 @@ export const style = css`
     --btn-hover-color: var(--primary-hover);
     --btn-active-color: var(--primary-active);
   }
+
   ${btnColor('primary')}
   ${btnColor('error')}
   ${btnColor('success')}

@@ -1,10 +1,12 @@
-import { Show, createEffect, createMemo, createSignal, mergeProps, splitProps } from 'solid-js';
+import { createEffect, createMemo, createSignal, mergeProps, Show, splitProps } from 'solid-js';
 import { isFunction } from '@moneko/common';
 import { css, cx } from '@moneko/css';
 import { customElement } from 'solid-element';
-import { style } from './style';
-import theme, { generateColor } from '../theme';
+
 import type { CustomElement } from '..';
+import theme, { generateColor } from '../theme';
+
+import { style } from './style';
 
 export interface TagProps {
   /** 自定义样式表 */

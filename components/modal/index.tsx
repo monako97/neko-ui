@@ -1,18 +1,21 @@
 import {
-  Show,
   createEffect,
   createMemo,
   createSignal,
   mergeProps,
   onCleanup,
+  Show,
   untrack,
 } from 'solid-js';
-import { customElement } from 'solid-element';
 import { Portal } from 'solid-js/web';
+import { customElement } from 'solid-element';
+
+import type { CustomElement } from '..';
+
 import modalStore from './store';
 import { style } from './style';
+
 import '../button';
-import type { CustomElement } from '..';
 
 /**
  * API

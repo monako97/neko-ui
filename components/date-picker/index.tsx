@@ -1,12 +1,15 @@
 import { createEffect, createMemo, createSignal, mergeProps, splitProps, untrack } from 'solid-js';
 import { customElement } from 'solid-element';
+
+import type { CustomElement, InputElement, PopoverProps } from '..';
+import Popover, { defaultProps } from '../popover';
+
 import dayjs from './dayjs';
 import Panel from './panel';
 import { styles } from './style';
+
 import '../button';
 import '../menu';
-import Popover, { defaultProps } from '../popover';
-import type { CustomElement, InputElement, PopoverProps } from '..';
 
 function DatePicker(_props: DatePickerProps) {
   let ref: InputElement | undefined;
@@ -76,7 +79,7 @@ function DatePicker(_props: DatePickerProps) {
     }
   }
   function inputMouseDown(e: MouseEvent) {
-    if (e.target === (ref?.shadowRoot as ShadowRoot)?.activeElement) {
+    if (e.target === (ref?.shadowRoot as ShadowRoot | null)?.activeElement) {
       openChange(!untrack(open));
     }
   }
@@ -213,7 +216,7 @@ export interface DatePickerProps extends Partial<PopoverProps> {
   showHeader?: boolean;
 }
 
-enum PickerType {
+export enum PickerType {
   /** 日期选择 */
   date = 'date',
   /** 月份选择 */

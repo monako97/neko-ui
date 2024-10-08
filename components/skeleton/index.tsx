@@ -1,8 +1,9 @@
-import { For, Show, createMemo, mergeProps } from 'solid-js';
+import { createMemo, For, mergeProps, Show } from 'solid-js';
 import { css, cx } from '@moneko/css';
 import { customElement } from 'solid-element';
-import theme from '../theme';
+
 import type { CustomElement } from '..';
+import theme from '../theme';
 
 const style = css`
   :host {

@@ -1,23 +1,25 @@
 import {
-  For,
-  Match,
-  Show,
-  Switch,
   createEffect,
   createMemo,
   createSignal,
+  For,
+  Match,
   mergeProps,
+  Show,
   splitProps,
+  Switch,
   untrack,
 } from 'solid-js';
 import { frameCallback, isFunction } from '@moneko/common';
 import { css, cx } from '@moneko/css';
 import { customElement } from 'solid-element';
-import { style } from './style';
+
+import type { BaseOption, BasicConfig, CustomElement } from '..';
 import { FieldName } from '../basic-config';
 import getOptions from '../get-options';
 import theme from '../theme';
-import type { BaseOption, BasicConfig, CustomElement } from '..';
+
+import { style } from './style';
 
 function Menu(props: MenuProps | MenuMultipleProps) {
   let ref: HTMLDivElement | undefined;
@@ -101,7 +103,7 @@ function Menu(props: MenuProps | MenuMultipleProps) {
           }
 
           function SubMenu() {
-            const isOpen = createMemo(() => openKeys().includes(item[_.fieldNames.value]!));
+            const isOpen = createMemo(() => openKeys().includes(item[_.fieldNames.value]));
             const [show, setShow] = createSignal<boolean>(untrack(isOpen));
 
             createEffect(() => {
@@ -113,10 +115,10 @@ function Menu(props: MenuProps | MenuMultipleProps) {
               preventDefault(e);
               let _openKeys = openKeys();
 
-              if (_openKeys.includes(item[_.fieldNames.value]!)) {
+              if (_openKeys.includes(item[_.fieldNames.value])) {
                 _openKeys = _openKeys.filter((v) => v !== item[_.fieldNames.value]);
               } else {
-                _openKeys = _openKeys.concat(item[_.fieldNames.value]!);
+                _openKeys = _openKeys.concat(item[_.fieldNames.value]);
               }
 
               if (isFunction(local.onOpenChange)) {
@@ -148,7 +150,7 @@ function Menu(props: MenuProps | MenuMultipleProps) {
                   onAnimationEnd={onAnimationEnd}
                 >
                   <div ref={el}>
-                    <RenderMenu fieldNames={_.fieldNames} list={item[_.fieldNames.children]!} />
+                    <RenderMenu fieldNames={_.fieldNames} list={item[_.fieldNames.children]} />
                   </div>
                 </div>
               );
@@ -182,7 +184,7 @@ function Menu(props: MenuProps | MenuMultipleProps) {
                   part="item"
                   handle-closed={item.handleClosed}
                   aria-disabled={local.disabled || item.disabled}
-                  aria-selected={value().includes(item[_.fieldNames.value]!)}
+                  aria-selected={value().includes(item[_.fieldNames.value])}
                   onMouseDown={preventDefault}
                   onClick={change.bind(null, item)}
                 >
@@ -198,7 +200,7 @@ function Menu(props: MenuProps | MenuMultipleProps) {
                   <span class="menu-group-title">
                     <RowTitle />
                   </span>
-                  <RenderMenu fieldNames={_.fieldNames} list={item[_.fieldNames.options]!} />
+                  <RenderMenu fieldNames={_.fieldNames} list={item[_.fieldNames.options]} />
                 </div>
               </Match>
             </Switch>
@@ -222,7 +224,7 @@ function Menu(props: MenuProps | MenuMultipleProps) {
   });
 
   createEffect(() => {
-    if (value()?.length) {
+    if (Array.isArray(value()) && value().length) {
       frameCallback(() => {
         const el = ref?.querySelector<HTMLElement>('[aria-selected=true]');
 

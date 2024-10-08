@@ -1,10 +1,11 @@
-import './sider.global.less';
-import { For, Show, createEffect, createMemo } from 'solid-js';
+import { createEffect, createMemo, For, Show } from 'solid-js';
 import app from '@app/info';
 import routes, { type RouteConfig } from '@app/routes';
 import { css } from '@moneko/css';
 import { A, getPathName, useLocation } from '@moneko/solid';
 import { theme } from 'neko-ui';
+
+import './sider.global.less';
 
 const switchThemeCss = css`
   .theme-btn {
@@ -35,15 +36,15 @@ export type MyPkg = Partial<RouteConfig> & {
 };
 const obj: Record<string, MyPkg[]> = {},
   menuKeys: string[] = [],
-  kv: Record<string, MyPkg> = {};
+  kv: Record<string, MyPkg | undefined> = {};
 
 let all: MyPkg[] = [];
 
 function extractMenu(list: RouteConfig[]) {
-  return list.forEach(({ key, metadata, children }) => {
+  list.forEach(({ key, metadata, children }) => {
     if (metadata) {
-      const type = metadata.type || '默认',
-        prev = obj[type as string] || [];
+      const type = metadata.type ?? '默认',
+        prev = obj[type as string] ?? [];
 
       obj[type as string] = prev.concat({
         ...metadata,
@@ -144,7 +145,7 @@ function Sider() {
                       {(item) => {
                         return (
                           <li class="site-sider-item" data-active={active() === item.key}>
-                            <A href={`/${item.key}` as string}>
+                            <A href={`/${item.key}`}>
                               <n-popover
                                 class="site-sider-icon"
                                 arrow={true}

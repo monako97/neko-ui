@@ -1,20 +1,20 @@
 import {
-  For,
-  Index,
-  Show,
   createEffect,
   createMemo,
   createSignal,
+  For,
+  Index,
   mergeProps,
   onCleanup,
   onMount,
+  Show,
   untrack,
 } from 'solid-js';
 import {
   type ColorParse,
+  colorParse,
   type ColorType,
   type HSVA,
-  colorParse,
   isFunction,
   passiveSupported,
   setClipboard,
@@ -22,12 +22,15 @@ import {
 } from '@moneko/common';
 import { css, cx } from '@moneko/css';
 import { customElement } from 'solid-element';
+
+import type { CustomElement, InputNumberProps } from '..';
+import theme from '../theme';
+
 import { style, switchCss } from './style';
+
 import '../dropdown';
 import '../input';
 import '../input-number';
-import theme from '../theme';
-import type { CustomElement, InputNumberProps } from '..';
 
 export interface ColorPaletteProps {
   /** 自定义类名 */
@@ -108,7 +111,7 @@ function ColorPalette(_: ColorPaletteProps) {
 
   function setColor(c = props.defaultValue) {
     if (untrack(color).toString() !== c) {
-      setHsva(colorParse(c as string));
+      setHsva(colorParse(c));
     }
   }
   function handleHexa(e: CustomEvent) {
@@ -117,12 +120,12 @@ function ColorPalette(_: ColorPaletteProps) {
     }
   }
   function handleHexaBlur(e: FocusEvent & { target: { value: string } }) {
-    if (e.target?.value) {
+    if (e.target.value) {
       setColor(e.target.value);
     }
   }
   function handleHexaEnter(e: KeyboardEvent & { target: { value: string } }) {
-    if (e.key === 'Enter' && typeof e.target?.value === 'string') {
+    if (e.key === 'Enter' && typeof e.target.value === 'string') {
       setColor(e.target.value);
     }
   }
@@ -233,7 +236,9 @@ function ColorPalette(_: ColorPaletteProps) {
               max="360"
               type="range"
               value={hsva().value[0]}
-              onInput={(e) => handleChange(0, Number(e.target.value), 'hsva')}
+              onInput={(e) => {
+                handleChange(0, Number(e.target.value), 'hsva');
+              }}
             />
             <input
               class="slider opacity"
@@ -242,7 +247,9 @@ function ColorPalette(_: ColorPaletteProps) {
               step="0.01"
               type="range"
               value={hsva().value[3]}
-              onInput={(e) => handleChange(3, Number(e.target.value))}
+              onInput={(e) => {
+                handleChange(3, Number(e.target.value));
+              }}
             />
           </div>
           <div class="preview" onClick={copy} />

@@ -1,10 +1,12 @@
-import { Show, createEffect, createSignal, mergeProps, splitProps, untrack } from 'solid-js';
+import { createEffect, createSignal, mergeProps, Show, splitProps, untrack } from 'solid-js';
 import { isFunction } from '@moneko/common';
 import { customElement } from 'solid-element';
-import Empty from '../empty';
-import '../menu';
-import Popover, { defaultProps as popoverProps } from '../popover';
+
 import type { CustomElement, MenuMultipleProps, MenuOption, MenuProps, PopoverProps } from '..';
+import Empty from '../empty';
+import Popover, { defaultProps as popoverProps } from '../popover';
+
+import '../menu';
 
 export interface BaseDropdownProps extends Omit<PopoverProps, 'content'> {
   /** 打开内容气泡 */

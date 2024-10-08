@@ -1,19 +1,21 @@
 import {
-  Match,
-  Show,
-  Switch,
   createEffect,
   createMemo,
   createSignal,
+  Match,
   mergeProps,
+  Show,
   splitProps,
+  Switch,
 } from 'solid-js';
 import { css, cx } from '@moneko/css';
 import { customElement } from 'solid-element';
-import { style } from './style';
+
 import Img from '../img';
-import theme from '../theme';
 import type { BasicConfig, CustomElement } from '../index';
+import theme from '../theme';
+
+import { style } from './style';
 
 export interface AvatarProps {
   /** 头像 */

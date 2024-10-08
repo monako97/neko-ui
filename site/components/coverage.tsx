@@ -1,9 +1,10 @@
-import './coverage.global.css';
-import { For, createMemo } from 'solid-js';
+import { createMemo, For } from 'solid-js';
 import coverages from '@app/coverage';
 import app from '@app/info';
 import { cx } from '@moneko/css';
 import { getPathName, useLocation } from '@moneko/solid';
+
+import './coverage.global.css';
 
 type CoverageType = 'statements' | 'conditionals' | 'methods';
 

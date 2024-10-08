@@ -1,6 +1,6 @@
 import { type TreeData } from '../tree';
 
-enum Type {
+export enum DataType {
   string = 'string',
   number = 'number',
   integer = 'integer',
@@ -9,7 +9,7 @@ enum Type {
   array = 'array',
 }
 interface BaseSchema {
-  type?: keyof typeof Type;
+  type?: keyof typeof DataType;
   name?: string;
   title?: string;
   items?: never;
@@ -22,21 +22,21 @@ interface ArraySchema extends Omit<BaseSchema, 'type' | 'items'> {
 }
 
 interface ObjectSchema extends Omit<BaseSchema, 'type'> {
-  type?: Exclude<keyof typeof Type, 'array'>;
+  type?: Exclude<keyof typeof DataType, 'array'>;
   properties?: Record<string, Schema>;
 }
 
 export type Schema = ObjectSchema | ArraySchema;
 
-function fromSchema(schema: Schema, pid?: string): TreeData<string>[] {
-  const treeData: TreeData<string>[] = [];
+function fromSchema(schema: Schema, pid?: string): TreeData[] {
+  const treeData: TreeData[] = [];
   const { properties } = schema;
 
   for (const k in properties) {
     if (Object.prototype.hasOwnProperty.call(properties, k)) {
-      const name = k as keyof typeof properties;
+      const name = k;
       const { properties: _properties, items, type = 'string', ...item } = properties[name];
-      const node: TreeData<string> = {
+      const node: TreeData = {
         ...item,
         name: name,
         type,

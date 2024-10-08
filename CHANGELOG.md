@@ -2,6 +2,10 @@
 
 ## Last
 
+### 📦 Code Refactoring
+
+- 减 44 依赖负重 ([80bf61a](https://github.com/monako97/neko-ui/commit/80bf61a3b7d448f181d258c827dfc31372290805))
+
 ### 📚 Documentation
 
 - github ci 关闭进度条 ([cd5e65b](https://github.com/monako97/neko-ui/commit/cd5e65b4d71fd9d6cbd2de62c3298661e3c2c5a9))

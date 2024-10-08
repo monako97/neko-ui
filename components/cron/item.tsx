@@ -1,14 +1,15 @@
-import type { ActiveTab, CronType } from '.';
 import type { RadioOption } from 'neko-ui';
 
-export type CronItemProps<T extends ActiveTab = 'second'> = {
+import type { ActiveTab, CronType } from '.';
+
+export interface CronItemProps<T extends ActiveTab = 'second'> {
   state: CronType[T];
-  onChange<V extends Exclude<keyof CronType[T], 'value' | 'type'> | 'type'>(
+  onChange?<V extends Exclude<keyof CronType[T], 'value' | 'type'> | 'type'>(
     type: V,
     value: CronType[T][V],
   ): void;
   options: RadioOption[];
-};
+}
 
 function Item<T extends ActiveTab>(props: CronItemProps<T>) {
   function handleType(e: CustomEvent<string>) {

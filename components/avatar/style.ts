@@ -1,4 +1,5 @@
 import { css } from '@moneko/css';
+
 import favicon from './favicon.svg';
 
 export const style = css`

@@ -1,21 +1,23 @@
 import {
-  Show,
   createEffect,
   createMemo,
   createSignal,
   mergeProps,
   onCleanup,
   onMount,
+  Show,
   splitProps,
 } from 'solid-js';
+import { Portal } from 'solid-js/web';
 import { isElementInside, isEqual, isFunction, passiveSupported } from '@moneko/common';
 import { css, cx } from '@moneko/css';
 import { customElement } from 'solid-element';
-import { Portal } from 'solid-js/web';
-import { popoverCss, portalCss } from './style';
+
+import type { BasicConfig, CustomElement } from '..';
 import Empty from '../empty';
 import theme from '../theme';
-import type { BasicConfig, CustomElement } from '..';
+
+import { popoverCss, portalCss } from './style';
 
 export interface PopoverProps {
   /** 自定义类名 */
@@ -85,21 +87,21 @@ export enum Placement {
   right = 'right',
 }
 
-type Posi = {
+interface Posi {
   left?: number;
   top?: number;
   right?: number;
   bottom?: number;
   '--x'?: number;
-};
+}
 
-type EventMap = {
+interface EventMap {
   click?: string;
   hover?: string;
   contextMenu?: string;
   none?: never;
   [key: string]: string | undefined;
-};
+}
 function Popover(props: PopoverProps) {
   const { isDark, baseStyle } = theme;
   const mp = mergeProps(
@@ -166,7 +168,7 @@ function Popover(props: PopoverProps) {
     closeTimer = setTimeout(
       () => {
         clearTimeout(closeTimer);
-        if ((e.target as HTMLElement)?.getAttribute('handle-closed') === 'false') {
+        if (e.target && (e.target as HTMLElement).getAttribute('handle-closed') === 'false') {
           return;
         }
         const isContains = isElementInside(e.target as Element, ref);
@@ -190,15 +192,15 @@ function Popover(props: PopoverProps) {
         openChange(false);
         return;
       }
-      const elRect = childRef!.getBoundingClientRect();
-      const portalRect = ref!.getBoundingClientRect();
+      const elRect = childRef.getBoundingClientRect();
+      const portalRect = ref.getBoundingClientRect();
       const offsetX = portalRect.width / 2 - elRect.width / 2;
       const margin = window.innerHeight - elRect.bottom;
       const _placement = local.placement;
 
       const _isBottom =
         (!_placement?.startsWith('top') &&
-          margin > ref!.offsetHeight * 0.8 &&
+          margin > ref.offsetHeight * 0.8 &&
           margin > elRect.top) ||
         _placement?.startsWith('bottom');
       const arrowHeight = local.arrow ? 8 : 4;

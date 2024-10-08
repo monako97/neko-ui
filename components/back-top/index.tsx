@@ -1,26 +1,28 @@
 import {
-  Show,
   createEffect,
   createMemo,
   createSignal,
   mergeProps,
   onCleanup,
   onMount,
+  Show,
   splitProps,
 } from 'solid-js';
+import { Portal } from 'solid-js/web';
 import { getMaxZindex, getScrollTop, isFunction } from '@moneko/common';
 import { css, cx } from '@moneko/css';
 import { customElement } from 'solid-element';
-import { Portal } from 'solid-js/web';
-import { style } from './style';
-import theme from '../theme';
+
 import type { CustomElement } from '..';
+import theme from '../theme';
+
+import { style } from './style';
 
 export interface BackTopProps {
   /** 设置需要监听其滚动事件的元素
    * @default window
    */
-  target?: HTMLElement | (() => HTMLElement);
+  target?: HTMLElement | (() => HTMLElement | undefined);
   /** 挂载到指定的元素
    * @default body
    */
@@ -76,10 +78,10 @@ function BackTop(_: BackTopProps) {
   }
 
   onMount(() => {
-    target().addEventListener('scroll', handleScrollY, false);
+    target()?.addEventListener('scroll', handleScrollY, false);
   });
   onCleanup(() => {
-    target().removeEventListener('scroll', handleScrollY, false);
+    target()?.removeEventListener('scroll', handleScrollY, false);
   });
   return (
     <Show when={show() !== null}>

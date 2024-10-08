@@ -1,7 +1,7 @@
 import notification from './notification';
 import queque, { type NotificationProps } from './queque';
 
-export type { NotificationType, NotificationProps } from './queque';
+export type { NotificationProps, NotificationType } from './queque';
 
 /** Api */
 interface Notification {

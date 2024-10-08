@@ -1,9 +1,11 @@
-import { Show, createEffect, createSignal, mergeProps } from 'solid-js';
+import { createEffect, createSignal, mergeProps, Show } from 'solid-js';
 import { css, cx } from '@moneko/css';
 import { customElement } from 'solid-element';
-import { style } from './style';
-import theme from '../theme';
+
 import type { CustomElement } from '..';
+import theme from '../theme';
+
+import { style } from './style';
 
 export interface SwitchProps {
   /** 自定义类名 */

@@ -1,7 +1,8 @@
 import { createEffect, mergeProps } from 'solid-js';
 import { customElement, noShadowDOM } from 'solid-element';
-import theme, { ColorScheme } from '../theme';
+
 import type { CustomElement } from '..';
+import theme, { ColorScheme } from '../theme';
 
 function Provider(props: ProviderProps) {
   const { baseStyle, scheme, setScheme } = theme;

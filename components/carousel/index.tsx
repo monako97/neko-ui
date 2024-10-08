@@ -1,18 +1,20 @@
 import {
-  Index,
-  Show,
   createEffect,
   createMemo,
   createSignal,
+  Index,
   mergeProps,
   onCleanup,
+  Show,
 } from 'solid-js';
 import { isFunction } from '@moneko/common';
 import { css, cx } from '@moneko/css';
 import { customElement } from 'solid-element';
-import { style } from './style';
-import theme from '../theme';
+
 import type { CustomElement } from '..';
+import theme from '../theme';
+
+import { style } from './style';
 
 export interface CarouselProps {
   /** 自定义类名 */

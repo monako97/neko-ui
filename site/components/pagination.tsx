@@ -1,7 +1,9 @@
-import './pagination.global.less';
-import { For, Show, batch, createEffect, createSignal } from 'solid-js';
+import { batch, createEffect, createSignal, For, Show } from 'solid-js';
 import { A, getPathName, useLocation } from '@moneko/solid';
-import { type MyPkg, all, kv } from './sider';
+
+import { all, kv, type MyPkg } from './sider';
+
+import './pagination.global.less';
 
 function Pagination() {
   const location = useLocation();
@@ -15,8 +17,8 @@ function Pagination() {
       const _prev = all[current - 1]?.key;
       const _next = all[current + 1]?.key;
 
-      setPrev(kv[_prev as string]);
-      setNext(kv[_next as string]);
+      setPrev(kv[_prev!]);
+      setNext(kv[_next!]);
     });
   });
 

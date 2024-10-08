@@ -1,8 +1,9 @@
-import { Show, createEffect, splitProps } from 'solid-js';
+import { createEffect, Show, splitProps } from 'solid-js';
 import { css, cx } from '@moneko/css';
 import { customElement } from 'solid-element';
-import theme from '../theme';
+
 import type { CustomElement } from '..';
+import theme from '../theme';
 
 const style = css`
   :host {
@@ -49,8 +50,8 @@ const style = css`
       text-align: center;
       inline-size: 16px;
       block-size: 16px;
-      inset-block: 0 0;
-      inset-inline: 0 0;
+      inset-block: 0;
+      inset-inline: 0;
       box-sizing: border-box;
       line-height: 1;
       content: '';
@@ -108,12 +109,12 @@ customElement<SpinProps>(
   'n-spin',
   { class: void 0, css: void 0, spin: void 0, children: void 0 },
   (_, opt) => {
-    const childNodes = (opt.element?.childNodes as NodeList) || [];
+    const childNodes = (opt.element.childNodes as NodeList) || [];
     const nodes = [...childNodes.values()];
     const [, props] = splitProps(_, ['children']);
 
     createEffect(() => {
-      opt.element?.replaceChildren();
+      opt.element.replaceChildren();
     });
     return <Spin {...props}>{nodes}</Spin>;
   },

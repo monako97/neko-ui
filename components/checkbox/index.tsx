@@ -1,11 +1,13 @@
-import { For, Show, createEffect, createMemo, createSignal, mergeProps } from 'solid-js';
+import { createEffect, createMemo, createSignal, For, mergeProps, Show } from 'solid-js';
 import { css, cx } from '@moneko/css';
 import { customElement } from 'solid-element';
-import { style } from './style';
+
+import type { BaseOption, BasicConfig, CustomElement } from '..';
 import { FieldName } from '../basic-config';
 import getOptions from '../get-options';
 import theme from '../theme';
-import type { BaseOption, BasicConfig, CustomElement } from '..';
+
+import { style } from './style';
 
 /** 通用API
  * @since 1.0.0

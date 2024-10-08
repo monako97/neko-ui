@@ -1,7 +1,11 @@
-import { For, createMemo } from 'solid-js';
+import { createMemo, For } from 'solid-js';
+
 import dayjs from './dayjs';
 
-type MonthPanelProps = { current: dayjs.Dayjs; onChange(next: dayjs.Dayjs): void };
+interface MonthPanelProps {
+  current: dayjs.Dayjs;
+  onChange(next: dayjs.Dayjs): void;
+}
 
 export const months = dayjs.monthsShort();
 

@@ -1,8 +1,9 @@
-import { selectCss, selectPortalCss } from './style';
-import type { CronData } from '.';
 import type { BaseOption } from 'neko-ui';
 
-type BeginIntervalProps = {
+import type { CronData } from '.';
+import { selectCss, selectPortalCss } from './style';
+
+interface BeginIntervalProps {
   begin: CronData['begin'];
   beginEvery: CronData['beginEvery'];
   label: [JSX.Element, JSX.Element, JSX.Element];
@@ -11,7 +12,7 @@ type BeginIntervalProps = {
   onChange(type: 'begin' | 'beginEvery', value: number): void;
   validate(type: 'begin' | 'beginEvery', value: number): boolean;
   disabled: boolean;
-};
+}
 
 function BeginInterval(props: BeginIntervalProps) {
   function onChange(

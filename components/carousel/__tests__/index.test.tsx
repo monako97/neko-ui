@@ -1,6 +1,6 @@
 import { fireEvent, render, waitFor } from '@solidjs/testing-library';
-import { screen } from 'shadow-dom-testing-library';
 import type { CarouselElement } from 'neko-ui';
+import { screen } from 'shadow-dom-testing-library';
 
 describe('BackTop', () => {
   it('basic', () => {
