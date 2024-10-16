@@ -1,9 +1,10 @@
 # Change log
 
-## Last
+## [v2.8.23](https://github.com/monako97/neko-ui/compare/v2.8.22...v2.8.23) (10-9-2024)
 
 ### 📦 Code Refactoring
 
+- 更新eslint@9、更新工程套件 ([5652faa](https://github.com/monako97/neko-ui/commit/5652faa4b51bb94242c156b6fcf4451d77ee52a7))
 - 减 44 依赖负重 ([80bf61a](https://github.com/monako97/neko-ui/commit/80bf61a3b7d448f181d258c827dfc31372290805))
 
 ### 📚 Documentation
