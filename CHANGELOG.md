@@ -1,5 +1,13 @@
 # Change log
 
+## Last
+
+## [v2.8.24](https://github.com/monako97/neko-ui/compare/v2.8.23...v2.8.24) (10-16-2024)
+
+### 🐛 Bug Fixes
+
+- types ([6a86fe8](https://github.com/monako97/neko-ui/commit/6a86fe8296fc7a4276930d91d92a0631337847ee))
+
 ## [v2.8.23](https://github.com/monako97/neko-ui/compare/v2.8.22...v2.8.23) (10-9-2024)
 
 ### 📦 Code Refactoring
