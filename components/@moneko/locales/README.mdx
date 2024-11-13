@@ -81,12 +81,12 @@ console.log(locales);
 
 ## 插值字符串
 
-> 通过 `interpolateString` 方法进行插值字符串转换; 替换字符串中的占位符 `${}` 为对应的值
+> 通过 `template` 方法进行插值字符串转换; 替换字符串中的占位符 `${}` 为对应的值
 
 ```ts
-import { interpolateString } from '@app/locales';
+import { template } from '@app/locales';
 
-interpolateString('`The length is ${val} characters!`', { val: 62 });
+template('The length is ${val} characters!', { val: 62 }); // The length is 62 characters!
 ```
 
 ## 修改语言
