@@ -81,6 +81,7 @@ const mdStyle = css`
     vertical-align: baseline;
     word-wrap: break-word;
     word-break: break-word;
+
     /* content-visibility: auto;
     contain-intrinsic-size: 32px; */
     margin-block-end: 1em;

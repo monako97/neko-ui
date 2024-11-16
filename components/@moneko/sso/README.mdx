@@ -143,6 +143,18 @@ const app = sso({
   count: 0,
 });
 
+type AppShared = typeof app;
+
+app(() => {
+  return {
+    next(iteration: VoidFunction, key: keyof AppShared, data: AppShared) {
+      console.log('app', key, data);
+      // 不执行 iteration 函数数据将不会改变
+      iteration();
+    },
+  };
+});
+// 或者这样写
 app((): Partial<SSOConfig> => {
   return {
     next(iteration, key, data) {

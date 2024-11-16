@@ -69,8 +69,8 @@ export const style = css`
         transition-timing-function: var(--transition-timing-function);
         transition-property: background-color, transform, border-color, height;
         box-sizing: border-box;
-        inset-block: 0 0;
-        inset-inline: 0 0;
+        inset-block: 0;
+        inset-inline: 0;
         content: '';
         inline-size: 10px;
         block-size: 10px;

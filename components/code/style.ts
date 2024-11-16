@@ -34,7 +34,7 @@ export const style = css`
       resize: none;
       box-sizing: border-box;
       inset-block: 32px 8px;
-      inset-inline: 16px 16px;
+      inset-inline: 16px;
       min-block-size: 64px;
       caret-color: var(--text-color);
       block-size: fit-content;

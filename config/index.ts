@@ -3,6 +3,7 @@ import type { ConfigType } from '@moneko/core';
 const CDNHOST = 'https://cdn.statically.io';
 // const CDN = `${CDNHOST}/gh/monako97/cdn/main/npm`;
 const conf: Partial<ConfigType> = {
+  cache: {},
   htmlPluginOption: {
     favicon: './site/assets/images/favicon.ico',
     meta: {

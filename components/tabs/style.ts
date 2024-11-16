@@ -67,7 +67,7 @@ export const style = css`
 
     &::after,
     &::before {
-      inset-block: 0 0;
+      inset-block: 0;
       inline-size: 30px;
       position: absolute;
       z-index: 1;

@@ -46,6 +46,28 @@ export const style = css`
     transition-property: color;
   }
 
+  .fill {
+    &:not(.disabled, .default) {
+      .label {
+        color: #fff !important;
+      }
+
+      &:hover {
+        --btn-bg: var(--btn-hover-color) !important;
+      }
+
+      &:active {
+        --btn-bg: var(--btn-active-color) !important;
+      }
+    }
+  }
+
+  .fill.danger.default {
+    .label {
+      color: #fff !important;
+    }
+  }
+
   .btn {
     display: inline-flex;
     justify-content: center;
@@ -155,27 +177,7 @@ export const style = css`
   ${btnColor('error')}
   ${btnColor('success')}
   ${btnColor('warning')}
-  .fill {
-    &:not(.disabled, .default) {
-      .label {
-        color: #fff !important;
-      }
-
-      &:hover {
-        --btn-bg: var(--btn-hover-color) !important;
-      }
-
-      &:active {
-        --btn-bg: var(--btn-active-color) !important;
-      }
-    }
-  }
-
-  .fill.danger.default {
-    .label {
-      color: #fff !important;
-    }
-  }
+  
 
   .dashed {
     border-style: dashed;

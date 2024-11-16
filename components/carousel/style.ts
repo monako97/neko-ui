@@ -30,6 +30,7 @@ export const style = css`
     min-inline-size: 100%;
     block-size: 100%;
     min-block-size: 100%;
+
     /* content-visibility: auto; */
     transform: translate3d(-100%, 0, 0);
   }
@@ -59,7 +60,7 @@ export const style = css`
     font-size: 16px;
     font-weight: bold;
     transition: transform var(--transition-duration);
-    inset-block: 0 0;
+    inset-block: 0;
     inline-size: fit-content;
     block-size: fit-content;
     line-height: 1;
@@ -91,7 +92,7 @@ export const style = css`
 
   .dots {
     position: absolute;
-    inset-inline: 0 0;
+    inset-inline: 0;
     inset-block-end: 16px;
     z-index: 1;
     display: flex;

@@ -1,18 +1,18 @@
 # Change log
 
-## Last
+## [v2.8.25](https://github.com/monako97/neko-ui/compare/v2.8.24...v2.8.25) (11-14-2024)
 
 ### 🐛 Bug Fixes
 
 - 1.9 ([88b47f4](https://github.com/monako97/neko-ui/commit/88b47f4d0ef919b6d00bdd489066762be05a1846))
 
-## [v2.8.24](https://github.com/monako97/neko-ui/compare/v2.8.23...v2.8.24) (2024-10-16)
+## [v2.8.24](https://github.com/monako97/neko-ui/compare/v2.8.23...v2.8.24) (10-16-2024)
 
 ### 🐛 Bug Fixes
 
 - types ([6a86fe8](https://github.com/monako97/neko-ui/commit/6a86fe8296fc7a4276930d91d92a0631337847ee))
 
-## [v2.8.23](https://github.com/monako97/neko-ui/compare/v2.8.22...v2.8.23) (2024-10-9)
+## [v2.8.23](https://github.com/monako97/neko-ui/compare/v2.8.22...v2.8.23) (10-9-2024)
 
 ### 📦 Code Refactoring
 
@@ -23,7 +23,7 @@
 
 - github ci 关闭进度条 ([cd5e65b](https://github.com/monako97/neko-ui/commit/cd5e65b4d71fd9d6cbd2de62c3298661e3c2c5a9))
 
-## [v2.8.22](https://github.com/monako97/neko-ui/compare/v2.8.19...v2.8.22) (2024-8-31)
+## [v2.8.22](https://github.com/monako97/neko-ui/compare/v2.8.19...v2.8.22) (8-31-2024)
 
 ### 📦 Code Refactoring
 
@@ -53,7 +53,7 @@
 - spining时增加模糊 ([e6e27b0](https://github.com/monako97/neko-ui/commit/e6e27b0c4b5b50513aa52bac886930b39ae954e7))
 - 更新 solid-js 1.8.18 ([ecdb3ec](https://github.com/monako97/neko-ui/commit/ecdb3ece39d6b3585680d4cb84d56653c291a6f4))
 
-## [v2.8.19](https://github.com/monako97/neko-ui/compare/v2.8.7...v2.8.19) (2024-6-25)
+## [v2.8.19](https://github.com/monako97/neko-ui/compare/v2.8.7...v2.8.19) (6-25-2024)
 
 ### 🐛 Bug Fixes
 
@@ -84,9 +84,9 @@
 - code、md ([88fdfe5](https://github.com/monako97/neko-ui/commit/88fdfe59c5feb1147cfbf912caec8f1089593de0))
 - code、md ([685d9ea](https://github.com/monako97/neko-ui/commit/685d9eac3af9badb5d35d84479c5eda6949d2c01))
 
-## [v2.8.7](https://github.com/monako97/neko-ui/compare/2.8.20...v2.8.7) (2024-5-25)
+## [v2.8.7](https://github.com/monako97/neko-ui/compare/2.8.20...v2.8.7) (5-25-2024)
 
-## [2.8.20](https://github.com/monako97/neko-ui/compare/2.8.18...2.8.20) (2024-7-2)
+## [2.8.20](https://github.com/monako97/neko-ui/compare/2.8.18...2.8.20) (7-2-2024)
 
 ### ✨ Features
 
@@ -100,7 +100,7 @@
 
 - n-popover ([c571c4f](https://github.com/monako97/neko-ui/commit/c571c4f426cc458495cd232601df7fa6f61e083a))
 
-## [2.8.18](https://github.com/monako97/neko-ui/compare/2.8.17...2.8.18) (2024-6-18)
+## [2.8.18](https://github.com/monako97/neko-ui/compare/2.8.17...2.8.18) (6-18-2024)
 
 ### ✨ Features
 
@@ -111,7 +111,7 @@
 - update build ([99fa42d](https://github.com/monako97/neko-ui/commit/99fa42df2cda163a6ebb2fbfae50b5852392b860))
 - update build ([b2fb060](https://github.com/monako97/neko-ui/commit/b2fb060fab2a8072da10dc98421c8af0a01d7415))
 
-## [2.8.17](https://github.com/monako97/neko-ui/compare/2.8.6...2.8.17) (2024-6-16)
+## [2.8.17](https://github.com/monako97/neko-ui/compare/2.8.6...2.8.17) (6-16-2024)
 
 ### 🐛 Bug Fixes
 
@@ -136,7 +136,7 @@
 - code、md ([685d9ea](https://github.com/monako97/neko-ui/commit/685d9eac3af9badb5d35d84479c5eda6949d2c01))
 - code组件 lang属性改为language ([43ec8de](https://github.com/monako97/neko-ui/commit/43ec8dec120eb35a0c370ecbcb31899eda853972))
 
-## [2.8.6](https://github.com/monako97/neko-ui/compare/2.8.5...2.8.6) (2024-5-25)
+## [2.8.6](https://github.com/monako97/neko-ui/compare/2.8.5...2.8.6) (5-25-2024)
 
 ### 🐛 Bug Fixes
 
@@ -147,13 +147,13 @@
 - 打包优化 ([1bf8547](https://github.com/monako97/neko-ui/commit/1bf8547e207bc70292f7ed9cd5df60d8dc2c085e))
 - 打包优化 ([0b572f9](https://github.com/monako97/neko-ui/commit/0b572f91e578637bfa18237e2b753b0a98afcd65))
 
-## [2.8.5](https://github.com/monako97/neko-ui/compare/2.8.4...2.8.5) (2024-5-23)
+## [2.8.5](https://github.com/monako97/neko-ui/compare/2.8.4...2.8.5) (5-23-2024)
 
 ### ✨ Features
 
 - 支持 esm和 cjs ([c9c820d](https://github.com/monako97/neko-ui/commit/c9c820df8842d8160ba1e2389365c8e239a874a1))
 
-## [2.8.4](https://github.com/monako97/neko-ui/compare/2.8.2...2.8.4) (2024-5-23)
+## [2.8.4](https://github.com/monako97/neko-ui/compare/2.8.2...2.8.4) (5-23-2024)
 
 ### ✨ Features
 
@@ -176,7 +176,7 @@
 - github action ci recursive install ([5bc4c5c](https://github.com/monako97/neko-ui/commit/5bc4c5c439bf90056b2e66a465d7b94d57854822))
 - @app/mdx-scpoe ([3108158](https://github.com/monako97/neko-ui/commit/3108158f44117afdc9edddefcee3d375ab950569))
 
-## [2.8.2](https://github.com/monako97/neko-ui/compare/2.7.5...2.8.2) (2024-5-22)
+## [2.8.2](https://github.com/monako97/neko-ui/compare/2.7.5...2.8.2) (5-22-2024)
 
 ### 📚 Documentation
 
@@ -197,13 +197,13 @@
 - tree支持 fieldNames ([b9814d3](https://github.com/monako97/neko-ui/commit/b9814d3f20d027e0d4ac639d12eda996eff6a7f8))
 - 减少安装体积 ([d5d2feb](https://github.com/monako97/neko-ui/commit/d5d2feb02187691c6ab43772cc49a961e7b4957a))
 
-## [2.7.5](https://github.com/monako97/neko-ui/compare/2.7.4...2.7.5) (2024-5-6)
+## [2.7.5](https://github.com/monako97/neko-ui/compare/2.7.4...2.7.5) (5-6-2024)
 
 ### ✨ Features
 
 - tree 动态修改数据 ([89592b3](https://github.com/monako97/neko-ui/commit/89592b3b25187ba753b93531ba088d96366489c0))
 
-## [2.7.4](https://github.com/monako97/neko-ui/compare/2.7.1...2.7.4) (2024-5-6)
+## [2.7.4](https://github.com/monako97/neko-ui/compare/2.7.1...2.7.4) (5-6-2024)
 
 ### ✨ Features
 
@@ -218,7 +218,7 @@
 - fix jekyll ([6bb89c7](https://github.com/monako97/neko-ui/commit/6bb89c7bef284a2e7b85de9d12baff74b795f8e3))
 - 更新 @moneko/core ([b77eb1c](https://github.com/monako97/neko-ui/commit/b77eb1c0fbaba716d12bfb44761af2701445dc15))
 
-## [2.7.1](https://github.com/monako97/neko-ui/compare/2.7.0...2.7.1) (2024-4-20)
+## [2.7.1](https://github.com/monako97/neko-ui/compare/2.7.0...2.7.1) (4-20-2024)
 
 ### 📚 Documentation
 
@@ -237,7 +237,7 @@
 
 - code支持swift代码高亮 ([4b43fa0](https://github.com/monako97/neko-ui/commit/4b43fa09250050f32503f6596a2d292609245b6c))
 
-## [2.7.0](https://github.com/monako97/neko-ui/compare/2.6.1...2.7.0) (2024-1-19)
+## [2.7.0](https://github.com/monako97/neko-ui/compare/2.6.1...2.7.0) (1-19-2024)
 
 ### ✨ Features
 
@@ -277,7 +277,7 @@
 - npm files ([73b5d58](https://github.com/monako97/neko-ui/commit/73b5d58485f43f0416178beb6f170e3b5872ab5d))
 - polyfill false ([5009662](https://github.com/monako97/neko-ui/commit/50096621efc6fadc7a4d57f0be347bca93000f57))
 
-## [2.6.1](https://github.com/monako97/neko-ui/compare/2.6.0...2.6.1) (2023-11-29)
+## [2.6.1](https://github.com/monako97/neko-ui/compare/2.6.0...2.6.1) (11-29-2023)
 
 ### 📦 Code Refactoring
 
@@ -291,7 +291,7 @@
 
 - docs ([3ca52b8](https://github.com/monako97/neko-ui/commit/3ca52b8954343038ea95505c37d026ad016e2abb))
 
-## [2.6.0](https://github.com/monako97/neko-ui/compare/2.5.1...2.6.0) (2023-11-26)
+## [2.6.0](https://github.com/monako97/neko-ui/compare/2.5.1...2.6.0) (11-26-2023)
 
 ### ✨ Features
 
@@ -318,7 +318,7 @@
 - 打包速度提升 ([52ce6e2](https://github.com/monako97/neko-ui/commit/52ce6e27fef79cf6c8d2ad17acbcb5b152063693))
 - 打包速度提升 58% ([e7858e8](https://github.com/monako97/neko-ui/commit/e7858e88759193e3308357e253ee4b1fcb06d78f))
 
-## [2.5.1](https://github.com/monako97/neko-ui/compare/2.5.0...2.5.1) (2023-10-12)
+## [2.5.1](https://github.com/monako97/neko-ui/compare/2.5.0...2.5.1) (10-12-2023)
 
 ### 📦 Code Refactoring
 
@@ -328,13 +328,13 @@
 
 - update readme ([428dcc5](https://github.com/monako97/neko-ui/commit/428dcc5c67aa319629569409d32adfca34436c18))
 
-## [2.5.0](https://github.com/monako97/neko-ui/compare/2.4.4...2.5.0) (2023-10-11)
+## [2.5.0](https://github.com/monako97/neko-ui/compare/2.4.4...2.5.0) (10-11-2023)
 
 ### ✨ Features
 
 - 支持按需引入 ([3e37948](https://github.com/monako97/neko-ui/commit/3e37948010ab65893151ba83bd9b7e6f000584a6))
 
-## [2.4.4](https://github.com/monako97/neko-ui/compare/2.4.3...2.4.4) (2023-9-21)
+## [2.4.4](https://github.com/monako97/neko-ui/compare/2.4.3...2.4.4) (9-21-2023)
 
 ### 💎 Styles
 
@@ -347,7 +347,7 @@
 - github actions ([29a5a6d](https://github.com/monako97/neko-ui/commit/29a5a6d91dcae3d9fc10fb0a60ec40167a789e32))
 - github actions ([af86d9d](https://github.com/monako97/neko-ui/commit/af86d9d9bd3926c913d540720ab23fb5f89a31af))
 
-## [2.4.3](https://github.com/monako97/neko-ui/compare/2.4.0...2.4.3) (2023-9-19)
+## [2.4.3](https://github.com/monako97/neko-ui/compare/2.4.0...2.4.3) (9-19-2023)
 
 ### ✨ Features
 
@@ -367,7 +367,7 @@
 - fix katex ([5c82c83](https://github.com/monako97/neko-ui/commit/5c82c83ae12bcff7d92c0f8b42dd50d46a9ddf3b))
 - fix ([9f5b866](https://github.com/monako97/neko-ui/commit/9f5b866fab056c22008e97f0e1b02490f3f0ce13))
 
-## [2.4.0](https://github.com/monako97/neko-ui/compare/2.3.5...2.4.0) (2023-9-14)
+## [2.4.0](https://github.com/monako97/neko-ui/compare/2.3.5...2.4.0) (9-14-2023)
 
 ### ✨ Features
 
@@ -383,7 +383,7 @@
 - 更新安全策略、问题模版 ([4f59fa2](https://github.com/monako97/neko-ui/commit/4f59fa22b360db2b7c64640d55e5479e89df9994))
 - 添加工程模块说明 ([fa69606](https://github.com/monako97/neko-ui/commit/fa696067efc9e0b30f322a19bb0cd306539790aa))
 
-## [2.3.5](https://github.com/monako97/neko-ui/compare/2.3.0...2.3.5) (2023-8-29)
+## [2.3.5](https://github.com/monako97/neko-ui/compare/2.3.0...2.3.5) (8-29-2023)
 
 ### 📚 Documentation
 
@@ -413,7 +413,7 @@
 
 - 自动推断html属性类型、js api属性类型 ([8599591](https://github.com/monako97/neko-ui/commit/85995910e6d8ddf2647ee3cbb38e9e34c626f5c3))
 
-## [2.3.0](https://github.com/monako97/neko-ui/compare/2.2.0...2.3.0) (2023-8-22)
+## [2.3.0](https://github.com/monako97/neko-ui/compare/2.2.0...2.3.0) (8-22-2023)
 
 ### 📚 Documentation
 
@@ -429,13 +429,13 @@
 
 - update core ([310920e](https://github.com/monako97/neko-ui/commit/310920e4a9dcc5fd7e985a2533241e6a2e97ee5f))
 
-## [2.2.0](https://github.com/monako97/neko-ui/compare/2.1.4...2.2.0) (2023-8-20)
+## [2.2.0](https://github.com/monako97/neko-ui/compare/2.1.4...2.2.0) (8-20-2023)
 
 ### ✨ Features
 
 - table 数据表格、pagination 分页器 ([da24adf](https://github.com/monako97/neko-ui/commit/da24adfdaa2168b6b58739fb72a17cb6ce15ce58))
 
-## [2.1.4](https://github.com/monako97/neko-ui/compare/2.0.8...2.1.4) (2023-8-19)
+## [2.1.4](https://github.com/monako97/neko-ui/compare/2.0.8...2.1.4) (8-19-2023)
 
 ### 📚 Documentation
 
@@ -477,7 +477,7 @@
 - update core ([f2a0b9f](https://github.com/monako97/neko-ui/commit/f2a0b9f07f4daa7fddd65ca7b3e14c170ea2f0ec))
 - update core ([5498632](https://github.com/monako97/neko-ui/commit/5498632df0bbcc46d05da40a4e48bea1c11b2b60))
 
-## [2.0.8](https://github.com/monako97/neko-ui/compare/2.0.3...2.0.8) (2023-8-4)
+## [2.0.8](https://github.com/monako97/neko-ui/compare/2.0.3...2.0.8) (8-4-2023)
 
 ### ✨ Features
 
@@ -495,7 +495,7 @@
 - umd types ([d2442d6](https://github.com/monako97/neko-ui/commit/d2442d68e0a5635823c9bc16d8b917d2d2649085))
 - umd ([3e27ef9](https://github.com/monako97/neko-ui/commit/3e27ef93e74e1b459689e5abe7824a40c2308292))
 
-## [2.0.3](https://github.com/monako97/neko-ui/compare/2.0.0...2.0.3) (2023-8-1)
+## [2.0.3](https://github.com/monako97/neko-ui/compare/2.0.0...2.0.3) (8-1-2023)
 
 ### ✨ Features
 
@@ -508,7 +508,7 @@
 - update ([439dcc1](https://github.com/monako97/neko-ui/commit/439dcc100e254a499a986cc37587b100508d99c8))
 - update ([2bcd9ff](https://github.com/monako97/neko-ui/commit/2bcd9ffb0c19a0b071a5ac9af543ab1348837585))
 
-## [2.0.0](https://github.com/monako97/neko-ui/compare/1.7.3...2.0.0) (2023-7-28)
+## [2.0.0](https://github.com/monako97/neko-ui/compare/1.7.3...2.0.0) (7-28-2023)
 
 ### 📚 Documentation
 
@@ -561,7 +561,7 @@
 - 优化文档生成 ([4fe4395](https://github.com/monako97/neko-ui/commit/4fe439513ab46b2a8fb130901b1489c67f6dd24a))
 - menu 导航菜单在select中的使用 ([e67bfe5](https://github.com/monako97/neko-ui/commit/e67bfe54a1420d14b5fa5403a741f5c07df78cff))
 
-## [1.7.3](https://github.com/monako97/neko-ui/compare/1.5.0...1.7.3) (2023-5-15)
+## [1.7.3](https://github.com/monako97/neko-ui/compare/1.5.0...1.7.3) (5-15-2023)
 
 ### 🐛 Bug Fixes
 
@@ -579,13 +579,13 @@
 - dropdown下拉菜单、popover 气泡卡片、select 下拉选择框 ([cc41847](https://github.com/monako97/neko-ui/commit/cc41847d1560c4a74019d024f3c113302cc8275f))
 - tootip 自动跟据情况决定展开方向 ([3aa7138](https://github.com/monako97/neko-ui/commit/3aa7138a71736a2a637397e67a8ee6c455d365e6))
 
-## [1.5.0](https://github.com/monako97/neko-ui/compare/1.4.2...1.5.0) (2023-5-5)
+## [1.5.0](https://github.com/monako97/neko-ui/compare/1.4.2...1.5.0) (5-5-2023)
 
 ### ✨ Features
 
 - segmented 分段控制器 ([e7c269b](https://github.com/monako97/neko-ui/commit/e7c269b6ea2d763e2577a127602de3d654cd5a41))
 
-## [1.4.2](https://github.com/monako97/neko-ui/compare/1.4.0...1.4.2) (2023-5-5)
+## [1.4.2](https://github.com/monako97/neko-ui/compare/1.4.0...1.4.2) (5-5-2023)
 
 ### ✨ Features
 
@@ -595,7 +595,7 @@
 
 - radio 大小调整 ([9367a19](https://github.com/monako97/neko-ui/commit/9367a19f1d1628d115bc71f85fd0e09f29e415c9))
 
-## [1.4.0](https://github.com/monako97/neko-ui/compare/1.1.0...1.4.0) (2023-5-4)
+## [1.4.0](https://github.com/monako97/neko-ui/compare/1.1.0...1.4.0) (5-4-2023)
 
 ### ✨ Features
 
@@ -605,7 +605,7 @@
 - switch按钮支持聚焦、键盘事件 ([20f48c5](https://github.com/monako97/neko-ui/commit/20f48c5a9b6e818f83ee573f36582fe795a30d5a))
 - switch ([181bf14](https://github.com/monako97/neko-ui/commit/181bf14a48bddb49c4d2dde5ff5ee369e0a65980))
 
-## [1.1.0](https://github.com/monako97/neko-ui/compare/1.0.47...1.1.0) (2023-5-1)
+## [1.1.0](https://github.com/monako97/neko-ui/compare/1.0.47...1.1.0) (5-1-2023)
 
 ### ✨ Features
 
@@ -625,13 +625,13 @@
 
 - update lib ([a9358e4](https://github.com/monako97/neko-ui/commit/a9358e4b661faef8fe263e852bd3bd213e149d9a))
 
-## [1.0.47](https://github.com/monako97/neko-ui/compare/1.0.40...1.0.47) (2023-4-20)
+## [1.0.47](https://github.com/monako97/neko-ui/compare/1.0.40...1.0.47) (4-20-2023)
 
 ### ✨ Features
 
 - tree ([31532cd](https://github.com/monako97/neko-ui/commit/31532cd80fce4fdaf59d2bc0ff8cdaa15f479d0d))
 
-## [1.0.40](https://github.com/monako97/neko-ui/compare/1.0.36...1.0.40) (2023-4-2)
+## [1.0.40](https://github.com/monako97/neko-ui/compare/1.0.36...1.0.40) (4-2-2023)
 
 ### 📚 Documentation
 
@@ -668,7 +668,7 @@
 - getColorVariableString ([f9ae61e](https://github.com/monako97/neko-ui/commit/f9ae61e6d2324c586cec81723ecc0bf85cbdec8d))
 - github pages ([271319e](https://github.com/monako97/neko-ui/commit/271319ec3e14bc755751e717300746dbf79fcf47))
 
-## [1.0.36](https://github.com/monako97/neko-ui/compare/1.0.35...1.0.36) (2023-3-7)
+## [1.0.36](https://github.com/monako97/neko-ui/compare/1.0.35...1.0.36) (3-7-2023)
 
 ### 🐛 Bug Fixes
 
@@ -680,7 +680,7 @@
 
 - 颜色选择器、颜色选择面板、文档生产方式 ([3195b70](https://github.com/monako97/neko-ui/commit/3195b709be77f103c5f40dffe6f5f61bd745e13d))
 
-## [1.0.35](https://github.com/monako97/neko-ui/compare/1.0.27...1.0.35) (2023-2-23)
+## [1.0.35](https://github.com/monako97/neko-ui/compare/1.0.27...1.0.35) (2-23-2023)
 
 ### ✨ Features
 
@@ -712,7 +712,7 @@
 -  ([f35688f](https://github.com/monako97/neko-ui/commit/f35688fed7a937de197f22d988b2f05d740318af))
 -  ([57f6a5f](https://github.com/monako97/neko-ui/commit/57f6a5ff0e9bf2c2541f24192e83e81d583cea17))
 
-## [1.0.27](https://github.com/monako97/neko-ui/compare/1.0.22...1.0.27) (2022-11-10)
+## [1.0.27](https://github.com/monako97/neko-ui/compare/1.0.22...1.0.27) (11-10-2022)
 
 ### 🐛 Bug Fixes
 
@@ -726,7 +726,7 @@
 - 颜色选择器 ([aa59914](https://github.com/monako97/neko-ui/commit/aa59914f406b06ba282b24fafd251f77e2ecae19))
 - Tooltip ([53c8ef4](https://github.com/monako97/neko-ui/commit/53c8ef4f62da8f3828acf137ca240d3028037a56))
 
-## [1.0.22](https://github.com/monako97/neko-ui/compare/1.0.16...1.0.22) (2022-10-19)
+## [1.0.22](https://github.com/monako97/neko-ui/compare/1.0.16...1.0.22) (10-19-2022)
 
 ### 🚨 Tests
 
@@ -743,7 +743,7 @@
 - lessc ([d64123b](https://github.com/monako97/neko-ui/commit/d64123beca32df09f0389b810fe2863f702cff29))
 - KaTeX ([de1bf0f](https://github.com/monako97/neko-ui/commit/de1bf0fb593d0fc42d05a57aca13be73b15a4f05))
 
-## [1.0.16](https://github.com/monako97/neko-ui/compare/1.0.9...1.0.16) (2022-10-13)
+## [1.0.16](https://github.com/monako97/neko-ui/compare/1.0.9...1.0.16) (10-13-2022)
 
 ### 🐛 Bug Fixes
 
@@ -752,7 +752,7 @@
 - commonJS css ([e52be9d](https://github.com/monako97/neko-ui/commit/e52be9da9471b4c08bce74832d0177135186f9ba))
 - commonJS css ([055ed80](https://github.com/monako97/neko-ui/commit/055ed80c105b652b7f435f079c628934d94e6748))
 
-## [1.0.9](https://github.com/monako97/neko-ui/compare/1.0.6...1.0.9) (2022-10-13)
+## [1.0.9](https://github.com/monako97/neko-ui/compare/1.0.6...1.0.9) (10-13-2022)
 
 ### 🐛 Bug Fixes
 
@@ -762,7 +762,7 @@
 - commonJS css ([a011494](https://github.com/monako97/neko-ui/commit/a0114947424b4d0ced994d69e1b9766be4085aed))
 - commonJS css ([d9d7f6e](https://github.com/monako97/neko-ui/commit/d9d7f6e5a7be4e8195f00640340646abaf41de17))
 
-## [1.0.6](https://github.com/monako97/neko-ui/compare/1.0.0...1.0.6) (2022-10-11)
+## [1.0.6](https://github.com/monako97/neko-ui/compare/1.0.0...1.0.6) (10-11-2022)
 
 ### 🐛 Bug Fixes
 
@@ -781,7 +781,7 @@
 
 - classname ([666000f](https://github.com/monako97/neko-ui/commit/666000f802a8f240d65190b8eec5bc837889aede))
 
-## [1.0.0](https://github.com/monako97/neko-ui/compare/0.1.0...1.0.0) (2022-9-17)
+## [1.0.0](https://github.com/monako97/neko-ui/compare/0.1.0...1.0.0) (9-17-2022)
 
 ### 🐛 Bug Fixes
 
