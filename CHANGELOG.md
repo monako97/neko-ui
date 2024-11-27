@@ -1,5 +1,11 @@
 # Change log
 
+## Last
+
+### 🐛 Bug Fixes
+
+- 修复在window平台构建案例的问题 ([9206a35](https://github.com/monako97/neko-ui/commit/9206a35ed5df3404810f4089fc5b6487a7ff26a2))
+
 ## [v2.8.26](https://github.com/monako97/neko-ui/compare/v2.8.25...v2.8.26) (11-17-2024)
 
 ### 📦 Code Refactoring

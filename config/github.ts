@@ -1,4 +1,4 @@
-import { type ConfigType, PACKAGENAME, isDev } from '@moneko/core';
+import { type ConfigType, isDev, PACKAGENAME } from '@moneko/core';
 
 const conf: Partial<ConfigType> = {
   devtool: isDev ? 'eval-cheap-module-source-map' : false,
@@ -7,11 +7,9 @@ const conf: Partial<ConfigType> = {
     jekyll: false,
   },
   bar: false,
-  polyfill: false,
   basename: `/${PACKAGENAME}`,
   publicPath: `/${PACKAGENAME}/`,
   bundleAnalyzer: false,
-  performance: false,
   fixBrowserRouter: {
     pathSegmentsToKeep: 1,
     path: '404.html',
