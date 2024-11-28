@@ -1,12 +1,12 @@
 ---
 type: 工程配套
 title: 脚手架
-subtitle: '@moneko/cli'
+subtitle: create-mo
 icon: 💻
 order: 10
 ---
 
-# @moneko/cli
+# create-mo
 
 > 这是一个脚手架工具, 可以快速进行一个组件库、单页面、微前端(乾坤)、后台管理、模块联邦应用的开发, 目前支持React18、Solid.js
 
@@ -40,9 +40,9 @@ import pnpm from './pnpm.md?raw';
 
 ```shell
 mo buildApp
-? 请输入软件包名称? com.moneko.bid ## 默认值
-? 请选择需要打包的类型 打包为apk (release)
-❯◉ 打包为apk (release) # 方向上下键选择条目，按空格键选中，回车键确认
+? 请输入软件包名称? com.moneko.bid ## 默认值 (已变更为在 config.ts 中配置)
+? 请选择需要打包的类型 打包为apk (release)  ## (已变更为在 config.ts 中配置)
+❯◉ 打包为apk (release)
  ◯ 打包为apk (debug)
  ◯ 打包为ipa (release)[未签名，需要 OSX 及 Xcode]
  ◯ 打包为ipa (debug)[未签名，需要 OSX 及 Xcode]

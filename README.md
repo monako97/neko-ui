@@ -5,8 +5,8 @@
 [docs-url]: https://monako97.github.io/neko-ui
 [docs-tag]: https://cdn.statically.io/gh/monako97/cdn/main/image/202307281701250.svg
 [npm-url]: https://npmjs.org/package/neko-ui
-[cli-url]: https://www.npmjs.com/package/@moneko/cli
-[cli-tag]: https://nodei.co/npm/@moneko/cli.png
+[cli-url]: https://www.npmjs.com/package/create-mo
+[cli-tag]: https://nodei.co/npm/create-mo.png
 [install-tag]: https://nodei.co/npm/neko-ui.png
 [version-tag]: https://img.shields.io/npm/v/neko-ui/latest.svg?logo=npm
 [size-tag]: https://packagephobia.com/badge?p=neko-ui@latest
@@ -98,9 +98,9 @@ const conf: Partial<ConfigType> = {
 export default conf;
 ```
 
-> 文档通过 @moneko/cli 生成
+> 文档通过 @moneko/core 生成
 
-[![@moneko/cli][cli-tag]][cli-url]
+[![@moneko/core][cli-tag]][cli-url]
 
 ## 支持浏览器
 

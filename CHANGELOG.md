@@ -2,6 +2,10 @@
 
 ## Last
 
+### 📚 Documentation
+
+- 构建工具文档更新 ([f47f238](https://github.com/monako97/neko-ui/commit/f47f23874c3afdbcae05c51c44da28bc05ecb84e))
+
 ### 🐛 Bug Fixes
 
 - 修复在window平台构建案例的问题 ([9206a35](https://github.com/monako97/neko-ui/commit/9206a35ed5df3404810f4089fc5b6487a7ff26a2))
