@@ -19,7 +19,7 @@
     "lint": "mo eslint components && mo eslint site",
     "postlint": "mo stylelint components && mo stylelint site && jest --coverage",
     "precommit": "npm run lint && npm run changelog",
-    "prepare": "mo githooks pre-commit=\"npm run precommit\" commit-msg=\"npx --no -- commitlint --edit \\${1}\"",
+    "prepare": "mo githooks pre-commit=\"npm run precommit\" commit-msg=\"npx --no -- commitlint --edit ${1}\"",
     "start": "mo start library solid",
     "test": "jest --coverage --watchAll"
   },
@@ -53,7 +53,7 @@
   "devDependencies": {
     "@commitlint/cli": "19.6.0",
     "@commitlint/config-conventional": "19.6.0",
-    "@moneko/core": "3.26.4",
+    "@moneko/core": "3.26.5",
     "@moneko/solid": "1.10.6",
     "@solidjs/testing-library": "0.8.10",
     "@swc/jest": "0.2.37",
@@ -68,7 +68,7 @@
     "n-code-live": "1.3.1",
     "n-katex": "1.0.8",
     "shadow-dom-testing-library": "1.11.3",
-    "stylelint-config-moneko": "2.4.2"
+    "stylelint-config-moneko": "2.4.3"
   },
   "dependencies": {
     "@moneko/common": "1.6.0",
