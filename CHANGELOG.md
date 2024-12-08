@@ -1,6 +1,6 @@
 # Change log
 
-## Last
+## [v2.8.27](https://github.com/monako97/neko-ui/compare/v2.8.26...v2.8.27) (2024-12-9)
 
 ### ✨ Features
 
