@@ -79,3 +79,18 @@ export enum FieldName {
   /** 名称 */
   name = 'name',
 }
+
+export function camelToKebab(str: string) {
+  return str
+    .replace(/([A-Z])/g, '-$1') // 在大写字母前添加 "-"
+    .toLowerCase(); // 转为小写
+}
+export function clearAttribute(el: HTMLElement | ICustomElement, fields: string[]) {
+  fields.forEach((key) => {
+    const field = key as 'className';
+    const prev = el[field];
+
+    el.removeAttribute(camelToKebab(field));
+    el[field] = prev;
+  });
+}

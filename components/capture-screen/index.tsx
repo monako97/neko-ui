@@ -13,7 +13,8 @@ import { css, cx } from '@moneko/css';
 import { customElement } from 'solid-element';
 
 import type { CustomElement } from '..';
-import theme from '../theme';
+import { clearAttribute } from '../basic-config';
+import theme, { inline } from '../theme';
 
 import { style } from './style';
 
@@ -423,7 +424,15 @@ customElement<CaptureScreenProps>(
       _,
     );
 
-    return <CaptureScreen {...props} />;
+    createEffect(() => {
+      clearAttribute(el, ['css', 'options']);
+    });
+    return (
+      <>
+        <style textContent={inline} />
+        <CaptureScreen {...props} />
+      </>
+    );
   },
 );
 

@@ -15,9 +15,9 @@ import { css, cx } from '@moneko/css';
 import { customElement } from 'solid-element';
 
 import type { BaseOption, BasicConfig, CustomElement } from '..';
-import { FieldName } from '../basic-config';
+import { clearAttribute, FieldName } from '../basic-config';
 import getOptions from '../get-options';
-import theme from '../theme';
+import theme, { block } from '../theme';
 
 import { style } from './style';
 
@@ -364,11 +364,14 @@ customElement<MenuProps>(
     const props = mergeProps(defaultProps, _);
 
     createEffect(() => {
-      el.removeAttribute('items');
-      el.removeAttribute('field-names');
-      el.removeAttribute('css');
+      clearAttribute(el, ['css', 'items', 'fieldNames']);
     });
-    return <Menu {...props} />;
+    return (
+      <>
+        <style textContent={block} />
+        <Menu {...props} />
+      </>
+    );
   },
 );
 

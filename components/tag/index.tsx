@@ -4,7 +4,8 @@ import { css, cx } from '@moneko/css';
 import { customElement } from 'solid-element';
 
 import type { CustomElement } from '..';
-import theme, { generateColor } from '../theme';
+import { clearAttribute } from '../basic-config';
+import theme, { generateColor, inline } from '../theme';
 
 import { style } from './style';
 
@@ -133,10 +134,15 @@ customElement<TagProps>(
 
     createEffect(() => {
       el.replaceChildren();
-      el.removeAttribute('css');
+      clearAttribute(el, ['css']);
     });
 
-    return <Tag {...props} />;
+    return (
+      <>
+        <style textContent={inline} />
+        <Tag {...props} />
+      </>
+    );
   },
 );
 

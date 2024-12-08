@@ -3,7 +3,8 @@ import { css, cx } from '@moneko/css';
 import { customElement } from 'solid-element';
 
 import type { CustomElement } from '..';
-import theme from '../theme';
+import { clearAttribute } from '../basic-config';
+import theme, { inline } from '../theme';
 
 import { style } from './style';
 
@@ -107,9 +108,14 @@ customElement<SwitchProps>(
     );
 
     createEffect(() => {
-      el.removeAttribute('css');
+      clearAttribute(el, ['css']);
     });
-    return <Switch {...props} />;
+    return (
+      <>
+        <style textContent={inline} />
+        <Switch {...props} />
+      </>
+    );
   },
 );
 export default Switch;

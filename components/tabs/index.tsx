@@ -14,9 +14,9 @@ import { css, cx } from '@moneko/css';
 import { customElement } from 'solid-element';
 
 import type { BaseOption, BasicConfig, ButtonElement, CustomElement } from '..';
-import { FieldName } from '../basic-config';
+import { clearAttribute, FieldName } from '../basic-config';
 import getOptions from '../get-options';
-import theme from '../theme';
+import theme, { block } from '../theme';
 
 import { addCss, btnCss, style } from './style';
 
@@ -380,11 +380,14 @@ customElement<TabsProps>(
     );
 
     createEffect(() => {
-      el.removeAttribute('items');
-      el.removeAttribute('field-names');
-      el.removeAttribute('css');
+      clearAttribute(el, ['css', 'fieldNames', 'items', 'extra']);
     });
-    return <Tabs {...props} />;
+    return (
+      <>
+        <style textContent={block} />
+        <Tabs {...props} />
+      </>
+    );
   },
 );
 export default Tabs;

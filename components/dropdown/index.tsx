@@ -3,8 +3,10 @@ import { isFunction } from '@moneko/common';
 import { customElement } from 'solid-element';
 
 import type { CustomElement, MenuMultipleProps, MenuOption, MenuProps, PopoverProps } from '..';
+import { clearAttribute } from '../basic-config';
 import Empty from '../empty';
 import Popover, { defaultProps as popoverProps } from '../popover';
+import { inline } from '../theme';
 
 import '../menu';
 
@@ -161,11 +163,14 @@ customElement<DropdownProps>(
     );
 
     createEffect(() => {
-      el.removeAttribute('items');
-      el.removeAttribute('field-names');
-      el.removeAttribute('css');
+      clearAttribute(el, ['popupCss', 'css', 'items', 'fieldNames', 'content']);
     });
-    return <Dropdown {...props} />;
+    return (
+      <>
+        <style textContent={inline} />
+        <Dropdown {...props} />
+      </>
+    );
   },
 );
 export default Dropdown;

@@ -4,7 +4,8 @@ import { css, cx } from '@moneko/css';
 import { customElement } from 'solid-element';
 
 import type { BasicConfig, CustomElement } from '..';
-import theme from '../theme';
+import { clearAttribute } from '../basic-config';
+import theme, { inline } from '../theme';
 
 import { style } from './style';
 
@@ -195,7 +196,15 @@ customElement<InputProps>('n-input', defaultInportProps, (_, opt) => {
     _,
   );
 
-  return <Input {...props} />;
+  createEffect(() => {
+    clearAttribute(el, ['css']);
+  });
+  return (
+    <>
+      <style textContent={inline} />
+      <Input {...props} />
+    </>
+  );
 });
 
 export default Input;

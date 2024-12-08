@@ -4,7 +4,9 @@ import { css, cx } from '@moneko/css';
 import { customElement } from 'solid-element';
 
 import type { CustomElement, InputProps } from '..';
+import { clearAttribute } from '../basic-config';
 import Input, { defaultInportProps } from '../input';
+import { inline } from '../theme';
 
 const style = css`
   /** 隐藏原生加减控件 */
@@ -160,7 +162,15 @@ customElement<InputNumberProps>(
       _,
     );
 
-    return <InputNumber {...props} />;
+    createEffect(() => {
+      clearAttribute(el, ['css']);
+    });
+    return (
+      <>
+        <style textContent={inline} />
+        <InputNumber {...props} />
+      </>
+    );
   },
 );
 

@@ -3,7 +3,8 @@ import { css, cx } from '@moneko/css';
 import { customElement } from 'solid-element';
 
 import type { CustomElement } from '..';
-import theme from '../theme';
+import { clearAttribute } from '../basic-config';
+import theme, { inline } from '../theme';
 
 const style = css`
   .text {
@@ -166,6 +167,18 @@ customElement<HighlightTextProps>(
     flag: void 0,
     extra: void 0,
   },
-  HighlightText,
+  (props, opt) => {
+    const el = opt.element;
+
+    createEffect(() => {
+      clearAttribute(el, ['css', 'text', 'highlight', 'extra']);
+    });
+    return (
+      <>
+        <style textContent={inline} />
+        <HighlightText {...props} />
+      </>
+    );
+  },
 );
 export default HighlightText;

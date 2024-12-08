@@ -1,6 +1,9 @@
 import { createEffect, mergeProps } from 'solid-js';
 import { customElement } from 'solid-element';
 
+import { clearAttribute } from '../basic-config';
+import { block } from '../theme';
+
 import Tree from './index';
 import type { TreeData, TreeProps } from './type';
 
@@ -62,10 +65,13 @@ customElement<TreeProps>(
     );
 
     createEffect(() => {
-      el.removeAttribute('css');
-      el.removeAttribute('field-names');
-      el.removeAttribute('data');
+      clearAttribute(el, ['css', 'fieldNames', 'data']);
     });
-    return <Tree {...props} />;
+    return (
+      <>
+        <style textContent={block} />
+        <Tree {...props} />
+      </>
+    );
   },
 );

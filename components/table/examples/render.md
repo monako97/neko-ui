@@ -35,7 +35,11 @@ description: 使用 `render` 函数自定义渲染单元格
         btn.type = 'primary';
         btn.textContent = '编辑';
         btn.onclick = function () {
-          console.log(record);
+          if (record.alive) {
+            NekoUI.notification.success(record.name);
+          } else {
+            NekoUI.notification.error(record.name);
+          }
         };
         return btn;
       },

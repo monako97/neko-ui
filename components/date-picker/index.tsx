@@ -2,7 +2,9 @@ import { createEffect, createMemo, createSignal, mergeProps, splitProps, untrack
 import { customElement } from 'solid-element';
 
 import type { CustomElement, InputElement, PopoverProps } from '..';
+import { clearAttribute } from '../basic-config';
 import Popover, { defaultProps } from '../popover';
+import { inline } from '../theme';
 
 import dayjs from './dayjs';
 import Panel from './panel';
@@ -274,9 +276,14 @@ customElement<DatePickerProps>(
     );
 
     createEffect(() => {
-      el.removeAttribute('css');
+      clearAttribute(el, ['popupCss', 'css']);
     });
-    return <DatePicker {...props} />;
+    return (
+      <>
+        <style textContent={inline} />
+        <DatePicker {...props} />
+      </>
+    );
   },
 );
 export default DatePicker;

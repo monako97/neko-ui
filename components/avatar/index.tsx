@@ -11,9 +11,10 @@ import {
 import { css, cx } from '@moneko/css';
 import { customElement } from 'solid-element';
 
+import { clearAttribute } from '../basic-config';
 import Img from '../img';
 import type { BasicConfig, CustomElement } from '../index';
-import theme from '../theme';
+import theme, { inline } from '../theme';
 
 import { style } from './style';
 
@@ -38,7 +39,6 @@ export interface AvatarProps {
 export type AvatarElement = CustomElement<AvatarProps>;
 
 function Avatar(_: AvatarProps) {
-  const { baseStyle } = theme;
   const avatarSize: Record<string, string> = {
     small: '24px',
     normal: '32px',
@@ -82,7 +82,6 @@ function Avatar(_: AvatarProps) {
 
   return (
     <>
-      <style textContent={baseStyle()} />
       <style textContent={style} />
       <style textContent={_style()} />
       <Show when={local.css}>
@@ -136,6 +135,20 @@ customElement<AvatarProps>(
     color: void 0,
     class: void 0,
   },
-  Avatar,
+  (props, opt) => {
+    const { baseStyle } = theme;
+    const el = opt.element;
+
+    createEffect(() => {
+      clearAttribute(el, ['css']);
+    });
+    return (
+      <>
+        <style textContent={inline} />
+        <style textContent={baseStyle()} />
+        <Avatar {...props} />
+      </>
+    );
+  },
 );
 export default Avatar;

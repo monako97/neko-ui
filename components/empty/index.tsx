@@ -1,8 +1,10 @@
-import { Show } from 'solid-js';
+import { createEffect, Show } from 'solid-js';
 import { css } from '@moneko/css';
 import { customElement } from 'solid-element';
 
 import type { CustomElement } from '..';
+import { clearAttribute } from '../basic-config';
+import { inline } from '../theme';
 
 import '../typography';
 
@@ -63,7 +65,19 @@ customElement<EmptyProps>(
     css: void 0,
     label: void 0,
   },
-  Empty,
+  (props, opt) => {
+    const el = opt.element;
+
+    createEffect(() => {
+      clearAttribute(el, ['css']);
+    });
+    return (
+      <>
+        <style textContent={inline} />
+        <Empty {...props} />
+      </>
+    );
+  },
 );
 
 export default Empty;

@@ -11,6 +11,7 @@ import { Portal } from 'solid-js/web';
 import { customElement } from 'solid-element';
 
 import type { CustomElement } from '..';
+import { clearAttribute } from '../basic-config';
 
 import modalStore from './store';
 import { style } from './style';
@@ -205,6 +206,7 @@ customElement<ModalProps>(
     maskBlur: void 0,
   },
   (_, opt) => {
+    const el = opt.element;
     const props = mergeProps(
       {
         onOpenChange(open: OpenStateKey) {
@@ -218,6 +220,9 @@ customElement<ModalProps>(
       _,
     );
 
+    createEffect(() => {
+      clearAttribute(el, ['content']);
+    });
     return <Modal {...props} />;
   },
 );

@@ -3,9 +3,9 @@ import { css, cx } from '@moneko/css';
 import { customElement } from 'solid-element';
 
 import type { BaseOption, BasicConfig, CustomElement } from '..';
-import { FieldName } from '../basic-config';
+import { clearAttribute, FieldName } from '../basic-config';
 import getOptions from '../get-options';
-import theme from '../theme';
+import theme, { inline } from '../theme';
 
 import { style } from './style';
 
@@ -246,11 +246,14 @@ customElement<CheckboxBoolProps | CheckboxGroupProps>(
     );
 
     createEffect(() => {
-      el.removeAttribute('options');
-      el.removeAttribute('field-names');
-      el.removeAttribute('css');
+      clearAttribute(el, ['options', 'fieldNames', 'css']);
     });
-    return <Checkbox {...props} />;
+    return (
+      <>
+        <style textContent={inline} />
+        <Checkbox {...props} />
+      </>
+    );
   },
 );
 export default Checkbox;

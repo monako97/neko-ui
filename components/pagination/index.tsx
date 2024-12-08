@@ -14,7 +14,8 @@ import { css } from '@moneko/css';
 import { customElement } from 'solid-element';
 
 import type { BasicConfig, CustomElement } from '..';
-import theme from '../theme';
+import { clearAttribute } from '../basic-config';
+import theme, { block } from '../theme';
 
 import { styles } from './styles';
 
@@ -259,9 +260,14 @@ customElement<PaginationProps>(
     );
 
     createEffect(() => {
-      el.removeAttribute('css');
+      clearAttribute(el, ['css']);
     });
-    return <Pagination {...props} />;
+    return (
+      <>
+        <style textContent={block} />
+        <Pagination {...props} />
+      </>
+    );
   },
 );
 export default Pagination;

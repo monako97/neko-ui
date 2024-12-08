@@ -4,8 +4,9 @@ import { css, cx } from '@moneko/css';
 import { customElement } from 'solid-element';
 
 import type { CustomElement } from '..';
+import { clearAttribute } from '../basic-config';
 import mdStyle from '../md-style';
-import theme from '../theme';
+import theme, { block } from '../theme';
 
 import '../code';
 import '../img';
@@ -308,10 +309,15 @@ customElement<MdProps>(
     );
 
     createEffect(() => {
-      el.removeAttribute('css');
+      clearAttribute(el, ['css', 'text']);
       el.replaceChildren();
     });
-    return <MD {...props} />;
+    return (
+      <>
+        <style textContent={block} />
+        <MD {...props} />
+      </>
+    );
   },
 );
 export default MD;

@@ -248,4 +248,14 @@ export interface ThemeOption {
   name: string;
 }
 
+export const inline = css({
+  ':host': {
+    display: 'inline-flex',
+  },
+});
+export const block = css({
+  ':host': {
+    display: 'block',
+  },
+});
 export default createRoot<Theme>(createTheme, getOwner());

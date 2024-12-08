@@ -34,7 +34,7 @@ describe('Avatar', () => {
     findByTestId('avatar-size').then((e) => {
       expect(
         e.shadowRoot
-          ?.querySelectorAll('style')[2]
+          ?.querySelectorAll('style')[3]
           ?.innerHTML.endsWith('.avatar{inline-size:1rem;block-size:1rem;}'),
       ).toBe(true);
     });
@@ -47,7 +47,7 @@ describe('Avatar', () => {
     findByTestId('avatar-size-type').then((e) => {
       expect(
         e.shadowRoot
-          ?.querySelectorAll('style')[2]
+          ?.querySelectorAll('style')[3]
           ?.innerHTML.endsWith('.avatar{inline-size:2.5rem;block-size:2.5rem;}'),
       ).toBe(true);
     });
@@ -60,7 +60,7 @@ describe('Avatar', () => {
     findByTestId('avatar-color').then((e) => {
       expect(
         e.shadowRoot
-          ?.querySelectorAll('style')[2]
+          ?.querySelectorAll('style')[3]
           ?.innerHTML.endsWith('.avatar{--avatar-color:red;inline-size:2rem;block-size:2rem;}'),
       ).toBe(true);
     });

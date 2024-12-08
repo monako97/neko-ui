@@ -14,7 +14,8 @@ import { css, cx } from '@moneko/css';
 import { customElement } from 'solid-element';
 
 import type { BasicConfig, CustomElement, PaginationProps } from '..';
-import theme from '../theme';
+import { clearAttribute } from '../basic-config';
+import theme, { block } from '../theme';
 
 import { styles } from './styles';
 
@@ -361,11 +362,14 @@ customElement<TableProps>(
     );
 
     createEffect(() => {
-      el.removeAttribute('css');
-      el.removeAttribute('title');
-      el.removeAttribute('data');
+      clearAttribute(el, ['css', 'columns', 'data', 'pagination', 'summary']);
     });
-    return <Table {...props} />;
+    return (
+      <>
+        <style textContent={block} />
+        <Table {...props} />
+      </>
+    );
   },
 );
 export default Table;

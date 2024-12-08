@@ -3,7 +3,8 @@ import { css, cx } from '@moneko/css';
 import { customElement } from 'solid-element';
 
 import type { CustomElement } from '..';
-import theme from '../theme';
+import { clearAttribute } from '../basic-config';
+import theme, { inline } from '../theme';
 
 const style = css`
   :host {
@@ -109,14 +110,21 @@ customElement<SpinProps>(
   'n-spin',
   { class: void 0, css: void 0, spin: void 0, children: void 0 },
   (_, opt) => {
+    const el = opt.element;
     const childNodes = (opt.element.childNodes as NodeList) || [];
     const nodes = [...childNodes.values()];
     const [, props] = splitProps(_, ['children']);
 
     createEffect(() => {
-      opt.element.replaceChildren();
+      clearAttribute(el, ['css']);
+      el.replaceChildren();
     });
-    return <Spin {...props}>{nodes}</Spin>;
+    return (
+      <>
+        <style textContent={inline} />
+        <Spin {...props}>{nodes}</Spin>
+      </>
+    );
   },
 );
 

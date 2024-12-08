@@ -4,6 +4,7 @@ import { css, cx } from '@moneko/css';
 import { customElement } from 'solid-element';
 
 import type { CustomElement } from '..';
+import { clearAttribute } from '../basic-config';
 import theme from '../theme';
 
 export interface TypographyProps {
@@ -60,7 +61,6 @@ function Typography(props: TypographyProps) {
 
     return css`
       :host {
-        display: inline-block;
         max-inline-size: 100%;
       }
 
@@ -112,6 +112,7 @@ customElement<TypographyProps>(
     );
 
     createEffect(() => {
+      clearAttribute(el, ['css', 'tag', 'style']);
       el.replaceChildren();
     });
     return <Typography {...props} />;

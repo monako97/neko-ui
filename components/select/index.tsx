@@ -14,9 +14,10 @@ import { isFunction } from '@moneko/common';
 import { customElement } from 'solid-element';
 
 import type { CustomElement, DropdownMultipleProps, DropdownProps, MenuOption } from '..';
-import { FieldName } from '../basic-config';
+import { clearAttribute, FieldName } from '../basic-config';
 import Dropdown, { defaultProps } from '../dropdown';
 import getOptions from '../get-options';
+import { inline } from '../theme';
 
 import { style } from './style';
 
@@ -336,11 +337,14 @@ customElement<SelectProps>(
     );
 
     createEffect(() => {
-      el.removeAttribute('options');
-      el.removeAttribute('field-names');
-      el.removeAttribute('css');
+      clearAttribute(el, ['options', 'css', 'fieldNames']);
     });
-    return <Select {...props} />;
+    return (
+      <>
+        <style textContent={inline} />
+        <Select {...props} />
+      </>
+    );
   },
 );
 export default Select;

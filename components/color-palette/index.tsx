@@ -24,7 +24,8 @@ import { css, cx } from '@moneko/css';
 import { customElement } from 'solid-element';
 
 import type { CustomElement, InputNumberProps } from '..';
-import theme from '../theme';
+import { clearAttribute } from '../basic-config';
+import theme, { block } from '../theme';
 
 import { style, switchCss } from './style';
 
@@ -357,7 +358,15 @@ customElement<ColorPaletteProps>('n-color-palette', defaultColorPaletteProps, (_
     _,
   );
 
-  return <ColorPalette {...props} />;
+  createEffect(() => {
+    clearAttribute(el, ['css']);
+  });
+  return (
+    <>
+      <style textContent={block} />
+      <ColorPalette {...props} />
+    </>
+  );
 });
 
 export default ColorPalette;

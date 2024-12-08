@@ -12,7 +12,8 @@ import { css, cx } from '@moneko/css';
 import { customElement } from 'solid-element';
 
 import type { CustomElement } from '..';
-import theme from '../theme';
+import { clearAttribute } from '../basic-config';
+import theme, { block } from '../theme';
 
 import { style } from './style';
 
@@ -198,9 +199,15 @@ customElement<CarouselProps>(
     );
 
     createEffect(() => {
+      clearAttribute(el, ['css']);
       el.replaceChildren();
     });
-    return <Carousel {...props} />;
+    return (
+      <>
+        <style textContent={block} />
+        <Carousel {...props} />
+      </>
+    );
   },
 );
 export default Carousel;

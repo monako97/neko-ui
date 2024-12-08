@@ -11,6 +11,7 @@ import { Portal } from 'solid-js/web';
 import { customElement } from 'solid-element';
 
 import type { CustomElement } from '..';
+import { inline } from '../theme';
 
 import ImgLazy from './lazy';
 import { imgCss, style } from './style';
@@ -206,7 +207,12 @@ customElement<ImgProps>(
       _,
     );
 
-    return <Img {...props} />;
+    return (
+      <>
+        <style textContent={inline} />
+        <Img {...props} />
+      </>
+    );
   },
 );
 export default Img;

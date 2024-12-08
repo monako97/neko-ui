@@ -5,7 +5,8 @@ import { css } from '@moneko/css';
 import { customElement } from 'solid-element';
 
 import type { BasicConfig, CustomElement } from '..';
-import theme from '../theme';
+import { clearAttribute } from '../basic-config';
+import theme, { inline } from '../theme';
 
 import { style } from './style';
 
@@ -158,11 +159,16 @@ customElement<ButtonProps>(
     );
 
     createEffect(() => {
+      clearAttribute(el, ['css']);
       el.replaceChildren();
-      el.removeAttribute('css');
     });
 
-    return <Button {...props} />;
+    return (
+      <>
+        <style textContent={inline} />
+        <Button {...props} />
+      </>
+    );
   },
 );
 export default Button;

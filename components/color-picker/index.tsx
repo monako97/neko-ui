@@ -11,7 +11,9 @@ import { cx } from '@moneko/css';
 import { customElement } from 'solid-element';
 
 import type { BasicConfig, ColorPaletteProps, CustomElement, PopoverProps } from '..';
+import { clearAttribute } from '../basic-config';
 import Popover, { defaultProps } from '../popover';
+import { inline } from '../theme';
 
 import { style } from './style';
 
@@ -112,7 +114,15 @@ customElement<ColorPickerProps>(
       _,
     );
 
-    return <ColorPicker {...props} />;
+    createEffect(() => {
+      clearAttribute(el, ['popupCss', 'css']);
+    });
+    return (
+      <>
+        <style textContent={inline} />
+        <ColorPicker {...props} />
+      </>
+    );
   },
 );
 

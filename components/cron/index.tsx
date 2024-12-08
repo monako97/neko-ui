@@ -3,6 +3,8 @@ import { css } from '@moneko/css';
 import { customElement } from 'solid-element';
 
 import type { BaseOption, CustomElement, TabOption } from '..';
+import { clearAttribute } from '../basic-config';
+import { block } from '../theme';
 
 import Day from './day';
 import Hour from './hour';
@@ -368,6 +370,7 @@ customElement<CronProps>(
     type: 'line',
     exclude: [],
     showCron: true,
+    css: void 0,
   } as CronProps,
   (_, opts) => {
     const el = opts.element;
@@ -384,7 +387,15 @@ customElement<CronProps>(
       _,
     );
 
-    return <Cron {...props} />;
+    createEffect(() => {
+      clearAttribute(el, ['exclude', 'css']);
+    });
+    return (
+      <>
+        <style textContent={block} />
+        <Cron {...props} />
+      </>
+    );
   },
 );
 export default Cron;

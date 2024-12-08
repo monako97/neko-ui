@@ -1,9 +1,10 @@
-import { createMemo, For, mergeProps, Show } from 'solid-js';
+import { createEffect, createMemo, For, mergeProps, Show } from 'solid-js';
 import { css, cx } from '@moneko/css';
 import { customElement } from 'solid-element';
 
 import type { CustomElement } from '..';
-import theme from '../theme';
+import { clearAttribute } from '../basic-config';
+import theme, { block } from '../theme';
 
 const style = css`
   :host {
@@ -200,7 +201,15 @@ customElement<SkeletonProps>(
       _,
     );
 
-    return <Skeleton {...props} />;
+    createEffect(() => {
+      clearAttribute(el, ['css']);
+    });
+    return (
+      <>
+        <style textContent={block} />
+        <Skeleton {...props} />
+      </>
+    );
   },
 );
 export default Skeleton;

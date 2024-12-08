@@ -84,6 +84,7 @@ export { default as Pagination, type PaginationElement, type PaginationProps } f
 export { default as Popover, type PopoverElement, type PopoverProps } from './popover';
 export { default as Prism } from './prism';
 export { default as Provider, type ProviderElement, type ProviderProps } from './provider';
+export { type IntRange, default as QrCode, type QrCodeElement, type QrCodeProps } from './qrcode';
 export { default as Radio, type RadioElement, type RadioOption, type RadioProps } from './radio';
 export { default as Segmented, type SegmentedElement, type SegmentedProps } from './segmented';
 export {
@@ -155,6 +156,7 @@ import type {
   PaginationElement,
   PopoverElement,
   ProviderElement,
+  QrCodeElement,
   RadioElement,
   SegmentedElement,
   SelectElement,
@@ -265,6 +267,11 @@ interface CustomElementTags {
    * @since 2.6.0
    */
   'n-modal': ModalElement;
+  /**
+   * 二维码
+   * @scince 2.9.0
+   */
+  'n-qrcode': QrCodeElement;
 }
 type IntrinsicNekoElement = Transform<CustomElementTags>;
 

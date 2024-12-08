@@ -14,7 +14,8 @@ import { css, cx } from '@moneko/css';
 import { customElement } from 'solid-element';
 
 import type { CustomElement } from '..';
-import theme from '../theme';
+import { clearAttribute } from '../basic-config';
+import theme, { block } from '../theme';
 
 import { style } from './style';
 
@@ -50,7 +51,6 @@ const cache = {
 };
 
 function Code(props: CodeProps) {
-  const { baseStyle } = theme;
   let codeEl: HTMLPreElement;
   const diffLang = /^diff-([\w-]+)/i;
   const [code, setCode] = createSignal<string>('');
@@ -193,7 +193,6 @@ function Code(props: CodeProps) {
 
   return (
     <>
-      <style textContent={baseStyle()} />
       <style textContent={prismCss()?.()} />
       <style textContent={style} />
       <Show when={props.css}>
@@ -232,6 +231,7 @@ customElement<CodeProps>(
     webWorker: void 0,
   },
   (_, opt) => {
+    const { baseStyle } = theme;
     const el = opt.element;
     const props = mergeProps(
       {
@@ -249,11 +249,17 @@ customElement<CodeProps>(
     );
 
     createEffect(() => {
+      clearAttribute(el, ['css', 'code']);
       el.replaceChildren();
-      el.removeAttribute('css');
     });
 
-    return <Code {...props} />;
+    return (
+      <>
+        <style textContent={block} />
+        <style textContent={baseStyle()} />
+        <Code {...props} />
+      </>
+    );
   },
 );
 export default Code;

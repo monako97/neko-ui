@@ -1,11 +1,13 @@
-import { createMemo, For, mergeProps, Show, splitProps } from 'solid-js';
+import { createEffect, createMemo, For, mergeProps, Show, splitProps } from 'solid-js';
 import { css, cx } from '@moneko/css';
 import { customElement } from 'solid-element';
 
 import type { AvatarProps, BasicConfig, CustomElement } from '..';
+import { clearAttribute } from '../basic-config';
+import Popover from '../popover';
+import { inline } from '../theme';
 
 import '../avatar';
-import '../popover';
 
 const style = css`
   .group {
@@ -17,15 +19,15 @@ const style = css`
     }
 
     & > n-avatar:not(:first-child),
-    & > n-popover {
+    & > .popover {
       margin-inline-start: -4%;
       transition: margin-inline-start var(--transition-duration);
 
-      &:hover:not(n-popover) {
+      &:hover:not(.popover) {
         margin-inline-start: 4px;
 
         &:has(+ n-avatar),
-        &:has(+ n-popover) {
+        &:has(+ .popover) {
           margin-inline-end: calc(4% + 4px);
         }
       }
@@ -99,10 +101,10 @@ function AvatarGroup(_props: AvatarGroupProps) {
       <div {...other} class={cx('group', local.class)}>
         <For each={showAvatar()}>{(a) => <n-avatar {...a} size={local.size} />}</For>
         <Show when={more().length}>
-          <n-popover
+          <Popover
             arrow={true}
             trigger="click"
-            popup-css={moreCss}
+            popupCss={moreCss}
             content={
               <div class="more">
                 <For each={more()}>{(a) => <n-avatar {...a} size={local.size} />}</For>
@@ -110,13 +112,25 @@ function AvatarGroup(_props: AvatarGroupProps) {
             }
           >
             <n-avatar size={local.size} username={`+${more().length}`} />
-          </n-popover>
+          </Popover>
         </Show>
       </div>
     </>
   );
 }
 
-customElement<AvatarGroupProps>('n-avatar-group', defaultProps, AvatarGroup);
+customElement<AvatarGroupProps>('n-avatar-group', defaultProps, (props, opt) => {
+  const el = opt.element;
+
+  createEffect(() => {
+    clearAttribute(el, ['css', 'data']);
+  });
+  return (
+    <>
+      <style textContent={inline} />
+      <AvatarGroup {...props} />
+    </>
+  );
+});
 
 export default AvatarGroup;

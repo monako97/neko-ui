@@ -14,8 +14,9 @@ import { css, cx } from '@moneko/css';
 import { customElement } from 'solid-element';
 
 import type { BasicConfig, CustomElement } from '..';
+import { clearAttribute } from '../basic-config';
 import Empty from '../empty';
-import theme from '../theme';
+import theme, { inline } from '../theme';
 
 import { popoverCss, portalCss } from './style';
 
@@ -339,7 +340,6 @@ function Popover(props: PopoverProps) {
 
   return (
     <>
-      <style textContent={baseStyle()} />
       <style textContent={popoverCss} />
       <Show when={local.css}>
         <style textContent={css(local.css)} />
@@ -390,6 +390,7 @@ export const defaultProps = {
   dropdownMatchSelectWidth: void 0,
 };
 customElement<PopoverProps>('n-popover', defaultProps, (_, opt) => {
+  const { baseStyle } = theme;
   const el = opt.element;
   const props = mergeProps(
     {
@@ -406,8 +407,14 @@ customElement<PopoverProps>('n-popover', defaultProps, (_, opt) => {
   );
 
   createEffect(() => {
-    el.removeAttribute('css');
+    clearAttribute(el, ['content', 'popupCss', 'css']);
   });
-  return <Popover {...props} />;
+  return (
+    <>
+      <style textContent={inline} />
+      <style textContent={baseStyle()} />
+      <Popover {...props} />
+    </>
+  );
 });
 export default Popover;
