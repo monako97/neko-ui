@@ -269,7 +269,7 @@ interface CustomElementTags {
   'n-modal': ModalElement;
   /**
    * 二维码
-   * @scince 2.9.0
+   * @since 2.9.0
    */
   'n-qrcode': QrCodeElement;
 }
