@@ -1,7 +1,6 @@
 ---
-title: 自定义尺寸
-description: 自定义尺寸
-order: 3
+title: 自定义二维码尺寸
+description: 设置二维码的尺寸。
 ---
 
 ```html

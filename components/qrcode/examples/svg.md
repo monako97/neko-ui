@@ -1,7 +1,6 @@
 ---
-title: 自定义渲染方式
-description: 自定义渲染方式
-order: 4
+title: 自定义二维码渲染方式
+description: 设置二维码的渲染方式，支持 SVG 或 Canvas。
 ---
 
 ```html

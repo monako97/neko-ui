@@ -1,7 +1,6 @@
 ---
-title: 自定义图标
-description: 自定义图标
-order: 6
+title: 自定义二维码图标
+description: 设置二维码的自定义图标。
 ---
 
 ```html

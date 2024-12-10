@@ -48,6 +48,12 @@ export interface QrCodeProps {
    * @default 7
    */
   iconSize?: number;
+  /**
+   * 模块形状
+   * @default 'rect'
+   * @since 2.9.1
+   */
+  shape?: 'rect' | 'rhombus' | 'heart' | 'circle';
 }
 const QRCode = (_props: QrCodeProps) => {
   const { isDark } = theme;
@@ -77,6 +83,7 @@ const QRCode = (_props: QrCodeProps) => {
     'bgColor',
     'color',
     'iconSize',
+    'shape',
   ]);
   const eccMap = {
     l: Ecc.get('LOW'),
@@ -100,8 +107,8 @@ const QRCode = (_props: QrCodeProps) => {
 
     if (props.type === 'canvas') {
       if (props.size <= 0 || props.border < 0 || !cvs) throw new RangeError('Value out of range');
-      const _scale = props.size / (qr.size + props.border * 2);
-      const scale = Math.ceil(_scale);
+      const scale = props.size / (qr.size + props.border * 2);
+      const radius = scale / 2; // 半径
 
       cvs.width = props.size;
       cvs.height = props.size;
@@ -111,12 +118,69 @@ const QRCode = (_props: QrCodeProps) => {
       const bgColor = props.bgColor || prev?.bg || styles.backgroundColor;
 
       ctx.clearRect(0, 0, props.size, props.size);
+      ctx.fillStyle = bgColor;
+      ctx.fillRect(0, 0, props.size, props.size);
+      ctx.fillStyle = color;
       for (let y = -props.border; y < qr.size + props.border; y++) {
+        const ypos = (y + props.border) * scale;
+
         for (let x = -props.border; x < qr.size + props.border; x++) {
-          ctx.fillStyle = qr.getModule(x, y) ? color : bgColor;
-          ctx.fillRect((x + props.border) * scale, (y + props.border) * scale, scale, scale);
+          if (qr.getModule(x, y)) {
+            const xpos = (x + props.border) * scale;
+
+            switch (props.shape) {
+              case 'circle':
+                ctx.beginPath();
+                ctx.arc(xpos + radius, ypos + radius, radius, 0, Math.PI * 2);
+                ctx.fill();
+                break;
+              case 'heart':
+                ctx.beginPath();
+                ctx.moveTo(xpos + radius, ypos + scale / 4);
+                ctx.bezierCurveTo(
+                  xpos + scale * 0.1,
+                  ypos - scale * 0.2,
+                  xpos - scale * 0.3,
+                  ypos + scale * 0.6,
+                  xpos + radius,
+                  ypos + scale,
+                );
+                ctx.bezierCurveTo(
+                  xpos + scale * 1.3,
+                  ypos + scale * 0.6,
+                  xpos + scale * 0.9,
+                  ypos - scale * 0.2,
+                  xpos + radius,
+                  ypos + scale / 4,
+                );
+                ctx.closePath();
+                ctx.fill();
+                break;
+              case 'rhombus':
+                ctx.beginPath();
+                ctx.moveTo(xpos + radius, ypos);
+                ctx.lineTo(xpos + scale, ypos + radius);
+                ctx.lineTo(xpos + radius, ypos + scale);
+                ctx.lineTo(xpos, ypos + radius);
+                ctx.closePath();
+                ctx.fill();
+                break;
+              case 'rect':
+              default:
+                // 避免由于小数位带来的间隔问题
+                ctx.fillRect(
+                  Math.floor(xpos),
+                  Math.floor(ypos),
+                  Math.ceil(scale),
+                  Math.ceil(scale),
+                );
+                break;
+            }
+          }
         }
       }
+      // 恢复缩放
+      // ctx.restore();
       // 如果有图标，则绘制到中心
       if (other.icon) {
         if (!img) {
@@ -138,7 +202,27 @@ const QRCode = (_props: QrCodeProps) => {
       for (let y = 0; y < qr.size; y++) {
         for (let x = 0; x < qr.size; x++) {
           if (qr.getModule(x, y)) {
-            parts.push(`M${x + props.border},${y + props.border}h1v1h-1z`);
+            switch (props.shape) {
+              case 'circle':
+                parts.push(
+                  `M${x + props.border + 0.5},${y + props.border + 0.5} m -0.5, 0 a 0.5,0.5 0 1,0 1,0 a 0.5,0.5 0 1,0 -1,0`,
+                );
+                break;
+              case 'rhombus':
+                parts.push(
+                  `M${x + props.border + 0.5},${y + props.border} L${x + props.border + 1},${y + props.border + 0.5} L${x + props.border + 0.5},${y + props.border + 1} L${x + props.border},${y + props.border + 0.5} Z`,
+                );
+                break;
+              case 'heart':
+                parts.push(
+                  `M${x + props.border + 0.5},${y + props.border + 0.25} C${x + props.border + 0.1},${y + props.border - 0.2} ${x + props.border - 0.3},${y + props.border + 0.6} ${x + props.border + 0.5},${y + props.border + 1} C${x + props.border + 1.3},${y + props.border + 0.6} ${x + props.border + 0.9},${y + props.border - 0.2} ${x + props.border + 0.5},${y + props.border + 0.25} Z`,
+                );
+                break;
+              case 'rect':
+              default:
+                parts.push(`M${x + props.border},${y + props.border}h1v1h-1z`);
+                break;
+            }
           }
         }
       }
@@ -209,6 +293,7 @@ export const defaultProps: QrCodeProps = {
   boostEcc: false,
   border: void 0,
   type: void 0,
+  shape: void 0,
 };
 
 customElement<QrCodeProps>('n-qrcode', defaultProps, (props, opt) => {

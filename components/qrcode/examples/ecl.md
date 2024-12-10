@@ -1,7 +1,6 @@
 ---
-title: 纠错比例
-description: 通过设置 ecl 调整不同的容错等级。
-order: 5
+title: 二维码纠错比例
+description: 通过设置 ECL（错误纠正等级）来调整二维码的容错能力。
 ---
 
 ```html
