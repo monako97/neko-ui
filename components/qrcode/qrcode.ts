@@ -42,8 +42,8 @@ const NUM_ERROR_CORRECTION_BLOCKS = [
     37, 40, 42, 45, 48, 51, 54, 57, 60, 63, 66, 70, 74, 77, 81,
   ],
 ];
-// 返回在给定版本的QR码中可以存储的数据位数，已排除所有功能模块。这包括余数位，因此可能不是8的倍数。结果范围在[208, 29648]之间。这可以实现为一个40项的查找表。
 
+// 返回在给定版本的QR码中可以存储的数据位数，已排除所有功能模块。这包括余数位，因此可能不是8的倍数。结果范围在[208, 29648]之间。这可以实现为一个40项的查找表。
 function getNumRawDataModules(ver: number): number {
   if (ver < QrCode.VERSION.MIN || ver > QrCode.VERSION.MAX) {
     throw new RangeError('Version number out of range');

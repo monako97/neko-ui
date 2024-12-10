@@ -25,9 +25,26 @@ export interface QrCodeProps {
    * @default 'm'
    */
   ecl?: 'l' | 'm' | 'q' | 'h';
+  /**
+   * 支持的QR码模型2标准最小版本
+   * @default 1
+   */
   minVersion?: IntRange<1, 41>;
+  /**
+   * 支持的QR码模型2标准最大版本
+   * @default 40
+   */
   maxVersion?: IntRange<1, 41>;
+  /**
+   * 掩码模式
+   * @default -1
+   * 为 -1 时，表示自动选择
+   */
   mask?: -1 | IntRange<0, 8>;
+  /**
+   * 在数据仍然适合当前版本号的情况下提高纠错级别
+   * @default true
+   */
   boostEcc?: boolean;
   /**
    * 模块外围的边框宽度（模块单位，非像素）
