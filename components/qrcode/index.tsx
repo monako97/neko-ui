@@ -36,9 +36,8 @@ export interface QrCodeProps {
    */
   maxVersion?: IntRange<1, 41>;
   /**
-   * 掩码模式
+   * 掩码模式; 为 -1 时，表示自动选择
    * @default -1
-   * 为 -1 时，表示自动选择
    */
   mask?: -1 | IntRange<0, 8>;
   /**

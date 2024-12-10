@@ -1,6 +1,7 @@
 ---
 title: 二维码模块形状
 description: 设置二维码的模块形状。
+col: 100%
 ---
 
 ```html

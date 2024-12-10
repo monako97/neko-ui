@@ -1,5 +1,11 @@
 # Change log
 
+## Last
+
+### 📚 Documentation
+
+- qrcode version ([53ae90d](https://github.com/monako97/neko-ui/commit/53ae90dd8682662e674ebcc0e1f6c9163aabbca9))
+
 ## [v2.9.1](https://github.com/monako97/neko-ui/compare/v2.9.0...v2.9.1) (12-11-2024)
 
 ### ✨ Features
