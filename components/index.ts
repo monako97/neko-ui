@@ -22,7 +22,7 @@ export {
   type CheckboxGroupElement,
   type CheckboxGroupProps,
 } from './checkbox';
-export { default as Code, type CodeElement, type CodeProps } from './code';
+export { default as Code, type CodeElement, type CodeProps, type Language } from './code';
 export {
   default as ColorPalette,
   type ColorPaletteElement,

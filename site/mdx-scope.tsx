@@ -1,7 +1,7 @@
 import { createMemo, Show } from 'solid-js';
 import { css } from '@moneko/css';
 import type { MDXComponents } from '@moneko/solid/mdx';
-import { type TabOption, theme } from 'neko-ui';
+import { type Language, type TabOption, theme } from 'neko-ui';
 
 interface Props {
   children: Element;
@@ -92,14 +92,7 @@ export function NpmTabs(p: Props) {
             p[key] && {
               label: key,
               icon: logo(icons[key as keyof typeof icons]),
-              content: (
-                <n-md
-                  no-render={true}
-                  line-number={false}
-                  css={noShadowMd}
-                  text={p[key] as string}
-                />
-              ),
+              content: <n-md no-render={true} css={noShadowMd} text={p[key] as string} />,
             }
           );
         })
@@ -142,8 +135,7 @@ const mdxScope: MDXComponents = {
     return (
       <n-code
         toolbar={true}
-        line-number={false}
-        language={p.children.className.replace('language-', '').replace(/ .*$/, '')}
+        language={p.children.className.replace('language-', '').replace(/ .*$/, '') as Language}
         {...p}
       />
     );

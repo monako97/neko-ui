@@ -4,7 +4,7 @@ describe('Md', () => {
   it('basic', () => {
     const { container, getByTestId } = render(() => (
       <>
-        <n-md line-number={false} tools={[]}>
+        <n-md tools={[]}>
           {`#### 第一种方式
 
 !> 直接在写在标签内`}

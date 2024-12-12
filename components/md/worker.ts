@@ -11,7 +11,6 @@ function onMessage(e: MessageEvent<string>) {
       pictureViewer?: boolean;
       lazyPicture?: boolean;
       langToolbar?: string[];
-      langLineNumber?: boolean;
     } & MarkedOptions;
     const renderer = new self.marked.Renderer();
 
@@ -31,9 +30,7 @@ function onMessage(e: MessageEvent<string>) {
         return `<n-tree data="${code}" />`;
       }
 
-      return `<n-code class="n-code" toolbar="${toolbar}" language="${lang}" ${
-        options.langLineNumber ? 'line-number="true"' : ''
-      }>${encodeURIComponent(code)}</n-code>`;
+      return `<n-code class="n-code" toolbar="${toolbar}" language="${lang}">${encodeURIComponent(code)}</n-code>`;
     };
 
     result = self.marked(text, {

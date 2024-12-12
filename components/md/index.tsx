@@ -43,7 +43,6 @@ function MD(_props: MdProps) {
     pictureViewer?: boolean;
     lazyPicture?: boolean;
     langToolbar?: string[];
-    langLineNumber?: boolean;
   }) {
     const { text, pictureViewer, lazyPicture, langToolbar, ...options } = opt;
     const marked = (await import('marked-completed')).default;
@@ -69,9 +68,7 @@ function MD(_props: MdProps) {
         return `<n-tree data="${code}" />`;
       }
 
-      return `<n-code class="n-code" toolbar="${toolbar}" language="${lang}" ${
-        options.langLineNumber ? 'line-number="true"' : ''
-      }>${encodeURIComponent(code)}</n-code>`;
+      return `<n-code class="n-code" toolbar="${toolbar}" language="${lang}">${code}</n-code>`;
     };
 
     update({
@@ -102,7 +99,6 @@ function MD(_props: MdProps) {
       worker.postMessage(
         JSON.stringify({
           text: props.text,
-          langLineNumber: props.lineNumber,
           langToolbar: props.tools,
           pictureViewer: props.pictureViewer,
           lazyPicture: props.lazyPicture,
@@ -112,7 +108,6 @@ function MD(_props: MdProps) {
       const call = () =>
         postMessage({
           text: props.text,
-          langLineNumber: props.lineNumber,
           langToolbar: props.tools,
           pictureViewer: props.pictureViewer,
           lazyPicture: props.lazyPicture,
@@ -256,10 +251,6 @@ export interface MdProps {
    * @default true
    */
   lazyPicture?: boolean;
-  /** 显示代码块行号
-   * @default true
-   */
-  lineNumber?: boolean;
   /** 开启代码块工具条
    * @default ['copy']
    */
@@ -287,7 +278,6 @@ customElement<MdProps>(
     class: void 0,
     pictureViewer: void 0,
     lazyPicture: void 0,
-    lineNumber: true,
     text: void 0,
     tools: void 0,
     getAnchorContainer: void 0,

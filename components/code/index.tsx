@@ -1,23 +1,59 @@
 import {
-  type Accessor,
   createEffect,
   createResource,
   createSignal,
+  createUniqueId,
+  type JSX,
   mergeProps,
   onCleanup,
-  onMount,
   Show,
   untrack,
 } from 'solid-js';
 import { isFunction, setClipboard } from '@moneko/common';
-import { css, cx } from '@moneko/css';
+import { css } from '@moneko/css';
+import type { TokenStream } from 'prismjs';
 import { customElement } from 'solid-element';
 
 import type { CustomElement } from '..';
 import { clearAttribute } from '../basic-config';
-import theme, { block } from '../theme';
+import theme from '../theme';
 
-import { style } from './style';
+import { darkCss, lightCss, style } from './style';
+
+export type Language =
+  | 'bash'
+  | 'shell'
+  | 'sh'
+  | 'clike'
+  | 'css'
+  | 'docker'
+  | 'dockerfile'
+  | 'git'
+  | 'diff'
+  | 'javascript'
+  | 'js'
+  | 'json'
+  | 'webmanifest'
+  | 'jsx'
+  | 'tsx'
+  | 'less'
+  | 'html'
+  | 'mathml'
+  | 'svg'
+  | 'xml'
+  | 'ssml'
+  | 'atom'
+  | 'rss'
+  | 'regex'
+  | 'rust'
+  | 'sql'
+  | 'swift'
+  | 'toml'
+  | 'typescript'
+  | 'ts'
+  | 'yaml'
+  | 'yml'
+  | 'matlab';
 
 export interface CodeProps {
   /** 自定义类名 */
@@ -26,74 +62,164 @@ export interface CodeProps {
   css?: string;
   /** 内容 */
   code?: string;
-  /** 语言 */
-  language?: string;
-  /** 显示代码行号 */
-  lineNumber?: boolean;
+  /** 语言
+   * @default 'markup'
+   */
+  language?: Language;
   /** 支持编辑 */
   edit?: boolean;
   /** 开启代码块工具条 */
   toolbar?: boolean;
   /** 编辑修改时的回调 */
-  onChange?: (code: string) => void;
+  onChange?(code: string): void;
   children?: JSX.Element;
-  /**
-   * 使用 web worker
-   * @default false
-   */
-  webWorker?: boolean;
 }
-
 export type CodeElement = CustomElement<CodeProps>;
-const cache = {
-  Prism: null as typeof import('../prism/index').default | null,
-  prismCss: null as Accessor<string> | null,
-};
 
 function Code(props: CodeProps) {
+  const { isDark } = theme;
   let codeEl: HTMLPreElement;
+  let timer: NodeJS.Timeout | undefined;
   const diffLang = /^diff-([\w-]+)/i;
+  const decoded = /%[0-9A-Fa-f]{2}/;
+  const id = createUniqueId();
   const [code, setCode] = createSignal<string>('');
-  const [hei, setHei] = createSignal(20);
-  const [isIntersecting, setIsIntersecting] = createSignal(false);
+  const [highlightCss, setHighlightCss] = createSignal<string>();
 
   async function fetchPrism() {
-    if (!cache.Prism) {
-      cache.Prism = (await import('../prism')).default;
+    if (!window.Prism) {
+      return (await import('../prism')).default;
     }
-    return cache.Prism;
-  }
-  async function fetchPrismCss() {
-    if (!cache.prismCss) {
-      cache.prismCss = (await import('../prism/css')).default;
-    }
-    return cache.prismCss;
+    return window.Prism;
   }
   const [prismJS] = createResource('prism', fetchPrism);
-  const [prismCss] = createResource('prism-css', fetchPrismCss);
 
-  function initObserver() {
-    return new IntersectionObserver((entries) => {
-      setIsIntersecting(entries[0].isIntersecting);
-    });
-  }
-  function initWorker() {
-    return new Worker('https://cdn.jsdelivr.net/npm/neko-ui@latest/es/code/worker.js');
-  }
-  // eslint-disable-next-line solid/reactivity
-  let observer = props.webWorker ? void 0 : initObserver();
-  // eslint-disable-next-line solid/reactivity
-  let worker: Worker | undefined = props.webWorker ? initWorker() : void 0;
+  createEffect(() => {
+    let _next = props.code || '';
+
+    if (decoded.test(_next)) {
+      _next = decodeURIComponent(_next);
+    }
+    codeEl.normalize();
+    if (_next !== codeEl.textContent) {
+      setCode(_next);
+    }
+  });
 
   function copy() {
     setClipboard(untrack(code), codeEl);
   }
-  function Pre() {
-    return (
+  const change: JSX.InputEventHandlerUnion<HTMLElement, InputEvent> = function (e) {
+    e.target.normalize();
+    const next = e.target.textContent;
+
+    syntax(props.language, next);
+    if (isFunction(props.onChange)) {
+      props.onChange(next);
+    }
+  };
+
+  function highlighter(el: HTMLPreElement, tokenize: TokenStream, start = 0) {
+    let pos = start;
+
+    if (Array.isArray(tokenize)) {
+      for (let i = 0, len = tokenize.length; i < len; i++) {
+        const token = tokenize[i];
+
+        if (typeof token !== 'object') {
+          pos += token.length;
+          continue;
+        }
+        pos = highlighter(el, token, pos);
+      }
+      return pos;
+    }
+    if (typeof tokenize === 'object' && tokenize.type) {
+      if (el.firstChild) {
+        const key = id + (tokenize.alias ?? tokenize.type);
+        const range = new Range();
+
+        range.setStart(el.firstChild, pos);
+        if (Array.isArray(tokenize.content)) {
+          pos = highlighter(el, tokenize.content, pos);
+        } else if (typeof tokenize.content === 'string') {
+          pos += tokenize.content.length;
+        }
+        range.setEnd(el.firstChild, pos);
+        const highlight = CSS.highlights.get(key);
+
+        if (highlight) {
+          highlight.add(range);
+        } else {
+          CSS.highlights.set(key, new Highlight().add(range));
+        }
+      }
+    }
+
+    return pos;
+  }
+  function syntax(language = 'markup', value: string | null) {
+    if (timer) {
+      clearTimeout(timer);
+      timer = void 0;
+    }
+    const Prism = prismJS();
+
+    if (!value || !Prism) return;
+    timer = setTimeout(() => {
+      clearTimeout(timer);
+
+      if (CSS.highlights) {
+        CSS.highlights.forEach((highlight, key) => {
+          if (key.startsWith(id)) {
+            highlight.clear();
+          }
+        });
+        const grammar =
+          Prism.languages[diffLang.test(language) ? 'diff' : language] || Prism.languages.markup;
+
+        highlighter(codeEl, Prism.tokenize(value, grammar));
+        setHighlightCss(() => {
+          const len = id.length;
+          let style = '';
+
+          for (const key of CSS.highlights.keys()) {
+            if (key.startsWith(id)) {
+              style += `::highlight(${key}){color:var(--${key.substring(len)});}`;
+            }
+          }
+          return style;
+        });
+      } else {
+        throw Error('不支持 CSS Highlights');
+      }
+      timer = void 0;
+    }, 0);
+  }
+  createEffect(() => {
+    syntax(props.language, code());
+  });
+  onCleanup(() => {
+    if (CSS.highlights) {
+      for (const key of CSS.highlights.keys()) {
+        if (key.startsWith(id)) {
+          CSS.highlights.delete(key);
+        }
+      }
+    }
+  });
+
+  return (
+    <>
+      <style textContent={isDark() ? darkCss : lightCss} />
+      <style textContent={highlightCss()} />
+      <style textContent={style} />
+      <Show when={props.css}>
+        <style textContent={css(props.css)} />
+      </Show>
       <pre
         classList={{
           [`language-${props.language}`]: !!props.language,
-          'line-numbers': props.lineNumber,
           'not-toolbar': !props.toolbar,
           [props.class!]: !props.edit,
         }}
@@ -103,115 +229,10 @@ function Code(props: CodeProps) {
             <button class="toolbar-copy" aria-label="copy" onClick={copy} />
           </div>
         </Show>
-        <code ref={codeEl} class={`language-${props.language}`} textContent={code()} />
+        <code ref={codeEl!} contenteditable={props.edit} spellcheck={false} onInput={change}>
+          {code()}
+        </code>
       </pre>
-    );
-  }
-  function change({ target }: { target: HTMLTextAreaElement }) {
-    const c = `${target.value}${target.value.endsWith('\n') ? '\u200b' : ''}`;
-
-    setCode(c);
-    if (isFunction(props.onChange)) {
-      props.onChange(c);
-    }
-  }
-  function update(e: { data: string }) {
-    codeEl.innerHTML = e.data;
-    setHei(codeEl.getBoundingClientRect().height - (props.toolbar ? 40 : 16));
-  }
-  function cleanObserver() {
-    if (observer) {
-      // 停止观察目标元素
-      observer.unobserve(codeEl);
-      observer.disconnect();
-    }
-  }
-  function postMessage(language: string, value?: string) {
-    const Prism = prismJS();
-
-    if (!value || !isIntersecting() || !Prism) return;
-    cleanObserver();
-    if (diffLang.test(language) && !Prism.languages[language]) {
-      Prism.languages[language] = Prism.languages.diff;
-    }
-    update({
-      data: Prism.highlight(
-        `${value}\n`,
-        Prism.languages[language] || Prism.languages.markup,
-        language,
-      ),
-    });
-  }
-  createEffect(() => {
-    if (props.code) {
-      try {
-        setCode(decodeURIComponent(props.code));
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      } catch (_error) {
-        setCode(props.code);
-      }
-    } else {
-      setCode('');
-    }
-  });
-  createEffect(() => {
-    if (props.webWorker) {
-      if (!worker) {
-        worker = initWorker();
-      }
-      worker.addEventListener('message', update);
-    } else if (!observer) {
-      observer = initObserver();
-    }
-  });
-
-  createEffect(() => {
-    if (worker) {
-      worker.postMessage(
-        JSON.stringify({
-          language: props.language,
-          code: code(),
-        }),
-      );
-    } else {
-      postMessage(props.language || 'markup', code());
-    }
-  });
-  onMount(() => {
-    if (codeEl) {
-      // 开始观察目标元素
-      observer?.observe(codeEl);
-    }
-  });
-  onCleanup(() => {
-    if (worker) {
-      worker.removeEventListener('message', update);
-      worker.terminate();
-    }
-    cleanObserver();
-  });
-
-  return (
-    <>
-      <style textContent={prismCss()?.()} />
-      <style textContent={style} />
-      <Show when={props.css}>
-        <style textContent={css(props.css)} />
-      </Show>
-      <Show when={props.edit} fallback={<Pre />}>
-        <div class={cx('n-editor', props.class)}>
-          <textarea
-            value={props.code}
-            classList={{
-              'line-numbers': props.lineNumber,
-              'not-toolbar': !props.toolbar,
-            }}
-            style={{ height: `${hei()}px` }}
-            onInput={change}
-          />
-          <Pre />
-        </div>
-      </Show>
     </>
   );
 }
@@ -226,9 +247,7 @@ customElement<CodeProps>(
     edit: void 0,
     toolbar: void 0,
     css: void 0,
-    lineNumber: void 0,
     onChange: void 0,
-    webWorker: void 0,
   },
   (_, opt) => {
     const { baseStyle } = theme;
@@ -252,10 +271,8 @@ customElement<CodeProps>(
       clearAttribute(el, ['css', 'code']);
       el.replaceChildren();
     });
-
     return (
       <>
-        <style textContent={block} />
         <style textContent={baseStyle()} />
         <Code {...props} />
       </>

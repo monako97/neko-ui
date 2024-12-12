@@ -1,11 +1,11 @@
 import { fireEvent, render } from '@solidjs/testing-library';
-import { CodeElement } from 'neko-ui';
+import { type CodeElement } from 'neko-ui';
 
 describe('Code', () => {
   it('basic', () => {
     const { container } = render(() => (
       <>
-        <n-code line-number={true} language="javascript">
+        <n-code language="javascript">
           {`const foo = bar.baz([1, 2, 3]) + 1;
 console.log(\`foo: $\{foo}\`);`}
         </n-code>
@@ -33,13 +33,7 @@ console.log(\`foo: $\{foo}\`);`}
   it('edit', () => {
     const change = jest.fn();
     const { getByTestId } = render(() => (
-      <n-code
-        data-testid="code"
-        line-number={true}
-        edit={true}
-        onChange={change}
-        language="javascript"
-      >
+      <n-code data-testid="code" edit={true} onChange={change} language="javascript">
         {`const foo = bar.baz([1, 2, 3]) + 1;
 console.log(\`foo: $\{foo}\`);`}
       </n-code>

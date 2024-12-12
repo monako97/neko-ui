@@ -4,6 +4,7 @@
 
 ### 📚 Documentation
 
+- qrcode version ([1880b7e](https://github.com/monako97/neko-ui/commit/1880b7e965d6ea1f6965c26d1ba13d29d166607f))
 - qrcode version ([53ae90d](https://github.com/monako97/neko-ui/commit/53ae90dd8682662e674ebcc0e1f6c9163aabbca9))
 
 ## [v2.9.1](https://github.com/monako97/neko-ui/compare/v2.9.0...v2.9.1) (12-11-2024)
