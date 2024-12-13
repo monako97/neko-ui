@@ -14,6 +14,7 @@ import '../img';
 function MD(_props: MdProps) {
   let renderer: marked.Renderer | undefined;
   let ref: HTMLDivElement | undefined;
+  const needEndod = /<[^>]+>/;
   const { baseStyle } = theme;
   const props = mergeProps(
     {
@@ -67,8 +68,9 @@ function MD(_props: MdProps) {
       if (lang === 'treeview') {
         return `<n-tree data="${code}" />`;
       }
+      const source = needEndod.test(code) ? endodeURLComponent(code) : code;
 
-      return `<n-code class="n-code" toolbar="${toolbar}" language="${lang}">${code}</n-code>`;
+      return `<n-code class="n-code" toolbar="${toolbar}" language="${lang}">${source}</n-code>`;
     };
 
     update({
