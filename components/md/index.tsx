@@ -68,7 +68,7 @@ function MD(_props: MdProps) {
       if (lang === 'treeview') {
         return `<n-tree data="${code}" />`;
       }
-      const source = needEndod.test(code) ? endodeURLComponent(code) : code;
+      const source = needEndod.test(code) ? encodeURIComponent(code) : code;
 
       return `<n-code class="n-code" toolbar="${toolbar}" language="${lang}">${source}</n-code>`;
     };
