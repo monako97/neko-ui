@@ -7,7 +7,6 @@ interface Props {
   children: Element;
   [key: string]: unknown;
 }
-
 const icons = {
   npm: 'https://github.com/npm.png?size=32',
   yarn: 'https://github.com/yarnpkg.png?size=32',
