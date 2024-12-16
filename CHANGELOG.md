@@ -1,5 +1,11 @@
 # Change log
 
+## Last
+
+### 📚 Documentation
+
+- actions cache ([9bdd81f](https://github.com/monako97/neko-ui/commit/9bdd81ff2ca910ffa42aeed498f63ff9cb3f9103))
+
 ## [v2.9.3](https://github.com/monako97/neko-ui/compare/v2.9.2...v2.9.3) (12-16-2024)
 
 ### ✨ Features

@@ -25,11 +25,12 @@ jobs:
         with:
           node-version: 20
           registry-url: 'https://registry.npmjs.org'
-      # 缓存 node_modules/.cache
       - name: Cache
         uses: actions/cache@v3
         with:
-          path: node_modules/.cache
+          path: |
+            node_modules/.cache
+            coverage
           key: ${{ runner.os }}-node-${{ hashFiles('**/pnpm-lock.yaml') }}
           restore-keys: |
             ${{ runner.os }}-node-
