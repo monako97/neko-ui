@@ -134,7 +134,7 @@ function Sandbox(_props: SandboxProps) {
                 hide: !open(),
               }}
               code={sources()[current().lang]}
-              language={current().lang === 'SolidJS' ? 'tsx' : current().lang}
+              language={(current().lang === 'html' ? 'html js' : current().lang) as NekoUI.Language}
               edit={true}
               css={codeNoShadowCss}
               onChange={codeChange}

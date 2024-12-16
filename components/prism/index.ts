@@ -20,7 +20,5 @@ import 'prismjs/components/prism-toml.js';
 import 'prismjs/components/prism-typescript.js'; // typescript + ts
 import 'prismjs/components/prism-yaml.js'; // yaml + yml
 import 'prismjs/components/prism-matlab.js';
-// plugins
-import 'prismjs/plugins/highlight-keywords/prism-highlight-keywords.js';
 
 export default Prism;

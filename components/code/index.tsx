@@ -1,5 +1,6 @@
 import {
   createEffect,
+  createMemo,
   createResource,
   createSignal,
   createUniqueId,
@@ -20,7 +21,7 @@ import theme from '../theme';
 
 import { darkCss, lightCss, style } from './style';
 
-export type Language =
+export type LanguageBase =
   | 'bash'
   | 'shell'
   | 'sh'
@@ -29,7 +30,6 @@ export type Language =
   | 'docker'
   | 'dockerfile'
   | 'git'
-  | 'diff'
   | 'javascript'
   | 'js'
   | 'json'
@@ -55,6 +55,13 @@ export type Language =
   | 'yml'
   | 'matlab';
 
+type ExcludeLanguage<T extends LanguageBase, U extends LanguageBase> = T extends U ? never : T;
+
+export type Language =
+  | LanguageBase
+  | {
+      [T in LanguageBase]: `${T} ${ExcludeLanguage<LanguageBase, T>}`;
+    }[LanguageBase];
 export interface CodeProps {
   /** 自定义类名 */
   class?: string;
@@ -62,7 +69,7 @@ export interface CodeProps {
   css?: string;
   /** 内容 */
   code?: string;
-  /** 语言
+  /** 语言（支持多种语言配置：如 `html css javascript`）
    * @default 'markup'
    */
   language?: Language;
@@ -80,7 +87,6 @@ function Code(props: CodeProps) {
   const { isDark } = theme;
   let codeEl: HTMLPreElement;
   let timer: NodeJS.Timeout | undefined;
-  const diffLang = /^diff-([\w-]+)/i;
   const decoded = /%[0-9A-Fa-f]{2}/;
   const id = createUniqueId();
   const [code, setCode] = createSignal<string>('');
@@ -90,9 +96,12 @@ function Code(props: CodeProps) {
     if (!window.Prism) {
       return (await import('../prism')).default;
     }
+    window.Prism.disableWorkerMessageHandler = true;
+    window.Prism.manual = true;
     return window.Prism;
   }
   const [prismJS] = createResource('prism', fetchPrism);
+  const title = createMemo(() => props.language?.split(' ').pop());
 
   createEffect(() => {
     let _next = props.code || '';
@@ -113,13 +122,36 @@ function Code(props: CodeProps) {
     e.target.normalize();
     const next = e.target.textContent;
 
-    syntax(props.language, next);
+    syntax(props.language, next, true);
     if (isFunction(props.onChange)) {
       props.onChange(next);
     }
   };
 
-  function highlighter(el: HTMLPreElement, tokenize: TokenStream, start = 0) {
+  function updateRang(
+    key: string,
+    token: string,
+    range: AbstractRange,
+    selection: Record<string, string>,
+  ) {
+    const highlight = CSS.highlights.get(key);
+
+    if (highlight) {
+      highlight.add(range);
+    } else {
+      CSS.highlights.set(key, new Highlight().add(range));
+    }
+    if (selection[key] === void 0) {
+      selection[key] =
+        `::highlight(${key}){color:var(--${token});background-color:var(--${token}-bg);text-decoration:var(--${token}-text-decoration);text-shadow:var(--${token}-text-shadow);-webkit-text-stroke-width:var(--${token}-stroke-width);-webkit-text-stroke-color:var(--${token}-stroke-color);}`;
+    }
+  }
+  function highlighter(
+    el: HTMLPreElement,
+    tokenize: TokenStream,
+    selection: Record<string, string>,
+    start = 0,
+  ) {
     let pos = start;
 
     if (Array.isArray(tokenize)) {
@@ -130,35 +162,40 @@ function Code(props: CodeProps) {
           pos += token.length;
           continue;
         }
-        pos = highlighter(el, token, pos);
+        pos = highlighter(el, token, selection, pos);
       }
       return pos;
     }
     if (typeof tokenize === 'object' && tokenize.type) {
       if (el.firstChild) {
-        const key = id + (tokenize.alias ?? tokenize.type);
+        const token = (tokenize.alias ?? tokenize.type).toString();
+        const key = id + token;
         const range = new Range();
 
-        range.setStart(el.firstChild, pos);
+        if (['deleted', 'inserted'].includes(token)) {
+          // diff
+          range.setStart(el.firstChild, pos + 2);
+        } else {
+          range.setStart(el.firstChild, pos);
+        }
         if (Array.isArray(tokenize.content)) {
-          pos = highlighter(el, tokenize.content, pos);
+          pos = highlighter(el, tokenize.content, selection, pos);
         } else if (typeof tokenize.content === 'string') {
           pos += tokenize.content.length;
         }
         range.setEnd(el.firstChild, pos);
-        const highlight = CSS.highlights.get(key);
-
-        if (highlight) {
-          highlight.add(range);
-        } else {
-          CSS.highlights.set(key, new Highlight().add(range));
-        }
+        updateRang(key, token, range, selection);
       }
     }
 
     return pos;
   }
-  function syntax(language = 'markup', value: string | null) {
+  function syntax(
+    language: Language = 'markup' as Language,
+    value: string | null,
+    clear?: boolean,
+    prevCss = {},
+  ) {
     if (timer) {
       clearTimeout(timer);
       timer = void 0;
@@ -168,28 +205,25 @@ function Code(props: CodeProps) {
     if (!value || !Prism) return;
     timer = setTimeout(() => {
       clearTimeout(timer);
-
       if (CSS.highlights) {
-        CSS.highlights.forEach((highlight, key) => {
-          if (key.startsWith(id)) {
-            highlight.clear();
-          }
-        });
-        const grammar =
-          Prism.languages[diffLang.test(language) ? 'diff' : language] || Prism.languages.markup;
-
-        highlighter(codeEl, Prism.tokenize(value, grammar));
-        setHighlightCss(() => {
-          const len = id.length;
-          let style = '';
-
-          for (const key of CSS.highlights.keys()) {
+        if (clear) {
+          CSS.highlights.forEach((highlight, key) => {
             if (key.startsWith(id)) {
-              style += `::highlight(${key}){color:var(--${key.substring(len)});}`;
+              highlight.clear();
             }
-          }
-          return style;
-        });
+          });
+        }
+        const grammars = language.split(' ') as Language[],
+          grammar = Prism.languages[grammars[0]];
+
+        if (grammar) {
+          highlighter(codeEl, Prism.tokenize(value, grammar), prevCss);
+        }
+        if (grammars.length > 1 || grammars[0] === 'git') {
+          syntax(grammars[1], value, false, prevCss);
+        } else {
+          setHighlightCss(Object.values(prevCss).join(''));
+        }
       } else {
         throw Error('不支持 CSS Highlights');
       }
@@ -197,7 +231,7 @@ function Code(props: CodeProps) {
     }, 0);
   }
   createEffect(() => {
-    syntax(props.language, code());
+    syntax(props.language, code(), true);
   });
   onCleanup(() => {
     if (CSS.highlights) {
@@ -225,7 +259,7 @@ function Code(props: CodeProps) {
         }}
       >
         <Show when={props.toolbar}>
-          <div class="toolbar" data-language={props.language?.split(' ')[0]}>
+          <div class="toolbar" data-language={title()}>
             <button class="toolbar-copy" aria-label="copy" onClick={copy} />
           </div>
         </Show>
@@ -274,7 +308,7 @@ customElement<CodeProps>(
     return (
       <>
         <style textContent={baseStyle()} />
-        <Code {...props} />
+        <Code language={'atom'} {...props} />
       </>
     );
   },

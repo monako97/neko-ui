@@ -39,8 +39,7 @@ app.config.isCustomElement = (tag) => /^n-[a-z]/.test(tag);
 
 ## Vue 中对应的写法为
 
-```html
-<template>
+export const vue = `<template>
   <n-input @change="handleChange" />
 </template>
 <script>
@@ -54,5 +53,6 @@ app.config.isCustomElement = (tag) => /^n-[a-z]/.test(tag);
       },
     },
   };
-</script>
-```
+</script>`
+
+<n-code toolbar code={vue} language="html js vue" />

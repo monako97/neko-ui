@@ -9,7 +9,9 @@ order: 0
 foo = foo + 1;
 </n-code>
 <strong>diff</strong>
-<n-code language="git">+ let foo = bar.baz([1, 2, 3]);
+<n-code language="git" code="+ <strong>diff</strong>">
+</n-code>
+<n-code toolbar="true" language="git javascript">+ let foo = bar.baz([1, 2, 3]);
 -    foo = foo + 1;
   let foo = bar.baz([1, 2, 3]);
 -    foo = foo + 1;

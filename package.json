@@ -51,9 +51,9 @@
     "ui libraries"
   ],
   "devDependencies": {
-    "@commitlint/cli": "19.6.0",
+    "@commitlint/cli": "19.6.1",
     "@commitlint/config-conventional": "19.6.0",
-    "@moneko/core": "3.26.10",
+    "@moneko/core": "3.26.12",
     "@moneko/solid": "1.10.6",
     "@solidjs/testing-library": "0.8.10",
     "@swc/jest": "0.2.37",

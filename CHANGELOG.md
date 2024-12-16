@@ -2,6 +2,10 @@
 
 ## Last
 
+### 📚 Documentation
+
+- 构建工具更新 ([eccfc01](https://github.com/monako97/neko-ui/commit/eccfc019c0b48cf6a0f51a6cc38ad44c6254628d))
+
 ## [v2.9.2](https://github.com/monako97/neko-ui/compare/v2.9.1...v2.9.2) (12-13-2024)
 
 ### 📦 Code Refactoring

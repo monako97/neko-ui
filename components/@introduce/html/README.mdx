@@ -8,8 +8,7 @@ subtitle: in html
 
 当案例中的代码为
 
-```jsx
-<n-select
+export const raw = `<n-select
   label="无后缀,无前缀"
   options={[
     { label: 'A', value: 'A' },
@@ -18,12 +17,13 @@ subtitle: in html
   onChange={(e) => {
     console.log(e.detail);
   }}
-/>
-```
+/>`
+
+<n-code toolbar code={raw} language="jsx" />
 
 ## 原生 HTML 中对应的写法为
 
-```html
+export const code = `
 <!doctype html>
 <html lang="en">
   <head>
@@ -46,4 +46,6 @@ subtitle: in html
     });
   </script>
 </html>
-```
+`;
+
+<n-code toolbar code={code} language="javascript html" />
