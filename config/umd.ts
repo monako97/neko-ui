@@ -9,7 +9,6 @@ const conf: Partial<ConfigType> = {
     path: resolveProgram('umd'),
     filename: 'index.js',
   },
-  bundleAnalyzer: false,
   splitChunk: false,
   runtimeChunk: false,
 };

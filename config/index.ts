@@ -14,7 +14,6 @@ const conf: Partial<ConfigType> = {
     },
   },
   fallbackCompPath: '@/components/fallback',
-  bundleAnalyzer: {},
   importOnDemand: {
     '@moneko/common': {
       transform: 'esm/${member}',
