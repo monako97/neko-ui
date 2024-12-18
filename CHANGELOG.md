@@ -4,6 +4,7 @@
 
 ### 📚 Documentation
 
+- github actions ([b8a4a42](https://github.com/monako97/neko-ui/commit/b8a4a42da65ad0106081f06d9e3983528e7c397f))
 - actions cache ([aa53393](https://github.com/monako97/neko-ui/commit/aa53393af156b8fa45af6eac10f663e6980453fd))
 - actions cache ([9bdd81f](https://github.com/monako97/neko-ui/commit/9bdd81ff2ca910ffa42aeed498f63ff9cb3f9103))
 
