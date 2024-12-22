@@ -39,21 +39,14 @@ function Segmented(props: SegmentedProps) {
   const [offsetStyle, setOffsetStyle] = createSignal('');
   let box: HTMLDivElement | undefined;
   const cssVar = createMemo(() => {
-    if (isDark()) {
-      return css`
-        :host {
-          --segmented-bg: #000;
-          --segmented-current-bg: #1f1f1f;
-        }
-      `;
-    }
+    const dark = isDark();
 
-    return css`
-      :host {
-        --segmented-bg: var(--primary-details-bg);
-        --segmented-current-bg: #fff;
-      }
-    `;
+    return css({
+      ':host': {
+        '--segmented-bg': dark ? '#000' : 'var(--primary-details-bg)',
+        '--segmented-current-bg': dark ? '#1f1f1f' : '#fff',
+      },
+    });
   });
   const fieldNames = createMemo(() => Object.assign({}, FieldName, props.fieldNames));
 

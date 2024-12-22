@@ -1,5 +1,31 @@
 import { css } from '@moneko/css';
 
+export const addCss = css`
+  .btn {
+    padding: 4px;
+    font-size: var(--font-size-lg);
+  }
+`;
+
+export const btnCss = css`
+  .remove {
+    display: inline-block;
+    font-size: 12px;
+    font-weight: 400;
+    color: var(--text-secondary);
+    transition: color var(--transition-timing-function) var(--transition-duration);
+    margin-inline-start: 8px;
+
+    &:hover {
+      color: var(--error-color);
+    }
+  }
+
+  .btn:has(.remove) {
+    padding-inline-end: 10px;
+  }
+`;
+
 export const style = css`
   :host {
     display: block;
@@ -44,18 +70,6 @@ export const style = css`
 
   .slide-in {
     animation: slide-in var(--transition-timing-function) var(--transition-duration);
-  }
-
-  @keyframes slide-in {
-    0% {
-      opacity: 0;
-      transform: translateY(16px);
-    }
-
-    100% {
-      opacity: 1;
-      transform: translateY(0);
-    }
   }
 
   .items {
@@ -142,30 +156,16 @@ export const style = css`
   .warp-right::after {
     opacity: 1;
   }
-`;
 
-export const btnCss = css`
-  .remove {
-    display: inline-block;
-    font-size: 12px;
-    font-weight: 400;
-    color: var(--text-secondary);
-    transition: color var(--transition-timing-function) var(--transition-duration);
-    margin-inline-start: 8px;
-
-    &:hover {
-      color: var(--error-color);
+  @keyframes slide-in {
+    0% {
+      opacity: 0;
+      transform: translateY(16px);
     }
-  }
 
-  .btn:has(.remove) {
-    padding-inline-end: 10px;
-  }
-`;
-
-export const addCss = css`
-  .btn {
-    padding: 4px;
-    font-size: var(--font-size-lg);
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
   }
 `;

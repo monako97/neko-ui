@@ -1,5 +1,22 @@
 import { css } from '@moneko/css';
 
+export const mdNoShadowCss = css`
+  .n-md-body {
+    padding: 0;
+    margin-block-end: 0;
+    background-color: transparent;
+    box-shadow: none;
+  }
+`;
+
+export const codeNoShadowCss = css`
+  .n-editor,
+  pre {
+    border-radius: 0 0 var(--border-radius) var(--border-radius);
+    box-shadow: none;
+  }
+`;
+
 export const sandboxCss = css`
   :host {
     display: inline-block;
@@ -164,22 +181,6 @@ export const sandboxCss = css`
   n-code-live::part(root) {
     display: block;
     gap: 4px;
-  }
-`;
-
-export const mdNoShadowCss = css`
-  .n-md-body {
-    padding: 0;
-    margin-block-end: 0;
-    background-color: transparent;
-    box-shadow: none;
-  }
-`;
-export const codeNoShadowCss = css`
-  .n-editor,
-  pre {
-    border-radius: 0 0 var(--border-radius) var(--border-radius);
-    box-shadow: none;
   }
 `;
 

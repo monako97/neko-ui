@@ -78,21 +78,14 @@ function Tabs(props: TabsProps) {
   let wrapRef: HTMLDivElement | undefined;
 
   const cssVar = createMemo(() => {
-    if (isDark()) {
-      return css`
-        :host {
-          --tab-current-bg: var(--component-bg);
-          --tab-bg: rgb(255 255 255 / 4%);
-        }
-      `;
-    }
+    const dark = isDark();
 
-    return css`
-      :host {
-        --tab-bg: var(--primary-details-bg);
-        --tab-current-bg: var(--component-bg);
-      }
-    `;
+    return css({
+      ':host': {
+        '--tab-bg': dark ? 'rgb(255 255 255 / 4%)' : 'var(--primary-details-bg)',
+        '--tab-current-bg': dark ? 'var(--component-bg)' : 'var(--component-bg)',
+      },
+    });
   });
   const fieldNames = createMemo(() => Object.assign({}, FieldName, props.fieldNames));
   const items = createMemo<TabOption[]>(() => {

@@ -60,30 +60,6 @@ export const style = css`
     animation: copy-slide-out var(--transition-duration) forwards var(--transition-timing-function);
   }
 
-  @keyframes copy-slide-in {
-    from {
-      opacity: 0;
-      transform: translate3d(0, -100%, 0) scale(0);
-    }
-
-    to {
-      opacity: 1;
-      transform: translate3d(0, 0, 0) scale(1);
-    }
-  }
-
-  @keyframes copy-slide-out {
-    from {
-      opacity: 1;
-      transform: translate3d(0, 0, 0) scale(1);
-    }
-
-    to {
-      opacity: 0;
-      transform: translate3d(0, -100%, 0) scale(0);
-    }
-  }
-
   pre,
   code {
     display: block;
@@ -204,6 +180,30 @@ export const style = css`
   pre::-webkit-scrollbar {
     block-size: 5px;
     inline-size: 5px;
+  }
+
+  @keyframes copy-slide-in {
+    from {
+      opacity: 0;
+      transform: translate3d(0, -100%, 0) scale(0);
+    }
+
+    to {
+      opacity: 1;
+      transform: translate3d(0, 0, 0) scale(1);
+    }
+  }
+
+  @keyframes copy-slide-out {
+    from {
+      opacity: 1;
+      transform: translate3d(0, 0, 0) scale(1);
+    }
+
+    to {
+      opacity: 0;
+      transform: translate3d(0, -100%, 0) scale(0);
+    }
   }
 `;
 export const darkCss = css({

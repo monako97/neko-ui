@@ -105,33 +105,16 @@ function Skeleton(props: SkeletonProps) {
   const { baseStyle, isDark } = theme;
   const rows = createMemo(() => Array(props.rows).fill(0));
   const cssVar = createMemo(() => {
-    if (isDark()) {
-      return css`
-        :host {
-          --skeleton-bg: rgb(255 255 255 / 6%);
-          --skeleton-bg-active: linear-gradient(
-              100deg,
-              rgb(255 255 255 / 5%) 40%,
-              rgb(255 255 255 / 15%) 50%,
-              rgb(255 255 255 / 5%) 60%
-            )
-            transparent 180%/200% 100%;
-        }
-      `;
-    }
+    const dark = isDark();
 
-    return css`
-      :host {
-        --skeleton-bg: rgb(0 0 0 / 6%);
-        --skeleton-bg-active: linear-gradient(
-            100deg,
-            rgb(0 0 0 / 5%) 40%,
-            rgb(0 0 0 / 15%) 50%,
-            rgb(0 0 0 / 5%) 60%
-          )
-          transparent 180%/200% 100%;
-      }
-    `;
+    return css({
+      ':host': {
+        '--skeleton-bg': dark ? 'rgb(255 255 255 / 6%)' : 'rgb(0 0 0 / 6%)',
+        '--skeleton-bg-active': dark
+          ? `linear-gradient(100deg,rgb(255 255 255 / 5%) 40%,rgb(255 255 255 / 15%) 50%,rgb(255 255 255 / 5%) 60%) transparent 180%/200% 100%`
+          : `linear-gradient(100deg,rgb(0 0 0 / 5%) 40%,rgb(0 0 0 / 15%) 50%,rgb(0 0 0 / 5%) 60%) transparent 180%/200% 100%`,
+      },
+    });
   });
 
   return (

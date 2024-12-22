@@ -9,6 +9,23 @@ import { inline } from '../theme';
 
 import '../avatar';
 
+const moreCss = css`
+  .more {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow-y: auto;
+    padding: 8px;
+    max-inline-size: 60vi;
+    max-block-size: 80vb;
+    gap: 8px;
+    flex-wrap: wrap;
+
+    > n-avatar {
+      display: flex;
+    }
+  }
+`;
 const style = css`
   .group {
     display: inline-flex;
@@ -31,24 +48,6 @@ const style = css`
           margin-inline-end: calc(4% + 4px);
         }
       }
-    }
-  }
-`;
-
-const moreCss = css`
-  .more {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    overflow-y: auto;
-    padding: 8px;
-    max-inline-size: 60vi;
-    max-block-size: 80vb;
-    gap: 8px;
-    flex-wrap: wrap;
-
-    & > n-avatar {
-      display: flex;
     }
   }
 `;
