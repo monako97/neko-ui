@@ -3,7 +3,7 @@
 }
 
 html,
-body {
+html > body {
   font-size: var(--font-size);
   font-family: var(--font-family);
   color: var(--text-color, rgb(0 0 0 / 65%));
@@ -43,11 +43,11 @@ n-provider {
   }
 }
 
-body {
+html > body {
   overflow-x: hidden;
 }
 
-body::before {
+html > body::before {
   position: fixed;
   inset-block-start: 0;
   z-index: 1;
