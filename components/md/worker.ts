@@ -1,53 +1,97 @@
-import type { MarkedOptions } from 'marked-completed';
+import type { MarkedOptions, Renderer } from 'marked-completed';
 
-self.importScripts('https://cdn.jsdelivr.net/npm/marked-completed/marked.min.js');
+import { code, image, katexBlock, katexInline } from './common';
 
-function onMessage(e: MessageEvent<string>) {
-  let result;
-
-  try {
-    const { text, pictureViewer, lazyPicture, langToolbar, ...options } = JSON.parse(e.data) as {
-      text: string;
-      pictureViewer?: boolean;
-      lazyPicture?: boolean;
-      langToolbar?: string[];
-    } & MarkedOptions;
-    const renderer = new self.marked.Renderer();
-
-    renderer.katexBlock = function (code: string) {
-      return `<n-katex display-mode="true">${code}</n-katex>`;
-    };
-    renderer.katexInline = function (code: string) {
-      return `<n-katex>${code}</n-katex>`;
-    };
-    renderer.image = (src: string, title: string, alt: string) => {
-      return `<n-img lazy="${lazyPicture}" disabled="${!pictureViewer}" role="img" src="${src}" alt="${alt}" ${title ? `title="${title}"` : ''}></n-img>`;
-    };
-    const toolbar = !!langToolbar?.length;
-
-    renderer.code = function (code: string, lang: string) {
-      if (lang === 'treeview') {
-        return `<n-tree data="${code}" />`;
-      }
-
-      return `<n-code class="n-code" toolbar="${toolbar}" language="${lang}">${encodeURIComponent(code)}</n-code>`;
-    };
-
-    result = self.marked(text, {
-      renderer: renderer,
-      langToolbar: langToolbar,
-      headerPrefix: '# ',
-      breaks: true,
-      pedantic: false,
-      smartLists: true,
-      smartypants: true,
-      xhtml: true,
-      ...options,
-    });
-  } catch (error) {
-    result = error;
-  }
-  self.postMessage(result);
+export interface WorkerMessage extends MarkedOptions {
+  text: string;
+  id?: string;
+  pictureViewer?: boolean;
+  lazyPicture?: boolean;
 }
 
-self.addEventListener('message', onMessage, false);
+let MARKED_URL: string | null, WORKER_URL: string | null;
+
+async function createMarked() {
+  const markedRaw = (await import('marked-completed?raw')).default;
+
+  return URL.createObjectURL(
+    new Blob([markedRaw], {
+      type: 'application/javascript',
+    }),
+  );
+}
+function createURL() {
+  function worker() {
+    self.importScripts('MARKED_URL');
+    let renderer: Renderer;
+
+    function onMessage(t: MessageEvent<WorkerMessage>) {
+      let result: string;
+
+      try {
+        if (!renderer) {
+          renderer = new self.marked.Renderer();
+          renderer.katexBlock("'");
+          renderer.katexInline("'");
+        }
+        renderer.image(...("'" as unknown as [string, string, string]));
+        renderer.code(...("'" as unknown as [string, string, false]));
+        result = self.marked(
+          t.data.text,
+          Object.assign(
+            {
+              renderer: renderer,
+              headerPrefix: '# ',
+              breaks: true,
+              pedantic: false,
+              smartLists: true,
+              smartypants: true,
+              xhtml: true,
+            },
+            t.data,
+          ),
+        );
+      } catch (error) {
+        result = (error as Error).message;
+      }
+      self.postMessage(result);
+    }
+    self.addEventListener('message', onMessage, false);
+  }
+
+  return URL.createObjectURL(
+    new Blob(
+      [
+        `(${worker.toString().replace('MARKED_URL', MARKED_URL!).replace(`katexBlock("'")`, `katexBlock=${katexBlock}`).replace(`katexInline("'")`, `katexInline=${katexInline}`).replace(`image(..."'")`, `image=(${image})(t.data.lazyPicture, t.data.pictureViewer)`).replace(`code(..."'")`, `code=(${code})(t.data.langToolbar)`)})(self)`,
+      ],
+      {
+        type: 'application/javascript',
+      },
+    ),
+  );
+}
+let count = 0;
+
+export async function create() {
+  count++;
+  if (!MARKED_URL) {
+    MARKED_URL = await createMarked();
+  }
+  if (!WORKER_URL) {
+    WORKER_URL = createURL();
+  }
+  return WORKER_URL;
+}
+
+export function dispose() {
+  count--;
+  const empty = count <= 0;
+
+  if (empty) {
+    URL.revokeObjectURL(MARKED_URL!);
+    MARKED_URL = null;
+    URL.revokeObjectURL(WORKER_URL!);
+    WORKER_URL = null;
+  }
+  return empty;
+}

@@ -1,4 +1,13 @@
-import { createEffect, For, Match, mergeProps, onCleanup, Show, Switch } from 'solid-js';
+import {
+  createEffect,
+  createResource,
+  For,
+  Match,
+  mergeProps,
+  onCleanup,
+  Show,
+  Switch,
+} from 'solid-js';
 import { frameCallback } from '@moneko/common';
 import { css, cx } from '@moneko/css';
 import { customElement } from 'solid-element';
@@ -8,13 +17,15 @@ import { clearAttribute } from '../basic-config';
 import mdStyle from '../md-style';
 import theme, { block } from '../theme';
 
+import { code, image, katexBlock, katexInline } from './common';
+import { create, dispose, type WorkerMessage } from './worker';
+
 import '../code';
 import '../img';
 
 function MD(_props: MdProps) {
   let renderer: marked.Renderer | undefined;
   let ref: HTMLDivElement | undefined;
-  const needEndod = /<[^>]+>/;
   const { baseStyle } = theme;
   const props = mergeProps(
     {
@@ -28,51 +39,27 @@ function MD(_props: MdProps) {
     _props,
   );
 
-  function initWorker() {
-    return new Worker('https://cdn.jsdelivr.net/npm/neko-ui@latest/es/md/worker.js');
+  async function createWorker(enable: boolean) {
+    return enable ? new Worker(await create()) : Promise.resolve(void 0);
   }
-  // eslint-disable-next-line solid/reactivity
-  let worker: Worker | undefined = props.webWorker ? initWorker() : void 0;
+  const [worker, { mutate }] = createResource(false, createWorker);
 
   function update(e: { data: string }) {
     if (ref) {
       ref.innerHTML = e.data;
     }
   }
-  async function postMessage(opt: {
-    text: string;
-    pictureViewer?: boolean;
-    lazyPicture?: boolean;
-    langToolbar?: string[];
-  }) {
-    const { text, pictureViewer, lazyPicture, langToolbar, ...options } = opt;
+  async function postMessage(opt: WorkerMessage) {
+    const { text, lazyPicture, pictureViewer, langToolbar, ...options } = opt;
     const marked = (await import('marked-completed')).default;
 
     if (!renderer) {
       renderer = new marked.Renderer();
-
-      renderer.katexBlock = (code: string) => {
-        return `<n-katex display-mode="true">${code}</n-katex>`;
-      };
-      renderer.katexInline = (code: string) => {
-        return `<n-katex>${code}</n-katex>`;
-      };
+      renderer.katexBlock = katexBlock;
+      renderer.katexInline = katexInline;
     }
-
-    renderer.image = (src: string, title: string, alt: string) => {
-      return `<n-img lazy="${lazyPicture}" disabled="${!pictureViewer}" role="img" src="${src}" alt="${alt}" ${title ? `title="${title}"` : ''}></n-img>`;
-    };
-    const toolbar = !!langToolbar?.length;
-
-    renderer.code = function (code: string, lang: string) {
-      if (lang === 'treeview') {
-        return `<n-tree data="${code}" />`;
-      }
-      const source = needEndod.test(code) ? encodeURIComponent(code) : code;
-
-      return `<n-code class="n-code" toolbar="${toolbar}" language="${lang}">${source}</n-code>`;
-    };
-
+    renderer.image = image(lazyPicture, pictureViewer);
+    renderer.code = code(langToolbar);
     update({
       data: marked(text, {
         renderer: renderer,
@@ -88,24 +75,26 @@ function MD(_props: MdProps) {
     });
   }
   createEffect(() => {
-    if (props.webWorker) {
-      if (!worker) {
-        worker = initWorker();
+    createWorker(props.webWorker).then((res) => {
+      if (res) {
+        res.addEventListener('message', update);
       }
-      worker.addEventListener('message', update);
-    }
+      mutate(res);
+    });
   });
 
   createEffect(() => {
-    if (worker) {
-      worker.postMessage(
-        JSON.stringify({
+    if (props.webWorker) {
+      const webWorker = worker();
+
+      if (webWorker) {
+        webWorker.postMessage({
           text: props.text,
           langToolbar: props.tools,
           pictureViewer: props.pictureViewer,
           lazyPicture: props.lazyPicture,
-        }),
-      );
+        });
+      }
     } else {
       const call = () =>
         postMessage({
@@ -119,9 +108,14 @@ function MD(_props: MdProps) {
     }
   });
   onCleanup(() => {
-    if (worker) {
-      worker.removeEventListener('message', update);
-      worker.terminate();
+    if (props.webWorker) {
+      const webWorker = worker();
+
+      if (webWorker) {
+        webWorker.removeEventListener('message', update);
+        webWorker.terminate();
+      }
+      dispose();
     }
   });
   let list: HTMLAnchorElement[] = [];
@@ -268,6 +262,7 @@ export interface MdProps {
   children?: JSX.Element;
   /**
    * 使用 web worker
+   * @default true
    */
   webWorker?: boolean;
 }
@@ -286,7 +281,7 @@ customElement<MdProps>(
     css: void 0,
     children: void 0,
     notRender: void 0,
-    webWorker: void 0,
+    webWorker: true,
   },
   (_, opt) => {
     const el = opt.element;
