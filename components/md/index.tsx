@@ -1,14 +1,4 @@
-import {
-  createEffect,
-  createResource,
-  For,
-  Match,
-  mergeProps,
-  onCleanup,
-  Show,
-  Switch,
-} from 'solid-js';
-import { frameCallback } from '@moneko/common';
+import { createEffect, For, Match, mergeProps, onCleanup, Show, Switch } from 'solid-js';
 import { css, cx } from '@moneko/css';
 import { customElement } from 'solid-element';
 
@@ -17,19 +7,16 @@ import { clearAttribute } from '../basic-config';
 import mdStyle from '../md-style';
 import theme, { block } from '../theme';
 
-import { code, image, katexBlock, katexInline } from './common';
-import { create, dispose, type WorkerMessage } from './worker';
+import { create, dispose } from './worker';
 
 import '../code';
 import '../img';
 
 function MD(_props: MdProps) {
-  let renderer: marked.Renderer | undefined;
   let ref: HTMLDivElement | undefined;
   const { baseStyle } = theme;
   const props = mergeProps(
     {
-      webWorker: false,
       pictureViewer: true,
       lazyPicture: true,
       text: '',
@@ -39,84 +26,27 @@ function MD(_props: MdProps) {
     _props,
   );
 
-  async function createWorker(enable: boolean) {
-    return enable ? new Worker(await create()) : Promise.resolve(void 0);
-  }
-  const [worker, { mutate }] = createResource(false, createWorker);
+  const worker = new Worker(create());
 
+  worker.addEventListener('message', update);
   function update(e: { data: string }) {
     if (ref) {
       ref.innerHTML = e.data;
     }
   }
-  async function postMessage(opt: WorkerMessage) {
-    const { text, lazyPicture, pictureViewer, langToolbar, ...options } = opt;
-    const marked = (await import('marked-completed')).default;
-
-    if (!renderer) {
-      renderer = new marked.Renderer();
-      renderer.katexBlock = katexBlock;
-      renderer.katexInline = katexInline;
-    }
-    renderer.image = image(lazyPicture, pictureViewer);
-    renderer.code = code(langToolbar);
-    update({
-      data: marked(text, {
-        renderer: renderer,
-        langToolbar: langToolbar,
-        headerPrefix: '# ',
-        breaks: true,
-        pedantic: false,
-        smartLists: true,
-        smartypants: true,
-        xhtml: true,
-        ...options,
-      }),
-    });
-  }
-  createEffect(() => {
-    createWorker(props.webWorker).then((res) => {
-      if (res) {
-        res.addEventListener('message', update);
-      }
-      mutate(res);
-    });
-  });
 
   createEffect(() => {
-    if (props.webWorker) {
-      const webWorker = worker();
-
-      if (webWorker) {
-        webWorker.postMessage({
-          text: props.text,
-          langToolbar: props.tools,
-          pictureViewer: props.pictureViewer,
-          lazyPicture: props.lazyPicture,
-        });
-      }
-    } else {
-      const call = () =>
-        postMessage({
-          text: props.text,
-          langToolbar: props.tools,
-          pictureViewer: props.pictureViewer,
-          lazyPicture: props.lazyPicture,
-        });
-
-      frameCallback(call);
-    }
+    worker.postMessage({
+      text: props.text,
+      langToolbar: props.tools,
+      pictureViewer: props.pictureViewer,
+      lazyPicture: props.lazyPicture,
+    });
   });
   onCleanup(() => {
-    if (props.webWorker) {
-      const webWorker = worker();
-
-      if (webWorker) {
-        webWorker.removeEventListener('message', update);
-        webWorker.terminate();
-      }
-      dispose();
-    }
+    worker.removeEventListener('message', update);
+    worker.terminate();
+    dispose();
   });
   let list: HTMLAnchorElement[] = [];
   let heading: HTMLHeadingElement[] = [];
@@ -260,11 +190,6 @@ export interface MdProps {
    */
   notRender?: boolean;
   children?: JSX.Element;
-  /**
-   * 使用 web worker
-   * @default true
-   */
-  webWorker?: boolean;
 }
 
 export type MdElement = CustomElement<MdProps>;
@@ -281,7 +206,6 @@ customElement<MdProps>(
     css: void 0,
     children: void 0,
     notRender: void 0,
-    webWorker: true,
   },
   (_, opt) => {
     const el = opt.element;

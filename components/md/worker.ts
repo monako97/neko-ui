@@ -1,6 +1,7 @@
 import type { MarkedOptions, Renderer } from 'marked-completed';
+import markedRaw from 'marked-completed?raw';
 
-import { code, image, katexBlock, katexInline } from './common';
+// import { code, image, katexBlock, katexInline } from './common';
 
 export interface WorkerMessage extends MarkedOptions {
   text: string;
@@ -11,9 +12,7 @@ export interface WorkerMessage extends MarkedOptions {
 
 let MARKED_URL: string | null, WORKER_URL: string | null;
 
-async function createMarked() {
-  const markedRaw = (await import('marked-completed?raw')).default;
-
+function createMarked() {
   return URL.createObjectURL(
     new Blob([markedRaw], {
       type: 'application/javascript',
@@ -31,11 +30,24 @@ function createURL() {
       try {
         if (!renderer) {
           renderer = new self.marked.Renderer();
-          renderer.katexBlock("'");
-          renderer.katexInline("'");
+          renderer.katexBlock = function (code: string) {
+            return `<n-katex display-mode="true">${code}</n-katex>`;
+          };
+          renderer.katexInline = function (code: string) {
+            return `<n-katex>${code}</n-katex>`;
+          };
         }
-        renderer.image(...("'" as unknown as [string, string, string]));
-        renderer.code(...("'" as unknown as [string, string, false]));
+        renderer.image = function (src: string, title: string, alt: string) {
+          return `<n-img lazy="${t.data.lazyPicture}" disabled="${!t.data.pictureViewer}" role="img" src="${src}" alt="${alt}" ${title ? `title="${title}"` : ''}></n-img>`;
+        };
+        renderer.code = function (sourcecode: string, lang: string) {
+          if (lang === 'treeview') {
+            return `<n-tree data="${sourcecode}" />`;
+          }
+          const needEndod = /<[^>]+>/;
+
+          return `<n-code class="n-code" toolbar="${t.data.langToolbar && !!t.data.langToolbar.length}" language="${lang}">${needEndod.test(sourcecode) ? encodeURIComponent(sourcecode) : sourcecode}</n-code>`;
+        };
         result = self.marked(
           t.data.text,
           Object.assign(
@@ -60,22 +72,17 @@ function createURL() {
   }
 
   return URL.createObjectURL(
-    new Blob(
-      [
-        `(${worker.toString().replace('MARKED_URL', MARKED_URL!).replace(`katexBlock("'")`, `katexBlock=${katexBlock}`).replace(`katexInline("'")`, `katexInline=${katexInline}`).replace(`image(..."'")`, `image=(${image})(t.data.lazyPicture, t.data.pictureViewer)`).replace(`code(..."'")`, `code=(${code})(t.data.langToolbar)`)})(self)`,
-      ],
-      {
-        type: 'application/javascript',
-      },
-    ),
+    new Blob([`(${worker.toString().replace('MARKED_URL', MARKED_URL!)})(self)`], {
+      type: 'application/javascript',
+    }),
   );
 }
 let count = 0;
 
-export async function create() {
+export function create() {
   count++;
   if (!MARKED_URL) {
-    MARKED_URL = await createMarked();
+    MARKED_URL = createMarked();
   }
   if (!WORKER_URL) {
     WORKER_URL = createURL();

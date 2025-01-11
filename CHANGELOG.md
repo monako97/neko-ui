@@ -1,6 +1,10 @@
 # Change log
 
-## Last
+## [v2.9.4](https://github.com/monako97/neko-ui/compare/v2.9.3...v2.9.4) (1-8-2025)
+
+### ✨ Features
+
+- n-md 默认开启webwork ([eebdedd](https://github.com/monako97/neko-ui/commit/eebdeddccb70ab563c6b5b6d5cb991fd244acbe7))
 
 ### 📚 Documentation
 

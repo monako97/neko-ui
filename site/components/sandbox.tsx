@@ -4,7 +4,7 @@ import * as SolidWeb from 'solid-js/web';
 import examples, { type ExampleModule } from '@app/example';
 import Fallback from '@app/fallback';
 import { isFunction } from '@moneko/common';
-import type { CodeLiveProps } from 'n-code-live';
+import CodeLive, { type CodeLiveProps } from 'n-code-live';
 import * as NekoUI from 'neko-ui';
 import { customElement } from 'solid-element';
 
@@ -30,6 +30,7 @@ interface SandboxProps extends Omit<ExampleModule, 'title'> {
 
 const components: CodeLiveProps['components'] = {
   ...Solid,
+  CodeLive,
   NekoUI,
   Portal,
   Dynamic,
@@ -77,7 +78,6 @@ function Sandbox(_props: SandboxProps) {
   );
 
   onMount(() => {
-    import('n-code-live');
     const l = langs()[0].value;
 
     setCurrent({
