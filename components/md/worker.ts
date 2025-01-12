@@ -1,8 +1,6 @@
 import type { MarkedOptions, Renderer } from 'marked-completed';
 import markedRaw from 'marked-completed?raw';
 
-// import { code, image, katexBlock, katexInline } from './common';
-
 export interface WorkerMessage extends MarkedOptions {
   text: string;
   id?: string;

@@ -1,5 +1,11 @@
 # Change log
 
+## [v2.9.6](https://github.com/monako97/neko-ui/compare/v2.9.4...v2.9.6) (1-12-2025)
+
+### 🐛 Bug Fixes
+
+- md worker ([86546b0](https://github.com/monako97/neko-ui/commit/86546b00f16aa9fe8e48a1e4e47f5679b49a0220))
+
 ## [v2.9.4](https://github.com/monako97/neko-ui/compare/v2.9.3...v2.9.4) (1-8-2025)
 
 ### ✨ Features

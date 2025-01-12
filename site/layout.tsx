@@ -18,7 +18,15 @@ function App(p: RouteProps<string>) {
   let box: HTMLDivElement | undefined;
   const { isDark, scheme } = theme;
   const location = useLocation();
-  const doc = createMemo(() => docs[getPathName(location)]);
+  const keys = Object.keys(docs);
+  const doc = createMemo(() => {
+    const base = getPathName(location);
+
+    return keys
+      .filter((key) => key === base || key.startsWith(`${base}/`))
+      .map((name) => docs[name])
+      .flat();
+  });
 
   createEffect(() => {
     box?.scrollTo({ top: 0, behavior: 'smooth' });

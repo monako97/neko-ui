@@ -25,7 +25,6 @@ function MD(_props: MdProps) {
     },
     _props,
   );
-
   const worker = new Worker(create());
 
   worker.addEventListener('message', update);
