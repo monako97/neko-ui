@@ -7,17 +7,16 @@ order: 4
 ```html
 <n-button>更新消息 (手动关闭)</n-button>
 <script>
-  const { notification } = NekoUI;
   const btn = container.querySelector('n-button');
 
   btn.addEventListener('click', function () {
-    const id = notification.info('操作成功!!!', 5000);
+    const id = NekoUI.notification.info('操作成功!!!', 5000);
 
     const timer = setTimeout(() => {
       const icon = document.createElement('i');
 
       icon.textContent = '🎉';
-      notification.update(id, {
+      NekoUI.notification.update(id, {
         type: 'success',
         children: '更新成功!!!',
         icon: icon,
@@ -29,7 +28,7 @@ order: 4
 ```
 
 ```jsx
-const { notification } = NekoUI;
+import { notification } from 'neko-ui';
 
 const Demo = () => {
   const handleOpen = () => {
@@ -48,5 +47,5 @@ const Demo = () => {
   return <n-button onClick={handleOpen}>更新消息 (手动关闭)</n-button>;
 };
 
-render(<Demo />);
+export default Demo;
 ```

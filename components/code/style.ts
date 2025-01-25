@@ -12,7 +12,7 @@ export const style = css`
   }
 
   .toolbar::after,
-  .toolbar-copy::after,
+  .toolbar-copy,
   pre,
   code {
     transition-duration: var(--transition-duration);
@@ -147,30 +147,21 @@ export const style = css`
     z-index: 3;
     border: none;
     padding: 0;
+    font-size: var(--font-size, 14px);
+    color: var(--text-color);
     background: none;
     outline: none;
     cursor: pointer;
-    inset-block-start: 0;
-    inset-inline-end: 8px;
+    inset-block-start: 5px;
+    inset-inline-end: 5px;
+  }
+
+  .toolbar > .toolbar-copy:hover {
+    color: var(--primary-color, #5794ff);
   }
 
   pre > .toolbar > .toolbar-copy:active {
     transform: scale(0.95);
-  }
-
-  .toolbar > .toolbar-copy::after {
-    display: block;
-    font-size: 24px;
-    font-family: sans-serif;
-    color: var(--text-color);
-    user-select: none;
-    content: '⎘';
-    line-height: 24px;
-    transition-property: color, transform;
-  }
-
-  .toolbar > .toolbar-copy:hover::after {
-    color: var(--primary-color, #5794ff);
   }
 
   .not-toolbar > code {

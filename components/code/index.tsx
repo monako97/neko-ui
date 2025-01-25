@@ -19,6 +19,7 @@ import type { CustomElement } from '..';
 import { clearAttribute } from '../basic-config';
 import theme from '../theme';
 
+import { CopyIcon } from './copy-icon';
 import { darkCss, lightCss, style } from './style';
 
 export type LanguageBase =
@@ -77,6 +78,8 @@ export interface CodeProps {
   edit?: boolean;
   /** 开启代码块工具条 */
   toolbar?: boolean;
+  /** 工具条上显示的文字 */
+  title?: string;
   /** 编辑修改时的回调 */
   onChange?(code: string): void;
   children?: JSX.Element;
@@ -101,7 +104,7 @@ function Code(props: CodeProps) {
     return window.Prism;
   }
   const [prismJS] = createResource('prism', fetchPrism);
-  const title = createMemo(() => props.language?.split(' ').pop());
+  const title = createMemo(() => props.title || props.language?.split(' ').pop());
 
   createEffect(() => {
     let _next = props.code || '';
@@ -260,7 +263,7 @@ function Code(props: CodeProps) {
       >
         <Show when={props.toolbar}>
           <div class="toolbar" data-language={title()}>
-            <button class="toolbar-copy" aria-label="copy" onClick={copy} />
+            <CopyIcon class="toolbar-copy" onClick={copy} />
           </div>
         </Show>
         <code ref={codeEl!} contenteditable={props.edit} spellcheck={false} onInput={change}>
@@ -282,6 +285,7 @@ customElement<CodeProps>(
     toolbar: void 0,
     css: void 0,
     onChange: void 0,
+    title: void 0,
   },
   (_, opt) => {
     const { baseStyle } = theme;
@@ -302,13 +306,13 @@ customElement<CodeProps>(
     );
 
     createEffect(() => {
-      clearAttribute(el, ['css', 'code']);
+      clearAttribute(el, ['css', 'code', 'title']);
       el.replaceChildren();
     });
     return (
       <>
         <style textContent={baseStyle()} />
-        <Code language={'atom'} {...props} />
+        <Code {...props} />
       </>
     );
   },

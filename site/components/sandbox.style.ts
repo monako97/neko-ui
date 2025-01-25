@@ -121,23 +121,19 @@ export const sandboxCss = css`
 
   .sandbox-btn {
     position: absolute;
+    display: flex;
+    gap: 4px;
+    align-items: center;
+    padding: 0 4px;
+    font-size: var(--font-size-sm);
     inset-inline-end: -16px;
     inset-block-end: 0;
-    padding: 0 4px;
     inline-size: fit-content;
-    font-size: var(--font-size-sm);
     cursor: pointer;
     border-start-start-radius: var(--border-radius);
     line-height: 24px;
     user-select: none;
     transition-property: background-color, color, transform;
-  }
-
-  .sandbox-btn::after {
-    display: inline-block;
-    text-indent: 4px;
-    line-height: 1;
-    content: '{ ... }';
   }
 
   .sandbox-btn:active {

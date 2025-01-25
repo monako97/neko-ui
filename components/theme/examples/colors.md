@@ -6,7 +6,9 @@ col: 100%
 ---
 
 ```jsx
-const { dark, setDark, light, setLight } = NekoUI.theme;
+import { theme } from 'neko-ui';
+
+const { dark, setDark, light, setLight } = theme;
 
 function getTextColor(colors) {
   return {

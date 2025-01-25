@@ -11,26 +11,25 @@ order: 2
 <n-button type="warning">警告</n-button>
 <n-button type="success">成功</n-button>
 <script>
-  const { notification } = NekoUI;
   const btns = container.querySelectorAll('n-button');
 
   btns.forEach((btn) => {
     btn.addEventListener('click', function () {
       switch (btn.type) {
         case 'primary':
-          notification.primary(`${btn.type} message`, 5000);
+          NekoUI.notification.primary(`${btn.type} message`, 5000);
           break;
         case 'warning':
-          notification.warning(`${btn.type} message`, 2000);
+          NekoUI.notification.warning(`${btn.type} message`, 2000);
           break;
         case 'error':
-          notification.error(`${btn.type} message`, 0, true);
+          NekoUI.notification.error(`${btn.type} message`, 0, true);
           break;
         case 'success':
-          notification.success(`${btn.type} message`, 4000);
+          NekoUI.notification.success(`${btn.type} message`, 4000);
           break;
         default:
-          notification.info('info message', 1000);
+          NekoUI.notification.info('info message', 1000);
           break;
       }
     });
@@ -39,8 +38,9 @@ order: 2
 ```
 
 ```jsx
+import { notification } from 'neko-ui';
+
 const Demo = () => {
-  const { notification } = NekoUI;
   const handleOpen = (type: string) => {
     switch (type) {
         case 'primary':
@@ -80,5 +80,5 @@ const Demo = () => {
   );
 };
 
-render(<Demo />);
+export default Demo;
 ```

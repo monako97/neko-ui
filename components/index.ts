@@ -51,6 +51,7 @@ export {
   type HighlightTextElement,
   type HighlightTextProps,
 } from './highlight-text';
+export { default as icon, type IconAttribute } from './icon';
 export { default as Img, type ImgElement, type ImgProps } from './img';
 export { default as Input, type InputElement, type InputProps } from './input';
 export {

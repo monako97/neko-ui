@@ -1,4 +1,4 @@
-import { createEffect, createMemo, createSignal, Show } from 'solid-js';
+import { createEffect, createMemo, createUniqueId, mergeProps, Show } from 'solid-js';
 import { css, cx } from '@moneko/css';
 import { customElement } from 'solid-element';
 
@@ -13,11 +13,37 @@ const style = css`
     white-space: break-spaces;
     cursor: auto;
   }
-
-  .hit {
-    color: var(--primary-color, #5794ff);
-  }
 `;
+
+function highlight(
+  box: HTMLDivElement,
+  id: string,
+  regExp: string,
+  flag: HighlightRule['flag'],
+  text: string,
+) {
+  const regex = new RegExp(regExp, flag);
+  const match = regex.exec(text);
+
+  if (match) {
+    const range = new Range();
+    let pos = 0;
+
+    pos += match.index;
+    if (box.firstChild) {
+      range.setStart(box.firstChild, pos);
+      pos += match[0].length;
+      range.setEnd(box.firstChild, pos);
+    }
+    const highlight = CSS.highlights.get(id);
+
+    if (highlight) {
+      highlight.add(range);
+    } else {
+      CSS.highlights.set(id, new Highlight().add(range));
+    }
+  }
+}
 
 export type HighlightTextJson =
   | {
@@ -38,6 +64,7 @@ export interface HighlightTextProps {
   flag?: HighlightRule['flag'];
   /** 额外需要高亮的内容 */
   extra?: string;
+  children?: string;
 }
 
 interface HighlightRule {
@@ -56,90 +83,44 @@ export interface Highlight {
 
 function HighlightText(props: HighlightTextProps) {
   const { baseStyle } = theme;
-  const [texts, setTexts] = createSignal<Highlight[] | null>();
-  const hitNode = createMemo(() => {
-    return (
-      texts()?.map((item) => {
-        return item.hit ? (
-          <span class="hit" data-text={item.text}>
-            {item.text}
-          </span>
-        ) : (
-          item.text
-        );
-      }) ?? props.text
-    );
-  });
-
-  /**
-   * 字符串转换成高亮字符的Json格式
-   * @param {string} text 字符串
-   * @returns {HighlightTextJson} 高亮字符的Json
-   */
-  function strToHighlight(text: string): Highlight[] | null {
-    /**
-     * 高亮字符串语法
-     * @example
-     * ```
-     * const str = '%c:高亮文字:c%';
-     * ```
-     */
-    const RegExp_HighLight = /%c:(.+?):c%/i;
-    let str = text,
-      strArr = RegExp_HighLight.exec(str);
-
-    if (strArr) {
-      const textArr: Highlight[] = [];
-
-      for (; strArr !== null; strArr = RegExp_HighLight.exec(str)) {
-        // 普通部分
-        let normalText: string | null = str.substring(0, strArr.index);
-
-        if (normalText.trim().length) {
-          textArr.push({
-            text: normalText,
-          });
-        }
-
-        // 高亮部分
-        textArr.push({
-          hit: true,
-          text: strArr[1],
-        });
-        str = str.substring(strArr[0].length + strArr.index);
-        normalText = null;
-      }
-      if (str.trim().length) {
-        textArr.push({
-          text: str,
-        });
-      }
-      return textArr;
-    }
-    return null;
-  }
+  let box: HTMLDivElement | undefined;
+  const id = createUniqueId();
+  const text = createMemo(() => `${props.text}${props.extra ?? ''}`);
 
   createEffect(() => {
-    if (typeof props.text === 'string' && props.highlight) {
-      let str = props.text;
-
+    if (box && props.highlight) {
       if (Array.isArray(props.highlight)) {
         for (let i = 0, len = props.highlight.length; i < len; i++) {
           const item = props.highlight[i];
           const isOne = typeof item === 'string';
           const hitStr = isOne ? item : item.highlight;
-          const iFlag = isOne ? props.flag : item.flag;
 
           if (hitStr.length) {
-            str = str.replace(new RegExp(hitStr, iFlag), `%c:${hitStr}:c%`);
+            highlight(box, id, hitStr, isOne ? props.flag : item.flag, text());
           }
         }
       } else if (props.highlight.length) {
-        str = str.replace(new RegExp(props.highlight, props.flag), `%c:${props.highlight}:c%`);
+        highlight(box, id, props.highlight, props.flag, text());
       }
-      setTexts(strToHighlight(str));
-    } else {
-      setTexts(null);
+    }
+  });
+  createEffect(() => {
+    if (box && typeof props.extra === 'string') {
+      const range = new Range();
+      let pos = props.text?.length || 0;
+
+      if (box.firstChild) {
+        range.setStart(box.firstChild, pos);
+        pos += props.extra.length;
+        range.setEnd(box.firstChild, pos);
+      }
+      const highlight = CSS.highlights.get(id);
+
+      if (highlight) {
+        highlight.add(range);
+      } else {
+        CSS.highlights.set(id, new Highlight().add(range));
+      }
     }
   });
 
@@ -147,10 +128,10 @@ function HighlightText(props: HighlightTextProps) {
     <>
       <style textContent={baseStyle()} />
       <style textContent={style} />
+      <style textContent={`::highlight(${id}) {color: var(--primary-color, #5794ff);}`} />
       <Show when={props.css}>{css(props.css)}</Show>
-      <div class={cx('text', props.class)}>
-        {hitNode()}
-        {props.extra && <span class="hit">{props.extra}</span>}
+      <div ref={box} class={cx('text', props.class)}>
+        {text()}
       </div>
     </>
   );
@@ -166,12 +147,21 @@ customElement<HighlightTextProps>(
     highlight: void 0,
     flag: void 0,
     extra: void 0,
+    children: void 0,
   },
-  (props, opt) => {
+  (_, opt) => {
     const el = opt.element;
+    const props = mergeProps(
+      {
+        text: el.textContent,
+        css: el.css,
+      },
+      _,
+    );
 
     createEffect(() => {
       clearAttribute(el, ['css', 'text', 'highlight', 'extra']);
+      el.replaceChildren();
     });
     return (
       <>

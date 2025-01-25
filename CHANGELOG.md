@@ -1,5 +1,11 @@
 # Change log
 
+## Last
+
+### 📚 Documentation
+
+- 修复部分api文档不显示的问题 ([9040b88](https://github.com/monako97/neko-ui/commit/9040b887c4551d5d639dd88b86a10e09597ff911))
+
 ## [v2.9.6](https://github.com/monako97/neko-ui/compare/v2.9.4...v2.9.6) (1-12-2025)
 
 ### 🐛 Bug Fixes

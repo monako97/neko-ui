@@ -133,7 +133,7 @@ function Segmented(props: SegmentedProps) {
                   <Show when={item[fieldName.icon]}>
                     <span class="icon">{item[fieldName.icon]}</span>
                   </Show>
-                  {item[fieldName.label]}
+                  <span class="text">{item[fieldName.label]}</span>
                   <Show when={item[fieldName.suffix]}>
                     <n-typography type="secondary">{item[fieldName.suffix]}</n-typography>
                   </Show>

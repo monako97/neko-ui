@@ -11,10 +11,10 @@ icon: 🔜
 
 ## 安装
 
-import { npm, NpmTabs } from '@app/mdx-scope';
-export const npmStr = npm('npm', { package: 'neko-ui' });
-export const yarnStr = npm('yarn', { package: 'neko-ui' });
-export const pnpmStr = npm('pnpm', { package: 'neko-ui' });
+import { npmInstall, NpmTabs } from '@app/mdx-scope';
+export const npmStr = npmInstall('npm', { package: 'neko-ui' });
+export const yarnStr = npmInstall('yarn', { package: 'neko-ui' });
+export const pnpmStr = npmInstall('pnpm', { package: 'neko-ui' });
 
 <NpmTabs npm={npmStr} yarn={yarnStr} pnpm={pnpmStr} />
 

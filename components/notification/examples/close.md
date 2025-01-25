@@ -7,17 +7,16 @@ order: 2
 ```html
 <n-button>消息通知(手动关闭)</n-button>
 <script>
-  const { notification } = NekoUI;
   const btn = container.querySelector('n-button');
 
   btn.addEventListener('click', function () {
-    notification.info('操作成功!!!', 0, true);
+    NekoUI.notification.info('操作成功!!!', 0, true);
   });
 </script>
 ```
 
 ```jsx
-const { notification } = NekoUI;
+import { notification } from 'neko-ui';
 
 const Demo = () => {
   const handleOpen = () => {
@@ -31,5 +30,5 @@ const Demo = () => {
   );
 };
 
-render(<Demo />);
+export default Demo;
 ```

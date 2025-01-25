@@ -31,9 +31,12 @@ export const style = css`
 
   .label {
     position: relative;
+    display: flex;
+    align-items: center;
     overflow: hidden;
     border-radius: var(--border-radius);
     padding: 0 12px;
+    font-size: var(--font-size);
     color: var(--text-color);
     outline: 0;
     transition:
@@ -41,13 +44,15 @@ export const style = css`
       var(--transition-duration) color var(--transition-timing-function);
     cursor: pointer;
     box-sizing: border-box;
-    /* stylelint-disable-next-line */
-    display: -webkit-box;
-    -webkit-box-orient: block-axis;
-    -webkit-line-clamp: var(--rows, 1);
     word-break: break-word;
     word-wrap: break-word;
-    font-size: var(--font-size);
+
+    .text {
+      /* stylelint-disable-next-line */
+      display: -webkit-box;
+      -webkit-box-orient: block-axis;
+      -webkit-line-clamp: var(--rows, 1);
+    }
 
     &:hover,
     &:focus {
@@ -66,6 +71,8 @@ export const style = css`
 
     .icon {
       margin-inline-end: 6px;
+      display: inline-flex;
+      align-items: center;
     }
   }
 

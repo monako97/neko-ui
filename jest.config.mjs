@@ -4,6 +4,7 @@ const config = {
   testPathIgnorePatterns: ['prism.js', 'code', 'md'],
   setupFilesAfterEnv: [
     '<rootDir>/test/setup.ts',
+    '<rootDir>/test/css-highlights.ts',
     '<rootDir>/test/canvas.ts',
     '<rootDir>/test/event.ts',
     '<rootDir>/test/structured-clone.ts',

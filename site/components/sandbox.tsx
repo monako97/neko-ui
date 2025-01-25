@@ -8,6 +8,7 @@ import CodeLive, { type CodeLiveProps } from 'n-code-live';
 import * as NekoUI from 'neko-ui';
 import { customElement } from 'solid-element';
 
+import { code, html, react, solid } from './icons';
 import { codeNoShadowCss, groupCss, mdNoShadowCss, sandboxCss } from './sandbox.style';
 
 const { createEffect, createMemo, createSignal, mergeProps, onMount } = Solid;
@@ -28,8 +29,15 @@ interface SandboxProps extends Omit<ExampleModule, 'title'> {
   description?: string;
 }
 
+const icons: Record<string, () => SVGSVGElement> = {
+  HTML: html,
+  JSX: solid,
+  solid: solid,
+  REACT: react,
+};
 const components: CodeLiveProps['components'] = {
   ...Solid,
+  ...NekoUI,
   CodeLive,
   NekoUI,
   Portal,
@@ -74,6 +82,7 @@ function Sandbox(_props: SandboxProps) {
     Object.keys(props.codes).map((k) => ({
       value: k,
       label: k.toLocaleUpperCase(),
+      icon: icons[k.toLocaleUpperCase()],
     })),
   );
 
@@ -116,7 +125,7 @@ function Sandbox(_props: SandboxProps) {
               data-open={open()}
               onClick={() => setOpen((prev) => !prev)}
             >
-              编辑
+              编辑 {code()}
             </span>
           </section>
           <Show when={hasDesc()}>
