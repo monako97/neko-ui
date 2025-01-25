@@ -1,6 +1,10 @@
 # Change log
 
-## Last
+## [v2.9.7](https://github.com/monako97/neko-ui/compare/v2.9.6...v2.9.7) (1-26-2025)
+
+### ✨ Features
+
+- icon ([fe75762](https://github.com/monako97/neko-ui/commit/fe75762b3eca5f5bd14927ffbfc1f9adaee5b0be))
 
 ### 📚 Documentation
 

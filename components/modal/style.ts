@@ -34,20 +34,59 @@ export const style = css`
     backdrop-filter: blur(10px);
   }
 
+  .modal-header,
+  .modal-body,
+  .modal-footer {
+    cursor: auto;
+  }
+
+  .modal-footer {
+    display: flex;
+    gap: 8px;
+    margin-block-start: 24px;
+    justify-content: flex-end;
+  }
+
   .modal-content {
+    cursor: grab;
     margin: auto;
     border-radius: var(--border-radius);
     padding: 20px 24px;
     background-color: var(--modal-component-bg);
     opacity: var(--opacity);
     box-shadow: var(--modal-box-shadow);
-    inline-size: 520px;
+    min-inline-size: 200px;
     max-inline-size: calc(100% - 32px);
     transform: translate3d(var(--x), var(--y), 1px) scale3d(var(--scale), var(--scale), 1);
     transition-property: transform, opacity;
     transition-duration: 0.2s;
     transition-timing-function: var(--timing);
     backdrop-filter: blur(10px);
+
+    &:active {
+      cursor: grabbing;
+    }
+
+    &.moveing {
+      transition-property: none;
+      transition-duration: none;
+      transition-timing-function: none;
+      user-select: none;
+
+      * {
+        pointer-events: none;
+      }
+    }
+
+    &.centered {
+      text-align: center;
+
+      .modal-body,
+      .modal-footer {
+        justify-content: center;
+        text-align: center;
+      }
+    }
   }
 
   .open {
@@ -95,8 +134,8 @@ export const style = css`
     100% {
       --opacity: 1;
       --scale: 1;
-      --x: 0;
-      --y: 0;
+      --x: var(--movement-x);
+      --y: var(--movement-y);
     }
   }
 
@@ -104,8 +143,8 @@ export const style = css`
     0% {
       --opacity: 1;
       --scale: 1;
-      --x: 0;
-      --y: 0;
+      --x: var(--movement-x);
+      --y: var(--movement-y);
     }
 
     100% {

@@ -32,7 +32,8 @@ function btnColor(type: ButtonProps['type']): string {
 
 export const style = css`
   .btn,
-  .label {
+  .label,
+  .icon {
     transition-duration: var(--transition-duration);
   }
 
@@ -46,9 +47,17 @@ export const style = css`
     transition-property: color;
   }
 
+  .icon {
+    display: inline-flex;
+    align-items: center;
+    color: inherit;
+    transition-property: color;
+  }
+
   .fill {
     &:not(.disabled, .default) {
-      .label {
+      .label,
+      .icon {
         color: #fff !important;
       }
 
@@ -63,12 +72,14 @@ export const style = css`
   }
 
   .fill.danger.default {
-    .label {
+    .label,
+    .icon {
       color: #fff !important;
     }
   }
 
   .btn {
+    position: relative;
     display: inline-flex;
     justify-content: center;
     align-items: center;
@@ -86,21 +97,24 @@ export const style = css`
     gap: 3px;
     line-height: 1;
     cursor: pointer;
-    transition-property: color, background-color, border-color, width, height, transform;
+    transition-property: color, background-color, border-color, width, height, transform, padding,
+      opacity;
+    transition-timing-function: linear;
     touch-action: manipulation;
     box-sizing: border-box;
     user-select: none;
     outline: none;
 
     &:has(.icon) {
-      padding: 4px 10px;
+      padding: 0 10px;
     }
 
     &:not(.disabled) {
       &:active {
         transform: scale(0.98);
 
-        .label {
+        .label,
+        .icon {
           color: var(--btn-active-color);
         }
 
@@ -123,9 +137,16 @@ export const style = css`
       }
 
       &:hover .label,
-      &:focus .label {
+      &:focus .label,
+      &:hover .icon,
+      &:focus .icon {
         color: var(--btn-hover-color);
       }
+    }
+
+    &.loading {
+      opacity: 0.7;
+      cursor: not-allowed;
     }
 
     &.disabled {
@@ -149,7 +170,7 @@ export const style = css`
     font-size: var(--font-size-xs);
 
     &:has(.icon) {
-      padding: 4px 5px;
+      padding: 0 5px;
     }
   }
 
@@ -160,7 +181,7 @@ export const style = css`
     gap: 4px;
 
     &:has(.icon) {
-      padding: 4px 12px;
+      padding: 0 12px;
     }
   }
 
@@ -221,6 +242,7 @@ export const style = css`
   }
 
   .block {
+    display: flex;
     inline-size: 100%;
   }
 

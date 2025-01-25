@@ -1,4 +1,13 @@
-import { createEffect, createMemo, createSignal, mergeProps, Show, splitProps } from 'solid-js';
+import {
+  createEffect,
+  createMemo,
+  createSignal,
+  Match,
+  mergeProps,
+  Show,
+  splitProps,
+  Switch,
+} from 'solid-js';
 import { Dynamic } from 'solid-js/web';
 import { isFunction } from '@moneko/common';
 import { css } from '@moneko/css';
@@ -6,8 +15,9 @@ import { customElement } from 'solid-element';
 
 import type { BasicConfig, CustomElement } from '..';
 import { clearAttribute } from '../basic-config';
-import theme, { inline } from '../theme';
+import theme, { block, inline } from '../theme';
 
+import loadingIcon from './loading';
 import { style } from './style';
 
 export interface ButtonProps {
@@ -47,6 +57,7 @@ export interface ButtonProps {
   icon?: (() => JSX.Element) | JSX.Element;
   children?: JSX.Element;
   onClick?(e: Event): void;
+  loading?: boolean;
 }
 export type ButtonElement = CustomElement<ButtonProps>;
 
@@ -70,12 +81,13 @@ function Button(_: ButtonProps) {
     'css',
     'disabled',
     'tag',
+    'loading',
   ]);
   let ref: HTMLButtonElement | undefined;
   const [animating, setAnimating] = createSignal(false);
 
   function handleClick() {
-    if (!local.disabled) {
+    if (!local.disabled && !local.loading) {
       setAnimating(true);
     }
   }
@@ -83,9 +95,11 @@ function Button(_: ButtonProps) {
     setAnimating(false);
   }
   const icon = createMemo(() => (isFunction(local.icon) ? local.icon() : local.icon));
+  const hostStyle = createMemo(() => (local.block ? block : inline));
 
   return (
     <>
+      <style textContent={hostStyle()} />
       <style textContent={baseStyle()} />
       <style textContent={style} />
       <Show when={local.css}>
@@ -98,6 +112,7 @@ function Button(_: ButtonProps) {
         classList={{
           [local.type]: true,
           [local.size]: true,
+          loading: local.loading,
           danger: local.danger,
           block: local.block,
           fill: local.fill,
@@ -112,13 +127,16 @@ function Button(_: ButtonProps) {
         part="button"
         onClick={handleClick}
         onAnimationEnd={handleAnimationEnd}
-        disabled={local.disabled}
+        disabled={local.disabled || local.loading}
         role="button"
         {...other}
       >
-        <Show when={local.icon}>
+        <Show when={local.icon || local.loading}>
           <span class="icon" part="icon">
-            {icon()}
+            <Switch>
+              <Match when={local.icon}>{icon()}</Match>
+              <Match when={local.loading}>{loadingIcon()}</Match>
+            </Switch>
           </span>
         </Show>
         <span class="label" part="label">
@@ -147,6 +165,7 @@ customElement<ButtonProps>(
     size: void 0,
     icon: void 0,
     tag: void 0,
+    loading: void 0,
   },
   (_, opt) => {
     const el = opt.element;
@@ -163,12 +182,7 @@ customElement<ButtonProps>(
       el.replaceChildren();
     });
 
-    return (
-      <>
-        <style textContent={inline} />
-        <Button {...props} />
-      </>
-    );
+    return <Button {...props} />;
   },
 );
 export default Button;

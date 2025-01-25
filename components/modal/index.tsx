@@ -4,19 +4,22 @@ import {
   createSignal,
   mergeProps,
   onCleanup,
+  onMount,
   Show,
   untrack,
 } from 'solid-js';
 import { Portal } from 'solid-js/web';
+import { isFunction, passiveSupported } from '@moneko/common';
 import { customElement } from 'solid-element';
 
 import type { CustomElement } from '..';
 import { clearAttribute } from '../basic-config';
+import type { ButtonProps } from '../button';
 
+import open from './hooks';
+import { defaultPosi } from './posi';
 import modalStore from './store';
 import { style } from './style';
-
-import '../button';
 
 /**
  * API
@@ -40,13 +43,20 @@ export interface ModalProps {
    */
   closeIcon?: JSX.Element | null;
   /** 内容 */
-  content: JSX.Element;
+  content?: HTMLElement | string | JSX.Element;
   /** 标题 */
-  title?: JSX.Element;
+  title?: HTMLElement | string | JSX.Element;
   /** 遮罩模糊
    * @default false
    */
   maskBlur?: boolean;
+  okText?: string | false | null;
+  cancelText?: string | false | null;
+  onCancel?(): Promise<boolean> | boolean;
+  onOk?(e: MouseEvent | Event): Promise<boolean> | boolean;
+  okProps?: Omit<ButtonProps, 'children' | 'onClick' | 'loading'>;
+  cancelProps?: Omit<ButtonProps, 'children' | 'onClick'>;
+  centered?: boolean;
 }
 
 /**
@@ -63,25 +73,43 @@ export enum OpenState {
 export type OpenStateKey = keyof typeof OpenState;
 export type ModalElement = CustomElement<ModalProps, 'onOpenChange'>;
 
-function Modal(props: ModalProps) {
+function Modal(_: ModalProps) {
   const doc = document.documentElement;
   const { setNum } = modalStore;
+  const props = mergeProps(
+    {
+      okText: '确认',
+      cancelText: '取消',
+    },
+    _,
+  );
+  const [moveing, setMoveing] = createSignal(false);
+  const [loading, setLoading] = createSignal(false);
   const [open, setOpen] = createSignal<OpenStateKey>('closed');
-  const [posi, setPosi] = createSignal({
-    x: 0,
-    y: 0,
-    width: 0,
-    height: 0,
-  });
+  const [posi, setPosi] = createSignal(defaultPosi);
+  const movement = [0, 0];
   let portal: HTMLDivElement | undefined;
+  let modal: HTMLDivElement | undefined;
 
   const getCss = createMemo(() => {
     const { x, y, width, height } = posi();
 
-    return `.portal { --y: ${-(y - height / 2)}px;--x: ${-(x - width / 2)}px;}`;
+    return `.portal { --y: ${-(y - height / 2)}px;--x: ${-(x - width / 2)}px; --movement-x: ${movement[0]}px; --movement-y: ${movement[1]}px;}`;
   });
 
-  function openChange(visi: OpenStateKey) {
+  async function openChange(visi: OpenStateKey) {
+    setLoading(false);
+    if (visi === OpenState.closeing) {
+      modal!.style.removeProperty('--x');
+      modal!.style.removeProperty('--y');
+      if (isFunction(props.onCancel)) {
+        setLoading(true);
+        if (!(await props.onCancel())) {
+          setLoading(false);
+          return;
+        }
+      }
+    }
     setOpen(visi);
     props.onOpenChange?.(visi);
   }
@@ -102,6 +130,19 @@ function Modal(props: ModalProps) {
     if (open() === OpenState.closeing) {
       openChange(OpenState.closed);
     }
+  }
+  async function handleOk(e: MouseEvent | Event) {
+    preventDefault(e);
+    if (isFunction(props.onOk)) {
+      setLoading(true);
+      if (!(await props.onOk(e))) {
+        setLoading(false);
+        return;
+      }
+    }
+
+    setOpen(OpenState.closeing);
+    props.onOpenChange?.(OpenState.closeing);
   }
   function portalClick(e: Event) {
     preventDefault(e);
@@ -159,6 +200,44 @@ function Modal(props: ModalProps) {
     );
   });
 
+  function move(ev: MouseEvent) {
+    if (modal) {
+      movement[0] = movement[0] + ev.movementX;
+      movement[1] = movement[1] + ev.movementY;
+
+      portal!.style.setProperty('--movement-x', `${movement[0]}px`);
+      portal!.style.setProperty('--movement-y', `${movement[1]}px`);
+      modal!.style.setProperty('--x', `${movement[0]}px`);
+      modal!.style.setProperty('--y', `${movement[1]}px`);
+    }
+  }
+
+  function mouseDown(e: MouseEvent) {
+    setMoveing(e.target === modal);
+  }
+  function mouseUp() {
+    setMoveing(false);
+  }
+  createEffect(() => {
+    if (moveing()) {
+      document.body.addEventListener('mousemove', move, {
+        passive: passiveSupported,
+      });
+    }
+    onCleanup(() => {
+      document.body.removeEventListener('mousemove', move, false);
+    });
+  });
+
+  onMount(() => {
+    document.body.addEventListener('mouseup', mouseUp, {
+      passive: passiveSupported,
+    });
+  });
+  onCleanup(() => {
+    document.body.removeEventListener('mouseup', mouseUp, false);
+  });
+
   return (
     <Show when={open() !== OpenState.closed}>
       <Portal useShadow={true}>
@@ -175,7 +254,15 @@ function Modal(props: ModalProps) {
           onAnimationEnd={handleDestroy}
           onClick={portalClick}
         >
-          <div class="modal-content">
+          <div
+            ref={modal}
+            classList={{
+              'modal-content': true,
+              centered: props.centered,
+              moveing: moveing(),
+            }}
+            onMouseDown={mouseDown}
+          >
             <div class="modal-header">
               <strong class="modal-title">{props.title}</strong>
             </div>
@@ -185,7 +272,26 @@ function Modal(props: ModalProps) {
               </n-button>
             </Show>
             <div class="modal-body">{props.content}</div>
-            {/* <div class="modal-footer">{props.footer}</div> */}
+            <Show when={props.cancelText || props.okText}>
+              <div class="modal-footer">
+                <Show when={props.cancelText}>
+                  <n-button {...props.cancelProps} onClick={close}>
+                    {props.cancelText}
+                  </n-button>
+                </Show>
+                <Show when={props.okText}>
+                  <n-button
+                    type="primary"
+                    fill={true}
+                    {...props.okProps}
+                    loading={loading()}
+                    onClick={handleOk}
+                  >
+                    {props.okText}
+                  </n-button>
+                </Show>
+              </div>
+            </Show>
           </div>
         </div>
       </Portal>
@@ -204,6 +310,11 @@ customElement<ModalProps>(
     content: void 0,
     title: void 0,
     maskBlur: void 0,
+    okText: void 0,
+    cancelText: void 0,
+    okProps: void 0,
+    cancelProps: void 0,
+    centered: void 0,
   },
   (_, opt) => {
     const el = opt.element;
@@ -226,4 +337,7 @@ customElement<ModalProps>(
     return <Modal {...props} />;
   },
 );
+
+Modal.open = open;
+
 export default Modal;

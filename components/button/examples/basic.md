@@ -5,17 +5,23 @@ order: 1
 ---
 
 ```html
-<n-button>按钮</n-button>
-<n-button type="primary">按钮</n-button>
-<n-button type="success">按钮</n-button>
-<n-button type="warning">按钮</n-button>
-<n-button type="error">按钮</n-button>
+<div style="display:flex;gap:4px;">
+  <n-button>按钮</n-button>
+  <n-button type="primary">按钮</n-button>
+  <n-button type="success">按钮</n-button>
+  <n-button type="warning">按钮</n-button>
+  <n-button type="error">按钮</n-button>
+  <n-button loading="true">按钮</n-button>
+</div>
 ```
 
 ```jsx
-<n-button>按钮</n-button>
-<n-button type="primary">按钮</n-button>
-<n-button type="success">按钮</n-button>
-<n-button type="warning">按钮</n-button>
-<n-button type="error">按钮</n-button>
+<div style={{ display: 'flex', gap: '4px' }}>
+  <n-button>按钮</n-button>
+  <n-button type="primary">按钮</n-button>
+  <n-button type="success">按钮</n-button>
+  <n-button type="warning">按钮</n-button>
+  <n-button type="error">按钮</n-button>
+  <n-button loading="true">按钮</n-button>
+</div>
 ```
