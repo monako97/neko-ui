@@ -2,6 +2,7 @@ import { createEffect, createMemo, createSignal, For, Show } from 'solid-js';
 import { frameCallback, isFunction, isString } from '@moneko/common';
 import { css } from '@moneko/css';
 
+import type { JSXElement } from '../basic-config';
 import schema from '../from-schema';
 import theme from '../theme';
 
@@ -150,13 +151,13 @@ function Tree(
     handleChange(item[fields.key], item);
     _.onRowClick?.(e, item[fields.key] as never, item as TreeData<never>);
   }
-  function renderItem(item: TreeData, title: JSX.Element, subTitle?: JSX.Element): JSX.Element[] {
+  function renderItem(item: TreeData, title: JSXElement, subTitle?: JSXElement): JSXElement[] {
     const row = _.renderRow?.(item, title, subTitle) || [title, subTitle];
 
     return rtl() ? row.reverse() : row;
   }
 
-  function renderTreeRow(list: TreeData[], depth = 0): JSX.Element {
+  function renderTreeRow(list: TreeData[], depth = 0): JSXElement {
     return (
       <For each={list}>
         {(item) => {

@@ -14,7 +14,7 @@ import { isFunction } from '@moneko/common';
 import { customElement } from 'solid-element';
 
 import type { CustomElement, DropdownMultipleProps, DropdownProps, MenuOption } from '..';
-import { clearAttribute, FieldName } from '../basic-config';
+import { clearAttribute, FieldName, type JSXElement } from '../basic-config';
 import Dropdown, { defaultProps } from '../dropdown';
 import getOptions from '../get-options';
 import { inline } from '../theme';
@@ -176,13 +176,13 @@ function Select(props: SelectProps) {
     }
   });
   const prefix = createMemo(() =>
-    isFunction(local.prefixIcon) ? (local.prefixIcon() as JSX.Element) : local.prefixIcon,
+    isFunction(local.prefixIcon) ? (local.prefixIcon() as JSXElement) : local.prefixIcon,
   );
   const label = createMemo(() =>
-    isFunction(local.label) ? (local.label() as JSX.Element) : local.label,
+    isFunction(local.label) ? (local.label() as JSXElement) : local.label,
   );
   const suffix = createMemo(() =>
-    isFunction(local.suffixIcon) ? (local.suffixIcon() as JSX.Element) : local.suffixIcon,
+    isFunction(local.suffixIcon) ? (local.suffixIcon() as JSXElement) : local.suffixIcon,
   );
 
   return (
@@ -277,11 +277,11 @@ interface SelectBaseProps {
   /** 选项 */
   options?: (MenuOption | string | number)[];
   /** 标题 */
-  label?: JSX.Element | (() => JSX.Element | (() => JSX.Element));
+  label?: JSXElement | (() => JSXElement | (() => JSXElement));
   /** 前缀图标 */
-  prefixIcon?: JSX.Element | (() => JSX.Element | (() => JSX.Element));
+  prefixIcon?: JSXElement | (() => JSXElement | (() => JSXElement));
   /** 后缀图标 */
-  suffixIcon?: JSX.Element | (() => JSX.Element | (() => JSX.Element));
+  suffixIcon?: JSXElement | (() => JSXElement | (() => JSXElement));
   style?: Record<string, string | number>;
 }
 

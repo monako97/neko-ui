@@ -14,7 +14,7 @@ import { css, cx } from '@moneko/css';
 import { customElement } from 'solid-element';
 
 import type { BasicConfig, CustomElement } from '..';
-import { clearAttribute } from '../basic-config';
+import { clearAttribute, type JSXElement } from '../basic-config';
 import Empty from '../empty';
 import theme, { inline } from '../theme';
 
@@ -26,7 +26,7 @@ export interface PopoverProps {
   /** 自定义样式表 */
   css?: string;
   /** 内容 */
-  content?: (() => JSX.Element) | JSX.Element;
+  content?: JSXElement;
   /** 挂载到指定的元素，值为一个返回对应 DOM 元素 默认 document.body */
   getPopupContainer?: (node?: HTMLElement | null) => HTMLElement;
   /** 触发行为
@@ -55,7 +55,7 @@ export interface PopoverProps {
    * @default 'normal'
    */
   size?: BasicConfig['size'];
-  children?: JSX.Element;
+  children?: JSXElement;
 }
 
 export enum TriggerOption {
@@ -311,9 +311,7 @@ function Popover(props: PopoverProps) {
     );
   });
   const hostStyle = createMemo(() => {
-    return `:host {--popover-bg: ${
-      isDark() ? '#1f1f1f' : 'var(--component-bg)'
-    };--popover-shadow-color: rgb(0 0 0 / 5%);}`;
+    return `:host {--popover-bg: ${isDark() ? '#1f1f1f' : 'var(--component-bg)'};--popover-shadow-color: rgb(0 0 0 / 5%);position: absolute;}`;
   });
 
   createEffect(() => {
@@ -361,7 +359,7 @@ function Popover(props: PopoverProps) {
             <Show when={local.content} fallback={<Empty />}>
               <Show when={typeof local.content === 'string'} fallback={local.content}>
                 {/* eslint-disable-next-line solid/no-innerhtml */}
-                <div innerHTML={local.content} />
+                <div innerHTML={local.content as string} />
               </Show>
             </Show>
           </div>

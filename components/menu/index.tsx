@@ -15,7 +15,7 @@ import { css, cx } from '@moneko/css';
 import { customElement } from 'solid-element';
 
 import type { BaseOption, BasicConfig, CustomElement } from '..';
-import { clearAttribute, FieldName } from '../basic-config';
+import { clearAttribute, FieldName, type JSXElement } from '../basic-config';
 import getOptions from '../get-options';
 import theme, { block } from '../theme';
 
@@ -94,10 +94,12 @@ function Menu(props: MenuProps | MenuMultipleProps) {
                     {item[_.fieldNames.icon]}
                   </span>
                 </Show>
-                {item[_.fieldNames.label]}
-                <span class="menu-suffix" part="suffix">
-                  {item[_.fieldNames.suffix]}
-                </span>
+                <span class="menu-label">{item[_.fieldNames.label]}</span>
+                <Show when={item[_.fieldNames.suffix]}>
+                  <span class="menu-suffix" part="suffix">
+                    {item[_.fieldNames.suffix]}
+                  </span>
+                </Show>
               </>
             );
           }
@@ -312,7 +314,7 @@ export interface MenuMultipleProps extends BaseMenuProps {
 /** 菜单选项 */
 export interface MenuOption extends Omit<BaseOption, 'children' | 'options'> {
   /** 图标 */
-  icon?: JSX.Element;
+  icon?: JSXElement | (() => JSXElement);
   /** 内置类型(状态) */
   type?: 'primary' | 'success' | 'error' | 'warning';
   /** 自定义颜色 */

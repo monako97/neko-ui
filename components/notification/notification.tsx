@@ -2,6 +2,7 @@ import { createEffect, createUniqueId, For, Show } from 'solid-js';
 import { render } from 'solid-js/web';
 import { cx } from '@moneko/css';
 
+import type { JSXElement } from '../basic-config';
 import theme from '../theme';
 
 import queque, { type NotificationType } from './queque';
@@ -11,10 +12,10 @@ const mountId = 'n-notification-box';
 
 const notification = (
   type: keyof typeof NotificationType,
-  children: JSX.Element,
+  children: JSXElement,
   duration = 3000,
   close?: boolean,
-  icon?: JSX.Element,
+  icon?: JSXElement,
 ) => {
   const uniqueId = createUniqueId();
   const { list, add, remove } = queque;

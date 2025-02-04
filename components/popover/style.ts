@@ -4,6 +4,7 @@ export const popoverCss = css`
   .popover {
     position: relative;
     display: inline-block;
+    inline-size: 100%;
     box-sizing: border-box;
 
     &::-webkit-scrollbar {

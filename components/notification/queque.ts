@@ -1,5 +1,7 @@
 import { createRoot, createSignal } from 'solid-js';
 
+import type { JSXElement } from '../basic-config';
+
 /** Api
  * @since 2.7.0
  */
@@ -7,9 +9,9 @@ export interface NotificationProps {
   /** 通知类型 */
   type: keyof typeof NotificationType;
   /** 通知内容 */
-  children: JSX.Element;
+  children: JSXElement;
   /** 图标 */
-  icon?: JSX.Element;
+  icon?: JSXElement;
   /**
    * 是否显示关闭按钮
    * @default false

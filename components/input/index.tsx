@@ -4,7 +4,7 @@ import { css, cx } from '@moneko/css';
 import { customElement } from 'solid-element';
 
 import type { BasicConfig, CustomElement } from '..';
-import { clearAttribute } from '../basic-config';
+import { clearAttribute, type JSXElement } from '../basic-config';
 import theme, { inline } from '../theme';
 
 import { style } from './style';
@@ -15,13 +15,13 @@ export interface InputProps {
   /** 自定义样式表 */
   css?: string;
   /** 前缀 */
-  prefixIcon?: JSX.Element;
+  prefixIcon?: JSXElement;
   /** 后缀 */
-  suffixIcon?: JSX.Element;
+  suffixIcon?: JSXElement;
   /** 大写锁定图标, 可以结合密码输入框使用
    * @since 2.5.2
    */
-  capsLockIcon?: JSX.Element;
+  capsLockIcon?: JSXElement;
   /** 禁用 */
   disabled?: boolean;
   /** 自动完成 */
@@ -33,7 +33,7 @@ export interface InputProps {
    */
   size?: BasicConfig['size'];
   /** 描述 */
-  label?: JSX.Element;
+  label?: JSXElement;
   /** 状态 */
   status?: 'error' | 'warning' | 'success';
   /** 类型

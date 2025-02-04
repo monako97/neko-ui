@@ -1,4 +1,4 @@
-import type { BasicConfig } from '../basic-config';
+import type { BasicConfig, JSXElement } from '../basic-config';
 import type { Schema } from '../from-schema';
 
 export interface TreeBaseProp {
@@ -23,7 +23,7 @@ export interface TreeBaseProp {
   /** 双击行时的回调函数 */
   onRowDoubleClick?: (e: MouseEvent, key: string, item: TreeData) => void;
   /** 自定义渲染行 */
-  renderRow?: (item: TreeData, title: JSX.Element, subTitle?: JSX.Element) => JSX.Element[];
+  renderRow?: (item: TreeData, title: JSXElement, subTitle?: JSXElement) => JSXElement[];
   /** 开启此选项支持 `JSONSchema`
    * @default false
    */

@@ -16,7 +16,7 @@ import type { TokenStream } from 'prismjs';
 import { customElement } from 'solid-element';
 
 import type { CustomElement } from '..';
-import { clearAttribute } from '../basic-config';
+import { clearAttribute, type JSXElement } from '../basic-config';
 import theme from '../theme';
 
 import { CopyIcon } from './copy-icon';
@@ -82,7 +82,7 @@ export interface CodeProps {
   title?: string;
   /** 编辑修改时的回调 */
   onChange?(code: string): void;
-  children?: JSX.Element;
+  children?: JSXElement;
 }
 export type CodeElement = CustomElement<CodeProps>;
 

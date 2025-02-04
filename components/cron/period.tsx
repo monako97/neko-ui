@@ -1,12 +1,14 @@
 import type { BaseOption } from 'neko-ui';
 
+import type { JSXElement } from '../basic-config';
+
 import type { CronData } from '.';
 import { selectCss, selectPortalCss } from './style';
 
 interface PeriodProps {
   start: CronData['start'];
   end: CronData['end'];
-  label: [JSX.Element, JSX.Element, JSX.Element];
+  label: [JSXElement, JSXElement, JSXElement];
   options: (string | number | BaseOption)[];
   onChange(type: 'start' | 'end', value: number): void;
   validate(type: 'start' | 'end', v: number): boolean;

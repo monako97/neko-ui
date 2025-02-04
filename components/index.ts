@@ -23,6 +23,7 @@ export {
   type CheckboxGroupProps,
 } from './checkbox';
 export { default as Code, type CodeElement, type CodeProps, type Language } from './code';
+export { default as Collapse, type CollapseElement, type CollapseProps } from './collapse';
 export {
   default as ColorPalette,
   type ColorPaletteElement,
@@ -139,6 +140,7 @@ import type {
   CheckboxBoolElement,
   CheckboxGroupElement,
   CodeElement,
+  CollapseElement,
   ColorPaletteElement,
   ColorPickerElement,
   CronElement,
@@ -273,6 +275,11 @@ interface CustomElementTags {
    * @since 2.9.0
    */
   'n-qrcode': QrCodeElement;
+  /**
+   * 折叠面板
+   * @since 2.10.0
+   */
+  'n-collapse': CollapseElement;
 }
 type IntrinsicNekoElement = Transform<CustomElementTags>;
 

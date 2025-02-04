@@ -49,10 +49,13 @@ export const style = css`
     column-gap: 5px;
   }
 
+  .menu-label {
+    flex: 1;
+  }
+
   .menu-suffix {
     text-align: end;
     color: var(--text-secondary);
-    flex: 1;
   }
 
   .sub-menu-title {

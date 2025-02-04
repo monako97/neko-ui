@@ -2,7 +2,7 @@ import { css } from '@moneko/css';
 
 export const style = css`
   :host {
-    display: inline-block;
+    display: inline-flex;
   }
 
   .tag {

@@ -82,7 +82,9 @@ describe('Menu', () => {
     fireEvent.click(screen.getByShadowText('大青蛙2'));
     fireEvent.click(screen.getByShadowText('一级菜单'));
     fireEvent.animationEnd(
-      screen.getByShadowText('一级菜单').parentElement!.querySelector('.sub-menu-children')!,
+      screen
+        .getByShadowText('一级菜单')
+        .parentElement!.parentElement!.querySelector('.sub-menu-children')!,
     );
   });
 });

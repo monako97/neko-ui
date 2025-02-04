@@ -1,12 +1,14 @@
 import type { BaseOption } from 'neko-ui';
 
+import type { JSXElement } from '../basic-config';
+
 import type { CronData } from '.';
 import { selectCss, selectPortalCss } from './style';
 
 interface BeginIntervalProps {
   begin: CronData['begin'];
   beginEvery: CronData['beginEvery'];
-  label: [JSX.Element, JSX.Element, JSX.Element];
+  label: [JSXElement, JSXElement, JSXElement];
   beginOption: (string | number | BaseOption)[];
   beginEveryOption: (string | number | BaseOption)[];
   onChange(type: 'begin' | 'beginEvery', value: number): void;

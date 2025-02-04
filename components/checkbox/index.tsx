@@ -3,7 +3,7 @@ import { css, cx } from '@moneko/css';
 import { customElement } from 'solid-element';
 
 import type { BaseOption, BasicConfig, CustomElement } from '..';
-import { clearAttribute, FieldName } from '../basic-config';
+import { clearAttribute, FieldName, type JSXElement } from '../basic-config';
 import getOptions from '../get-options';
 import theme, { inline } from '../theme';
 
@@ -201,7 +201,7 @@ function Checkbox(props: CheckboxBoolProps | CheckboxGroupProps) {
                   checked={'indeterminate' in item ? checkedAll() : value().includes(realVal)}
                   onChange={onChange.bind(null, item)}
                 />
-                <label>{item[fieldName.label]}</label>
+                <label>{item[fieldName.label] as JSXElement}</label>
               </span>
             );
           }}

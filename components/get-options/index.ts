@@ -1,3 +1,5 @@
+import { isUndefined } from '@moneko/common';
+
 import { type BaseOption, type BasicConfig, FieldName } from '../basic-config';
 
 function getOptions<T extends BaseOption = BaseOption>(
@@ -9,8 +11,8 @@ function getOptions<T extends BaseOption = BaseOption>(
     const { options, children, label, value } = Object.assign({}, FieldName, fieldNames);
 
     if (typeof item === 'object') {
-      const _label = (typeof item[label] === 'undefined' ? item[value] : item[label]) || i;
-      const _value = (typeof item[value] === 'undefined' ? _label : item[value]) || i;
+      const _label = (isUndefined(item[label]) ? item[value] : item[label]) ?? i;
+      const _value = (isUndefined(item[value]) ? _label : item[value]) ?? i;
       const _item = {
         ...item,
         [label]: _label,

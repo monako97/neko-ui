@@ -3,7 +3,7 @@ import { css, cx } from '@moneko/css';
 import { customElement } from 'solid-element';
 
 import type { CustomElement } from '..';
-import { clearAttribute } from '../basic-config';
+import { clearAttribute, type JSXElement } from '../basic-config';
 import theme, { inline } from '../theme';
 
 const style = css`
@@ -79,7 +79,7 @@ export interface SpinProps {
   /** 加载状态 */
   spin?: boolean;
   /** 内容 */
-  children?: JSX.Element | JSX.Element[];
+  children?: JSXElement | JSXElement[];
 }
 
 function Spin(props: SpinProps) {

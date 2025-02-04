@@ -12,7 +12,7 @@ import { css, cx } from '@moneko/css';
 import { customElement } from 'solid-element';
 
 import type { CustomElement } from '..';
-import { clearAttribute } from '../basic-config';
+import { clearAttribute, type JSXElement } from '../basic-config';
 import theme, { block } from '../theme';
 
 import { style } from './style';
@@ -23,7 +23,7 @@ export interface CarouselProps {
   /** 自定义样式表 */
   css?: string;
   /** 轮播的内容 */
-  children?: JSX.Element[];
+  children?: JSXElement[];
   /** 当前内容的位置
    * @default 0
    */
@@ -33,7 +33,7 @@ export interface CarouselProps {
   /** 设置自动播放时长, 不设置时不自动播放 */
   autoplay?: number;
   /** 自定义头部 */
-  header?: (current: number) => JSX.Element | ((current: number) => JSX.Element);
+  header?: (current: number) => JSXElement;
   /** 切换显示的位置时的回调方法 */
   onChange?: (e: number) => void;
 }
@@ -80,7 +80,7 @@ function Carousel(_props: CarouselProps) {
       setLeft(_current);
     }
   }
-  function getPrevNext(idx: number, arr: JSX.Element[]) {
+  function getPrevNext(idx: number, arr: JSXElement[]) {
     let _prev = idx - 1,
       _next = idx + 1;
 

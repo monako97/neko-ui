@@ -4,7 +4,7 @@ import { css, cx } from '@moneko/css';
 import { customElement } from 'solid-element';
 
 import type { CustomElement } from '..';
-import { clearAttribute } from '../basic-config';
+import { clearAttribute, type JSXElement } from '../basic-config';
 import theme, { generateColor, inline } from '../theme';
 
 import { style } from './style';
@@ -17,11 +17,11 @@ export interface TagProps {
   /** 自定义颜色 */
   color?: string;
   /** 图标 */
-  icon?: JSX.Element;
+  icon?: JSXElement | (() => JSXElement);
   /** 内置类型(状态) */
   type?: 'primary' | 'success' | 'error' | 'warning';
   /** 自定义关闭图标 */
-  closeIcon?: JSX.Element | boolean;
+  closeIcon?: JSXElement;
   /** 显示边框
    * @default true
    */
@@ -30,7 +30,7 @@ export interface TagProps {
   disabled?: boolean;
   /** 关闭时的回调方法 */
   onClose?: (e: MouseEvent) => void;
-  children?: JSX.Element;
+  children?: JSXElement;
 }
 
 function Tag(props: TagProps) {
@@ -87,7 +87,7 @@ function Tag(props: TagProps) {
         }}
       >
         <Show when={local.icon}>
-          <span class="icon">{local.icon}</span>
+          <span class="icon">{local.icon as JSXElement}</span>
         </Show>
         {other.children}
         <Show when={local.closeIcon}>

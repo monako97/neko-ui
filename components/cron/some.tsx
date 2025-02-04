@@ -1,11 +1,13 @@
 import type { BaseOption } from 'neko-ui';
 
+import type { JSXElement } from '../basic-config';
+
 import type { CronData } from '.';
 import { selectPortalCss } from './style';
 
 interface SomeProps {
   value: CronData['some'];
-  label: JSX.Element;
+  label: JSXElement;
   options: (string | number | BaseOption)[];
   type: CronData['type'];
   onChange(type: 'some', value: number[]): void;

@@ -13,7 +13,7 @@ import { isFunction, passiveSupported } from '@moneko/common';
 import { customElement } from 'solid-element';
 
 import type { CustomElement } from '..';
-import { clearAttribute } from '../basic-config';
+import { clearAttribute, type JSXElement } from '../basic-config';
 import type { ButtonProps } from '../button';
 
 import open from './hooks';
@@ -41,7 +41,7 @@ export interface ModalProps {
   /**
    * 自定义关闭图标, 设置为 null 或 false 时隐藏关闭按钮
    */
-  closeIcon?: JSX.Element | null;
+  closeIcon?: JSXElement;
   /** 内容 */
   content?: HTMLElement | string | JSX.Element;
   /** 标题 */

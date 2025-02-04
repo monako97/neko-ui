@@ -14,17 +14,22 @@ export interface BaseDropdownProps extends Omit<PopoverProps, 'content'> {
   /** 打开内容气泡 */
   open?: boolean | null;
 }
+
 export interface DropdownProps
   extends Omit<MenuProps, 'openKeys' | 'onOpenChange'>,
     BaseDropdownProps {
   /** 打开内容气泡 */
   open?: boolean | null;
+  /** menu样式表 */
+  menuCss?: string;
 }
 export interface DropdownMultipleProps
   extends Omit<MenuMultipleProps, 'openKeys' | 'onOpenChange'>,
     BaseDropdownProps {
   /** 打开内容气泡 */
   open?: boolean | null;
+  /** menu样式表 */
+  menuCss?: string;
 }
 export type DropdownElement = CustomElement<DropdownProps>;
 export type DropdownMultipleElement = CustomElement<DropdownMultipleProps>;
@@ -33,6 +38,7 @@ function Dropdown(props: DropdownProps | DropdownMultipleProps) {
   const [local, other] = splitProps(props, [
     'popupClass',
     'popupCss',
+    'menuCss',
     'value',
     'defaultValue',
     'onChange',
@@ -109,6 +115,7 @@ function Dropdown(props: DropdownProps | DropdownMultipleProps) {
               onChange={change}
               open-keys={menuOpenKeys()}
               onOpenChange={menuOpenKeysChange}
+              css={local.menuCss}
             />
           </Show>
         </div>
@@ -130,6 +137,7 @@ export const defaultProps = {
   type: void 0,
   onOpenChange: void 0,
   openKeys: void 0,
+  menuCss: void 0,
 };
 
 customElement<DropdownProps>(

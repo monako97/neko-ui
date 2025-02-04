@@ -14,7 +14,7 @@ import { css } from '@moneko/css';
 import { customElement } from 'solid-element';
 
 import type { BasicConfig, CustomElement } from '..';
-import { clearAttribute } from '../basic-config';
+import { clearAttribute, type JSXElement } from '../basic-config';
 import theme, { block } from '../theme';
 
 import { styles } from './styles';
@@ -221,10 +221,10 @@ export interface PaginationProps {
    * 或者通过[slot="total-text"]插槽
    * @default true
    */
-  totalText?: ((total: number, range: [start: number, end: number]) => JSX.Element) | false;
+  totalText?: ((total: number, range: [start: number, end: number]) => JSXElement) | false;
   /** 值修改时的回调方法 */
   onChange?(page: number, pageSize: number): void;
-  children?: JSX.Element;
+  children?: JSXElement;
 }
 export type PaginationElement = CustomElement<PaginationProps>;
 

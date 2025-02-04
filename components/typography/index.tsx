@@ -4,7 +4,7 @@ import { css, cx } from '@moneko/css';
 import { customElement } from 'solid-element';
 
 import type { CustomElement } from '..';
-import { clearAttribute } from '../basic-config';
+import { clearAttribute, type JSXElement } from '../basic-config';
 import theme from '../theme';
 
 export interface TypographyProps {
@@ -26,7 +26,7 @@ export interface TypographyProps {
   tag?: string;
   /** 禁用 */
   disabled?: boolean;
-  children?: JSX.Element;
+  children?: JSXElement;
   style?: Record<string, string | number>;
 }
 

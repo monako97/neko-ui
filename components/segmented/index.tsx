@@ -4,7 +4,7 @@ import { css, cx } from '@moneko/css';
 import { customElement } from 'solid-element';
 
 import type { BaseOption, BasicConfig, CustomElement } from '..';
-import { clearAttribute, FieldName } from '../basic-config';
+import { clearAttribute, FieldName, type JSXElement } from '../basic-config';
 import getOptions from '../get-options';
 import theme, { inline } from '../theme';
 
@@ -131,9 +131,9 @@ function Segmented(props: SegmentedProps) {
                   ref={options()[i()].ref}
                 >
                   <Show when={item[fieldName.icon]}>
-                    <span class="icon">{item[fieldName.icon]}</span>
+                    <span class="icon">{item[fieldName.icon] as JSXElement}</span>
                   </Show>
-                  <span class="text">{item[fieldName.label]}</span>
+                  <span class="text">{item[fieldName.label] as JSXElement}</span>
                   <Show when={item[fieldName.suffix]}>
                     <n-typography type="secondary">{item[fieldName.suffix]}</n-typography>
                   </Show>

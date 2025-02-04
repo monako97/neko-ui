@@ -14,7 +14,7 @@ import { css } from '@moneko/css';
 import { customElement } from 'solid-element';
 
 import type { BasicConfig, CustomElement } from '..';
-import { clearAttribute } from '../basic-config';
+import { clearAttribute, type JSXElement } from '../basic-config';
 import theme, { block, inline } from '../theme';
 
 import loadingIcon from './loading';
@@ -54,8 +54,8 @@ export interface ButtonProps {
    */
   size?: BasicConfig['size'];
   /** 按钮前面添加一个图标 */
-  icon?: (() => JSX.Element) | JSX.Element;
-  children?: JSX.Element;
+  icon?: (() => JSXElement) | JSXElement;
+  children?: JSXElement | string;
   onClick?(e: Event): void;
   loading?: boolean;
 }

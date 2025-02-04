@@ -1,5 +1,5 @@
 import type { MarkedOptions, Renderer } from 'marked-completed';
-import markedRaw from 'marked-completed?raw';
+import markedRaw from 'marked-completed/marked.min.js?raw';
 
 export interface WorkerMessage extends MarkedOptions {
   text: string;

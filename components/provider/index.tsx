@@ -2,6 +2,7 @@ import { createEffect, mergeProps } from 'solid-js';
 import { customElement, noShadowDOM } from 'solid-element';
 
 import type { CustomElement } from '..';
+import type { JSXElement } from '../basic-config';
 import theme, { ColorScheme } from '../theme';
 
 function Provider(props: ProviderProps) {
@@ -29,7 +30,7 @@ export interface ProviderProps {
    */
   scheme?: keyof typeof ColorScheme;
   /** 包裹的子项 */
-  children?: JSX.Element;
+  children?: JSXElement;
   /** 响应 scheme 变化 */
   onScheme?(scheme: keyof typeof ColorScheme): void;
 }

@@ -3,7 +3,7 @@ import { css } from '@moneko/css';
 import { customElement } from 'solid-element';
 
 import type { CustomElement } from '..';
-import { clearAttribute } from '../basic-config';
+import { clearAttribute, type JSXElement } from '../basic-config';
 import { inline } from '../theme';
 
 import '../typography';
@@ -30,7 +30,7 @@ export interface EmptyProps {
   /** 自定义类名 */
   class?: string;
   /** 描述 */
-  label?: JSX.Element;
+  label?: JSXElement;
   style?: Record<string, string | number>;
 }
 export type EmptyElement = CustomElement<EmptyProps>;

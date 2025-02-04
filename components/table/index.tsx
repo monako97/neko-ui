@@ -14,7 +14,7 @@ import { css, cx } from '@moneko/css';
 import { customElement } from 'solid-element';
 
 import type { BasicConfig, CustomElement, PaginationProps } from '..';
-import { clearAttribute } from '../basic-config';
+import { clearAttribute, type JSXElement } from '../basic-config';
 import theme, { block } from '../theme';
 
 import { styles } from './styles';
@@ -247,13 +247,13 @@ export interface TableProps<T extends Record<string, Any> = Record<string, Any>>
   /** 数据源 */
   data?: T[];
   /** 表格标题, 支持直接赋值给 'title' 属性, 或者通过[slot="title"]插槽 */
-  title?: JSX.Element | 'slot';
+  title?: JSXElement | 'slot';
   /** 汇总行 */
   summary?: (keyof T)[];
   /** 汇总行描述
    * @default '合计'
    */
-  summaryText?: JSX.Element;
+  summaryText?: JSXElement;
   /** 分页器
    * @default false
    */
@@ -262,7 +262,7 @@ export interface TableProps<T extends Record<string, Any> = Record<string, Any>>
    * @default 'normal'
    */
   size?: BasicConfig['size'];
-  children?: JSX.Element;
+  children?: JSXElement;
 }
 /** 栏 */
 interface Column<T extends Record<string, Any>> extends Cell {
@@ -271,9 +271,9 @@ interface Column<T extends Record<string, Any>> extends Cell {
   /** 原始 key */
   originKey?: keyof T;
   /** 单元格表头标题 */
-  label?: JSX.Element;
+  label?: JSXElement;
   /** 自定义渲染单元格 */
-  render?(item: T[keyof T], row: T, index: number): JSX.Element;
+  render?(item: T[keyof T], row: T, index: number): JSXElement;
   /** 单元格横跨的列数 */
   colspan?: number;
   /** 单元格横跨的行数 */

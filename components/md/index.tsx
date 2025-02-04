@@ -3,7 +3,7 @@ import { css, cx } from '@moneko/css';
 import { customElement } from 'solid-element';
 
 import type { CustomElement } from '..';
-import { clearAttribute } from '../basic-config';
+import { clearAttribute, type JSXElement } from '../basic-config';
 import mdStyle from '../md-style';
 import theme, { block } from '../theme';
 
@@ -144,7 +144,7 @@ function MD(_props: MdProps) {
         <style textContent={css(props.css)} />
       </Show>
       <Switch>
-        <Match when={(props.children || []).length > 0}>
+        <Match when={((props.children as []) || []).length > 0}>
           <article class="n-md-box" part="box">
             <div class="n-md-body" part="body">
               <For each={props.children as []}>{(e) => e}</For>
@@ -188,7 +188,7 @@ export interface MdProps {
    * @default false
    */
   notRender?: boolean;
-  children?: JSX.Element;
+  children?: JSXElement;
 }
 
 export type MdElement = CustomElement<MdProps>;

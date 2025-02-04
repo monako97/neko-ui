@@ -1,5 +1,11 @@
 # Change log
 
+## Last
+
+### ✨ Features
+
+- modal hooks ([5b3f88c](https://github.com/monako97/neko-ui/commit/5b3f88cd8bda986f9f0e03c82784872c2841e77a))
+
 ## [v2.9.7](https://github.com/monako97/neko-ui/compare/v2.9.6...v2.9.7) (1-26-2025)
 
 ### ✨ Features
