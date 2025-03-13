@@ -1,5 +1,5 @@
 import { createEffect, createMemo, For, Show } from 'solid-js';
-import app from '@app/info';
+import { description, name } from '@app/info';
 import routes, { type RouteConfig } from '@app/routes';
 import { css } from '@moneko/css';
 import { A, getPathName, useLocation } from '@moneko/solid';
@@ -118,8 +118,8 @@ function Sider() {
           <n-avatar css={avatarCss} />
         </A>
         <hgroup class="site-title">
-          <h1 data-truncated>{app.name.replace(/-/g, ' ').toLocaleUpperCase()}</h1>
-          <i>{kv[active()]?.subtitle || app.description}</i>
+          <h1 data-truncated>{name.replace(/-/g, ' ').toLocaleUpperCase()}</h1>
+          <i>{kv[active()]?.subtitle || description}</i>
         </hgroup>
         <n-dropdown
           value={scheme()}

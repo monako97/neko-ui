@@ -116,7 +116,8 @@ export const style = css`
   }
 
   .opacity {
-    background: linear-gradient(
+    background:
+      linear-gradient(
         to right,
         hsl(calc(var(--h)) 100% 50% / 0%),
         hsl(calc(var(--h)) 100% 50% / 100%)

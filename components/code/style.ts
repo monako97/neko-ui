@@ -2,7 +2,8 @@ import { css } from '@moneko/css';
 
 export const style = css`
   :host {
-    --code-font-stack: 'Liberation Mono', monaco, menlo, consolas, 'Source Code Pro', 'Ubuntu Mono',
+    --code-font-stack:
+      'Liberation Mono', monaco, menlo, consolas, 'Source Code Pro', 'Ubuntu Mono',
       'Microsoft Yahei', '微软雅黑', courier, 'Helvetica Neue', 'Lantinghei SC', stxihei, wenquanyi,
       sans-serif;
 

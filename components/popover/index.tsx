@@ -26,7 +26,7 @@ export interface PopoverProps {
   /** 自定义样式表 */
   css?: string;
   /** 内容 */
-  content?: JSXElement;
+  content?: JSXElement | (() => JSXElement);
   /** 挂载到指定的元素，值为一个返回对应 DOM 元素 默认 document.body */
   getPopupContainer?: (node?: HTMLElement | null) => HTMLElement;
   /** 触发行为
@@ -357,7 +357,7 @@ function Popover(props: PopoverProps) {
           </Show>
           <div ref={ref} onAnimationEnd={exit} class={portalCls()} {...childrenProps()}>
             <Show when={local.content} fallback={<Empty />}>
-              <Show when={typeof local.content === 'string'} fallback={local.content}>
+              <Show when={typeof local.content === 'string'} fallback={<>{local.content}</>}>
                 {/* eslint-disable-next-line solid/no-innerhtml */}
                 <div innerHTML={local.content as string} />
               </Show>

@@ -1,6 +1,6 @@
 import { createMemo, For } from 'solid-js';
 import coverages from '@app/coverage';
-import app from '@app/info';
+import { name } from '@app/info';
 import { cx } from '@moneko/css';
 import { getPathName, useLocation } from '@moneko/solid';
 
@@ -11,9 +11,9 @@ type CoverageType = 'statements' | 'conditionals' | 'methods';
 function Coverage() {
   const location = useLocation();
   const coverage = createMemo(() => {
-    const name = getPathName(location);
+    const component = getPathName(location);
 
-    return coverages[name ? `components.${name}` : app.name] || {};
+    return coverages[component ? `components.${component}` : name] || {};
   });
 
   function getNum(num: number) {

@@ -1,8 +1,8 @@
-import neko from 'eslint-config-neko';
+import eslint from '@moneko/eslint';
 import solid from 'eslint-plugin-solid/configs/typescript';
 
 const conf = [
-  ...neko.configs.recommended,
+  ...eslint.configs.recommended,
   { ignores: ['**/**/*.mdx?', 'lib', 'docs', 'coverage', 'prism.js'] },
 ];
 

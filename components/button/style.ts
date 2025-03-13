@@ -97,8 +97,8 @@ export const style = css`
     gap: 3px;
     line-height: 1;
     cursor: pointer;
-    transition-property: color, background-color, border-color, width, height, transform, padding,
-      opacity;
+    transition-property:
+      color, background-color, border-color, width, height, transform, padding, opacity;
     transition-timing-function: linear;
     touch-action: manipulation;
     box-sizing: border-box;

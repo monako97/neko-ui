@@ -41,11 +41,11 @@ export interface ModalProps {
   /**
    * 自定义关闭图标, 设置为 null 或 false 时隐藏关闭按钮
    */
-  closeIcon?: JSXElement;
+  closeIcon?: JSXElement | (() => JSXElement);
   /** 内容 */
-  content?: HTMLElement | string | JSX.Element;
+  content?: JSXElement | (() => JSXElement);
   /** 标题 */
-  title?: HTMLElement | string | JSX.Element;
+  title?: JSXElement | (() => JSXElement);
   /** 遮罩模糊
    * @default false
    */
@@ -94,7 +94,9 @@ function Modal(_: ModalProps) {
   const getCss = createMemo(() => {
     const { x, y, width, height } = posi();
 
-    return `.portal { --y: ${-(y - height / 2)}px;--x: ${-(x - width / 2)}px; --movement-x: ${movement[0]}px; --movement-y: ${movement[1]}px;}`;
+    return `.portal { --y: ${-(y - height / 2)}px;--x: ${-(x - width / 2)}px; --movement-x: ${
+      movement[0]
+    }px; --movement-y: ${movement[1]}px;}`;
   });
 
   async function openChange(visi: OpenStateKey) {
@@ -191,7 +193,11 @@ function Modal(_: ModalProps) {
       return null;
     }
     if (['function', 'object'].includes(typeof props.closeIcon)) {
-      return () => <span class="modal-close">{props.closeIcon}</span>;
+      return () => (
+        <span class="modal-close">
+          {isFunction(props.closeIcon) ? props.closeIcon() : props.closeIcon}
+        </span>
+      );
     }
     return () => (
       <n-button class="modal-close" danger={true} circle={true} flat={true} onClick={close}>
@@ -237,6 +243,8 @@ function Modal(_: ModalProps) {
   onCleanup(() => {
     document.body.removeEventListener('mouseup', mouseUp, false);
   });
+  const title = createMemo(() => (isFunction(props.title) ? props.title() : props.title));
+  const content = createMemo(() => (isFunction(props.content) ? props.content() : props.content));
 
   return (
     <Show when={open() !== OpenState.closed}>
@@ -264,14 +272,14 @@ function Modal(_: ModalProps) {
             onMouseDown={mouseDown}
           >
             <div class="modal-header">
-              <strong class="modal-title">{props.title}</strong>
+              <strong class="modal-title">{title()}</strong>
             </div>
             <Show when={props.closeIcon === void 0} fallback={closeIcon() as JSXElement}>
               <n-button class="modal-close" danger={true} circle={true} flat={true} onClick={close}>
                 ⛌
               </n-button>
             </Show>
-            <div class="modal-body">{props.content}</div>
+            <div class="modal-body">{content()}</div>
             <Show when={props.cancelText || props.okText}>
               <div class="modal-footer">
                 <Show when={props.cancelText}>

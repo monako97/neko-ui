@@ -88,7 +88,7 @@ export type CodeElement = CustomElement<CodeProps>;
 
 function Code(props: CodeProps) {
   const { isDark } = theme;
-  let codeEl: HTMLPreElement;
+  let codeEl: HTMLPreElement | undefined;
   let timer: NodeJS.Timeout | undefined;
   const decoded = /%[0-9A-Fa-f]{2}/;
   const id = createUniqueId();
@@ -112,9 +112,11 @@ function Code(props: CodeProps) {
     if (decoded.test(_next)) {
       _next = decodeURIComponent(_next);
     }
-    codeEl.normalize();
-    if (_next !== codeEl.textContent) {
-      setCode(_next);
+    if (codeEl) {
+      codeEl.normalize();
+      if (_next !== codeEl.textContent) {
+        setCode(_next);
+      }
     }
   });
 
@@ -219,7 +221,7 @@ function Code(props: CodeProps) {
         const grammars = language.split(' ') as Language[],
           grammar = Prism.languages[grammars[0]];
 
-        if (grammar) {
+        if (grammar && codeEl) {
           highlighter(codeEl, Prism.tokenize(value, grammar), prevCss);
         }
         if (grammars.length > 1 || grammars[0] === 'git') {
@@ -266,7 +268,7 @@ function Code(props: CodeProps) {
             <CopyIcon class="toolbar-copy" onClick={copy} />
           </div>
         </Show>
-        <code ref={codeEl!} contenteditable={props.edit} spellcheck={false} onInput={change}>
+        <code ref={codeEl} contenteditable={props.edit} spellcheck={false} onInput={change}>
           {code()}
         </code>
       </pre>
