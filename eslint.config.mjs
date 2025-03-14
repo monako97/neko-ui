@@ -1,9 +1,5 @@
-import eslint from '@moneko/eslint';
-import solid from 'eslint-plugin-solid/configs/typescript';
+import recommended from '@moneko/eslint/solid';
 
-const conf = [
-  ...eslint.configs.recommended,
-  { ignores: ['**/**/*.mdx?', 'lib', 'docs', 'coverage', 'prism.js'] },
-];
-
-export default conf.concat(solid);
+export default recommended.concat({
+  ignores: ['**/**/*.mdx?', 'lib', 'docs', 'coverage', 'prism.js'],
+});

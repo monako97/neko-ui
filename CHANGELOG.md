@@ -1,5 +1,11 @@
 # Change log
 
+## [v2.10.0](https://github.com/monako97/neko-ui/compare/v2.9.9...v2.10.0) (3-14-2025)
+
+### 🐛 Bug Fixes
+
+- isEqual ([19c0581](https://github.com/monako97/neko-ui/commit/19c0581f5974372ba1323221895088ba001a0aeb))
+
 ## [v2.9.9](https://github.com/monako97/neko-ui/compare/v2.9.7...v2.9.9) (2-4-2025)
 
 ### ✨ Features
