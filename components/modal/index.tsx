@@ -170,7 +170,7 @@ function Modal(_: ModalProps) {
     if (open() === OpenState.open) {
       setNum((prev) => prev + 1);
       doc.addEventListener('mousewheel', preventDefault, {
-        passive: false,
+        passive: passiveSupported,
       });
 
       if (props.escClosable) {

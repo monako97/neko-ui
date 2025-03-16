@@ -14,7 +14,13 @@ order: 1
   btn.addEventListener('click', function (e) {
     modal.open = 'open';
   });
-  modal.content = 'content...';
+  modal.content = Array.from({ length: 100 }, (_, i) => {
+    const p = document.createElement('p');
+
+    p.textContent = `${i}Some contents...`;
+
+    return p;
+  });
   modal.addEventListener('openchange', function (e) {
     modal.open = e.detail;
   });
@@ -37,13 +43,9 @@ const Demo = () => {
         open={open}
         title="最简单的用法"
         onOpenChange={handleOpenChange}
-        content={
-          <>
-            <p>Some contents...</p>
-            <p>Some contents...</p>
-            <p>Some contents...</p>
-          </>
-        }
+        content={Array.from({ length: 100 }, (_, i) => (
+          <p>{i}Some contents...</p>
+        ))}
       />
       <n-button type="primary" onClick={handleOpen}>
         打开模态框

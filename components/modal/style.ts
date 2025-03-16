@@ -47,14 +47,24 @@ export const style = css`
     justify-content: flex-end;
   }
 
+  .modal-body {
+    overflow: auto;
+    max-block-size: calc(100vb - 150px);
+
+    &::-webkit-scrollbar {
+      inline-size: 5px;
+      block-size: 5px;
+    }
+  }
+
   .modal-content {
-    cursor: grab;
     margin: auto;
     border-radius: var(--border-radius);
     padding: 20px 24px;
     background-color: var(--modal-component-bg);
     opacity: var(--opacity);
     box-shadow: var(--modal-box-shadow);
+    cursor: grab;
     min-inline-size: 200px;
     max-inline-size: calc(100% - 32px);
     transform: translate3d(var(--x), var(--y), 1px) scale3d(var(--scale), var(--scale), 1);

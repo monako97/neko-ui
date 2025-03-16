@@ -1,5 +1,11 @@
 # Change log
 
+## Last
+
+### ✨ Features
+
+- 依赖瘦身 ([134e6ab](https://github.com/monako97/neko-ui/commit/134e6aba8d731ec7b304035d79478a74a7b57f23))
+
 ## [v2.10.0](https://github.com/monako97/neko-ui/compare/v2.9.9...v2.10.0) (3-14-2025)
 
 ### 🐛 Bug Fixes
