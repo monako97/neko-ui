@@ -1,6 +1,10 @@
 # Change log
 
-## Last
+## [v2.10.1](https://github.com/monako97/neko-ui/compare/v2.10.0...v2.10.1) (3-16-2025)
+
+### 🐛 Bug Fixes
+
+- modal ([735cd87](https://github.com/monako97/neko-ui/commit/735cd87df29749295eaf73947e71776013c3400d))
 
 ### ✨ Features
 
