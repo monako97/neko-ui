@@ -1,5 +1,11 @@
 # Change log
 
+## Last
+
+### 📦 Code Refactoring
+
+- update deps ([31974ff](https://github.com/monako97/neko-ui/commit/31974ff43f8a388f59fb32b2fb3ceaab625f018e))
+
 ## [v2.10.1](https://github.com/monako97/neko-ui/compare/v2.10.0...v2.10.1) (3-16-2025)
 
 ### 🐛 Bug Fixes
