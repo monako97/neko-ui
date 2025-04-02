@@ -16,10 +16,12 @@
   "scripts": {
     "build": "mo build library solid",
     "changelog": "mo changelog CHANGELOG.md && git add CHANGELOG.md",
+    "lint:commit": "pure-lint mode=commit && npm run changelog",
+    "lint:ci": "pure-lint mode=ci",
     "lint": "mo eslint [components,site] --fix",
     "postlint": "mo stylelint [components,site] --fix && jest --coverage",
     "precommit": "npm run lint && npm run changelog",
-    "prepare": "mo githooks pre-commit=\"npm run precommit\" commit-msg=\"npx --no -- commitlint --edit ${1}\"",
+    "prepare": "mo githooks pre-commit=\"npm run lint:commit\" commit-msg=\"npx --no -- commitlint --edit ${1}\"",
     "start": "mo start library solid",
     "test": "jest --coverage --watchAll"
   },
@@ -53,9 +55,9 @@
   "devDependencies": {
     "@commitlint/cli": "19.8.0",
     "@commitlint/config-conventional": "19.8.0",
-    "@moneko/core": "3.35.2",
-    "@moneko/eslint": "1.1.0",
-    "@moneko/stylelint": "1.0.2",
+    "@moneko/core": "3.35.5",
+    "@moneko/eslint": "1.2.1",
+    "@moneko/stylelint": "1.2.0",
     "@moneko/solid": "1.11.0",
     "@solidjs/testing-library": "0.8.10",
     "@swc/jest": "0.2.37",
