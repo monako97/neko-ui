@@ -1,6 +1,6 @@
 {
   "name": "neko-ui",
-  "version": "2.10.1",
+  "version": "2.10.2",
   "description": "WebComponents UI Libraries",
   "main": "lib/index.js",
   "module": "es/index.js",
@@ -73,7 +73,7 @@
     "shadow-dom-testing-library": "1.12.0"
   },
   "dependencies": {
-    "@moneko/common": "1.7.5",
+    "@moneko/common": "1.7.6",
     "@moneko/css": "1.1.5",
     "custom-element-type": "1.0.6",
     "dayjs": "1.11.13",
