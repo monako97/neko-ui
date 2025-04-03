@@ -129,7 +129,9 @@ function HighlightText(props: HighlightTextProps) {
       <style textContent={baseStyle()} />
       <style textContent={style} />
       <style textContent={`::highlight(${id}) {color: var(--primary-color, #5794ff);}`} />
-      <Show when={props.css}>{css(props.css)}</Show>
+      <Show when={props.css}>
+        <style textContent={css(props.css)} />
+      </Show>
       <div ref={box} class={cx('text', props.class)}>
         {text()}
       </div>
