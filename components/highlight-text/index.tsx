@@ -92,7 +92,7 @@ function HighlightText(props: HighlightTextProps) {
       if (Array.isArray(props.highlight)) {
         for (let i = 0, len = props.highlight.length; i < len; i++) {
           const item = props.highlight[i];
-          const isOne = typeof item === 'string';
+          const isOne = typeof item !== 'object';
           const hitStr = isOne ? item : item.highlight;
 
           if (hitStr.length) {
