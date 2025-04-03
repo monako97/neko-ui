@@ -18,7 +18,7 @@
     "changelog": "mo changelog CHANGELOG.md && git add CHANGELOG.md",
     "lint:commit": "pure-lint mode=commit && npm run changelog",
     "lint:ci": "pure-lint mode=ci",
-    "lint": "",
+    "lint": "mo version",
     "lint2": "mo eslint [components,site] --fix",
     "postlint": "mo stylelint [components,site] --fix && jest --coverage",
     "precommit": "npm run lint && npm run changelog",
