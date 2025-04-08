@@ -19,6 +19,9 @@ const conf: Partial<ConfigType> = {
       transform: 'esm/${member}',
     },
   },
+  devServer: {
+    https: true,
+  },
 };
 
 export default conf;
