@@ -41,12 +41,7 @@
     "access": "public",
     "registry": "https://registry.npmjs.org"
   },
-  "sideEffects": [
-    "*.css",
-    "*.less",
-    "*.md",
-    "*.mdx"
-  ],
+  "sideEffects": true,
   "keywords": [
     "neko-ui",
     "neko ui",

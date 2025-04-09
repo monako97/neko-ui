@@ -1,6 +1,10 @@
 # Change log
 
-## Last
+## [v2.10.6-beta.0](https://github.com/monako97/neko-ui/compare/v2.10.6...v2.10.6-beta.0) (4-9-2025)
+
+### 📦 Code Refactoring
+
+- component registry ([24238da](https://github.com/monako97/neko-ui/commit/24238daedd4745d819922096a033193cc4a30c3e))
 
 ## [v2.10.6](https://github.com/monako97/neko-ui/compare/v2.10.5...v2.10.6) (4-9-2025)
 
