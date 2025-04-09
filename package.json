@@ -1,6 +1,6 @@
 {
   "name": "neko-ui",
-  "version": "2.10.6",
+  "version": "2.10.6-beta.0",
   "description": "WebComponents UI Libraries",
   "main": "lib/index.js",
   "module": "es/index.js",
@@ -41,7 +41,12 @@
     "access": "public",
     "registry": "https://registry.npmjs.org"
   },
-  "sideEffects": false,
+  "sideEffects": [
+    "*.css",
+    "*.less",
+    "*.md",
+    "*.mdx"
+  ],
   "keywords": [
     "neko-ui",
     "neko ui",

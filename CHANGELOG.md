@@ -2,6 +2,14 @@
 
 ## Last
 
+## [v2.10.6](https://github.com/monako97/neko-ui/compare/v2.10.5...v2.10.6) (4-9-2025)
+
+## [v2.10.5](https://github.com/monako97/neko-ui/compare/v2.10.4...v2.10.5) (4-9-2025)
+
+### 📦 Code Refactoring
+
+- update deps ([7aca389](https://github.com/monako97/neko-ui/commit/7aca3894ace9736935d88db8b156e3066c1ccde2))
+
 ## [v2.10.4](https://github.com/monako97/neko-ui/compare/v2.10.3...v2.10.4) (4-9-2025)
 
 ### 📦 Code Refactoring

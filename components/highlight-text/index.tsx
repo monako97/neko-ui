@@ -140,37 +140,43 @@ function HighlightText(props: HighlightTextProps) {
 }
 
 export type HighlightTextElement = CustomElement<HighlightTextProps>;
-customElement<HighlightTextProps>(
-  'n-highlight-text',
-  {
-    class: void 0,
-    css: void 0,
-    text: void 0,
-    highlight: void 0,
-    flag: void 0,
-    extra: void 0,
-    children: void 0,
-  },
-  (_, opt) => {
-    const el = opt.element;
-    const props = mergeProps(
-      {
-        text: el.textContent,
-        css: el.css,
-      },
-      _,
-    );
 
-    createEffect(() => {
-      clearAttribute(el, ['css', 'text', 'highlight', 'extra']);
-      el.replaceChildren();
-    });
-    return (
-      <>
-        <style textContent={inline} />
-        <HighlightText {...props} />
-      </>
-    );
-  },
-);
+function registry() {
+  customElement<HighlightTextProps>(
+    'n-highlight-text',
+    {
+      class: void 0,
+      css: void 0,
+      text: void 0,
+      highlight: void 0,
+      flag: void 0,
+      extra: void 0,
+      children: void 0,
+    },
+    (_, opt) => {
+      const el = opt.element;
+      const props = mergeProps(
+        {
+          text: el.textContent,
+          css: el.css,
+        },
+        _,
+      );
+
+      createEffect(() => {
+        clearAttribute(el, ['css', 'text', 'highlight', 'extra']);
+        el.replaceChildren();
+      });
+      return (
+        <>
+          <style textContent={inline} />
+          <HighlightText {...props} />
+        </>
+      );
+    },
+  );
+}
+
+HighlightText.registry = registry;
+HighlightText.registry();
 export default HighlightText;

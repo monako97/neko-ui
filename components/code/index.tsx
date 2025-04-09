@@ -276,47 +276,53 @@ function Code(props: CodeProps) {
   );
 }
 
-customElement<CodeProps>(
-  'n-code',
-  {
-    class: void 0,
-    code: void 0,
-    language: void 0,
-    children: void 0,
-    edit: void 0,
-    toolbar: void 0,
-    css: void 0,
-    onChange: void 0,
-    title: void 0,
-  },
-  (_, opt) => {
-    const { baseStyle } = theme;
-    const el = opt.element;
-    const props = mergeProps(
-      {
-        code: el.textContent,
-        css: el.css,
-        onChange(val: string) {
-          el.dispatchEvent(
-            new CustomEvent('change', {
-              detail: val,
-            }),
-          );
+function registry() {
+  customElement<CodeProps>(
+    'n-code',
+    {
+      class: void 0,
+      code: void 0,
+      language: void 0,
+      children: void 0,
+      edit: void 0,
+      toolbar: void 0,
+      css: void 0,
+      onChange: void 0,
+      title: void 0,
+    },
+    (_, opt) => {
+      const { baseStyle } = theme;
+      const el = opt.element;
+      const props = mergeProps(
+        {
+          code: el.textContent,
+          css: el.css,
+          onChange(val: string) {
+            el.dispatchEvent(
+              new CustomEvent('change', {
+                detail: val,
+              }),
+            );
+          },
         },
-      },
-      _,
-    );
+        _,
+      );
 
-    createEffect(() => {
-      clearAttribute(el, ['css', 'code', 'title']);
-      el.replaceChildren();
-    });
-    return (
-      <>
-        <style textContent={baseStyle()} />
-        <Code {...props} />
-      </>
-    );
-  },
-);
+      createEffect(() => {
+        clearAttribute(el, ['css', 'code', 'title']);
+        el.replaceChildren();
+      });
+      return (
+        <>
+          <style textContent={baseStyle()} />
+          <Code {...props} />
+        </>
+      );
+    },
+  );
+}
+
+Code.registry = registry;
+Code.registry();
+
 export default Code;

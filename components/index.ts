@@ -286,16 +286,17 @@ type IntrinsicNekoElement = Transform<CustomElementTags>;
 declare module 'solid-js' {
   // eslint-disable-next-line @typescript-eslint/no-namespace
   export namespace JSX {
-    export interface IntrinsicElements extends HTMLElementTags, IntrinsicNekoElement {}
+    // eslint-disable-next-line @typescript-eslint/no-empty-object-type
+    interface IntrinsicElements extends IntrinsicNekoElement {}
   }
   // eslint-disable-next-line @typescript-eslint/no-empty-object-type
   interface HTMLElementTagNameMap extends IntrinsicNekoElement {}
 }
-declare global {
+declare module 'react' {
   // eslint-disable-next-line @typescript-eslint/no-namespace
   export namespace JSX {
     // eslint-disable-next-line @typescript-eslint/no-empty-object-type
-    export interface IntrinsicElements extends IntrinsicNekoElement {}
+    interface IntrinsicElements extends IntrinsicNekoElement {}
   }
   // eslint-disable-next-line @typescript-eslint/no-empty-object-type
   interface HTMLElementTagNameMap extends IntrinsicNekoElement {}
