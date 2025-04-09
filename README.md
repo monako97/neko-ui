@@ -59,6 +59,8 @@ pnpm add neko-ui -S
 
 ## 按需引入
 
+`neko-ui` 默认支持基于 ES modules 的 tree shaking，直接引入 `import { theme } from 'neko-ui';` 就会有按需加载的效果。
+
 ### 手动方式
 
 ```jsx
@@ -77,25 +79,6 @@ function Demo() {
     </div>
   );
 }
-```
-
-### 使用 @moneko
-
-```typescript
-// config/index.ts
-import type { ConfigType } from '@moneko/core';
-
-const conf: Partial<ConfigType> = {
-  // 按需引入
-  importOnDemand: {
-    'neko-ui': {
-      transform: 'es/${member}',
-      memberTransformers: ['dashed_case'],
-    },
-  },
-};
-
-export default conf;
 ```
 
 > 文档通过 @moneko/core 生成
