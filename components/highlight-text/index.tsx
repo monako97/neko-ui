@@ -93,14 +93,14 @@ function HighlightText(props: HighlightTextProps) {
         for (let i = 0, len = props.highlight.length; i < len; i++) {
           const item = props.highlight[i];
           const isOne = typeof item !== 'object';
-          const hitStr = isOne ? item : item.highlight;
+          const hitStr = String(isOne ? item : item.highlight);
 
           if (hitStr.length) {
             highlight(box, id, hitStr, isOne ? props.flag : item.flag, text());
           }
         }
-      } else if (props.highlight.length) {
-        highlight(box, id, props.highlight, props.flag, text());
+      } else if (String(props.highlight).length) {
+        highlight(box, id, String(props.highlight), props.flag, text());
       }
     }
   });
