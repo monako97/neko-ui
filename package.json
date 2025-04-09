@@ -41,7 +41,7 @@
     "access": "public",
     "registry": "https://registry.npmjs.org"
   },
-  "sideEffects": true,
+  "sideEffects": false,
   "keywords": [
     "neko-ui",
     "neko ui",
@@ -58,9 +58,9 @@
   "devDependencies": {
     "@commitlint/cli": "19.8.0",
     "@commitlint/config-conventional": "19.8.0",
-    "@moneko/core": "3.39.3",
+    "@moneko/core": "3.39.4",
     "@moneko/eslint": "1.3.0",
-    "@moneko/solid": "1.11.0",
+    "@moneko/solid": "1.11.1",
     "@moneko/stylelint": "1.3.0",
     "@solidjs/testing-library": "0.8.10",
     "@swc/jest": "0.2.37",
@@ -76,8 +76,8 @@
     "shadow-dom-testing-library": "1.12.0"
   },
   "dependencies": {
-    "@moneko/common": "1.7.6",
-    "@moneko/css": "1.1.5",
+    "@moneko/common": "1.7.7",
+    "@moneko/css": "1.2.0",
     "custom-element-type": "1.0.6",
     "dayjs": "1.11.13",
     "prismjs": "1.30.0",
