@@ -6,6 +6,7 @@ import type { BaseOption, BasicConfig, CustomElement } from '..';
 import { clearAttribute, FieldName, type JSXElement } from '../basic-config';
 import getOptions from '../get-options';
 import theme, { inline } from '../theme';
+import { registry } from '../utils';
 
 import { style } from './style';
 
@@ -214,46 +215,49 @@ function Checkbox(props: CheckboxBoolProps | CheckboxGroupProps) {
 export type CheckboxGroupElement = CustomElement<CheckboxGroupProps>;
 export type CheckboxBoolElement = CustomElement<CheckboxBoolProps>;
 
-customElement<CheckboxBoolProps | CheckboxGroupProps>(
-  'n-checkbox',
-  {
-    class: void 0,
-    css: void 0,
-    name: void 0,
-    disabled: void 0,
-    value: void 0,
-    defaultValue: void 0,
-    options: void 0,
-    onChange: void 0,
-    fieldNames: void 0,
-    checkAll: void 0,
-    layout: void 0,
-  },
-  (_, opt) => {
-    const el = opt.element;
-    const props = mergeProps(
-      {
-        layout: el.layout || 'horizontal',
-        onChange(next: (string | number)[] | boolean) {
-          el.dispatchEvent(
-            new CustomEvent('change', {
-              detail: next,
-            }),
-          );
+Checkbox.registry = () => {
+  customElement<CheckboxBoolProps | CheckboxGroupProps>(
+    'n-checkbox',
+    {
+      class: void 0,
+      css: void 0,
+      name: void 0,
+      disabled: void 0,
+      value: void 0,
+      defaultValue: void 0,
+      options: void 0,
+      onChange: void 0,
+      fieldNames: void 0,
+      checkAll: void 0,
+      layout: void 0,
+    },
+    (_, opt) => {
+      const el = opt.element;
+      const props = mergeProps(
+        {
+          layout: el.layout || 'horizontal',
+          onChange(next: (string | number)[] | boolean) {
+            el.dispatchEvent(
+              new CustomEvent('change', {
+                detail: next,
+              }),
+            );
+          },
         },
-      },
-      _,
-    );
+        _,
+      );
 
-    createEffect(() => {
-      clearAttribute(el, ['options', 'fieldNames', 'css']);
-    });
-    return (
-      <>
-        <style textContent={inline} />
-        <Checkbox {...props} />
-      </>
-    );
-  },
-);
+      createEffect(() => {
+        clearAttribute(el, ['options', 'fieldNames', 'css']);
+      });
+      return (
+        <>
+          <style textContent={inline} />
+          <Checkbox {...props} />
+        </>
+      );
+    },
+  );
+};
+registry(Checkbox);
 export default Checkbox;

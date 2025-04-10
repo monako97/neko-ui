@@ -26,6 +26,7 @@ import { customElement } from 'solid-element';
 import type { CustomElement, InputNumberProps } from '..';
 import { clearAttribute } from '../basic-config';
 import theme, { block } from '../theme';
+import { registry } from '../utils';
 
 import { style, switchCss } from './style';
 
@@ -343,30 +344,32 @@ export const defaultColorPaletteProps = {
   onChange: void 0,
 };
 
-customElement<ColorPaletteProps>('n-color-palette', defaultColorPaletteProps, (_, opts) => {
-  const el = opts.element;
-  const props = mergeProps(
-    {
-      onChange(val?: string) {
-        el.dispatchEvent(
-          new CustomEvent('change', {
-            detail: val,
-          }),
-        );
+ColorPalette.registry = () => {
+  customElement<ColorPaletteProps>('n-color-palette', defaultColorPaletteProps, (_, opts) => {
+    const el = opts.element;
+    const props = mergeProps(
+      {
+        onChange(val?: string) {
+          el.dispatchEvent(
+            new CustomEvent('change', {
+              detail: val,
+            }),
+          );
+        },
       },
-    },
-    _,
-  );
+      _,
+    );
 
-  createEffect(() => {
-    clearAttribute(el, ['css']);
+    createEffect(() => {
+      clearAttribute(el, ['css']);
+    });
+    return (
+      <>
+        <style textContent={block} />
+        <ColorPalette {...props} />
+      </>
+    );
   });
-  return (
-    <>
-      <style textContent={block} />
-      <ColorPalette {...props} />
-    </>
-  );
-});
-
+};
+registry(ColorPalette);
 export default ColorPalette;

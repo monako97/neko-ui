@@ -5,6 +5,7 @@ import { customElement } from 'solid-element';
 import type { CustomElement } from '..';
 import { clearAttribute } from '../basic-config';
 import theme, { block } from '../theme';
+import { registry } from '../utils';
 
 const style = css`
   :host {
@@ -161,38 +162,41 @@ function Skeleton(props: SkeletonProps) {
 }
 
 export type SkeletonElement = CustomElement<SkeletonProps>;
-customElement<SkeletonProps>(
-  'n-skeleton',
-  {
-    rows: 3,
-    active: void 0,
-    avatar: void 0,
-    title: void 0,
-    css: void 0,
-    class: void 0,
-  },
-  (_, opt) => {
-    const el = opt.element;
-    const props = mergeProps(
-      {
-        rows: el.rows,
-        active: el.active,
-        avatar: el.avatar,
-        title: el.title,
-        css: el.css,
-      },
-      _,
-    );
+Skeleton.registry = () => {
+  customElement<SkeletonProps>(
+    'n-skeleton',
+    {
+      rows: 3,
+      active: void 0,
+      avatar: void 0,
+      title: void 0,
+      css: void 0,
+      class: void 0,
+    },
+    (_, opt) => {
+      const el = opt.element;
+      const props = mergeProps(
+        {
+          rows: el.rows,
+          active: el.active,
+          avatar: el.avatar,
+          title: el.title,
+          css: el.css,
+        },
+        _,
+      );
 
-    createEffect(() => {
-      clearAttribute(el, ['css']);
-    });
-    return (
-      <>
-        <style textContent={block} />
-        <Skeleton {...props} />
-      </>
-    );
-  },
-);
+      createEffect(() => {
+        clearAttribute(el, ['css']);
+      });
+      return (
+        <>
+          <style textContent={block} />
+          <Skeleton {...props} />
+        </>
+      );
+    },
+  );
+};
+registry(Skeleton);
 export default Skeleton;

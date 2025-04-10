@@ -15,6 +15,7 @@ import { customElement } from 'solid-element';
 import type { CustomElement } from '..';
 import { clearAttribute, type JSXElement } from '../basic-config';
 import type { ButtonProps } from '../button';
+import { registry } from '../utils';
 
 import open from './hooks';
 import { defaultPosi } from './posi';
@@ -307,45 +308,46 @@ function Modal(_: ModalProps) {
   );
 }
 
-customElement<ModalProps>(
-  'n-modal',
-  {
-    open: 'closed' as OpenStateKey,
-    maskClosable: true,
-    escClosable: true,
-    onOpenChange: void 0,
-    closeIcon: void 0,
-    content: void 0,
-    title: void 0,
-    maskBlur: void 0,
-    okText: void 0,
-    cancelText: void 0,
-    okProps: void 0,
-    cancelProps: void 0,
-    centered: void 0,
-  },
-  (_, opt) => {
-    const el = opt.element;
-    const props = mergeProps(
-      {
-        onOpenChange(open: OpenStateKey) {
-          opt.element.dispatchEvent(
-            new CustomEvent('openchange', {
-              detail: open,
-            }),
-          );
+Modal.registry = () => {
+  customElement<ModalProps>(
+    'n-modal',
+    {
+      open: 'closed' as OpenStateKey,
+      maskClosable: true,
+      escClosable: true,
+      onOpenChange: void 0,
+      closeIcon: void 0,
+      content: void 0,
+      title: void 0,
+      maskBlur: void 0,
+      okText: void 0,
+      cancelText: void 0,
+      okProps: void 0,
+      cancelProps: void 0,
+      centered: void 0,
+    },
+    (_, opt) => {
+      const el = opt.element;
+      const props = mergeProps(
+        {
+          onOpenChange(open: OpenStateKey) {
+            opt.element.dispatchEvent(
+              new CustomEvent('openchange', {
+                detail: open,
+              }),
+            );
+          },
         },
-      },
-      _,
-    );
+        _,
+      );
 
-    createEffect(() => {
-      clearAttribute(el, ['content']);
-    });
-    return <Modal {...props} />;
-  },
-);
-
+      createEffect(() => {
+        clearAttribute(el, ['content']);
+      });
+      return <Modal {...props} />;
+    },
+  );
+};
 Modal.open = open;
-
+registry(Modal);
 export default Modal;

@@ -1,5 +1,11 @@
 # Change log
 
+## Last
+
+### 📚 Documentation
+
+- fix ([dfb721f](https://github.com/monako97/neko-ui/commit/dfb721fa7f6f10252ccd8639746942a92a1c12f8))
+
 ## [v2.10.6-beta.0](https://github.com/monako97/neko-ui/compare/v2.10.6...v2.10.6-beta.0) (4-9-2025)
 
 ### 📦 Code Refactoring

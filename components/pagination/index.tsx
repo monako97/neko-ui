@@ -16,6 +16,7 @@ import { customElement } from 'solid-element';
 import type { BasicConfig, CustomElement } from '..';
 import { clearAttribute, type JSXElement } from '../basic-config';
 import theme, { block } from '../theme';
+import { registry } from '../utils';
 
 import { styles } from './styles';
 
@@ -228,46 +229,50 @@ export interface PaginationProps {
 }
 export type PaginationElement = CustomElement<PaginationProps>;
 
-customElement<PaginationProps>(
-  'n-pagination',
-  {
-    class: void 0,
-    css: void 0,
-    page: void 0,
-    pageSize: void 0,
-    total: 0,
-    size: void 0,
-    onChange: void 0,
-    totalText: void 0,
-  },
-  (_, opt) => {
-    const el = opt.element;
-    const props = mergeProps(
-      {
-        css: el.css,
-        onChange(page: number, pageSize: number) {
-          el.dispatchEvent(
-            new CustomEvent('change', {
-              detail: [page, pageSize],
-            }),
-          );
+Pagination.registry = () => {
+  customElement<PaginationProps>(
+    'n-pagination',
+    {
+      class: void 0,
+      css: void 0,
+      page: void 0,
+      pageSize: void 0,
+      total: 0,
+      size: void 0,
+      onChange: void 0,
+      totalText: void 0,
+    },
+    (_, opt) => {
+      const el = opt.element;
+      const props = mergeProps(
+        {
+          css: el.css,
+          onChange(page: number, pageSize: number) {
+            el.dispatchEvent(
+              new CustomEvent('change', {
+                detail: [page, pageSize],
+              }),
+            );
+          },
         },
-      },
-      _,
-      {
-        totalText: (!!el.querySelector("[slot='total-text']") as false) || _.totalText,
-      },
-    );
+        _,
+        {
+          totalText: (!!el.querySelector("[slot='total-text']") as false) || _.totalText,
+        },
+      );
 
-    createEffect(() => {
-      clearAttribute(el, ['css']);
-    });
-    return (
-      <>
-        <style textContent={block} />
-        <Pagination {...props} />
-      </>
-    );
-  },
-);
+      createEffect(() => {
+        clearAttribute(el, ['css']);
+      });
+      return (
+        <>
+          <style textContent={block} />
+          <Pagination {...props} />
+        </>
+      );
+    },
+  );
+};
+
+registry(Pagination);
 export default Pagination;

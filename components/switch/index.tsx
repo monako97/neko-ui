@@ -5,6 +5,7 @@ import { customElement } from 'solid-element';
 import type { CustomElement } from '..';
 import { clearAttribute } from '../basic-config';
 import theme, { inline } from '../theme';
+import { registry } from '../utils';
 
 import { style } from './style';
 
@@ -74,48 +75,51 @@ function Switch(props: SwitchProps) {
   );
 }
 
-customElement<SwitchProps>(
-  'n-switch',
-  {
-    class: void 0,
-    css: void 0,
-    checked: void 0,
-    disabled: void 0,
-    checkedText: void 0,
-    unCheckedText: void 0,
-    loading: false,
-    onChange: void 0,
-  },
-  (_, opt) => {
-    const el = opt.element;
-    const props = mergeProps(
-      {
-        css: el.css,
-        checked: el.checked,
-        disabled: el.disabled,
-        checkedText: el.checkedText,
-        unCheckedText: el.unCheckedText,
-        loading: el.loading,
-        onChange(val: boolean) {
-          el.dispatchEvent(
-            new CustomEvent('change', {
-              detail: val,
-            }),
-          );
+Switch.registry = () => {
+  customElement<SwitchProps>(
+    'n-switch',
+    {
+      class: void 0,
+      css: void 0,
+      checked: void 0,
+      disabled: void 0,
+      checkedText: void 0,
+      unCheckedText: void 0,
+      loading: false,
+      onChange: void 0,
+    },
+    (_, opt) => {
+      const el = opt.element;
+      const props = mergeProps(
+        {
+          css: el.css,
+          checked: el.checked,
+          disabled: el.disabled,
+          checkedText: el.checkedText,
+          unCheckedText: el.unCheckedText,
+          loading: el.loading,
+          onChange(val: boolean) {
+            el.dispatchEvent(
+              new CustomEvent('change', {
+                detail: val,
+              }),
+            );
+          },
         },
-      },
-      _,
-    );
+        _,
+      );
 
-    createEffect(() => {
-      clearAttribute(el, ['css']);
-    });
-    return (
-      <>
-        <style textContent={inline} />
-        <Switch {...props} />
-      </>
-    );
-  },
-);
+      createEffect(() => {
+        clearAttribute(el, ['css']);
+      });
+      return (
+        <>
+          <style textContent={inline} />
+          <Switch {...props} />
+        </>
+      );
+    },
+  );
+};
+registry(Switch);
 export default Switch;

@@ -5,6 +5,7 @@ import { customElement } from 'solid-element';
 import type { BaseOption, CustomElement, TabOption } from '..';
 import { clearAttribute } from '../basic-config';
 import { block } from '../theme';
+import { registry } from '../utils';
 
 import Day from './day';
 import Hour from './hour';
@@ -361,41 +362,44 @@ function Cron(props: CronProps) {
   );
 }
 
-customElement<CronProps>(
-  'n-cron',
-  {
-    value: void 0,
-    defaultValue: '0 0 0 * * ? *',
-    onChange: void 0,
-    type: 'line',
-    exclude: [],
-    showCron: true,
-    css: void 0,
-  } as CronProps,
-  (_, opts) => {
-    const el = opts.element;
-    const props = mergeProps(
-      {
-        onChange(val?: string) {
-          el.dispatchEvent(
-            new CustomEvent('change', {
-              detail: val,
-            }),
-          );
+Cron.registry = () => {
+  customElement<CronProps>(
+    'n-cron',
+    {
+      value: void 0,
+      defaultValue: '0 0 0 * * ? *',
+      onChange: void 0,
+      type: 'line',
+      exclude: [],
+      showCron: true,
+      css: void 0,
+    } as CronProps,
+    (_, opts) => {
+      const el = opts.element;
+      const props = mergeProps(
+        {
+          onChange(val?: string) {
+            el.dispatchEvent(
+              new CustomEvent('change', {
+                detail: val,
+              }),
+            );
+          },
         },
-      },
-      _,
-    );
+        _,
+      );
 
-    createEffect(() => {
-      clearAttribute(el, ['exclude', 'css']);
-    });
-    return (
-      <>
-        <style textContent={block} />
-        <Cron {...props} />
-      </>
-    );
-  },
-);
+      createEffect(() => {
+        clearAttribute(el, ['exclude', 'css']);
+      });
+      return (
+        <>
+          <style textContent={block} />
+          <Cron {...props} />
+        </>
+      );
+    },
+  );
+};
+registry(Cron);
 export default Cron;

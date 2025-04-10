@@ -6,6 +6,7 @@ import { customElement } from 'solid-element';
 import type { CustomElement } from '..';
 import { clearAttribute, type JSXElement } from '../basic-config';
 import theme from '../theme';
+import { registry } from '../utils';
 
 export interface TypographyProps {
   /** 自定义类名 */
@@ -91,31 +92,35 @@ function Typography(props: TypographyProps) {
 
 export type TypographyElement = CustomElement<TypographyProps>;
 
-customElement<TypographyProps>(
-  'n-typography',
-  {
-    class: void 0,
-    css: void 0,
-    type: void 0,
-    truncated: void 0,
-    tag: void 0,
-    disabled: void 0,
-    style: void 0,
-  },
-  (_, opt) => {
-    const el = opt.element;
-    const props = mergeProps(
-      {
-        children: [...el.childNodes.values()],
-      },
-      _,
-    );
+Typography.registry = () => {
+  customElement<TypographyProps>(
+    'n-typography',
+    {
+      class: void 0,
+      css: void 0,
+      type: void 0,
+      truncated: void 0,
+      tag: void 0,
+      disabled: void 0,
+      style: void 0,
+    },
+    (_, opt) => {
+      const el = opt.element;
+      const props = mergeProps(
+        {
+          children: [...el.childNodes.values()],
+        },
+        _,
+      );
 
-    createEffect(() => {
-      clearAttribute(el, ['css', 'tag', 'style']);
-      el.replaceChildren();
-    });
-    return <Typography {...props} />;
-  },
-);
+      createEffect(() => {
+        clearAttribute(el, ['css', 'tag', 'style']);
+        el.replaceChildren();
+      });
+      return <Typography {...props} />;
+    },
+  );
+};
+
+registry(Typography);
 export default Typography;

@@ -17,6 +17,7 @@ import type { BaseOption, BasicConfig, ButtonElement, CustomElement } from '..';
 import { clearAttribute, FieldName, type JSXElement } from '../basic-config';
 import getOptions from '../get-options';
 import theme, { block } from '../theme';
+import { registry } from '../utils';
 
 import { addCss, btnCss, style } from './style';
 
@@ -334,53 +335,56 @@ function Tabs(props: TabsProps) {
 
 export type TabsElement = CustomElement<TabsProps, 'onChange' | 'onEdit'>;
 
-customElement<TabsProps>(
-  'n-tabs',
-  {
-    class: void 0,
-    css: void 0,
-    disabled: void 0,
-    value: void 0,
-    defaultValue: void 0,
-    centered: void 0,
-    items: [],
-    type: 'line' as TabsProps['type'],
-    fieldNames: void 0,
-    add: void 0,
-    extra: void 0,
-    animated: void 0,
-  },
-  (_, opt) => {
-    const el = opt.element;
-    const props = mergeProps(
-      {
-        onChange(next: string, item: TabOption, e: Event) {
-          el.dispatchEvent(
-            new CustomEvent('change', {
-              detail: [next, item, e],
-            }),
-          );
+Tabs.registry = () => {
+  customElement<TabsProps>(
+    'n-tabs',
+    {
+      class: void 0,
+      css: void 0,
+      disabled: void 0,
+      value: void 0,
+      defaultValue: void 0,
+      centered: void 0,
+      items: [],
+      type: 'line' as TabsProps['type'],
+      fieldNames: void 0,
+      add: void 0,
+      extra: void 0,
+      animated: void 0,
+    },
+    (_, opt) => {
+      const el = opt.element;
+      const props = mergeProps(
+        {
+          onChange(next: string, item: TabOption, e: Event) {
+            el.dispatchEvent(
+              new CustomEvent('change', {
+                detail: [next, item, e],
+              }),
+            );
+          },
+          onEdit(type: 'add' | 'remove', item: TabOption, e: Event) {
+            el.dispatchEvent(
+              new CustomEvent('edit', {
+                detail: [type, item, e],
+              }),
+            );
+          },
         },
-        onEdit(type: 'add' | 'remove', item: TabOption, e: Event) {
-          el.dispatchEvent(
-            new CustomEvent('edit', {
-              detail: [type, item, e],
-            }),
-          );
-        },
-      },
-      _,
-    );
+        _,
+      );
 
-    createEffect(() => {
-      clearAttribute(el, ['css', 'fieldNames', 'items', 'extra']);
-    });
-    return (
-      <>
-        <style textContent={block} />
-        <Tabs {...props} />
-      </>
-    );
-  },
-);
+      createEffect(() => {
+        clearAttribute(el, ['css', 'fieldNames', 'items', 'extra']);
+      });
+      return (
+        <>
+          <style textContent={block} />
+          <Tabs {...props} />
+        </>
+      );
+    },
+  );
+};
+registry(Tabs);
 export default Tabs;

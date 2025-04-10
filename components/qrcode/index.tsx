@@ -3,6 +3,7 @@ import { customElement } from 'solid-element';
 
 import { clearAttribute } from '../basic-config';
 import theme, { inline } from '../theme';
+import { registry } from '../utils';
 
 import { Ecc, encodeSegments, type IntRange, makeSegments } from './qrcode';
 export type { IntRange } from './qrcode';
@@ -221,17 +222,31 @@ const QRCode = (_props: QrCodeProps) => {
             switch (props.shape) {
               case 'circle':
                 parts.push(
-                  `M${x + props.border + 0.5},${y + props.border + 0.5} m -0.5, 0 a 0.5,0.5 0 1,0 1,0 a 0.5,0.5 0 1,0 -1,0`,
+                  `M${x + props.border + 0.5},${
+                    y + props.border + 0.5
+                  } m -0.5, 0 a 0.5,0.5 0 1,0 1,0 a 0.5,0.5 0 1,0 -1,0`,
                 );
                 break;
               case 'rhombus':
                 parts.push(
-                  `M${x + props.border + 0.5},${y + props.border} L${x + props.border + 1},${y + props.border + 0.5} L${x + props.border + 0.5},${y + props.border + 1} L${x + props.border},${y + props.border + 0.5} Z`,
+                  `M${x + props.border + 0.5},${y + props.border} L${x + props.border + 1},${
+                    y + props.border + 0.5
+                  } L${x + props.border + 0.5},${y + props.border + 1} L${x + props.border},${
+                    y + props.border + 0.5
+                  } Z`,
                 );
                 break;
               case 'heart':
                 parts.push(
-                  `M${x + props.border + 0.5},${y + props.border + 0.25} C${x + props.border + 0.1},${y + props.border - 0.2} ${x + props.border - 0.3},${y + props.border + 0.6} ${x + props.border + 0.5},${y + props.border + 1} C${x + props.border + 1.3},${y + props.border + 0.6} ${x + props.border + 0.9},${y + props.border - 0.2} ${x + props.border + 0.5},${y + props.border + 0.25} Z`,
+                  `M${x + props.border + 0.5},${y + props.border + 0.25} C${
+                    x + props.border + 0.1
+                  },${y + props.border - 0.2} ${x + props.border - 0.3},${y + props.border + 0.6} ${
+                    x + props.border + 0.5
+                  },${y + props.border + 1} C${x + props.border + 1.3},${y + props.border + 0.6} ${
+                    x + props.border + 0.9
+                  },${y + props.border - 0.2} ${x + props.border + 0.5},${
+                    y + props.border + 0.25
+                  } Z`,
                 );
                 break;
               case 'rect':
@@ -312,18 +327,20 @@ export const defaultProps: QrCodeProps = {
   shape: void 0,
 };
 
-customElement<QrCodeProps>('n-qrcode', defaultProps, (props, opt) => {
-  const el = opt.element;
+QRCode.registry = () => {
+  customElement<QrCodeProps>('n-qrcode', defaultProps, (props, opt) => {
+    const el = opt.element;
 
-  createEffect(() => {
-    clearAttribute(el, ['value', 'icon']);
+    createEffect(() => {
+      clearAttribute(el, ['value', 'icon']);
+    });
+    return (
+      <>
+        <style textContent={inline} />
+        <QRCode {...props} />
+      </>
+    );
   });
-  return (
-    <>
-      <style textContent={inline} />
-      <QRCode {...props} />
-    </>
-  );
-});
-
+};
+registry(QRCode);
 export default QRCode;

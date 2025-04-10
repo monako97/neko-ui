@@ -6,6 +6,7 @@ import type { BaseOption, BasicConfig, CustomElement } from '..';
 import { clearAttribute, FieldName } from '../basic-config';
 import getOptions from '../get-options';
 import theme, { inline } from '../theme';
+import { registry } from '../utils';
 
 import { style } from './style';
 
@@ -114,45 +115,48 @@ function Radio(props: RadioProps) {
 
 export type RadioElement = CustomElement<RadioProps>;
 
-customElement<RadioProps>(
-  'n-radio',
-  {
-    class: void 0,
-    css: void 0,
-    name: void 0,
-    disabled: void 0,
-    value: void 0,
-    defaultValue: void 0,
-    options: [],
-    onChange: void 0,
-    fieldNames: void 0,
-    layout: void 0,
-  },
-  (_, opt) => {
-    const el = opt.element;
-    const props = mergeProps(
-      {
-        layout: el.layout || 'horizontal',
-        onChange(next: string) {
-          el.dispatchEvent(
-            new CustomEvent('change', {
-              detail: next,
-            }),
-          );
+Radio.registry = () => {
+  customElement<RadioProps>(
+    'n-radio',
+    {
+      class: void 0,
+      css: void 0,
+      name: void 0,
+      disabled: void 0,
+      value: void 0,
+      defaultValue: void 0,
+      options: [],
+      onChange: void 0,
+      fieldNames: void 0,
+      layout: void 0,
+    },
+    (_, opt) => {
+      const el = opt.element;
+      const props = mergeProps(
+        {
+          layout: el.layout || 'horizontal',
+          onChange(next: string) {
+            el.dispatchEvent(
+              new CustomEvent('change', {
+                detail: next,
+              }),
+            );
+          },
         },
-      },
-      _,
-    );
+        _,
+      );
 
-    createEffect(() => {
-      clearAttribute(el, ['options', 'css', 'fieldNames']);
-    });
-    return (
-      <>
-        <style textContent={inline} />
-        <Radio {...props} />
-      </>
-    );
-  },
-);
+      createEffect(() => {
+        clearAttribute(el, ['options', 'css', 'fieldNames']);
+      });
+      return (
+        <>
+          <style textContent={inline} />
+          <Radio {...props} />
+        </>
+      );
+    },
+  );
+};
+registry(Radio);
 export default Radio;

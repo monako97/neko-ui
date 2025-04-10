@@ -7,6 +7,7 @@ import type { CustomElement, InputProps } from '..';
 import { clearAttribute } from '../basic-config';
 import Input, { defaultInportProps } from '../input';
 import { inline } from '../theme';
+import { registry } from '../utils';
 
 const style = css`
   /** 隐藏原生加减控件 */
@@ -135,43 +136,45 @@ function InputNumber(props: InputNumberProps) {
   );
 }
 
-customElement<InputNumberProps>(
-  'n-input-number',
-  {
-    ...defaultInportProps,
-    defaultValue: void 0,
-    max: void 0,
-    min: void 0,
-    onChange: void 0,
-    step: void 0,
-    precision: void 0,
-  },
-  (_, opt) => {
-    const el = opt.element;
-    const props = mergeProps(
-      {
-        onChange(val?: number | string) {
-          el.value = val;
-          el.dispatchEvent(
-            new CustomEvent('change', {
-              detail: val,
-            }),
-          );
+InputNumber.registry = () => {
+  customElement<InputNumberProps>(
+    'n-input-number',
+    {
+      ...defaultInportProps,
+      defaultValue: void 0,
+      max: void 0,
+      min: void 0,
+      onChange: void 0,
+      step: void 0,
+      precision: void 0,
+    },
+    (_, opt) => {
+      const el = opt.element;
+      const props = mergeProps(
+        {
+          onChange(val?: number | string) {
+            el.value = val;
+            el.dispatchEvent(
+              new CustomEvent('change', {
+                detail: val,
+              }),
+            );
+          },
         },
-      },
-      _,
-    );
+        _,
+      );
 
-    createEffect(() => {
-      clearAttribute(el, ['css']);
-    });
-    return (
-      <>
-        <style textContent={inline} />
-        <InputNumber {...props} />
-      </>
-    );
-  },
-);
-
+      createEffect(() => {
+        clearAttribute(el, ['css']);
+      });
+      return (
+        <>
+          <style textContent={inline} />
+          <InputNumber {...props} />
+        </>
+      );
+    },
+  );
+};
+registry(InputNumber);
 export default InputNumber;

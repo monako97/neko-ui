@@ -4,6 +4,7 @@ import { customElement } from 'solid-element';
 
 import { clearAttribute, type JSXElement } from '../basic-config';
 import theme, { block } from '../theme';
+import { registry } from '../utils';
 
 const style = css`
   details {
@@ -91,22 +92,25 @@ export interface CollapseProps {
 }
 export type CollapseElement = CustomElement<CollapseProps>;
 
-customElement<CollapseProps>(
-  'n-collapse',
-  {
-    class: void 0,
-    css: void 0,
-    title: void 0,
-    children: [],
-  },
-  (props, opt) => {
-    const el = opt.element;
+Collapse.registry = () => {
+  customElement<CollapseProps>(
+    'n-collapse',
+    {
+      class: void 0,
+      css: void 0,
+      title: void 0,
+      children: [],
+    },
+    (props, opt) => {
+      const el = opt.element;
 
-    createEffect(() => {
-      clearAttribute(el, ['css', 'title']);
-      el.replaceChildren();
-    });
-    return <Collapse {...props} />;
-  },
-);
+      createEffect(() => {
+        clearAttribute(el, ['css', 'title']);
+        el.replaceChildren();
+      });
+      return <Collapse {...props} />;
+    },
+  );
+};
+registry(Collapse);
 export default Collapse;

@@ -17,6 +17,7 @@ import type { BasicConfig, CustomElement } from '..';
 import { clearAttribute, type JSXElement } from '../basic-config';
 import Empty from '../empty';
 import theme, { inline } from '../theme';
+import { registry } from '../utils';
 
 import { popoverCss, portalCss } from './style';
 
@@ -311,7 +312,9 @@ function Popover(props: PopoverProps) {
     );
   });
   const hostStyle = createMemo(() => {
-    return `:host {--popover-bg: ${isDark() ? '#1f1f1f' : 'var(--component-bg)'};--popover-shadow-color: rgb(0 0 0 / 5%);position: absolute;}`;
+    return `:host {--popover-bg: ${
+      isDark() ? '#1f1f1f' : 'var(--component-bg)'
+    };--popover-shadow-color: rgb(0 0 0 / 5%);position: absolute;}`;
   });
 
   createEffect(() => {
@@ -387,32 +390,35 @@ export const defaultProps = {
   placement: void 0,
   dropdownMatchSelectWidth: void 0,
 };
-customElement<PopoverProps>('n-popover', defaultProps, (_, opt) => {
-  const { baseStyle } = theme;
-  const el = opt.element;
-  const props = mergeProps(
-    {
-      onOpenChange(next: boolean | null) {
-        el.dispatchEvent(
-          new CustomEvent('openchange', {
-            detail: next,
-          }),
-        );
+Popover.registry = () => {
+  customElement<PopoverProps>('n-popover', defaultProps, (_, opt) => {
+    const { baseStyle } = theme;
+    const el = opt.element;
+    const props = mergeProps(
+      {
+        onOpenChange(next: boolean | null) {
+          el.dispatchEvent(
+            new CustomEvent('openchange', {
+              detail: next,
+            }),
+          );
+        },
+        children: [...el.childNodes.values()],
       },
-      children: [...el.childNodes.values()],
-    },
-    _,
-  );
+      _,
+    );
 
-  createEffect(() => {
-    clearAttribute(el, ['content', 'popupCss', 'css']);
+    createEffect(() => {
+      clearAttribute(el, ['content', 'popupCss', 'css']);
+    });
+    return (
+      <>
+        <style textContent={inline} />
+        <style textContent={baseStyle()} />
+        <Popover {...props} />
+      </>
+    );
   });
-  return (
-    <>
-      <style textContent={inline} />
-      <style textContent={baseStyle()} />
-      <Popover {...props} />
-    </>
-  );
-});
+};
+registry(Popover);
 export default Popover;

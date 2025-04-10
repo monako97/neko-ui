@@ -7,6 +7,7 @@ import type { BaseOption, BasicConfig, CustomElement } from '..';
 import { clearAttribute, FieldName, type JSXElement } from '../basic-config';
 import getOptions from '../get-options';
 import theme, { inline } from '../theme';
+import { registry } from '../utils';
 
 import { style } from './style';
 
@@ -149,50 +150,53 @@ function Segmented(props: SegmentedProps) {
 
 export type SegmentedElement = CustomElement<SegmentedProps>;
 
-customElement<SegmentedProps>(
-  'n-segmented',
-  {
-    class: void 0,
-    css: void 0,
-    name: void 0,
-    disabled: void 0,
-    value: void 0,
-    defaultValue: void 0,
-    options: [],
-    onChange: void 0,
-    fieldNames: void 0,
-  },
-  (_, opt) => {
-    const el = opt.element;
-    const props = mergeProps(
-      {
-        css: el.css,
-        name: el.name,
-        disabled: el.disabled,
-        value: el.value,
-        defaultValue: el.defaultValue,
-        options: el.options,
-        fieldNames: el.fieldNames,
-        onChange(next: string) {
-          el.dispatchEvent(
-            new CustomEvent('change', {
-              detail: next,
-            }),
-          );
+Segmented.registry = () => {
+  customElement<SegmentedProps>(
+    'n-segmented',
+    {
+      class: void 0,
+      css: void 0,
+      name: void 0,
+      disabled: void 0,
+      value: void 0,
+      defaultValue: void 0,
+      options: [],
+      onChange: void 0,
+      fieldNames: void 0,
+    },
+    (_, opt) => {
+      const el = opt.element;
+      const props = mergeProps(
+        {
+          css: el.css,
+          name: el.name,
+          disabled: el.disabled,
+          value: el.value,
+          defaultValue: el.defaultValue,
+          options: el.options,
+          fieldNames: el.fieldNames,
+          onChange(next: string) {
+            el.dispatchEvent(
+              new CustomEvent('change', {
+                detail: next,
+              }),
+            );
+          },
         },
-      },
-      _,
-    );
+        _,
+      );
 
-    createEffect(() => {
-      clearAttribute(el, ['options', 'css', 'fieldNames']);
-    });
-    return (
-      <>
-        <style textContent={inline} />
-        <Segmented {...props} />
-      </>
-    );
-  },
-);
+      createEffect(() => {
+        clearAttribute(el, ['options', 'css', 'fieldNames']);
+      });
+      return (
+        <>
+          <style textContent={inline} />
+          <Segmented {...props} />
+        </>
+      );
+    },
+  );
+};
+registry(Segmented);
 export default Segmented;

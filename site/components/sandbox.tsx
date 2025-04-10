@@ -46,7 +46,7 @@ const components: CodeLiveProps['components'] = {
   Fragment: Fragment,
 };
 
-function Sandbox(_props: SandboxProps) {
+export function Sandbox(_props: SandboxProps) {
   const props = mergeProps({ codes: {} } as SandboxProps, _props);
   const [sources, setSources] = createSignal<Record<string, string>>({});
   const [current, setCurrent] = createSignal({
@@ -155,23 +155,25 @@ function Sandbox(_props: SandboxProps) {
   );
 }
 
-customElement(
-  'site-sandbox',
-  {
-    legend: '',
-    description: void 0,
-    codes: {},
-    order: void 0,
-  },
-  Sandbox,
-);
+Sandbox.registry = () => {
+  customElement(
+    'site-sandbox',
+    {
+      legend: '',
+      description: void 0,
+      codes: {},
+      order: void 0,
+    },
+    Sandbox,
+  );
+};
 
 interface SandboxGroupProps {
   name: string;
   ignore?: string[];
 }
 
-function SandboxGroup(props: SandboxGroupProps) {
+export function SandboxGroup(props: SandboxGroupProps) {
   async function load(name: string) {
     let box: () => Solid.JSX.Element = () => null;
     const exampleModule = examples[`@app/example/${name}`];
@@ -218,14 +220,15 @@ function SandboxGroup(props: SandboxGroupProps) {
   );
 }
 
-customElement(
-  'site-sandbox-group',
-  {
-    ignore: [],
-    name: '',
-  },
-  SandboxGroup,
-);
-
+SandboxGroup.registry = () => {
+  customElement(
+    'site-sandbox-group',
+    {
+      ignore: [],
+      name: '',
+    },
+    SandboxGroup,
+  );
+};
 export type SandboxElement = CustomElement<ExampleModule>;
 export type SandboxGroupElement = CustomElement<SandboxGroupProps>;

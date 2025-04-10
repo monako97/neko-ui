@@ -5,6 +5,7 @@ import type { CustomElement, InputElement, PopoverProps } from '..';
 import { clearAttribute, type JSXElement } from '../basic-config';
 import Popover, { defaultProps } from '../popover';
 import { inline } from '../theme';
+import { registry } from '../utils';
 
 import dayjs from './dayjs';
 import Panel from './panel';
@@ -229,61 +230,64 @@ export enum PickerType {
 
 export type DatePickerElement = CustomElement<DatePickerProps, 'onChange' | 'onOpenChange'>;
 
-customElement<DatePickerProps>(
-  'n-data-picker',
-  {
-    ...defaultProps,
-    value: void 0,
-    defaultValue: void 0,
-    disabled: void 0,
-    onChange: void 0,
-    open: void 0,
-    onOpenChange: void 0,
-    type: void 0,
-    format: void 0,
-    parser: void 0,
-    showTime: void 0,
-    suffixIcon: '📅',
-    prefixIcon: void 0,
-    placeholder: void 0,
-    showHour: true,
-    showMinute: true,
-    showSecond: true,
-    showToday: true,
-    showHeader: true,
-  },
-  (_, opt) => {
-    const el = opt.element;
-    const props = mergeProps(
-      {
-        css: el.css,
-        onChange(val: string, time: dayjs.Dayjs) {
-          el.dispatchEvent(
-            new CustomEvent('change', {
-              detail: [val, time],
-            }),
-          );
+DatePicker.registry = () => {
+  customElement<DatePickerProps>(
+    'n-data-picker',
+    {
+      ...defaultProps,
+      value: void 0,
+      defaultValue: void 0,
+      disabled: void 0,
+      onChange: void 0,
+      open: void 0,
+      onOpenChange: void 0,
+      type: void 0,
+      format: void 0,
+      parser: void 0,
+      showTime: void 0,
+      suffixIcon: '📅',
+      prefixIcon: void 0,
+      placeholder: void 0,
+      showHour: true,
+      showMinute: true,
+      showSecond: true,
+      showToday: true,
+      showHeader: true,
+    },
+    (_, opt) => {
+      const el = opt.element;
+      const props = mergeProps(
+        {
+          css: el.css,
+          onChange(val: string, time: dayjs.Dayjs) {
+            el.dispatchEvent(
+              new CustomEvent('change', {
+                detail: [val, time],
+              }),
+            );
+          },
+          onOpenChange(open: boolean | null) {
+            el.dispatchEvent(
+              new CustomEvent('openchange', {
+                detail: open,
+              }),
+            );
+          },
         },
-        onOpenChange(open: boolean | null) {
-          el.dispatchEvent(
-            new CustomEvent('openchange', {
-              detail: open,
-            }),
-          );
-        },
-      },
-      _,
-    );
+        _,
+      );
 
-    createEffect(() => {
-      clearAttribute(el, ['popupCss', 'css']);
-    });
-    return (
-      <>
-        <style textContent={inline} />
-        <DatePicker {...props} />
-      </>
-    );
-  },
-);
+      createEffect(() => {
+        clearAttribute(el, ['popupCss', 'css']);
+      });
+      return (
+        <>
+          <style textContent={inline} />
+          <DatePicker {...props} />
+        </>
+      );
+    },
+  );
+};
+registry(DatePicker);
 export default DatePicker;

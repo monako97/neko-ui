@@ -16,6 +16,7 @@ import { customElement } from 'solid-element';
 import type { BasicConfig, CustomElement } from '..';
 import { clearAttribute, type JSXElement } from '../basic-config';
 import theme, { block, inline } from '../theme';
+import { registry } from '../utils';
 
 import loadingIcon from './loading';
 import { style } from './style';
@@ -147,42 +148,46 @@ function Button(_: ButtonProps) {
   );
 }
 
-customElement<ButtonProps>(
-  'n-button',
-  {
-    class: void 0,
-    css: void 0,
-    type: void 0,
-    ghost: void 0,
-    fill: void 0,
-    circle: void 0,
-    dashed: void 0,
-    flat: void 0,
-    disabled: void 0,
-    block: void 0,
-    link: void 0,
-    danger: void 0,
-    size: void 0,
-    icon: void 0,
-    tag: void 0,
-    loading: void 0,
-  },
-  (_, opt) => {
-    const el = opt.element;
-    const props = mergeProps(
-      {
-        css: el.css,
-        children: [...el.childNodes.values()],
-      },
-      _,
-    );
+Button.registry = () => {
+  customElement<ButtonProps>(
+    'n-button',
+    {
+      class: void 0,
+      css: void 0,
+      type: void 0,
+      ghost: void 0,
+      fill: void 0,
+      circle: void 0,
+      dashed: void 0,
+      flat: void 0,
+      disabled: void 0,
+      block: void 0,
+      link: void 0,
+      danger: void 0,
+      size: void 0,
+      icon: void 0,
+      tag: void 0,
+      loading: void 0,
+    },
+    (_, opt) => {
+      const el = opt.element;
+      const props = mergeProps(
+        {
+          css: el.css,
+          children: [...el.childNodes.values()],
+        },
+        _,
+      );
 
-    createEffect(() => {
-      clearAttribute(el, ['css']);
-      el.replaceChildren();
-    });
+      createEffect(() => {
+        clearAttribute(el, ['css']);
+        el.replaceChildren();
+      });
 
-    return <Button {...props} />;
-  },
-);
+      return <Button {...props} />;
+    },
+  );
+};
+
+registry(Button);
 export default Button;

@@ -16,6 +16,7 @@ import { customElement } from 'solid-element';
 import type { BasicConfig, CustomElement, PaginationProps } from '..';
 import { clearAttribute, type JSXElement } from '../basic-config';
 import theme, { block } from '../theme';
+import { registry } from '../utils';
 
 import { styles } from './styles';
 
@@ -325,51 +326,54 @@ enum Valign {
 }
 export type TableElement = CustomElement<TableProps>;
 
-customElement<TableProps>(
-  'n-table',
-  {
-    class: void 0,
-    css: void 0,
-    loading: false,
-    columns: {},
-    data: [],
-    emptyVal: '-',
-    title: void 0,
-    char: void 0,
-    charoff: void 0,
-    align: Align.left,
-    valign: Valign.middle,
-    summary: void 0,
-    summaryText: '合计',
-    pagination: void 0,
-    size: void 0,
-  },
-  (_, opt) => {
-    const el = opt.element;
-    const props = mergeProps(
-      {
-        css: el.css,
-        columns: el.columns,
-        data: el.data,
-        pagination: el.pagination,
-        summary: el.summary,
-        summaryText: el.summaryText,
-      },
-      _,
-      {
-        title: !!el.querySelector("[slot='title']") || _.title,
-      },
-    );
+Table.registry = () => {
+  customElement<TableProps>(
+    'n-table',
+    {
+      class: void 0,
+      css: void 0,
+      loading: false,
+      columns: {},
+      data: [],
+      emptyVal: '-',
+      title: void 0,
+      char: void 0,
+      charoff: void 0,
+      align: Align.left,
+      valign: Valign.middle,
+      summary: void 0,
+      summaryText: '合计',
+      pagination: void 0,
+      size: void 0,
+    },
+    (_, opt) => {
+      const el = opt.element;
+      const props = mergeProps(
+        {
+          css: el.css,
+          columns: el.columns,
+          data: el.data,
+          pagination: el.pagination,
+          summary: el.summary,
+          summaryText: el.summaryText,
+        },
+        _,
+        {
+          title: !!el.querySelector("[slot='title']") || _.title,
+        },
+      );
 
-    createEffect(() => {
-      clearAttribute(el, ['css', 'columns', 'data', 'pagination', 'summary']);
-    });
-    return (
-      <>
-        <style textContent={block} />
-        <Table {...props} />
-      </>
-    );
-  },
-);
+      createEffect(() => {
+        clearAttribute(el, ['css', 'columns', 'data', 'pagination', 'summary']);
+      });
+      return (
+        <>
+          <style textContent={block} />
+          <Table {...props} />
+        </>
+      );
+    },
+  );
+};
+registry(Table);
 export default Table;

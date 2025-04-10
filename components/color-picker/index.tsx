@@ -14,6 +14,7 @@ import type { BasicConfig, ColorPaletteProps, CustomElement, PopoverProps } from
 import { clearAttribute } from '../basic-config';
 import Popover, { defaultProps } from '../popover';
 import { inline } from '../theme';
+import { registry } from '../utils';
 
 import { style } from './style';
 
@@ -89,41 +90,43 @@ function ColorPicker(props: ColorPickerProps) {
   );
 }
 
-customElement<ColorPickerProps>(
-  'n-color-picker',
-  {
-    ...defaultProps,
-    value: void 0,
-    defaultValue: void 0,
-    onChange: void 0,
-    size: void 0,
-  },
-  (_, opts) => {
-    const el = opts.element;
-    const props = mergeProps(
-      {
-        onChange(val?: string) {
-          el.dispatchEvent(
-            new CustomEvent('change', {
-              detail: val,
-            }),
-          );
+ColorPicker.registry = () => {
+  customElement<ColorPickerProps>(
+    'n-color-picker',
+    {
+      ...defaultProps,
+      value: void 0,
+      defaultValue: void 0,
+      onChange: void 0,
+      size: void 0,
+    },
+    (_, opts) => {
+      const el = opts.element;
+      const props = mergeProps(
+        {
+          onChange(val?: string) {
+            el.dispatchEvent(
+              new CustomEvent('change', {
+                detail: val,
+              }),
+            );
+          },
+          children: el.children,
         },
-        children: el.children,
-      },
-      _,
-    );
+        _,
+      );
 
-    createEffect(() => {
-      clearAttribute(el, ['popupCss', 'css']);
-    });
-    return (
-      <>
-        <style textContent={inline} />
-        <ColorPicker {...props} />
-      </>
-    );
-  },
-);
-
+      createEffect(() => {
+        clearAttribute(el, ['popupCss', 'css']);
+      });
+      return (
+        <>
+          <style textContent={inline} />
+          <ColorPicker {...props} />
+        </>
+      );
+    },
+  );
+};
+registry(ColorPicker);
 export default ColorPicker;

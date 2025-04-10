@@ -6,6 +6,7 @@ import type { CustomElement } from '..';
 import { clearAttribute, type JSXElement } from '../basic-config';
 import mdStyle from '../md-style';
 import theme, { block } from '../theme';
+import { registry } from '../utils';
 
 import { create, dispose } from './worker';
 
@@ -193,41 +194,45 @@ export interface MdProps {
 
 export type MdElement = CustomElement<MdProps>;
 
-customElement<MdProps>(
-  'n-md',
-  {
-    class: void 0,
-    pictureViewer: void 0,
-    lazyPicture: void 0,
-    text: void 0,
-    tools: void 0,
-    getAnchorContainer: void 0,
-    css: void 0,
-    children: void 0,
-    notRender: void 0,
-  },
-  (_, opt) => {
-    const el = opt.element;
-    const props = mergeProps(
-      {
-        text: (!_.notRender && el.textContent) || el.text,
-        css: el.css,
-        tools: el.tools,
-        getAnchorContainer: el.getAnchorContainer,
-      },
-      _,
-    );
+MD.registry = () => {
+  customElement<MdProps>(
+    'n-md',
+    {
+      class: void 0,
+      pictureViewer: void 0,
+      lazyPicture: void 0,
+      text: void 0,
+      tools: void 0,
+      getAnchorContainer: void 0,
+      css: void 0,
+      children: void 0,
+      notRender: void 0,
+    },
+    (_, opt) => {
+      const el = opt.element;
+      const props = mergeProps(
+        {
+          text: (!_.notRender && el.textContent) || el.text,
+          css: el.css,
+          tools: el.tools,
+          getAnchorContainer: el.getAnchorContainer,
+        },
+        _,
+      );
 
-    createEffect(() => {
-      clearAttribute(el, ['css', 'text']);
-      el.replaceChildren();
-    });
-    return (
-      <>
-        <style textContent={block} />
-        <MD {...props} />
-      </>
-    );
-  },
-);
+      createEffect(() => {
+        clearAttribute(el, ['css', 'text']);
+        el.replaceChildren();
+      });
+      return (
+        <>
+          <style textContent={block} />
+          <MD {...props} />
+        </>
+      );
+    },
+  );
+};
+
+registry(MD);
 export default MD;

@@ -18,6 +18,7 @@ import type { BaseOption, BasicConfig, CustomElement } from '..';
 import { clearAttribute, FieldName, type JSXElement } from '../basic-config';
 import getOptions from '../get-options';
 import theme, { block } from '../theme';
+import { registry } from '../utils';
 
 import { style } from './style';
 
@@ -328,53 +329,56 @@ export interface MenuOption extends Omit<BaseOption, 'children' | 'options'> {
 export type MenuElement = CustomElement<MenuProps, 'onChange' | 'onOpenChange'>;
 export type MenuMultipleElement = CustomElement<MenuMultipleProps, 'onChange' | 'onOpenChange'>;
 
-customElement<MenuProps>(
-  'n-menu',
-  {
-    class: void 0,
-    css: void 0,
-    disabled: void 0,
-    value: void 0,
-    defaultValue: void 0,
-    onOpenChange: void 0,
-    openKeys: void 0,
-    fieldNames: void 0,
-    multiple: void 0,
-    toggle: void 0,
-    onChange: void 0,
-    items: [],
-  },
-  (_, opt) => {
-    const el = opt.element;
-    const defaultProps: Partial<MenuProps> = {
-      css: el.css,
-      onChange(key, item) {
-        el.dispatchEvent(
-          new CustomEvent('change', {
-            detail: [key, item],
-          }),
-        );
-      },
-      onOpenChange(keys) {
-        el.dispatchEvent(
-          new CustomEvent('openchange', {
-            detail: keys,
-          }),
-        );
-      },
-    };
-    const props = mergeProps(defaultProps, _);
+Menu.registry = () => {
+  customElement<MenuProps>(
+    'n-menu',
+    {
+      class: void 0,
+      css: void 0,
+      disabled: void 0,
+      value: void 0,
+      defaultValue: void 0,
+      onOpenChange: void 0,
+      openKeys: void 0,
+      fieldNames: void 0,
+      multiple: void 0,
+      toggle: void 0,
+      onChange: void 0,
+      items: [],
+    },
+    (_, opt) => {
+      const el = opt.element;
+      const defaultProps: Partial<MenuProps> = {
+        css: el.css,
+        onChange(key, item) {
+          el.dispatchEvent(
+            new CustomEvent('change', {
+              detail: [key, item],
+            }),
+          );
+        },
+        onOpenChange(keys) {
+          el.dispatchEvent(
+            new CustomEvent('openchange', {
+              detail: keys,
+            }),
+          );
+        },
+      };
+      const props = mergeProps(defaultProps, _);
 
-    createEffect(() => {
-      clearAttribute(el, ['css', 'items', 'fieldNames']);
-    });
-    return (
-      <>
-        <style textContent={block} />
-        <Menu {...props} />
-      </>
-    );
-  },
-);
+      createEffect(() => {
+        clearAttribute(el, ['css', 'items', 'fieldNames']);
+      });
+      return (
+        <>
+          <style textContent={block} />
+          <Menu {...props} />
+        </>
+      );
+    },
+  );
+};
 
+registry(Menu);
 export default Menu;

@@ -6,6 +6,7 @@ import type { AvatarProps, BasicConfig, CustomElement } from '..';
 import { clearAttribute } from '../basic-config';
 import Popover from '../popover';
 import { inline } from '../theme';
+import { registry } from '../utils';
 
 import '../avatar';
 
@@ -118,18 +119,21 @@ function AvatarGroup(_props: AvatarGroupProps) {
   );
 }
 
-customElement<AvatarGroupProps>('n-avatar-group', defaultProps, (props, opt) => {
-  const el = opt.element;
+AvatarGroup.registry = () => {
+  customElement<AvatarGroupProps>('n-avatar-group', defaultProps, (props, opt) => {
+    const el = opt.element;
 
-  createEffect(() => {
-    clearAttribute(el, ['css', 'data']);
+    createEffect(() => {
+      clearAttribute(el, ['css', 'data']);
+    });
+    return (
+      <>
+        <style textContent={inline} />
+        <AvatarGroup {...props} />
+      </>
+    );
   });
-  return (
-    <>
-      <style textContent={inline} />
-      <AvatarGroup {...props} />
-    </>
-  );
-});
+};
 
+registry(AvatarGroup);
 export default AvatarGroup;

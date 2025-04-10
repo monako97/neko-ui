@@ -7,6 +7,7 @@ import { clearAttribute } from '../basic-config';
 import Empty from '../empty';
 import Popover, { defaultProps as popoverProps } from '../popover';
 import { inline } from '../theme';
+import { registry } from '../utils';
 
 import '../menu';
 
@@ -140,45 +141,48 @@ export const defaultProps = {
   menuCss: void 0,
 };
 
-customElement<DropdownProps>(
-  'n-dropdown',
-  {
-    ...defaultProps,
-    items: [],
-  },
-  (_, opt) => {
-    const el = opt.element;
-    const props = mergeProps(
-      {
-        items: el.items,
-        onChange(key, item) {
-          el.dispatchEvent(
-            new CustomEvent('change', {
-              detail: [key, item],
-            }),
-          );
-        },
-        onOpenChange(open: boolean | null) {
-          el.dispatchEvent(
-            new CustomEvent('openchange', {
-              detail: open,
-            }),
-          );
-        },
-        children: [...el.childNodes.values()],
-      } as DropdownProps,
-      _,
-    );
+Dropdown.registry = () => {
+  customElement<DropdownProps>(
+    'n-dropdown',
+    {
+      ...defaultProps,
+      items: [],
+    },
+    (_, opt) => {
+      const el = opt.element;
+      const props = mergeProps(
+        {
+          items: el.items,
+          onChange(key, item) {
+            el.dispatchEvent(
+              new CustomEvent('change', {
+                detail: [key, item],
+              }),
+            );
+          },
+          onOpenChange(open: boolean | null) {
+            el.dispatchEvent(
+              new CustomEvent('openchange', {
+                detail: open,
+              }),
+            );
+          },
+          children: [...el.childNodes.values()],
+        } as DropdownProps,
+        _,
+      );
 
-    createEffect(() => {
-      clearAttribute(el, ['popupCss', 'css', 'items', 'fieldNames', 'content']);
-    });
-    return (
-      <>
-        <style textContent={inline} />
-        <Dropdown {...props} />
-      </>
-    );
-  },
-);
+      createEffect(() => {
+        clearAttribute(el, ['popupCss', 'css', 'items', 'fieldNames', 'content']);
+      });
+      return (
+        <>
+          <style textContent={inline} />
+          <Dropdown {...props} />
+        </>
+      );
+    },
+  );
+};
+registry(Dropdown);
 export default Dropdown;

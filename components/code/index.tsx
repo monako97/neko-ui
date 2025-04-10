@@ -18,6 +18,7 @@ import { customElement } from 'solid-element';
 import type { CustomElement } from '..';
 import { clearAttribute, type JSXElement } from '../basic-config';
 import theme from '../theme';
+import { registry } from '../utils';
 
 import { CopyIcon } from './copy-icon';
 import { darkCss, lightCss, style } from './style';
@@ -276,7 +277,7 @@ function Code(props: CodeProps) {
   );
 }
 
-function registry() {
+Code.registry = () => {
   customElement<CodeProps>(
     'n-code',
     {
@@ -320,9 +321,8 @@ function registry() {
       );
     },
   );
-}
+};
 
-Code.registry = registry;
-Code.registry();
+registry(Code);
 
 export default Code;

@@ -12,6 +12,7 @@ import { customElement } from 'solid-element';
 
 import type { CustomElement } from '..';
 import { inline } from '../theme';
+import { registry } from '../utils';
 
 import ImgLazy from './lazy';
 import { imgCss, style } from './style';
@@ -176,43 +177,46 @@ function Img(_: ImgProps) {
   );
 }
 
-customElement<ImgProps>(
-  'n-img',
-  {
-    src: void 0,
-    srcFull: void 0,
-    alt: void 0,
-    open: null as boolean | null,
-    maskClosable: void 0,
-    escClosable: void 0,
-    onOpenChange: void 0,
-    onLoad: void 0,
-    lazy: void 0,
-    disabled: void 0,
-  },
-  (_, opt) => {
-    const props = mergeProps(
-      {
-        onOpenChange(open: boolean | null) {
-          opt.element.dispatchEvent(
-            new CustomEvent('openchange', {
-              detail: open,
-            }),
-          );
+Img.registry = () => {
+  customElement<ImgProps>(
+    'n-img',
+    {
+      src: void 0,
+      srcFull: void 0,
+      alt: void 0,
+      open: null as boolean | null,
+      maskClosable: void 0,
+      escClosable: void 0,
+      onOpenChange: void 0,
+      onLoad: void 0,
+      lazy: void 0,
+      disabled: void 0,
+    },
+    (_, opt) => {
+      const props = mergeProps(
+        {
+          onOpenChange(open: boolean | null) {
+            opt.element.dispatchEvent(
+              new CustomEvent('openchange', {
+                detail: open,
+              }),
+            );
+          },
+          onLoad() {
+            opt.element.dispatchEvent(new CustomEvent('load'));
+          },
         },
-        onLoad() {
-          opt.element.dispatchEvent(new CustomEvent('load'));
-        },
-      },
-      _,
-    );
+        _,
+      );
 
-    return (
-      <>
-        <style textContent={inline} />
-        <Img {...props} />
-      </>
-    );
-  },
-);
+      return (
+        <>
+          <style textContent={inline} />
+          <Img {...props} />
+        </>
+      );
+    },
+  );
+};
+registry(Img);
 export default Img;

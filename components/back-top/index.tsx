@@ -16,6 +16,7 @@ import { customElement } from 'solid-element';
 import type { CustomElement } from '..';
 import { clearAttribute } from '../basic-config';
 import theme, { inline } from '../theme';
+import { registry } from '../utils';
 
 import { style } from './style';
 
@@ -110,44 +111,48 @@ function BackTop(_: BackTopProps) {
 
 export type BackTopElement = CustomElement<BackTopProps>;
 
-customElement<BackTopProps>(
-  'n-back-top',
-  {
-    class: void 0,
-    css: void 0,
-    visibilityHeight: void 0,
-    mount: void 0,
-    target: void 0,
-  },
-  (_, opt) => {
-    const el = opt.element;
+BackTop.registry = () => {
+  customElement<BackTopProps>(
+    'n-back-top',
+    {
+      class: void 0,
+      css: void 0,
+      visibilityHeight: void 0,
+      mount: void 0,
+      target: void 0,
+    },
+    (_, opt) => {
+      const el = opt.element;
 
-    if (!el.mount) {
-      el.style.position = 'sticky';
-      el.style.bottom = '24px';
-      el.style.right = '24px';
-      el.style.display = 'block';
-      el.style.pointerEvents = 'none';
-    }
-    const props = mergeProps(
-      {
-        css: el.css,
-        visibilityHeight: el.visibilityHeight,
-        mount: el.renderRoot as HTMLElement,
-        target: el.target,
-      },
-      _,
-    );
+      if (!el.mount) {
+        el.style.position = 'sticky';
+        el.style.bottom = '24px';
+        el.style.right = '24px';
+        el.style.display = 'block';
+        el.style.pointerEvents = 'none';
+      }
+      const props = mergeProps(
+        {
+          css: el.css,
+          visibilityHeight: el.visibilityHeight,
+          mount: el.renderRoot as HTMLElement,
+          target: el.target,
+        },
+        _,
+      );
 
-    createEffect(() => {
-      clearAttribute(el, ['css']);
-    });
-    return (
-      <>
-        <style textContent={inline} />
-        <BackTop {...props} />
-      </>
-    );
-  },
-);
+      createEffect(() => {
+        clearAttribute(el, ['css']);
+      });
+      return (
+        <>
+          <style textContent={inline} />
+          <BackTop {...props} />
+        </>
+      );
+    },
+  );
+};
+
+registry(BackTop);
 export default BackTop;

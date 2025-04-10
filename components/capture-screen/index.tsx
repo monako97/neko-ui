@@ -15,6 +15,7 @@ import { customElement } from 'solid-element';
 import type { CustomElement } from '..';
 import { clearAttribute } from '../basic-config';
 import theme, { inline } from '../theme';
+import { registry } from '../utils';
 
 import { style } from './style';
 
@@ -335,105 +336,107 @@ function CaptureScreen(_: CaptureScreenProps) {
   );
 }
 
-customElement<CaptureScreenProps>(
-  'n-capture-screen',
-  {
-    class: void 0,
-    css: void 0,
-    options: void 0,
-    preview: void 0,
-    controls: void 0,
-    recorder: void 0,
-    filename: void 0,
-    captureScreenText: void 0,
-    stopCaptureText: void 0,
-    startRecorderText: void 0,
-    stopRecorderText: void 0,
-    pausedRecorderText: void 0,
-    recorderingText: void 0,
-    onErrorRecorder: void 0,
-    onStopRecorder: void 0,
-    onStartRecorder: void 0,
-    onRecorderDataAvailable: void 0,
-    onErrorCapture: void 0,
-    onStopCapture: void 0,
-    onStartCapture: void 0,
-    onSaveRecorder: void 0,
-  },
-  (_, opt) => {
-    const el = opt.element;
-    const props = mergeProps(
-      {
-        onErrorRecorder(e: Event) {
-          el.dispatchEvent(
-            new CustomEvent('errorrecorder', {
-              detail: e,
-            }),
-          );
+CaptureScreen.registry = () => {
+  customElement<CaptureScreenProps>(
+    'n-capture-screen',
+    {
+      class: void 0,
+      css: void 0,
+      options: void 0,
+      preview: void 0,
+      controls: void 0,
+      recorder: void 0,
+      filename: void 0,
+      captureScreenText: void 0,
+      stopCaptureText: void 0,
+      startRecorderText: void 0,
+      stopRecorderText: void 0,
+      pausedRecorderText: void 0,
+      recorderingText: void 0,
+      onErrorRecorder: void 0,
+      onStopRecorder: void 0,
+      onStartRecorder: void 0,
+      onRecorderDataAvailable: void 0,
+      onErrorCapture: void 0,
+      onStopCapture: void 0,
+      onStartCapture: void 0,
+      onSaveRecorder: void 0,
+    },
+    (_, opt) => {
+      const el = opt.element;
+      const props = mergeProps(
+        {
+          onErrorRecorder(e: Event) {
+            el.dispatchEvent(
+              new CustomEvent('errorrecorder', {
+                detail: e,
+              }),
+            );
+          },
+          onStopRecorder() {
+            el.dispatchEvent(
+              new CustomEvent('stoprecorder', {
+                detail: void 0,
+              }),
+            );
+          },
+          onStartRecorder(state: MediaRecorder['state']) {
+            el.dispatchEvent(
+              new CustomEvent('startrecorder', {
+                detail: state,
+              }),
+            );
+          },
+          onRecorderDataAvailable(e: MediaRecorderDataAvailableEvent) {
+            el.dispatchEvent(
+              new CustomEvent('recorderdataavailable', {
+                detail: e,
+              }),
+            );
+          },
+          onErrorCapture(e: unknown) {
+            el.dispatchEvent(
+              new CustomEvent('errorcapture', {
+                detail: e,
+              }),
+            );
+          },
+          onStopCapture() {
+            el.dispatchEvent(
+              new CustomEvent('stopcapture', {
+                detail: void 0,
+              }),
+            );
+          },
+          onStartCapture(stream?: MediaStream) {
+            el.dispatchEvent(
+              new CustomEvent('startcapture', {
+                detail: stream,
+              }),
+            );
+          },
+          onSaveRecorder(blob: Blob, fileName: string) {
+            el.dispatchEvent(
+              new CustomEvent('saverecorder', {
+                detail: [blob, fileName],
+              }),
+            );
+          },
         },
-        onStopRecorder() {
-          el.dispatchEvent(
-            new CustomEvent('stoprecorder', {
-              detail: void 0,
-            }),
-          );
-        },
-        onStartRecorder(state: MediaRecorder['state']) {
-          el.dispatchEvent(
-            new CustomEvent('startrecorder', {
-              detail: state,
-            }),
-          );
-        },
-        onRecorderDataAvailable(e: MediaRecorderDataAvailableEvent) {
-          el.dispatchEvent(
-            new CustomEvent('recorderdataavailable', {
-              detail: e,
-            }),
-          );
-        },
-        onErrorCapture(e: unknown) {
-          el.dispatchEvent(
-            new CustomEvent('errorcapture', {
-              detail: e,
-            }),
-          );
-        },
-        onStopCapture() {
-          el.dispatchEvent(
-            new CustomEvent('stopcapture', {
-              detail: void 0,
-            }),
-          );
-        },
-        onStartCapture(stream?: MediaStream) {
-          el.dispatchEvent(
-            new CustomEvent('startcapture', {
-              detail: stream,
-            }),
-          );
-        },
-        onSaveRecorder(blob: Blob, fileName: string) {
-          el.dispatchEvent(
-            new CustomEvent('saverecorder', {
-              detail: [blob, fileName],
-            }),
-          );
-        },
-      },
-      _,
-    );
+        _,
+      );
 
-    createEffect(() => {
-      clearAttribute(el, ['css', 'options']);
-    });
-    return (
-      <>
-        <style textContent={inline} />
-        <CaptureScreen {...props} />
-      </>
-    );
-  },
-);
-
+      createEffect(() => {
+        clearAttribute(el, ['css', 'options']);
+      });
+      return (
+        <>
+          <style textContent={inline} />
+          <CaptureScreen {...props} />
+        </>
+      );
+    },
+  );
+};
+registry(CaptureScreen);
 export default CaptureScreen;

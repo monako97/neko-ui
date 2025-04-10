@@ -4,6 +4,7 @@ import { customElement, noShadowDOM } from 'solid-element';
 import type { CustomElement } from '..';
 import type { JSXElement } from '../basic-config';
 import theme, { ColorScheme } from '../theme';
+import { registry } from '../utils';
 
 function Provider(props: ProviderProps) {
   const { baseStyle, scheme, setScheme } = theme;
@@ -36,21 +37,24 @@ export interface ProviderProps {
 }
 export type ProviderElement = CustomElement<ProviderProps, 'onScheme'>;
 
-customElement<ProviderProps>('n-provider', (_, opt) => {
-  const el = opt.element;
-  const props = mergeProps(
-    {
-      onScheme(scheme: keyof typeof ColorScheme) {
-        el.dispatchEvent(
-          new CustomEvent('scheme', {
-            detail: scheme,
-          }),
-        );
+Provider.registry = () => {
+  customElement<ProviderProps>('n-provider', (_, opt) => {
+    const el = opt.element;
+    const props = mergeProps(
+      {
+        onScheme(scheme: keyof typeof ColorScheme) {
+          el.dispatchEvent(
+            new CustomEvent('scheme', {
+              detail: scheme,
+            }),
+          );
+        },
       },
-    },
-    _,
-  );
+      _,
+    );
 
-  return <Provider {...props} />;
-});
+    return <Provider {...props} />;
+  });
+};
+registry(Provider);
 export default Provider;

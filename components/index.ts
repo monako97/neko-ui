@@ -129,6 +129,7 @@ export { default as Typography, type TypographyElement, type TypographyProps } f
 export type { CustomElement } from 'custom-element-type';
 export { customElement, getCurrentElement, hot, noShadowDOM, withSolid } from 'solid-element';
 import type { ICustomElement, Transform } from 'custom-element-type';
+export { registry } from './utils';
 
 import type {
   AvatarElement,

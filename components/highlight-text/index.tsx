@@ -5,6 +5,7 @@ import { customElement } from 'solid-element';
 import type { CustomElement } from '..';
 import { clearAttribute } from '../basic-config';
 import theme, { inline } from '../theme';
+import { registry } from '../utils';
 
 const style = css`
   .text {
@@ -141,7 +142,7 @@ function HighlightText(props: HighlightTextProps) {
 
 export type HighlightTextElement = CustomElement<HighlightTextProps>;
 
-function registry() {
+HighlightText.registry = () => {
   customElement<HighlightTextProps>(
     'n-highlight-text',
     {
@@ -175,8 +176,7 @@ function registry() {
       );
     },
   );
-}
+};
 
-HighlightText.registry = registry;
-HighlightText.registry();
+registry(HighlightText);
 export default HighlightText;

@@ -6,6 +6,7 @@ import { customElement } from 'solid-element';
 import type { CustomElement } from '..';
 import { clearAttribute, type JSXElement } from '../basic-config';
 import theme, { generateColor, inline } from '../theme';
+import { registry } from '../utils';
 
 import { style } from './style';
 
@@ -102,48 +103,50 @@ function Tag(props: TagProps) {
 
 export type TagElement = CustomElement<TagProps, 'onClose'>;
 
-customElement<TagProps>(
-  'n-tag',
-  {
-    class: void 0,
-    css: void 0,
-    color: void 0,
-    icon: void 0,
-    closeIcon: void 0,
-    onClose: void 0,
-    bordered: true,
-    disabled: void 0,
-    type: void 0,
-  },
-  (_, opt) => {
-    const el = opt.element;
-    const props = mergeProps(
-      {
-        css: el.css,
-        children: [...el.childNodes.values()],
-        onClose(e: Event) {
-          el.dispatchEvent(
-            new CustomEvent('close', {
-              detail: e,
-            }),
-          );
+Tag.registry = () => {
+  customElement<TagProps>(
+    'n-tag',
+    {
+      class: void 0,
+      css: void 0,
+      color: void 0,
+      icon: void 0,
+      closeIcon: void 0,
+      onClose: void 0,
+      bordered: true,
+      disabled: void 0,
+      type: void 0,
+    },
+    (_, opt) => {
+      const el = opt.element;
+      const props = mergeProps(
+        {
+          css: el.css,
+          children: [...el.childNodes.values()],
+          onClose(e: Event) {
+            el.dispatchEvent(
+              new CustomEvent('close', {
+                detail: e,
+              }),
+            );
+          },
         },
-      },
-      _,
-    );
+        _,
+      );
 
-    createEffect(() => {
-      el.replaceChildren();
-      clearAttribute(el, ['css']);
-    });
+      createEffect(() => {
+        el.replaceChildren();
+        clearAttribute(el, ['css']);
+      });
 
-    return (
-      <>
-        <style textContent={inline} />
-        <Tag {...props} />
-      </>
-    );
-  },
-);
-
+      return (
+        <>
+          <style textContent={inline} />
+          <Tag {...props} />
+        </>
+      );
+    },
+  );
+};
+registry(Tag);
 export default Tag;

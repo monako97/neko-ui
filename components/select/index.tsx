@@ -18,6 +18,7 @@ import { clearAttribute, FieldName, type JSXElement } from '../basic-config';
 import Dropdown, { defaultProps } from '../dropdown';
 import getOptions from '../get-options';
 import { inline } from '../theme';
+import { registry } from '../utils';
 
 import { style } from './style';
 
@@ -303,48 +304,51 @@ export interface SelectMultipleProps
 export type SelectElement = CustomElement<SelectProps, 'onChange' | 'onOpenChange'>;
 export type SelectMultipleElement = CustomElement<SelectMultipleProps, 'onChange' | 'onOpenChange'>;
 
-customElement<SelectProps>(
-  'n-select',
-  {
-    ...defaultProps,
-    options: [],
-    label: void 0,
-    placeholder: '请选择',
-    dropdownMatchSelectWidth: true,
-    prefixIcon: void 0,
-    suffixIcon: void 0,
-  },
-  (_, opt) => {
-    const el = opt.element;
-    const props = mergeProps(
-      {
-        onChange(key: string | number, item: MenuOption) {
-          el.dispatchEvent(
-            new CustomEvent('change', {
-              detail: [key, item],
-            }),
-          );
+Select.registry = () => {
+  customElement<SelectProps>(
+    'n-select',
+    {
+      ...defaultProps,
+      options: [],
+      label: void 0,
+      placeholder: '请选择',
+      dropdownMatchSelectWidth: true,
+      prefixIcon: void 0,
+      suffixIcon: void 0,
+    },
+    (_, opt) => {
+      const el = opt.element;
+      const props = mergeProps(
+        {
+          onChange(key: string | number, item: MenuOption) {
+            el.dispatchEvent(
+              new CustomEvent('change', {
+                detail: [key, item],
+              }),
+            );
+          },
+          onOpenChange(open: boolean | null) {
+            el.dispatchEvent(
+              new CustomEvent('openchange', {
+                detail: open,
+              }),
+            );
+          },
         },
-        onOpenChange(open: boolean | null) {
-          el.dispatchEvent(
-            new CustomEvent('openchange', {
-              detail: open,
-            }),
-          );
-        },
-      },
-      _,
-    );
+        _,
+      );
 
-    createEffect(() => {
-      clearAttribute(el, ['options', 'css', 'fieldNames']);
-    });
-    return (
-      <>
-        <style textContent={inline} />
-        <Select {...props} />
-      </>
-    );
-  },
-);
+      createEffect(() => {
+        clearAttribute(el, ['options', 'css', 'fieldNames']);
+      });
+      return (
+        <>
+          <style textContent={inline} />
+          <Select {...props} />
+        </>
+      );
+    },
+  );
+};
+registry(Select);
 export default Select;

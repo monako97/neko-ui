@@ -6,6 +6,7 @@ import { customElement } from 'solid-element';
 import type { BasicConfig, CustomElement } from '..';
 import { clearAttribute, type JSXElement } from '../basic-config';
 import theme, { inline } from '../theme';
+import { registry } from '../utils';
 
 import { style } from './style';
 
@@ -177,34 +178,36 @@ export const defaultInportProps = {
   placeholder: '请输入',
 };
 
-customElement<InputProps>('n-input', defaultInportProps, (_, opt) => {
-  const el = opt.element;
-  const props = mergeProps(
-    {
-      css: el.css,
-      size: el.size || 'normal',
-      value: el.value || el.defaultValue || '',
-      type: el.type || 'text',
-      onChange(val?: number | string) {
-        el.dispatchEvent(
-          new CustomEvent('change', {
-            detail: val,
-          }),
-        );
+Input.registry = () => {
+  customElement<InputProps>('n-input', defaultInportProps, (_, opt) => {
+    const el = opt.element;
+    const props = mergeProps(
+      {
+        css: el.css,
+        size: el.size || 'normal',
+        value: el.value || el.defaultValue || '',
+        type: el.type || 'text',
+        onChange(val?: number | string) {
+          el.dispatchEvent(
+            new CustomEvent('change', {
+              detail: val,
+            }),
+          );
+        },
       },
-    },
-    _,
-  );
+      _,
+    );
 
-  createEffect(() => {
-    clearAttribute(el, ['css']);
+    createEffect(() => {
+      clearAttribute(el, ['css']);
+    });
+    return (
+      <>
+        <style textContent={inline} />
+        <Input {...props} />
+      </>
+    );
   });
-  return (
-    <>
-      <style textContent={inline} />
-      <Input {...props} />
-    </>
-  );
-});
-
+};
+registry(Input);
 export default Input;

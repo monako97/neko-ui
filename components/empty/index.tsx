@@ -5,6 +5,7 @@ import { customElement } from 'solid-element';
 import type { CustomElement } from '..';
 import { clearAttribute, type JSXElement } from '../basic-config';
 import { inline } from '../theme';
+import { registry } from '../utils';
 
 import '../typography';
 
@@ -58,26 +59,28 @@ function Empty(props: EmptyProps) {
   );
 }
 
-customElement<EmptyProps>(
-  'n-empty',
-  {
-    class: void 0,
-    css: void 0,
-    label: void 0,
-  },
-  (props, opt) => {
-    const el = opt.element;
+Empty.registry = () => {
+  customElement<EmptyProps>(
+    'n-empty',
+    {
+      class: void 0,
+      css: void 0,
+      label: void 0,
+    },
+    (props, opt) => {
+      const el = opt.element;
 
-    createEffect(() => {
-      clearAttribute(el, ['css']);
-    });
-    return (
-      <>
-        <style textContent={inline} />
-        <Empty {...props} />
-      </>
-    );
-  },
-);
-
+      createEffect(() => {
+        clearAttribute(el, ['css']);
+      });
+      return (
+        <>
+          <style textContent={inline} />
+          <Empty {...props} />
+        </>
+      );
+    },
+  );
+};
+registry(Empty);
 export default Empty;

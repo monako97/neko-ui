@@ -14,6 +14,7 @@ import { customElement } from 'solid-element';
 import type { CustomElement } from '..';
 import { clearAttribute, type JSXElement } from '../basic-config';
 import theme, { block } from '../theme';
+import { registry } from '../utils';
 
 import { style } from './style';
 
@@ -170,44 +171,47 @@ function Carousel(_props: CarouselProps) {
   );
 }
 
-customElement<CarouselProps>(
-  'n-carousel',
-  {
-    children: void 0,
-    autoplay: void 0,
-    class: void 0,
-    css: void 0,
-    offset: void 0,
-    dots: void 0,
-    header: void 0,
-    onChange: void 0,
-  },
-  (_, opt) => {
-    const el = opt.element;
-    const props = mergeProps(
-      {
-        onChange(key: number) {
-          el.offset = key;
-          el.dispatchEvent(
-            new CustomEvent('change', {
-              detail: key,
-            }),
-          );
+Carousel.registry = () => {
+  customElement<CarouselProps>(
+    'n-carousel',
+    {
+      children: void 0,
+      autoplay: void 0,
+      class: void 0,
+      css: void 0,
+      offset: void 0,
+      dots: void 0,
+      header: void 0,
+      onChange: void 0,
+    },
+    (_, opt) => {
+      const el = opt.element;
+      const props = mergeProps(
+        {
+          onChange(key: number) {
+            el.offset = key;
+            el.dispatchEvent(
+              new CustomEvent('change', {
+                detail: key,
+              }),
+            );
+          },
         },
-      },
-      _,
-    );
+        _,
+      );
 
-    createEffect(() => {
-      clearAttribute(el, ['css']);
-      el.replaceChildren();
-    });
-    return (
-      <>
-        <style textContent={block} />
-        <Carousel {...props} />
-      </>
-    );
-  },
-);
+      createEffect(() => {
+        clearAttribute(el, ['css']);
+        el.replaceChildren();
+      });
+      return (
+        <>
+          <style textContent={block} />
+          <Carousel {...props} />
+        </>
+      );
+    },
+  );
+};
+registry(Carousel);
 export default Carousel;

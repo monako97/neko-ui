@@ -15,6 +15,7 @@ import { clearAttribute } from '../basic-config';
 import Img from '../img';
 import type { BasicConfig, CustomElement } from '../index';
 import theme, { inline } from '../theme';
+import { registry } from '../utils';
 
 import { style } from './style';
 
@@ -124,31 +125,35 @@ function Avatar(_: AvatarProps) {
   );
 }
 
-customElement<AvatarProps>(
-  'n-avatar',
-  {
-    css: void 0,
-    size: void 0,
-    src: void 0,
-    alt: void 0,
-    username: void 0,
-    color: void 0,
-    class: void 0,
-  },
-  (props, opt) => {
-    const { baseStyle } = theme;
-    const el = opt.element;
+Avatar.registry = () => {
+  customElement<AvatarProps>(
+    'n-avatar',
+    {
+      css: void 0,
+      size: void 0,
+      src: void 0,
+      alt: void 0,
+      username: void 0,
+      color: void 0,
+      class: void 0,
+    },
+    (props, opt) => {
+      const { baseStyle } = theme;
+      const el = opt.element;
 
-    createEffect(() => {
-      clearAttribute(el, ['css']);
-    });
-    return (
-      <>
-        <style textContent={inline} />
-        <style textContent={baseStyle()} />
-        <Avatar {...props} />
-      </>
-    );
-  },
-);
+      createEffect(() => {
+        clearAttribute(el, ['css']);
+      });
+      return (
+        <>
+          <style textContent={inline} />
+          <style textContent={baseStyle()} />
+          <Avatar {...props} />
+        </>
+      );
+    },
+  );
+};
+
+registry(Avatar);
 export default Avatar;
