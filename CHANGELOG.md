@@ -2,6 +2,10 @@
 
 ## Last
 
+### 📦 Code Refactoring
+
+- component registry ([e4de440](https://github.com/monako97/neko-ui/commit/e4de4405e9ae105fce27c63067f992d5787841d1))
+
 ### 📚 Documentation
 
 - fix ([dfb721f](https://github.com/monako97/neko-ui/commit/dfb721fa7f6f10252ccd8639746942a92a1c12f8))
