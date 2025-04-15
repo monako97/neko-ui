@@ -14,6 +14,16 @@ import { codeNoShadowCss, groupCss, mdNoShadowCss, sandboxCss } from './sandbox.
 const { createEffect, createMemo, createSignal, mergeProps, onMount } = Solid;
 const { For, Show, render, Portal, Dynamic } = SolidWeb;
 
+for (const key in NekoUI) {
+  if (Object.prototype.hasOwnProperty.call(NekoUI, key)) {
+    const element = NekoUI[key as keyof typeof NekoUI];
+
+    if (isFunction(element) && 'registry' in element && isFunction(element.registry)) {
+      element.registry();
+    }
+  }
+}
+CodeLive.registry();
 function $$jsx(type: Solid.Component, p: Solid.VoidProps, ...children: JSX.Element[]) {
   return h(type, {
     ...p,
@@ -38,7 +48,6 @@ const icons: Record<string, () => SVGSVGElement> = {
 const components: CodeLiveProps['components'] = {
   ...Solid,
   ...NekoUI,
-  CodeLive,
   NekoUI,
   Portal,
   Dynamic,

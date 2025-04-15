@@ -3,12 +3,10 @@ import { css, cx } from '@moneko/css';
 import { customElement } from 'solid-element';
 
 import type { AvatarProps, BasicConfig, CustomElement } from '..';
+import Avatar from '../avatar';
 import { clearAttribute } from '../basic-config';
 import Popover from '../popover';
 import { inline } from '../theme';
-import { registry } from '../utils';
-
-import '../avatar';
 
 const moreCss = css`
   .more {
@@ -120,6 +118,7 @@ function AvatarGroup(_props: AvatarGroupProps) {
 }
 
 AvatarGroup.registry = () => {
+  Avatar.registry();
   customElement<AvatarGroupProps>('n-avatar-group', defaultProps, (props, opt) => {
     const el = opt.element;
 
@@ -134,6 +133,4 @@ AvatarGroup.registry = () => {
     );
   });
 };
-
-registry(AvatarGroup);
 export default AvatarGroup;

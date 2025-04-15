@@ -25,7 +25,10 @@ subtitle: in react
 
 ```jsx
 import { useEffect, useRef } from 'react';
-import type { SelectElement } from 'neko-ui';
+import { Select, registry, type SelectElement } 'neko-ui';
+
+// 在使用前注册一次就行
+registry(Select);
 
 function Demo() {
   const el = useRef<SelectElement>(null);

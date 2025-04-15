@@ -25,14 +25,12 @@ import { customElement } from 'solid-element';
 
 import type { CustomElement, InputNumberProps } from '..';
 import { clearAttribute } from '../basic-config';
+import Dropdown from '../dropdown';
+import Input from '../input';
+import InputNumber from '../input-number';
 import theme, { block } from '../theme';
-import { registry } from '../utils';
 
 import { style, switchCss } from './style';
-
-import '../dropdown';
-import '../input';
-import '../input-number';
 
 export interface ColorPaletteProps {
   /** 自定义类名 */
@@ -345,6 +343,9 @@ export const defaultColorPaletteProps = {
 };
 
 ColorPalette.registry = () => {
+  Dropdown.registry();
+  Input.registry();
+  InputNumber.registry();
   customElement<ColorPaletteProps>('n-color-palette', defaultColorPaletteProps, (_, opts) => {
     const el = opts.element;
     const props = mergeProps(
@@ -371,5 +372,4 @@ ColorPalette.registry = () => {
     );
   });
 };
-registry(ColorPalette);
 export default ColorPalette;

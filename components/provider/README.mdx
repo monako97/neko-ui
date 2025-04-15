@@ -8,3 +8,11 @@ icon: 🐩
 # Provider
 
 > 与组件共享响应性, 当你在其它应用中希望获得 Neko UI 内部的响应性时, 可以考虑使用
+
+## 注册组件 `只需注册一次`
+
+```js
+import { Provider, registry } 'neko-ui';
+
+registry(Provider);
+```

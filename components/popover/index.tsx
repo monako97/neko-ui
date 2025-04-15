@@ -17,7 +17,6 @@ import type { BasicConfig, CustomElement } from '..';
 import { clearAttribute, type JSXElement } from '../basic-config';
 import Empty from '../empty';
 import theme, { inline } from '../theme';
-import { registry } from '../utils';
 
 import { popoverCss, portalCss } from './style';
 
@@ -420,5 +419,4 @@ Popover.registry = () => {
     );
   });
 };
-registry(Popover);
 export default Popover;

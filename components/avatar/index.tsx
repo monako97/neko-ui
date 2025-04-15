@@ -15,7 +15,6 @@ import { clearAttribute } from '../basic-config';
 import Img from '../img';
 import type { BasicConfig, CustomElement } from '../index';
 import theme, { inline } from '../theme';
-import { registry } from '../utils';
 
 import { style } from './style';
 
@@ -155,5 +154,4 @@ Avatar.registry = () => {
   );
 };
 
-registry(Avatar);
 export default Avatar;

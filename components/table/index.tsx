@@ -15,12 +15,10 @@ import { customElement } from 'solid-element';
 
 import type { BasicConfig, CustomElement, PaginationProps } from '..';
 import { clearAttribute, type JSXElement } from '../basic-config';
+import Pagination from '../pagination';
 import theme, { block } from '../theme';
-import { registry } from '../utils';
 
 import { styles } from './styles';
-
-import '../pagination';
 
 type Col = Column<Record<string, Any>>;
 const defaultPagination = { page: 1, pageSize: 20, total: 0, totalText: void 0, size: void 0 };
@@ -327,6 +325,7 @@ enum Valign {
 export type TableElement = CustomElement<TableProps>;
 
 Table.registry = () => {
+  Pagination.registry();
   customElement<TableProps>(
     'n-table',
     {
@@ -375,5 +374,4 @@ Table.registry = () => {
     },
   );
 };
-registry(Table);
 export default Table;

@@ -6,7 +6,6 @@ import { customElement } from 'solid-element';
 import type { CustomElement } from '..';
 import { clearAttribute, type JSXElement } from '../basic-config';
 import theme, { generateColor, inline } from '../theme';
-import { registry } from '../utils';
 
 import { style } from './style';
 
@@ -148,5 +147,4 @@ Tag.registry = () => {
     },
   );
 };
-registry(Tag);
 export default Tag;

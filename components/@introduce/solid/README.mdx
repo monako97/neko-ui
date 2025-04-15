@@ -24,6 +24,11 @@ subtitle: in solidjs
 ## Solid.js 中对应的写法为
 
 ```tsx
+import { Select, registry } 'neko-ui';
+
+// 在使用前注册一次就行
+registry(Select);
+
 function Demo() {
   return (
     <n-select

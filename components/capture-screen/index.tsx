@@ -14,12 +14,10 @@ import { customElement } from 'solid-element';
 
 import type { CustomElement } from '..';
 import { clearAttribute } from '../basic-config';
+import Button from '../button';
 import theme, { inline } from '../theme';
-import { registry } from '../utils';
 
 import { style } from './style';
-
-import '../button';
 
 declare interface MediaRecorderDataAvailableEvent extends Event {
   /** MediaRecorderDataAvailableEvent */
@@ -337,6 +335,7 @@ function CaptureScreen(_: CaptureScreenProps) {
 }
 
 CaptureScreen.registry = () => {
+  Button.registry();
   customElement<CaptureScreenProps>(
     'n-capture-screen',
     {
@@ -438,5 +437,4 @@ CaptureScreen.registry = () => {
     },
   );
 };
-registry(CaptureScreen);
 export default CaptureScreen;

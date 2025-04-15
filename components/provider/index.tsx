@@ -4,7 +4,6 @@ import { customElement, noShadowDOM } from 'solid-element';
 import type { CustomElement } from '..';
 import type { JSXElement } from '../basic-config';
 import theme, { ColorScheme } from '../theme';
-import { registry } from '../utils';
 
 function Provider(props: ProviderProps) {
   const { baseStyle, scheme, setScheme } = theme;
@@ -56,5 +55,4 @@ Provider.registry = () => {
     return <Provider {...props} />;
   });
 };
-registry(Provider);
 export default Provider;

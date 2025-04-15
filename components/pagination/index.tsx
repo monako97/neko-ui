@@ -15,13 +15,11 @@ import { customElement } from 'solid-element';
 
 import type { BasicConfig, CustomElement } from '..';
 import { clearAttribute, type JSXElement } from '../basic-config';
+import Button from '../button';
 import theme, { block } from '../theme';
-import { registry } from '../utils';
+import Typography from '../typography';
 
 import { styles } from './styles';
-
-import '../button';
-import '../typography';
 
 function Pagination(_: PaginationProps) {
   const { baseStyle } = theme;
@@ -230,6 +228,8 @@ export interface PaginationProps {
 export type PaginationElement = CustomElement<PaginationProps>;
 
 Pagination.registry = () => {
+  Button.registry();
+  Typography.registry();
   customElement<PaginationProps>(
     'n-pagination',
     {
@@ -274,5 +274,4 @@ Pagination.registry = () => {
   );
 };
 
-registry(Pagination);
 export default Pagination;

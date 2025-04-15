@@ -4,7 +4,6 @@ import { customElement } from 'solid-element';
 
 import { clearAttribute, type JSXElement } from '../basic-config';
 import theme, { block } from '../theme';
-import { registry } from '../utils';
 
 const style = css`
   details {
@@ -112,5 +111,4 @@ Collapse.registry = () => {
     },
   );
 };
-registry(Collapse);
 export default Collapse;

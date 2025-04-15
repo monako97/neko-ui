@@ -6,7 +6,6 @@ import type { BaseOption, BasicConfig, CustomElement } from '..';
 import { clearAttribute, FieldName, type JSXElement } from '../basic-config';
 import getOptions from '../get-options';
 import theme, { inline } from '../theme';
-import { registry } from '../utils';
 
 import { style } from './style';
 
@@ -259,5 +258,4 @@ Checkbox.registry = () => {
     },
   );
 };
-registry(Checkbox);
 export default Checkbox;

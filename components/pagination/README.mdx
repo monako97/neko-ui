@@ -8,3 +8,11 @@ icon: 🍁
 # Pagination 分页器
 
 > 当加载/渲染所有数据将花费很多时间时, 采用分页的形式分隔长列表，每次只加载一个页面。
+
+## 注册组件 `只需注册一次`
+
+```js
+import { Pagination, registry } 'neko-ui';
+
+registry(Pagination);
+```

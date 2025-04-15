@@ -18,7 +18,6 @@ import type { BaseOption, BasicConfig, CustomElement } from '..';
 import { clearAttribute, FieldName, type JSXElement } from '../basic-config';
 import getOptions from '../get-options';
 import theme, { block } from '../theme';
-import { registry } from '../utils';
 
 import { style } from './style';
 
@@ -380,5 +379,4 @@ Menu.registry = () => {
   );
 };
 
-registry(Menu);
 export default Menu;

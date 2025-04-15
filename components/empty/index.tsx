@@ -5,9 +5,7 @@ import { customElement } from 'solid-element';
 import type { CustomElement } from '..';
 import { clearAttribute, type JSXElement } from '../basic-config';
 import { inline } from '../theme';
-import { registry } from '../utils';
-
-import '../typography';
+import Typography from '../typography';
 
 const style = css`
   .empty-container {
@@ -60,6 +58,7 @@ function Empty(props: EmptyProps) {
 }
 
 Empty.registry = () => {
+  Typography.registry();
   customElement<EmptyProps>(
     'n-empty',
     {
@@ -82,5 +81,5 @@ Empty.registry = () => {
     },
   );
 };
-registry(Empty);
+
 export default Empty;

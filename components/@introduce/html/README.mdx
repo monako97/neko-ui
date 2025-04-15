@@ -35,6 +35,10 @@ export const code = `
     <n-select id="select" label="无后缀,无前缀"></n-select>
   </body>
   <script>
+    const { Select } = NekoUI;
+
+    // 在使用前注册一次就行
+    NekoUI.registry(Select);
     const select = document.querySelector('#select');
 
     select.options = [

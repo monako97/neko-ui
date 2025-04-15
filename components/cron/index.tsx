@@ -4,8 +4,12 @@ import { customElement } from 'solid-element';
 
 import type { BaseOption, CustomElement, TabOption } from '..';
 import { clearAttribute } from '../basic-config';
+import Button from '../button';
+import InputNumber from '../input-number';
+import Radio from '../radio';
+import Select from '../select';
+import Tabs from '../tabs';
 import { block } from '../theme';
-import { registry } from '../utils';
 
 import Day from './day';
 import Hour from './hour';
@@ -14,12 +18,6 @@ import Month from './month';
 import Second from './second';
 import Week from './week';
 import Year from './year';
-
-import '../button';
-import '../input-number';
-import '../radio';
-import '../select';
-import '../tabs';
 
 export interface CronProps {
   /** 自定义类名 */
@@ -363,6 +361,11 @@ function Cron(props: CronProps) {
 }
 
 Cron.registry = () => {
+  Button.registry();
+  InputNumber.registry();
+  Radio.registry();
+  Select.registry();
+  Tabs.registry();
   customElement<CronProps>(
     'n-cron',
     {
@@ -401,5 +404,4 @@ Cron.registry = () => {
     },
   );
 };
-registry(Cron);
 export default Cron;

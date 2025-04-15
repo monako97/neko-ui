@@ -43,6 +43,11 @@ export const vue = `<template>
   <n-input @change="handleChange" />
 </template>
 <script>
+  import { Input, registry } 'neko-ui';
+
+  // 在使用前注册一次就行
+  registry(Input);
+
   export default {
     data() {
       return {};

@@ -125,7 +125,7 @@ const App = () => {
 
 > 所有的 sso 都将使用这个配置
 
-```javascript
+```js
 sso.config({
   next(iteration, key, data) {
     console.log('global', key, data);
@@ -139,7 +139,7 @@ sso.config({
 
 > 为单独的对象设置私有的配置, 权限高于全局配置
 
-```typescript
+```ts
 const app = sso({
   count: 0,
 });
@@ -171,7 +171,7 @@ app((): Partial<SSOConfig> => {
 
 > 当使用 React < 18 时使用批量更新。
 
-```javascript
+```js
 sso.config({
   next: ReactDOM.unstable_batchedUpdates,
 });

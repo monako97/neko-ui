@@ -2,6 +2,14 @@
 
 > Cron表达式
 
+## 注册组件 `只需注册一次`
+
+```js
+import { Cron, registry } 'neko-ui';
+
+registry(Cron);
+```
+
 ## 规范
 
 ```shell

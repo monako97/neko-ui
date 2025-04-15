@@ -6,7 +6,6 @@ import type { BaseOption, BasicConfig, CustomElement } from '..';
 import { clearAttribute, FieldName } from '../basic-config';
 import getOptions from '../get-options';
 import theme, { inline } from '../theme';
-import { registry } from '../utils';
 
 import { style } from './style';
 
@@ -158,5 +157,4 @@ Radio.registry = () => {
     },
   );
 };
-registry(Radio);
 export default Radio;

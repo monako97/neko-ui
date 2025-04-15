@@ -7,7 +7,6 @@ import type { CustomElement, InputProps } from '..';
 import { clearAttribute } from '../basic-config';
 import Input, { defaultInportProps } from '../input';
 import { inline } from '../theme';
-import { registry } from '../utils';
 
 const style = css`
   /** 隐藏原生加减控件 */
@@ -176,5 +175,4 @@ InputNumber.registry = () => {
     },
   );
 };
-registry(InputNumber);
 export default InputNumber;

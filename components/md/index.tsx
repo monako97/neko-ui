@@ -4,14 +4,12 @@ import { customElement } from 'solid-element';
 
 import type { CustomElement } from '..';
 import { clearAttribute, type JSXElement } from '../basic-config';
+import Code from '../code';
+import Img from '../img';
 import mdStyle from '../md-style';
 import theme, { block } from '../theme';
-import { registry } from '../utils';
 
 import { create, dispose } from './worker';
-
-import '../code';
-import '../img';
 
 function MD(_props: MdProps) {
   let ref: HTMLDivElement | undefined;
@@ -195,6 +193,8 @@ export interface MdProps {
 export type MdElement = CustomElement<MdProps>;
 
 MD.registry = () => {
+  Code.registry();
+  Img.registry();
   customElement<MdProps>(
     'n-md',
     {
@@ -234,5 +234,4 @@ MD.registry = () => {
   );
 };
 
-registry(MD);
 export default MD;

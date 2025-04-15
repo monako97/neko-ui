@@ -14,7 +14,6 @@ import { customElement } from 'solid-element';
 import type { CustomElement } from '..';
 import { clearAttribute, type JSXElement } from '../basic-config';
 import theme, { block } from '../theme';
-import { registry } from '../utils';
 
 import { style } from './style';
 
@@ -213,5 +212,4 @@ Carousel.registry = () => {
     },
   );
 };
-registry(Carousel);
 export default Carousel;

@@ -5,7 +5,6 @@ import { customElement } from 'solid-element';
 import type { CustomElement } from '..';
 import { clearAttribute } from '../basic-config';
 import theme, { block } from '../theme';
-import { registry } from '../utils';
 
 const style = css`
   :host {
@@ -198,5 +197,4 @@ Skeleton.registry = () => {
     },
   );
 };
-registry(Skeleton);
 export default Skeleton;

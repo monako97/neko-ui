@@ -15,13 +15,11 @@ import { customElement } from 'solid-element';
 
 import type { BaseOption, BasicConfig, ButtonElement, CustomElement } from '..';
 import { clearAttribute, FieldName, type JSXElement } from '../basic-config';
+import Button from '../button';
 import getOptions from '../get-options';
 import theme, { block } from '../theme';
-import { registry } from '../utils';
 
 import { addCss, btnCss, style } from './style';
-
-import '../button';
 
 export interface TabsProps {
   /** 自定义类名 */
@@ -336,6 +334,7 @@ function Tabs(props: TabsProps) {
 export type TabsElement = CustomElement<TabsProps, 'onChange' | 'onEdit'>;
 
 Tabs.registry = () => {
+  Button.registry();
   customElement<TabsProps>(
     'n-tabs',
     {
@@ -386,5 +385,4 @@ Tabs.registry = () => {
     },
   );
 };
-registry(Tabs);
 export default Tabs;

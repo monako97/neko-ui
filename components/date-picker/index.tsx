@@ -3,16 +3,14 @@ import { customElement } from 'solid-element';
 
 import type { CustomElement, InputElement, PopoverProps } from '..';
 import { clearAttribute, type JSXElement } from '../basic-config';
+import Button from '../button';
+import Menu from '../menu';
 import Popover, { defaultProps } from '../popover';
 import { inline } from '../theme';
-import { registry } from '../utils';
 
 import dayjs from './dayjs';
 import Panel from './panel';
 import { styles } from './style';
-
-import '../button';
-import '../menu';
 
 function DatePicker(_props: DatePickerProps) {
   let ref: InputElement | undefined;
@@ -231,6 +229,8 @@ export enum PickerType {
 export type DatePickerElement = CustomElement<DatePickerProps, 'onChange' | 'onOpenChange'>;
 
 DatePicker.registry = () => {
+  Button.registry();
+  Menu.registry();
   customElement<DatePickerProps>(
     'n-data-picker',
     {
@@ -289,5 +289,4 @@ DatePicker.registry = () => {
     },
   );
 };
-registry(DatePicker);
 export default DatePicker;

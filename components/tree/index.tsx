@@ -6,7 +6,6 @@ import { customElement } from 'solid-element';
 import { clearAttribute, type JSXElement } from '../basic-config';
 import schema from '../from-schema';
 import theme, { block } from '../theme';
-import { registry } from '../utils';
 
 import { style } from './style';
 import type {
@@ -334,6 +333,5 @@ Tree.registry = () => {
     },
   );
 };
-registry(Tree);
 
 export default Tree;

@@ -18,7 +18,6 @@ import { customElement } from 'solid-element';
 import type { CustomElement } from '..';
 import { clearAttribute, type JSXElement } from '../basic-config';
 import theme from '../theme';
-import { registry } from '../utils';
 
 import { CopyIcon } from './copy-icon';
 import { darkCss, lightCss, style } from './style';
@@ -322,7 +321,5 @@ Code.registry = () => {
     },
   );
 };
-
-registry(Code);
 
 export default Code;

@@ -16,7 +16,6 @@ import { customElement } from 'solid-element';
 import type { BasicConfig, CustomElement } from '..';
 import { clearAttribute, type JSXElement } from '../basic-config';
 import theme, { block, inline } from '../theme';
-import { registry } from '../utils';
 
 import loadingIcon from './loading';
 import { style } from './style';
@@ -189,5 +188,4 @@ Button.registry = () => {
   );
 };
 
-registry(Button);
 export default Button;

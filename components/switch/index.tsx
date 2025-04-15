@@ -5,7 +5,6 @@ import { customElement } from 'solid-element';
 import type { CustomElement } from '..';
 import { clearAttribute } from '../basic-config';
 import theme, { inline } from '../theme';
-import { registry } from '../utils';
 
 import { style } from './style';
 
@@ -121,5 +120,4 @@ Switch.registry = () => {
     },
   );
 };
-registry(Switch);
 export default Switch;

@@ -6,7 +6,6 @@ import { customElement } from 'solid-element';
 import type { CustomElement } from '..';
 import { clearAttribute, type JSXElement } from '../basic-config';
 import theme from '../theme';
-import { registry } from '../utils';
 
 export interface TypographyProps {
   /** 自定义类名 */
@@ -122,5 +121,4 @@ Typography.registry = () => {
   );
 };
 
-registry(Typography);
 export default Typography;

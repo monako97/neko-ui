@@ -17,12 +17,10 @@ import type { CustomElement, DropdownMultipleProps, DropdownProps, MenuOption } 
 import { clearAttribute, FieldName, type JSXElement } from '../basic-config';
 import Dropdown, { defaultProps } from '../dropdown';
 import getOptions from '../get-options';
+import Tag from '../tag';
 import { inline } from '../theme';
-import { registry } from '../utils';
 
 import { style } from './style';
-
-import '../tag';
 
 function Select(props: SelectProps) {
   const [local, other] = splitProps(props, [
@@ -305,6 +303,7 @@ export type SelectElement = CustomElement<SelectProps, 'onChange' | 'onOpenChang
 export type SelectMultipleElement = CustomElement<SelectMultipleProps, 'onChange' | 'onOpenChange'>;
 
 Select.registry = () => {
+  Tag.registry();
   customElement<SelectProps>(
     'n-select',
     {
@@ -350,5 +349,4 @@ Select.registry = () => {
     },
   );
 };
-registry(Select);
 export default Select;

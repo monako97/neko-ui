@@ -21,8 +21,10 @@ export const pnpmStr = npmInstall('pnpm', { package: 'neko-ui' });
 ## 使用
 
 ```jsx
-import 'neko-ui'; // 在使用前引入一次就行, 建议在入口文件进行
+import { Input, registry } 'neko-ui';
 
+// 在使用前注册一次就行
+registry(Input);
 function View() {
   return <n-input />;
 }
@@ -33,6 +35,12 @@ function View() {
 ```html
 <!-- 引入 CDN 资源 -->
 <script src="https://cdn.jsdelivr.net/npm/neko-ui/lib/index.js"></script>
+<script>
+  const { Input } = NekoUI;
+
+  // 在使用前注册一次就行
+  NekoUI.registry(Input);
+</script>
 <!-- 使用 -->
 <body>
   <n-input></n-input>

@@ -12,7 +12,6 @@ import { customElement } from 'solid-element';
 
 import type { CustomElement } from '..';
 import { inline } from '../theme';
-import { registry } from '../utils';
 
 import ImgLazy from './lazy';
 import { imgCss, style } from './style';
@@ -218,5 +217,4 @@ Img.registry = () => {
     },
   );
 };
-registry(Img);
 export default Img;

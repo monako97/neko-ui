@@ -6,7 +6,6 @@ import { customElement } from 'solid-element';
 import type { BasicConfig, CustomElement } from '..';
 import { clearAttribute, type JSXElement } from '../basic-config';
 import theme, { inline } from '../theme';
-import { registry } from '../utils';
 
 import { style } from './style';
 
@@ -209,5 +208,4 @@ Input.registry = () => {
     );
   });
 };
-registry(Input);
 export default Input;

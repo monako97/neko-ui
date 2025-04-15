@@ -7,11 +7,9 @@ import type { BaseOption, BasicConfig, CustomElement } from '..';
 import { clearAttribute, FieldName, type JSXElement } from '../basic-config';
 import getOptions from '../get-options';
 import theme, { inline } from '../theme';
-import { registry } from '../utils';
+import Typography from '../typography';
 
 import { style } from './style';
-
-import '../typography';
 
 export interface SegmentedProps {
   /** 自定义类名 */
@@ -151,6 +149,7 @@ function Segmented(props: SegmentedProps) {
 export type SegmentedElement = CustomElement<SegmentedProps>;
 
 Segmented.registry = () => {
+  Typography.registry();
   customElement<SegmentedProps>(
     'n-segmented',
     {
@@ -198,5 +197,4 @@ Segmented.registry = () => {
     },
   );
 };
-registry(Segmented);
 export default Segmented;

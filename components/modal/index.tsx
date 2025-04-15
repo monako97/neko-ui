@@ -15,7 +15,6 @@ import { customElement } from 'solid-element';
 import type { CustomElement } from '..';
 import { clearAttribute, type JSXElement } from '../basic-config';
 import type { ButtonProps } from '../button';
-import { registry } from '../utils';
 
 import open from './hooks';
 import { defaultPosi } from './posi';
@@ -349,5 +348,4 @@ Modal.registry = () => {
   );
 };
 Modal.open = open;
-registry(Modal);
 export default Modal;

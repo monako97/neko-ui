@@ -5,7 +5,6 @@ import { customElement } from 'solid-element';
 import type { CustomElement } from '..';
 import { clearAttribute, type JSXElement } from '../basic-config';
 import theme, { inline } from '../theme';
-import { registry } from '../utils';
 
 const style = css`
   :host {
@@ -130,5 +129,4 @@ Spin.registry = () => {
     },
   );
 };
-registry(Spin);
 export default Spin;

@@ -5,11 +5,9 @@ import { customElement } from 'solid-element';
 import type { CustomElement, MenuMultipleProps, MenuOption, MenuProps, PopoverProps } from '..';
 import { clearAttribute } from '../basic-config';
 import Empty from '../empty';
+import Menu from '../menu';
 import Popover, { defaultProps as popoverProps } from '../popover';
 import { inline } from '../theme';
-import { registry } from '../utils';
-
-import '../menu';
 
 export interface BaseDropdownProps extends Omit<PopoverProps, 'content'> {
   /** 打开内容气泡 */
@@ -142,6 +140,7 @@ export const defaultProps = {
 };
 
 Dropdown.registry = () => {
+  Menu.registry();
   customElement<DropdownProps>(
     'n-dropdown',
     {
@@ -184,5 +183,4 @@ Dropdown.registry = () => {
     },
   );
 };
-registry(Dropdown);
 export default Dropdown;

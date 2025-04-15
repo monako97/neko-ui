@@ -3,7 +3,6 @@ import { customElement } from 'solid-element';
 
 import { clearAttribute } from '../basic-config';
 import theme, { inline } from '../theme';
-import { registry } from '../utils';
 
 import { Ecc, encodeSegments, type IntRange, makeSegments } from './qrcode';
 export type { IntRange } from './qrcode';
@@ -342,5 +341,4 @@ QRCode.registry = () => {
     );
   });
 };
-registry(QRCode);
 export default QRCode;

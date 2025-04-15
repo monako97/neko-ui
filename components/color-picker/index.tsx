@@ -12,13 +12,11 @@ import { customElement } from 'solid-element';
 
 import type { BasicConfig, ColorPaletteProps, CustomElement, PopoverProps } from '..';
 import { clearAttribute } from '../basic-config';
+import ColorPalette from '../color-palette';
 import Popover, { defaultProps } from '../popover';
 import { inline } from '../theme';
-import { registry } from '../utils';
 
 import { style } from './style';
-
-import '../color-palette';
 
 /** 颜色选择器
  * @since 2.0.0
@@ -91,6 +89,7 @@ function ColorPicker(props: ColorPickerProps) {
 }
 
 ColorPicker.registry = () => {
+  ColorPalette.registry();
   customElement<ColorPickerProps>(
     'n-color-picker',
     {
@@ -128,5 +127,4 @@ ColorPicker.registry = () => {
     },
   );
 };
-registry(ColorPicker);
 export default ColorPicker;
