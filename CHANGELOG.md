@@ -1,6 +1,10 @@
 # Change log
 
-## Last
+## [v2.11.0](https://github.com/monako97/neko-ui/compare/v2.10.7...v2.11.0) (4-16-2025)
+
+### 📦 Code Refactoring
+
+- 注册组件 ([9717add](https://github.com/monako97/neko-ui/commit/9717add2767a560396ddd71bdc085adb5e431ad6))
 
 ### 📚 Documentation
 

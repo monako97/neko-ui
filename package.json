@@ -63,7 +63,7 @@
   "devDependencies": {
     "@commitlint/cli": "19.8.0",
     "@commitlint/config-conventional": "19.8.0",
-    "@moneko/core": "3.42.1",
+    "@moneko/core": "3.43.1",
     "@moneko/solid": "1.11.1",
     "@solidjs/testing-library": "0.8.10",
     "@swc/jest": "0.2.37",
