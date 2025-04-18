@@ -1,5 +1,11 @@
 # Change log
 
+## Last
+
+### 📦 Code Refactoring
+
+- 构建工具更新 ([cbbff0e](https://github.com/monako97/neko-ui/commit/cbbff0ee42eac699825863caad51f4c2541cd17b))
+
 ## [v2.11.0](https://github.com/monako97/neko-ui/compare/v2.10.7...v2.11.0) (4-16-2025)
 
 ### 📦 Code Refactoring
