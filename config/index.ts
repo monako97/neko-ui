@@ -14,11 +14,6 @@ const conf: Partial<ConfigType> = {
     },
   },
   fallbackCompPath: '@/components/fallback',
-  importOnDemand: {
-    '@moneko/common': {
-      transform: 'esm/${member}',
-    },
-  },
   devServer: {
     https: true,
   },
