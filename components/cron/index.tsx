@@ -1,4 +1,13 @@
-import { batch, createEffect, createSignal, mergeProps, Show, splitProps, untrack } from 'solid-js';
+import {
+  batch,
+  createEffect,
+  createMemo,
+  createSignal,
+  mergeProps,
+  Show,
+  splitProps,
+  untrack,
+} from 'solid-js';
 import { css } from '@moneko/css';
 import { customElement } from 'solid-element';
 
@@ -299,50 +308,54 @@ function Cron(props: CronProps) {
     });
   });
 
-  const items = [
-    {
-      value: 'second',
-      label: '秒',
-      content: <Second state={state().second} onChange={onChange} />,
-    },
-    {
-      value: 'minute',
-      label: '分钟',
-      content: <Minute state={state().minute} onChange={onChange} />,
-    },
-    {
-      value: 'hour',
-      label: '小时',
-      content: <Hour state={state().hour} onChange={onChange} />,
-    },
-    {
-      value: 'day',
-      label: '日',
-      content: <Day state={state().day} onChange={onChange} />,
-    },
-    {
-      value: 'week',
-      label: '周',
-      content: <Week state={state().week} onChange={onChange} />,
-    },
-    {
-      value: 'month',
-      label: '月',
-      content: <Month state={state().month} onChange={onChange} />,
-    },
-    {
-      value: 'year',
-      label: '年',
-      content: <Year state={state().year} onChange={onChange} />,
-    },
-  ];
+  const items = createMemo(() => {
+    const exclude = local.exclude || [];
+
+    return [
+      !exclude.includes('second') && {
+        value: 'second',
+        label: '秒',
+        content: <Second state={state().second} onChange={onChange} />,
+      },
+      !exclude.includes('minute') && {
+        value: 'minute',
+        label: '分钟',
+        content: <Minute state={state().minute} onChange={onChange} />,
+      },
+      !exclude.includes('hour') && {
+        value: 'hour',
+        label: '小时',
+        content: <Hour state={state().hour} onChange={onChange} />,
+      },
+      !exclude.includes('day') && {
+        value: 'day',
+        label: '日',
+        content: <Day state={state().day} onChange={onChange} />,
+      },
+      !exclude.includes('week') && {
+        value: 'week',
+        label: '周',
+        content: <Week state={state().week} onChange={onChange} />,
+      },
+      !exclude.includes('month') && {
+        value: 'month',
+        label: '月',
+        content: <Month state={state().month} onChange={onChange} />,
+      },
+      !exclude.includes('year') && {
+        value: 'year',
+        label: '年',
+        content: <Year state={state().year} onChange={onChange} />,
+      },
+    ].filter(Boolean) as TabOption[];
+  });
 
   return (
     <>
       <Show when={local.css}>
         <style textContent={css(local.css)} />
       </Show>
-      <n-tabs type={local.type} items={items} value={active()} onChange={changeActiveKey} />
+      <n-tabs type={local.type} items={items()} value={active()} onChange={changeActiveKey} />
       <Show when={local.showCron}>
         <code
           style={{

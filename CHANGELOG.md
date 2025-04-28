@@ -2,6 +2,10 @@
 
 ## Last
 
+### ✨ Features
+
+- 构建工具更新 ([e8b3007](https://github.com/monako97/neko-ui/commit/e8b300762df86722be610612d9b882ea2f324e3e))
+
 ### 📦 Code Refactoring
 
 - 构建工具更新 ([7238699](https://github.com/monako97/neko-ui/commit/723869945bcabab271efb72e47ca27c9393edb37))
