@@ -11,6 +11,9 @@ html > body {
   transition-duration: 0.3s;
   transition-property: background-color, color;
   transition-timing-function: cubic-bezier(0.94, -0.1, 0.1, 1.2);
+  -webkit-font-smoothing: subpixel-antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizelegibility;
 }
 
 #root {
