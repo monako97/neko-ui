@@ -2,8 +2,11 @@
 
 ## Last
 
+## [v2.11.1](https://github.com/monako97/neko-ui/compare/v2.11.0...v2.11.1) (4-28-2025)
+
 ### ✨ Features
 
+- corn 隐藏域 ([94a41e0](https://github.com/monako97/neko-ui/commit/94a41e0756bcc7f7235846c5ba48b9f4f5853ef4))
 - 构建工具更新 ([e8b3007](https://github.com/monako97/neko-ui/commit/e8b300762df86722be610612d9b882ea2f324e3e))
 
 ### 📦 Code Refactoring
