@@ -59,7 +59,7 @@ export const style = css`
     }
 
     50% {
-      border-radius: 30% 60% 70% 40% / 50% 60% 30% 60%;
+      border-radius: 30% 60% 70% 40% / 50% 60% 30%;
     }
 
     100% {

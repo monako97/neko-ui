@@ -31,7 +31,6 @@ const mockMedia = (ondataavailable?: boolean) => {
     writable: true,
     value: jest.fn().mockImplementation(() => ({
       start: jest.fn(function (this: MediaRecorder) {
-        // eslint-disable-next-line no-invalid-this
         Object.assign(this, {
           state: 'recording',
         });
@@ -39,35 +38,30 @@ const mockMedia = (ondataavailable?: boolean) => {
         if (ondataavailable) {
           const blobEvent = { data: new Blob(), timecode: 1 } as BlobEvent;
 
-          // eslint-disable-next-line no-invalid-this
           this.ondataavailable?.(blobEvent);
         }
       }),
       ondataavailable: ondataavailable ? jest.fn(() => ({ data: 0 })) : null,
       onerror: jest.fn(function (this: MediaRecorder) {
-        // eslint-disable-next-line no-invalid-this
         Object.assign(this, {
           state: 'error',
         });
       }),
       state: 'inactive',
       stop: jest.fn(function (this: MediaRecorder) {
-        // eslint-disable-next-line no-invalid-this
         Object.assign(this, {
           state: 'inactive',
         });
-        // eslint-disable-next-line no-invalid-this
+
         this.onstop?.(window.event!);
       }),
       onstop: jest.fn(),
       pause: jest.fn(function (this: MediaRecorder) {
-        // eslint-disable-next-line no-invalid-this
         Object.assign(this, {
           state: 'paused',
         });
       }),
       resume: jest.fn(function (this: MediaRecorder) {
-        // eslint-disable-next-line no-invalid-this
         Object.assign(this, {
           state: 'recording',
         });
