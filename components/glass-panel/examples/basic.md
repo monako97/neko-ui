@@ -6,9 +6,11 @@ order: 1
 ```html
 <style>
   #box-glass {
-    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     height: 50vh;
-    background-image: url(https://nodei.co/npm/neko-ui.png);
+    background-image: url(https://img.picui.cn/free/2025/06/11/6849a037bb61d.gif);
   }
 </style>
 <div id="box-glass">
@@ -23,9 +25,12 @@ order: 1
 ```jsx
 <div
   style={{
+    display: 'flex',
+    'align-items': 'center',
+    'justify-content': 'center',
     'text-align': 'center',
     height: '50vh',
-    'background-image': 'url(https://nodei.co/npm/neko-ui.png)',
+    'background-image': 'url(https://img.picui.cn/free/2025/06/11/6849a037bb61d.gif)',
   }}
 >
   <n-glass-panel

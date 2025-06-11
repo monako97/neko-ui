@@ -1,4 +1,12 @@
-import { createEffect, createUniqueId, JSX, mergeProps, Show, splitProps } from 'solid-js';
+import {
+  createEffect,
+  createMemo,
+  createUniqueId,
+  JSX,
+  mergeProps,
+  Show,
+  splitProps,
+} from 'solid-js';
 import { css, cx } from '@moneko/css';
 import { customElement } from 'solid-element';
 
@@ -48,6 +56,9 @@ const GlassPanel = (_: GlassPanelProps) => {
       overflow: 'inherit',
     },
   });
+  const filter = createMemo(() =>
+    cx(!!local.filterBlur && `blur(${local.filterBlur}px)`, `url(#${id})`),
+  );
 
   return (
     <>
@@ -58,7 +69,8 @@ const GlassPanel = (_: GlassPanelProps) => {
       <slot
         id="backdrop-slot"
         style={css({
-          'backdrop-filter': cx(!!local.filterBlur && `blur(${local.filterBlur}px)`, `url(#${id})`),
+          '-webkit-backdrop-filter': filter(),
+          'backdrop-filter': filter(),
         })}
       />
       <svg style={{ display: 'none' }}>

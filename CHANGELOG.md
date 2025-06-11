@@ -1,5 +1,11 @@
 # Change log
 
+## Last
+
+### 🐛 Bug Fixes
+
+- safari backdrop ([ffe2997](https://github.com/monako97/neko-ui/commit/ffe2997f770d47a31140b255549c998178c2df6f))
+
 ## [v2.12.1](https://github.com/monako97/neko-ui/compare/v2.12.0-beta.0...v2.12.1) (6-11-2025)
 
 ### ✨ Features
