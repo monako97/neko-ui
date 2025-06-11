@@ -1,6 +1,10 @@
 # Change log
 
-## Last
+## [v2.12.0-beta.0](https://github.com/monako97/neko-ui/compare/v2.11.2...v2.12.0-beta.0) (6-11-2025)
+
+### ✨ Features
+
+- n-glass-panel 玻璃面板 ([7e2082a](https://github.com/monako97/neko-ui/commit/7e2082a4930365abee239b7c8ee42f1ca5faa5bd))
 
 ### 🐛 Bug Fixes
 
