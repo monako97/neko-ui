@@ -1,5 +1,5 @@
-import { createEffect, createUniqueId, JSX, mergeProps, splitProps } from 'solid-js';
-import { css } from '@moneko/css';
+import { createEffect, createUniqueId, JSX, mergeProps, Show, splitProps } from 'solid-js';
+import { css, cx } from '@moneko/css';
 import { customElement } from 'solid-element';
 
 import type { CustomElement } from '..';
@@ -32,7 +32,6 @@ export interface GlassPanelProps {
 const GlassPanel = (_: GlassPanelProps) => {
   const props = mergeProps({ filterBlur: 16 }, _);
   const [local] = splitProps(props, [
-    'class',
     'css',
     'filter',
     'feTurbulence',
@@ -40,18 +39,26 @@ const GlassPanel = (_: GlassPanelProps) => {
     'filterBlur',
   ]);
   const id = createUniqueId();
+  const baseCss = css({
+    '#backdrop-slot': {
+      display: 'block',
+      width: '100%',
+      height: '100%',
+      'border-radius': 'inherit',
+      overflow: 'inherit',
+    },
+  });
 
   return (
     <>
-      <style textContent={css(local.css)} />
+      <style textContent={baseCss} />
+      <Show when={props.css}>
+        <style textContent={css(local.css)} />
+      </Show>
       <slot
+        id="backdrop-slot"
         style={{
-          display: 'block',
-          width: '100%',
-          height: '100%',
-          'backdrop-filter': `blur(${local.filterBlur}px) url(#${id})`,
-          'border-radius': 'inherit',
-          overflow: 'inherit',
+          'backdrop-filter': cx(!!local.filterBlur && `blur(${local.filterBlur}px)`, `url(#${id})`),
         }}
       />
       <svg style={{ display: 'none' }}>
