@@ -47,32 +47,35 @@ const GlassPanel = (_: GlassPanelProps) => {
     'filterBlur',
   ]);
   const id = createUniqueId();
-  const baseCss = css({
-    '#backdrop-slot': {
-      display: 'block',
-      width: '100%',
-      height: '100%',
-      borderRadius: 'inherit',
-      overflow: 'inherit',
-    },
+  const baseCss = createMemo(() => {
+    return css`
+      #backdrop-slot {
+        display: block;
+        overflow: inherit;
+        border-radius: inherit;
+        inline-size: 100%;
+        block-size: 100%;
+        backdrop-filter: blur(${local.filterBlur}px);
+      }
+
+      @supports (backdrop-filter: url(#${id})) {
+        #backdrop-slot {
+          backdrop-filter: ${cx(
+            !!local.filterBlur && `blur(${local.filterBlur}px)`,
+            `url(#${id})`,
+          )};
+        }
+      }
+    `;
   });
-  const filter = createMemo(() =>
-    cx(!!local.filterBlur && `blur(${local.filterBlur}px)`, `url(#${id})`),
-  );
 
   return (
     <>
-      <style textContent={baseCss} />
+      <style textContent={baseCss()} />
       <Show when={props.css}>
         <style textContent={css(local.css)} />
       </Show>
-      <slot
-        id="backdrop-slot"
-        style={css({
-          '-webkit-backdrop-filter': filter(),
-          'backdrop-filter': filter(),
-        })}
-      />
+      <slot id="backdrop-slot" />
       <svg style={{ display: 'none' }}>
         <filter
           id={id}
