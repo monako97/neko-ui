@@ -8,7 +8,7 @@ order: 1
   #box-glass {
     text-align: center;
     height: 50vh;
-    background-image: url('https://t7.baidu.com/it/u=727460147,2222092211&fm=193&f=GIF');
+    background-image: url(https://nodei.co/npm/neko-ui.png);
   }
 </style>
 <div id="box-glass">
@@ -25,8 +25,7 @@ order: 1
   style={{
     'text-align': 'center',
     height: '50vh',
-    'background-image':
-      'url("https://t7.baidu.com/it/u=727460147,2222092211&fm=193&f=GIF")',
+    'background-image': 'url(https://nodei.co/npm/neko-ui.png)',
   }}
 >
   <n-glass-panel

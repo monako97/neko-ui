@@ -1,9 +1,10 @@
 # Change log
 
-## Last
+## [v2.12.1](https://github.com/monako97/neko-ui/compare/v2.12.0-beta.0...v2.12.1) (6-11-2025)
 
 ### ✨ Features
 
+- n-glass-panel filterBlur ([82af32d](https://github.com/monako97/neko-ui/commit/82af32d2d0fa0acf297238fcbf8f3f81e069ddf1))
 - n-glass-panel 玻璃面板 ([a56ed7f](https://github.com/monako97/neko-ui/commit/a56ed7f6684016cd09f9d5dba74a0f4a48dc4357))
 
 ## [v2.12.0-beta.0](https://github.com/monako97/neko-ui/compare/v2.12.0...v2.12.0-beta.0) (6-11-2025)

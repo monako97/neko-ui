@@ -44,7 +44,7 @@ const GlassPanel = (_: GlassPanelProps) => {
       display: 'block',
       width: '100%',
       height: '100%',
-      'border-radius': 'inherit',
+      borderRadius: 'inherit',
       overflow: 'inherit',
     },
   });
@@ -57,9 +57,9 @@ const GlassPanel = (_: GlassPanelProps) => {
       </Show>
       <slot
         id="backdrop-slot"
-        style={{
+        style={css({
           'backdrop-filter': cx(!!local.filterBlur && `blur(${local.filterBlur}px)`, `url(#${id})`),
-        }}
+        })}
       />
       <svg style={{ display: 'none' }}>
         <filter
