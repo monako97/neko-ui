@@ -47,6 +47,7 @@ export {
 export { default as Empty, type EmptyElement, type EmptyProps } from './empty';
 export { default as fromSchema } from './from-schema';
 export { default as getOptions } from './get-options';
+export { default as GlassPanel, type GlassPanelElement, type GlassPanelProps } from './glass-panel';
 export {
   default as HighlightText,
   type HighlightTextElement,
@@ -149,6 +150,7 @@ import type {
   DropdownElement,
   DropdownMultipleElement,
   EmptyElement,
+  GlassPanelElement,
   HighlightTextElement,
   ImgElement,
   InputElement,
@@ -281,6 +283,11 @@ interface CustomElementTags {
    * @since 2.10.0
    */
   'n-collapse': CollapseElement;
+  /**
+   * 玻璃面板
+   * @since 2.12.0
+   */
+  'n-glass-panel': GlassPanelElement;
 }
 type IntrinsicNekoElement = Transform<CustomElementTags>;
 
