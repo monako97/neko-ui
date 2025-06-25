@@ -146,9 +146,7 @@ function HighlightText(props: HighlightTextProps) {
       <style textContent={baseStyle()} />
       <style textContent={style} />
       <style
-        textContent={`::highlight(${id}) {color: var(--primary-color, ${
-          props.highlightColor ?? '#5794ff'
-        });}`}
+        textContent={`::highlight(${id}) {color: ${props.highlightColor ?? 'var(--primary-color, #5794ff)'};}`}
       />
       <Show when={props.css}>
         <style textContent={css(props.css)} />

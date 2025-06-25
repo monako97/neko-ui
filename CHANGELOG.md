@@ -1,6 +1,10 @@
 # Change log
 
-## Last
+## [v2.12.2](https://github.com/monako97/neko-ui/compare/v2.12.1...v2.12.2) (6-25-2025)
+
+### ⚙️ Continuous Integrations
+
+- 2.12.2 ([f499e59](https://github.com/monako97/neko-ui/commit/f499e594d80f663b55dd427c3168a247eb4e2fea))
 
 ### ✨ Features
 

@@ -8,7 +8,7 @@ order: 1
 <n-highlight-text highlight="大头菜">
   买入价格是指自己岛上的的价格，在其他岛上购买大头菜不会影响此数值
 </n-highlight-text>
-<n-highlight-text highlight="岛上" flag="g">
+<n-highlight-text highlight="岛上" flag="g" highlight-color="red">
   买入价格是指自己岛上的的价格，在其他岛上购买大头菜不会影响此数值
 </n-highlight-text>
 ```
