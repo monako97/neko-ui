@@ -1,5 +1,11 @@
 # Change log
 
+## Last
+
+### ✨ Features
+
+- 添加亮度属性到 GlassPanel 组件并更新样式 ([9f406b3](https://github.com/monako97/neko-ui/commit/9f406b3ccc4fd22dcc9898ff7072479e5aa0e903))
+
 ## [v2.12.3](https://github.com/monako97/neko-ui/compare/v2.12.2...v2.12.3) (6-25-2025)
 
 ### ⚙️ Continuous Integrations
