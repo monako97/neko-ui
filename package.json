@@ -61,7 +61,7 @@
     "ui libraries"
   ],
   "devDependencies": {
-    "@moneko/core": "3.47.4",
+    "@moneko/core": "3.47.7",
     "@moneko/solid": "1.11.1",
     "@solidjs/testing-library": "0.8.10",
     "@swc/jest": "0.2.38",
@@ -79,7 +79,7 @@
   "dependencies": {
     "@moneko/common": "1.8.0",
     "@moneko/css": "1.2.0",
-    "custom-element-type": "1.0.6",
+    "custom-element-type": "1.0.7",
     "dayjs": "1.11.13",
     "prismjs": "1.30.0",
     "solid-element": "1.8.1",

@@ -77,22 +77,32 @@ export const style = css`
     &::before {
       position: absolute;
       z-index: -1;
+      margin: auto;
       background: var(--img) center/cover no-repeat;
+      opacity: 0.5;
       content: '';
+      inset-inline-start: 0;
+      inset-block-start: 0;
+      inset-inline-end: 0;
+      inset-block-end: 0;
       inline-size: 100%;
       block-size: 100%;
       pointer-events: none;
-      opacity: 0.5;
     }
 
     &::after {
       position: absolute;
       z-index: -1;
       content: '';
-      inline-size: 100%;
-      block-size: 100%;
+      inset-inline-start: -10%;
+      inset-block-start: -10%;
+      inset-inline-end: -10%;
+      inset-block-end: -10%;
+      margin: auto;
+      inline-size: 120%;
+      block-size: 120%;
       pointer-events: none;
-      backdrop-filter: blur(50px);
+      backdrop-filter: blur(10px) brightness(80%);
     }
 
     &:hover {

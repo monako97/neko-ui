@@ -32,6 +32,11 @@ export interface GlassPanelProps {
    * @default 16
    */
   filterBlur?: number;
+  /**
+   * 亮度
+   * @since 2.12.3
+   */
+  brightness?: number;
   filter?: Omit<JSX.FilterSVGAttributes<SVGFilterElement>, 'id'>;
   feTurbulence?: JSX.FeTurbulanceSVGAttributes<SVGFETurbulenceElement>;
   feDisplacementMap?: JSX.FeDisplacementMapSVGAttributes<SVGFEDisplacementMapElement>;
@@ -45,9 +50,15 @@ const GlassPanel = (_: GlassPanelProps) => {
     'feTurbulence',
     'feDisplacementMap',
     'filterBlur',
+    'brightness',
   ]);
   const id = createUniqueId();
   const baseCss = createMemo(() => {
+    const normal = cx(
+      !!local.brightness && `brightness(${local.brightness})`,
+      !!local.filterBlur && `blur(${local.filterBlur}px)`,
+    );
+
     return css`
       #backdrop-slot {
         display: block;
@@ -55,15 +66,12 @@ const GlassPanel = (_: GlassPanelProps) => {
         border-radius: inherit;
         inline-size: 100%;
         block-size: 100%;
-        backdrop-filter: blur(${local.filterBlur}px);
+        backdrop-filter: ${normal};
       }
 
       @supports (backdrop-filter: url(#${id})) {
         #backdrop-slot {
-          backdrop-filter: ${cx(
-            !!local.filterBlur && `blur(${local.filterBlur}px)`,
-            `url(#${id})`,
-          )};
+          backdrop-filter: ${normal} url(#${id});
         }
       }
     `;
@@ -107,6 +115,7 @@ GlassPanel.registry = () => {
     {
       class: void 0,
       css: void 0,
+      brightness: void 0,
       filterBlur: void 0,
       filter: void 0,
       feTurbulence: void 0,
@@ -116,7 +125,14 @@ GlassPanel.registry = () => {
       const el = opt.element;
 
       createEffect(() => {
-        clearAttribute(el, ['css', 'filterBlur', 'filter', 'feTurbulence', 'feDisplacementMap']);
+        clearAttribute(el, [
+          'css',
+          'brightness',
+          'filterBlur',
+          'filter',
+          'feTurbulence',
+          'feDisplacementMap',
+        ]);
       });
       return (
         <>

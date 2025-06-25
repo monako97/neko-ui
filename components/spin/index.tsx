@@ -24,6 +24,8 @@ const style = css`
 
   .content {
     display: flex;
+    max-inline-size: 100%;
+    max-block-size: 100%;
     opacity: 1;
     transition: opacity var(--transition-duration);
   }

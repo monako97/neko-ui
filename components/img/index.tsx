@@ -8,15 +8,21 @@ import {
   untrack,
 } from 'solid-js';
 import { Portal } from 'solid-js/web';
+import { css } from '@moneko/css';
 import { customElement } from 'solid-element';
 
 import type { CustomElement } from '..';
+import { clearAttribute } from '../basic-config';
 import { inline } from '../theme';
 
 import ImgLazy from './lazy';
 import { imgCss, style } from './style';
 
 export interface ImgProps extends JSX.HTMLAttributes<HTMLImageElement> {
+  /** 自定义样式表 */
+  css?: string;
+  /** 自定义类名 */
+  class?: string;
   /** 图片地址 */
   src?: string;
   /** 查看大图的地址, 默认使用 `src`
@@ -143,10 +149,14 @@ function Img(_: ImgProps) {
 
   return (
     <>
+      <Show when={props.css}>
+        <style textContent={css(props.css)} />
+      </Show>
       <ImgLazy
         src={props.src}
         alt={props.alt}
         lazy={props.lazy}
+        style={props.style}
         classList={{
           none: !!open(),
         }}
@@ -180,9 +190,11 @@ Img.registry = () => {
   customElement<ImgProps>(
     'n-img',
     {
+      class: void 0,
+      css: void 0,
+      alt: void 0,
       src: void 0,
       srcFull: void 0,
-      alt: void 0,
       open: null as boolean | null,
       maskClosable: void 0,
       escClosable: void 0,
@@ -192,6 +204,7 @@ Img.registry = () => {
       disabled: void 0,
     },
     (_, opt) => {
+      const el = opt.element;
       const props = mergeProps(
         {
           onOpenChange(open: boolean | null) {
@@ -208,6 +221,9 @@ Img.registry = () => {
         _,
       );
 
+      createEffect(() => {
+        clearAttribute(el, ['css']);
+      });
       return (
         <>
           <style textContent={inline} />
