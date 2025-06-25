@@ -1,5 +1,11 @@
 # Change log
 
+## Last
+
+### ✨ Features
+
+- 更新 GlassPanelProps 接口，添加对比度、阴影、灰度等属性支持 ([757b99b](https://github.com/monako97/neko-ui/commit/757b99bc8843b88d102e1ac81dbb10fb60366429))
+
 ## [v2.12.4](https://github.com/monako97/neko-ui/compare/v2.12.3...v2.12.4) (6-25-2025)
 
 ### ✨ Features
