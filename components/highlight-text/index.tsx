@@ -15,6 +15,19 @@ const style = css`
   }
 `;
 
+function execAll(str: string, regex: RegExp) {
+  let lastMatch: RegExpExecArray | null;
+  const matches: RegExpExecArray[] = [];
+
+  while ((lastMatch = regex.exec(str))) {
+    matches.push(lastMatch);
+
+    if (!regex.global) break;
+  }
+
+  return matches;
+}
+
 function highlight(
   box: HTMLDivElement,
   id: string,
@@ -23,9 +36,8 @@ function highlight(
   text: string,
 ) {
   const regex = new RegExp(regExp, flag);
-  const match = regex.exec(text);
 
-  if (match) {
+  execAll(text, regex).forEach((match) => {
     const range = new Range();
     let pos = 0;
 
@@ -35,14 +47,14 @@ function highlight(
       pos += match[0].length;
       range.setEnd(box.firstChild, pos);
     }
-    const highlight = CSS.highlights.get(id);
+    const cssHighlight = CSS.highlights.get(id);
 
-    if (highlight) {
-      highlight.add(range);
+    if (cssHighlight) {
+      cssHighlight.add(range);
     } else {
       CSS.highlights.set(id, new Highlight().add(range));
     }
-  }
+  });
 }
 
 export type HighlightTextJson =
@@ -65,6 +77,11 @@ export interface HighlightTextProps {
   /** 额外需要高亮的内容 */
   extra?: string;
   children?: string;
+  /** 高亮颜色
+   * @default '#5794ff'
+   * @since 2.12.2
+   **/
+  highlightColor?: string;
 }
 
 interface HighlightRule {
@@ -96,7 +113,7 @@ function HighlightText(props: HighlightTextProps) {
           const hitStr = String(isOne ? item : item.highlight);
 
           if (hitStr.length) {
-            highlight(box, id, hitStr, isOne ? props.flag : item.flag, text());
+            highlight(box, id, hitStr, isOne ? props.flag : (item.flag ?? props.flag), text());
           }
         }
       } else if (String(props.highlight).length) {
@@ -114,10 +131,10 @@ function HighlightText(props: HighlightTextProps) {
         pos += props.extra.length;
         range.setEnd(box.firstChild, pos);
       }
-      const highlight = CSS.highlights.get(id);
+      const cssHighlight = CSS.highlights.get(id);
 
-      if (highlight) {
-        highlight.add(range);
+      if (cssHighlight) {
+        cssHighlight.add(range);
       } else {
         CSS.highlights.set(id, new Highlight().add(range));
       }
@@ -128,7 +145,11 @@ function HighlightText(props: HighlightTextProps) {
     <>
       <style textContent={baseStyle()} />
       <style textContent={style} />
-      <style textContent={`::highlight(${id}) {color: var(--primary-color, #5794ff);}`} />
+      <style
+        textContent={`::highlight(${id}) {color: var(--primary-color, ${
+          props.highlightColor ?? '#5794ff'
+        });}`}
+      />
       <Show when={props.css}>
         <style textContent={css(props.css)} />
       </Show>
@@ -151,6 +172,7 @@ HighlightText.registry = () => {
       highlight: void 0,
       flag: void 0,
       extra: void 0,
+      highlightColor: void 0,
       children: void 0,
     },
     (_, opt) => {
@@ -164,7 +186,7 @@ HighlightText.registry = () => {
       );
 
       createEffect(() => {
-        clearAttribute(el, ['css', 'text', 'highlight', 'extra']);
+        clearAttribute(el, ['css', 'text', 'highlight', 'extra', 'flag']);
         el.replaceChildren();
       });
       return (

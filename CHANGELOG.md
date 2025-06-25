@@ -4,6 +4,7 @@
 
 ### 🐛 Bug Fixes
 
+- safari backdrop ([f344df4](https://github.com/monako97/neko-ui/commit/f344df43f253e5888031ba019f643191070ed5e7))
 - safari backdrop ([bc164e8](https://github.com/monako97/neko-ui/commit/bc164e87daf791aab5b26d7e8d8d94c04b6e20ea))
 - safari backdrop ([ffe2997](https://github.com/monako97/neko-ui/commit/ffe2997f770d47a31140b255549c998178c2df6f))
 
