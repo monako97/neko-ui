@@ -1,9 +1,10 @@
 # Change log
 
-## Last
+## [v2.12.4](https://github.com/monako97/neko-ui/compare/v2.12.3...v2.12.4) (6-25-2025)
 
 ### ✨ Features
 
+- 更新版本号至 2.12.4 并添加亮度属性到 CHANGELOG ([ea8564d](https://github.com/monako97/neko-ui/commit/ea8564d3209ac18d548d16d10c0c0ed713e7e67f))
 - 添加亮度属性到 GlassPanel 组件并更新样式 ([9f406b3](https://github.com/monako97/neko-ui/commit/9f406b3ccc4fd22dcc9898ff7072479e5aa0e903))
 
 ## [v2.12.3](https://github.com/monako97/neko-ui/compare/v2.12.2...v2.12.3) (6-25-2025)

@@ -28,15 +28,55 @@ export interface GlassPanelProps {
    */
   class?: string;
   /**
-   * 模糊值 (px)
+   * 模糊值
    * @default 16
    */
-  filterBlur?: number;
+  blur?: string;
   /**
    * 亮度
    * @since 2.12.3
    */
-  brightness?: number;
+  brightness?: string;
+  /**
+   * 对比度
+   * @since 2.12.5
+   */
+  contrast?: string;
+  /**
+   * 阴影
+   * @since 2.12.5
+   */
+  dropShadow?: string;
+  /**
+   * 灰度
+   * @since 2.12.5
+   */
+  grayscale?: string;
+  /**
+   * 色调旋转
+   * @since 2.12.5
+   */
+  hueRotate?: string;
+  /**
+   * 反转颜色
+   * @since 2.12.5
+   */
+  invert?: string;
+  /**
+   * 透明度
+   * @since 2.12.5
+   */
+  opacity?: string;
+  /**
+   * 饱和度
+   * @since 2.12.5
+   */
+  saturate?: string;
+  /**
+   * 复古效果
+   * @since 2.12.5
+   */
+  sepia?: string;
   filter?: Omit<JSX.FilterSVGAttributes<SVGFilterElement>, 'id'>;
   feTurbulence?: JSX.FeTurbulanceSVGAttributes<SVGFETurbulenceElement>;
   feDisplacementMap?: JSX.FeDisplacementMapSVGAttributes<SVGFEDisplacementMapElement>;
@@ -49,14 +89,30 @@ const GlassPanel = (_: GlassPanelProps) => {
     'filter',
     'feTurbulence',
     'feDisplacementMap',
-    'filterBlur',
+    'blur',
     'brightness',
+    'contrast',
+    'dropShadow',
+    'grayscale',
+    'hueRotate',
+    'invert',
+    'opacity',
+    'saturate',
+    'sepia',
   ]);
   const id = createUniqueId();
   const baseCss = createMemo(() => {
     const normal = cx(
       !!local.brightness && `brightness(${local.brightness})`,
-      !!local.filterBlur && `blur(${local.filterBlur}px)`,
+      !!local.blur && `blur(${local.blur})`,
+      !!local.contrast && `contrast(${local.contrast})`,
+      !!local.dropShadow && `drop-shadow(${local.dropShadow})`,
+      !!local.grayscale && `grayscale(${local.grayscale})`,
+      !!local.hueRotate && `hue-rotate(${local.hueRotate})`,
+      !!local.invert && `invert(${local.invert})`,
+      !!local.opacity && `opacity(${local.opacity})`,
+      !!local.saturate && `saturate(${local.saturate})`,
+      !!local.sepia && `sepia(${local.sepia})`,
     );
 
     return css`
@@ -116,7 +172,15 @@ GlassPanel.registry = () => {
       class: void 0,
       css: void 0,
       brightness: void 0,
-      filterBlur: void 0,
+      blur: void 0,
+      contrast: void 0,
+      dropShadow: void 0,
+      grayscale: void 0,
+      hueRotate: void 0,
+      invert: void 0,
+      opacity: void 0,
+      saturate: void 0,
+      sepia: void 0,
       filter: void 0,
       feTurbulence: void 0,
       feDisplacementMap: void 0,
@@ -128,7 +192,15 @@ GlassPanel.registry = () => {
         clearAttribute(el, [
           'css',
           'brightness',
-          'filterBlur',
+          'blur',
+          'contrast',
+          'dropShadow',
+          'grayscale',
+          'hueRotate',
+          'invert',
+          'opacity',
+          'saturate',
+          'sepia',
           'filter',
           'feTurbulence',
           'feDisplacementMap',
