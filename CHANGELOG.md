@@ -1,5 +1,11 @@
 # Change log
 
+## Last
+
+### ✨ Features
+
+- highlightColor ([8da0115](https://github.com/monako97/neko-ui/commit/8da0115d97c2af1d63bcd58c44a9ff020a0e04be))
+
 ## [v2.12.2](https://github.com/monako97/neko-ui/compare/v2.12.1...v2.12.2) (6-25-2025)
 
 ### ⚙️ Continuous Integrations
