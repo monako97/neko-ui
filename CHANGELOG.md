@@ -2,6 +2,10 @@
 
 ## Last
 
+### ✨ Features
+
+- highlightColor ([32ff6c6](https://github.com/monako97/neko-ui/commit/32ff6c6f696976c4cd78fa31eedda5af7f8f045a))
+
 ### 🐛 Bug Fixes
 
 - safari backdrop ([f344df4](https://github.com/monako97/neko-ui/commit/f344df43f253e5888031ba019f643191070ed5e7))
