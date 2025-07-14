@@ -1,5 +1,11 @@
 # Change log
 
+## [v2.13.0](https://github.com/monako97/neko-ui/compare/v2.12.5...v2.13.0) (7-14-2025)
+
+### ✨ Features
+
+- 添加 Marquee 组件及其文档，更新版本号至 2.13.0 ([5fdf910](https://github.com/monako97/neko-ui/commit/5fdf91052e47ce8543786569ff19da485b8299da))
+
 ## [v2.12.5](https://github.com/monako97/neko-ui/compare/v2.12.4...v2.12.5) (6-25-2025)
 
 ### ✨ Features

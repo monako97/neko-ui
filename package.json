@@ -1,6 +1,6 @@
 {
   "name": "neko-ui",
-  "version": "2.13.0",
+  "version": "2.13.1",
   "description": "WebComponents UI Libraries",
   "main": "lib/index.js",
   "module": "es/index.js",
@@ -15,6 +15,7 @@
     ]
   },
   "scripts": {
+    "pin": "mo pin",
     "build": "mo build library solid",
     "changelog": "mo changelog CHANGELOG.md && git add CHANGELOG.md",
     "lint:commit": "pure-lint mode=commit && npm run changelog",
@@ -61,10 +62,10 @@
     "ui libraries"
   ],
   "devDependencies": {
-    "@moneko/core": "3.47.7",
+    "@moneko/core": "3.48.1",
     "@moneko/solid": "1.11.1",
     "@solidjs/testing-library": "0.8.10",
-    "@swc/jest": "0.2.38",
+    "@swc/jest": "0.2.39",
     "@testing-library/jest-dom": "6.6.3",
     "@types/jest": "29.5.14",
     "@types/prismjs": "1.26.5",

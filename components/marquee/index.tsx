@@ -39,7 +39,7 @@ const Marquee = (_: MarqueeProps) => {
 
   createEffect(() => {
     if (el) {
-      const item = el.querySelector('.item') as HTMLDivElement;
+      const item = el.querySelector('.n-marquee-item') as HTMLDivElement;
 
       setCount(Math.ceil(el.offsetWidth / item.offsetWidth) + 1);
     }
@@ -53,18 +53,19 @@ const Marquee = (_: MarqueeProps) => {
       </Show>
       <div
         ref={el}
-        class={cx('marquee', props.hoverPause && 'hover-pause')}
+        class={cx('n-marquee', props.hoverPause && 'n-marquee-hover-pause')}
         style={{ '--speed': `${props.speed}s` }}
       >
         <For each={Array.from({ length: count() })}>
           {() => (
-            <div class="item">
+            <div class="n-marquee-item">
               {Array.isArray(props.children) ? (
                 <For each={props.children}>
                   {(item) => {
-                    return isFunction((item as HTMLElement).cloneNode)
-                      ? (item as HTMLElement).cloneNode(true)
-                      : item;
+                    const node = item as HTMLElement;
+                    const next = isFunction(node.cloneNode) ? node.cloneNode(true) : node;
+
+                    return next;
                   }}
                 </For>
               ) : (

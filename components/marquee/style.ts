@@ -1,7 +1,7 @@
 import { css } from '@moneko/css';
 
 export const style = css`
-  .marquee {
+  .n-marquee {
     --speed: 15s;
 
     position: relative;
@@ -22,6 +22,7 @@ export const style = css`
       max-inline-size: 25%;
       block-size: 100%;
       background-image: linear-gradient(to right, var(--component-bg), transparent);
+      pointer-events: none;
     }
 
     &::after {
@@ -30,7 +31,7 @@ export const style = css`
     }
   }
 
-  .item {
+  .n-marquee-item {
     animation-duration: var(--speed);
     animation-iteration-count: infinite;
     animation-name: marquee-content;
@@ -38,8 +39,8 @@ export const style = css`
     padding: 5px 15px;
   }
 
-  .hover-pause {
-    &:hover .item {
+  .n-marquee-hover-pause {
+    &:hover .n-marquee-item {
       animation-play-state: paused;
     }
   }
