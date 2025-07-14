@@ -21,6 +21,10 @@ export interface MarqueeProps {
    * @default 15
    */
   speed?: number;
+  /** 是否使用遮罩
+   * @default true
+   */
+  mask?: boolean;
   children?: JSXElement | JSXElement[];
 }
 
@@ -32,6 +36,7 @@ const Marquee = (_: MarqueeProps) => {
     {
       speed: 15,
       hoverPause: true,
+      mask: true,
     },
     _,
   );
@@ -53,7 +58,11 @@ const Marquee = (_: MarqueeProps) => {
       </Show>
       <div
         ref={el}
-        class={cx('n-marquee', props.hoverPause && 'n-marquee-hover-pause')}
+        class={cx(
+          'n-marquee',
+          props.mask && 'n-marquee-mask',
+          props.hoverPause && 'n-marquee-hover-pause',
+        )}
         style={{ '--speed': `${props.speed}s` }}
       >
         <For each={Array.from({ length: count() })}>
@@ -89,6 +98,7 @@ Marquee.registry = () => {
       css: void 0,
       speed: 15,
       hoverPause: true,
+      mask: true,
     },
     (_, opt) => {
       const el = opt.element;

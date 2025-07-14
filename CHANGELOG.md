@@ -1,5 +1,11 @@
 # Change log
 
+## [v2.13.1](https://github.com/monako97/neko-ui/compare/v2.13.0...v2.13.1) (7-14-2025)
+
+### ✨ Features
+
+- 更新 Marquee 组件以支持无阴影 DOM，移除样式中的 margin，并更新依赖版本 ([2042b01](https://github.com/monako97/neko-ui/commit/2042b01ec547eecfe3b3d7b0c05b8346269bbe07))
+
 ## [v2.13.0](https://github.com/monako97/neko-ui/compare/v2.12.5...v2.13.0) (7-14-2025)
 
 ### ✨ Features
