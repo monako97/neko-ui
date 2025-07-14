@@ -1,9 +1,10 @@
 # Change log
 
-## Last
+## [v2.12.5](https://github.com/monako97/neko-ui/compare/v2.12.4...v2.12.5) (6-25-2025)
 
 ### ✨ Features
 
+- 更新版本号至 2.12.5，并在 CHANGELOG 中添加新特性 ([ee786c8](https://github.com/monako97/neko-ui/commit/ee786c82c438ca4b6019e3099249611ea477c6e6))
 - 更新 GlassPanelProps 接口，添加对比度、阴影、灰度等属性支持 ([757b99b](https://github.com/monako97/neko-ui/commit/757b99bc8843b88d102e1ac81dbb10fb60366429))
 
 ## [v2.12.4](https://github.com/monako97/neko-ui/compare/v2.12.3...v2.12.4) (6-25-2025)

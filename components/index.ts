@@ -61,6 +61,7 @@ export {
   type InputNumberElement,
   type InputNumberProps,
 } from './input-number';
+export { default as Marquee, type MarqueeElement, type MarqueeProps } from './marquee';
 export { default as Md, type MdElement, type MdProps } from './md';
 export { default as mdStyle } from './md-style';
 export {
@@ -155,6 +156,7 @@ import type {
   ImgElement,
   InputElement,
   InputNumberElement,
+  MarqueeElement,
   MdElement,
   MenuElement,
   MenuMultipleElement,
@@ -288,6 +290,11 @@ interface CustomElementTags {
    * @since 2.12.0
    */
   'n-glass-panel': GlassPanelElement;
+  /**
+   * 跑马灯
+   * @since 2.13.0
+   */
+  'n-marquee': MarqueeElement;
 }
 type IntrinsicNekoElement = Transform<CustomElementTags>;
 

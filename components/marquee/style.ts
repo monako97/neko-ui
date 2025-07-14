@@ -1,0 +1,56 @@
+import { css } from '@moneko/css';
+
+export const style = css`
+  .marquee {
+    --speed: 15s;
+
+    position: relative;
+    display: flex;
+    overflow: hidden;
+    margin: auto;
+    white-space: nowrap;
+    inline-size: 100%;
+
+    &::before,
+    &::after {
+      content: '';
+      position: absolute;
+      z-index: 1000;
+      inset-block-start: 0;
+      inset-inline-start: 0;
+      inline-size: 15rem;
+      max-inline-size: 25%;
+      block-size: 100%;
+      background-image: linear-gradient(to right, var(--component-bg), transparent);
+    }
+
+    &::after {
+      inset-inline: auto 0;
+      background-image: linear-gradient(to left, var(--component-bg), transparent);
+    }
+  }
+
+  .item {
+    animation-duration: var(--speed);
+    animation-iteration-count: infinite;
+    animation-name: marquee-content;
+    animation-timing-function: linear;
+    padding: 5px 15px;
+  }
+
+  .hover-pause {
+    &:hover .item {
+      animation-play-state: paused;
+    }
+  }
+
+  @keyframes marquee-content {
+    from {
+      transform: translateX(0%);
+    }
+
+    to {
+      transform: translateX(-100%);
+    }
+  }
+`;
