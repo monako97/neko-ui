@@ -32,7 +32,6 @@
 [![GitHub Actions CI](https://github.com/monako97/neko-ui/actions/workflows/cd.yml/badge.svg?style=flat-square)](https://github.com/monako97/neko-ui/actions/workflows/cd.yml)
 [![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fmonako97%2Fneko-ui.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2Fmonako97%2Fneko-ui?ref=badge_shield)
 
-
 [![neko-ui][install-tag]][npm-url]
 
 ## 安装
@@ -55,10 +54,16 @@ pnpm add neko-ui -S
 
 ```html
 <!-- 引入 CDN 资源 -->
-<script src="https://cdn.jsdelivr.net/npm/neko-ui/umd/index.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/neko-ui/lib/index.js"></script>
+<script>
+  const { Input } = NekoUI;
+
+  // 在使用前注册一次就行
+  NekoUI.registry(Input);
+</script>
 <!-- 使用 -->
 <body>
-  <n-button>按钮</n-button>
+  <n-input></n-input>
 </body>
 ```
 
@@ -66,14 +71,14 @@ pnpm add neko-ui -S
 
 `neko-ui` 默认支持基于 ES modules 的 tree shaking，直接引入 `import { theme } from 'neko-ui';` 就会有按需加载的效果。
 
-### 手动方式
+### 手动注册组件
 
 ```jsx
 // 按需引入
-import 'neko-ui/es/button';
-import 'neko-ui/es/date-picker';
-// 全量引入
-// import 'neko-ui';
+import { Button, DatePicker, registry } from 'neko-ui';
+
+// 注册组件
+registry(Button, DatePicker);
 
 // 使用
 function Demo() {

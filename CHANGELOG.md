@@ -1,5 +1,11 @@
 # Change log
 
+## Last
+
+### 🐛 Bug Fixes
+
+- loop marquee animation ([156808c](https://github.com/monako97/neko-ui/commit/156808ced6d9b856cbf1eb49c79be5adb8a9f73b))
+
 ## [v2.13.3](https://github.com/monako97/neko-ui/compare/v2.13.2...v2.13.3) (7-15-2025)
 
 ### ✨ Features
