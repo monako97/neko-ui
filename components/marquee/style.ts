@@ -10,39 +10,27 @@ export const style = css`
     margin: auto;
     white-space: nowrap;
     inline-size: 100%;
+    gap: 48px;
 
     &.n-marquee-mask {
-      &::before,
-      &::after {
-        content: '';
-        position: absolute;
-        z-index: 1000;
-        inset-block-start: 0;
-        inset-inline-start: 0;
-        inline-size: 15rem;
-        max-inline-size: 25%;
-        block-size: 100%;
-        background-image: linear-gradient(to right, var(--component-bg), transparent);
-        pointer-events: none;
-      }
-
-      &::after {
-        inset-inline: auto 0;
-        background-image: linear-gradient(to left, var(--component-bg), transparent);
-      }
+      mask-image: linear-gradient(
+        to right,
+        transparent 0,
+        var(--component-bg) 25%,
+        var(--component-bg) 75%,
+        transparent 100%
+      );
+      mask-composite: intersect;
     }
   }
 
   .n-marquee-item {
     display: flex;
     align-items: center;
-    line-height: 1;
-    gap: 4px;
     animation-duration: var(--speed);
     animation-iteration-count: infinite;
     animation-name: marquee-content;
     animation-timing-function: linear;
-    padding: 0 24px;
   }
 
   .n-marquee-hover-pause {
@@ -53,11 +41,11 @@ export const style = css`
 
   @keyframes marquee-content {
     from {
-      transform: translateX(0%);
+      transform: translate3d(0%, 0, 0);
     }
 
     to {
-      transform: translateX(-100%);
+      transform: translate3d(-100%, 0, 0);
     }
   }
 `;

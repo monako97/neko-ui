@@ -104,7 +104,7 @@ const mdStyle = css`
     padding: 16px;
     max-inline-size: 200px;
     block-size: fit-content;
-    max-block-size: calc(100vb - 132px);
+    max-block-size: calc(100vh - 132px);
     box-sizing: border-box;
     transition-duration: var(--transition-duration);
     transition-timing-function: var(--transition-timing-function);

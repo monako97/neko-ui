@@ -7,7 +7,7 @@ html > body {
   font-size: var(--font-size);
   font-family: var(--font-family);
   color: var(--text-color, rgb(0 0 0 / 65%));
-  inline-size: 100vi;
+  inline-size: 100vw;
   transition-duration: 0.3s;
   transition-property: background-color, color;
   transition-timing-function: cubic-bezier(0.94, -0.1, 0.1, 1.2);
@@ -28,7 +28,7 @@ html > body {
 
 n-provider {
   display: flex;
-  inline-size: 100vi;
+  inline-size: 100vw;
 }
 
 .site-doc-main {
@@ -39,7 +39,7 @@ n-provider {
 .site-page-view {
   box-sizing: border-box;
   margin: 16px auto 0;
-  min-block-size: calc(100vb - 132px);
+  min-block-size: calc(100vh - 132px);
 
   n-md::part(toc) {
     inset-block-start: 16px;
@@ -55,7 +55,7 @@ html > body::before {
   inset-block-start: 0;
   z-index: 1;
   display: block;
-  inline-size: 100vi;
+  inline-size: 100vw;
   block-size: 100px;
   background: linear-gradient(
     124deg,
@@ -88,8 +88,8 @@ html > body::before {
   inset-block-start: 50%;
   inset-inline-start: 50%;
   z-index: -1;
-  inline-size: 100vi;
-  block-size: 100vb;
+  inline-size: 100vw;
+  block-size: 100vh;
   background: linear-gradient(#673ab7, transparent), linear-gradient(90deg, #ff5722, transparent),
     linear-gradient(-90deg, #8bc34a, transparent);
   transform: translate(-50%, -50%);

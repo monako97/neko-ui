@@ -49,7 +49,7 @@ export const style = css`
 
   .modal-body {
     overflow: auto;
-    max-block-size: calc(100vb - 150px);
+    max-block-size: calc(100vh - 150px);
 
     &::-webkit-scrollbar {
       inline-size: 5px;

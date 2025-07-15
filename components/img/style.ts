@@ -126,8 +126,8 @@ export const style = css`
     }
 
     100% {
-      inline-size: 100vi;
-      block-size: 100vb;
+      inline-size: 100vw;
+      block-size: 100vh;
       inset-block-start: 0;
       inset-inline-start: 0;
     }
@@ -135,8 +135,8 @@ export const style = css`
 
   @keyframes photo-out {
     from {
-      inline-size: 100vi;
-      block-size: 100vb;
+      inline-size: 100vw;
+      block-size: 100vh;
       inset-block-start: 0;
       inset-inline-start: 0;
     }

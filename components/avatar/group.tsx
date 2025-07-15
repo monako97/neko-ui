@@ -15,8 +15,8 @@ const moreCss = css`
     align-items: center;
     overflow-y: auto;
     padding: 8px;
-    max-inline-size: 60vi;
-    max-block-size: 80vb;
+    max-inline-size: 60vw;
+    max-block-size: 80vh;
     gap: 8px;
     flex-wrap: wrap;
 
