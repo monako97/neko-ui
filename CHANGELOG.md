@@ -1,5 +1,17 @@
 # Change log
 
+## [v2.13.3](https://github.com/monako97/neko-ui/compare/v2.13.2...v2.13.3) (7-15-2025)
+
+### ✨ Features
+
+- 更新样式文件以使用视口单位替代逻辑单位，优化响应式布局 ([2156028](https://github.com/monako97/neko-ui/commit/2156028e0df9ab38ba4c8586520951e8fc8931bf))
+
+## [v2.13.2](https://github.com/monako97/neko-ui/compare/v2.13.1...v2.13.2) (7-14-2025)
+
+### ✨ Features
+
+- 更新 Marquee 组件以支持遮罩功能，调整样式并更新版本号至 2.13.2 ([9355dcc](https://github.com/monako97/neko-ui/commit/9355dcc6d89fd5c0b12412710261de21d7007225))
+
 ## [v2.13.1](https://github.com/monako97/neko-ui/compare/v2.13.0...v2.13.1) (7-14-2025)
 
 ### ✨ Features

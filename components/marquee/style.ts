@@ -10,7 +10,6 @@ export const style = css`
     margin: auto;
     white-space: nowrap;
     inline-size: 100%;
-    gap: 48px;
 
     &.n-marquee-mask {
       mask-image: linear-gradient(
@@ -31,6 +30,7 @@ export const style = css`
     animation-iteration-count: infinite;
     animation-name: marquee-content;
     animation-timing-function: linear;
+    padding: 0 24px;
   }
 
   .n-marquee-hover-pause {
