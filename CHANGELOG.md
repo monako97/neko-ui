@@ -2,6 +2,20 @@
 
 ## Last
 
+## [v2.13.6](https://github.com/monako97/neko-ui/compare/v2.13.5...v2.13.6) (7-31-2025)
+
+## [v2.13.5](https://github.com/monako97/neko-ui/compare/v2.13.4...v2.13.5) (7-28-2025)
+
+### 🐛 Bug Fixes
+
+- fullscreen ([0413835](https://github.com/monako97/neko-ui/commit/04138358a8719e6f75315330a73e3ee750b937c8))
+
+### 📚 Documentation
+
+- update ([bdcf849](https://github.com/monako97/neko-ui/commit/bdcf849c7270a1f9ee39022ee58d2733a3301ed4))
+
+## [v2.13.4](https://github.com/monako97/neko-ui/compare/v2.13.3...v2.13.4) (7-16-2025)
+
 ### 🐛 Bug Fixes
 
 - loop marquee animation ([156808c](https://github.com/monako97/neko-ui/commit/156808ced6d9b856cbf1eb49c79be5adb8a9f73b))
