@@ -1,6 +1,6 @@
 {
   "name": "neko-ui",
-  "version": "2.13.6",
+  "version": "2.13.7",
   "description": "WebComponents UI Libraries",
   "main": "lib/index.js",
   "module": "es/index.js",
@@ -62,7 +62,7 @@
     "ui libraries"
   ],
   "devDependencies": {
-    "@moneko/core": "3.48.6",
+    "@moneko/core": "3.50.4",
     "@moneko/solid": "1.11.1",
     "@solidjs/testing-library": "0.8.10",
     "@swc/jest": "0.2.39",
@@ -78,10 +78,10 @@
     "shadow-dom-testing-library": "1.12.0"
   },
   "dependencies": {
-    "@moneko/common": "1.9.0",
+    "@moneko/common": "1.10.0",
     "@moneko/css": "1.2.0",
     "custom-element-type": "1.0.7",
-    "dayjs": "1.11.13",
+    "dayjs": "1.11.18",
     "prismjs": "1.30.0",
     "solid-element": "1.8.1",
     "solid-js": "1.8.23"
