@@ -316,7 +316,15 @@ declare module 'react' {
   // eslint-disable-next-line @typescript-eslint/no-empty-object-type
   interface HTMLElementTagNameMap extends IntrinsicNekoElement {}
 }
-
+declare global {
+  // eslint-disable-next-line @typescript-eslint/no-namespace
+  export namespace JSX {
+    // eslint-disable-next-line @typescript-eslint/no-empty-object-type
+    interface IntrinsicElements extends IntrinsicNekoElement {}
+    // eslint-disable-next-line @typescript-eslint/no-empty-object-type
+    interface HTMLElementTagNameMap extends IntrinsicNekoElement {}
+  }
+}
 export interface ComponentOptions<T> {
   element: T & ICustomElement;
 }

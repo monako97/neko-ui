@@ -1,10 +1,11 @@
 {
   "name": "neko-ui",
-  "version": "2.13.7",
+  "version": "2.13.8",
   "description": "WebComponents UI Libraries",
   "main": "lib/index.js",
   "module": "es/index.js",
   "unpkg": "umd/index.js",
+  "types": "es/index.d.ts",
   "exports": {
     ".": {
       "require": "./lib/index.js",
@@ -62,7 +63,7 @@
     "ui libraries"
   ],
   "devDependencies": {
-    "@moneko/core": "3.50.5",
+    "@moneko/core": "3.52.2",
     "@moneko/solid": "1.11.2",
     "@solidjs/testing-library": "0.8.10",
     "@swc/jest": "0.2.39",

@@ -1,9 +1,10 @@
 # Change log
 
-## Last
+## [v2.13.7](https://github.com/monako97/neko-ui/compare/v2.13.6...v2.13.7) (8-31-2025)
 
 ### 🐛 Bug Fixes
 
+- sideEffects ([228bdac](https://github.com/monako97/neko-ui/commit/228bdac2b40b13484fe868f6347a633ec63e64c1))
 - sideEffects ([7fd7100](https://github.com/monako97/neko-ui/commit/7fd71009b35d93809d0d9ce5dbd04434ebb755fb))
 
 ## [v2.13.6](https://github.com/monako97/neko-ui/compare/v2.13.5...v2.13.6) (7-31-2025)
