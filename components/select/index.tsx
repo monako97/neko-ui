@@ -304,6 +304,7 @@ export type SelectMultipleElement = CustomElement<SelectMultipleProps, 'onChange
 
 Select.registry = () => {
   Tag.registry();
+  Dropdown.registry();
   customElement<SelectProps>(
     'n-select',
     {

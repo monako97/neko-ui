@@ -141,6 +141,7 @@ export const defaultProps = {
 
 Dropdown.registry = () => {
   Menu.registry();
+  Popover.registry();
   customElement<DropdownProps>(
     'n-dropdown',
     {
