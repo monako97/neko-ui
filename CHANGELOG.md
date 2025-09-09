@@ -1,5 +1,17 @@
 # Change log
 
+## Last
+
+### 🐛 Bug Fixes
+
+- corn z level ([af1198d](https://github.com/monako97/neko-ui/commit/af1198d311eaf443f638429c56ac176c88c84b18))
+
+## [v2.13.8](https://github.com/monako97/neko-ui/compare/v2.13.7...v2.13.8) (9-5-2025)
+
+### ✨ Features
+
+- jsx types ([fbe5a46](https://github.com/monako97/neko-ui/commit/fbe5a46e5dedc7034e87b8d33e18f650e5991407))
+
 ## [v2.13.7](https://github.com/monako97/neko-ui/compare/v2.13.6...v2.13.7) (8-31-2025)
 
 ### 🐛 Bug Fixes

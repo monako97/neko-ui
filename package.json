@@ -70,10 +70,8 @@
     "@testing-library/jest-dom": "6.6.3",
     "@types/jest": "29.5.14",
     "@types/prismjs": "1.26.5",
-    "husky": "9.1.7",
     "jest": "29.7.0",
     "jest-environment-jsdom": "29.7.0",
-    "marked-completed": "1.2.14",
     "n-code-live": "2.1.0",
     "n-katex": "1.0.8",
     "shadow-dom-testing-library": "1.12.0"
@@ -81,8 +79,10 @@
   "dependencies": {
     "@moneko/common": "1.10.0",
     "@moneko/css": "1.2.0",
+    "component-register": "0.8.7",
     "custom-element-type": "1.0.7",
     "dayjs": "1.11.18",
+    "marked-completed": "1.2.14",
     "prismjs": "1.30.0",
     "solid-element": "1.8.1",
     "solid-js": "1.8.23"

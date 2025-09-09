@@ -8,7 +8,6 @@ import theme, { ColorScheme } from '../theme';
 function Provider(props: ProviderProps) {
   const { baseStyle, scheme, setScheme } = theme;
 
-  noShadowDOM();
   createEffect(() => {
     props.onScheme?.(scheme());
   });
@@ -38,6 +37,7 @@ export type ProviderElement = CustomElement<ProviderProps, 'onScheme'>;
 
 Provider.registry = () => {
   customElement<ProviderProps>('n-provider', (_, opt) => {
+    noShadowDOM();
     const el = opt.element;
     const props = mergeProps(
       {
