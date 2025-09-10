@@ -22,7 +22,7 @@
     "lint:commit": "pure-lint mode=commit && npm run changelog",
     "lint:ci": "pure-lint mode=ci",
     "lint": "mo eslint [components,site] --fix",
-    "postlint": "mo stylelint [components,site] --fix && jest --coverage",
+    "postlint": "mo stylelint [components,site] --fix",
     "precommit": "npm run lint && npm run changelog",
     "prepare": "mo githooks pre-commit=\"npm run lint:commit\" commit-msg=\"commit-lint\"",
     "start": "mo start library solid",

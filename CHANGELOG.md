@@ -2,6 +2,10 @@
 
 ## Last
 
+### ✨ Features
+
+- solid 1.9.9 ([19dbfb0](https://github.com/monako97/neko-ui/commit/19dbfb0718134049131e60e8ce2839ce1d751be0))
+
 ### 📚 Documentation
 
 - update ([e83e722](https://github.com/monako97/neko-ui/commit/e83e72253ebd7c2204a486b214d5ac4146f27177))
