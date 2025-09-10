@@ -3,7 +3,9 @@ import Period from './period';
 import Some from './some';
 import { numCss, selectCss, selectPortalCss } from './style';
 
-function Year(props: Required<Omit<CronItemProps<'year'>, 'options'>>) {
+function Year(
+  props: Required<Omit<CronItemProps<'year'>, 'options' | 'disabled'>> & { disabled?: boolean },
+) {
   const fullYear = new Date().getFullYear();
   const years: number[] = [];
 
@@ -21,7 +23,7 @@ function Year(props: Required<Omit<CronItemProps<'year'>, 'options'>>) {
           start={props.state.start}
           end={props.state.end}
           options={years}
-          disabled={props.state.type !== 'period'}
+          disabled={props.disabled || props.state.type !== 'period'}
           onChange={props.onChange}
           validate={(_, v) => (_ === 'start' ? v >= fullYear : v >= fullYear + 1)}
           label={['周期从', '到', '年']}
@@ -44,7 +46,7 @@ function Year(props: Required<Omit<CronItemProps<'year'>, 'options'>>) {
               }
             }}
             options={years}
-            disabled={props.state.type !== 'beginInterval'}
+            disabled={props.disabled || props.state.type !== 'beginInterval'}
             css={selectCss}
             popup-css={selectPortalCss}
             dropdown-match-select-width={false}
@@ -61,7 +63,7 @@ function Year(props: Required<Omit<CronItemProps<'year'>, 'options'>>) {
                 props.onChange('beginEvery', v);
               }
             }}
-            disabled={props.state.type !== 'beginInterval'}
+            disabled={props.disabled || props.state.type !== 'beginInterval'}
             min={0}
           />
           年触发1次
@@ -77,12 +79,20 @@ function Year(props: Required<Omit<CronItemProps<'year'>, 'options'>>) {
           options={years}
           type={props.state.type}
           onChange={props.onChange}
+          disabled={props.disabled}
         />
       ),
     },
   ];
 
-  return <Item options={options} onChange={props.onChange} state={props.state} />;
+  return (
+    <Item
+      options={options}
+      onChange={props.onChange}
+      state={props.state}
+      disabled={props.disabled}
+    />
+  );
 }
 
 export default Year;

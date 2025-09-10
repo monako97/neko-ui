@@ -1,3 +1,4 @@
+import { createMemo } from 'solid-js';
 import type { RadioOption } from 'neko-ui';
 
 import type { ActiveTab, CronType } from '.';
@@ -9,6 +10,7 @@ export interface CronItemProps<T extends ActiveTab = 'second'> {
     value: CronType[T][V],
   ): void;
   options: RadioOption[];
+  disabled?: boolean;
 }
 
 function Item<T extends ActiveTab>(props: CronItemProps<T>) {
@@ -16,13 +18,15 @@ function Item<T extends ActiveTab>(props: CronItemProps<T>) {
     props.onChange?.('type', e.detail as CronType[T]['type']);
   }
 
+  const options = createMemo(() => {
+    if (props.disabled) {
+      return props.options.filter((o) => o.value === props.state.type);
+    }
+    return props.options;
+  });
+
   return (
-    <n-radio
-      layout="vertical"
-      value={props.state.type}
-      options={props.options}
-      onChange={handleType}
-    />
+    <n-radio layout="vertical" value={props.state.type} options={options()} onChange={handleType} />
   );
 }
 

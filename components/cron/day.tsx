@@ -6,7 +6,8 @@ import Period from './period';
 import Some from './some';
 import { selectCss, selectPortalCss } from './style';
 
-function Day(props: Required<Omit<CronItemProps<'day'>, 'options'>>) {
+function Day(props: Required<Omit<CronItemProps<'day'>, 'options' | 'disabled'>> & { disabled?: boolean },
+) {
   const days: BaseOption[] = [];
   const daysBeginEvery: number[] = [];
 
@@ -28,7 +29,7 @@ function Day(props: Required<Omit<CronItemProps<'day'>, 'options'>>) {
           start={props.state.start}
           end={props.state.end}
           options={days}
-          disabled={props.state.type !== 'period'}
+          disabled={props.disabled || props.state.type !== 'period'}
           onChange={props.onChange}
           validate={(_, v) => v >= 1 && v < 31}
           label={['周期从', '到', '日']}
@@ -44,7 +45,7 @@ function Day(props: Required<Omit<CronItemProps<'day'>, 'options'>>) {
           onChange={props.onChange}
           beginOption={days}
           beginEveryOption={daysBeginEvery}
-          disabled={props.state.type !== 'beginInterval'}
+          disabled={props.disabled || props.state.type !== 'beginInterval'}
           validate={(_, v) => v >= 1 && v <= 31}
           label={['从', '日开始, 每', '天执行一次']}
         />
@@ -66,7 +67,7 @@ function Day(props: Required<Omit<CronItemProps<'day'>, 'options'>>) {
               }
             }}
             options={days}
-            disabled={props.state.type !== 'closeWorkDay'}
+            disabled={props.disabled || props.state.type !== 'closeWorkDay'}
             css={selectCss}
             popup-css={selectPortalCss}
             dropdown-match-select-width={false}
@@ -86,12 +87,20 @@ function Day(props: Required<Omit<CronItemProps<'day'>, 'options'>>) {
           options={days}
           type={props.state.type}
           onChange={props.onChange}
+          disabled={props.disabled}
         />
       ),
     },
   ];
 
-  return <Item state={props.state} options={options} onChange={props.onChange} />;
+  return (
+    <Item
+      state={props.state}
+      options={options}
+      onChange={props.onChange}
+      disabled={props.disabled}
+    />
+  );
 }
 
 export default Day;

@@ -4,6 +4,7 @@
 
 ### ✨ Features
 
+- solid 1.9.9 ([dc3c471](https://github.com/monako97/neko-ui/commit/dc3c4713bec2ea19005ea900475187862a334e02))
 - solid 1.9.9 ([19dbfb0](https://github.com/monako97/neko-ui/commit/19dbfb0718134049131e60e8ce2839ce1d751be0))
 
 ### 📚 Documentation
@@ -14,10 +15,22 @@
 
 - popover zlevel ([aa60d40](https://github.com/monako97/neko-ui/commit/aa60d40c8470734a86432c8c339be3dde200b45f))
 
-## [v2.13.9-beta.0](https://github.com/monako97/neko-ui/compare/v2.13.8...v2.13.9-beta.0) (9-9-2025)
+## [v2.13.9-beta.0](https://github.com/monako97/neko-ui/compare/v2.13.9...v2.13.9-beta.0) (9-9-2025)
+
+## [v2.13.9](https://github.com/monako97/neko-ui/compare/v2.13.8...v2.13.9) (9-10-2025)
+
+### ✨ Features
+
+- solid 1.9.9 ([dc3c471](https://github.com/monako97/neko-ui/commit/dc3c4713bec2ea19005ea900475187862a334e02))
+- solid 1.9.9 ([19dbfb0](https://github.com/monako97/neko-ui/commit/19dbfb0718134049131e60e8ce2839ce1d751be0))
+
+### 📚 Documentation
+
+- update ([e83e722](https://github.com/monako97/neko-ui/commit/e83e72253ebd7c2204a486b214d5ac4146f27177))
 
 ### 🐛 Bug Fixes
 
+- popover zlevel ([aa60d40](https://github.com/monako97/neko-ui/commit/aa60d40c8470734a86432c8c339be3dde200b45f))
 - popover zlevel ([93c9612](https://github.com/monako97/neko-ui/commit/93c9612d6006fa09d855fd37ffb39a794b5b8e79))
 - corn z level ([af1198d](https://github.com/monako97/neko-ui/commit/af1198d311eaf443f638429c56ac176c88c84b18))
 

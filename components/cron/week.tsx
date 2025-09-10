@@ -4,7 +4,9 @@ import Period from './period';
 import Some from './some';
 import { selectCss, selectPortalCss } from './style';
 
-function Week(props: Required<Omit<CronItemProps<'week'>, 'options'>>) {
+function Week(
+  props: Required<Omit<CronItemProps<'week'>, 'options' | 'disabled'>> & { disabled?: boolean },
+) {
   const weeks = [
     {
       label: '星期日',
@@ -52,7 +54,7 @@ function Week(props: Required<Omit<CronItemProps<'week'>, 'options'>>) {
           start={props.state.start}
           end={props.state.end}
           options={weeks}
-          disabled={props.state.type !== 'period'}
+          disabled={props.disabled || props.state.type !== 'period'}
           onChange={props.onChange}
           validate={(_, v) => (_ === 'start' ? v >= 1 && v < 7 : v > 1 && v <= 7)}
           label={['周期从', '到', '日']}
@@ -68,7 +70,7 @@ function Week(props: Required<Omit<CronItemProps<'week'>, 'options'>>) {
           onChange={props.onChange}
           beginOption={beginEvery}
           beginEveryOption={weeks}
-          disabled={props.state.type !== 'beginInterval'}
+          disabled={props.disabled || props.state.type !== 'beginInterval'}
           validate={(_, v) => (_ === 'begin' ? v >= 1 && v <= 4 : true)}
           label={['第', '的', null]}
         />
@@ -85,7 +87,7 @@ function Week(props: Required<Omit<CronItemProps<'week'>, 'options'>>) {
               props.onChange('last', Number(e.detail[0]));
             }}
             options={weeks}
-            disabled={props.state.type !== 'last'}
+            disabled={props.disabled || props.state.type !== 'last'}
             css={selectCss}
             popup-css={selectPortalCss}
             dropdown-match-select-width={false}
@@ -103,12 +105,20 @@ function Week(props: Required<Omit<CronItemProps<'week'>, 'options'>>) {
           options={weeks}
           type={props.state.type}
           onChange={props.onChange}
+          disabled={props.disabled}
         />
       ),
     },
   ];
 
-  return <Item options={options} onChange={props.onChange} state={props.state} />;
+  return (
+    <Item
+      options={options}
+      onChange={props.onChange}
+      state={props.state}
+      disabled={props.disabled}
+    />
+  );
 }
 
 export default Week;

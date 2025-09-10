@@ -5,7 +5,9 @@ import Item, { type CronItemProps } from './item';
 import Period from './period';
 import Some from './some';
 
-function Hour(props: Required<Omit<CronItemProps<'hour'>, 'options'>>) {
+function Hour(
+  props: Required<Omit<CronItemProps<'hour'>, 'options' | 'disabled'>> & { disabled?: boolean },
+) {
   const beginEvery: string[] = [];
 
   for (let x = 0; x < 24; x++) {
@@ -21,7 +23,7 @@ function Hour(props: Required<Omit<CronItemProps<'hour'>, 'options'>>) {
           start={props.state.start}
           end={props.state.end}
           options={hours}
-          disabled={props.state.type !== 'period'}
+          disabled={props.disabled || props.state.type !== 'period'}
           onChange={props.onChange}
           validate={(_, v) => (_ === 'start' ? v >= 0 && v < 23 : v > 0 && v <= 23)}
           label={['周期从', '到', '时']}
@@ -37,7 +39,7 @@ function Hour(props: Required<Omit<CronItemProps<'hour'>, 'options'>>) {
           onChange={props.onChange}
           beginOption={hours}
           beginEveryOption={beginEvery}
-          disabled={props.state.type !== 'beginInterval'}
+          disabled={props.disabled || props.state.type !== 'beginInterval'}
           validate={(_, v) => (_ === 'begin' ? v >= 0 && v <= 23 : v >= 1 && v <= 24)}
           label={['从', '时开始, 每', '小时执行一次']}
         />
@@ -52,12 +54,20 @@ function Hour(props: Required<Omit<CronItemProps<'hour'>, 'options'>>) {
           options={hours}
           type={props.state.type}
           onChange={props.onChange}
+          disabled={props.disabled}
         />
       ),
     },
   ];
 
-  return <Item options={options} onChange={props.onChange} state={props.state} />;
+  return (
+    <Item
+      options={options}
+      onChange={props.onChange}
+      state={props.state}
+      disabled={props.disabled}
+    />
+  );
 }
 
 export default Hour;

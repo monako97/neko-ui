@@ -46,11 +46,13 @@ export interface CronProps {
   /** 值 */
   value?: string;
   /** 默认值
-   * @default 0 0 0 * * ? *
+   * @default '0 0 0 * * ? *'
    */
   defaultValue?: string;
-  /** 值改变触发a */
+  /** 值改变触发 */
   onChange?(val?: string): void;
+  /** 只读模式 */
+  disabled?: boolean;
 }
 
 export type CronElement = CustomElement<CronProps>;
@@ -92,6 +94,7 @@ function Cron(props: CronProps) {
     'showCron',
     'css',
     'class',
+    'disabled',
   ]);
   const [value, setValue] = createSignal(local.defaultValue);
   const date = new Date();
@@ -181,33 +184,37 @@ function Cron(props: CronProps) {
   }
 
   function onChange<T extends CronType[ActiveTab]>(type: keyof T, val: T[keyof T]) {
-    batch(() => {
-      prefixWeekDay();
-      setState((prev) => {
-        const next = {
-          ...prev[active()],
-          [type]: val,
-        };
+    if (!local.disabled) {
+      batch(() => {
+        prefixWeekDay();
+        setState((prev) => {
+          const next = {
+            ...prev[active()],
+            [type]: val,
+          };
 
-        if (type === 'start' || type === 'end') {
-          if (next.end - next.start <= 1) {
-            if (type === 'end') {
-              next.start = (val as number) - 1;
-            } else {
-              next.end = (val as number) + 1;
+          if (type === 'start' || type === 'end') {
+            if (next.end - next.start <= 1) {
+              if (type === 'end') {
+                next.start = (val as number) - 1;
+              } else {
+                next.end = (val as number) + 1;
+              }
             }
           }
-        }
 
-        return {
-          ...prev,
-          [active()]: next,
-        };
+          return {
+            ...prev,
+            [active()]: next,
+          };
+        });
       });
-    });
+    }
   }
   function changeActiveKey(e: CustomEvent<[string, TabOption, Event]>) {
-    setActive(e.detail[0] as ActiveTab);
+    if (!local.disabled) {
+      setActive(e.detail[0] as ActiveTab);
+    }
   }
   function parseVal<T extends ActiveTab>(item: CronType[T], isWeek?: boolean) {
     if (item.value.includes('-')) {
@@ -303,49 +310,54 @@ function Cron(props: CronProps) {
 
     setValue((prev) => {
       if (prev === next) return prev;
-      props.onChange?.(next);
+      if (!local.disabled) {
+        props.onChange?.(next);
+      }
       return next;
     });
   });
 
-  const items = createMemo(() => {
+  function enable(key: keyof CronType) {
     const exclude = local.exclude || [];
 
+    return !exclude.includes(key) && (local.disabled ? active() === key : true);
+  }
+  const items = createMemo(() => {
     return [
-      !exclude.includes('second') && {
+      enable('second') && {
         value: 'second',
         label: '秒',
-        content: <Second state={state().second} onChange={onChange} />,
+        content: <Second state={state().second} onChange={onChange} disabled={local.disabled} />,
       },
-      !exclude.includes('minute') && {
+      enable('minute') && {
         value: 'minute',
         label: '分钟',
-        content: <Minute state={state().minute} onChange={onChange} />,
+        content: <Minute state={state().minute} onChange={onChange} disabled={local.disabled} />,
       },
-      !exclude.includes('hour') && {
+      enable('minute') && {
         value: 'hour',
         label: '小时',
-        content: <Hour state={state().hour} onChange={onChange} />,
+        content: <Hour state={state().hour} onChange={onChange} disabled={local.disabled} />,
       },
-      !exclude.includes('day') && {
+      enable('day') && {
         value: 'day',
         label: '日',
-        content: <Day state={state().day} onChange={onChange} />,
+        content: <Day state={state().day} onChange={onChange} disabled={local.disabled} />,
       },
-      !exclude.includes('week') && {
+      enable('week') && {
         value: 'week',
         label: '周',
-        content: <Week state={state().week} onChange={onChange} />,
+        content: <Week state={state().week} onChange={onChange} disabled={local.disabled} />,
       },
-      !exclude.includes('month') && {
+      enable('month') && {
         value: 'month',
         label: '月',
-        content: <Month state={state().month} onChange={onChange} />,
+        content: <Month state={state().month} onChange={onChange} disabled={local.disabled} />,
       },
-      !exclude.includes('year') && {
+      enable('year') && {
         value: 'year',
         label: '年',
-        content: <Year state={state().year} onChange={onChange} />,
+        content: <Year state={state().year} onChange={onChange} disabled={local.disabled} />,
       },
     ].filter(Boolean) as TabOption[];
   });
@@ -389,17 +401,20 @@ Cron.registry = () => {
       exclude: [],
       showCron: true,
       css: void 0,
+      disabled: void 0,
     } as CronProps,
     (_, opts) => {
       const el = opts.element;
       const props = mergeProps(
         {
           onChange(val?: string) {
-            el.dispatchEvent(
-              new CustomEvent('change', {
-                detail: val,
-              }),
-            );
+            if (!_.disabled) {
+              el.dispatchEvent(
+                new CustomEvent('change', {
+                  detail: val,
+                }),
+              );
+            }
           },
         },
         _,

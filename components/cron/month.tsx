@@ -7,7 +7,9 @@ import Some from './some';
 
 const months = month.map((m, i) => ({ label: m, value: i }));
 
-function Month(props: Required<Omit<CronItemProps<'month'>, 'options'>>) {
+function Month(
+  props: Required<Omit<CronItemProps<'month'>, 'options' | 'disabled'>> & { disabled?: boolean },
+) {
   const beginEvery: number[] = [];
 
   for (let x = 1; x < 13; x++) {
@@ -23,7 +25,7 @@ function Month(props: Required<Omit<CronItemProps<'month'>, 'options'>>) {
           start={props.state.start}
           end={props.state.end}
           options={months}
-          disabled={props.state.type !== 'period'}
+          disabled={props.disabled || props.state.type !== 'period'}
           onChange={props.onChange}
           validate={(_, v) => (_ === 'start' ? v >= 1 && v < 12 : v > 1 && v <= 12)}
           label={['周期从', '到', '月']}
@@ -39,7 +41,7 @@ function Month(props: Required<Omit<CronItemProps<'month'>, 'options'>>) {
           onChange={props.onChange}
           beginOption={months}
           beginEveryOption={beginEvery}
-          disabled={props.state.type !== 'beginInterval'}
+          disabled={props.disabled || props.state.type !== 'beginInterval'}
           validate={(_, v) => v >= 1 && v <= 12}
           label={['从', '开始, 每', '个月执行一次']}
         />
@@ -54,12 +56,20 @@ function Month(props: Required<Omit<CronItemProps<'month'>, 'options'>>) {
           options={months}
           type={props.state.type}
           onChange={props.onChange}
+          disabled={props.disabled}
         />
       ),
     },
   ];
 
-  return <Item options={options} onChange={props.onChange} state={props.state} />;
+  return (
+    <Item
+      options={options}
+      onChange={props.onChange}
+      state={props.state}
+      disabled={props.disabled}
+    />
+  );
 }
 
 export default Month;

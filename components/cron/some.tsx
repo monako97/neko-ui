@@ -11,6 +11,7 @@ interface SomeProps {
   options: (string | number | BaseOption)[];
   type: CronData['type'];
   onChange(type: 'some', value: number[]): void;
+  disabled?: boolean;
 }
 
 function Some(props: SomeProps) {
@@ -31,7 +32,7 @@ function Some(props: SomeProps) {
         value={props.value}
         onChange={onChange}
         options={props.options}
-        disabled={props.type !== 'some'}
+        disabled={props.disabled || props.type !== 'some'}
         popup-css={selectPortalCss}
         dropdown-match-select-width={false}
         arrow={true}
