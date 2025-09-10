@@ -1,5 +1,11 @@
 # Change log
 
+## Last
+
+### 🐛 Bug Fixes
+
+- popover zlevel ([aa60d40](https://github.com/monako97/neko-ui/commit/aa60d40c8470734a86432c8c339be3dde200b45f))
+
 ## [v2.13.9-beta.0](https://github.com/monako97/neko-ui/compare/v2.13.8...v2.13.9-beta.0) (9-9-2025)
 
 ### 🐛 Bug Fixes
