@@ -14,7 +14,7 @@ export const popoverCss = css`
 `;
 export const portalCss = css`
   .container {
-    z-index: 9999;
+    z-index: 99999;
     overflow-y: auto;
     /* stylelint-disable-next-line */
     max-block-size: -webkit-fill-available;
@@ -28,7 +28,7 @@ export const portalCss = css`
     --direction: 1;
 
     position: fixed;
-    z-index: 9999;
+    z-index: 99999;
     display: inline-block;
     border-radius: var(--border-radius);
     padding: 4px;

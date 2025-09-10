@@ -19,7 +19,7 @@ function Provider(props: ProviderProps) {
   return (
     <>
       <style textContent={baseStyle()} />
-      {props.children}
+      <slot />
     </>
   );
 }

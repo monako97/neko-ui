@@ -299,7 +299,7 @@ function Popover(props: PopoverProps) {
 
     return `.portal {${Object.keys(p)
       .map((k) => `${k}:${p[k as keyof Posi]}px;`)
-      .join('')}z-index: 1;}`;
+      .join('')}z-index: 99999;}`;
   });
   const portalCls = createMemo(() => {
     return cx(
@@ -358,7 +358,7 @@ function Popover(props: PopoverProps) {
             <style textContent={css(local.popupCss)} />
           </Show>
           <div ref={ref} onAnimationEnd={exit} class={portalCls()} {...childrenProps()}>
-            <Show when={local.content} fallback={<Empty />}>
+            <Show when={!!local.content} fallback={<Empty />}>
               <Show when={typeof local.content === 'string'} fallback={<>{local.content}</>}>
                 {/* eslint-disable-next-line solid/no-innerhtml */}
                 <div innerHTML={local.content as string} />

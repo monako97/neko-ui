@@ -4,6 +4,7 @@ import {
   createMemo,
   createSignal,
   For,
+  JSX,
   mergeProps,
   Show,
   splitProps,
@@ -58,7 +59,7 @@ function Table(_: TableProps) {
     });
   });
 
-  function getLayout(col: Col) {
+  function getLayout(col: Col): JSX.ThHTMLAttributes<HTMLTableCellElement> {
     return {
       width: col.width,
       align: col.align,
@@ -292,7 +293,7 @@ interface Cell {
   /** 规定根据哪个字符来进行文本对齐 */
   char?: string;
   /** 规定第一个对齐字符的偏移量 */
-  charoff?: number;
+  charoff?: string;
   /** 单元格内容的垂直对齐方式
    * @default 'middle'
    */
