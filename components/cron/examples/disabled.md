@@ -4,9 +4,9 @@ order: 1
 ---
 
 ```html
-<n-cron default-value="0-1 * 0-1 * * ?" disabled="true"></n-cron>
+<n-cron default-value="0-1 0 0 ? * 5#1 *" disabled="true"></n-cron>
 ```
 
 ```jsx
-<n-cron default-value="0-1 * 0-1 * * ?" disabled="true" />
+<n-cron default-value="0-1 0 0 ? * 5#1 *" disabled="true" />
 ```

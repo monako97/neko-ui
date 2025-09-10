@@ -212,9 +212,7 @@ function Cron(props: CronProps) {
     }
   }
   function changeActiveKey(e: CustomEvent<[string, TabOption, Event]>) {
-    if (!local.disabled) {
-      setActive(e.detail[0] as ActiveTab);
-    }
+    setActive(e.detail[0] as ActiveTab);
   }
   function parseVal<T extends ActiveTab>(item: CronType[T], isWeek?: boolean) {
     if (item.value.includes('-')) {
@@ -320,7 +318,7 @@ function Cron(props: CronProps) {
   function enable(key: keyof CronType) {
     const exclude = local.exclude || [];
 
-    return !exclude.includes(key) && (local.disabled ? active() === key : true);
+    return !exclude.includes(key);
   }
   const items = createMemo(() => {
     return [

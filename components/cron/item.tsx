@@ -20,7 +20,10 @@ function Item<T extends ActiveTab>(props: CronItemProps<T>) {
 
   const options = createMemo(() => {
     if (props.disabled) {
-      return props.options.filter((o) => o.value === props.state.type);
+      return props.options.map((o) => ({
+        ...o,
+        disabled: o.value !== props.state.type,
+      }));
     }
     return props.options;
   });

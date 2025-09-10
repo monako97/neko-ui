@@ -6,7 +6,8 @@ import Period from './period';
 import Some from './some';
 import { selectCss, selectPortalCss } from './style';
 
-function Day(props: Required<Omit<CronItemProps<'day'>, 'options' | 'disabled'>> & { disabled?: boolean },
+function Day(
+  props: Required<Omit<CronItemProps<'day'>, 'options' | 'disabled'>> & { disabled?: boolean },
 ) {
   const days: BaseOption[] = [];
   const daysBeginEvery: number[] = [];
