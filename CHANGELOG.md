@@ -1,5 +1,11 @@
 # Change log
 
+## Last
+
+### ✨ Features
+
+- 更新 @moneko/core 依赖至 3.55.3 ([f85dff1](https://github.com/monako97/neko-ui/commit/f85dff17d22a46973987011500f88f2b096aa832))
+
 ## [v2.14.0](https://github.com/monako97/neko-ui/compare/v2.13.10...v2.14.0) (9-10-2025)
 
 ### ✨ Features
