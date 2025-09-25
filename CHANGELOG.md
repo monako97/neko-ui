@@ -4,6 +4,7 @@
 
 ### ✨ Features
 
+- 更新 @moneko/core 依赖至 3.55.8 ([d7f1c74](https://github.com/monako97/neko-ui/commit/d7f1c74fe15b43a4d05717fb07184cd074598575))
 - 更新 @moneko/core 依赖至 3.55.7 ([bc8e725](https://github.com/monako97/neko-ui/commit/bc8e72502671c6c6f4d1d8b3888cbebff412a942))
 - 更新 @moneko/core 依赖至 3.55.6 ([756ab85](https://github.com/monako97/neko-ui/commit/756ab8596b80ded4c922701c525457904636b6b5))
 - 更新 @moneko/core 依赖至 3.55.5 ([45b5e5b](https://github.com/monako97/neko-ui/commit/45b5e5b30d1ff535b7688fe6937599ca78458129))
