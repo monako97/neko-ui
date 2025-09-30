@@ -200,9 +200,9 @@ function Select(props: SelectProps) {
         ref={ref}
         class="select"
         tabindex={other.disabled ? -1 : 0}
-        onKeyDown={keyDown}
-        onFocus={focus}
-        onBlur={blur}
+        on:keydown={keyDown}
+        on:focus={focus}
+        on:blur={blur}
         aria-disabled={other.disabled}
       >
         <Show when={prefix()}>
@@ -211,7 +211,7 @@ function Select(props: SelectProps) {
         <Show when={label()}>
           <label class="label">{label()}</label>
         </Show>
-        <div class="tags" ref={tagsRef} onMouseDown={click}>
+        <div class="tags" ref={tagsRef} on:mousedown={click}>
           <Show
             when={other.multiple}
             fallback={

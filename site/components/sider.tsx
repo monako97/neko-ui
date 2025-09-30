@@ -124,7 +124,7 @@ function Sider() {
         <n-dropdown
           value={scheme()}
           items={themes}
-          // trigger="click"
+          trigger="click"
           css={switchThemeCss}
           onChange={(e: CustomEvent) => {
             setScheme(e.detail[0]);

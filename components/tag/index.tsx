@@ -91,7 +91,7 @@ function Tag(props: TagProps) {
         </Show>
         {other.children}
         <Show when={local.closeIcon}>
-          <span class="close" onClick={onClose}>
+          <span class="close" on:click={onClose}>
             {local.closeIcon === true ? '⛌' : local.closeIcon}
           </span>
         </Show>

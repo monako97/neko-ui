@@ -81,8 +81,8 @@ function ImgLazy(_: ImgLazyProps) {
           }}
           part={other.part || 'img'}
           src={isIntersecting() ? other.src : void 0}
-          onError={handleError}
-          onLoad={handleLoad}
+          on:error={handleError}
+          on:load={handleLoad}
         />
       </Spin>
     </>

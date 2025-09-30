@@ -94,12 +94,12 @@ function BackTop(_: BackTopProps) {
           <style textContent={css(local.css)} />
         </Show>
         <div
-          onAnimationEnd={exit}
+          on:animationend={exit}
           class={cx('back-top', local.class)}
           classList={{
             'back-top-out': show() === false,
           }}
-          onClick={handleBackTop}
+          on:click={handleBackTop}
           style={{ 'z-index': getMaxZindex().toString() }}
           {...other}
         />

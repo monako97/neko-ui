@@ -227,7 +227,7 @@ function ColorPalette(_: ColorPaletteProps) {
         <style textContent={css(props.css)} />
       </Show>
       <div class={cx('palette', props.class)}>
-        <div ref={picker} class="picker" onMouseDown={mouseDown} />
+        <div ref={picker} class="picker" on:mousedown={mouseDown} />
         <div class="chooser">
           <div class="range">
             <input
@@ -236,7 +236,7 @@ function ColorPalette(_: ColorPaletteProps) {
               max="360"
               type="range"
               value={hsva().value[0]}
-              onInput={(e) => {
+              on:input={(e) => {
                 handleChange(0, Number(e.target.value), 'hsva');
               }}
             />
@@ -247,12 +247,12 @@ function ColorPalette(_: ColorPaletteProps) {
               step="0.01"
               type="range"
               value={hsva().value[3]}
-              onInput={(e) => {
+              on:input={(e) => {
                 handleChange(3, Number(e.target.value));
               }}
             />
           </div>
-          <div class="preview" onClick={copy} />
+          <div class="preview" on:click={copy} />
         </div>
         <div class="form">
           <Show
@@ -318,14 +318,14 @@ function ColorPalette(_: ColorPaletteProps) {
             fallback={
               <i
                 style={{ '--c': 'rgba(168,16,16,0.15)' }}
-                onClick={setColor.bind(null, 'rgba(168,16,16,0.15)')}
+                on:click={setColor.bind(null, 'rgba(168,16,16,0.15)')}
               />
             }
           >
-            <i class="eye-dropper" style={{ '--c': 'transparent' }} onClick={eyeDropper} />
+            <i class="eye-dropper" style={{ '--c': 'transparent' }} on:click={eyeDropper} />
           </Show>
           <For each={material}>
-            {(c) => <i style={{ '--c': c }} onClick={setColor.bind(null, c)} />}
+            {(c) => <i style={{ '--c': c }} on:click={setColor.bind(null, c)} />}
           </For>
         </div>
       </div>

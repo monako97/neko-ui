@@ -189,22 +189,7 @@ GlassPanel.registry = () => {
       const el = opt.element;
 
       createEffect(() => {
-        clearAttribute(el, [
-          'css',
-          'brightness',
-          'blur',
-          'contrast',
-          'dropShadow',
-          'grayscale',
-          'hueRotate',
-          'invert',
-          'opacity',
-          'saturate',
-          'sepia',
-          'filter',
-          'feTurbulence',
-          'feDisplacementMap',
-        ]);
+        clearAttribute(el, ['css']);
       });
       return (
         <>

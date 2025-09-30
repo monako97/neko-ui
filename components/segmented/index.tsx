@@ -117,15 +117,15 @@ function Segmented(props: SegmentedProps) {
                   value={item[fieldName.value]}
                   disabled={readOnly}
                   checked={item[fieldName.value] === value()}
-                  onChange={handleChange}
+                  on:change={handleChange}
                 />
                 <label
                   class={cx('label', item.class)}
                   tabindex={readOnly ? -1 : 0}
-                  onKeyUp={({ key }) => {
+                  on:keyup={({ key }) => {
                     onKeyUp(key, item);
                   }}
-                  onClick={handleChange}
+                  on:click={handleChange}
                   aria-disabled={readOnly}
                   ref={options()[i()].ref}
                 >

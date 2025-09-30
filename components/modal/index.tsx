@@ -259,8 +259,8 @@ function Modal(_: ModalProps) {
             closeing: open() !== OpenState.open,
             'mask-blur': props.maskBlur,
           }}
-          onAnimationEnd={handleDestroy}
-          onClick={portalClick}
+          on:animationend={handleDestroy}
+          on:click={portalClick}
         >
           <div
             ref={modal}
@@ -269,7 +269,7 @@ function Modal(_: ModalProps) {
               centered: props.centered,
               moveing: moveing(),
             }}
-            onMouseDown={mouseDown}
+            on:mousedown={mouseDown}
           >
             <div class="modal-header">
               <strong class="modal-title">{title()}</strong>

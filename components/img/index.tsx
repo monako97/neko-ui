@@ -174,10 +174,10 @@ function Img(_: ImgProps) {
               open: !!open(),
               closeing: !open(),
             }}
-            onAnimationEnd={handleDestroy}
-            onClick={portalClick}
+            on:animationend={handleDestroy}
+            on:click={portalClick}
           >
-            <span class="close" onClick={close} />
+            <span class="close" on:click={close} />
             <img class="img" src={props.srcFull || props.src} alt={props.alt} />
           </div>
         </Portal>

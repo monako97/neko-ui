@@ -125,8 +125,8 @@ function Button(_: ButtonProps) {
           without: animating(),
         }}
         part="button"
-        onClick={handleClick}
-        onAnimationEnd={handleAnimationEnd}
+        on:click={handleClick}
+        on:animationend={handleAnimationEnd}
         disabled={local.disabled || local.loading}
         role="button"
         {...other}

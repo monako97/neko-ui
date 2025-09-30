@@ -290,7 +290,6 @@ const QRCode = (_props: QrCodeProps) => {
     <Show when={props.type === 'svg'} fallback={<canvas ref={cvs} role="img" />}>
       <svg
         xmlns="http://www.w3.org/2000/svg"
-        version="1.1"
         stroke="none"
         width={props.size}
         height={props.size}

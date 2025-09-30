@@ -66,8 +66,8 @@ function Switch(props: SwitchProps) {
         text-on={props.checkedText}
         text-off={props.unCheckedText}
         aria-disabled={props.disabled}
-        onClick={change}
-        onKeyUp={onKeyUp}
+        on:click={change}
+        on:keyup={onKeyUp}
         tabindex={props.disabled || props.loading ? -1 : 0}
       />
     </>

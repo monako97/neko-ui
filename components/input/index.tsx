@@ -127,16 +127,16 @@ function Input(props: InputProps) {
           ref={inputRef}
           class="input"
           part="input"
-          onChange={handleInput}
           type={props.type}
           value={value()}
           autocomplete={props.autoComplete}
           accept={props.accept}
           placeholder={props.placeholder}
-          onMouseDown={handleMouseDown}
-          onKeyDown={handleKeyDown}
-          onKeyUp={handleKeyUp}
-          onBlur={handleBlur}
+          on:change={handleInput}
+          on:mousedown={handleMouseDown}
+          on:keydown={handleKeyDown}
+          on:keyup={handleKeyUp}
+          on:blur={handleBlur}
         />
         <Show when={props.label}>
           <label class="label">{props.label}</label>

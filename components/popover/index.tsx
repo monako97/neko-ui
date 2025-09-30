@@ -266,13 +266,13 @@ function Popover(props: PopoverProps) {
     const _props: Partial<Record<keyof EventMap, void>> = {};
 
     const openEvent: EventMap = {
-      click: 'onMouseDown',
-      hover: 'onMouseEnter',
-      contextMenu: 'onContextMenu',
+      click: 'on:mousedown',
+      hover: 'on:mouseenter',
+      contextMenu: 'on:contextmenu',
       none: void 0,
     };
     const closeEvent: EventMap = {
-      hover: 'onMouseLeave',
+      hover: 'on:mouseleave',
       click: void 0,
       contextMenu: void 0,
       none: void 0,
@@ -357,7 +357,7 @@ function Popover(props: PopoverProps) {
           <Show when={local.popupCss}>
             <style textContent={css(local.popupCss)} />
           </Show>
-          <div ref={ref} onAnimationEnd={exit} class={portalCls()} {...childrenProps()}>
+          <div ref={ref} on:animationend={exit} class={portalCls()} {...childrenProps()}>
             <Show when={!!local.content} fallback={<Empty />}>
               <Show when={typeof local.content === 'string'} fallback={<>{local.content}</>}>
                 {/* eslint-disable-next-line solid/no-innerhtml */}

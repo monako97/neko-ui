@@ -86,7 +86,7 @@ function Panel(props: PanelProps) {
   });
   return (
     <div class="date-time-picker">
-      <div ref={datePicker} class="date-picker" onMouseDown={handleMouseDown}>
+      <div ref={datePicker} class="date-picker" on:mousedown={handleMouseDown}>
         <Show when={props.showHeader}>
           <section class="date-picker-header">
             <span

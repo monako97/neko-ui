@@ -137,7 +137,7 @@ function Carousel(_props: CarouselProps) {
       <section class={cx('carousel', props.class)}>
         <section class="list" data-dir={direction()}>
           <div class="item">{list()[left()]}</div>
-          <div class="item" onAnimationEnd={onOffsetChange}>
+          <div class="item" on:animationend={onOffsetChange}>
             {list()[offset()]}
           </div>
           <div class="item">{list()[right()]}</div>
@@ -146,8 +146,8 @@ function Carousel(_props: CarouselProps) {
         <Show when={header()}>
           <section class="header">{header()}</section>
         </Show>
-        <div class="prev" onClick={handlePrev} />
-        <div class="next" onClick={handleNext} />
+        <div class="prev" on:click={handlePrev} />
+        <div class="next" on:click={handleNext} />
         <Show when={props.dots}>
           <div class="dots">
             <Index each={dotLen()}>
@@ -158,7 +158,7 @@ function Carousel(_props: CarouselProps) {
                     classList={{
                       active: idx === (offset() % 20) + direction(),
                     }}
-                    onClick={handleDot.bind(null, idx)}
+                    on:click={handleDot.bind(null, idx)}
                   />
                 );
               }}

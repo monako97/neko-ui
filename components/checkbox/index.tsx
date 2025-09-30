@@ -188,8 +188,8 @@ function Checkbox(props: CheckboxBoolProps | CheckboxGroupProps) {
                 class={cx('item', item.class, item.status)}
                 aria-disabled={readOnly}
                 tabindex={readOnly ? -1 : 0}
-                onKeyUp={onKeyUp.bind(null, item)}
-                onClick={onChange.bind(null, item)}
+                on:keyup={onKeyUp.bind(null, item)}
+                on:click={onChange.bind(null, item)}
               >
                 <input
                   ref={item.ref}
@@ -199,7 +199,7 @@ function Checkbox(props: CheckboxBoolProps | CheckboxGroupProps) {
                   value={realVal as string}
                   disabled={readOnly}
                   checked={'indeterminate' in item ? checkedAll() : value().includes(realVal)}
-                  onChange={onChange.bind(null, item)}
+                  on:change={onChange.bind(null, item)}
                 />
                 <label>{item[fieldName.label] as JSXElement}</label>
               </span>

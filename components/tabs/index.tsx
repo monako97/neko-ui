@@ -294,7 +294,7 @@ function Tabs(props: TabsProps) {
                 >
                   {item[label]}
                   <Show when={item.closable}>
-                    <span class="remove" onClick={handleEdit.bind(null, 'remove', item)}>
+                    <span class="remove" on:click={handleEdit.bind(null, 'remove', item)}>
                       ⛌
                     </span>
                   </Show>
@@ -322,7 +322,7 @@ function Tabs(props: TabsProps) {
           classList={{
             [ani()]: props.animated,
           }}
-          onAnimationEnd={onAnimationEnd}
+          on:animationend={onAnimationEnd}
         >
           {content()}
         </div>

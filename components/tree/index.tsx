@@ -176,10 +176,10 @@ function Tree(
                   active: current().includes(key),
                   non: _.readonly || !isFunction(_.onChange),
                 }}
-                onClick={(e) => {
+                on:click={(e) => {
                   handleClick(e, item);
                 }}
-                onDblClick={(e) => _.onRowDoubleClick?.(e, key, item)}
+                on:dblclick={(e) => _.onRowDoubleClick?.(e, key, item)}
                 style={depth ? { '--depth': `${depth * 2}em` } : void 0}
                 data-path-end={item[pathEnd]}
                 data-path={item[path]}

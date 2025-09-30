@@ -149,7 +149,7 @@ function Menu(props: MenuProps | MenuMultipleProps) {
                   style={{
                     '--h': `${hei()}px`,
                   }}
-                  onAnimationEnd={onAnimationEnd}
+                  on:animationend={onAnimationEnd}
                 >
                   <div ref={el}>
                     <RenderMenu fieldNames={_.fieldNames} list={item[_.fieldNames.children]} />
@@ -166,9 +166,9 @@ function Menu(props: MenuProps | MenuMultipleProps) {
                   'sub-menu-close': !isOpen(),
                 }}
                 part="sub-menu"
-                onMouseDown={preventDefault}
+                on:mousedown={preventDefault}
               >
-                <span class="sub-menu-title" onClick={handleOpen}>
+                <span class="sub-menu-title" on:click={handleOpen}>
                   <RowTitle />
                   <span class="menu-arrow" />
                 </span>
@@ -187,8 +187,8 @@ function Menu(props: MenuProps | MenuMultipleProps) {
                   handle-closed={item.handleClosed}
                   aria-disabled={local.disabled || item.disabled}
                   aria-selected={value().includes(item[_.fieldNames.value])}
-                  onMouseDown={preventDefault}
-                  onClick={change.bind(null, item)}
+                  on:mousedown={preventDefault}
+                  on:click={change.bind(null, item)}
                 >
                   <RowTitle />
                 </div>
@@ -198,7 +198,7 @@ function Menu(props: MenuProps | MenuMultipleProps) {
                 <SubMenu />
               </Match>
               <Match when={Array.isArray(item[_.fieldNames.options])}>
-                <div class={cx('menu-group', item.class)} onMouseDown={preventDefault}>
+                <div class={cx('menu-group', item.class)} on:mousedown={preventDefault}>
                   <span class="menu-group-title">
                     <RowTitle />
                   </span>

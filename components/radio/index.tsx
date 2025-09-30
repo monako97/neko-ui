@@ -87,8 +87,8 @@ function Radio(props: RadioProps) {
                 part="item"
                 tabindex={readOnly ? -1 : 0}
                 aria-disabled={readOnly}
-                onKeyUp={onKeyUp.bind(null, item)}
-                onClick={handleChange}
+                on:keyup={onKeyUp.bind(null, item)}
+                on:click={handleChange}
               >
                 <input
                   class="radio"
@@ -98,7 +98,7 @@ function Radio(props: RadioProps) {
                   disabled={readOnly}
                   tabindex={-1}
                   checked={item[fieldName.value] === value()}
-                  onChange={handleChange}
+                  on:change={handleChange}
                 />
                 <label class="label" part="label">
                   {item[fieldName.label]}

@@ -132,7 +132,7 @@ export function Sandbox(_props: SandboxProps) {
                 'sandbox-btn-desc': hasDesc(),
               }}
               data-open={open()}
-              onClick={() => setOpen((prev) => !prev)}
+              on:click={() => setOpen((prev) => !prev)}
             >
               编辑 {code()}
             </span>

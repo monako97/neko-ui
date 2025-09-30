@@ -268,7 +268,7 @@ function Code(props: CodeProps) {
             <CopyIcon class="toolbar-copy" onClick={copy} />
           </div>
         </Show>
-        <code ref={codeEl} contenteditable={props.edit} spellcheck={false} onInput={change}>
+        <code ref={codeEl} contenteditable={props.edit} spellcheck={false} on:input={change}>
           {code()}
         </code>
       </pre>

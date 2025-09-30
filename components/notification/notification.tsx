@@ -69,7 +69,7 @@ const notification = (
                   <Show when={item.close}>
                     <span
                       class="close"
-                      onClick={() => {
+                      on:click={() => {
                         remove(item.uniqueId);
                       }}
                     />
