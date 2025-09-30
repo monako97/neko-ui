@@ -1,5 +1,11 @@
 # Change log
 
+## Last
+
+### ✨ Features
+
+- 更新 @moneko/core 依赖至 3.56.0-beta.2，并优化 github.ts 配置 ([65870ef](https://github.com/monako97/neko-ui/commit/65870ef4969aa5be86e177f7bad6dad6c42f0b30))
+
 ## [v2.14.1](https://github.com/monako97/neko-ui/compare/v2.14.0...v2.14.1) (9-28-2025)
 
 ### ✨ Features
