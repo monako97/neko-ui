@@ -1,9 +1,10 @@
 # Change log
 
-## Last
+## [v2.14.2](https://github.com/monako97/neko-ui/compare/v2.14.1...v2.14.2) (10-1-2025)
 
 ### ✨ Features
 
+- 更新事件处理方式，使用新的事件绑定语法 ([1db1928](https://github.com/monako97/neko-ui/commit/1db1928c66bba9c2f56902f9709b7442155ac3db))
 - 更新 @moneko/core 依赖至 3.56.0 ([573745d](https://github.com/monako97/neko-ui/commit/573745d374def093ae520554a897e0e05faf9a3d))
 - 更新 @moneko/core 依赖至 3.56.0-beta.2，并优化 github.ts 配置 ([65870ef](https://github.com/monako97/neko-ui/commit/65870ef4969aa5be86e177f7bad6dad6c42f0b30))
 
