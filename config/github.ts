@@ -1,6 +1,9 @@
 import { type ConfigType, isDev, PACKAGENAME } from '@moneko/core';
 
 const conf: Partial<ConfigType> = {
+  htmlPluginOption: {
+    publicPath: `/${PACKAGENAME}/`,
+  },
   fallbackCompPath: '@/components/fallback',
   devtool: isDev ? 'eval-cheap-module-source-map' : false,
   seo: {

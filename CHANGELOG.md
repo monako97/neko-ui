@@ -4,6 +4,7 @@
 
 ### ✨ Features
 
+- 更新 @moneko/core 依赖至 3.56.20，并注释掉 publicPath 配置 ([a241adf](https://github.com/monako97/neko-ui/commit/a241adfa82e8f5ffcd921f8dbcb6dccdb5e55004))
 - 更新 @moneko/core 依赖至 3.56.19-beta.0 ([ac6242a](https://github.com/monako97/neko-ui/commit/ac6242ae9659d2cbdf5d013bee87e5e2d051dbe1))
 
 ## [v2.14.2](https://github.com/monako97/neko-ui/compare/v2.14.1...v2.14.2) (10-1-2025)
