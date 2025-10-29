@@ -27,12 +27,11 @@
 [![install size][size-tag]][size-url]
 [![download][download-tag]][npm-url]
 ![x][x-tag]
-
-[![NPM Quality](http://npm.packagequality.com/shield/neko-ui.svg?style=flat-square)](http://packagequality.com/#?package=neko-ui)
 [![GitHub Actions CI](https://github.com/monako97/neko-ui/actions/workflows/cd.yml/badge.svg?style=flat-square)](https://github.com/monako97/neko-ui/actions/workflows/cd.yml)
 [![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fmonako97%2Fneko-ui.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2Fmonako97%2Fneko-ui?ref=badge_shield)
 
 [![neko-ui][install-tag]][npm-url]
+[![Package Quality](https://packagequality.com/badge/neko-ui.png)](https://packagequality.com/#?package=neko-ui)
 
 ## 安装
 
