@@ -1,6 +1,6 @@
 {
   "name": "neko-ui",
-  "version": "2.14.2",
+  "version": "2.14.3-beta.0",
   "description": "WebComponents UI Libraries",
   "main": "lib/index.js",
   "module": "es/index.js",
@@ -82,7 +82,7 @@
     "@moneko/css": "1.2.0",
     "component-register": "0.8.7",
     "custom-element-type": "1.0.7",
-    "dayjs": "1.11.18",
+    "dayjs": "1.11.19",
     "marked-completed": "1.2.14",
     "prismjs": "1.30.0",
     "solid-element": "1.9.1",
