@@ -1,9 +1,14 @@
 # Change log
 
-## Last
+## [v2.14.4](https://github.com/monako97/neko-ui/compare/v2.14.3-beta.0...v2.14.4) (11-5-2025)
+
+## [v2.14.3-beta.0](https://github.com/monako97/neko-ui/compare/v2.14.3...v2.14.3-beta.0) (10-31-2025)
+
+## [v2.14.3](https://github.com/monako97/neko-ui/compare/v2.14.2...v2.14.3) (11-3-2025)
 
 ### ✨ Features
 
+- 添加 htmlPluginOption 配置，设置 publicPath ([107ca3c](https://github.com/monako97/neko-ui/commit/107ca3cc3835aee86860f2c6edfe41e0c485a0cb))
 - 更新 @moneko/core 依赖至 3.56.20，并注释掉 publicPath 配置 ([a241adf](https://github.com/monako97/neko-ui/commit/a241adfa82e8f5ffcd921f8dbcb6dccdb5e55004))
 - 更新 @moneko/core 依赖至 3.56.19-beta.0 ([ac6242a](https://github.com/monako97/neko-ui/commit/ac6242ae9659d2cbdf5d013bee87e5e2d051dbe1))
 

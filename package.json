@@ -64,7 +64,7 @@
     "ui libraries"
   ],
   "devDependencies": {
-    "@moneko/core": "3.57.7",
+    "@moneko/core": "3.58.0",
     "@moneko/solid": "1.11.3",
     "@solidjs/testing-library": "0.8.10",
     "@swc/jest": "0.2.39",
@@ -86,7 +86,7 @@
     "marked-completed": "1.2.14",
     "prismjs": "1.30.0",
     "solid-element": "1.9.1",
-    "solid-js": "1.9.9"
+    "solid-js": "1.9.10"
   },
   "browserslist": [
     ">0.3%, defaults",
