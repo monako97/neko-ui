@@ -16,6 +16,7 @@ const conf: Partial<ConfigType> = {
     pathSegmentsToKeep: 1,
     path: '404.html',
   },
+  minChunkSize: 200000,
 };
 
 export default conf;

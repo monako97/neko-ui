@@ -1,5 +1,11 @@
 # Change log
 
+## Last
+
+### 🛠 Builds
+
+- support PWA ([46ba892](https://github.com/monako97/neko-ui/commit/46ba892af8fc1c36bb30d0d5e4788cba3ec07781))
+
 ## [v2.14.4](https://github.com/monako97/neko-ui/compare/v2.14.3-beta.0...v2.14.4) (11-5-2025)
 
 ## [v2.14.3-beta.0](https://github.com/monako97/neko-ui/compare/v2.14.3...v2.14.3-beta.0) (10-31-2025)
