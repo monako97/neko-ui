@@ -1,7 +1,7 @@
 ---
 type: 工程配套
 title: 国际化
-subtitle: '虚拟: @app/locales'
+subtitle: '虚拟: app:locales'
 order: 5
 ---
 
@@ -18,7 +18,7 @@ export const tree = `
 
 # 文本国际化
 
-> 通过内置的虚拟模块 @app/locales 进行文本国际化;
+> 通过内置的虚拟模块 `app:locales` 进行文本国际化;
 > 国际化内容依赖项目目录下的 `src/locales` 文件夹内容自动生成
 > 一个文件对应一种语言, 默认语言名称为文件名
 
@@ -28,7 +28,7 @@ export const tree = `
 
 ```ts
 // zh-CN.ts
-import type { LocaleConfig } from '@app/locales';
+import type { LocaleConfig } from 'app:locales';
 
 const en: LocaleConfig = {
   title: '中文',
@@ -42,7 +42,7 @@ export default en;
 
 ```ts flex
 // en.ts
-import type { LocaleConfig } from '@app/locales';
+import type { LocaleConfig } from 'app:locales';
 
 const en: LocaleConfig = {
   language: 'en_US', // 自定义语言名称
@@ -62,7 +62,7 @@ export default en;
 > 或参考 [demo](https://github.com/monako97/demo-micro-app-solid)
 
 ```ts
-import { setLang, t } from '@app/locales';
+import { setLang, t } from 'app:locales';
 
 console.log(t.home); // 首页
 setLang('en_US');
@@ -74,7 +74,7 @@ console.log(t.home); // Home
 > 通过 `locales` 获取当前项目的语言列表
 
 ```ts
-import { locales } from '@app/locales';
+import { locales } from 'app:locales';
 
 console.log(locales);
 ```
@@ -84,7 +84,7 @@ console.log(locales);
 > 通过 `template` 方法进行插值字符串转换; 替换字符串中的占位符 `${}` 为对应的值
 
 ```ts
-import { template } from '@app/locales';
+import { template } from 'app:locales';
 
 template('The length is ${val} characters!', { val: 62 }); // The length is 62 characters!
 ```
@@ -94,7 +94,7 @@ template('The length is ${val} characters!', { val: 62 }); // The length is 62 c
 > 使用 `setLang` 方法修改语言
 
 ```ts
-import { setLang } from '@app/locales';
+import { setLang } from 'app:locales';
 
 setLang('zh_CN');
 ```
@@ -104,7 +104,7 @@ setLang('zh_CN');
 > 使用 `lang` 获取当前使用的语言
 
 ```ts
-import { lang } from '@app/locales';
+import { lang } from 'app:locales';
 
 console.log(lang);
 ```
@@ -114,7 +114,7 @@ console.log(lang);
 > 使用 `t` 获取对应字典的当前语言文本
 
 ```ts
-import { t } from '@app/locales';
+import { t } from 'app:locales';
 
 console.log(t['password-fap']);
 ```
@@ -124,7 +124,7 @@ console.log(t['password-fap']);
 > 通过 `setLocalizable` 设置或修改一个新的语种(滞后/更新), 可用于线上紧急更新文案
 
 ```ts
-import { setLocalizable } from '@app/locales';
+import { setLocalizable } from 'app:locales';
 
 setLocalizable('lang', {
   language: 'zh-HK',

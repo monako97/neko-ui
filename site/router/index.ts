@@ -1,5 +1,5 @@
 import { lazy } from 'solid-js';
-import type { RouteConfig } from '@app/routes';
+import type { RouteConfig } from 'app:routes';
 
 const router: RouteConfig[] = [
   {

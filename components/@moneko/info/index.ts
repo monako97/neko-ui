@@ -1,4 +1,4 @@
-/** 虚拟模块 @app/info
+/** 虚拟模块 `app:info`
  * @description 应用信息
  * @ignore optional
  */

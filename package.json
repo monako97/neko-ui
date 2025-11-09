@@ -48,7 +48,8 @@
     "*.css",
     "*.less",
     "*.md",
-    "@app/*"
+    "@app/*",
+    "app:*"
   ],
   "keywords": [
     "neko-ui",
@@ -64,8 +65,8 @@
     "ui libraries"
   ],
   "devDependencies": {
-    "@moneko/core": "3.58.1-bate.4",
-    "@moneko/solid": "1.11.3",
+    "@moneko/core": "4.0.0-bate.3",
+    "@moneko/solid": "2.0.0-beta.3",
     "@solidjs/testing-library": "0.8.10",
     "@swc/jest": "0.2.39",
     "@testing-library/jest-dom": "6.6.3",

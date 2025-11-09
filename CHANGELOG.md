@@ -4,6 +4,7 @@
 
 ### 🛠 Builds
 
+- update @moneko/core to version 3.58.1-bate.4 ([6fda68a](https://github.com/monako97/neko-ui/commit/6fda68af88f7e9f96e44c5db5f4b4c496e53ae19))
 - update @moneko/core to version 3.58.1-bate.3 and remove unused 'bar' property from umd config ([201f30a](https://github.com/monako97/neko-ui/commit/201f30a1da5c46e06a5a742acfbe0fbebf6dc852))
 - support PWA ([46ba892](https://github.com/monako97/neko-ui/commit/46ba892af8fc1c36bb30d0d5e4788cba3ec07781))
 

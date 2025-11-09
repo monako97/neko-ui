@@ -1,8 +1,8 @@
 import { createMemo, For } from 'solid-js';
-import coverages from '@app/coverage';
-import { name } from '@app/info';
 import { cx } from '@moneko/css';
 import { getPathName, useLocation } from '@moneko/solid';
+import { name } from 'app:info';
+import coverages from 'docs:coverage';
 
 import './coverage.global.css';
 

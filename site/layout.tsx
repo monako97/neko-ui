@@ -1,6 +1,6 @@
 import { createEffect, createMemo, For, Show } from 'solid-js';
-import docs from '@app/docs';
 import { getPathName, type RouteProps, useLocation } from '@moneko/solid';
+import docs from 'docs:docs';
 import { mdStyle, registry, theme } from 'neko-ui';
 
 import Coverage from '@/components/coverage';
@@ -12,7 +12,9 @@ import Sider from '@/components/sider';
 import ChangeLog from '../CHANGELOG.md';
 
 import './layout.global.css';
+import { cs } from './aaa.module.less';
 
+console.log(docs);
 registry(Sandbox, SandboxGroup);
 function App(p: RouteProps<string>) {
   let box: HTMLDivElement | undefined;
@@ -39,6 +41,7 @@ function App(p: RouteProps<string>) {
       <style textContent={mdStyle} />
       <Sider />
       <main ref={box} class="site-doc-main">
+        <div class={cs}>csacsacsa</div>
         <Show when={!getPathName(location).startsWith('@')}>
           <Coverage />
         </Show>

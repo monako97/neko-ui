@@ -1,4 +1,4 @@
-import { author, projectName, repository } from '@app/info';
+import { author, projectName, repository } from 'app:info';
 
 import './footer.css';
 
