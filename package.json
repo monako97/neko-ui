@@ -65,8 +65,8 @@
     "ui libraries"
   ],
   "devDependencies": {
-    "@moneko/core": "4.0.0-bate.3",
-    "@moneko/solid": "2.0.0-beta.3",
+    "@moneko/core": "4.0.2",
+    "@moneko/solid": "2.0.2",
     "@solidjs/testing-library": "0.8.10",
     "@swc/jest": "0.2.39",
     "@testing-library/jest-dom": "6.6.3",

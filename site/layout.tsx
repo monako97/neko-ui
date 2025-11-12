@@ -11,10 +11,8 @@ import Sider from '@/components/sider';
 
 import ChangeLog from '../CHANGELOG.md';
 
-import './layout.global.css';
-import { cs } from './aaa.module.less';
+import './layout.css';
 
-console.log(docs);
 registry(Sandbox, SandboxGroup);
 function App(p: RouteProps<string>) {
   let box: HTMLDivElement | undefined;
@@ -41,7 +39,6 @@ function App(p: RouteProps<string>) {
       <style textContent={mdStyle} />
       <Sider />
       <main ref={box} class="site-doc-main">
-        <div class={cs}>csacsacsa</div>
         <Show when={!getPathName(location).startsWith('@')}>
           <Coverage />
         </Show>

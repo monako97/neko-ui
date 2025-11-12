@@ -2,6 +2,10 @@
 
 ## Last
 
+### 📚 Documentation
+
+- 构建工具更新 ([6096745](https://github.com/monako97/neko-ui/commit/6096745100879db6cfc35bf8ab582bb8b17b56fd))
+
 ### 🛠 Builds
 
 - update @moneko/core to version 3.58.1-bate.4 ([6fda68a](https://github.com/monako97/neko-ui/commit/6fda68af88f7e9f96e44c5db5f4b4c496e53ae19))
