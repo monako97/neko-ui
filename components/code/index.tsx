@@ -89,7 +89,7 @@ export type CodeElement = CustomElement<CodeProps>;
 function Code(props: CodeProps) {
   const { isDark } = theme;
   let codeEl: HTMLPreElement | undefined;
-  let timer: NodeJS.Timeout | undefined;
+  let timer: ReturnType<typeof setInterval> | undefined;
   const decoded = /%[0-9A-Fa-f]{2}/;
   const id = createUniqueId();
   const [code, setCode] = createSignal<string>('');

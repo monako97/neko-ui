@@ -1,5 +1,5 @@
 {
-  "extends": "@moneko/solid/base",
+  "extends": "@moneko/init.d",
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {

@@ -174,7 +174,8 @@ function Tabs(props: TabsProps) {
   });
 
   createEffect(() => {
-    let timer: NodeJS.Timeout | undefined, whellTimer: NodeJS.Timeout | undefined;
+    let timer: ReturnType<typeof setInterval> | undefined,
+      whellTimer: ReturnType<typeof setInterval> | undefined;
     const el = current()?.ref;
 
     if (el) {

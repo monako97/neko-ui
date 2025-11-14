@@ -131,7 +131,7 @@ function Popover(props: PopoverProps) {
   ]);
   let ref: HTMLDivElement | undefined;
   let childRef: HTMLSpanElement | undefined;
-  let closeTimer: NodeJS.Timeout | undefined;
+  let closeTimer: ReturnType<typeof setInterval> | undefined;
   const [open, setOpen] = createSignal<boolean | null>(null);
   const [posi, setPosi] = createSignal<Posi>({});
   const [up, setUp] = createSignal<boolean>(false);
@@ -181,7 +181,7 @@ function Popover(props: PopoverProps) {
       local.trigger === 'hover' ? 300 : 0,
     );
   }
-  let portalTimer: NodeJS.Timeout | undefined;
+  let portalTimer: ReturnType<typeof setInterval> | undefined;
   const showPortal = function (e?: Event): void {
     clearTimeout(portalTimer);
     portalTimer = setTimeout(() => {
