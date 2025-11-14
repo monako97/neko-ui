@@ -4,6 +4,7 @@
 
 ### 🛠 Builds
 
+- 构建工具更新 ([e12578c](https://github.com/monako97/neko-ui/commit/e12578c79fa027bd17b1dd6fc0b0f75c5a4af3d1))
 - 构建工具更新 ([f37ef1d](https://github.com/monako97/neko-ui/commit/f37ef1dc7dd32ee6a0cf65500bf4f3b9341e05ce))
 - update @moneko/core to version 3.58.1-bate.4 ([6fda68a](https://github.com/monako97/neko-ui/commit/6fda68af88f7e9f96e44c5db5f4b4c496e53ae19))
 - update @moneko/core to version 3.58.1-bate.3 and remove unused 'bar' property from umd config ([201f30a](https://github.com/monako97/neko-ui/commit/201f30a1da5c46e06a5a742acfbe0fbebf6dc852))
