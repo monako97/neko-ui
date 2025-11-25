@@ -29,11 +29,11 @@ jobs:
         uses: actions/cache@v3
         with:
           path: |
-            node_modules/.cache
+            node_modules
             coverage
-          key: ${{ runner.os }}-node-${{ hashFiles('package.json') }}
+          key: ${{ runner.os }}-node
           restore-keys: |
-            ${{ runner.os }}-node-
+            ${{ runner.os }}-node
 
       - name: 'Setup pnpm'
         uses: pnpm/action-setup@v4
