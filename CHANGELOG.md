@@ -4,6 +4,7 @@
 
 ### 🛠 Builds
 
+- update @moneko/core to version 4.1.0 ([4360f15](https://github.com/monako97/neko-ui/commit/4360f155a4b3f6f851bda640e1e9bbdc9401e9f7))
 - 构建工具更新 ([e585a04](https://github.com/monako97/neko-ui/commit/e585a049545ab249e4ececd38edd0169893cc7ee))
 - 构建工具更新 ([e12578c](https://github.com/monako97/neko-ui/commit/e12578c79fa027bd17b1dd6fc0b0f75c5a4af3d1))
 - 构建工具更新 ([f37ef1d](https://github.com/monako97/neko-ui/commit/f37ef1dc7dd32ee6a0cf65500bf4f3b9341e05ce))
