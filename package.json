@@ -65,7 +65,7 @@
     "ui libraries"
   ],
   "devDependencies": {
-    "@moneko/core": "4.1.2",
+    "@moneko/core": "4.2.0",
     "@moneko/solid": "2.0.3",
     "@solidjs/testing-library": "0.8.10",
     "@swc/jest": "0.2.39",
@@ -80,7 +80,7 @@
   },
   "dependencies": {
     "@moneko/common": "1.11.0",
-    "@moneko/css": "1.2.0",
+    "@moneko/css": "1.3.1",
     "component-register": "0.8.7",
     "custom-element-type": "1.0.7",
     "dayjs": "1.11.19",

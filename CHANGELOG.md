@@ -2,6 +2,10 @@
 
 ## Last
 
+### ⚙️ Continuous Integrations
+
+- update ci ([02afd80](https://github.com/monako97/neko-ui/commit/02afd8086103d7bcf114f6096d9f1735b3abe523))
+
 ### 🛠 Builds
 
 - update @moneko/core to version 4.1.2 ([33a2a89](https://github.com/monako97/neko-ui/commit/33a2a8965519d358c78d92020d3c4d5dc61bcd2c))

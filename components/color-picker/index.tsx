@@ -22,8 +22,7 @@ import { style } from './style';
  * @since 2.0.0
  */
 export interface ColorPickerProps
-  extends ColorPaletteProps,
-    Omit<PopoverProps, 'children' | 'content'> {
+  extends ColorPaletteProps, Omit<PopoverProps, 'children' | 'content'> {
   /** 自定义类名 */
   class?: string;
   /** 自定义样式表 */

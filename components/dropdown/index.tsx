@@ -15,16 +15,14 @@ export interface BaseDropdownProps extends Omit<PopoverProps, 'content'> {
 }
 
 export interface DropdownProps
-  extends Omit<MenuProps, 'openKeys' | 'onOpenChange'>,
-    BaseDropdownProps {
+  extends Omit<MenuProps, 'openKeys' | 'onOpenChange'>, BaseDropdownProps {
   /** 打开内容气泡 */
   open?: boolean | null;
   /** menu样式表 */
   menuCss?: string;
 }
 export interface DropdownMultipleProps
-  extends Omit<MenuMultipleProps, 'openKeys' | 'onOpenChange'>,
-    BaseDropdownProps {
+  extends Omit<MenuMultipleProps, 'openKeys' | 'onOpenChange'>, BaseDropdownProps {
   /** 打开内容气泡 */
   open?: boolean | null;
   /** menu样式表 */

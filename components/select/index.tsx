@@ -292,8 +292,7 @@ export interface SelectProps extends Omit<DropdownProps, 'items' | 'children'>, 
 
 /** 多选 */
 export interface SelectMultipleProps
-  extends Omit<DropdownMultipleProps, 'items' | 'children'>,
-    SelectBaseProps {
+  extends Omit<DropdownMultipleProps, 'items' | 'children'>, SelectBaseProps {
   /** 值
    * @default []
    */
