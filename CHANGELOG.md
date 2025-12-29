@@ -4,6 +4,7 @@
 
 ### 🐛 Bug Fixes
 
+- 更新 CDN 链接和依赖版本 ([96c0506](https://github.com/monako97/neko-ui/commit/96c0506e2f0fdce2a63207db36d0f072607d4b18))
 - 更新 CDN 链接和依赖版本 ([8d11201](https://github.com/monako97/neko-ui/commit/8d112012ad169ad895bf7bb1ba3dcf7d809c8298))
 
 ## [v2.14.5](https://github.com/monako97/neko-ui/compare/v2.14.4...v2.14.5) (12-29-2025)
