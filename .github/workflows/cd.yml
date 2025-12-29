@@ -63,6 +63,7 @@ jobs:
               NPM_PACKAGE_TAG="latest"
           fi
           if [[ $(npm view "${NPM_PACKAGE_NAME}" versions) != *"'${NPM_PACKAGE_VERSION}'"* ]]; then
+            npm pkg fix
             npm publish --tag ${NPM_PACKAGE_TAG} --access public
             echo "Successfully published version ${NPM_PACKAGE_VERSION} of ${NPM_PACKAGE_NAME} to GitLab's NPM registry: ${CI_PROJECT_URL}/-/packages"
             curl -X PUT https://registry-direct.npmmirror.com/-/package/${NPM_PACKAGE_NAME}/syncs
