@@ -2,7 +2,9 @@ import Prism from 'prismjs';
 
 // language
 import 'prismjs/components/prism-bash.js'; // shell + sh + bash
+import 'prismjs/components/prism-c.js';
 import 'prismjs/components/prism-clike.js';
+import 'prismjs/components/prism-cpp.js';
 import 'prismjs/components/prism-css.js';
 import 'prismjs/components/prism-docker.js'; // docker + dockerfile
 import 'prismjs/components/prism-git.js'; // diff
