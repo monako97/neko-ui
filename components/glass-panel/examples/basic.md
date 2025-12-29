@@ -10,7 +10,7 @@ order: 1
     align-items: center;
     justify-content: center;
     height: 50vh;
-    background-image: url(https://img.picui.cn/free/2025/06/11/6849a037bb61d.gif);
+    background-image: url(https://h5static.dewucdn.com/node-common/f1cd0113-adb7-de1a-ff81-2e386b3a291c.webp);
   }
 </style>
 <div id="box-glass">
@@ -30,7 +30,7 @@ order: 1
     'justify-content': 'center',
     'text-align': 'center',
     height: '50vh',
-    'background-image': 'url(https://img.picui.cn/free/2025/06/11/6849a037bb61d.gif)',
+    'background-image': 'url(https://h5static.dewucdn.com/node-common/f1cd0113-adb7-de1a-ff81-2e386b3a291c.webp)',
   }}
 >
   <n-glass-panel
