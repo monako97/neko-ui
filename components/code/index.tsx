@@ -251,7 +251,9 @@ function Code(props: CodeProps) {
   return (
     <>
       <style textContent={isDark() ? darkCss : lightCss} />
-      <style textContent={highlightCss()} />
+      <Show when={highlightCss()}>
+        <style textContent={highlightCss()} />
+      </Show>
       <style textContent={style} />
       <Show when={props.css}>
         <style textContent={css(props.css)} />
@@ -262,13 +264,20 @@ function Code(props: CodeProps) {
           'not-toolbar': !props.toolbar,
           [props.class!]: !props.edit,
         }}
+        part="code-block"
       >
         <Show when={props.toolbar}>
-          <div class="toolbar" data-language={title()}>
+          <div class="toolbar" data-language={title()} part="code-toolbar">
             <CopyIcon class="toolbar-copy" onClick={copy} />
           </div>
         </Show>
-        <code ref={codeEl} contenteditable={props.edit} spellcheck={false} on:input={change}>
+        <code
+          ref={codeEl}
+          contenteditable={props.edit}
+          spellcheck={false}
+          on:input={change}
+          part="code-content"
+        >
           {code()}
         </code>
       </pre>

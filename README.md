@@ -1,9 +1,9 @@
 [home-url]: https://monako97.github.io/neko-ui
-[home-tag]: https://cdn.statically.io/gh/monako97/cdn/main/image/202307281703208.svg
-[jetbrains-tag]: https://cdn.statically.io/gh/monako97/cdn/main/image/202307281758090.svg
+[home-tag]: https://cdn.statically.io/gh/monako97/cdn@main/image/202307281703208.svg
+[jetbrains-tag]: https://cdn.statically.io/gh/monako97/cdn@main/image/202307281758090.svg
 [jetbrains-url]: https://www.jetbrains.com/?from=monako
 [docs-url]: https://monako97.github.io/neko-ui
-[docs-tag]: https://cdn.statically.io/gh/monako97/cdn/main/image/202307281701250.svg
+[docs-tag]: https://cdn.statically.io/gh/monako97/cdn@main/image/202307281701250.svg
 [npm-url]: https://npmjs.org/package/neko-ui
 [cli-url]: https://www.npmjs.com/package/create-mo
 [cli-tag]: https://nodei.co/npm/create-mo.png
@@ -96,12 +96,12 @@ function Demo() {
 
 ## 支持浏览器
 
-[edge]: https://cdn.statically.io/gh/alrra/browser-logos/main/src/edge/edge.svg
-[chrome]: https://cdn.statically.io/gh/alrra/browser-logos/main/src/chrome/chrome.svg
-[firefox]: https://cdn.statically.io/gh/alrra/browser-logos/main/src/firefox/firefox.svg
-[safari]: https://cdn.statically.io/gh/alrra/browser-logos/main/src/safari/safari.svg
-[opera]: https://cdn.statically.io/gh/alrra/browser-logos/main/src/opera/opera.svg
-[samsung]: https://cdn.statically.io/gh/alrra/browser-logos/main/src/samsung-internet/samsung-internet.svg
+[edge]: https://cdn.statically.io/gh/alrra/browser-logos@main/src/edge/edge.svg
+[chrome]: https://cdn.statically.io/gh/alrra/browser-logos@main/src/chrome/chrome.svg
+[firefox]: https://cdn.statically.io/gh/alrra/browser-logos@main/src/firefox/firefox.svg
+[safari]: https://cdn.statically.io/gh/alrra/browser-logos@main/src/safari/safari.svg
+[opera]: https://cdn.statically.io/gh/alrra/browser-logos@main/src/opera/opera.svg
+[samsung]: https://cdn.statically.io/gh/alrra/browser-logos@main/src/samsung-internet/samsung-internet.svg
 
 | ![Edge][edge] | ![Firefox][firefox] | ![Chrome][chrome] | ![Safari][safari] | ![Samsung][samsung] | ![Opera][opera] |
 | :-----------: | :-----------------: | :---------------: | :---------------: | :-----------------: | :-------------: |

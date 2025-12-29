@@ -29,10 +29,10 @@ function createURL() {
         if (!renderer) {
           renderer = new self.marked.Renderer();
           renderer.katexBlock = function (code: string) {
-            return `<n-katex display-mode="true">${code}</n-katex>`;
+            return `<n-katex display-mode="true" part="katex-block">${code}</n-katex>`;
           };
           renderer.katexInline = function (code: string) {
-            return `<n-katex>${code}</n-katex>`;
+            return `<n-katex part="katex-inline">${code}</n-katex>`;
           };
         }
         renderer.image = function (src: string, title: string, alt: string) {
