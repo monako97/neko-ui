@@ -1,9 +1,9 @@
 [home-url]: https://monako97.github.io/neko-ui
-[home-tag]: https://cdn.statically.io/gh/monako97/cdn@main/image/202307281703208.svg
+[home-tag]: https://h5static.dewucdn.com/node-common/4eff4dcf-45bb-076d-abef-6e117f708d42.svg
 [jetbrains-tag]: https://cdn.statically.io/gh/monako97/cdn@main/image/202307281758090.svg
 [jetbrains-url]: https://www.jetbrains.com/?from=monako
 [docs-url]: https://monako97.github.io/neko-ui
-[docs-tag]: https://cdn.statically.io/gh/monako97/cdn@main/image/202307281701250.svg
+[docs-tag]: https://h5static.dewucdn.com/node-common/75de0360-fb9b-cde5-0b4e-02b3df87915c.svg
 [npm-url]: https://npmjs.org/package/neko-ui
 [cli-url]: https://www.npmjs.com/package/create-mo
 [cli-tag]: https://nodei.co/npm/create-mo.png

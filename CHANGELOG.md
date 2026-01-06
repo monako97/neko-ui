@@ -1,6 +1,10 @@
 # Change log
 
-## Last
+## [v2.14.7](https://github.com/monako97/neko-ui/compare/v2.14.5...v2.14.7) (12-30-2025)
+
+### 📚 Documentation
+
+- 构建工具更新 ([b5ece4d](https://github.com/monako97/neko-ui/commit/b5ece4db73d09818a4e4b9d46434907b6a670923))
 
 ### 🐛 Bug Fixes
 
