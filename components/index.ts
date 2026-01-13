@@ -129,9 +129,21 @@ export {
 } from './tree';
 export { default as Typography, type TypographyElement, type TypographyProps } from './typography';
 export type { CustomElement } from 'custom-element-type';
-// export { customElement, getCurrentElement, hot, noShadowDOM, withSolid } from 'solid-element';
+export { customElement, getCurrentElement, hot, noShadowDOM, withSolid } from 'solid-element';
 import type { ICustomElement, Transform } from 'custom-element-type';
 export { registry } from './utils';
+export {
+  type ArrayCSSInterpolation,
+  type ComponentSelector,
+  css,
+  type CSSInterpolation,
+  type CSSObject,
+  type CSSProperties,
+  type CSSStyleSheet,
+  cx,
+  injectGlobal,
+  type Interpolation,
+} from '@moneko/css';
 
 import type {
   AvatarElement,

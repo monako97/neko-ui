@@ -1,6 +1,6 @@
 {
   "name": "neko-ui",
-  "version": "2.14.7",
+  "version": "2.14.8",
   "description": "WebComponents UI Libraries",
   "main": "lib/index.js",
   "module": "es/index.js",
@@ -75,7 +75,7 @@
     "jest": "30.2.0",
     "jest-environment-jsdom": "30.2.0",
     "n-code-live": "2.1.1",
-    "n-katex": "1.0.8",
+    "n-katex": "1.0.9",
     "shadow-dom-testing-library": "1.13.1"
   },
   "dependencies": {

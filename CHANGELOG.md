@@ -1,5 +1,11 @@
 # Change log
 
+## Last
+
+### 🐛 Bug Fixes
+
+- 更新 README 中的 CDN 链接 ([d6385b2](https://github.com/monako97/neko-ui/commit/d6385b2e783d11a29d66666a0aa396614b1250b6))
+
 ## [v2.14.7](https://github.com/monako97/neko-ui/compare/v2.14.5...v2.14.7) (12-30-2025)
 
 ### 📚 Documentation
