@@ -1,5 +1,11 @@
 # Change log
 
+## [v2.14.9](https://github.com/monako97/neko-ui/compare/v2.14.8...v2.14.9) (1-27-2026)
+
+### ✨ Features
+
+- 更新 solid-js 的版本 ([c29a991](https://github.com/monako97/neko-ui/commit/c29a9910e2c52dec2acd77d62a8b7af333f940fc))
+
 ## [v2.14.8](https://github.com/monako97/neko-ui/compare/v2.14.7...v2.14.8) (1-14-2026)
 
 ### 🐛 Bug Fixes
