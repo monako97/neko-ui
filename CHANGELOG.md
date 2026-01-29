@@ -2,6 +2,10 @@
 
 ## Last
 
+### 🐛 Bug Fixes
+
+- 修复 toolbar 样式顺序问题 ([674576b](https://github.com/monako97/neko-ui/commit/674576b2838d9378ca6b2747de2f62002889203b))
+
 ### ✨ Features
 
 - 添加 n-code 主题风格支持 ([d479759](https://github.com/monako97/neko-ui/commit/d479759e22caa0702ff986c63bd9ba650b511937))
