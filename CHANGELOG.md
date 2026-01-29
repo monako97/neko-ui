@@ -1,5 +1,18 @@
 # Change log
 
+## Last
+
+### 🛠 Builds
+
+- 构建更新 ([1e1c28a](https://github.com/monako97/neko-ui/commit/1e1c28a4f7e007d38a0c132a5e37228b34ab25dc))
+- 构建更新 ([4190290](https://github.com/monako97/neko-ui/commit/4190290bced7c8af5e7f4709989418551f356993))
+
+## [v2.14.10](https://github.com/monako97/neko-ui/compare/v2.14.9...v2.14.10) (1-27-2026)
+
+### 🐛 Bug Fixes
+
+- 更新 @moneko/core 的版本号至 4.5.5 ([ed0ce51](https://github.com/monako97/neko-ui/commit/ed0ce517381702369d58da88efcbc403436a48cb))
+
 ## [v2.14.9](https://github.com/monako97/neko-ui/compare/v2.14.8...v2.14.9) (1-27-2026)
 
 ### ✨ Features
