@@ -32,6 +32,6 @@ foo = foo + 1;
   let foo = bar.baz([1, 2, 3]);
 -    foo = foo + 1;
 - console.log(12);`}
-  language="javascript"
+  language="git javascript"
 />
 ```

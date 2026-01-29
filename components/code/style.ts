@@ -85,7 +85,7 @@ export const style = css`
     overflow: visible;
     margin: auto;
     color: var(--code-color);
-    background-color: var(--primary-component-bg);
+    background-color: var(--code-bg);
     box-shadow: 0 2px 8px 0 var(--primary-shadow);
   }
 
@@ -101,6 +101,11 @@ export const style = css`
     color: var(--code-lang-style-color);
   }
 
+  pre.classic > .toolbar::after {
+    background-color: var(--code-toolbar-bg);
+    box-shadow: 0 1px 5px var(--code-toolbar-shadow);
+  }
+
   pre > .toolbar::after {
     position: absolute;
     z-index: 2;
@@ -110,9 +115,7 @@ export const style = css`
     font-family: Ubuntu, sans-serif;
     font-weight: bold;
     text-align: center;
-    color: var(--text-color);
-    background-color: var(--code-toolbar-bg, rgb(220 224 229 / 50%));
-    box-shadow: 0 1px 5px rgb(0 0 0 / 10%);
+    color: var(--code-color);
     text-transform: uppercase;
     backdrop-filter: blur(10px);
     content: attr(data-language) '';
@@ -149,7 +152,7 @@ export const style = css`
     border: none;
     padding: 0;
     font-size: var(--font-size, 14px);
-    color: var(--text-color);
+    color: var(--code-color);
     background: none;
     outline: none;
     cursor: pointer;
@@ -200,9 +203,12 @@ export const style = css`
 `;
 export const darkCss = css({
   ':host': {
+    '--code-bg': '#000',
     '--code-color': '#eee',
+    '--code-shadow': 'rgb(0 0 0 / 12%)',
     '--code-lang-style-color': '#fd9170',
     '--code-toolbar-bg': 'rgb(63, 63, 63, 0.7)',
+    '--code-toolbar-shadow': 'rgb(0 0 0 / 10%)',
     '--atrule': '#c792ea',
     '--attr-name': '#9cdcfe',
     '--attr-value': '#ce9178',
@@ -244,8 +250,12 @@ export const darkCss = css({
 });
 export const lightCss = css({
   ':host': {
+    '--code-bg': '#fff',
     '--code-color': '#90a4ae',
+    '--code-shadow': 'var(--primary-shadow)',
     '--code-lang-style-color': '#f76d47',
+    '--code-toolbar-bg': 'rgb(220 224 229 / 50%)',
+    '--code-toolbar-shadow': 'rgb(0 0 0 / 10%)',
     '--namespace': 'rgba(56, 64, 68, 0.7)',
     '--tag': '#4b69c6',
     '--atrule': '#7c4dff',

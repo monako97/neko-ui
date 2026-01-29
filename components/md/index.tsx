@@ -18,6 +18,8 @@ function MD(_props: MdProps) {
     {
       pictureViewer: true,
       lazyPicture: true,
+      codeTheme: void 0,
+      codeClassic: void 0,
       text: '',
       tools: ['copy'],
       getAnchorContainer: () => window as unknown as HTMLElement,
@@ -39,6 +41,8 @@ function MD(_props: MdProps) {
       langToolbar: props.tools,
       pictureViewer: props.pictureViewer,
       lazyPicture: props.lazyPicture,
+      codeTheme: props.codeTheme,
+      codeClassic: props.codeClassic,
     });
   });
   onCleanup(() => {
@@ -188,6 +192,15 @@ export interface MdProps {
    */
   notRender?: boolean;
   children?: JSXElement;
+  /** 代码块主题风格
+   * @since 2.14.11
+   */
+  codeTheme?: 'light' | 'dark';
+  /** 代码块经典风格
+   * @since 2.14.11
+   * @default true
+   */
+  codeClassic?: boolean;
 }
 
 export type MdElement = CustomElement<MdProps>;
@@ -207,6 +220,8 @@ MD.registry = () => {
       css: void 0,
       children: void 0,
       notRender: void 0,
+      codeTheme: void 0,
+      codeClassic: void 0,
     },
     (_, opt) => {
       const el = opt.element;

@@ -83,6 +83,15 @@ export interface CodeProps {
   /** 编辑修改时的回调 */
   onChange?(code: string): void;
   children?: JSXElement;
+  /** 主题风格
+   * @since 2.14.11
+   */
+  theme?: 'light' | 'dark';
+  /** 经典风格
+   * @since 2.14.11
+   * @default true
+   */
+  classic?: boolean;
 }
 export type CodeElement = CustomElement<CodeProps>;
 
@@ -105,6 +114,12 @@ function Code(props: CodeProps) {
   }
   const [prismJS] = createResource('prism', fetchPrism);
   const title = createMemo(() => props.title || props.language?.split(' ').pop());
+  const tokenCss = createMemo(() => {
+    if (props.theme) {
+      return props.theme === 'dark' ? darkCss : lightCss;
+    }
+    return isDark() ? darkCss : lightCss;
+  });
 
   createEffect(() => {
     let _next = props.code || '';
@@ -250,7 +265,7 @@ function Code(props: CodeProps) {
 
   return (
     <>
-      <style textContent={isDark() ? darkCss : lightCss} />
+      <style textContent={tokenCss()} />
       <Show when={highlightCss()}>
         <style textContent={highlightCss()} />
       </Show>
@@ -263,6 +278,7 @@ function Code(props: CodeProps) {
           [`language-${props.language}`]: !!props.language,
           'not-toolbar': !props.toolbar,
           [props.class!]: !props.edit,
+          classic: props.classic !== false,
         }}
         part="code-block"
       >
@@ -298,6 +314,8 @@ Code.registry = () => {
       css: void 0,
       onChange: void 0,
       title: void 0,
+      theme: void 0,
+      classic: void 0,
     },
     (_, opt) => {
       const { baseStyle } = theme;

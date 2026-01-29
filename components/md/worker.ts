@@ -6,6 +6,8 @@ export interface WorkerMessage extends MarkedOptions {
   id?: string;
   pictureViewer?: boolean;
   lazyPicture?: boolean;
+  codeTheme?: 'light' | 'dark';
+  codeClassic?: boolean;
 }
 
 let MARKED_URL: string | null, WORKER_URL: string | null;
@@ -44,7 +46,15 @@ function createURL() {
           }
           const needEndod = /<[^>]+>/;
 
-          return `<n-code class="n-code" toolbar="${t.data.langToolbar && !!t.data.langToolbar.length}" language="${lang}">${needEndod.test(sourcecode) ? encodeURIComponent(sourcecode) : sourcecode}</n-code>`;
+          let attrs = '';
+
+          if (t.data.codeTheme) {
+            attrs += ` theme="${t.data.codeTheme}"`;
+          }
+          if (t.data.codeClassic !== void 0) {
+            attrs += ` classic="${t.data.codeClassic}"`;
+          }
+          return `<n-code class="n-code" toolbar="${t.data.langToolbar && !!t.data.langToolbar.length}" language="${lang}" ${attrs}>${needEndod.test(sourcecode) ? encodeURIComponent(sourcecode) : sourcecode}</n-code>`;
         };
         result = self.marked(
           t.data.text,
