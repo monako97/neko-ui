@@ -101,11 +101,6 @@ export const style = css`
     color: var(--code-lang-style-color);
   }
 
-  pre.classic > .toolbar::after {
-    background-color: var(--code-toolbar-bg);
-    box-shadow: 0 1px 5px var(--code-toolbar-shadow);
-  }
-
   pre > .toolbar::after {
     position: absolute;
     z-index: 2;
@@ -125,6 +120,11 @@ export const style = css`
     transition-property: background-color, border-color, color;
     inset-block-start: 0;
     inset-inline-start: 0;
+  }
+
+  pre.classic > .toolbar::after {
+    background-color: var(--code-toolbar-bg);
+    box-shadow: 0 1px 5px var(--code-toolbar-shadow);
   }
 
   pre > .toolbar::before {

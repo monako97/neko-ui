@@ -2,6 +2,10 @@
 
 ## Last
 
+### ✨ Features
+
+- 添加 n-code 主题风格支持 ([d479759](https://github.com/monako97/neko-ui/commit/d479759e22caa0702ff986c63bd9ba650b511937))
+
 ### 🛠 Builds
 
 - 构建更新 ([f7765bd](https://github.com/monako97/neko-ui/commit/f7765bd6b5479fba60ea3df94d9b5b72bf1fc8a4))
