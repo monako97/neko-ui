@@ -1,9 +1,10 @@
 # Change log
 
-## Last
+## [v2.14.11](https://github.com/monako97/neko-ui/compare/v2.14.10...v2.14.11) (1-30-2026)
 
 ### 🐛 Bug Fixes
 
+- 修复 toolbar 样式顺序问题 ([443bb06](https://github.com/monako97/neko-ui/commit/443bb066b35445101554fad4eb67e0909d3d38ed))
 - 修复 toolbar 样式顺序问题 ([674576b](https://github.com/monako97/neko-ui/commit/674576b2838d9378ca6b2747de2f62002889203b))
 
 ### ✨ Features
